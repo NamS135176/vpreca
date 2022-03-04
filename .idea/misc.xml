@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/button_outlined.xml" value="0.2085" />
+        <entry key="app/src/main/res/drawable/button_solid.xml" value="0.2085" />
+        <entry key="app/src/main/res/drawable/ic_home_info.xml" value="0.2085" />
+        <entry key="app/src/main/res/drawable/ic_home_info2.xml" value="0.2085" />
+        <entry key="app/src/main/res/drawable/ic_home_usage.xml" value="0.1845" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2085" />
+        <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.2085" />
+        <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.13125" />
+        <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.11475409836065574" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.15217391304347827" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.15217391304347827" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33539731682146545" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.40222772277227725" />
+        <entry key="app/src/main/res/layout/home_card_container.xml" value="0.243408203125" />
+        <entry key="app/src/main/res/layout/home_card_container2.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/home_card_item.xml" value="0.3360910031023785" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.23697916666666666" />
+        <entry key="app/src/main/res/menu/main.xml" value="0.23697916666666666" />
+        <entry key="app/src/main/res/xml/network_security_config.xml" value="0.10677083333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

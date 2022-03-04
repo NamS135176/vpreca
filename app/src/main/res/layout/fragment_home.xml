@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="16dp"
+    android:paddingHorizontal="16dp"
+    tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/text_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/home_text_info"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_balance"
+        style="@style/Widget.AppCompat.TextView.Bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥9000"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@id/text_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_info" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_see_all_card"
+        style="@style/Widget.App.Button.Outlined"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:textSize="10sp"
+        android:backgroundTint="@android:color/transparent"
+        android:text="@string/home_button_see_all_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_balance" />
+
+    <TextView
+        android:id="@+id/text_last_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/home_text_last_login"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@id/text_info"
+        app:layout_constraintTop_toBottomOf="@id/text_info" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:minHeight="160dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_see_all_card">
+
+        <TextView
+            android:id="@+id/text_no_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_text_no_card"
+            android:textSize="11sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <include layout="@layout/home_card_container" android:id="@+id/list_card" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_add_new_card"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/button_outlined"
+        android:paddingHorizontal="40dp"
+        android:text="@string/home_button_add_new_card"
+        android:textColor="@color/primary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:icon="@drawable/ic_home_button_logo"
+        app:iconGravity="textStart"
+        app:iconPadding="6dp"
+        app:iconSize="16dp"
+        app:iconTint="@color/primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/card_container"
+        app:layout_constraintTop_toBottomOf="@id/card_container" />
+</androidx.constraintlayout.widget.ConstraintLayout>

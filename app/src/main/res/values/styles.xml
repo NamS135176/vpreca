@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.App.Button.IconOnly" parent="Widget.MaterialComponents.Button">
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="iconGravity">textStart</item>
+    </style>
+
+    <style name="Widget.AppCompat.TextView.Bold" parent="Widget.MaterialComponents.TextView">
+        <item name="android:fontFamily">@font/hiragino_sans_gb_w6</item>
+        <item name="fontFamily">@font/hiragino_sans_gb_w6
+        </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+    </style>
+
+    <style name="MyCardView" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">9dp</item>
+    </style>
+
+    <style name="Widget.App.Button.Outlined" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/primary</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">@dimen/corner_md</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="@style/Widget.MaterialComponents.Button">
+        <item name="cornerRadius">@dimen/corner_md</item>
+    </style>
+
+
+    <style name="Widget.App.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxCornerRadiusBottomEnd">@dimen/corner_md</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/corner_md</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/corner_md</item>
+        <item name="boxCornerRadiusTopStart">@dimen/corner_md</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+</resources>
