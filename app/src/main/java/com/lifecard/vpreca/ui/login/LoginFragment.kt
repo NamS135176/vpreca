@@ -53,12 +53,8 @@ class LoginFragment : Fragment() {
                     return@Observer
                 }
                 loginButton.isEnabled = loginFormState.isDataValid
-                loginFormState.usernameError?.let {
-                    usernameEditText.error = getString(it)
-                }
-                loginFormState.passwordError?.let {
-                    passwordEditText.error = getString(it)
-                }
+                usernameEditText.error = loginFormState.usernameError?.let { getString(it) }
+                passwordEditText.error = loginFormState.passwordError?.let { getString(it) }
             })
 
         loginViewModel.loginResult.observe(viewLifecycleOwner,
@@ -94,8 +90,8 @@ class LoginFragment : Fragment() {
         passwordEditText.editText?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(
-                    usernameEditText.editText.toString(),
-                    passwordEditText.editText.toString()
+                    usernameEditText.editText?.text.toString(),
+                    passwordEditText.editText?.text.toString()
                 )
             }
             false
