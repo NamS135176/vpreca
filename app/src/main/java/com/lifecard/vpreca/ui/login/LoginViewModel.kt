@@ -8,10 +8,10 @@ import androidx.lifecycle.viewModelScope
 
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.Result
-import com.lifecard.vpreca.data.source.AuthRepository
+import com.lifecard.vpreca.data.UserRepository
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val loginRepository: AuthRepository) : ViewModel() {
+class LoginViewModel(private val loginRepository: UserRepository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm

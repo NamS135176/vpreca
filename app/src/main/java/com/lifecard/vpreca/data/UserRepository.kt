@@ -1,6 +1,5 @@
-package com.lifecard.vpreca.data.source
+package com.lifecard.vpreca.data
 
-import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.api.RetrofitBuilder
 import com.lifecard.vpreca.data.model.User
 import kotlinx.coroutines.Dispatchers
@@ -8,7 +7,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.*
 
-class AuthRepository {
+class UserRepository {
     // in-memory cache of the loggedInUser object
     var user: User? = null
         private set

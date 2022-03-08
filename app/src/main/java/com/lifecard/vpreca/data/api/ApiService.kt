@@ -1,9 +1,11 @@
 package com.lifecard.vpreca.data.api
 
+import com.lifecard.vpreca.data.model.CardResponse
 import com.lifecard.vpreca.data.model.LoginResponse
 import com.lifecard.vpreca.data.model.User
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiService {
@@ -13,4 +15,8 @@ interface ApiService {
         @Field("username") username: String,
         @Field("password") password: String
     ): LoginResponse
+
+    @GET("cards")
+    suspend fun getListCards(): CardResponse
+
 }

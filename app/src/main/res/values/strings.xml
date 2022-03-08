@@ -30,7 +30,9 @@
     <string name="welcome">"Welcome!"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="login_failed">Login failed</string>
     <string name="title_activity_login">LoginActivity</string>
 
+    <!-- Strings related to Home screen -->
+    <string name="get_list_card_failure">Get list card failure</string>
 </resources>
