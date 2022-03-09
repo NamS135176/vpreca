@@ -5,27 +5,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
-import com.lifecard.vpreca.ui.login.LoginViewModel
-import com.lifecard.vpreca.ui.login.LoginViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+
+    private val homeViewModel: HomeViewModel by viewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,10 +35,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this, HomeViewModelFactory())
-                .get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 

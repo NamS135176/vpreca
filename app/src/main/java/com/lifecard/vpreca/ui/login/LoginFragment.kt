@@ -1,7 +1,7 @@
 package com.lifecard.vpreca.ui.login
 
+import android.content.Intent
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -12,14 +12,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import com.lifecard.vpreca.MainActivity
 
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by viewModels()
     private var _binding: FragmentLoginBinding? = null
 
     // This property is only valid between onCreateView and
@@ -39,13 +43,14 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
 
         val usernameEditText = binding.username
         val passwordEditText = binding.password
         val loginButton = binding.buttonLogin
         val loadingProgressBar = binding.loading
+
+//        usernameEditText.editText?.setText("anhndt@vn-sis.com")
+//        passwordEditText.editText?.setText("123456")
 
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
@@ -66,6 +71,7 @@ class LoginFragment : Fragment() {
                 }
                 loginResult.success?.let {
                     updateUiWithUser(it)
+                    navigateToMainScreen()
                 }
             })
 
@@ -116,6 +122,14 @@ class LoginFragment : Fragment() {
     private fun showLoginFailed(@StringRes errorString: Int) {
         val appContext = context?.applicationContext ?: return
         Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
+    }
+
+
+    private fun navigateToMainScreen() {
+        val intent = Intent(requireContext(), MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

@@ -9,9 +9,12 @@ import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(private val loginRepository: UserRepository) : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val loginRepository: UserRepository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm

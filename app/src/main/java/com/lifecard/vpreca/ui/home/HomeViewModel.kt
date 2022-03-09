@@ -8,12 +8,18 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import kotlinx.coroutines.launch
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.UserRepository
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel(private val creditCardRepository: CreditCardRepository) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val creditCardRepository: CreditCardRepository, private val userRepository: UserRepository) : ViewModel() {
     private val _creditCardResult = MutableLiveData<CreditCardResult>()
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
 
     init {
+        println("HomeViewModel... init")
         viewModelScope.launch {
             val result = creditCardRepository.getLatestCards(true)
             if (result is Result.Success) {
@@ -22,5 +28,7 @@ class HomeViewModel(private val creditCardRepository: CreditCardRepository) : Vi
                 _creditCardResult.value = CreditCardResult(error = R.string.get_list_card_failure)
             }
         }
+
+        println("HomeViewModel... user is: ${userRepository.user}")
     }
 }
