@@ -1,13 +1,15 @@
 package com.lifecard.vpreca.data
 
+import android.content.SharedPreferences
 import com.lifecard.vpreca.data.api.RetrofitBuilder
 import com.lifecard.vpreca.data.model.User
+import com.lifecard.vpreca.data.source.SecureStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.*
 
-class UserRepository {
+class UserRepository(private val secureStore: SecureStore) {
     // in-memory cache of the loggedInUser object
     var user: User? = null
         private set
@@ -18,7 +20,17 @@ class UserRepository {
     init {
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
-        user = null
+        val accessToken = secureStore.getJwtToken()
+        println("UserRepository... init: accessToken=${accessToken}")
+        if (accessToken != null) {
+            val fakeUser = User(
+                UUID.randomUUID().toString(),
+                "The Anh",
+                "anhndt@vn-sis.com",
+                accessToken
+            )
+            user = fakeUser
+        }
     }
 
     suspend fun login(username: String, password: String): Result<User> {
@@ -44,5 +56,7 @@ class UserRepository {
         this.user = loggedInUser
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
+        println("UserRepository... setLoggedInUser: ${secureStore}")
+        secureStore.saveJwtToken(loggedInUser.accessToken)
     }
 }

@@ -27,4 +27,23 @@
 
     <style name="Theme.VPreca.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="Theme.VPreca.Fullscreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+<!--        <item name="android:actionBarStyle">@style/Widget.Theme.VPreca.ActionBar.Fullscreen</item>-->
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.VPreca.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
+
+    <style name="Theme.VPreca.SplashTheme" parent="Theme.VPreca.Fullscreen">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
 </resources>

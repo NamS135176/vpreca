@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg_splash.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/button_outlined.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/button_solid.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/dot_default.xml" value="0.21" />
@@ -13,11 +14,14 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/round_bg_primary.xml" value="0.21" />
+        <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/tab_dot_selector.xml" value="0.21" />
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.13125" />
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.11475409836065574" />
+        <entry key="app/src/main/res/layout/activity_fullscreen.xml" value="0.1983695652173913" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.15217391304347827" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1983695652173913" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.15217391304347827" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.19610507246376813" />
@@ -29,6 +33,7 @@
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.23697916666666666" />
         <entry key="app/src/main/res/menu/main.xml" value="0.23697916666666666" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_splash_logo.xml" value="0.21" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.10677083333333333" />
       </map>
     </option>
