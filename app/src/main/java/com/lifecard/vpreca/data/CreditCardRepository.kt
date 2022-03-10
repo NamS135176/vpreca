@@ -1,6 +1,6 @@
 package com.lifecard.vpreca.data
 
-import com.lifecard.vpreca.data.api.RetrofitBuilder
+import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.CreditCard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
@@ -8,7 +8,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class CreditCardRepository {
+class CreditCardRepository(private val apiService: ApiService) {
     // Mutex to make writes to cached values thread-safe.
     private val latestCardsMutex = Mutex()
 
@@ -18,7 +18,7 @@ class CreditCardRepository {
         return withContext(Dispatchers.IO) {
             if (refresh || latestCards.isEmpty()) {
                 try {
-                    val response = RetrofitBuilder.apiService.getListCards()
+                    val response = apiService.getListCards()
                     latestCardsMutex.withLock { latestCards = response.data }
                 } catch (e: Throwable) {
                     Result.Error(Exception("Can not get card", e))

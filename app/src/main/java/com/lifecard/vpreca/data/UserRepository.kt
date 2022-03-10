@@ -1,7 +1,6 @@
 package com.lifecard.vpreca.data
 
-import android.content.SharedPreferences
-import com.lifecard.vpreca.data.api.RetrofitBuilder
+import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.data.source.SecureStore
 import kotlinx.coroutines.Dispatchers
@@ -9,7 +8,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.*
 
-class UserRepository(private val secureStore: SecureStore) {
+class UserRepository(private val secureStore: SecureStore, private val apiService: ApiService) {
     // in-memory cache of the loggedInUser object
     var user: User? = null
         private set
@@ -36,7 +35,7 @@ class UserRepository(private val secureStore: SecureStore) {
     suspend fun login(username: String, password: String): Result<User> {
         return withContext(Dispatchers.IO) {
             try {
-                var response = RetrofitBuilder.apiService.login(username, password)
+                var response = apiService.login(username, password)
                 val fakeUser = User(
                     UUID.randomUUID().toString(),
                     "The Anh",
