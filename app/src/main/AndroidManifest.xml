@@ -14,6 +14,11 @@
         android:theme="@style/Theme.VPreca"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SignupActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VPreca.NoActionBar"
+            />
+        <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.VPreca.SplashTheme">
