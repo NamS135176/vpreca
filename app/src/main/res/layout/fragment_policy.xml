@@ -12,12 +12,51 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         tools:context=".ui.signup/SignupFragment"
-        android:paddingHorizontal="16dp">
+>
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/appbar_policy">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="32dp"
+                android:paddingTop="32dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OK"
+                    android:textAlignment="center"
+                    android:visibility="invisible"></TextView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="新規アカウント開設"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="18dp"
+                    ></TextView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="キャンセル"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="14dp"></TextView>
+            </LinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
         <LinearLayout
             android:id="@+id/indication"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/container"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_policy"
             android:orientation="horizontal"
             android:paddingVertical="16dp"
             android:gravity="center_horizontal|center_vertical">
@@ -71,6 +110,7 @@
             android:layout_marginTop="16dp"
             android:padding="16dp"
             android:background="#FDFDFD"
+            android:layout_marginHorizontal="16dp"
             >
         </androidx.recyclerview.widget.RecyclerView>
         <LinearLayout
@@ -102,6 +142,7 @@
             android:text="次へ"
             android:layout_marginBottom="8dp"
             android:enabled="false"
+            android:layout_marginHorizontal="16dp"
             ></com.google.android.material.button.MaterialButton>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

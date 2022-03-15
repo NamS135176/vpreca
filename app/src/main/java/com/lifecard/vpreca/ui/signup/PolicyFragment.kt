@@ -50,11 +50,22 @@ class PolicyFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val btnSubmitPolicy = view.findViewById<Button>(R.id.btn_submit_policy)
         val cbPolicy = view.findViewById<CheckBox>(R.id.cbPolicy)
+        val rcPolicy = view?.findViewById<RecyclerView>(R.id.svPolicy)
 
         cbPolicy.setOnClickListener(View.OnClickListener {
             btnSubmitPolicy.isEnabled = cbPolicy.isChecked
         })
-        val rcPolicy = view?.findViewById<RecyclerView>(R.id.svPolicy)
+
+        btnSubmitPolicy.setOnClickListener(View.OnClickListener {
+            val phoneFragment = PhoneFragment()
+            val manager = parentFragmentManager
+            val transaction = manager.beginTransaction()
+            transaction.replace(R.id.fmSignup, phoneFragment)
+            transaction.addToBackStack(null)
+            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
+            transaction.commit()
+        })
+
 
         var arrPolicy: ArrayList<String>
         arrPolicy = ArrayList()
