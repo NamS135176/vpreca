@@ -12,12 +12,13 @@ import android.widget.EditText
 import com.lifecard.vpreca.R
 
 
-class PhoneFragment : Fragment() {
+class ConfirmPhoneFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+
         }
     }
 
@@ -26,13 +27,14 @@ class PhoneFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_phone, container, false)
+        return inflater.inflate(R.layout.fragment_confirm_phone, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val inputPhone = view.findViewById<EditText>(R.id.edt_phone)
-        val btnSubmitPhone = view.findViewById<Button>(R.id.btn_submit_phone)
+
+        val inputPhoneConfirm = view.findViewById<EditText>(R.id.edt_phone_confirm)
+        val btnSubmitPhoneConfirm = view.findViewById<Button>(R.id.btn_submit_phone_confirm)
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // ignore
@@ -43,18 +45,18 @@ class PhoneFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if(s.length > 0){
-                    btnSubmitPhone.isEnabled = true
+                if(s?.length > 0){
+                    btnSubmitPhoneConfirm.isEnabled = true
                 }
             }
         }
-        inputPhone.addTextChangedListener(afterTextChangedListener)
+        inputPhoneConfirm.addTextChangedListener(afterTextChangedListener)
 
-        btnSubmitPhone.setOnClickListener(View.OnClickListener {
-            val confirmPhoneFragment = ConfirmPhoneFragment()
+        btnSubmitPhoneConfirm.setOnClickListener(View.OnClickListener {
+            val emailFragment = EmailFragment()
             val manager = parentFragmentManager
             val transaction = manager.beginTransaction()
-            transaction.replace(R.id.fmSignup, confirmPhoneFragment)
+            transaction.replace(R.id.fmSignup, emailFragment)
             transaction.addToBackStack(null)
             transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
             transaction.commit()

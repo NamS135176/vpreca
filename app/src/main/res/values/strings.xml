@@ -40,4 +40,44 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--    Policy Screen-->
+    <string name="title_appbar_policy">新規アカウント開設</string>
+    <string name="title_next_policy">キャンセル</string>
+    <string name="confirm_policy">上記全ての項目に同意する</string>
+    <string name="btn_next_policy">次へ</string>
+    <!--    Phone Screen-->
+    <string name="phone_back">戻る</string>
+    <string name="title_appbar_phone">新規アカウント開設</string>
+    <string name="title_next_phone">キャンセル</string>
+    <string name="btn_next_phone">次へ</string>
+    <string name="phone_title">電話番号登録</string>
+    <string name="phone_des_top">Vプリカアカウントを作成するにはSMS（ショートメールサービス）による認証が必要です。</string>
+    <string name="phone_des_bot">以下にSMSを受信できる090/080/070ではじまる電話番号をハイフンを入れずに入力、「電話番号認証」をタップしてください。</string>
+    <string name="phone_hint">電話番号</string>
+    <string name="des_phone_input">電話番号は、ご連絡先として登録いたします。</string>
+
+    <!--    Confirm Phone Screen-->
+    <string name="confirm_phone_title">認証コード入力</string>
+    <string name="confirm_phone_des">SMSで認証コードを送信いたしました。受け取った認証コードを入力し、「次へ」ボタンをタップしてください。</string>
+    <string name="confirm_phone_des_left">送信先電話番号</string>
+    <string name="confirm_phone_des_right">080-0000-0000</string>
+    <string name="confirm_phone_hint">認証コード</string>
+    <string name="confirm_phone_des_input">認証コードが届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
+
+    <!--    Email Screen-->
+    <string name="email_title">メールアドレス登録</string>
+    <string name="email_des_top">続いて、メールアドレスによる認証を行います。</string>
+    <string name="email_des_bot">以下に、認証コードを受信するメールアドレスを入力し、「メールアドレス認証」をタップしてください。</string>
+    <string name="email_hint">メールアドレス</string>
+    <string name="email_des_input">メールアドレスは、ご連絡先として登録いたします。</string>
+
+<!--    Confirm Email Screen-->
+    <string name="confirm_email_title">認証コード入力</string>
+    <string name="confirm_email_des">SMSで認証コードを送信いたしました。受け取った認証コードを入力し、「次へ」ボタンをタップしてください。</string>
+    <string name="confirm_email_des_left">送信先メールアドレス</string>
+    <string name="confirm_email_des_right">sample@sample.jp</string>
+    <string name="confirm_email_hint">認証コード</string>
+    <string name="confirm_email_des_input">認証コードが届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
+
+
 </resources>

@@ -26,44 +26,157 @@
                 android:paddingTop="32dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp">
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="戻る"
+                    android:layout_weight="0.8"
+                    android:text="@string/phone_back"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textSize="18dp"
-                    ></TextView>
-                <TextView
+                    android:textSize="18sp"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="新規アカウント開設"
+                    android:text="@string/title_appbar_phone"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textSize="18dp"
-                    ></TextView>
-                <TextView
+                    android:textSize="18sp"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="キャンセル"
+                    android:layout_weight="0.8"
+                    android:text="@string/title_next_phone"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textSize="14dp"></TextView>
+                    android:textSize="14sp"/>
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
+        <LinearLayout
+            android:id="@+id/indication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_policy"
+            android:orientation="horizontal"
+            android:paddingVertical="16dp"
+            android:gravity="center_horizontal|center_vertical">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/indicator_active"
+                android:layout_marginHorizontal="8dp"
+                />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/indicator_active"
+                android:layout_marginHorizontal="8dp"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/indicator_inactive"
+                android:layout_marginHorizontal="8dp"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/indicator_inactive"
+                android:layout_marginHorizontal="8dp"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/indicator_inactive"
+                android:layout_marginHorizontal="8dp"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/indicator_inactive"
+                android:layout_marginHorizontal="8dp"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/indicator_inactive"
+                android:layout_marginHorizontal="8dp"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/indicator_inactive"
+                android:layout_marginHorizontal="8dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/phone_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/indication"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_title"
+                android:textSize="18sp"
+                android:textColor="@color/light_blue_600"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/phone_title"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="32dp"
+            android:orientation="vertical"
+            >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_des_top"
+                android:textSize="12sp"
 
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_des_bot"
+                android:textSize="12sp"
+                android:layout_marginTop="32dp"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone"
+                style="@style/Widget.App.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="40dp"
+                android:hint="@string/phone_hint"
+                android:inputType="number"
+                android:selectAllOnFocus="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#F3F3F3"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/des_phone_input"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"
+                />
+        </LinearLayout>
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_submit_policy"
+            android:id="@+id/btn_submit_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="次へ"
+            android:text="@string/btn_next_phone"
             android:layout_marginBottom="8dp"
             android:enabled="false"
             android:layout_marginHorizontal="16dp"
-            ></com.google.android.material.button.MaterialButton>
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
