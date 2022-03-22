@@ -7,14 +7,20 @@
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/drawable/indicator_active.xml" value="0.1745" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/drawable/indicator_inactive.xml" value="0.1745" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/activity_login.xml" value="0.15806159420289856" />
+        <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/activity_signup.xml" value="0.1661600810536981" />
+        <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/app_bar_main.xml" value="0.18802083333333333" />
+        <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/content_main.xml" value="0.18802083333333333" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/fragment_confirm_email.xml" value="0.18802083333333333" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/fragment_confirm_phone.xml" value="0.18802083333333333" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/fragment_email.xml" value="0.18802083333333333" />
+        <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/fragment_gallery.xml" value="0.18802083333333333" />
+        <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/fragment_home.xml" value="0.18802083333333333" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/fragment_phone.xml" value="0.19635416666666666" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/fragment_policy.xml" value="0.19635416666666666" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/fragment_signup.xml" value="0.1" />
+        <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/home_card_item.xml" value="0.18802083333333333" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/policy_item.xml" value="0.19635416666666666" />
         <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/slider_policy.xml" value="0.13269927536231885" />
         <entry key="app/src/main/res/drawable/bg_splash.xml" value="0.21" />

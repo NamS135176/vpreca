@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 
 class EmailFragment : Fragment() {
@@ -43,21 +44,23 @@ class EmailFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if(s.length > 0){
+                if(s.length > 0 && android.util.Patterns.EMAIL_ADDRESS.matcher(s).matches()){
                     btnSubmitEmail.isEnabled = true
                 }
+
             }
         }
         inputEmail.addTextChangedListener(afterTextChangedListener)
 
         btnSubmitEmail.setOnClickListener(View.OnClickListener {
-            val confirmEmailFragment = ConfirmEmailFragment()
-            val manager = parentFragmentManager
-            val transaction = manager.beginTransaction()
-            transaction.replace(R.id.fmSignup, confirmEmailFragment)
-            transaction.addToBackStack(null)
-            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
-            transaction.commit()
+            findNavController().navigate(R.id.nav_confirm_email)
+//            val confirmEmailFragment = ConfirmEmailFragment()
+//            val manager = parentFragmentManager
+//            val transaction = manager.beginTransaction()
+//            transaction.replace(R.id.fmSignup, confirmEmailFragment)
+//            transaction.addToBackStack(null)
+//            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
+//            transaction.commit()
         })
     }
 

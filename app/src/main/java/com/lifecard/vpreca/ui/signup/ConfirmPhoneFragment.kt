@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 
 
@@ -53,13 +54,14 @@ class ConfirmPhoneFragment : Fragment() {
         inputPhoneConfirm.addTextChangedListener(afterTextChangedListener)
 
         btnSubmitPhoneConfirm.setOnClickListener(View.OnClickListener {
-            val emailFragment = EmailFragment()
-            val manager = parentFragmentManager
-            val transaction = manager.beginTransaction()
-            transaction.replace(R.id.fmSignup, emailFragment)
-            transaction.addToBackStack(null)
-            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
-            transaction.commit()
+            findNavController().navigate(R.id.nav_email)
+//            val emailFragment = EmailFragment()
+//            val manager = parentFragmentManager
+//            val transaction = manager.beginTransaction()
+//            transaction.replace(R.id.fmSignup, emailFragment)
+//            transaction.addToBackStack(null)
+//            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
+//            transaction.commit()
         })
     }
 

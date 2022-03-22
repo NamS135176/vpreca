@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signup_nav"
+    app:startDestination="@id/nav_policy">
+    <fragment
+        android:id="@+id/nav_policy"
+        android:name="com.lifecard.vpreca.ui.signup.PolicyFragment"
+        android:label="fragment_policy"
+        tools:layout="@layout/fragment_policy" />
+    <fragment
+        android:id="@+id/nav_phone"
+        android:name="com.lifecard.vpreca.ui.signup.PhoneFragment"
+        android:label="fragment_phone"
+        tools:layout="@layout/fragment_phone" />
+    <fragment
+        android:id="@+id/nav_confirm_phone"
+        android:name="com.lifecard.vpreca.ui.signup.ConfirmPhoneFragment"
+        android:label="fragment_phone_confirm"
+        tools:layout="@layout/fragment_confirm_phone" />
+    <fragment
+        android:id="@+id/nav_email"
+        android:name="com.lifecard.vpreca.ui.signup.EmailFragment"
+        android:label="fragment_email"
+        tools:layout="@layout/fragment_email" />
+    <fragment
+        android:id="@+id/nav_confirm_email"
+        android:name="com.lifecard.vpreca.ui.signup.ConfirmEmailFragment"
+        android:label="fragment_email_confirm"
+        tools:layout="@layout/fragment_confirm_email" />
+</navigation>

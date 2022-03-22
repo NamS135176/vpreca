@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 
 
@@ -43,7 +44,7 @@ class PhoneFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if(s.length > 0){
+                if(s.length > 0 && android.util.Patterns.PHONE.matcher(s).matches()){
                     btnSubmitPhone.isEnabled = true
                 }
             }
@@ -51,13 +52,14 @@ class PhoneFragment : Fragment() {
         inputPhone.addTextChangedListener(afterTextChangedListener)
 
         btnSubmitPhone.setOnClickListener(View.OnClickListener {
-            val confirmPhoneFragment = ConfirmPhoneFragment()
-            val manager = parentFragmentManager
-            val transaction = manager.beginTransaction()
-            transaction.replace(R.id.fmSignup, confirmPhoneFragment)
-            transaction.addToBackStack(null)
-            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
-            transaction.commit()
+            findNavController().navigate(R.id.nav_confirm_phone)
+//            val confirmPhoneFragment = ConfirmPhoneFragment()
+//            val manager = parentFragmentManager
+//            val transaction = manager.beginTransaction()
+//            transaction.replace(R.id.fmSignup, confirmPhoneFragment)
+//            transaction.addToBackStack(null)
+//            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
+//            transaction.commit()
         })
     }
 

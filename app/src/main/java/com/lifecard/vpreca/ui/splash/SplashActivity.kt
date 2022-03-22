@@ -21,12 +21,13 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_splash)
 
-        println("SplashActivity... onCreate: ${userRepository.user}")
+//        println("SplashActivity... onCreate: ${userRepository.user}")
 //        if (userRepository.isLoggedIn) {
 //            navigateToLoginScreen()
 //        } else {
 //            navigateToMainScreen()
 //        }
+//        navigateToLoginScreen()
         navigateToSignUpScreen()
     }
 

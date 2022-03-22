@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lifecard.vpreca.R
@@ -43,13 +44,7 @@ class PolicyFragment : Fragment() {
         })
 
         btnSubmitPolicy.setOnClickListener(View.OnClickListener {
-            val phoneFragment = PhoneFragment()
-            val manager = parentFragmentManager
-            val transaction = manager.beginTransaction()
-            transaction.replace(R.id.fmSignup, phoneFragment)
-            transaction.addToBackStack(null)
-            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
-            transaction.commit()
+            findNavController().navigate(R.id.nav_phone)
         })
 
 
