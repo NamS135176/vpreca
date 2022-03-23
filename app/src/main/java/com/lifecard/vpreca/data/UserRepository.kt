@@ -19,14 +19,13 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
     init {
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
-        val accessToken = secureStore.getJwtToken()
+        val accessToken = secureStore.getAccessToken()
         println("UserRepository... init: accessToken=${accessToken}")
         if (accessToken != null) {
             val fakeUser = User(
                 UUID.randomUUID().toString(),
                 "The Anh",
                 "anhndt@vn-sis.com",
-                accessToken
             )
             user = fakeUser
         }
@@ -35,14 +34,15 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
     suspend fun login(username: String, password: String): Result<User> {
         return withContext(Dispatchers.IO) {
             try {
-                var response = apiService.login(username, password)
+                var loginResponse = apiService.login(username, password)
                 val fakeUser = User(
                     UUID.randomUUID().toString(),
                     "The Anh",
                     "anhndt@vn-sis.com",
-                    response.accessToken
                 )
                 setLoggedInUser(fakeUser)
+                secureStore.saveAccessToken(loginResponse.accessToken)
+                secureStore.saveRefreshToken(loginResponse.refreshToken)
                 Result.Success(fakeUser)
             } catch (e: Throwable) {
                 println("LoginDataSource... login has error ${e}")
@@ -56,6 +56,5 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
         println("UserRepository... setLoggedInUser: ${secureStore}")
-        secureStore.saveJwtToken(loggedInUser.accessToken)
     }
 }

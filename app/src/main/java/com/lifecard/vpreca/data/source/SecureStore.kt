@@ -26,11 +26,19 @@ class SecureStore(private val appContext: Context) {
         return encryptedSharedPreferences.getString(key, null)
     }
 
-    fun saveJwtToken(token: String) {
-        return saveEncryptText(Constanst.KEY_JWT, token)
+    fun saveAccessToken(token: String) {
+        return saveEncryptText(Constanst.SECURE_ACCESS_TOKEN, token)
     }
 
-    fun getJwtToken(): String? {
-        return getEncryptText(Constanst.KEY_JWT)
+    fun getAccessToken(): String? {
+        return getEncryptText(Constanst.SECURE_ACCESS_TOKEN)
+    }
+
+    fun saveRefreshToken(token: String) {
+        return saveEncryptText(Constanst.SECURE_REFRESH_TOKEN, token)
+    }
+
+    fun getRefreshToken(): String? {
+        return getEncryptText(Constanst.SECURE_REFRESH_TOKEN)
     }
 }

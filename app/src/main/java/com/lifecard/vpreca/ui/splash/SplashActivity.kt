@@ -26,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
         } else {
             navigateToMainScreen()
         }
+//        navigateToLoginScreen()
     }
 
     private fun navigateToMainScreen() {
