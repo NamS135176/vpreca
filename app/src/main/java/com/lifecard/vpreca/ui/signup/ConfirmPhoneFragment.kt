@@ -11,11 +11,14 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
+import com.lifecard.vpreca.databinding.FragmentPhoneBinding
 
 
 class ConfirmPhoneFragment : Fragment() {
 
-
+    private var _binding:FragmentConfirmPhoneBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -28,14 +31,15 @@ class ConfirmPhoneFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_confirm_phone, container, false)
+        _binding = FragmentConfirmPhoneBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val inputPhoneConfirm = view.findViewById<EditText>(R.id.edt_phone_confirm)
-        val btnSubmitPhoneConfirm = view.findViewById<Button>(R.id.btn_submit_phone_confirm)
+        val inputPhoneConfirm = binding.edtPhoneConfirm
+        val btnSubmitPhoneConfirm = binding.btnSubmitPhoneConfirm
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // ignore

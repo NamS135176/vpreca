@@ -8,15 +8,24 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lifecard.vpreca.R
-
+import com.lifecard.vpreca.databinding.FragmentLoginBinding
+import com.lifecard.vpreca.databinding.FragmentPhoneBinding
+import com.lifecard.vpreca.databinding.FragmentPolicyBinding
 
 
 class PolicyFragment : Fragment() {
 
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(PolicyViewModel::class.java)
+    }
+
+    private var _binding : FragmentPolicyBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -29,15 +38,17 @@ class PolicyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_policy, container, false)
+        _binding = FragmentPolicyBinding.inflate(inflater, container, false)
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_policy, container, false)
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btnSubmitPolicy = view.findViewById<Button>(R.id.btn_submit_policy)
-        val cbPolicy = view.findViewById<CheckBox>(R.id.cbPolicy)
-        val rcPolicy = view?.findViewById<RecyclerView>(R.id.svPolicy)
+        val btnSubmitPolicy = binding.btnSubmitPolicy
+        val cbPolicy = binding.cbPolicy
+        val rcPolicy = binding.svPolicy
 
         cbPolicy.setOnClickListener(View.OnClickListener {
             btnSubmitPolicy.isEnabled = cbPolicy.isChecked
@@ -60,7 +71,4 @@ class PolicyFragment : Fragment() {
         rcPolicy?.layoutManager = linearLayoutManager
         rcPolicy?.adapter = adapter
     }
-
-
-
 }

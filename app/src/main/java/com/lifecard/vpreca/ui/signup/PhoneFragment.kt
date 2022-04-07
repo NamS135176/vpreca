@@ -9,12 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.databinding.FragmentPhoneBinding
+import com.lifecard.vpreca.databinding.FragmentPolicyBinding
 
 
 class PhoneFragment : Fragment() {
 
+    private val phoneViewModel by lazy { ViewModelProvider(this).get(PhoneViewModel::class.java) }
+    private var _binding:FragmentPhoneBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,13 +33,16 @@ class PhoneFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_phone, container, false)
+
+//        return inflater.inflate(R.layout.fragment_phone, container, false)
+        _binding = FragmentPhoneBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val inputPhone = view.findViewById<EditText>(R.id.edt_phone)
-        val btnSubmitPhone = view.findViewById<Button>(R.id.btn_submit_phone)
+        val inputPhone = binding.edtPhone
+        val btnSubmitPhone = binding.btnSubmitPhone
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // ignore
@@ -44,22 +53,17 @@ class PhoneFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if(s.length > 0 && android.util.Patterns.PHONE.matcher(s).matches()){
-                    btnSubmitPhone.isEnabled = true
-                }
+//                if(phoneViewModel.isPhoneValid(s.toString())){
+//                    btnSubmitPhone.isEnabled = true
+//                }
+                phoneViewModel.checkPhone(s.toString())
+                btnSubmitPhone.isEnabled = phoneViewModel.enableNext
             }
         }
         inputPhone.addTextChangedListener(afterTextChangedListener)
 
         btnSubmitPhone.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_confirm_phone)
-//            val confirmPhoneFragment = ConfirmPhoneFragment()
-//            val manager = parentFragmentManager
-//            val transaction = manager.beginTransaction()
-//            transaction.replace(R.id.fmSignup, confirmPhoneFragment)
-//            transaction.addToBackStack(null)
-//            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
-//            transaction.commit()
         })
     }
 

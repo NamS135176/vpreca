@@ -11,9 +11,13 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
+import com.lifecard.vpreca.databinding.FragmentEmailBinding
 
 class EmailFragment : Fragment() {
 
+    private var _binding:FragmentEmailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,13 +31,14 @@ class EmailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_email, container, false)
+        _binding = FragmentEmailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val inputEmail = view.findViewById<EditText>(R.id.edt_email_signup)
-        val btnSubmitEmail = view.findViewById<Button>(R.id.btn_submit_email_signup)
+        val inputEmail = binding.edtEmailSignup
+        val btnSubmitEmail = binding.btnSubmitEmailSignup
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // ignore
@@ -47,20 +52,12 @@ class EmailFragment : Fragment() {
                 if(s.length > 0 && android.util.Patterns.EMAIL_ADDRESS.matcher(s).matches()){
                     btnSubmitEmail.isEnabled = true
                 }
-
             }
         }
         inputEmail.addTextChangedListener(afterTextChangedListener)
 
         btnSubmitEmail.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_confirm_email)
-//            val confirmEmailFragment = ConfirmEmailFragment()
-//            val manager = parentFragmentManager
-//            val transaction = manager.beginTransaction()
-//            transaction.replace(R.id.fmSignup, confirmEmailFragment)
-//            transaction.addToBackStack(null)
-//            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
-//            transaction.commit()
         })
     }
 

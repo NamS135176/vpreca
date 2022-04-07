@@ -6,9 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.databinding.FragmentConfirmEmailBinding
+import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
 
 
 class ConfirmEmailFragment : Fragment() {
+
+    private var _binding:FragmentConfirmEmailBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -20,7 +26,8 @@ class ConfirmEmailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_confirm_email, container, false)
+        _binding = FragmentConfirmEmailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     companion object {
