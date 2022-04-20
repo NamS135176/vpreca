@@ -49,9 +49,6 @@ class LoginFragment : Fragment() {
         val loginButton = binding.buttonLogin
         val loadingProgressBar = binding.loading
 
-//        usernameEditText.editText?.setText("anhndt@vn-sis.com")
-//        passwordEditText.editText?.setText("123456")
-
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
                 if (loginFormState == null) {

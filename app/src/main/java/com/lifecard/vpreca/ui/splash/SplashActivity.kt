@@ -18,15 +18,12 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_splash)
-
         println("SplashActivity... onCreate: ${userRepository.user}")
         if (userRepository.isLoggedIn) {
             navigateToLoginScreen()
         } else {
             navigateToMainScreen()
         }
-//        navigateToLoginScreen()
     }
 
     private fun navigateToMainScreen() {

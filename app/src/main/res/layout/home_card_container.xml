@@ -4,10 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<!--    <include-->
-<!--        android:id="@+id/card_list"-->
-<!--        layout="@layout/home_card_item"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/card_list"

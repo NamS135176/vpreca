@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/drawable/splash_background.xml" value="0.1945" />
+        <entry key="..\:/Smartidea/vpreca-android/app/src/main/res/layout/home_card_container.xml" value="0.20729166666666668" />
         <entry key="app/src/main/res/drawable/bg_splash.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/button_outlined.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/button_solid.xml" value="0.2085" />
