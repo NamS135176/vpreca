@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.SignupActivity
 import com.lifecard.vpreca.data.UserRepository
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -18,12 +19,16 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        println("SplashActivity... onCreate: ${userRepository.user}")
-        if (userRepository.isLoggedIn) {
-            navigateToLoginScreen()
-        } else {
-            navigateToMainScreen()
-        }
+//        setContentView(R.layout.activity_splash)
+
+//        println("SplashActivity... onCreate: ${userRepository.user}")
+//        if (userRepository.isLoggedIn) {
+//            navigateToLoginScreen()
+//        } else {
+//            navigateToMainScreen()
+//        }
+//        navigateToLoginScreen()
+        navigateToSignUpScreen()
     }
 
     private fun navigateToMainScreen() {
@@ -35,6 +40,13 @@ class SplashActivity : AppCompatActivity() {
 
     private fun navigateToLoginScreen() {
         val intent = Intent(this, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+    }
+
+    private fun navigateToSignUpScreen() {
+        val intent = Intent(this, SignupActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)
