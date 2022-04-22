@@ -2,28 +2,24 @@ package com.lifecard.vpreca.data.source
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.security.crypto.EncryptedSharedPreferences
 import com.lifecard.vpreca.utils.Constanst
 
 class SecureStore(private val appContext: Context) {
 
-    private val encryptedSharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
-        Constanst.ENCRYPTED_SHARED_PREFS_FILENAME,
-        Constanst.MASTER_KEY_ALIAS,
-        appContext,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
+    private val encryptedSharedPreferences: SharedPreferences =
+        appContext.getSharedPreferences("VPrecaPref", Context.MODE_PRIVATE)
 
-    fun saveEncryptText(key: String, textToEncrypt: String) {
+    private fun saveEncryptText(key: String, textToEncrypt: String) {
         with(encryptedSharedPreferences.edit()) {
-            putString(key, textToEncrypt)
+            val encryptedValue = EncryptionUtils.encrypt(appContext, textToEncrypt)
+            putString(key, encryptedValue)
             apply()
         }
     }
 
     fun getEncryptText(key: String): String? {
-        return encryptedSharedPreferences.getString(key, null)
+        val encryptedValue = encryptedSharedPreferences.getString(key, null)
+        return EncryptionUtils.decrypt(appContext, encryptedValue)
     }
 
     fun saveAccessToken(token: String) {

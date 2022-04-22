@@ -48,5 +48,4 @@ class AppModule {
     fun provideSecureStore(@ApplicationContext appContext: Context): SecureStore {
         return SecureStore(appContext)
     }
-
 }
