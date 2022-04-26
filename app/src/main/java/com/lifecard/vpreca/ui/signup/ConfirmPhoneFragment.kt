@@ -12,7 +12,7 @@ import android.widget.EditText
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
-import com.lifecard.vpreca.databinding.FragmentPhoneBinding
+
 
 
 class ConfirmPhoneFragment : Fragment() {

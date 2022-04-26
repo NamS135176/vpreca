@@ -71,7 +71,7 @@
     <string name="email_hint">メールアドレス</string>
     <string name="email_des_input">メールアドレスは、ご連絡先として登録いたします。</string>
 
-<!--    Confirm Email Screen-->
+    <!--    Confirm Email Screen-->
     <string name="confirm_email_title">認証コード入力</string>
     <string name="confirm_email_des">SMSで認証コードを送信いたしました。受け取った認証コードを入力し、「次へ」ボタンをタップしてください。</string>
     <string name="confirm_email_des_left">送信先メールアドレス</string>
@@ -79,5 +79,9 @@
     <string name="confirm_email_hint">認証コード</string>
     <string name="confirm_email_des_input">認証コードが届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
 
-
+<!--    Term of use Screen-->
+    <string name='title_term_of_use'>アプリ利用規約</string>
+    <string name="des_term_of_use">以下のアプリ利用規約をよくお読みのうえ、「同意して始める」 をタップしてください。</string>
+    <string name="confirm_term_of_use">アプリ利用規約に同意する</string>
+    <string name="confirm_term_of_use_btn">はじめる</string>
 </resources>
