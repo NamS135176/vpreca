@@ -13,9 +13,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.lifecard.vpreca.IntroduceActivity
 import com.lifecard.vpreca.MainActivity
 
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.SignupActivity
 import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +50,16 @@ class LoginFragment : Fragment() {
         val passwordEditText = binding.password
         val loginButton = binding.buttonLogin
         val loadingProgressBar = binding.loading
+        val logoGift = binding.logoGift
+        val signUpButton = binding.buttonSignup
+
+        signUpButton.setOnClickListener(View.OnClickListener {
+            val intent = Intent(requireContext(), SignupActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
+//            Toast.makeText(requireContext(),"sdhgfjsf", Toast.LENGTH_SHORT)
+        })
 
         loginViewModel.loginFormState.observe(viewLifecycleOwner,
             Observer { loginFormState ->
@@ -107,6 +119,13 @@ class LoginFragment : Fragment() {
                 passwordEditText.editText?.text.toString()
             )
         }
+
+        logoGift.setOnClickListener(View.OnClickListener {
+            val intent = Intent(context, IntroduceActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
+        })
     }
 
     private fun updateUiWithUser(user: User) {

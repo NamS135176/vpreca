@@ -45,6 +45,10 @@
     <string name="title_next_policy">キャンセル</string>
     <string name="confirm_policy">上記全ての項目に同意する</string>
     <string name="btn_next_policy">次へ</string>
+    <string name="policy_des">以下の内容をよくお読みのうえ、チェックボックスにチェックをして、「次へ」をタップしてください</string>
+    <string name="policy_note_top">個人情報の取り扱いに関する同意約款</string>
+    <string name="policy_note_bot">会員規約</string>
+
     <!--    Phone Screen-->
     <string name="phone_back">戻る</string>
     <string name="title_appbar_phone">新規アカウント開設</string>
@@ -79,9 +83,31 @@
     <string name="confirm_email_hint">認証コード</string>
     <string name="confirm_email_des_input">認証コードが届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
 
-<!--    Term of use Screen-->
+    <!--    Term of use Screen-->
     <string name='title_term_of_use'>アプリ利用規約</string>
     <string name="des_term_of_use">以下のアプリ利用規約をよくお読みのうえ、「同意して始める」 をタップしてください。</string>
     <string name="confirm_term_of_use">アプリ利用規約に同意する</string>
     <string name="confirm_term_of_use_btn">はじめる</string>
+
+<!--    Introduce Screen-->
+    <string name='introduce_title'>Vプリカギフト</string>
+    <string name='introduce_des_top'>Vプリカギフトの </string>
+    <string name='introduce_des_bot'>カード情報を確認します</string>
+    <string name='introduce_des'>以下の内容をよくお読みのうえ、チェックボックスにチェックを して、「次へ」ボタンを押してください</string>
+    <string name='introduce_first_line'>私は、暴力団などの反社会的勢力や、反社会的勢力の関 係者ではないことを表明します。</string>
+    <string name='introduce_second_line'>私は、Vプリカギフト利用規約に同意します。</string>
+    <string name='introduce_third_line'>私は、アカウント登録情報に不備があった等でライフカードが必要と判断した場合は運転免許証等の本人確認 用書類を提出することに同意します。</string>
+    <string name='introduce_highlight_bot'>Vプリカギフト利用規約</string>
+    <string name='introduce_btn'>次へ</string>
+
+    <string name='introduce_des_second'>認証コード(半角英数字15文字)</string>
+    <string name='introduce_second_input'>半角英数字15文字</string>
+    <string name='introduce_second_des'>スペースや半角・全角・大文字・小文字の文字の種類を厳密に判 定しています。文字列が合致していても文字の種類が異なります と、入力エラーとなります。</string>
+    <string name='introduce_card_title'>カード番号入力(下4桁)</string>
+
+    <string name='introduce_third_des'>ギフトカードの内容を確認してください。</string>
+    <string name='introduce_third_btn_top'>ご利用できます</string>
+
+    <string name='card_expire_date'>有効期限</string>
+    <string name='sercue_code'>セキュリティ</string>
 </resources>

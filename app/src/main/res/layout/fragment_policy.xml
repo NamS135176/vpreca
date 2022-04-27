@@ -31,92 +31,94 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:text="@string/title_next_policy"
-                    android:textAlignment="center"
+                    android:gravity="center"
                     android:visibility="invisible"/>
                 <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Widget.AppCompat.TextView.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:text="@string/title_appbar_policy"
-                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
                     android:textColor="#fff"
                     android:textSize="18sp"
                     />
                 <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Widget.AppCompat.TextView.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:text="@string/title_next_policy"
-                    android:textAlignment="center"
+                    android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="14sp"/>
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
-        <LinearLayout
-            android:id="@+id/indication"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/policy_des"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/appbar_policy"
-            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
             android:paddingVertical="16dp"
-            android:gravity="center_horizontal|center_vertical">
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/indicator_active"
-                android:layout_marginHorizontal="8dp"
-                />
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/indicator_inactive"
-                android:layout_marginHorizontal="8dp"/>
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/indicator_inactive"
-                android:layout_marginHorizontal="8dp"/>
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/indicator_inactive"
-                android:layout_marginHorizontal="8dp"/>
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/indicator_inactive"
-                android:layout_marginHorizontal="8dp"/>
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/indicator_inactive"
-                android:layout_marginHorizontal="8dp"/>
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/indicator_inactive"
-                android:layout_marginHorizontal="8dp"/>
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/indicator_inactive"
-                android:layout_marginHorizontal="8dp"/>
-        </LinearLayout>
+            android:textSize="12sp"
+            android:text="@string/policy_des"
+            />
         <androidx.recyclerview.widget.RecyclerView
+            android:background="@drawable/border_term_of_use"
             android:id="@+id/svPolicy"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:layout_constraintTop_toBottomOf="@+id/indication"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@+id/policy_des"
             android:layout_marginTop="16dp"
             android:padding="16dp"
-            android:background="#FDFDFD"
             android:layout_marginHorizontal="16dp"
             >
         </androidx.recyclerview.widget.RecyclerView>
-        <LinearLayout
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/policy_note_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/svPolicy"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            android:textSize="12sp"
+            android:text="@string/policy_note_top"
+            android:textColor="@color/primary"
+            style="@style/Widget.AppCompat.TextView.Bold"
+            android:gravity="center_horizontal"
+            />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/policy_note_bot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/policy_note_top"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            android:textSize="12sp"
+            android:text="@string/policy_note_bot"
+            android:textColor="@color/primary"
+            style="@style/Widget.AppCompat.TextView.Bold"
+            android:gravity="center_horizontal"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_submit_policy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/btn_next_policy"
+            android:layout_marginBottom="24dp"
+            android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
+            android:enabled="false"
+            android:textColor="@color/white"
+            android:layout_marginHorizontal="24dp"
+            app:cornerRadius="24dp"
+            android:paddingVertical="16dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/btn_submit_policy"
             android:gravity="center"
             android:paddingVertical="16dp"
             android:paddingHorizontal="16dp"
@@ -125,24 +127,21 @@
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/cbPolicy"
                 android:layout_width="30dp"
-                android:layout_height="20dp"
-                android:gravity="center"/>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="@string/confirm_policy"
-            android:gravity="center"/>
+                android:layout_height="30dp"
+                android:gravity="center"
+                app:useMaterialThemeColors="false"
+                android:checked="false"
+                android:button="@drawable/checkbox_policy"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@string/confirm_policy"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                />
         </LinearLayout>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_submit_policy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:text="@string/btn_next_policy"
-            android:layout_marginBottom="8dp"
-            android:enabled="false"
-            android:layout_marginHorizontal="16dp"
-            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

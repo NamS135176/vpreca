@@ -14,9 +14,13 @@
         android:theme="@style/Theme.VPreca"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".IntroduceActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VPreca.NoActionBar" />
+        <activity
             android:name=".TermOfUseActivity"
             android:exported="false"
-            android:theme="@style/Theme.VPreca.NoActionBar"/>
+            android:theme="@style/Theme.VPreca.NoActionBar" />
         <activity
             android:name=".SignupActivity"
             android:exported="false"

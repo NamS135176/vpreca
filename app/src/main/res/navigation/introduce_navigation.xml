@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/introduce_nav"
+    app:startDestination="@id/nav_introduce_first">
+    <fragment
+        android:id="@+id/nav_introduce_first"
+        android:name="com.lifecard.vpreca.ui.introduce.IntroduceFragmentFirst"
+        android:label="fragment_introduce_first"
+        tools:layout="@layout/introduce_fragment_first_fragment" />
+    <fragment
+        android:id="@+id/nav_introduce_second"
+        android:name="com.lifecard.vpreca.ui.introduce.IntroduceFragmentSecond"
+        android:label="fragment_introduce_second"
+        tools:layout="@layout/introduce_fragment_second_fragment" />
+    <fragment
+        android:id="@+id/nav_introduce_third"
+        android:name="com.lifecard.vpreca.ui.introduce.IntroduceFragmentThird"
+        android:label="fragment_introduce_third"
+        tools:layout="@layout/introduce_fragment_third_fragment" />
+</navigation>
