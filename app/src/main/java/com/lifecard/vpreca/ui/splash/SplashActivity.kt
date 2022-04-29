@@ -22,7 +22,7 @@ class SplashActivity : AppCompatActivity() {
 //        val sharedPref = this?.getPreferences(MODE_PRIVATE) ?: return
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(baseContext)
         val first = sharedPref.getString("first", "no")
-        Toast.makeText(this,first, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this,first, Toast.LENGTH_SHORT).show()
         if(first == "no"){
             navigateToTermOfUse()
         }

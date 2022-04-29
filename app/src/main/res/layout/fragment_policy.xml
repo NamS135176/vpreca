@@ -44,6 +44,7 @@
                     android:textSize="18sp"
                     />
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/regis_cancel"
                     style="@style/Widget.AppCompat.TextView.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
