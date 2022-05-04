@@ -16,3 +16,4 @@
 local.properties
 keystore.properties
 secure.properties
+deploygate-submit.sh
