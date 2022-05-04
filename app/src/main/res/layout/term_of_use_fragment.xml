@@ -46,6 +46,8 @@
             android:layout_height="wrap_content"
             android:text="@string/des_term_of_use"
             android:paddingHorizontal="32dp"
+            android:textSize="12sp"
+            android:lineSpacingExtra="18px"
             />
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
