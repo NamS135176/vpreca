@@ -67,11 +67,21 @@
         android:paddingHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:orientation="horizontal">
+<!--        <com.google.android.material.checkbox.MaterialCheckBox-->
+<!--            android:id="@+id/cbTermOfUse"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:gravity="center"-->
+<!--            android:button="@drawable/checkbox_policy"/>-->
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/cbTermOfUse"
             android:layout_width="30dp"
-            android:layout_height="20dp"
-            android:gravity="center"/>
+            android:layout_height="30dp"
+            android:gravity="center"
+            app:useMaterialThemeColors="false"
+            android:checked="false"
+            android:button="@drawable/checkbox_policy"
+            />
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,6 +89,7 @@
             android:text="@string/confirm_term_of_use"
             android:gravity="center"
             android:textSize="16sp"
+            android:paddingLeft="8dp"
             android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"/>
     </LinearLayout>
     <com.google.android.material.button.MaterialButton
@@ -91,5 +102,6 @@
         android:enabled="false"
         android:layout_marginHorizontal="16dp"
         app:cornerRadius="16dp"
+
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
