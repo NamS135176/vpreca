@@ -20,19 +20,23 @@
         <item name="strokeWidth">1dp</item>
         <item name="cornerRadius">@dimen/corner_md</item>
     </style>
+
     <style name="Widget.App.Button.Outlined.BoldText" parent="@style/Widget.App.Button.Outlined">
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/hiragino_sans_w6</item>
-        <item name="fontFamily">@font/hiragino_sans_w6</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+        <item name="fontFamily">@font/hiragino_sans_w6
+        </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
     </style>
 
     <style name="Widget.App.Button" parent="@style/Widget.MaterialComponents.Button">
         <item name="cornerRadius">@dimen/corner_md</item>
     </style>
+
     <style name="Widget.App.Button.BoldText" parent="@style/Widget.App.Button">
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/hiragino_sans_w6</item>
-        <item name="fontFamily">@font/hiragino_sans_w6</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+        <item name="fontFamily">@font/hiragino_sans_w6
+        </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
     </style>
 
     <style name="Widget.App.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
@@ -43,6 +47,16 @@
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
     </style>
+
+    <style name="TextInputEditTextFilledBox">
+        <item name="android:textColorHint">@color/brown_grey</item>
+        <item name="android:background">@drawable/textinput_background</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+    </style>
+
 
     <style name="Widget.Theme.VPreca.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
@@ -67,6 +81,7 @@
     <style name="Widget.AppCompat.TextView.Bold" parent="Widget.AppCompat.TextView">
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/hiragino_sans_w6</item>
-        <item name="fontFamily">@font/hiragino_sans_w6</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+        <item name="fontFamily">@font/hiragino_sans_w6
+        </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
     </style>
 </resources>

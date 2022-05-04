@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.lifecard.vpreca.IntroduceActivity
 import com.lifecard.vpreca.MainActivity
@@ -20,6 +21,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.SignupActivity
 import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
+import com.lifecard.vpreca.utils.KeyboardUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,7 +48,9 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val usernameLayout = binding.usernameLayout
         val usernameEditText = binding.username
+        val passwordLayout = binding.passwordLayout
         val passwordEditText = binding.password
         val loginButton = binding.buttonLogin
         val loadingProgressBar = binding.loading
@@ -61,15 +65,26 @@ class LoginFragment : Fragment() {
 //            Toast.makeText(requireContext(),"sdhgfjsf", Toast.LENGTH_SHORT)
         })
 
-        loginViewModel.loginFormState.observe(viewLifecycleOwner,
-            Observer { loginFormState ->
-                if (loginFormState == null) {
-                    return@Observer
-                }
-                loginButton.isEnabled = loginFormState.isDataValid
-                usernameEditText.error = loginFormState.usernameError?.let { getString(it) }
-                passwordEditText.error = loginFormState.passwordError?.let { getString(it) }
-            })
+        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
+            loginButton.isEnabled =
+                loginFormState.usernameError == null && loginFormState.passwordError == null
+            print("loginViewModel.validForm.observe... usernameError: ${loginFormState.usernameError} - passwordError: ${loginFormState.passwordError} ")
+        })
+        loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
+            usernameLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+
+        })
+        loginViewModel.passwordError.observe(viewLifecycleOwner, Observer { error: Int? ->
+            passwordLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
 
         loginViewModel.loginResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
@@ -84,30 +99,23 @@ class LoginFragment : Fragment() {
                 }
             })
 
-        val afterTextChangedListener = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
+        usernameEditText.doAfterTextChanged { text -> loginViewModel.usernameDataChanged(text = text.toString()) }
+        usernameEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                //focus to password field
+                passwordEditText.requestFocus()
             }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                loginViewModel.loginDataChanged(
-                    usernameEditText.editText?.text.toString(),
-                    passwordEditText.editText?.text.toString()
-                )
-            }
+            false
         }
-        usernameEditText.editText?.addTextChangedListener(afterTextChangedListener)
-        passwordEditText.editText?.addTextChangedListener(afterTextChangedListener)
-        passwordEditText.editText?.setOnEditorActionListener { _, actionId, _ ->
+
+        passwordEditText.doAfterTextChanged { text -> loginViewModel.passwordDataChanged(text = text.toString()) }
+        passwordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(
-                    usernameEditText.editText?.text.toString(),
-                    passwordEditText.editText?.text.toString()
+                    usernameEditText.text.toString(),
+                    passwordEditText.text.toString()
                 )
+                context?.let { KeyboardUtils.hideKeyboard(it, passwordEditText) }
             }
             false
         }
@@ -115,9 +123,10 @@ class LoginFragment : Fragment() {
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
             loginViewModel.login(
-                usernameEditText.editText?.text.toString(),
-                passwordEditText.editText?.text.toString()
+                usernameEditText.text.toString(),
+                passwordEditText.text.toString()
             )
+            context?.let { KeyboardUtils.hideKeyboard(it, passwordEditText) }
         }
 
         logoGift.setOnClickListener(View.OnClickListener {

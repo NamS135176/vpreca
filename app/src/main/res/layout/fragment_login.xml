@@ -28,53 +28,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/username"
-            style="@style/Widget.App.TextInputLayout.FilledBox"
+        <com.lifecard.vpreca.ui.custom.MyTextInputLayout
+            android:id="@+id/username_layout"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="40dp"
-            android:hint="@string/prompt_email"
-            android:inputType="textEmailAddress"
-            android:selectAllOnFocus="true"
-            app:hintTextColor="@color/brown_grey"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/logo">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username"
+                style="@style/TextInputEditTextFilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
+                android:layout_marginTop="40dp"
+                android:hint="@string/prompt_email"
+                android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
-                tools:targetApi="lollipop" />
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp" />
+        </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password"
-            style="@style/Widget.App.TextInputLayout.FilledBox"
+        <com.lifecard.vpreca.ui.custom.MyTextInputLayout
+            android:id="@+id/password_layout"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            app:hintTextColor="@color/brown_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username"
+            app:layout_constraintTop_toBottomOf="@+id/username_layout"
             app:passwordToggleEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                style="@style/TextInputEditTextFilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
                 android:hint="@string/prompt_password"
-                android:inputType="textPassword" />
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                app:hintTextColor="@color/brown_grey" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_forgot_password"
@@ -88,7 +83,7 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password" />
+            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_login"
