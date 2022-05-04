@@ -54,8 +54,15 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textFontWeight" tools:targetApi="p">
             @android:integer/status_bar_notification_info_maxnum
         </item>
+        <item name="android:fontFamily">@font/hiragino_sans_w6</item>
+    </style>
+
+    <style name="TextBold" parent="Widget.AppCompat.TextView.Bold">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/hiragino_sans_w6</item>
     </style>
 </resources>
