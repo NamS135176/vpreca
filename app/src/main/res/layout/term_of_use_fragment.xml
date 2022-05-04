@@ -58,8 +58,8 @@
                 android:gravity="center"
                 android:text="@string/confirm_term_of_use"
                 android:textColor="@color/black"
-                android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
                 android:textSize="16sp"
+                style="@style/TextBold"
                 tools:targetApi="p" />
         </LinearLayout>
 
