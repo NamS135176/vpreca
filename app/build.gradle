@@ -30,7 +30,7 @@ android {
     }
 
     signingConfigs {
-        config {
+        release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'])
@@ -54,6 +54,8 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
 
             buildConfigField("String", "SECURE_KEY_FILE_NAME", "\"${secureProperties['keystoreFileName']}\"")
             buildConfigField("String", "SECURE_KEY_PASSWORD", "\"${secureProperties['keystorePassword']}\"")
