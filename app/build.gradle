@@ -21,6 +21,14 @@ secureProperties.load(new FileInputStream(securePropertiesFile))
 android {
     compileSdk 31
 
+    buildFeatures {
+
+        dataBinding true
+
+        // for view binding:
+        // viewBinding true
+    }
+
     signingConfigs {
         config {
             keyAlias keystoreProperties['keyAlias']
