@@ -106,7 +106,7 @@ class PolicyFragment : Fragment() {
         })
 
         btnSubmitPolicy.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_phone)
+            findNavController().navigate(R.id.nav_signup_input)
         })
 
 

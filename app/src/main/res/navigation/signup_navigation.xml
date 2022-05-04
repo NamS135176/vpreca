@@ -10,10 +10,10 @@
         android:label="fragment_policy"
         tools:layout="@layout/fragment_policy" />
     <fragment
-        android:id="@+id/nav_phone"
-        android:name="com.lifecard.vpreca.ui.signup.PhoneFragment"
-        android:label="fragment_phone"
-        tools:layout="@layout/fragment_phone" />
+        android:id="@+id/nav_signup_input"
+        android:name="com.lifecard.vpreca.ui.signup.SignupInputFragment"
+        android:label="fragment_signup_input"
+        tools:layout="@layout/signup_input_fragment" />
     <fragment
         android:id="@+id/nav_confirm_phone"
         android:name="com.lifecard.vpreca.ui.signup.ConfirmPhoneFragment"
