@@ -11,12 +11,6 @@
         <item name="iconGravity">textStart</item>
     </style>
 
-    <style name="Widget.AppCompat.TextView.Bold" parent="Widget.MaterialComponents.TextView">
-        <item name="android:fontFamily">@font/hiragino_sans_gb_w6</item>
-        <item name="fontFamily">@font/hiragino_sans_gb_w6
-        </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
-    </style>
-
     <style name="MyCardView" parent="@style/Widget.MaterialComponents.CardView">
         <item name="cardCornerRadius">9dp</item>
     </style>
@@ -26,11 +20,20 @@
         <item name="strokeWidth">1dp</item>
         <item name="cornerRadius">@dimen/corner_md</item>
     </style>
+    <style name="Widget.App.Button.Outlined.BoldText" parent="@style/Widget.App.Button.Outlined">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/hiragino_sans_w6</item>
+        <item name="fontFamily">@font/hiragino_sans_w6</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+    </style>
 
     <style name="Widget.App.Button" parent="@style/Widget.MaterialComponents.Button">
         <item name="cornerRadius">@dimen/corner_md</item>
     </style>
-
+    <style name="Widget.App.Button.BoldText" parent="@style/Widget.App.Button">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/hiragino_sans_w6</item>
+        <item name="fontFamily">@font/hiragino_sans_w6</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+    </style>
 
     <style name="Widget.App.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxCornerRadiusBottomEnd">@dimen/corner_md</item>
@@ -61,8 +64,9 @@
         <item name="android:fontFamily">@font/hiragino_sans_w6</item>
     </style>
 
-    <style name="TextBold" parent="Widget.AppCompat.TextView.Bold">
+    <style name="Widget.AppCompat.TextView.Bold" parent="Widget.AppCompat.TextView">
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/hiragino_sans_w6</item>
+        <item name="fontFamily">@font/hiragino_sans_w6</item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
     </style>
 </resources>

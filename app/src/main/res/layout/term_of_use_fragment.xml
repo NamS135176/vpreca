@@ -59,7 +59,7 @@
                 android:text="@string/confirm_term_of_use"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                style="@style/TextBold"
+                style="@style/Widget.AppCompat.TextView.Bold"
                 tools:targetApi="p" />
         </LinearLayout>
 
