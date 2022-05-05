@@ -35,8 +35,8 @@ class IntroduceFragmentSecond : Fragment() {
         viewModel = ViewModelProvider(this).get(IntroduceFragmentSecondViewModel::class.java)
 
         val btnSubmit = binding.btnSubmitInput
-        val imgIntroduceBack = binding.imgBackIntroduceSecond
-        val tvIntroduceBack = binding.tvBackIntroduceSecond
+        val imgIntroduceBack = binding.appbarGiftSecond.imgBackIntroduce
+        val tvIntroduceBack = binding.appbarGiftSecond.tvBackIntroduce
 
         imgIntroduceBack.setOnClickListener(View.OnClickListener {
            findNavController().navigate(R.id.nav_introduce_first)

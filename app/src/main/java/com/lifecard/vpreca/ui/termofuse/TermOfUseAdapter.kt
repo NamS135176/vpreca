@@ -35,7 +35,7 @@ class TermOfUseAdapter(private val dataSet: ArrayList<String>) :
         } else {
             // inflate your second item layout & return that viewHolder
             view = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.policy_item, viewGroup, false)
+                .inflate(R.layout.policy_item_no_dot, viewGroup, false)
         }
         return ViewHolder(view)
     }

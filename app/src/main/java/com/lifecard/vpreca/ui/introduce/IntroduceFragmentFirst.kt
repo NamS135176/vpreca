@@ -35,8 +35,8 @@ class IntroduceFragmentFirst : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(IntroduceFragmentFirstViewModel::class.java)
         // TODO: Use the ViewModel
-        val imgIntroduceBack = binding.imgBackIntroduce
-        val tvIntroduceBack = binding.tvBackIntroduce
+        val imgIntroduceBack = binding.appbarGift.imgBackIntroduce
+        val tvIntroduceBack = binding.appbarGift.tvBackIntroduce
         val checkbox = binding.cbIntroduceFirst
         val btnSubmit = binding.btnSubmitIntroduceFirst
 
