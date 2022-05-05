@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 // Creates a variable called keystorePropertiesFile, and initializes it to the
@@ -39,7 +41,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.lifecard.vpreca"
+        applicationId "com.smartidea.vpreca"
         minSdk 16
         targetSdk 31
         versionCode 1
@@ -114,6 +116,11 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:29.3.1')
+//    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
