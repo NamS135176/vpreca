@@ -11,7 +11,7 @@ import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.databinding.HomeCardContainerBinding
 import com.lifecard.vpreca.databinding.HomeCardItemBinding
 
-class CardSlideFragment(private val card: CreditCard): Fragment() {
+class CardSlideFragment(private val card: CreditCard) : Fragment() {
     private var _binding: HomeCardItemBinding? = null
 
     // This property is only valid between onCreateView and
@@ -25,12 +25,8 @@ class CardSlideFragment(private val card: CreditCard): Fragment() {
     ): View? {
         _binding = HomeCardItemBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.cardAmount.text = card.amount.toString()
-        binding.cardUsername.text = card.username
+        binding.cardAmount.text = card.publishAmount.toString()
+        binding.cardUsername.text = card.cardNickname
         return root;
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 }

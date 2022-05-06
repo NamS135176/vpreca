@@ -23,7 +23,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.VPreca.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.VPreca.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="elevation">0dp</item>
+    </style>
 
     <style name="Theme.VPreca.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 

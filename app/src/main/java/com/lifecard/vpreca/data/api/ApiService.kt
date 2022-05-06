@@ -1,6 +1,7 @@
 package com.lifecard.vpreca.data.api
 
 import com.lifecard.vpreca.data.model.CardResponse
+import com.lifecard.vpreca.data.model.CardUsageHistoryResponse
 import com.lifecard.vpreca.data.model.LoginResponse
 import com.lifecard.vpreca.data.model.User
 import retrofit2.http.Field
@@ -19,4 +20,6 @@ interface ApiService {
     @GET("cards")
     suspend fun getListCards(): CardResponse
 
+    @POST("CardDealHisReq")
+    suspend fun getCardUsageHistory(): CardUsageHistoryResponse
 }

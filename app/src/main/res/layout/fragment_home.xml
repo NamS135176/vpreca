@@ -37,7 +37,8 @@
         android:backgroundTint="@android:color/transparent"
         android:text="@string/home_button_see_all_card"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_balance" />
+        app:layout_constraintTop_toBottomOf="@id/text_balance"
+        tools:targetApi="lollipop" />
 
     <TextView
         android:id="@+id/text_last_login"
