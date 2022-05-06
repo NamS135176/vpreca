@@ -18,6 +18,7 @@ import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
 import com.lifecard.vpreca.databinding.TermOfUseFragmentBinding
 import com.lifecard.vpreca.ui.signup.PolicyAdapter
 import com.lifecard.vpreca.ui.signup.TermOfUseAdapter
+import com.lifecard.vpreca.utils.PreferenceHelper
 
 class TermOfUseFragment : Fragment() {
 
@@ -43,7 +44,6 @@ class TermOfUseFragment : Fragment() {
         val rvTermOfUse = binding.rvTermOfUse
         val btnSubmit = binding.btnSubmitTermOfUse
         val cbTermOfUse = binding.cbTermOfUse
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(activity)
 
         val arrPolicy: ArrayList<String>
         arrPolicy = ArrayList()
@@ -59,17 +59,12 @@ class TermOfUseFragment : Fragment() {
         rvTermOfUse?.adapter = adapter
 
         cbTermOfUse.setOnClickListener(View.OnClickListener {
-            val editor = sharedPref.edit()
-            editor.putString("first", "first")
-            editor.apply()
-            editor.commit()
+            context?.let { it1 -> PreferenceHelper.setAcceptTermOfUseFirstTime(appContext = it1, value = true) }
             btnSubmit.isEnabled = cbTermOfUse.isChecked
-
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {
-            val first = sharedPref.getString("first", "no")
-            Toast.makeText(context,first,Toast.LENGTH_SHORT).show()
+            context?.let { it1 -> PreferenceHelper.setAcceptTermOfUseFirstTime(appContext = it1, value = true) }
             val intent = Intent(activity, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }

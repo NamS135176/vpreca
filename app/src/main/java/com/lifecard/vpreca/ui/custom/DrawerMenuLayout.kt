@@ -1,17 +1,22 @@
 package com.lifecard.vpreca.ui.custom
 
 import android.content.Context
-import android.os.Handler
+import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
+import android.view.View.OnClickListener
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.BuildConfig
+import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.LayoutDrawerContentBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
+import com.lifecard.vpreca.ui.webview.WebViewActivity
+import com.lifecard.vpreca.ui.webview.WebViewFragment
 import org.greenrobot.eventbus.EventBus
 
 
@@ -81,7 +86,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
         NavigationItem(
             type = 1,
             position = 9,
-            title = context.getString(R.string.menu_group_utilities)
+            title = context.getString(R.string.menu_register_lifecard)
         ),
         NavigationItem(
             type = 1,
@@ -143,29 +148,70 @@ class DrawerMenuLayout @JvmOverloads constructor(
         NavigationItem(
             type = 1,
             position = 21,
-            title = context.getString(R.string.menu_laws)
+            title = context.getString(R.string.menu_link)
         ),
         NavigationItem(
             type = 1,
             position = 22,
-            title = context.getString(R.string.menu_settlement)
+            title = context.getString(R.string.menu_laws)
         ),
         NavigationItem(
             type = 1,
             position = 23,
+            title = context.getString(R.string.menu_settlement)
+        ),
+        NavigationItem(
+            type = 1,
+            position = 24,
             title = context.getString(R.string.menu_rule)
         )
     )
 
+    private fun showWebViewActivity(webUrl: String) {
+        val intent = Intent(context, WebViewActivity::class.java)
+        intent.putExtra(WebViewActivity.EXTRA_WEB_URL, webUrl)
+        context.startActivity(intent)
+    }
+
     private var onItemClickListener = object : OnItemClickListener {
         override fun onClick(position: Int) {
             print("onClick menu at ${position}")
-            Toast.makeText(context, "onClick menu at ${position}", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "onClick menu at ${position}", Toast.LENGTH_SHORT).show()
             closeDrawer()
-            when (position) {
-                0 -> {
 
-                }
+            when (position) {
+
+                1 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
+                    .show()//menu_vpreca_gift_request
+                3 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
+                    .show()//menu_member_info
+                4 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
+                    .show()//menu_change_pass
+                5 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
+                    .show()//menu_change_phone
+                6 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
+                    .show()//menu_credit_card_info
+                7 -> Toast.makeText(
+                    context,
+                    "Not yet supported (FaceID/TouchID)",
+                    Toast.LENGTH_SHORT
+                ).show()//menu_member_setting -> show faceId/TouchID
+                9 -> Toast.makeText(context, "Not yet supported", Toast.LENGTH_SHORT)
+                    .show()//menu_register_lifecard
+                10 -> Toast.makeText(context, "Not yet supported", Toast.LENGTH_SHORT)
+                    .show()//menu_campain_info
+                12 -> showWebViewActivity("https://vpc.lifecard.co.jp/news/index.html")//menu_news
+                13 -> showWebViewActivity("https://vpreca.dga.jp/")//menu_faq
+                14 -> showWebViewActivity("https://vpc.lifecard.co.jp/contact/index.html")//menu_inquiry
+                16 -> showWebViewActivity("https://vpc.lifecard.co.jp/attention/index.html")//menu_attention
+                17 -> showWebViewActivity("https://www.lifecard.co.jp/company/")//menu_company
+                18 -> showWebViewActivity("https://www.lifecard.co.jp/company/business/")//menu_business_info
+                19 -> showWebViewActivity("https://www.lifecard.co.jp/efforts/compliance/")//menu_compliance
+                20 -> showWebViewActivity("https://www.lifecard.co.jp/privacy_policy/")//menu_privacy_policy
+                21 -> showWebViewActivity("https://vpc.lifecard.co.jp/links/index.html")//menu_link
+                22 -> showWebViewActivity("https://www.lifecard.co.jp/efforts/privacy_policy/")//menu_laws
+                23 -> showWebViewActivity("https://vpc.lifecard.co.jp/settlement/index.html")//menu_settlement
+                24 -> showWebViewActivity("https://vpc.lifecard.co.jp/rule/index.html")//menu_rule
             }
         }
     }

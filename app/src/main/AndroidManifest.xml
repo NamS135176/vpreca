@@ -16,6 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:overrideLibrary="com.google.firebase.analytics.ktx">
         <activity
+            android:name=".ui.webview.WebViewActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VPreca.NoActionBar" />
+        <activity
             android:name=".IntroduceActivity"
             android:exported="false"
             android:theme="@style/Theme.VPreca.NoActionBar" />

@@ -113,9 +113,13 @@
 
     <!--    Signup Input-->
     <string name='signup_input_title'>本登録</string>
+
+
     <string name="menu_app_version">バージョン : %1$s</string>
     <string name="copyright_life_card_co_ltd">Copyright © LIFE CARD Co., Ltd.\nAll rights reserved</string>
     <string name="logout">ログアウト</string>
     <string name="drawer_header_menu" translatable="false">メニュー</string>
     <string name="close">閉じる</string>
+    <string name="cancel">キャンセル</string>
+    <string name="title_webview">カードを買う</string>
 </resources>

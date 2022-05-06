@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:795327281742:android:b35afd295f391f0f1b611f",
+        "android_client_info": {
+          "package_name": "com.lifecard.vpreca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795327281742-jh6lqfouv545umo1deu3acot2a90c58n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD49Lom3bbwUkdDlnFhIYrsHPvHKgpW8u8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795327281742-jh6lqfouv545umo1deu3acot2a90c58n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "795327281742-ko0epuafkg3tlv30mdui6msqo8a7obrp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.smartidea.vpreca"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:795327281742:android:5236149670242fdc1b611f",
         "android_client_info": {
           "package_name": "com.smartidea.vpreca"
