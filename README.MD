@@ -5,3 +5,11 @@ save those file to root of project to build and run
 
 ## Some cli
 - clear android : adb shell pm clear com.lifecard.vpreca 
+- clean and build release: ./gradlew clean && ./gradlew assembleRelease
+
+## Release:
+- file path: ./app/build/outputs/apk/release/app-release.apk
+- cli to deploy to deploygate: sh deploygate-submit.sh
+
+## Deploygate link:
+- android dev: https://dply.me/jmfhf5

@@ -54,7 +54,7 @@ class PolicyFragment : Fragment() {
         val btnSubmitPolicy = binding.btnSubmitPolicy
         val cbPolicy = binding.cbPolicy
         val rcPolicy = binding.svPolicy
-        val cancelButton = binding.regisCancel
+        val cancelButton = binding.appbarPolicy.cancelBtn
 
         cancelButton.setOnClickListener(View.OnClickListener {
             val builder = MaterialAlertDialogBuilder(requireContext())
