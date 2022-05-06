@@ -19,7 +19,6 @@ class HomeViewModel @Inject constructor(private val creditCardRepository: Credit
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
 
     init {
-        println("HomeViewModel... init")
         viewModelScope.launch {
             val result = creditCardRepository.getLatestCards(true)
             if (result is Result.Success) {
@@ -28,7 +27,5 @@ class HomeViewModel @Inject constructor(private val creditCardRepository: Credit
                 _creditCardResult.value = CreditCardResult(error = R.string.get_list_card_failure)
             }
         }
-
-        println("HomeViewModel... user is: ${userRepository.user}")
     }
 }

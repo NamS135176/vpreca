@@ -5,6 +5,8 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 }
 
 // Creates a variable called keystorePropertiesFile, and initializes it to the
@@ -122,6 +124,9 @@ dependencies {
 
     //event bus
     implementation 'org.greenrobot:eventbus:3.3.1'
+
+    //joda time
+    implementation 'net.danlew:android.joda:2.10.14'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
