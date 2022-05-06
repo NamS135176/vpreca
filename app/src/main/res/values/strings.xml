@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">VPreca</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -89,7 +89,7 @@
     <string name="confirm_term_of_use">アプリ利用規約に同意する</string>
     <string name="confirm_term_of_use_btn">はじめる</string>
 
-<!--    Introduce Screen-->
+    <!--    Introduce Screen-->
     <string name='introduce_title'>Vプリカギフト</string>
     <string name='introduce_des_top'>Vプリカギフトの </string>
     <string name='introduce_des_bot'>カード情報を確認します</string>
@@ -121,4 +121,14 @@
     <string name='hint_username'>半角英大文字2~18文字</string>
     <string name='username_input_des'>記号・スペースはご利用いただけません。</string>
     <string name='name_signup_title'>お名前</string>
+    <!--    Signup Input-->
+
+
+    <string name="menu_app_version">バージョン : %1$s</string>
+    <string name="copyright_life_card_co_ltd">Copyright © LIFE CARD Co., Ltd.\nAll rights reserved</string>
+    <string name="logout">ログアウト</string>
+    <string name="drawer_header_menu" translatable="false">メニュー</string>
+    <string name="close">閉じる</string>
+    <string name="cancel">キャンセル</string>
+    <string name="title_webview">カードを買う</string>
 </resources>

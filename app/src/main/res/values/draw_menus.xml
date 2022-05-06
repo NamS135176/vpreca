@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_group_vpreca_gift">Vプリカギフト</string>
+    <string name="menu_vpreca_gift_request">ギフトカード照会・登録</string>
+    <!--    Group my account-->
+    <string name="menu_group_my_account">アカウント</string>
+    <string name="menu_member_info">会員情報管理</string>
+    <string name="menu_change_pass">パスワード変更</string>
+    <string name="menu_change_phone">電話番号変更</string>
+    <string name="menu_credit_card_info">クレジットカード情報</string>
+    <string name="menu_member_setting">ログイン認証設定</string>
+
+    <!--    Group utilities-->
+    <string name="menu_group_utilities">おトクなご利用方法</string>
+    <string name="menu_register_lifecard">ライフカードのお申し込み</string>
+    <string name="menu_campain_info">キャンペーン情報</string>
+
+    <!--    Group support-->
+    <string name="menu_group_support">サポート</string>
+    <string name="menu_news">お知らせ</string>
+    <string name="menu_faq">よくある質問</string>
+    <string name="menu_inquiry">お問い合わせ</string>
+
+    <!--    Group About VPreca-->
+    <string name="menu_group_about_vpreca">Vプリカについて</string>
+    <string name="menu_attention">ご利用に関するご注意</string>
+    <string name="menu_company">会社概要</string>
+    <string name="menu_business_info">事業案内</string>
+    <string name="menu_compliance">コンプライアンスへの取り組み</string>
+    <string name="menu_privacy_policy">個人情報保護方針</string>
+    <string name="menu_link">関係団体リンク</string>
+    <string name="menu_laws">個人情報保護に関する法律に基づく\n公表事項</string>
+    <string name="menu_settlement">資金決済法に基づく表示</string>
+    <string name="menu_rule">会員規約</string>
+
+
+</resources>
