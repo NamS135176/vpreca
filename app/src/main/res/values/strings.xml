@@ -116,7 +116,7 @@
     <string name='appbar_signup_title'>新規アカウント開設</string>
     <string name='signup_input_title'>本登録</string>
     <string name="signup_input_id_title">ログインID</string>
-    <string name="hint_id">新規開設-本登録</string>
+    <string name="hint_id">半角英数6~10文字</string>
     <string name='id_input_des'>半角英数字・記号_(アンダーバー)（ハイフン）がご利用いただけます。</string>
     <string name='username_signup_title'>ニックネーム（ローマ字）</string>
     <string name='hint_username'>半角英大文字2~18文字</string>
@@ -126,6 +126,7 @@
     <string name="hint_second_name">メイ（全角）</string>
     <string name='hint_third_name'>姓（全角）</string>
     <string name='hint_last_name'>名（全角）</string>
+    <string name='hint_dob'>1980年1月1日</string>
     <string name='gender_signup_title'>性別</string>
     <string name='dob_signup_title'>生年月日</string>
     <string name='dob_hint'>1980年1月1日</string>
