@@ -26,12 +26,12 @@ class SplashActivity : AppCompatActivity() {
         if (PreferenceHelper.isAcceptTermOfUseFirstTime(appContext = baseContext)) {
             navigateToTermOfUse()
         } else {
-            navigateToLoginScreen()
-//            if (userRepository.isLoggedIn) {
-//                navigateToLoginScreen()
-//            } else {
-//                navigateToMainScreen()
-//            }
+//            navigateToLoginScreen()
+            if (userRepository.isLoggedIn) {
+                navigateToMainScreen()
+            } else {
+                navigateToLoginScreen()
+            }
         }
     }
 

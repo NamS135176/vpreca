@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
@@ -16,9 +15,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
+import com.lifecard.vpreca.utils.Converter
+import com.lifecard.vpreca.utils.SimpleOnPageChangeCallback
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -30,6 +34,31 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private val pageChangeCallback = object : SimpleOnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            val buttonSlideLeft = binding.listCard.buttonSlideLeft
+            val buttonSlideRight = binding.listCard.buttonSlideRight
+            val itemCount = binding.listCard.cardList.adapter?.itemCount
+            itemCount?.let {
+                if (it == 1) {
+                    buttonSlideLeft.visibility = View.INVISIBLE
+                    buttonSlideRight.visibility = View.INVISIBLE
+                } else if (position < 1) {
+                    buttonSlideLeft.visibility = View.INVISIBLE
+                    buttonSlideRight.visibility = View.VISIBLE
+                } else if (position >= it - 1) {
+                    buttonSlideLeft.visibility = View.VISIBLE
+                    buttonSlideRight.visibility = View.INVISIBLE
+                } else {
+                    buttonSlideLeft.visibility = View.VISIBLE
+                    buttonSlideRight.visibility = View.VISIBLE
+                }
+            }
+
+        }
+    }
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
@@ -45,6 +74,9 @@ class HomeFragment : Fragment() {
         val viewPager = cardContainer.cardList
         val tabDots = cardContainer.tabDots
         var pagerAdapter: CardSlidePagerAdapter? = null
+        val buttonSlideLeft = binding.listCard.buttonSlideLeft
+        val buttonSlideRight = binding.listCard.buttonSlideRight
+        val textBalance = binding.textBalance
 
         binding.textLastLogin.text =
             getString(R.string.home_text_last_login, SimpleDateFormat("yyyy M/d").format(Date()))
@@ -57,6 +89,20 @@ class HomeFragment : Fragment() {
                     HomeFragmentDirections.actionToCardUsage(it)
                 findNavController().navigate(action)
             }
+        })
+
+
+        buttonSlideLeft.setOnClickListener(View.OnClickListener {
+            viewPager.setCurrentItem(max(viewPager.currentItem - 1, 0), true)
+        })
+        buttonSlideRight.setOnClickListener(View.OnClickListener {
+            viewPager.adapter?.let {
+                viewPager.setCurrentItem(
+                    min(viewPager.currentItem + 1, it.itemCount - 1),
+                    true
+                )
+            }
+
         })
 
         homeViewModel.creditCardResult.observe(viewLifecycleOwner, Observer { creditCardResult ->
@@ -76,9 +122,20 @@ class HomeFragment : Fragment() {
                             CardSlidePagerAdapter(requireActivity(), creditCardResult.success)
                         viewPager.adapter = pagerAdapter
 
+                        viewPager.registerOnPageChangeCallback(pageChangeCallback)
+
                         TabLayoutMediator(tabDots, viewPager) { tab, position ->
 
                         }.attach()
+
+                        val sumBalance: Int = creditCardResult.success.sumOf {
+                            try {
+                                it.chargeBalance.toInt()
+                            } catch (e: Exception) {
+                                0
+                            }
+                        }
+                        textBalance.text = Converter.convertCurrency(sumBalance)
                     }
                 }
 
@@ -92,6 +149,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.listCard.cardList.unregisterOnPageChangeCallback(pageChangeCallback)
         _binding = null
     }
 

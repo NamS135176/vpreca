@@ -63,14 +63,12 @@ android {
 
             buildConfigField("String", "SECURE_KEY_FILE_NAME", "\"${secureProperties['keystoreFileName']}\"")
             buildConfigField("String", "SECURE_KEY_PASSWORD", "\"${secureProperties['keystorePassword']}\"")
-            buildConfigField("String", "SECURE_KEY_PROVIDER", "\"${secureProperties['keystoreProvider']}\"")
             buildConfigField("String", "SECURE_KEY_ALIAS", "\"${secureProperties['keystoreAlias']}\"")
         }
 
         debug {
             buildConfigField("String", "SECURE_KEY_FILE_NAME", "\"${secureProperties['keystoreFileName']}\"")
             buildConfigField("String", "SECURE_KEY_PASSWORD", "\"${secureProperties['keystorePassword']}\"")
-            buildConfigField("String", "SECURE_KEY_PROVIDER", "\"${secureProperties['keystoreProvider']}\"")
             buildConfigField("String", "SECURE_KEY_ALIAS", "\"${secureProperties['keystoreAlias']}\"")
         }
 

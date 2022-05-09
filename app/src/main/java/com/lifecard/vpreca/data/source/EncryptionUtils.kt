@@ -2,11 +2,13 @@ package com.lifecard.vpreca.data.source
 
 import android.content.Context
 import android.os.Build
+import android.security.keystore.KeyProperties
 import java.io.IOException
 import java.security.KeyStore
 import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
 import java.security.cert.CertificateException
+import kotlin.Error
 
 object EncryptionUtils {
     fun encrypt(context: Context, token: String?): String? {
@@ -34,9 +36,13 @@ object EncryptionUtils {
                 keyStore = KeyStore.getInstance(EncryptionKeyGenerator.ANDROID_KEY_STORE)
                 keyStore.load(null)
             } catch (e: KeyStoreException) {
+                print("${this.javaClass.simpleName} keyStore has error ${e}")
             } catch (e: CertificateException) {
+                print("${this.javaClass.simpleName} keyStore has error ${e}")
             } catch (e: NoSuchAlgorithmException) {
+                print("${this.javaClass.simpleName} keyStore has error ${e}")
             } catch (e: IOException) {
+                print("${this.javaClass.simpleName} keyStore has error ${e}")
             }
             return keyStore
         }

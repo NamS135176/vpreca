@@ -25,8 +25,7 @@ class CardSlideFragment(private val card: CreditCard) : Fragment() {
     ): View? {
         _binding = HomeCardItemBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.cardAmount.text = card.publishAmount.toString()
-        binding.cardUsername.text = card.cardNickname
+        binding.card = card
         return root;
     }
 }

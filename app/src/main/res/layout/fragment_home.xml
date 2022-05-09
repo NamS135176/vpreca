@@ -22,7 +22,6 @@
         style="@style/Widget.AppCompat.TextView.Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¥9000"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@id/text_info"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,12 +29,12 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_see_all_card"
-        style="@style/Widget.App.Button.Outlined"
+        style="@style/Widget.App.Button.Outlined.BoldText"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:textSize="10sp"
         android:backgroundTint="@android:color/transparent"
         android:text="@string/home_button_see_all_card"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_balance"
         tools:targetApi="lollipop" />
@@ -50,15 +49,31 @@
         app:layout_constraintStart_toStartOf="@id/text_info"
         app:layout_constraintTop_toBottomOf="@id/text_info" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_card_no_balance"
+        style="@style/Widget.App.Button.Outlined.BoldText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/my_page_button_card_no_balance_mh"
+        android:layout_marginTop="24dp"
+        android:text="@string/my_page_button_card_no_balance"
+        android:textColor="@color/danger"
+        android:textSize="14sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_see_all_card"
+        app:strokeColor="@color/error_text" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/card_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="26dp"
         android:minHeight="160dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_see_all_card">
+        app:layout_constraintTop_toBottomOf="@id/button_card_no_balance">
 
         <TextView
             android:id="@+id/text_no_card"
@@ -71,7 +86,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <include layout="@layout/home_card_container" android:id="@+id/list_card" />
+        <include
+            android:id="@+id/list_card"
+            layout="@layout/home_card_container"
+            android:visibility="invisible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
