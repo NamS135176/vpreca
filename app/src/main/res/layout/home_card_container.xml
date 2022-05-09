@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/card_list"
         android:layout_width="0dp"
@@ -18,9 +17,9 @@
         android:id="@+id/button_slide_left"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/my_page_card_arrow_direction_height"
-        android:visibility="gone"
         android:layout_marginTop="@dimen/my_page_card_arrow_direction_mt"
         android:background="@drawable/ic_card_arrow_left"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/card_list" />
 
@@ -28,9 +27,9 @@
         android:id="@+id/button_slide_right"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/my_page_card_arrow_direction_height"
-        android:visibility="gone"
-        android:background="@drawable/ic_card_arrow_right"
         android:layout_marginTop="@dimen/my_page_card_arrow_direction_mt"
+        android:background="@drawable/ic_card_arrow_right"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/card_list" />
 
@@ -55,6 +54,29 @@
         app:layout_constraintTop_toBottomOf="@id/tab_dots">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_info"
+            style="@style/Widget.App.Button.IconOnly"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:backgroundTint="#0fc6d6"
+            app:cornerRadius="24dp"
+            app:icon="@drawable/ic_home_info"
+            app:iconSize="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_button_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/home_button_info"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="@id/button_info"
+            app:layout_constraintStart_toStartOf="@id/button_info"
+            app:layout_constraintTop_toBottomOf="@id/button_info" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_usage"
             style="@style/Widget.App.Button.IconOnly"
             android:layout_width="48dp"
@@ -63,7 +85,9 @@
             app:cornerRadius="24dp"
             app:icon="@drawable/ic_home_usage"
             app:iconSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_lock"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@id/button_info"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -72,34 +96,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="@string/home_button_usage"
+            android:textSize="11sp"
             app:layout_constraintEnd_toEndOf="@id/button_usage"
             app:layout_constraintStart_toStartOf="@id/button_usage"
             app:layout_constraintTop_toBottomOf="@id/button_usage" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_info"
-            style="@style/Widget.App.Button.IconOnly"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:backgroundTint="#00c833"
-            app:cornerRadius="24dp"
-            app:icon="@drawable/ic_home_info"
-            app:iconSize="16dp"
-            app:layout_constraintEnd_toStartOf="@id/button_lock"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@id/button_usage"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_button_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-
-            android:text="@string/home_button_info"
-            app:layout_constraintEnd_toEndOf="@id/button_info"
-            app:layout_constraintStart_toStartOf="@id/button_info"
-            app:layout_constraintTop_toBottomOf="@id/button_info" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_lock"
@@ -108,10 +109,11 @@
             android:layout_height="48dp"
             android:backgroundTint="#d0d0d0"
             app:cornerRadius="24dp"
-            app:icon="@drawable/ic_home_lock"
+            app:icon="@drawable/ic_home_unlock"
             app:iconSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toStartOf="@id/button_reload"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@id/button_usage"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -120,8 +122,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="@string/home_button_lock"
+            android:textSize="11sp"
             app:layout_constraintEnd_toEndOf="@id/button_lock"
             app:layout_constraintStart_toStartOf="@id/button_lock"
             app:layout_constraintTop_toBottomOf="@id/button_lock" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_reload"
+            style="@style/Widget.App.Button.IconOnly"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:backgroundTint="#53c312"
+            app:cornerRadius="24dp"
+            app:icon="@drawable/ic_home_reload"
+            app:iconSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@id/button_lock"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_button_reload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/home_button_reload"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="@id/button_reload"
+            app:layout_constraintStart_toStartOf="@id/button_reload"
+            app:layout_constraintTop_toBottomOf="@id/button_reload" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

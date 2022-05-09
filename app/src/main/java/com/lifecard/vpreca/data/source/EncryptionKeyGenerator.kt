@@ -19,7 +19,7 @@ import javax.crypto.KeyGenerator
 import javax.security.auth.x500.X500Principal
 
 internal object EncryptionKeyGenerator {
-    const val ANDROID_KEY_STORE = BuildConfig.SECURE_KEY_PROVIDER
+    const val ANDROID_KEY_STORE = "AndroidKeyStore"
     const val KEY_ALIAS = BuildConfig.SECURE_KEY_ALIAS
     private const val KEY_STORE_FILE_NAME = BuildConfig.SECURE_KEY_FILE_NAME
     private const val KEY_STORE_PASSWORD = BuildConfig.SECURE_KEY_PASSWORD

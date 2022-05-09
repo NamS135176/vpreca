@@ -15,8 +15,10 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
+import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.SimpleOnPageChangeCallback
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.max
@@ -74,6 +76,7 @@ class HomeFragment : Fragment() {
         var pagerAdapter: CardSlidePagerAdapter? = null
         val buttonSlideLeft = binding.listCard.buttonSlideLeft
         val buttonSlideRight = binding.listCard.buttonSlideRight
+        val textBalance = binding.textBalance
 
         binding.textLastLogin.text =
             getString(R.string.home_text_last_login, SimpleDateFormat("yyyy M/d").format(Date()))
@@ -124,6 +127,15 @@ class HomeFragment : Fragment() {
                         TabLayoutMediator(tabDots, viewPager) { tab, position ->
 
                         }.attach()
+
+                        val sumBalance: Int = creditCardResult.success.sumOf {
+                            try {
+                                it.chargeBalance.toInt()
+                            } catch (e: Exception) {
+                                0
+                            }
+                        }
+                        textBalance.text = Converter.convertCurrency(sumBalance)
                     }
                 }
 
