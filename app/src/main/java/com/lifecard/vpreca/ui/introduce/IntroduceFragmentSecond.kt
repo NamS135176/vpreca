@@ -27,11 +27,6 @@ class IntroduceFragmentSecond : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = IntroduceFragmentSecondFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(IntroduceFragmentSecondViewModel::class.java)
 
         val btnSubmit = binding.btnSubmitInput
@@ -39,7 +34,7 @@ class IntroduceFragmentSecond : Fragment() {
         val tvIntroduceBack = binding.appbarGiftSecond.tvBackIntroduce
 
         imgIntroduceBack.setOnClickListener(View.OnClickListener {
-           findNavController().navigate(R.id.nav_introduce_first)
+            findNavController().navigate(R.id.nav_introduce_first)
         })
 
         tvIntroduceBack.setOnClickListener(View.OnClickListener {
@@ -50,6 +45,8 @@ class IntroduceFragmentSecond : Fragment() {
             findNavController().navigate(R.id.nav_introduce_third)
         })
         // TODO: Use the ViewModel
+        return binding.root
     }
+
 
 }

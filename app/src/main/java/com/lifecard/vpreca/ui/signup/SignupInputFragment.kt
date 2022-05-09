@@ -23,13 +23,8 @@ class SignupInputFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = SignupInputFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(SignupInputViewModel::class.java)
-        // TODO: Use the ViewModel
+        return binding.root
     }
 
 }

@@ -26,11 +26,6 @@ class IntroduceFragmentThird : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = IntroduceFragmentThirdFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(IntroduceFragmentThirdViewModel::class.java)
         // TODO: Use the ViewModel
 
@@ -44,7 +39,9 @@ class IntroduceFragmentThird : Fragment() {
         tvIntroduceBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_second)
         })
-
+        return binding.root
     }
+
+
 
 }

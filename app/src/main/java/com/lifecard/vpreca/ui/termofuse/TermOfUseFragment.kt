@@ -34,11 +34,6 @@ class TermOfUseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = TermOfUseFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(TermOfUseViewModel::class.java)
 
         val rvTermOfUse = binding.rvTermOfUse
@@ -70,7 +65,7 @@ class TermOfUseFragment : Fragment() {
             }
             startActivity(intent)
         })
-        // TODO: Use the ViewModel
+        return binding.root
     }
 
 }
