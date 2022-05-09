@@ -107,6 +107,7 @@
             style="@style/Widget.App.Button.IconOnly"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="@drawable/ic_home_unlock_status_background"
             android:backgroundTint="#d0d0d0"
             app:cornerRadius="24dp"
             app:icon="@drawable/ic_home_unlock"
@@ -138,7 +139,6 @@
             app:iconSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@id/button_lock"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView

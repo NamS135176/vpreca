@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
@@ -40,23 +41,44 @@ class HomeFragment : Fragment() {
             super.onPageSelected(position)
             val buttonSlideLeft = binding.listCard.buttonSlideLeft
             val buttonSlideRight = binding.listCard.buttonSlideRight
-            val itemCount = binding.listCard.cardList.adapter?.itemCount
-            itemCount?.let {
-                if (it == 1) {
+            val buttonLock = binding.listCard.buttonLock
+
+            binding.listCard.cardList.adapter?.let {
+                val adapter = it as CardSlidePagerAdapter
+                val itemCount = adapter.itemCount
+                if (itemCount == 1) {
                     buttonSlideLeft.visibility = View.INVISIBLE
                     buttonSlideRight.visibility = View.INVISIBLE
                 } else if (position < 1) {
                     buttonSlideLeft.visibility = View.INVISIBLE
                     buttonSlideRight.visibility = View.VISIBLE
-                } else if (position >= it - 1) {
+                } else if (position >= itemCount - 1) {
                     buttonSlideLeft.visibility = View.VISIBLE
                     buttonSlideRight.visibility = View.INVISIBLE
                 } else {
                     buttonSlideLeft.visibility = View.VISIBLE
                     buttonSlideRight.visibility = View.VISIBLE
                 }
+                val currentCreditCard = adapter.getItem(position)
+                val isLocked = currentCreditCard.vcnSecurityLockFlg == "1"
+                //change button lock
+                context?.let { ctx ->
+                    buttonLock.icon = ContextCompat.getDrawable(
+                        ctx,
+                        when (isLocked) {
+                            true -> R.drawable.ic_home_lock
+                            else -> R.drawable.ic_home_unlock
+                        }
+                    )
+                    buttonLock.background = ContextCompat.getDrawable(
+                        ctx,
+                        when (isLocked) {
+                            true -> R.drawable.ic_home_locked_status_background
+                            else -> R.drawable.ic_home_unlock_status_background
+                        }
+                    )
+                }
             }
-
         }
     }
 
