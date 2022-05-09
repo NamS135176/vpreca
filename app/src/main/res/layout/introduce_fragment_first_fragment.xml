@@ -1,222 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/term_of_use"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.termofuse.TermOfUseFragment"
-    android:background="@color/primary">
-
-    <com.google.android.material.appbar.AppBarLayout
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/term_of_use"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:elevation="0dp"
-        android:id="@+id/appbar_policy">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="32dp"
-            android:paddingTop="32dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:paddingHorizontal="4dp">
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgBackIntroduce"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvBackIntroduce"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/phone_back"
-                    android:textColor="#fff"
-                    android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
-                    android:textSize="18sp"/>
-            </LinearLayout>
+        android:layout_height="match_parent"
+        tools:context=".ui.termofuse.TermOfUseFragment"
+        android:background="@color/primary">
+        <include
+            android:id="@+id/appbar_gift"
+            layout="@layout/toolbar_with_back_btn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{@string/introduce_title}"
+            app:elevation="0dp"
+            />
+        <!--    <com.google.android.material.appbar.AppBarLayout-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        app:layout_constraintTop_toTopOf="parent"-->
+        <!--        app:elevation="0dp"-->
+        <!--        android:id="@+id/appbar_policy">-->
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:paddingBottom="32dp"-->
+        <!--            android:paddingTop="32dp"-->
+        <!--            android:paddingLeft="8dp"-->
+        <!--            android:paddingRight="8dp">-->
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="0.25"-->
+        <!--                android:paddingHorizontal="4dp">-->
+        <!--                <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                    android:id="@+id/imgBackIntroduce"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:src="@drawable/ic_baseline_arrow_back_ios_24"/>-->
+        <!--                <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                    android:id="@+id/tvBackIntroduce"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:text="@string/phone_back"-->
+        <!--                    android:textColor="#fff"-->
+        <!--                    android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"-->
+        <!--                    android:textSize="18sp"/>-->
+        <!--            </LinearLayout>-->
+        <!--            <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="0.5"-->
+        <!--                android:text="@string/introduce_title"-->
+        <!--                android:gravity="center_horizontal"-->
+        <!--                android:textColor="#fff"-->
+        <!--                android:textSize="18sp"-->
+        <!--                android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"-->
+        <!--                />-->
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="0.25"-->
+        <!--                android:visibility="invisible">-->
+        <!--                <ImageView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:src="@drawable/ic_baseline_arrow_back_ios_24"/>-->
+        <!--                <TextView-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:text="@string/phone_back"-->
+        <!--                    android:textColor="#fff"-->
+        <!--                    android:textSize="18sp"/>-->
+        <!--            </LinearLayout>-->
+        <!--        </LinearLayout>-->
+        <!--    </com.google.android.material.appbar.AppBarLayout>-->
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="0dp"
+                android:id="@+id/desTop"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="@string/introduce_title"
+                app:layout_constraintTop_toBottomOf="@+id/appbar_gift"
+                android:text="@string/introduce_des_top"
+                android:gravity="center_horizontal"
+                android:paddingTop="12dp"
+                android:textColor="#fff"
+                style="@style/Widget.AppCompat.TextView.Bold"
+                android:textSize="18sp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/desBot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/desTop"
+                android:text="@string/introduce_des_bot"
                 android:gravity="center_horizontal"
                 android:textColor="#fff"
-                android:textSize="18sp"
+                style="@style/Widget.AppCompat.TextView.Bold"
+                android:textSize="18sp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/desBot"
+                android:text="@string/introduce_des"
+                android:textColor="#fff"
+                android:paddingTop="42dp"
+                android:paddingBottom="48dp"
+                android:paddingHorizontal="28dp"
+                android:textSize="12sp"
+                android:lineSpacingExtra="6sp"
+               />
+            <LinearLayout
+                android:id="@+id/highlight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="28dp"
+                android:background="@drawable/border_first_introduce"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/des"
+                android:paddingVertical="18dp"
+                android:paddingRight="18dp"
+                android:paddingLeft="9dp"
+                >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="•"
+                    android:textColor="#fff"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/introduce_first_line"
+                    android:textColor="#fff"
+                    android:paddingLeft="8dp"
+                    android:lineSpacingExtra="6dp"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+                <LinearLayout
+                    android:paddingBottom="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="•"
+                        android:textColor="#fff"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/introduce_second_line"
+                        android:textColor="#fff"
+                        android:lineSpacingExtra="6dp"
+                        android:paddingLeft="8dp"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="16dp">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="•"
+                        android:textColor="#fff"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/introduce_third_line"
+                        android:textColor="#fff"
+                        android:lineSpacingExtra="6dp"
+                        android:paddingLeft="8dp"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/highlight"
+                android:text="@string/introduce_highlight_bot"
+                android:textColor="#fff"
+                android:paddingVertical="26dp"
+                android:paddingHorizontal="24dp"
+                android:textSize="12sp"
+                android:gravity="center_horizontal"
+                style="@style/Widget.AppCompat.TextView.Bold"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_submit_introduce_first"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@string/introduce_btn"
+                android:layout_marginBottom="24dp"
                 android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
+                android:enabled="false"
+                android:textColor="@color/primary"
+                android:layout_marginHorizontal="45dp"
+                app:cornerRadius="24dp"
+                android:paddingVertical="12dp"
+                android:backgroundTint='@color/button_introduce_background'
                 />
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
-                android:visibility="invisible">
-                <ImageView
+                app:layout_constraintBottom_toTopOf="@+id/btn_submit_introduce_first"
+                android:gravity="center"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbIntroduceFirst"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:gravity="center"
+                    app:useMaterialThemeColors="false"
+                    android:checked="false"
+                    android:button="@drawable/checkbox_selector"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_arrow_back_ios_24"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/phone_back"
-                    android:textColor="#fff"
-                    android:textSize="18sp"/>
+                    android:textColor="@color/white"
+                    android:text="@string/confirm_policy"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    style="@style/Widget.AppCompat.TextView.Bold"
+                    android:paddingLeft="18dp"
+                    />
             </LinearLayout>
-        </LinearLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/desTop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/appbar_policy"
-        android:text="@string/introduce_des_top"
-        android:textAlignment="center"
-        android:paddingTop="24dp"
-        android:textColor="#fff"
-        android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
-        android:textSize="18sp" />
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/desBot"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/desTop"
-        android:text="@string/introduce_des_bot"
-        android:textAlignment="center"
-        android:textColor="#fff"
-        android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
-        android:textSize="18sp" />
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/des"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/desBot"
-        android:text="@string/introduce_des"
-        android:textColor="#fff"
-        android:paddingVertical="32dp"
-        android:paddingHorizontal="24dp"
-       />
-    <LinearLayout
-        android:id="@+id/highlight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:background="@drawable/border_first_introduce"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/des"
-        android:padding="16dp"
-        >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="•"
-            android:paddingBottom="16dp"
-            android:textColor="#fff"/>
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/introduce_first_line"
-            android:textColor="#fff"
-            android:paddingLeft="8dp"
-            android:textSize="12sp"/>
-    </LinearLayout>
-        <LinearLayout
-            android:paddingVertical="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="•"
-                android:paddingBottom="16dp"
-                android:textColor="#fff"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/introduce_second_line"
-                android:textColor="#fff"
-                android:paddingLeft="8dp"
-                android:textSize="12sp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="•"
-                android:paddingBottom="16dp"
-                android:textColor="#fff"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/introduce_third_line"
-                android:textColor="#fff"
-                android:paddingLeft="8dp"
-                android:textSize="12sp"/>
-        </LinearLayout>
-    </LinearLayout>
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/highlight"
-        android:text="@string/introduce_highlight_bot"
-        android:textColor="#fff"
-        android:paddingVertical="32dp"
-        android:paddingHorizontal="24dp"
-        android:textAlignment="center"
-        android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
-        />
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_submit_introduce_first"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/introduce_btn"
-        android:layout_marginBottom="24dp"
-        android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
-        android:enabled="false"
-        android:textColor="@color/primary"
-        android:layout_marginHorizontal="24dp"
-        app:cornerRadius="24dp"
-        android:paddingVertical="16dp"
-        android:backgroundTint='@color/button_introduce_background'
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btn_submit_introduce_first"
-        android:gravity="center"
-        android:paddingVertical="16dp"
-        android:paddingHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/cbIntroduceFirst"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:gravity="center"
-            app:useMaterialThemeColors="false"
-            android:checked="false"
-            android:button="@drawable/checkbox_selector"
-            />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/confirm_policy"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

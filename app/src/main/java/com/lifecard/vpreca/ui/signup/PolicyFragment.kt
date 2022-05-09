@@ -44,17 +44,11 @@ class PolicyFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPolicyBinding.inflate(inflater, container, false)
-        return binding.root
-//        return inflater.inflate(R.layout.fragment_policy, container, false)
 
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         val btnSubmitPolicy = binding.btnSubmitPolicy
         val cbPolicy = binding.cbPolicy
         val rcPolicy = binding.svPolicy
-        val cancelButton = binding.regisCancel
+        val cancelButton = binding.appbarPolicy.cancelBtn
 
         cancelButton.setOnClickListener(View.OnClickListener {
             val builder = MaterialAlertDialogBuilder(requireContext())
@@ -121,5 +115,9 @@ class PolicyFragment : Fragment() {
         val adapter = PolicyAdapter(arrPolicy)
         rcPolicy?.layoutManager = linearLayoutManager
         rcPolicy?.adapter = adapter
+
+        return binding.root
+//        return inflater.inflate(R.layout.fragment_policy, container, false)
+
     }
 }

@@ -6,7 +6,7 @@
     <!--    <gradient android:startColor="#ffff0000" android:endColor="#ff000000" android:angle="270"/>-->
     <solid android:color="#F7F7F7"></solid>
     <stroke android:color="#D9D9D9" android:width="2dp"></stroke>
-    <size android:height="30dp" android:width="30dp"/>
+    <size android:height="36dp" android:width="36dp"/>
     <corners android:radius="5dp"></corners>
 
 </shape>

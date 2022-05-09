@@ -34,8 +34,8 @@ class IntroduceFragmentThird : Fragment() {
         viewModel = ViewModelProvider(this).get(IntroduceFragmentThirdViewModel::class.java)
         // TODO: Use the ViewModel
 
-        val imgIntroduceBack = binding.imgBackIntroduceThird
-        val tvIntroduceBack = binding.tvBackIntroduceThird
+        val imgIntroduceBack = binding.appbarGiftThird.imgBackIntroduce
+        val tvIntroduceBack = binding.appbarGiftThird.tvBackIntroduce
 
         imgIntroduceBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_second)

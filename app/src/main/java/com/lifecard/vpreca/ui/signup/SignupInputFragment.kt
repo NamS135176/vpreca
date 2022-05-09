@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.databinding.SignupInputFragmentBinding
 
 class SignupInputFragment : Fragment() {
 
@@ -15,12 +16,14 @@ class SignupInputFragment : Fragment() {
     }
 
     private lateinit var viewModel: SignupInputViewModel
-
+    private var _binding : SignupInputFragmentBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.signup_input_fragment, container, false)
+        _binding = SignupInputFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
