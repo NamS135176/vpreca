@@ -121,6 +121,19 @@
     <string name='hint_username'>半角英大文字2~18文字</string>
     <string name='username_input_des'>記号・スペースはご利用いただけません。</string>
     <string name='name_signup_title'>お名前</string>
+    <string name='hint_first_name'>セイ（全角）</string>
+    <string name="hint_second_name">メイ（全角）</string>
+    <string name='hint_third_name'>姓（全角）</string>
+    <string name='hint_last_name'>名（全角）</string>
+    <string name='gender_signup_title'>性別</string>
+    <string name='dob_signup_title'>生年月日</string>
+    <string name='dob_hint'>1980年1月1日</string>
+    <string name='city_signup_title'>居住地（都道府県）</string>
+    <string name='phone_signup_title'>電話番号（自宅 or 携帯）</string>
+    <string name='secret_signup_title'>秘密の質問</string>
+    <string name="secret_answer_signup_title">秘密の質問の答え</string>
+    <string name='hint_phone'>09000000000</string>
+    <string name='hint_answer'>全角20文字以内</string>
     <!--    Signup Input-->
 
 
