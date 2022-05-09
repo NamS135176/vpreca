@@ -60,24 +60,7 @@ class HomeFragment : Fragment() {
                     buttonSlideRight.visibility = View.VISIBLE
                 }
                 val currentCreditCard = adapter.getItem(position)
-                val isLocked = currentCreditCard.vcnSecurityLockFlg == "1"
-                //change button lock
-                context?.let { ctx ->
-                    buttonLock.icon = ContextCompat.getDrawable(
-                        ctx,
-                        when (isLocked) {
-                            true -> R.drawable.ic_home_lock
-                            else -> R.drawable.ic_home_unlock
-                        }
-                    )
-                    buttonLock.background = ContextCompat.getDrawable(
-                        ctx,
-                        when (isLocked) {
-                            true -> R.drawable.ic_home_locked_status_background
-                            else -> R.drawable.ic_home_unlock_status_background
-                        }
-                    )
-                }
+                binding.listCard.currentCard = currentCreditCard
             }
         }
     }
