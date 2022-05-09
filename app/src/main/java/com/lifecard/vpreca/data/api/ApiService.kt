@@ -17,7 +17,7 @@ interface ApiService {
         @Field("password") password: String
     ): LoginResponse
 
-    @GET("cards")
+    @POST("CardListSelReq")
     suspend fun getListCards(): CardResponse
 
     @POST("CardDealHisReq")

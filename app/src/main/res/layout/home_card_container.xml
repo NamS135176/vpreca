@@ -7,22 +7,45 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/card_list"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@id/button_slide_right"
+        app:layout_constraintStart_toEndOf="@id/button_slide_left"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button_slide_left"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/my_page_card_arrow_direction_height"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/my_page_card_arrow_direction_mt"
+        android:background="@drawable/ic_card_arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/card_list" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button_slide_right"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/my_page_card_arrow_direction_height"
+        android:visibility="gone"
+        android:background="@drawable/ic_card_arrow_right"
+        android:layout_marginTop="@dimen/my_page_card_arrow_direction_mt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/card_list" />
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_dots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_list"
         app:tabBackground="@drawable/tab_dot_selector"
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp"
-        app:tabMaxWidth="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_list" />
+        app:tabMaxWidth="18dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

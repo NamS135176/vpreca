@@ -28,9 +28,9 @@ class SplashActivity : AppCompatActivity() {
         } else {
 //            navigateToLoginScreen()
             if (userRepository.isLoggedIn) {
-                navigateToLoginScreen()
-            } else {
                 navigateToMainScreen()
+            } else {
+                navigateToLoginScreen()
             }
         }
     }

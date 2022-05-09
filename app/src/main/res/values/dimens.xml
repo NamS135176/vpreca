@@ -10,4 +10,8 @@
     <dimen name="fragment_vertical_margin">16dp</dimen>
     <dimen name="corner_md">10dp</dimen>
     <dimen name="navigation_drawer_width">280dp</dimen>
+    <dimen name="my_page_card_height">175dp</dimen>
+    <dimen name="my_page_card_arrow_direction_height">19dp</dimen>
+    <!--    (175-19)/2-->
+    <dimen name="my_page_card_arrow_direction_mt">78dp</dimen>
 </resources>

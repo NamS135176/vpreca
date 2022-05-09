@@ -3,6 +3,7 @@ package com.lifecard.vpreca.data.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 @Parcelize
 data class CreditCard(
@@ -67,7 +68,7 @@ data class CreditCard(
     @SerializedName("onlinePinRegFlg")
     val onlinePinRegFlg: String,
     @SerializedName("precaExpirationDate")
-    val precaExpirationDate: String,
+    val precaExpirationDate: Date,
     @SerializedName("precaNumber")
     val precaNumber: String,
     @SerializedName("publishAddFree")

@@ -124,4 +124,5 @@
     <string name="title_webview">カードを買う</string>
     <string name="card_usage_balance">ご利用可能残高</string>
     <string name="card_usage_number">カード番号</string>
+    <string name="text_card_balance">残高</string>
 </resources>
