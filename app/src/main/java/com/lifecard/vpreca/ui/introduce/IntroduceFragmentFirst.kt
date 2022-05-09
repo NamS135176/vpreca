@@ -28,11 +28,6 @@ class IntroduceFragmentFirst : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = IntroduceFragmentFirstFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(IntroduceFragmentFirstViewModel::class.java)
         // TODO: Use the ViewModel
         val imgIntroduceBack = binding.appbarGift.imgBackIntroduce
@@ -61,6 +56,8 @@ class IntroduceFragmentFirst : Fragment() {
         btnSubmit.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_second)
         })
+        return binding.root
     }
+
 
 }
