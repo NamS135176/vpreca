@@ -137,4 +137,5 @@
     <string name="text_card_balance">残高</string>
     <string name="my_page_button_card_no_balance">残高不足のカードがあります</string>
     <string name="my_page_card_locked">ロック中</string>
+    <string name="button_ok">はい</string>
 </resources>

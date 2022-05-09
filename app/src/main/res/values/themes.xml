@@ -18,6 +18,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="Theme.VPreca.WhiteAccent">
+        <item name="colorAccent">@color/white</item> <!-- Whatever color you want-->
+    </style>
+
     <style name="Theme.VPreca.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
