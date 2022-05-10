@@ -5,13 +5,10 @@ import androidx.lifecycle.Observer
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -63,7 +60,6 @@ class LoginFragment : Fragment() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
             startActivity(intent)
-//            Toast.makeText(requireContext(),"sdhgfjsf", Toast.LENGTH_SHORT)
         })
 
         loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
@@ -151,10 +147,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun updateUiWithUser(user: User) {
-        val welcome = getString(R.string.welcome) + user.email
-        // TODO : initiate successful logged in experience
-        val appContext = context?.applicationContext ?: return
-        Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

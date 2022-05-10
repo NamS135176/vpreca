@@ -31,10 +31,10 @@ object Converter {
     }
 
     @JvmStatic
-    fun convertCurrency(value: String): String {
+    fun convertCurrency(value: String?): String {
         return try {
-            convertCurrency(Integer.parseInt(value))
-        } catch (err: Error) {
+            convertCurrency(value?.let { Integer.parseInt(it) } ?: 0)
+        } catch (err: Exception) {
             convertCurrency(0)
         }
     }

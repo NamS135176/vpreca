@@ -6,12 +6,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class RemoteRepository(private val apiService: ApiService) {
+class RemoteRepository(
+    private val apiService: ApiService,
+    private val userRepository: UserRepository
+) {
 
     suspend fun getCardUsageHistory(): Result<List<CardUsageHistory>> {
         return withContext(Dispatchers.IO) {
             try {
-                var cardUsageHistoryResponse = apiService.getCardUsageHistory()
+                val cardUsageHistoryResponse =
+                    apiService.getCardUsageHistory("Bear ${userRepository.user?.accessToken!!}")
                 Result.Success(cardUsageHistoryResponse.items)
             } catch (e: Throwable) {
                 println("LoginDataSource... login has error ${e}")

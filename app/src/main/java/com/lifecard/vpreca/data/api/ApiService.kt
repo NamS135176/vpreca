@@ -4,22 +4,25 @@ import com.lifecard.vpreca.data.model.CardResponse
 import com.lifecard.vpreca.data.model.CardUsageHistoryResponse
 import com.lifecard.vpreca.data.model.LoginResponse
 import com.lifecard.vpreca.data.model.User
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
     @FormUrlEncoded
     @POST("login")
     suspend fun login(
-        @Field("username") username: String,
-        @Field("password") password: String
+        @Field("loginId") username: String,
+        @Field("loginPassword") password: String
     ): LoginResponse
 
+    @FormUrlEncoded
     @POST("CardListSelReq")
-    suspend fun getListCards(): CardResponse
+    suspend fun getListCards(
+        @Header("Authorization") authorization: String,
+        @Field("memberNumber") memberNumber: String = "002",
+        @Field("invalidCardResFlg") invalidCardResFlg: String = "1"
+    ): CardResponse
 
+    @FormUrlEncoded
     @POST("CardDealHisReq")
-    suspend fun getCardUsageHistory(): CardUsageHistoryResponse
+    suspend fun getCardUsageHistory(@Header("Authorization") authorization: String): CardUsageHistoryResponse
 }

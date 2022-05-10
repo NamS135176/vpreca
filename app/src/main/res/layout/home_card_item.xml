@@ -15,6 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:paddingHorizontal="18dp">
 
@@ -68,6 +69,7 @@
                 android:id="@+id/card_cvc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
                 android:layout_marginLeft="70dp"
                 android:text="@{card.vcn}"
                 android:textColor="@color/white"
@@ -125,6 +127,7 @@
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
                 android:layout_marginRight="40dp"
                 android:text="@{Converter.convertCurrency(card.publishAmount), default=`¥0`}"
                 android:textSize="22sp" />

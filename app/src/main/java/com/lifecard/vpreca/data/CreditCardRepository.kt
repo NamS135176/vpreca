@@ -6,9 +6,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
-class CreditCardRepository(private val apiService: ApiService) {
+class CreditCardRepository(
+    private val apiService: ApiService,
+    private val userRepository: UserRepository
+) {
     // Mutex to make writes to cached values thread-safe.
     private val latestCardsMutex = Mutex()
 
@@ -18,13 +20,17 @@ class CreditCardRepository(private val apiService: ApiService) {
         return withContext(Dispatchers.IO) {
             if (refresh || latestCards.isEmpty()) {
                 try {
-                    val response = apiService.getListCards()
+                    val response =
+                        apiService.getListCards(authorization = "Bear ${userRepository.user?.accessToken!!}")
                     latestCardsMutex.withLock { latestCards = response.data }
-                } catch (e: Throwable) {
-                    Result.Error(Exception("Can not get card", e))
+                    latestCardsMutex.withLock { Result.Success(latestCards) }
+                } catch (e: Exception) {
+                    print("${CreditCardRepository::class.simpleName} getLatestCards has error ${e}")
+                    Result.Error(e)
                 }
+            } else {
+                latestCardsMutex.withLock { Result.Success(latestCards) }
             }
-            latestCardsMutex.withLock { Result.Success(latestCards) }
         }
     }
 }

@@ -112,7 +112,7 @@
     <string name='card_expire_date'>有効期限</string>
     <string name='sercue_code'>セキュリティ</string>
 
-<!--    Signup Input-->
+    <!--    Signup Input-->
     <string name='appbar_signup_title'>新規アカウント開設</string>
     <string name='signup_input_title'>本登録</string>
     <string name="signup_input_id_title">ログインID</string>
@@ -153,4 +153,8 @@
     <string name="my_page_card_locked">ロック中</string>
     <string name="button_ok">はい</string>
     <string name="login_fragment_text_login_info">固定電話をご登録の方へのご案内</string>
+
+    <!--    Error  -->
+    <string name="error_default">Error</string>
+    <string name="error_no_internet_connection">No internet connection</string>
 </resources>

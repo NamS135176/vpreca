@@ -3,8 +3,8 @@ package com.lifecard.vpreca.data.model
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse (
-    @SerializedName("access_token")
+    @SerializedName("accessToken")
     val accessToken: String,
-    @SerializedName("refresh_token")
+    @SerializedName("refreshToken")
     val refreshToken: String,
 )

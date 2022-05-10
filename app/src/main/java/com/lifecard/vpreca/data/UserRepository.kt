@@ -20,12 +20,15 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
         val accessToken = secureStore.getAccessToken()
+        val refreshToken = secureStore.getRefreshToken()
         println("UserRepository... init: accessToken=${accessToken}")
         if (accessToken != null) {
             val fakeUser = User(
                 UUID.randomUUID().toString(),
                 "The Anh",
                 "anhndt@vn-sis.com",
+                accessToken = accessToken,
+                refreshToken = refreshToken!!
             )
             user = fakeUser
         }
@@ -34,11 +37,13 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
     suspend fun login(username: String, password: String): Result<User> {
         return withContext(Dispatchers.IO) {
             try {
-                var loginResponse = apiService.login(username, password)
+                val loginResponse = apiService.login(username, password)
                 val fakeUser = User(
                     UUID.randomUUID().toString(),
                     "The Anh",
                     "anhndt@vn-sis.com",
+                    accessToken = loginResponse.accessToken,
+                    refreshToken = loginResponse.refreshToken!!
                 )
                 setLoggedInUser(fakeUser)
                 secureStore.saveAccessToken(loginResponse.accessToken)
@@ -55,7 +60,7 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
         this.user = loggedInUser
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
-        println("UserRepository... setLoggedInUser: ${secureStore}")
+        println("UserRepository... setLoggedInUser: ${loggedInUser}")
     }
 
     fun clear() {
