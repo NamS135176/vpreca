@@ -24,5 +24,8 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("CardDealHisReq")
-    suspend fun getCardUsageHistory(@Header("Authorization") authorization: String): CardUsageHistoryResponse
+    suspend fun getCardUsageHistory(
+        @Header("Authorization") authorization: String,
+        @Field("memberNumber") memberNumber: String = "002",
+    ): CardUsageHistoryResponse
 }
