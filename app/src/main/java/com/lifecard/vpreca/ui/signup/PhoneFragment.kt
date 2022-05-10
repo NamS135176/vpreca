@@ -63,7 +63,7 @@ class PhoneFragment : Fragment() {
         inputPhone.addTextChangedListener(afterTextChangedListener)
 
         btnSubmitPhone.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_confirm_phone)
+
         })
     }
 

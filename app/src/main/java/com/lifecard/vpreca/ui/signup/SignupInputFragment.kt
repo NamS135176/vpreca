@@ -1,5 +1,6 @@
 package com.lifecard.vpreca.ui.signup
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -9,13 +10,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.SignupData
 import com.lifecard.vpreca.databinding.SignupInputFragmentBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SignupInputFragment : Fragment() {
 
@@ -33,54 +44,65 @@ class SignupInputFragment : Fragment() {
         _binding = SignupInputFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SignupInputViewModel::class.java)
 
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        })
+
         val spinnerGender = binding.spinnerGender
         val spinnerCity = binding.spinnerCity
         val spinnerSecret = binding.spinnerSecret
         val btnCancel = binding.appbarSignup.cancelBtn
+        val btnDatePicker = binding.dobInputLayout
+        val idLayout = binding.idInputLayout
+        val usernameLayout = binding.usernameInputLayout
+        val idEdt = binding.idInput
+        val usernameEdit = binding.idUsername
+        val btnSubmit = binding.btnSubmitPolicy
+
+        var cal = Calendar.getInstance()
+
+        fun updateDateInView() {
+            val myFormat = "yyyy年MM月dd日" // mention the format you need
+            val sdf = SimpleDateFormat(myFormat, Locale.US)
+            btnDatePicker!!.text = sdf.format(cal.getTime())
+        }
+
+        val dateSetListener = object : DatePickerDialog.OnDateSetListener {
+            override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
+                                   dayOfMonth: Int) {
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, monthOfYear)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateDateInView()
+            }
+        }
+
+        btnDatePicker.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View) {
+                DatePickerDialog(requireContext(),
+                    dateSetListener,
+                    // set DatePickerDialog to point to today's date when it loads up
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)).show()
+            }
+        })
+
 
         btnCancel.setOnClickListener(View.OnClickListener {
-            val builder = MaterialAlertDialogBuilder(requireContext())
-
-            // dialog title
-//            builder.setTitle("Dialog Title")
-            // drawable for dialog title
-            // dialog message
-            builder.setMessage("途中ですがキャンセルしてもよろしいですか？")
-            // dialog background color
-
-            builder.setPositiveButton("はい"){ dialog,which->
-                // do something on positive button click
-                val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            MaterialAlertDialogBuilder(requireContext()).apply {
+                setPositiveButton("はい") { dialog, which ->
+                    // do something on positive button click
+                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    startActivity(intent)
                 }
-                startActivity(intent)
-            }
-            // icon for positive button
-
-
-            builder.setNegativeButton("いいえ"){dialog,which->
-                // do something when negative button clicked
-            }
-
-            builder.setNegativeButtonIcon(
-                ContextCompat.getDrawable(requireContext(),R.drawable.ic_baseline_arrow_back_ios_24)
-            )
-
-
-            builder.setOnCancelListener {
-                // do something on cancel listener
-            }
-            builder.setOnDismissListener {
-                // do something on dismiss listener
-            }
-
-            // set dialog non cancelable
-            builder.setCancelable(false)
-
-
-            // finally, create the alert dialog and show it
-            val dialog = builder.create()
-            dialog.show()
+                setNegativeButton("いいえ", null)
+                setMessage("途中ですがキャンセルしてもよろしいですか")
+            }.create().show()
         })
 
         val list = mutableListOf(
@@ -122,9 +144,59 @@ class SignupInputFragment : Fragment() {
             }
         }
 
+        viewModel.validForm.observe(viewLifecycleOwner, androidx.lifecycle.Observer { signupFormState ->
+            if(idEdt.text.toString() == "" || usernameEdit.text.toString() == ""){
+                btnSubmit.isEnabled = false
+            }
+            else{
+                btnSubmit.isEnabled =
+                    signupFormState.usernameError == null && signupFormState.idError == null
+            }
+        })
+
+        viewModel.usernameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer {  error: Int? ->
+            usernameLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
+        viewModel.idError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+            idLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
+
+        idEdt.doAfterTextChanged { text -> viewModel.idDataChanged(text = text.toString()) }
+        idEdt.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                //focus to password field
+                usernameEdit.requestFocus()
+            }
+            false
+        }
+
+        usernameEdit.doAfterTextChanged { text -> viewModel.usernameDataChanged(text = text.toString()) }
+        usernameEdit.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                //focus to password field
+//                idEdt.requestFocus()
+            }
+            false
+        }
+
         spinnerGender.adapter = adapter
         spinnerCity.adapter = adapter
         spinnerSecret.adapter = adapter
+
+        btnSubmit.setOnClickListener(View.OnClickListener {
+            val signupData = SignupData(idEdt.text.toString(), usernameEdit.text.toString())
+            val action = SignupInputFragmentDirections.actionSignupInputToSignupConfirm(signupData)
+            findNavController().navigate(action)
+        })
+
         return binding.root
     }
 

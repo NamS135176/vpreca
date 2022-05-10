@@ -58,7 +58,6 @@ class ConfirmPhoneFragment : Fragment() {
         inputPhoneConfirm.addTextChangedListener(afterTextChangedListener)
 
         btnSubmitPhoneConfirm.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_email)
 //            val emailFragment = EmailFragment()
 //            val manager = parentFragmentManager
 //            val transaction = manager.beginTransaction()

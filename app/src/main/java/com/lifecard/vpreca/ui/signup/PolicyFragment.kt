@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -44,55 +45,32 @@ class PolicyFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPolicyBinding.inflate(inflater, container, false)
-
-        val btnSubmitPolicy = binding.btnSubmitPolicy
-        val cbPolicy = binding.cbPolicy
-        val rcPolicy = binding.svPolicy
-        val cancelButton = binding.appbarPolicy.cancelBtn
-
-        cancelButton.setOnClickListener(View.OnClickListener {
-            val builder = MaterialAlertDialogBuilder(requireContext())
-
-            // dialog title
-//            builder.setTitle("Dialog Title")
-            // drawable for dialog title
-            // dialog message
-            builder.setMessage("途中ですがキャンセルしてもよろしいですか？")
-            // dialog background color
-
-            builder.setPositiveButton("はい"){ dialog,which->
-                // do something on positive button click
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
                 val intent = Intent(requireContext(), LoginActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
                 startActivity(intent)
             }
-            // icon for positive button
-
-
-            builder.setNegativeButton("いいえ"){dialog,which->
-                // do something when negative button clicked
-            }
-
-            builder.setNegativeButtonIcon(
-                ContextCompat.getDrawable(requireContext(),R.drawable.ic_baseline_arrow_back_ios_24)
-            )
-
-
-            builder.setOnCancelListener {
-                // do something on cancel listener
-            }
-            builder.setOnDismissListener {
-                // do something on dismiss listener
-            }
-
-            // set dialog non cancelable
-            builder.setCancelable(false)
-
-
-            // finally, create the alert dialog and show it
-            val dialog = builder.create()
-            dialog.show()
+        })
+        val btnSubmitPolicy = binding.btnSubmitPolicy
+        val cbPolicy = binding.cbPolicy
+        val rcPolicy = binding.svPolicy
+        val cancelButton = binding.appbarPolicy.cancelBtn
+        cbPolicy.isChecked = false
+        btnSubmitPolicy.isEnabled = false
+        cancelButton.setOnClickListener(View.OnClickListener {
+            MaterialAlertDialogBuilder(requireContext()).apply {
+                setPositiveButton("はい") { dialog, which ->
+                    // do something on positive button click
+                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    startActivity(intent)
+                }
+                setNegativeButton("いいえ", null)
+                setMessage("途中ですがキャンセルしてもよろしいですか")
+            }.create().show()
         })
 
         cbPolicy.setOnClickListener(View.OnClickListener {

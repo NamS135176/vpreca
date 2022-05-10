@@ -201,7 +201,7 @@
                 android:text="@string/introduce_btn"
                 android:layout_marginBottom="24dp"
                 android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
-                android:enabled="false"
+                android:enabled="true"
                 android:textColor="@color/primary"
                 android:layout_marginHorizontal="45dp"
                 app:cornerRadius="24dp"

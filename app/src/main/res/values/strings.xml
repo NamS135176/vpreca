@@ -112,7 +112,7 @@
     <string name='card_expire_date'>有効期限</string>
     <string name='sercue_code'>セキュリティ</string>
 
-<!--    Signup Input-->
+    <!--    Signup Input-->
     <string name='appbar_signup_title'>新規アカウント開設</string>
     <string name='signup_input_title'>本登録</string>
     <string name="signup_input_id_title">ログインID</string>
@@ -137,7 +137,28 @@
     <string name='hint_phone'>09000000000</string>
     <string name='hint_answer'>全角20文字以内</string>
     <!--    Signup Input-->
+    <!--    Confirm Signup-->
+    <string name='confirm_signup_title'>登録内容確認</string>
+    <string name='confirm_signup_des'>入力した項目に誤りがないか確認してください。</string>
+    <string name='id_confirm_signup_title'>ログインID</string>
+    <string name='username_confirm_signup_title'>ニックネーム</string>
+    <string name='name_confirm_signup_tile'>お名前</string>
+    <string name='furigana_confirm_signup_title'>フリガナ</string>
+    <string name="gender_confirm_signup_title">性別</string>
+    <string name="dov_confirm_signup_title">生年月日</string>
+    <string name="addres_confirm_signup_title">居住地</string>
+    <string name="phone_confirm_signup_title">電話番号</string>
+    <string name="secret_confirm_signup_title">秘密の質問</string>
+    <string name='secret_answer_confirm_signup_title'>秘密の質問の答え</string>
+    <!--    Confirm Signup-->
 
+    <!--    Complete Signup-->
+    <string name='complete_signup_title'>登録完了</string>
+    <string name='complete_signup_des'>アカウント登録が完了しました。</string>
+    <string name="complete_signup_message_first">ログインボタンをタップすると、Vプリカサービスがご利用いただけます。</string>
+    <string name="complete_signup_message_second">登録内容をご登録いただいたメールアドレスに送信いたしましたのでご確認ください。</string>
+    <string name="btn_complete">ログイン</string>
+    <!--    Complete Signup-->
 
     <string name="menu_app_version">バージョン : %1$s</string>
     <string name="copyright_life_card_co_ltd">Copyright © LIFE CARD Co., Ltd.\nAll rights reserved</string>

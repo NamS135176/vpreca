@@ -57,7 +57,7 @@ class EmailFragment : Fragment() {
         inputEmail.addTextChangedListener(afterTextChangedListener)
 
         btnSubmitEmail.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_confirm_email)
+
         })
     }
 
