@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.MarginPageTransformer
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
@@ -82,6 +83,20 @@ class HomeFragment : Fragment() {
         val buttonSlideLeft = binding.listCard.buttonSlideLeft
         val buttonSlideRight = binding.listCard.buttonSlideRight
         val textBalance = binding.textBalance
+
+        viewPager.apply {
+            clipToPadding = false   // allow full width shown with padding
+            clipChildren = false    // allow left/right item is not clipped
+            offscreenPageLimit = 2
+        }
+        // increase this offset to show more of left/right
+        val offsetPx = 50
+        viewPager.setPadding(offsetPx, 0, offsetPx, 0)
+
+// increase this offset to increase distance between 2 items
+        val pageMarginPx = 20
+        val marginTransformer = MarginPageTransformer(pageMarginPx)
+        viewPager.setPageTransformer(marginTransformer)
 
         binding.textLastLogin.text =
             getString(R.string.home_text_last_login, SimpleDateFormat("yyyy M/d").format(Date()))
