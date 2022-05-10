@@ -57,4 +57,8 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
         // @see https://developer.android.com/training/articles/keystore
         println("UserRepository... setLoggedInUser: ${secureStore}")
     }
+
+    fun clear() {
+        this.user = null
+    }
 }

@@ -37,4 +37,11 @@ class SecureStore(private val appContext: Context) {
     fun getRefreshToken(): String? {
         return getEncryptText(Constanst.SECURE_REFRESH_TOKEN)
     }
+
+    fun clear() {
+        with(encryptedSharedPreferences.edit()) {
+            clear()
+            commit()
+        }
+    }
 }
