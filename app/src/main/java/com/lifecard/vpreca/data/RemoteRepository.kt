@@ -17,9 +17,9 @@ class RemoteRepository(
                 val cardUsageHistoryResponse =
                     apiService.getCardUsageHistory("Bear ${userRepository.user?.accessToken!!}")
                 Result.Success(cardUsageHistoryResponse.items)
-            } catch (e: Throwable) {
-                println("LoginDataSource... login has error ${e}")
-                Result.Error(IOException("Error logging in", e))
+            } catch (e: Exception) {
+                println("RemoteRepository...getCardUsageHistory has error ${e}")
+                Result.Error(IOException("Error getCardUsageHistory", e))
             }
         }
     }
