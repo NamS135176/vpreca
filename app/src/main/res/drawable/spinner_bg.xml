@@ -7,9 +7,9 @@
         </shape>
     </item>
     <item
-        android:drawable="@drawable/ic_spinner_end"
-        android:gravity="center_vertical|right"
-        android:right="@dimen/fragment_horizontal_margin">
+        android:gravity="center_vertical|right">
+
+        <bitmap android:src="@drawable/ic_spinner_bg_bitmap" />
 
     </item>
 </layer-list>
