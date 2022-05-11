@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sms_verify_nav"
+    app:startDestination="@id/nav_sms_verify">
+    <fragment
+        android:id="@+id/nav_sms_verify"
+        android:name="com.lifecard.vpreca.ui.smsverify.SMSVerifyFragment"
+        android:label="fragment_sms_verify"
+        tools:layout="@layout/fragment_sms_verify" />
+
+</navigation>

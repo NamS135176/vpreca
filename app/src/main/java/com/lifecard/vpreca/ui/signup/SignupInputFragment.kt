@@ -61,7 +61,7 @@ class SignupInputFragment : Fragment() {
         val usernameEdit = binding.idUsername
         val btnSubmit = binding.btnSubmitPolicy
 
-        var cal = Calendar.getInstance()
+        val cal = Calendar.getInstance()
 
         fun updateDateInView() {
             val myFormat = "yyyy年MM月dd日" // mention the format you need
@@ -69,26 +69,24 @@ class SignupInputFragment : Fragment() {
             btnDatePicker!!.text = sdf.format(cal.getTime())
         }
 
-        val dateSetListener = object : DatePickerDialog.OnDateSetListener {
-            override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
-                                   dayOfMonth: Int) {
+        val dateSetListener =
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 cal.set(Calendar.YEAR, year)
                 cal.set(Calendar.MONTH, monthOfYear)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 updateDateInView()
             }
-        }
 
-        btnDatePicker.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View) {
-                DatePickerDialog(requireContext(),
-                    dateSetListener,
-                    // set DatePickerDialog to point to today's date when it loads up
-                    cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH),
-                    cal.get(Calendar.DAY_OF_MONTH)).show()
-            }
-        })
+        btnDatePicker.setOnClickListener {
+            DatePickerDialog(
+                requireContext(),
+                dateSetListener,
+                // set DatePickerDialog to point to today's date when it loads up
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
 
 
         btnCancel.setOnClickListener(View.OnClickListener {
