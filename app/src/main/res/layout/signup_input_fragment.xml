@@ -255,13 +255,11 @@
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinner_gender"
-                style="@style/MySpinner"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="54dp"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginTop="9dp"
                 android:paddingHorizontal="16dp"
-                android:spinnerMode="dropdown"
                 app:layout_constraintTop_toBottomOf="@+id/signup_gender_title" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -280,41 +278,17 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/dob_input_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginTop="9dp"
                 android:background="@drawable/input_signup_style"
+                android:gravity="center_vertical"
                 android:paddingHorizontal="21dp"
-                android:paddingVertical="19dp"
                 android:text="@string/hint_dob"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/signup_dob_title" />
-            <!--            <com.lifecard.vpreca.ui.custom.MyTextInputLayout-->
-            <!--                android:layout_marginHorizontal="22dp"-->
-            <!--                android:layout_marginTop="9dp"-->
-            <!--                android:id="@+id/dob_input_layout"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@id/signup_dob_title"-->
-            <!--                >-->
 
-            <!--                <com.google.android.material.textfield.TextInputEditText-->
-            <!--                    android:id="@+id/idDob"-->
-            <!--                    style="@style/TextInputEditTextFilledBox"-->
-            <!--                    android:textSize="16sp"-->
-            <!--                    android:textColor="#9c9c9c"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:hint="@string/hint_dob"-->
-            <!--                    android:imeOptions="actionNext"-->
-            <!--                    android:inputType="text"-->
-            <!--                    android:background="@drawable/input_signup_style"-->
-            <!--                    android:paddingTop="16dp"-->
-            <!--                    android:paddingHorizontal="17dp"-->
-            <!--                    android:paddingBottom="16dp" />-->
-            <!--            </com.lifecard.vpreca.ui.custom.MyTextInputLayout>-->
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/signup_city_title"
                 style="@style/Widget.AppCompat.TextView.Bold"
@@ -328,16 +302,13 @@
                 android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@+id/dob_input_layout" />
 
-            <Spinner
+            <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinner_city"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="54dp"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginTop="9dp"
-                android:background="@drawable/spinner_bg"
                 android:paddingHorizontal="16dp"
-                android:popupBackground="#f1f1f1"
-                android:spinnerMode="dropdown"
                 app:layout_constraintTop_toBottomOf="@+id/signup_city_title" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -391,17 +362,13 @@
                 android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@+id/phone_input_layout" />
 
-            <Spinner
+            <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinner_secret"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="54dp"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginTop="9dp"
-                android:background="@drawable/spinner_bg"
                 android:paddingHorizontal="16dp"
-                android:paddingVertical="18dp"
-                android:popupBackground="#f1f1f1"
-                android:spinnerMode="dropdown"
                 app:layout_constraintTop_toBottomOf="@+id/signup_secret_title" />
 
             <com.google.android.material.textview.MaterialTextView
