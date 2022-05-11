@@ -12,11 +12,8 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lifecard.vpreca.IntroduceActivity
-import com.lifecard.vpreca.MainActivity
+import com.lifecard.vpreca.*
 
-import com.lifecard.vpreca.R
-import com.lifecard.vpreca.SignupActivity
 import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.KeyboardUtils
@@ -54,6 +51,14 @@ class LoginFragment : Fragment() {
         val loadingProgressBar = binding.loading
         val logoGift = binding.logoGift
         val signUpButton = binding.buttonSignup
+        val btnForgotPass = binding.buttonForgotPassword
+
+        btnForgotPass.setOnClickListener(View.OnClickListener {
+            val intent = Intent(requireContext(), ForgotPassActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
+        })
 
         signUpButton.setOnClickListener(View.OnClickListener {
             val intent = Intent(requireContext(), SignupActivity::class.java).apply {

@@ -23,17 +23,17 @@
                 app:elevation="0dp"
                 />
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/signup_input_title"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingTop="32dp"
-                android:text="@string/complete_signup_title"
-                android:textColor="#0057b5"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@+id/appbar_confirm_signup"
-                />
+            android:id="@+id/signup_input_title"
+            style="@style/Widget.AppCompat.TextView.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="32dp"
+            android:text="@string/complete_signup_title"
+            android:textColor="#0057b5"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_confirm_signup"
+            />
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/signup_input_des"
                 android:layout_width="match_parent"
