@@ -32,7 +32,6 @@
         style="@style/Widget.App.Button.Outlined.BoldText"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:backgroundTint="@android:color/transparent"
         android:text="@string/home_button_see_all_card"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"

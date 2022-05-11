@@ -44,15 +44,15 @@
                 android:hint="@string/prompt_email"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp" />
+                android:insetTop="0dp"
+                android:insetBottom="0dp" />
         </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
 
         <com.lifecard.vpreca.ui.custom.MyTextInputLayout
             android:id="@+id/password_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="21dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/username_layout"
@@ -85,26 +85,52 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password_layout" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_login_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_fragment_text_login_info"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_forgot_password" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_login"
             style="@style/Widget.App.Button.Outlined.BoldText"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginTop="20dp"
-            android:enabled="false"
+            android:layout_height="54dp"
+            android:layout_marginTop="25dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="@string/action_sign_in"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_forgot_password"
+            app:layout_constraintTop_toBottomOf="@+id/text_login_info"
             app:strokeColor="@color/white" />
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white"
+            android:theme="@style/Theme.VPreca.WhiteAccent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/button_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_login"
+            tools:targetApi="lollipop" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_or"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="36dp"
             android:text="@string/login_or"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -115,19 +141,18 @@
             android:id="@+id/button_signup"
             style="@style/Widget.App.Button.BoldText"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/white"
-            android:enabled="true"
+            android:layout_height="54dp"
+            android:layout_marginTop="39dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="@string/action_signup"
             android:textColor="@color/peacock_blue"
             android:textFontWeight="700"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="18sp"
+            app:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_or"
-            app:strokeColor="@color/white"
             tools:targetApi="p" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -143,9 +168,9 @@
             <ImageView
                 android:id="@+id/logo_gift"
                 android:layout_width="0dp"
-                android:layout_height="41dp"
+                android:layout_height="32dp"
                 android:background="@drawable/login_logo_gift"
-                app:layout_constraintDimensionRatio="145:41"
+                app:layout_constraintDimensionRatio="294:68"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -161,22 +186,5 @@
                 app:layout_constraintStart_toEndOf="@id/logo_gift"
                 app:layout_constraintTop_toTopOf="@id/logo_gift" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="64dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="64dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/password"
-            app:layout_constraintStart_toStartOf="@+id/password"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -11,7 +11,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginRepository: UserRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(private val loginRepository: UserRepository) :
+    ViewModel() {
     val usernameError = MutableLiveData<Int?>()
     val passwordError = MutableLiveData<Int?>()
     val validForm = MediatorLiveData<LoginFormState>().apply {
@@ -28,10 +29,17 @@ class LoginViewModel @Inject constructor(private val loginRepository: UserReposi
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
+    val loading = MutableLiveData(false)
 
     fun login(username: String, password: String) {
+        if (!isUserNameValid(username) || !isPasswordValid(password)) {
+            usernameDataChanged(username)
+            passwordDataChanged(password)
+            return
+        }
         // can be launched in a separate asynchronous job
         viewModelScope.launch {
+            loading.value = true
             val result = loginRepository.login(username, password)
 
             if (result is Result.Success) {
@@ -40,19 +48,9 @@ class LoginViewModel @Inject constructor(private val loginRepository: UserReposi
             } else {
                 _loginResult.value = LoginResult(error = R.string.login_failed)
             }
+            loading.value = false
         }
     }
-
-//    fun loginDataChanged(username: String, password: String) {
-////        _loginForm.value?.
-//        if (!isUserNameValid(username)) {
-//            _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
-//        } else if (!isPasswordValid(password)) {
-//            _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
-//        } else {
-//            _loginForm.value = LoginFormState(isDataValid = true)
-//        }
-//    }
 
     fun usernameDataChanged(text: String) {
         if (!isUserNameValid(text)) {

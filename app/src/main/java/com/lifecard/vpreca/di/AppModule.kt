@@ -28,14 +28,20 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     @Singleton
-    fun provideApiService(@ApplicationContext appContext: Context, secureStore: SecureStore): ApiService {
+    fun provideApiService(
+        @ApplicationContext appContext: Context,
+        secureStore: SecureStore
+    ): ApiService {
         return ApiServiceFactory.createService(appContext, secureStore)
     }
 
     @Provides
     @Singleton
-    fun provideCreditCardRepository(apiService: ApiService): CreditCardRepository {
-        return CreditCardRepository(apiService)
+    fun provideCreditCardRepository(
+        apiService: ApiService,
+        userRepository: UserRepository
+    ): CreditCardRepository {
+        return CreditCardRepository(apiService, userRepository)
     }
 
     @Provides
@@ -52,8 +58,11 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideRemoteRepository(apiService: ApiService): RemoteRepository {
-        return RemoteRepository(apiService)
+    fun provideRemoteRepository(
+        apiService: ApiService,
+        userRepository: UserRepository
+    ): RemoteRepository {
+        return RemoteRepository(apiService, userRepository)
     }
 
 }

@@ -5,15 +5,13 @@ import androidx.lifecycle.Observer
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.IntroduceActivity
 import com.lifecard.vpreca.MainActivity
 
@@ -62,7 +60,6 @@ class LoginFragment : Fragment() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
             startActivity(intent)
-//            Toast.makeText(requireContext(),"sdhgfjsf", Toast.LENGTH_SHORT)
         })
 
         loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
@@ -89,7 +86,7 @@ class LoginFragment : Fragment() {
         loginViewModel.loginResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 loginResult ?: return@Observer
-                loadingProgressBar.visibility = View.GONE
+
                 loginResult.error?.let {
                     showLoginFailed(it)
                 }
@@ -98,6 +95,19 @@ class LoginFragment : Fragment() {
                     navigateToMainScreen()
                 }
             })
+
+        loginViewModel.loading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> {
+                    loadingProgressBar.visibility = View.VISIBLE
+                    loginButton.visibility = View.INVISIBLE
+                }
+                else -> {
+                    loadingProgressBar.visibility = View.GONE
+                    loginButton.visibility = View.VISIBLE
+                }
+            }
+        })
 
         usernameEditText.doAfterTextChanged { text -> loginViewModel.usernameDataChanged(text = text.toString()) }
         usernameEditText.setOnEditorActionListener { _, actionId, _ ->
@@ -121,7 +131,6 @@ class LoginFragment : Fragment() {
         }
 
         loginButton.setOnClickListener {
-            loadingProgressBar.visibility = View.VISIBLE
             loginViewModel.login(
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString()
@@ -138,15 +147,13 @@ class LoginFragment : Fragment() {
     }
 
     private fun updateUiWithUser(user: User) {
-        val welcome = getString(R.string.welcome) + user.email
-        // TODO : initiate successful logged in experience
-        val appContext = context?.applicationContext ?: return
-        Toast.makeText(appContext, welcome, Toast.LENGTH_LONG).show()
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
-        val appContext = context?.applicationContext ?: return
-        Toast.makeText(appContext, errorString, Toast.LENGTH_LONG).show()
+        MaterialAlertDialogBuilder(requireContext()).apply {
+            setPositiveButton(R.string.button_ok, null)
+            setMessage(errorString)
+        }.create().show()
     }
 
 

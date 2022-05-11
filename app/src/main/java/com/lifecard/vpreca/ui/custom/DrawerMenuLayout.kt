@@ -13,20 +13,28 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.BuildConfig
 import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.RemoteRepository
+import com.lifecard.vpreca.data.UserRepository
+import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.LayoutDrawerContentBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.ui.webview.WebViewActivity
 import com.lifecard.vpreca.ui.webview.WebViewFragment
+import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
+import javax.inject.Inject
 
 
 data class NavigationItem(var type: Int, var position: Int, var title: String)
 
+@AndroidEntryPoint
 class DrawerMenuLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayoutCompat(context, attrs, defStyleAttr) {
+    @Inject lateinit var userRepository: UserRepository
+    @Inject lateinit var secureStore: SecureStore
 
     private var _binding: LayoutDrawerContentBinding
     private var adapter: DrawerMenuAdapter
@@ -233,6 +241,14 @@ class DrawerMenuLayout @JvmOverloads constructor(
         binding.textAppVersion.text =
             String.format(resources.getString(R.string.menu_app_version), BuildConfig.VERSION_NAME)
         binding.navHeader.buttonCloseDrawer.setOnClickListener(OnClickListener { closeDrawer() })
+        binding.buttonLogout.setOnClickListener(OnClickListener {
+            userRepository.clear()
+            secureStore.clear()
+            val intent = Intent(context, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            context.startActivity(intent)
+        })
     }
 
     private fun closeDrawer() {

@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.MarginPageTransformer
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
@@ -40,23 +43,27 @@ class HomeFragment : Fragment() {
             super.onPageSelected(position)
             val buttonSlideLeft = binding.listCard.buttonSlideLeft
             val buttonSlideRight = binding.listCard.buttonSlideRight
-            val itemCount = binding.listCard.cardList.adapter?.itemCount
-            itemCount?.let {
-                if (it == 1) {
+            val buttonLock = binding.listCard.buttonLock
+
+            binding.listCard.cardList.adapter?.let {
+                val adapter = it as CardSlidePagerAdapter
+                val itemCount = adapter.itemCount
+                if (itemCount == 1) {
                     buttonSlideLeft.visibility = View.INVISIBLE
                     buttonSlideRight.visibility = View.INVISIBLE
                 } else if (position < 1) {
                     buttonSlideLeft.visibility = View.INVISIBLE
                     buttonSlideRight.visibility = View.VISIBLE
-                } else if (position >= it - 1) {
+                } else if (position >= itemCount - 1) {
                     buttonSlideLeft.visibility = View.VISIBLE
                     buttonSlideRight.visibility = View.INVISIBLE
                 } else {
                     buttonSlideLeft.visibility = View.VISIBLE
                     buttonSlideRight.visibility = View.VISIBLE
                 }
+                val currentCreditCard = adapter.getItem(position)
+                binding.listCard.currentCard = currentCreditCard
             }
-
         }
     }
 
@@ -141,7 +148,12 @@ class HomeFragment : Fragment() {
 
             }
             creditCardResult.error?.let {
-                println("homeViewModel.creditCardResult.observe err: ${getString(creditCardResult.error)}")
+                println("homeViewModel.creditCardResult.observe err: ${getString(it.messageResId!!)}")
+                //show dialog
+                MaterialAlertDialogBuilder(requireContext()).apply {
+                    setPositiveButton(R.string.button_ok, null)
+                    setMessage(getString(it.messageResId))
+                }.create().show()
             }
         })
         return root

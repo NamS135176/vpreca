@@ -27,11 +27,12 @@
         android:paddingBottom="26dp">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonLogout"
-            style="@style/Widget.App.Button.BoldText"
+            android:id="@+id/button_logout"
+            style="@style/Widget.App.TextButton.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/logout"
+            android:paddingHorizontal="16dp"
             android:textColor="@color/peacock_blue"
             android:textSize="14sp" />
 

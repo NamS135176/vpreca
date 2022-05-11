@@ -12,13 +12,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiServiceFactory {
     companion object {
-        fun createService(appContext: Context, secureStore: SecureStore) : ApiService {
+        fun createService(appContext: Context, secureStore: SecureStore): ApiService {
             val client = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
+                .addInterceptor(HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                })
+                .addInterceptor(NetworkConnectionInterceptor(appContext))
                 .authenticator(TokenAuthenticator(appContext, secureStore))
-            .build()
+                .build()
             val gson = GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssSSS")
                 .create()

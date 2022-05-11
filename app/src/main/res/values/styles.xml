@@ -39,6 +39,13 @@
         </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
     </style>
 
+    <style name="Widget.App.TextButton.Bold" parent="@style/Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/hiragino_sans_w6</item>
+        <item name="fontFamily">@font/hiragino_sans_w6
+        </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+    </style>
+
     <style name="Widget.App.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxCornerRadiusBottomEnd">@dimen/corner_md</item>
         <item name="boxCornerRadiusBottomStart">@dimen/corner_md</item>
