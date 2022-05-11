@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
@@ -28,6 +29,12 @@ class IntroduceFragmentSecond : Fragment() {
     ): View? {
         _binding = IntroduceFragmentSecondFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(IntroduceFragmentSecondViewModel::class.java)
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+               findNavController().popBackStack()
+            }
+        })
 
         val btnSubmit = binding.btnSubmitInput
         val imgIntroduceBack = binding.appbarGiftSecond.imgBackIntroduce

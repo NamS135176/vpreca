@@ -8,25 +8,32 @@
         android:id="@+id/nav_policy"
         android:name="com.lifecard.vpreca.ui.signup.PolicyFragment"
         android:label="fragment_policy"
-        tools:layout="@layout/fragment_policy" />
+        tools:layout="@layout/fragment_policy" >
+    </fragment>
     <fragment
         android:id="@+id/nav_signup_input"
         android:name="com.lifecard.vpreca.ui.signup.SignupInputFragment"
         android:label="fragment_signup_input"
-        tools:layout="@layout/signup_input_fragment" />
+        tools:layout="@layout/signup_input_fragment" >
+        <action
+            android:id="@+id/action_SignupInput_to_SignupConfirm"
+            app:destination="@id/nav_confirm_signup_data" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_confirm_phone"
-        android:name="com.lifecard.vpreca.ui.signup.ConfirmPhoneFragment"
-        android:label="fragment_phone_confirm"
-        tools:layout="@layout/fragment_confirm_phone" />
+        android:id="@+id/nav_confirm_signup_data"
+        android:name="com.lifecard.vpreca.ui.signup.ConfirmSignupDataFragment"
+        android:label="fragment_confirm_signup_data"
+        tools:layout="@layout/fragment_confirm_signup_data" >
+        <argument
+            android:name="signup_data"
+            app:nullable="true"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.SignupData" />
+    </fragment>
     <fragment
-        android:id="@+id/nav_email"
-        android:name="com.lifecard.vpreca.ui.signup.EmailFragment"
-        android:label="fragment_email"
-        tools:layout="@layout/fragment_email" />
-    <fragment
-        android:id="@+id/nav_confirm_email"
-        android:name="com.lifecard.vpreca.ui.signup.ConfirmEmailFragment"
-        android:label="fragment_email_confirm"
-        tools:layout="@layout/fragment_confirm_email" />
+        android:id="@+id/nav_complete"
+        android:name="com.lifecard.vpreca.ui.signup.CompleteSignupFragment"
+        android:label="fragment_complete"
+        tools:layout="@layout/fragment_complete_signup" >
+    </fragment>
 </navigation>

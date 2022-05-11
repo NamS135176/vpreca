@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.IntroduceFragmentSecondFragmentBinding
@@ -28,6 +29,12 @@ class IntroduceFragmentThird : Fragment() {
         _binding = IntroduceFragmentThirdFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(IntroduceFragmentThirdViewModel::class.java)
         // TODO: Use the ViewModel
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        })
 
         val imgIntroduceBack = binding.appbarGiftThird.imgBackIntroduce
         val tvIntroduceBack = binding.appbarGiftThird.tvBackIntroduce

@@ -15,6 +15,10 @@
         android:theme="@style/Theme.VPreca"
         tools:overrideLibrary="com.google.firebase.analytics.ktx">
         <activity
+            android:name=".ForgotPassActivity"
+            android:exported="false"
+            android:theme="@style/Theme.VPreca.NoActionBar"/>
+        <activity
             android:name=".ui.webview.WebViewActivity"
             android:exported="false"
             android:theme="@style/Theme.VPreca.NoActionBar" />
