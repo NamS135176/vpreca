@@ -1,5 +1,6 @@
 package com.lifecard.vpreca.ui.custom
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
@@ -9,6 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.BuildConfig
 import com.lifecard.vpreca.LoginActivity
@@ -41,7 +44,8 @@ class DrawerMenuLayout @JvmOverloads constructor(
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
+    private val binding get() = _binding
+//    var navController: NavController? = null
 
     private var items: ArrayList<NavigationItem> = arrayListOf(
         NavigationItem(
@@ -176,9 +180,8 @@ class DrawerMenuLayout @JvmOverloads constructor(
     )
 
     private fun showWebViewActivity(webUrl: String) {
-        val intent = Intent(context, WebViewActivity::class.java)
-        intent.putExtra(WebViewActivity.EXTRA_WEB_URL, webUrl)
-        context.startActivity(intent)
+        var navController = (context as Activity).findNavController(R.id.nav_host_fragment_content_main)
+        navController.navigate(R.id.nav_webview, WebViewFragment.createBundle(webUrl))
     }
 
     private var onItemClickListener = object : OnItemClickListener {

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.lifecard.vpreca.databinding.FragmentWebViewBinding
 
@@ -20,6 +21,9 @@ class WebViewFragment : Fragment() {
             f.arguments = args
 
             return f
+        }
+        fun createBundle(webUrl: String): Bundle {
+            return bundleOf("web_url" to webUrl)
         }
     }
 

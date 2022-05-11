@@ -44,4 +44,18 @@
             android:defaultValue="@null"
             app:argType="com.lifecard.vpreca.data.model.CreditCard" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_webview"
+        android:name="com.lifecard.vpreca.ui.webview.WebViewFragment"
+        android:label="Login"
+        android:fitsSystemWindows="true"
+        style="@style/Theme.VPreca.Fullscreen"
+        tools:layout="@layout/fragment_web_view">
+        <argument
+            android:name="web_url"
+            app:nullable="true"
+            android:defaultValue="@null"
+            app:argType="string" />
+    </fragment>
 </navigation>
