@@ -23,6 +23,7 @@ import com.lifecard.vpreca.databinding.LayoutDrawerContentBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.ui.webview.WebViewActivity
 import com.lifecard.vpreca.ui.webview.WebViewFragment
+import com.lifecard.vpreca.utils.viewFindNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
@@ -180,7 +181,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
     )
 
     private fun showWebViewActivity(webUrl: String) {
-        var navController = (context as Activity).findNavController(R.id.nav_host_fragment_content_main)
+        val navController = viewFindNavController(context)
         navController.navigate(R.id.nav_webview, WebViewFragment.createBundle(webUrl))
     }
 
