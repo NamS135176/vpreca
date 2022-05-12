@@ -13,6 +13,10 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
     // in-memory cache of the loggedInUser object
     var user: User? = null
         private set
+    var accessToken: String? = null
+        private set
+    var refreshToken: String? = null
+        private set
 
     val isLoggedIn: Boolean
         get() = user != null
@@ -35,20 +39,33 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
         }
     }
 
-    suspend fun login(username: String, password: String): Result<User> {
+    suspend fun login(username: String, password: String): Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
             try {
                 val loginResponse = apiService.login(username, password)
+                secureStore.saveAccessToken(loginResponse.accessToken)
+                secureStore.saveRefreshToken(loginResponse.refreshToken)
+                accessToken = loginResponse.accessToken
+                refreshToken = loginResponse.refreshToken
+                Result.Success(loginResponse)
+            } catch (e: Exception) {
+                println("LoginDataSource... login has error ${e}")
+                Result.Error(IOException("Error logging in", e))
+            }
+        }
+    }
+
+    suspend fun getUser(): Result<User> {
+        return withContext(Dispatchers.IO) {
+            try {
                 val fakeUser = User(
                     UUID.randomUUID().toString(),
                     "The Anh",
                     "anhndt@vn-sis.com",
-                    accessToken = loginResponse.accessToken,
-                    refreshToken = loginResponse.refreshToken!!
+                    accessToken = accessToken!!,
+                    refreshToken = refreshToken!!
                 )
                 setLoggedInUser(fakeUser)
-                secureStore.saveAccessToken(loginResponse.accessToken)
-                secureStore.saveRefreshToken(loginResponse.refreshToken)
                 Result.Success(fakeUser)
             } catch (e: Exception) {
                 println("LoginDataSource... login has error ${e}")

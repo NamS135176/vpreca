@@ -7,4 +7,12 @@ data class LoginResponse (
     val accessToken: String,
     @SerializedName("refreshToken")
     val refreshToken: String,
+    @SerializedName("action")
+    val action: LoginAction,
 )
+
+enum class LoginAction(val value:String) {
+    None("none"),
+    SmsVerify("sms_verify"),
+    UpdateAccount("update_account"),
+}

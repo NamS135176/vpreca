@@ -18,6 +18,7 @@ import com.lifecard.vpreca.*
 import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.KeyboardUtils
+import com.lifecard.vpreca.utils.fragmentFindNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -100,6 +101,12 @@ class LoginFragment : Fragment() {
                 loginResult.success?.let {
                     updateUiWithUser(it)
                     navigateToMainScreen()
+                }
+                loginResult.navigateSmsVerify?.let {
+                    if (it) {
+                        //navigate to sms verify
+                        
+                    }
                 }
             })
 

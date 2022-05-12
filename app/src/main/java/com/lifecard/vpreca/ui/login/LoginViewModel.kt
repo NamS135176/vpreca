@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
+import com.lifecard.vpreca.data.model.LoginAction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,11 +41,25 @@ class LoginViewModel @Inject constructor(private val loginRepository: UserReposi
         // can be launched in a separate asynchronous job
         viewModelScope.launch {
             loading.value = true
-            val result = loginRepository.login(username, password)
+            val loginResult = loginRepository.login(username, password)
 
-            if (result is Result.Success) {
-                _loginResult.value =
-                    LoginResult(success = result.data)
+            if (loginResult is Result.Success) {
+                when (loginResult.data.action) {
+                    LoginAction.None -> {
+                        val userResult = loginRepository.getUser()
+                        if (userResult is Result.Success) {
+                            _loginResult.value =
+                                LoginResult(success = userResult.)
+
+                        } else {
+                            _loginResult.value = LoginResult(error = R.string.login_failed)
+                        }
+                    }
+                    LoginAction.SmsVerify -> _loginResult.value =
+                        LoginResult(navigateSmsVerify = true)
+                    LoginAction.UpdateAccount -> _loginResult.value =
+                        LoginResult(navigateUpdateAccount = true)
+                }
             } else {
                 _loginResult.value = LoginResult(error = R.string.login_failed)
             }
