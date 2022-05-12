@@ -14,9 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VPreca"
         tools:overrideLibrary="com.google.firebase.analytics.ktx">
-        <activity
-            android:name=".SMSVerifyActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ForgotPassActivity"
             android:exported="false"

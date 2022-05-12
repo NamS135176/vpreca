@@ -9,6 +9,4 @@ data class User(
     val name: String,
     @SerializedName("email")
     val email: String,
-    val accessToken: String,
-    val refreshToken: String
 )

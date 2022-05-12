@@ -7,5 +7,7 @@ import com.lifecard.vpreca.data.model.User
  */
 data class LoginResult(
     val success: User? = null,
+    val navigateSmsVerify: Boolean? = false,
+    val navigateUpdateAccount: Boolean? = false,
     val error: Int? = null
 )

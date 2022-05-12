@@ -2,7 +2,9 @@ package com.lifecard.vpreca
 
 import android.os.Bundle
 import android.view.Menu
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -42,10 +44,27 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+//        val toggle = ActionBarDrawerToggle(
+//            this,
+//            drawerLayout,
+//            binding.appBarMain.toolbar,
+//            R.string.navigation_drawer_open,
+//            R.string.navigation_drawer_close
+//        )
+//        toggle.isDrawerIndicatorEnabled = true
+//        toggle.setHomeAsUpIndicator(R.drawable.ic_drawer_toggle);
+//        actionBar?.setDisplayHomeAsUpEnabled(true)
+//        actionBar?.setHomeButtonEnabled(true)
+
+//        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorAccent));
+
+//        toggle.drawerArrowDrawable.color = ContextCompat.getColor(applicationContext, R.color.black)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
