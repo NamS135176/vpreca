@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.MarginPageTransformer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
@@ -20,8 +18,9 @@ import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.SimpleOnPageChangeCallback
+import com.lifecard.vpreca.utils.clearLightStatusBar
+import com.lifecard.vpreca.utils.setLightStatusBar
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.max
@@ -156,6 +155,8 @@ class HomeFragment : Fragment() {
                 }.create().show()
             }
         })
+        setLightStatusBar()
+
         return root
     }
 
@@ -163,6 +164,7 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         binding.listCard.cardList.unregisterOnPageChangeCallback(pageChangeCallback)
         _binding = null
+        clearLightStatusBar()
     }
 
     private inner class CardSlidePagerAdapter(
