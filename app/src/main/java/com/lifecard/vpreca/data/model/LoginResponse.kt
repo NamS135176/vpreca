@@ -8,7 +8,7 @@ data class LoginResponse (
     @SerializedName("refreshToken")
     val refreshToken: String,
     @SerializedName("action")
-    val action: LoginAction,
+    val action: String,
 )
 
 enum class LoginAction(val value:String) {

@@ -3,6 +3,7 @@ package com.lifecard.vpreca.utils
 import android.app.Activity
 import android.content.Context
 import android.os.Build
+import android.text.Editable
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
@@ -10,11 +11,20 @@ import androidx.core.content.ContextCompat.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 
 
 fun Fragment.fragmentFindNavController(): NavController {
-    return requireActivity().findNavController(R.id.nav_host_fragment_content_main)
+    var navController: NavController? = null
+    try {
+        navController = requireActivity().findNavController(R.id.nav_host_fragment_content_main)
+    } catch (e: Exception) {
+    }
+    if (navController == null) {
+        navController = findNavController()
+    }
+    return navController;
 }
 
 fun Fragment.hideToolbar() {
@@ -81,3 +91,5 @@ fun Fragment.clearLightStatusBar() = try {
 
 } catch (e: Exception) {
 }
+
+fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)

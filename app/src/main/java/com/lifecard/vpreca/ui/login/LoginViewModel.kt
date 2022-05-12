@@ -45,19 +45,19 @@ class LoginViewModel @Inject constructor(private val loginRepository: UserReposi
 
             if (loginResult is Result.Success) {
                 when (loginResult.data.action) {
-                    LoginAction.None -> {
+                    LoginAction.None.value -> {
                         val userResult = loginRepository.getUser()
                         if (userResult is Result.Success) {
                             _loginResult.value =
-                                LoginResult(success = userResult.)
+                                LoginResult(success = userResult.data)
 
                         } else {
                             _loginResult.value = LoginResult(error = R.string.login_failed)
                         }
                     }
-                    LoginAction.SmsVerify -> _loginResult.value =
+                    LoginAction.SmsVerify.value -> _loginResult.value =
                         LoginResult(navigateSmsVerify = true)
-                    LoginAction.UpdateAccount -> _loginResult.value =
+                    LoginAction.UpdateAccount.value -> _loginResult.value =
                         LoginResult(navigateUpdateAccount = true)
                 }
             } else {
@@ -65,6 +65,10 @@ class LoginViewModel @Inject constructor(private val loginRepository: UserReposi
             }
             loading.value = false
         }
+    }
+
+    fun clearLoginResult() {
+        _loginResult.value = null
     }
 
     fun usernameDataChanged(text: String) {

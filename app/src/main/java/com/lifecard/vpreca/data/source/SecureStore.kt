@@ -38,6 +38,14 @@ class SecureStore(private val appContext: Context) {
         return getEncryptText(Constanst.SECURE_REFRESH_TOKEN)
     }
 
+    fun saveLoginAction(action: String) {
+        return saveEncryptText(Constanst.SECURE_LOGIN_ACTION, action)
+    }
+
+    fun getLoginAction(): String? {
+        return getEncryptText(Constanst.SECURE_REFRESH_TOKEN)
+    }
+
     fun clear() {
         with(encryptedSharedPreferences.edit()) {
             clear()

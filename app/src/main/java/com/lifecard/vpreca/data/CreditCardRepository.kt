@@ -21,7 +21,7 @@ class CreditCardRepository(
             if (refresh || latestCards.isEmpty()) {
                 try {
                     val response =
-                        apiService.getListCards(authorization = "Bear ${userRepository.user?.accessToken!!}")
+                        apiService.getListCards(authorization = "Bear ${userRepository.accessToken!!}")
                     latestCardsMutex.withLock { latestCards = response.data }
                     latestCardsMutex.withLock { Result.Success(latestCards) }
                 } catch (e: Exception) {

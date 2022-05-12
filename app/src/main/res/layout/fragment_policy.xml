@@ -21,48 +21,7 @@
                 app:elevation="0dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:title="@{@string/title_appbar_policy}" />
-            <!--        <com.google.android.material.appbar.AppBarLayout-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            app:layout_constraintTop_toTopOf="parent"-->
-            <!--            android:id="@+id/appbar_policy">-->
-            <!--            <LinearLayout-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:orientation="horizontal"-->
-            <!--                android:paddingBottom="32dp"-->
-            <!--                android:paddingTop="32dp"-->
-            <!--                android:paddingLeft="8dp"-->
-            <!--                android:paddingRight="8dp">-->
-            <!--                <androidx.appcompat.widget.AppCompatTextView-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_weight="0.8"-->
-            <!--                    android:text="@string/title_next_policy"-->
-            <!--                    android:gravity="center"-->
-            <!--                    android:visibility="invisible"/>-->
-            <!--                <androidx.appcompat.widget.AppCompatTextView-->
-            <!--                    style="@style/Widget.AppCompat.TextView.Bold"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_weight="0.5"-->
-            <!--                    android:text="@string/title_appbar_policy"-->
-            <!--                    android:gravity="center_horizontal"-->
-            <!--                    android:textColor="#fff"-->
-            <!--                    android:textSize="18sp"-->
-            <!--                    />-->
-            <!--                <androidx.appcompat.widget.AppCompatTextView-->
-            <!--                    android:id="@+id/regis_cancel"-->
-            <!--                    style="@style/Widget.AppCompat.TextView.Bold"-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_weight="0.8"-->
-            <!--                    android:text="@string/title_next_policy"-->
-            <!--                    android:gravity="center"-->
-            <!--                    android:textColor="#fff"-->
-            <!--                    android:textSize="14sp"/>-->
-            <!--            </LinearLayout>-->
-            <!--        </com.google.android.material.appbar.AppBarLayout>-->
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/policy_des"
                 android:layout_width="match_parent"
@@ -85,35 +44,37 @@
                 android:paddingTop="18dp"
                 android:paddingRight="24dp"
                 android:paddingBottom="21dp"
-                app:layout_constraintTop_toBottomOf="@+id/policy_des"></androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@+id/policy_des"
+                android:paddingStart="15dp"
+                android:paddingEnd="24dp" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/policy_note_top"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_policy"
+                style="@style/Widget.App.MaterialComponents.Button.TextButton.Bold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:lineSpacingExtra="6sp"
                 android:paddingHorizontal="24dp"
-                android:paddingTop="20dp"
                 android:text="@string/policy_note_top"
-                android:textColor="@color/primary"
                 android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/svPolicy" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/policy_note_bot"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_term_of_use"
+                style="@style/Widget.App.MaterialComponents.Button.TextButton.Bold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:lineSpacingExtra="6sp"
                 android:paddingHorizontal="24dp"
-                android:paddingTop="22dp"
                 android:text="@string/policy_note_bot"
-                android:textColor="@color/primary"
                 android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@+id/policy_note_top" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_policy" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_submit_policy"

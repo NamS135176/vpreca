@@ -15,7 +15,7 @@ class RemoteRepository(
         return withContext(Dispatchers.IO) {
             try {
                 val cardUsageHistoryResponse =
-                    apiService.getCardUsageHistory("Bear ${userRepository.user?.accessToken!!}")
+                    apiService.getCardUsageHistory("Bear ${userRepository.accessToken!!}")
                 Result.Success(cardUsageHistoryResponse.items)
             } catch (e: Exception) {
                 println("RemoteRepository...getCardUsageHistory has error ${e}")
