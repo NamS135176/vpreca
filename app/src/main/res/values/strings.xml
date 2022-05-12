@@ -203,6 +203,12 @@
     <string name='sms_verify_description_third'>認証番号が届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
     <string name='sms_verify_btn_submit'>ログイン</string>
     <string name='sms_verify_error'>認証番号が違います。残り２回</string>
+    <string name="sms_overtimes_title">制限回数を超えました</string>
+    <string name="sms_overtimes_des_top">セキュリティ保護のために一時的にSMS認証を停止いたします。</string>
+    <string name="sms_overtimes_des_bot">しばらく経ってから再度やりなおしてください</string>
+    <string name="sms_code_expired_title">有効期限切れ</string>
+    <string name="sms_code_expired_des_top">SMS認証の有効期限が切れています。</string>
+    <string name="sms_code_expired_des_bot">再度お手続きをお願いいたします。</string>
     <!--    SMS Verify-->
 
     <string name="menu_app_version">バージョン : %1$s</string>

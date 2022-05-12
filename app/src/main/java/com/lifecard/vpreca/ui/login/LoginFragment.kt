@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.*
 
@@ -52,19 +53,20 @@ class LoginFragment : Fragment() {
         val logoGift = binding.logoGift
         val signUpButton = binding.buttonSignup
         val btnForgotPass = binding.buttonForgotPassword
+        val tvLoginInfo = binding.textLoginInfo
+
+        tvLoginInfo.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_sms_verify) })
 
         btnForgotPass.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireContext(), ForgotPassActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            startActivity(intent)
+            findNavController().navigate(R.id.nav_forgot_input)
         })
 
         signUpButton.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireContext(), SignupActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            startActivity(intent)
+//            val intent = Intent(requireContext(), SignupActivity::class.java).apply {
+////                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+////            }
+////            startActivity(intent)
+            findNavController().navigate(R.id.nav_policy)
         })
 
         loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
@@ -144,10 +146,11 @@ class LoginFragment : Fragment() {
         }
 
         logoGift.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, IntroduceActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            startActivity(intent)
+//            val intent = Intent(context, IntroduceActivity::class.java).apply {
+//                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            }
+//            startActivity(intent)
+            findNavController().navigate(R.id.nav_introduce_first)
         })
     }
 

@@ -93,10 +93,11 @@ class SignupInputFragment : Fragment() {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
                     // do something on positive button click
-                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    }
-                    startActivity(intent)
+//                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
+//                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    }
+//                    startActivity(intent)
+                    findNavController().navigate(R.id.nav_login)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
