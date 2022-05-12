@@ -30,19 +30,19 @@ object EncryptionUtils {
     }
 
     private val keyStore: KeyStore?
-        private get() {
+        get() {
             var keyStore: KeyStore? = null
             try {
                 keyStore = KeyStore.getInstance(EncryptionKeyGenerator.ANDROID_KEY_STORE)
                 keyStore.load(null)
             } catch (e: KeyStoreException) {
-                print("${this.javaClass.simpleName} keyStore has error ${e}")
+                print("EncryptionUtils keyStore has error ${e}")
             } catch (e: CertificateException) {
-                print("${this.javaClass.simpleName} keyStore has error ${e}")
+                print("EncryptionUtils keyStore has error ${e}")
             } catch (e: NoSuchAlgorithmException) {
-                print("${this.javaClass.simpleName} keyStore has error ${e}")
+                print("EncryptionUtils keyStore has error ${e}")
             } catch (e: IOException) {
-                print("${this.javaClass.simpleName} keyStore has error ${e}")
+                print("EncryptionUtils keyStore has error ${e}")
             }
             return keyStore
         }
@@ -57,6 +57,7 @@ object EncryptionUtils {
                 keyStore.deleteEntry(EncryptionKeyGenerator.KEY_ALIAS)
             }
         } catch (e: KeyStoreException) {
+            print("SecurityKey... clear has exception ${e}")
         }
     }
 }

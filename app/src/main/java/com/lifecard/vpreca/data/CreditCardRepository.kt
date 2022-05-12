@@ -25,7 +25,7 @@ class CreditCardRepository(
                     latestCardsMutex.withLock { latestCards = response.data }
                     latestCardsMutex.withLock { Result.Success(latestCards) }
                 } catch (e: Exception) {
-                    print("${CreditCardRepository::class.simpleName} getLatestCards has error ${e}")
+                    print("CreditCardRepository getLatestCards has error ${e}")
                     Result.Error(e)
                 }
             } else {

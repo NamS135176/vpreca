@@ -28,6 +28,7 @@ internal class SecurityKey {
             val encrypted = cipher.doFinal(token.toByteArray())
             return Base64.encodeToString(encrypted, Base64.URL_SAFE)
         } catch (e: GeneralSecurityException) {
+            print("SecurityKey... encrypt has exception ${e}")
         }
         //Unable to encrypt Token
         return null
@@ -41,6 +42,7 @@ internal class SecurityKey {
             val original = cipher.doFinal(decoded)
             return String(original)
         } catch (e: GeneralSecurityException) {
+            print("SecurityKey... decrypt has exception ${e}")
         }
         //Unable to decrypt encrypted Token
         return null

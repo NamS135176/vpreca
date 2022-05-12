@@ -52,7 +52,7 @@
                 android:id="@+id/sms_verify_des_bot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="26dp"
+                android:paddingTop="22dp"
                 android:text="@string/sms_verify_des_bot"
                 android:textColor="#353535"
                 android:textSize="12sp"
@@ -90,6 +90,79 @@
                     android:layout_weight="1"
                     />
             </LinearLayout>
+            <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
+                android:id="@+id/code_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="21dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sms_verify_des_bot">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/idCodeVerify"
+                    style="@style/TextInputEditTextFilledBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/input_signup_style"
+                    android:hint="@string/sms_verify_code_hint"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:paddingHorizontal="17dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sms_verify_desscription_first"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="32dp"
+                android:text="@string/sms_verify_description_first"
+                android:textColor="#353535"
+                android:textSize="12sp"
+                android:lineSpacingExtra="6dp"
+                android:layout_marginHorizontal="29dp"
+                app:layout_constraintTop_toBottomOf="@+id/code_input_layout"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sms_verify_desscription_second"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sms_verify_description_second"
+                android:textColor="#353535"
+                android:textSize="12sp"
+                android:lineSpacingExtra="6dp"
+                android:layout_marginHorizontal="29dp"
+                app:layout_constraintTop_toBottomOf="@+id/sms_verify_desscription_first"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/sms_verify_desscription_third"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="22dp"
+                android:text="@string/sms_verify_description_third"
+                android:textColor="#353535"
+                android:textSize="12sp"
+                android:lineSpacingExtra="6dp"
+                android:layout_marginHorizontal="29dp"
+                app:layout_constraintTop_toBottomOf="@+id/sms_verify_desscription_second"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="22dp"
+                android:paddingVertical="18dp"
+                android:text="@string/btn_complete"
+                app:cornerRadius="30dp"
+                android:enabled="false"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/btn_verify_sms"
+                style="@style/Widget.AppCompat.TextView.Bold"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

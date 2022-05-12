@@ -1,6 +1,7 @@
 package com.lifecard.vpreca.data
 
 import com.lifecard.vpreca.data.api.ApiService
+import com.lifecard.vpreca.data.model.LoginResponse
 import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.data.source.SecureStore
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +50,7 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
                 secureStore.saveAccessToken(loginResponse.accessToken)
                 secureStore.saveRefreshToken(loginResponse.refreshToken)
                 Result.Success(fakeUser)
-            } catch (e: Throwable) {
+            } catch (e: Exception) {
                 println("LoginDataSource... login has error ${e}")
                 Result.Error(IOException("Error logging in", e))
             }
