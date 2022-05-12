@@ -253,14 +253,22 @@
                 android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@+id/name_input_layout" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinner_gender"
+            <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
+                android:id="@+id/gender_input_layout"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginHorizontal="22dp"
-                android:layout_marginTop="9dp"
-                android:paddingHorizontal="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/signup_gender_title" />
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signup_gender_title" >
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginTop="9dp"
+                    android:paddingHorizontal="16dp"
+/>
+            </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/signup_dob_title"
@@ -273,7 +281,7 @@
                 android:text="@string/dob_signup_title"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_gender" />
+                app:layout_constraintTop_toBottomOf="@+id/gender_input_layout" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/dob_input_layout"

@@ -6,15 +6,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.ArrayAdapter
-import android.widget.DatePicker
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -143,13 +142,27 @@ class SignupInputFragment : Fragment() {
             }
         }
 
+        val afterTextChangedListener = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // ignore
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                // ignore
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.dateDataChanged(text = s.toString())
+            }
+        }
+
         viewModel.validForm.observe(viewLifecycleOwner, androidx.lifecycle.Observer { signupFormState ->
-            if(idEdt.text.toString() == "" || usernameEdit.text.toString() == ""){
+            if(idEdt.text.toString() == "" || usernameEdit.text.toString() == "" || spinnerGender.selectedItem.toString() == "選択してください" || btnDatePicker.text.toString() == "1980年1月1日"){
                 btnSubmit.isEnabled = false
             }
             else{
                 btnSubmit.isEnabled =
-                    signupFormState.usernameError == null && signupFormState.idError == null
+                    signupFormState.usernameError == null && signupFormState.idError == null && signupFormState.genderError == null && signupFormState.dateError == null
             }
         })
 
@@ -167,6 +180,27 @@ class SignupInputFragment : Fragment() {
                 null
             }
         })
+
+        viewModel.cityError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+        })
+
+        viewModel.dateError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+        })
+
+        btnDatePicker.addTextChangedListener(afterTextChangedListener)
+        spinnerGender?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                viewModel.genderDataChanged(text = list.get(position))
+            }
+
+        }
 
         idEdt.doAfterTextChanged { text -> viewModel.idDataChanged(text = text.toString()) }
         idEdt.setOnEditorActionListener { _, actionId, _ ->

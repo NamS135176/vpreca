@@ -62,10 +62,6 @@ class LoginFragment : Fragment() {
         })
 
         signUpButton.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(requireContext(), SignupActivity::class.java).apply {
-////                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-////            }
-////            startActivity(intent)
             findNavController().navigate(R.id.nav_policy)
         })
 
@@ -146,10 +142,6 @@ class LoginFragment : Fragment() {
         }
 
         logoGift.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(context, IntroduceActivity::class.java).apply {
-//                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//            }
-//            startActivity(intent)
             findNavController().navigate(R.id.nav_introduce_first)
         })
     }

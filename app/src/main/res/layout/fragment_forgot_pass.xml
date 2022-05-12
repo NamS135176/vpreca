@@ -104,19 +104,28 @@
                 android:textSize="12sp"
                 android:layout_marginTop="35dp"
                 app:layout_constraintTop_toBottomOf="@+id/forgot_pass_email_layout" />
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/dob_input_layout_forgot"
+            <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
+                android:id="@+id/dob_input_layout_forgot_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginTop="9dp"
-                android:background="@drawable/input_signup_style"
-                android:paddingHorizontal="21dp"
-                android:paddingVertical="19dp"
-                android:text="@string/forgot_pass_dob_hint"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/forgot_dob_title" />
+                app:layout_constraintTop_toBottomOf="@id/forgot_dob_title">
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/dob_input_layout_forgot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/input_signup_style"
+                    android:paddingHorizontal="21dp"
+                    android:paddingVertical="19dp"
+                    android:text="@string/forgot_pass_dob_hint"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                     />
+            </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/forgot_phone_title"
                 style="@style/Widget.AppCompat.TextView.Bold"
@@ -128,7 +137,7 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:layout_marginTop="35dp"
-                app:layout_constraintTop_toBottomOf="@+id/dob_input_layout_forgot" />
+                app:layout_constraintTop_toBottomOf="@+id/dob_input_layout_forgot_lay" />
             <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
                 android:id="@+id/forgot_pass_phone_layout"
                 android:layout_width="match_parent"
@@ -146,7 +155,7 @@
                     android:background="@drawable/input_signup_style"
                     android:hint="@string/forgot_pass_phone_hint"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="phone"
                     android:paddingHorizontal="17dp"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
@@ -188,18 +197,27 @@
                 android:textSize="12sp"
                 android:layout_marginTop="35dp"
                 app:layout_constraintTop_toBottomOf="@+id/forgot_warning_des_bot" />
-            <Spinner
-                android:id="@+id/spinner_question"
+            <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
+                android:id="@+id/forgot_pass_question_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginTop="9dp"
-                android:background="@drawable/spinner_bg"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="18dp"
-                android:popupBackground="#f1f1f1"
-                android:spinnerMode="dropdown"
-                app:layout_constraintTop_toBottomOf="@+id/forgot_secret_question_title" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/forgot_secret_question_title">
+                <Spinner
+                    android:id="@+id/spinner_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/spinner_bg"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="18dp"
+                    android:popupBackground="#f1f1f1"
+                    android:spinnerMode="dropdown"
+                   />
+            </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/forgot_secret_answer_title"
                 style="@style/Widget.AppCompat.TextView.Bold"
@@ -211,7 +229,7 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 android:layout_marginTop="35dp"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_question" />
+                app:layout_constraintTop_toBottomOf="@+id/forgot_pass_question_layout" />
             <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
                 android:id="@+id/forgot_pass_secret_answer_layout"
                 android:layout_width="match_parent"

@@ -10,7 +10,12 @@ import com.lifecard.vpreca.ui.login.LoginFormState
 class SignupInputViewModel : ViewModel() {
     val usernameError = MutableLiveData<Int?>()
     val idError = MutableLiveData<Int?>()
-
+    val dateError = MutableLiveData<Int?>()
+    val phoneError = MutableLiveData<Int?>()
+    val questionError = MutableLiveData<Int?>()
+    val cityError = MutableLiveData<Int?>()
+    val genderError = MutableLiveData<Int?>()
+    val answerError = MutableLiveData<Int?>()
     val validForm = MediatorLiveData<SignUpFormState>().apply {
         value = SignUpFormState()
         addSource(idError) { value ->
@@ -21,7 +26,26 @@ class SignupInputViewModel : ViewModel() {
             val previous = this.value
             this.value = previous?.copy(usernameError = value)
         }
-
+        addSource(dateError) { value ->
+            val previous = this.value
+            this.value = previous?.copy(dateError = value)
+        }
+        addSource(phoneError) { value ->
+            val previous = this.value
+            this.value = previous?.copy(phoneError = value)
+        }
+        addSource(genderError) { value ->
+            val previous = this.value
+            this.value = previous?.copy(genderError = value)
+        }
+        addSource(questionError) { value ->
+            val previous = this.value
+            this.value = previous?.copy(questionError = value)
+        }
+        addSource(answerError) { value ->
+            val previous = this.value
+            this.value = previous?.copy(answerError = value)
+        }
     }
 
     fun usernameDataChanged(text: String) {
@@ -39,6 +63,75 @@ class SignupInputViewModel : ViewModel() {
             idError.value = null
         }
     }
+    fun dateDataChanged(text: String) {
+        if (!isDateValid(text)) {
+            dateError.value = R.string.forgot_pass_error_dob
+        } else {
+            dateError.value = null
+        }
+    }
+
+    fun phoneDataChanged(text: String) {
+        if (!isPhoneValid(text)) {
+            phoneError.value = R.string.forgot_pass_error_phone
+        } else {
+            phoneError.value = null
+        }
+    }
+
+    fun questionDataChanged(text: String) {
+        if (!isQuestionValid(text)) {
+            questionError.value = R.string.forgot_pass_error_secret_question
+        }
+        else{
+            questionError.value = null
+        }
+    }
+
+    fun cityDataChanged(text: String) {
+        if (!isQuestionValid(text)) {
+            cityError.value = R.string.forgot_pass_error_secret_question
+        }
+        else{
+            cityError.value = null
+        }
+    }
+
+    fun genderDataChanged(text: String) {
+        if (!isQuestionValid(text)) {
+            genderError.value = R.string.forgot_pass_error_secret_question
+        }
+        else{
+            genderError.value = null
+        }
+    }
+
+    fun answerDataChanged(text: String) {
+        if (!isAnswerValid(text)) {
+            answerError.value = R.string.forgot_pass_error_secret_answer
+        }
+        else{
+            answerError.value = null
+        }
+    }
+
+    private fun isPhoneValid(phone: String): Boolean {
+        return Patterns.PHONE.matcher(phone).matches()
+    }
+
+    private fun isDateValid(date: String): Boolean {
+
+        return date != "1980年1月1日"
+    }
+
+    private fun isQuestionValid(question: String): Boolean {
+
+        return true
+    }
+
+    private fun isAnswerValid(answer: String): Boolean {
+        return answer.length in 0..20
+    }
 
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
@@ -49,4 +142,5 @@ class SignupInputViewModel : ViewModel() {
     private fun isIdValid(id: String): Boolean {
         return id.length in 6..10
     }
+
 }
