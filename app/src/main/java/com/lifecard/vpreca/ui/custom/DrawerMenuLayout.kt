@@ -181,7 +181,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
     )
 
     private fun showWebViewActivity(webUrl: String) {
-        val navController = viewFindNavController(context)
+        val navController = viewFindNavController()
         navController.navigate(R.id.nav_webview, WebViewFragment.createBundle(webUrl))
     }
 

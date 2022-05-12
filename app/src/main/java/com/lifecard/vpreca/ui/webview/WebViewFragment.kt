@@ -64,12 +64,12 @@ class WebViewFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        hideToolbar(requireActivity())
+        hideToolbar()
     }
 
     override fun onDetach() {
         super.onDetach()
-        showToolbar(requireActivity())
+        showToolbar()
     }
 }
 

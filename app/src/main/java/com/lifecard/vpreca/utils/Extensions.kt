@@ -17,17 +17,22 @@ fun Fragment.fragmentFindNavController(): NavController {
     return requireActivity().findNavController(R.id.nav_host_fragment_content_main)
 }
 
-fun Fragment.hideToolbar(activity: Activity) {
-
-    (activity as? AppCompatActivity)?.supportActionBar?.hide()
+fun Fragment.hideToolbar() {
+    try {
+        (requireActivity() as? AppCompatActivity)?.supportActionBar?.hide()
+    } catch (e: Exception) {
+    }
 }
 
-fun Fragment.showToolbar(activity: Activity) {
-    (activity as? AppCompatActivity)?.supportActionBar?.show()
+fun Fragment.showToolbar() {
+    try {
+        (requireActivity() as? AppCompatActivity)?.supportActionBar?.show()
+    } catch (e: Exception) {
+    }
 }
 
-fun View.viewFindNavController(ctx: Context): NavController {
-    return (ctx as Activity).findNavController(R.id.nav_host_fragment_content_main)
+fun View.viewFindNavController(): NavController {
+    return (context as Activity).findNavController(R.id.nav_host_fragment_content_main)
 }
 
 fun Fragment.setLightStatusBar() = try {
