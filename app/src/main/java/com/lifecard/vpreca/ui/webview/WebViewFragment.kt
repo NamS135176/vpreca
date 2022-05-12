@@ -1,5 +1,6 @@
 package com.lifecard.vpreca.ui.webview
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,14 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.databinding.FragmentWebViewBinding
+import com.lifecard.vpreca.utils.fragmentFindNavController
+import com.lifecard.vpreca.utils.hideToolbar
+import com.lifecard.vpreca.utils.showToolbar
 
 class WebViewFragment : Fragment() {
 
@@ -20,6 +27,10 @@ class WebViewFragment : Fragment() {
             f.arguments = args
 
             return f
+        }
+
+        fun createBundle(webUrl: String): Bundle {
+            return bundleOf("web_url" to webUrl)
         }
     }
 
@@ -43,10 +54,22 @@ class WebViewFragment : Fragment() {
         webView.webChromeClient = MyWebChromeClient()
         webUrl?.let { webView.loadUrl(webUrl) }
 
-
-        buttonCancel.setOnClickListener(View.OnClickListener { activity?.finish() })
+        buttonCancel.setOnClickListener(View.OnClickListener {
+            val navController = fragmentFindNavController()
+            navController.popBackStack()
+        })
 
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        hideToolbar(requireActivity())
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        showToolbar(requireActivity())
     }
 }
 
