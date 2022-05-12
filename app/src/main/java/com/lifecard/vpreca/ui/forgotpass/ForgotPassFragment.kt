@@ -135,11 +135,11 @@ class ForgotPassFragment : Fragment() {
         spinnerQuestion.adapter = adapter
 
         viewModel.validForm.observe(viewLifecycleOwner, androidx.lifecycle.Observer { forgotPassState ->
-            if(emailEdt.text.toString() == ""){
+            if(emailEdt.text.toString() == "" ){
                 btnSubmit.isEnabled = false
             }
             else{
-                btnSubmit.isEnabled =(forgotPassState.emailError == null )
+                btnSubmit.isEnabled =(forgotPassState.emailError == null && tvDatePicker.text.toString() != "年/月/日" )
             }
         })
 
@@ -150,7 +150,6 @@ class ForgotPassFragment : Fragment() {
                 null
             }
         })
-
 
 
         emailEdt.doAfterTextChanged { text -> viewModel.emailDataChanged(text = text.toString()) }
