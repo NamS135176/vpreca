@@ -190,6 +190,27 @@
     <string name="complete_forgot_des_bot">送信させていただいたURLよりログインパスワード星設定画面へ進み、ログインパスワードの再設定をお願いします。</string>
     <!--    Complete Forgot Pass-->
 
+    <!--    SMS Verify-->
+    <string name="appbar_sms_title">自動ログイン認証</string>
+    <string name='sms_verify_title'>認証番号入力</string>
+    <string name="sms_verify_des_top">自動ログインの有効期限が切れました。</string>
+    <string name='sms_verify_des_bot'>SMSで認証番号を送信いたしました。受け取った認証番号を入力し、「次へ」ボタンをタップしてください。</string>
+    <string name='sms_verify_code_title'>送信先電話番号</string>
+    <string name="sms_verify_phone_example">080-0000-0000</string>
+    <string name='sms_verify_code_hint'>認証番号</string>
+    <string name="sms_verify_description_first">認証手続きの有効時間は10分です。</string>
+    <string name='sms_verify_description_second'>認証番号の入力を複数回間違えると、同日中の入力が行えなくなります。</string>
+    <string name='sms_verify_description_third'>認証番号が届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
+    <string name='sms_verify_btn_submit'>ログイン</string>
+    <string name='sms_verify_error'>認証番号が違います。残り２回</string>
+    <string name="sms_overtimes_title">制限回数を超えました</string>
+    <string name="sms_overtimes_des_top">セキュリティ保護のために一時的にSMS認証を停止いたします。</string>
+    <string name="sms_overtimes_des_bot">しばらく経ってから再度やりなおしてください</string>
+    <string name="sms_code_expired_title">有効期限切れ</string>
+    <string name="sms_code_expired_des_top">SMS認証の有効期限が切れています。</string>
+    <string name="sms_code_expired_des_bot">再度お手続きをお願いいたします。</string>
+    <!--    SMS Verify-->
+
     <string name="menu_app_version">バージョン : %1$s</string>
     <string name="copyright_life_card_co_ltd">Copyright © LIFE CARD Co., Ltd.\nAll rights reserved</string>
     <string name="logout">ログアウト</string>

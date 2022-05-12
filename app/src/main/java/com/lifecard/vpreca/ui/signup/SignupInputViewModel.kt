@@ -42,11 +42,11 @@ class SignupInputViewModel : ViewModel() {
 
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
-        return username.length >= 2 && username.length<=18
+        return username.length in 2..18
     }
 
     // A placeholder password validation check
     private fun isIdValid(id: String): Boolean {
-        return id.length >= 6 && id.length<=10
+        return id.length in 6..10
     }
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentForgotPassBinding
@@ -48,10 +49,11 @@ class CompleteForgotPassFragment : Fragment() {
     }
 
     fun backFunction(){
-        val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        startActivity(intent)
+//        val intent = Intent(requireContext(), LoginActivity::class.java).apply {
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        }
+//        startActivity(intent)
+        findNavController().navigate(R.id.nav_login)
     }
 
 }

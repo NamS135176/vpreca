@@ -47,10 +47,11 @@ class PolicyFragment : Fragment() {
         _binding = FragmentPolicyBinding.inflate(inflater, container, false)
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                }
-                startActivity(intent)
+//                val intent = Intent(requireContext(), LoginActivity::class.java).apply {
+//                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                }
+//                startActivity(intent)
+                findNavController().popBackStack()
             }
         })
         val btnSubmitPolicy = binding.btnSubmitPolicy
@@ -63,10 +64,11 @@ class PolicyFragment : Fragment() {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
                     // do something on positive button click
-                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    }
-                    startActivity(intent)
+//                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
+//                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    }
+//                    startActivity(intent)
+                    findNavController().popBackStack()
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
