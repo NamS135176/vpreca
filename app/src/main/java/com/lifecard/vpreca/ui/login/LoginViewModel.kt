@@ -68,7 +68,7 @@ class LoginViewModel @Inject constructor(private val loginRepository: UserReposi
     }
 
     fun clearLoginResult() {
-        _loginResult.value = null
+        _loginResult.value = LoginResult()
     }
 
     fun usernameDataChanged(text: String) {

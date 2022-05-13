@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.databinding.FragmentWebViewBinding
 import com.lifecard.vpreca.utils.fragmentFindNavController
 import com.lifecard.vpreca.utils.hideToolbar

@@ -1,23 +1,23 @@
 package com.lifecard.vpreca.ui.termofuse
 
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
+import android.os.Build
 import android.os.Bundle
-import android.preference.PreferenceManager
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.TermOfUseActivity
-import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
 import com.lifecard.vpreca.databinding.TermOfUseFragmentBinding
-import com.lifecard.vpreca.ui.signup.PolicyAdapter
-import com.lifecard.vpreca.ui.signup.TermOfUseAdapter
+import com.lifecard.vpreca.ui.webview.WebViewActivity
+import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.PreferenceHelper
 
 class TermOfUseFragment : Fragment() {
@@ -25,9 +25,44 @@ class TermOfUseFragment : Fragment() {
     companion object {
         fun newInstance() = TermOfUseFragment()
     }
+
     private var _binding: TermOfUseFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: TermOfUseViewModel
+//    private lateinit var buttonToolbarBack: AppCompatButton
+
+    private var webViewClient = object : WebViewClient() {
+
+        private fun handleOpenUrl(view: WebView?, url: String) {
+            if (url.contains("privacy_policy.html") && url.contains("file://")) {
+                view?.loadUrl("file:///android_asset/privacy_policy.html")
+//                buttonToolbarBack.visibility = View.VISIBLE
+            } else if (url.startsWith("http://") || url.startsWith("https://")) {
+                //open webview fragment
+                val intent = Intent(context, WebViewActivity::class.java)
+                intent.putExtra(WebViewActivity.EXTRA_WEB_URL, url)
+                startActivity(intent)
+//                findNavController().navigate(R.id.nav_webview, WebViewFragment.createBundle(url))
+            }
+        }
+
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) return true//only support from 24 and above
+            request?.url?.let {
+                handleOpenUrl(view, it.toString())
+            }
+            return true
+        }
+
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) return false//only support from 23 and bellow
+            url?.let { handleOpenUrl(view, it) }
+            return true
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,35 +71,45 @@ class TermOfUseFragment : Fragment() {
         _binding = TermOfUseFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(TermOfUseViewModel::class.java)
 
-        val rvTermOfUse = binding.rvTermOfUse
         val btnSubmit = binding.btnSubmitTermOfUse
         val cbTermOfUse = binding.cbTermOfUse
+        val webView = binding.webview
+//        buttonToolbarBack = binding.appbar.buttonBack
 
-        val arrPolicy: ArrayList<String>
-        arrPolicy = ArrayList()
-        arrPolicy.add(getString(R.string.title_term_of_use))
-        for (i in 0 until 12) {
-            arrPolicy.add("利用規約內容。利用規約内容。利用規約內容。利用規 約內容。利用規約內容。利用規約內容。利用規約內 容。利用規約內容。")
-        }
-
-        val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        val adapter = TermOfUseAdapter(arrPolicy)
-        rvTermOfUse?.layoutManager = linearLayoutManager
-        rvTermOfUse?.adapter = adapter
+//        buttonToolbarBack.visibility = View.INVISIBLE
+//        buttonToolbarBack.setOnClickListener(View.OnClickListener {
+//            buttonToolbarBack.visibility = View.INVISIBLE
+//            webView.loadUrl("file:///android_asset/term_of_use.html")
+//        })
 
         cbTermOfUse.setOnClickListener(View.OnClickListener {
-            context?.let { it1 -> PreferenceHelper.setAcceptTermOfUseFirstTime(appContext = it1, value = true) }
+            context?.let { it1 ->
+                PreferenceHelper.setAcceptTermOfUseFirstTime(
+                    appContext = it1,
+                    value = true
+                )
+            }
             btnSubmit.isEnabled = cbTermOfUse.isChecked
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {
-            context?.let { it1 -> PreferenceHelper.setAcceptTermOfUseFirstTime(appContext = it1, value = true) }
+            context?.let { it1 ->
+                PreferenceHelper.setAcceptTermOfUseFirstTime(
+                    appContext = it1,
+                    value = true
+                )
+            }
             val intent = Intent(activity, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
             startActivity(intent)
         })
+        webView.settings.useWideViewPort = true
+        webView.settings.loadWithOverviewMode = true
+        webView.settings.builtInZoomControls = false
+        webView.settings.javaScriptEnabled = false
+        webView.webViewClient = webViewClient
+        webView.loadUrl("file:///android_asset/term_of_use.html")
         return binding.root
     }
 
