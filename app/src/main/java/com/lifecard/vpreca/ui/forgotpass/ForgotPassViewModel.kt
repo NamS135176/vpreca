@@ -80,11 +80,11 @@ class ForgotPassViewModel : ViewModel() {
     }
     // A placeholder username validation check
     private fun isEmailValid(email: String): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches() && isHalfWidth(email)
     }
 
     private fun isPhoneValid(phone: String): Boolean {
-        return Patterns.PHONE.matcher(phone).matches()
+        return Patterns.PHONE.matcher(phone).matches() && isHalfWidth(phone)
     }
 
     private fun isDateValid(date: String): Boolean {
@@ -93,11 +93,16 @@ class ForgotPassViewModel : ViewModel() {
     }
 
     private fun isQuestionValid(question: String): Boolean {
-
         return true
     }
 
     private fun isAnswerValid(answer: String): Boolean {
-        return answer.length in 0..20
+        return answer.length in 0..20 && isHalfWidth(answer)
     }
+
+    fun isHalfWidth(text:String):Boolean{
+        val regex = "[０-９ぁ-んァ-ン一-龥]".toRegex()
+        return regex.find(text) == null
+    }
+
 }
