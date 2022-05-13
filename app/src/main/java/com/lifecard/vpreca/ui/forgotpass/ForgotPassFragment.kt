@@ -57,8 +57,7 @@ class ForgotPassFragment : Fragment() {
         val emailEdt = binding.forgotPassEmailInput
         val btnSubmit = binding.btnSubmitForgot
         val emailLayout = binding.forgotPassEmailLayout
-        val imgBack = binding.appbarForgotPass.imgBackIntroduce
-        val tvBack = binding.appbarForgotPass.tvBackIntroduce
+        val btnBack = binding.appbarForgotPass.btnBack
         val cancelBtn = binding.appbarForgotPass.cancelBtn
         val dateLayout = binding.dobInputLayoutForgotLay
         val phoneEdt = binding.forgotPassPhoneInput
@@ -80,9 +79,8 @@ class ForgotPassFragment : Fragment() {
             }.create().show()
         })
 
-        imgBack.setOnClickListener(View.OnClickListener { backFunction() })
+        btnBack.setOnClickListener(View.OnClickListener { backFunction() })
 
-        tvBack.setOnClickListener(View.OnClickListener { backFunction() })
 
         fun updateDateInView() {
             val myFormat = "yyyy年MM月dd日" // mention the format you need

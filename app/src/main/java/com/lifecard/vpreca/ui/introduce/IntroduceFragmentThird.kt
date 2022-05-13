@@ -36,16 +36,12 @@ class IntroduceFragmentThird : Fragment() {
             }
         })
 
-        val imgIntroduceBack = binding.appbarGiftThird.imgBackIntroduce
-        val tvIntroduceBack = binding.appbarGiftThird.tvBackIntroduce
+        val btnBack = binding.appbarGiftThird.btnBack
 
-        imgIntroduceBack.setOnClickListener(View.OnClickListener {
+        btnBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_second)
         })
 
-        tvIntroduceBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_introduce_second)
-        })
         return binding.root
     }
 
