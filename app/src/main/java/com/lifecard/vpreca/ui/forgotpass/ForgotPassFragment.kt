@@ -44,7 +44,7 @@ class ForgotPassFragment : Fragment() {
         _binding = FragmentForgotPassBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(ForgotPassViewModel::class.java)
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 backFunction()

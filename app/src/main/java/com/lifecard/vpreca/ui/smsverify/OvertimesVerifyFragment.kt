@@ -36,7 +36,7 @@ class OvertimesVerifyFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentOvertimesVerifyBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() { findNavController().navigate(R.id.nav_login) }
         })
         val btnComplete = binding.btnOvertimes

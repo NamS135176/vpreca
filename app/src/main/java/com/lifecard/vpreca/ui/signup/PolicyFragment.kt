@@ -37,7 +37,7 @@ class PolicyFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPolicyBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
 //                val intent = Intent(requireContext(), LoginActivity::class.java).apply {

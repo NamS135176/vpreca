@@ -42,7 +42,7 @@ class SignupInputFragment : Fragment() {
         _binding = SignupInputFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SignupInputViewModel::class.java)
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 findNavController().popBackStack()
             }

@@ -40,7 +40,7 @@ class CodeExpiredFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCodeExpiredBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() { findNavController().navigate(R.id.nav_login) }
         })
         // Inflate the layout for this fragment

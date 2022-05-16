@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
@@ -51,13 +52,6 @@ class LoginFragment : NoToolbarFragment() {
     ): View? {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         val usernameLayout = binding.usernameLayout
         val usernameEditText = binding.username
         val passwordLayout = binding.passwordLayout
@@ -171,6 +165,18 @@ class LoginFragment : NoToolbarFragment() {
 
         logoGift.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_first)
+        })
+        return binding.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
         })
     }
 

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -17,6 +18,7 @@ import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.databinding.ActivityMainBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.ui.custom.DrawerMenuLayout
+import com.lifecard.vpreca.ui.login.LoginFragmentDirections
 import com.lifecard.vpreca.utils.PreferenceHelper
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
@@ -60,8 +62,13 @@ class MainActivity : AppCompatActivity() {
         if (userRepository.isLoggedIn) {
             navController.setGraph(R.navigation.main_navigation)
         } else {
+            navView.visibility = View.GONE
             if (!PreferenceHelper.isAcceptTermOfUseFirstTime(appContext = baseContext)) {
-                navController.navigate(R.id.nav_term_of_use)
+                val navOptions = NavOptions.Builder().apply {
+                    setPopUpTo(R.id.nav_term_of_use, inclusive = true)
+                }
+                    .build()
+                navController.navigate(R.id.nav_term_of_use, args = null, navOptions = navOptions)
             }
         }
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)

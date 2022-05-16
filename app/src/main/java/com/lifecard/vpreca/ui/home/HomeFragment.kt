@@ -169,6 +169,7 @@ class HomeFragment : Fragment() {
         _binding = null
         clearLightStatusBar()
     }
+
     private lateinit var lifecycleObserver: DefaultLifecycleObserver
 
     override fun onAttach(context: Context) {
@@ -181,6 +182,9 @@ class HomeFragment : Fragment() {
             }
         }
         requireActivity().lifecycle.addObserver(lifecycleObserver)
+
+        val view = requireActivity().findViewById<View>(R.id.nav_view)
+        view.visibility = View.VISIBLE
     }
 
     private inner class CardSlidePagerAdapter(

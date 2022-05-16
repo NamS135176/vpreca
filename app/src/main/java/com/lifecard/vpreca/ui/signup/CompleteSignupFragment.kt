@@ -43,7 +43,7 @@ class CompleteSignupFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentCompleteSignupBinding.inflate(inflater, container, false)
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
 //                val intent = Intent(requireContext(), LoginActivity::class.java).apply {
 //                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
