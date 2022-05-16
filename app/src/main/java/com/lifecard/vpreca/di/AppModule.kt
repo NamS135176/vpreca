@@ -2,7 +2,6 @@ package com.lifecard.vpreca.di
 
 import android.content.Context
 import android.content.Intent
-import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.UserRepository

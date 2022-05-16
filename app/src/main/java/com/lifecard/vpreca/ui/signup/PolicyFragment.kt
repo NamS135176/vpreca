@@ -16,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.SignupActivity
 import com.lifecard.vpreca.databinding.FragmentLoginBinding

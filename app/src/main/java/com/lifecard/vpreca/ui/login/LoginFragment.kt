@@ -8,26 +8,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.doAfterTextChanged
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.KeyboardUtils
 import com.lifecard.vpreca.utils.fragmentFindNavController
+import com.lifecard.vpreca.utils.navigateToHome
 import com.lifecard.vpreca.utils.toEditable
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : NoToolbarFragment() {
 
     private val loginViewModel: LoginViewModel by viewModels()
     private var _binding: FragmentLoginBinding? = null
@@ -103,7 +109,7 @@ class LoginFragment : Fragment() {
                 }
                 loginResult.success?.let {
                     updateUiWithUser(it)
-                    navigateToMainScreen()
+                    navigateToHome()
                 }
                 loginResult.navigateSmsVerify?.let {
                     if (it) {
@@ -193,14 +199,6 @@ class LoginFragment : Fragment() {
             setPositiveButton(R.string.button_ok, null)
             setMessage(errorString)
         }.create().show()
-    }
-
-
-    private fun navigateToMainScreen() {
-        val intent = Intent(requireContext(), MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        startActivity(intent)
     }
 
     override fun onDestroyView() {

@@ -13,7 +13,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.lifecard.vpreca.LoginActivity
+import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.TermOfUseFragmentBinding
 import com.lifecard.vpreca.ui.webview.WebViewActivity
@@ -99,10 +99,11 @@ class TermOfUseFragment : Fragment() {
                     value = true
                 )
             }
-            val intent = Intent(activity, LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            startActivity(intent)
+            findNavController().navigate(R.id.nav_login)
+//            val intent = Intent(activity, MainActivity::class.java).apply {
+//                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            }
+//            startActivity(intent)
         })
         webView.settings.useWideViewPort = true
         webView.settings.loadWithOverviewMode = true

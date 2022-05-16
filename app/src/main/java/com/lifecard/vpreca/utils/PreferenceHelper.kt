@@ -14,7 +14,7 @@ class PreferenceHelper {
             val sharedPreferences = appContext.getSharedPreferences("VPrecaPref", Context.MODE_PRIVATE)
             with(sharedPreferences.edit()) {
                 putBoolean("accept_term_of_use_first_time", value)
-                apply()
+                commit()
             }
         }
     }

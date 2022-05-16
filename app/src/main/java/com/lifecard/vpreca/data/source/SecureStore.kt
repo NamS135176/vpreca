@@ -43,7 +43,7 @@ class SecureStore(private val appContext: Context) {
     }
 
     fun getLoginAction(): String? {
-        return getEncryptText(Constanst.SECURE_REFRESH_TOKEN)
+        return getEncryptText(Constanst.SECURE_LOGIN_ACTION)
     }
 
     fun clear() {

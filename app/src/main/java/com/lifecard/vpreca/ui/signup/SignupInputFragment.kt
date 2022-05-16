@@ -20,7 +20,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doBeforeTextChanged
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.SignupData
 import com.lifecard.vpreca.databinding.SignupInputFragmentBinding

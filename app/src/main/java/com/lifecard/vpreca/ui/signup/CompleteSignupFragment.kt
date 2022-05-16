@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
-import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentCompleteSignupBinding
 import com.lifecard.vpreca.databinding.FragmentConfirmSignupDataBinding

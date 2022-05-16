@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lifecard.vpreca.LoginActivity
+import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentConfirmSignupDataBinding
 import com.lifecard.vpreca.databinding.FragmentPolicyBinding
@@ -44,7 +44,7 @@ class ConfirmSignupDataFragment : Fragment() {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
                     // do something on positive button click
-                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
+                    val intent = Intent(requireContext(), MainActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
                     startActivity(intent)

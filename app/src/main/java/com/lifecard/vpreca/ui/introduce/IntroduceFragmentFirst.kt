@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
-import com.lifecard.vpreca.LoginActivity
+import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.SignupActivity
 import com.lifecard.vpreca.databinding.FragmentConfirmEmailBinding
@@ -49,14 +49,14 @@ class IntroduceFragmentFirst : Fragment() {
         checkbox.isChecked = false
         btnSubmit.isEnabled = false
         imgIntroduceBack.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, LoginActivity::class.java).apply {
+            val intent = Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
             startActivity(intent)
         })
 
         tvIntroduceBack.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, LoginActivity::class.java).apply {
+            val intent = Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
             startActivity(intent)

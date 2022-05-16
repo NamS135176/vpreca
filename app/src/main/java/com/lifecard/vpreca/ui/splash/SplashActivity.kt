@@ -17,40 +17,20 @@ import javax.inject.Inject
 @SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
-    @Inject
-    lateinit var userRepository: UserRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (PreferenceHelper.isAcceptTermOfUseFirstTime(appContext = baseContext)) {
-            navigateToTermOfUse()
-        } else {
-//            navigateToLoginScreen()
-            if (userRepository.isLoggedIn) {
-                navigateToMainScreen()
-            } else {
-                navigateToLoginScreen()
-            }
-        }
+        navigateToMainScreen()
+//        if (!PreferenceHelper.isAcceptTermOfUseFirstTime(appContext = baseContext)) {
+//            navigateToTermOfUse()
+//        } else {
+//            navigateToMainScreen()
+//        }
     }
 
     private fun navigateToMainScreen() {
         val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        startActivity(intent)
-    }
-
-    private fun navigateToLoginScreen() {
-        val intent = Intent(this, LoginActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        startActivity(intent)
-    }
-
-    private fun navigateToSignUpScreen() {
-        val intent = Intent(this, SignupActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)

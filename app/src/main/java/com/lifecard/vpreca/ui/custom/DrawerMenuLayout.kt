@@ -11,10 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.BuildConfig
-import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.UserRepository
@@ -23,6 +24,7 @@ import com.lifecard.vpreca.databinding.LayoutDrawerContentBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.ui.webview.WebViewActivity
 import com.lifecard.vpreca.ui.webview.WebViewFragment
+import com.lifecard.vpreca.utils.navigateToLogin
 import com.lifecard.vpreca.utils.viewFindNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
@@ -37,8 +39,11 @@ class DrawerMenuLayout @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayoutCompat(context, attrs, defStyleAttr) {
-    @Inject lateinit var userRepository: UserRepository
-    @Inject lateinit var secureStore: SecureStore
+    @Inject
+    lateinit var userRepository: UserRepository
+
+    @Inject
+    lateinit var secureStore: SecureStore
 
     private var _binding: LayoutDrawerContentBinding
     private var adapter: DrawerMenuAdapter
@@ -248,10 +253,8 @@ class DrawerMenuLayout @JvmOverloads constructor(
         binding.buttonLogout.setOnClickListener(OnClickListener {
             userRepository.clear()
             secureStore.clear()
-            val intent = Intent(context, LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            context.startActivity(intent)
+            closeDrawer()
+            navigateToLogin()
         })
     }
 
