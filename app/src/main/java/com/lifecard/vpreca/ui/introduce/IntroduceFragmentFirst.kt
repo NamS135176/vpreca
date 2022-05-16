@@ -11,8 +11,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.SignupActivity
-import com.lifecard.vpreca.databinding.FragmentConfirmEmailBinding
 import com.lifecard.vpreca.databinding.IntroduceFragmentFirstFragmentBinding
 
 class IntroduceFragmentFirst : Fragment() {

@@ -20,15 +20,15 @@ import com.lifecard.vpreca.ui.custom.DrawerMenuLayout
 
 
 fun Fragment.fragmentFindNavController(): NavController {
-    var navController: NavController? = null
-    try {
-        navController = requireActivity().findNavController(R.id.nav_host_fragment_content_main)
-    } catch (e: Exception) {
-    }
-    if (navController == null) {
-        navController = findNavController()
-    }
-    return navController;
+    var navController: NavController = findNavController()
+//    try {
+//        if (navController == null) {
+//            navController = requireActivity().findNavController(R.id.nav_host_fragment_content_main)
+//        }
+//    } catch (e: Exception) {
+//    }
+
+    return navController
 }
 
 fun Fragment.hideToolbar() {

@@ -22,22 +22,10 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         navigateToMainScreen()
-//        if (!PreferenceHelper.isAcceptTermOfUseFirstTime(appContext = baseContext)) {
-//            navigateToTermOfUse()
-//        } else {
-//            navigateToMainScreen()
-//        }
     }
 
     private fun navigateToMainScreen() {
         val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        startActivity(intent)
-    }
-
-    private fun navigateToTermOfUse() {
-        val intent = Intent(this, TermOfUseActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)

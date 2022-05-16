@@ -10,7 +10,10 @@
         android:id="@+id/nav_term_of_use"
         android:name="com.lifecard.vpreca.ui.termofuse.TermOfUseFragment"
         android:label="@string/title_term_of_use"
-        tools:layout="@layout/term_of_use_fragment" />
+        tools:layout="@layout/term_of_use_fragment">
+        <action android:id="@+id/action_term_of_use_to_web"
+            app:destination="@id/nav_webview"/>
+    </fragment>
 
     <fragment
         android:id="@+id/nav_login"

@@ -1,6 +1,5 @@
 package com.lifecard.vpreca.ui.termofuse
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,14 +8,11 @@ import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.TermOfUseFragmentBinding
-import com.lifecard.vpreca.ui.webview.WebViewActivity
 import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.PreferenceHelper
 
@@ -39,9 +35,7 @@ class TermOfUseFragment : Fragment() {
 //                buttonToolbarBack.visibility = View.VISIBLE
             } else if (url.startsWith("http://") || url.startsWith("https://")) {
                 //open webview fragment
-                val intent = Intent(context, WebViewActivity::class.java)
-                intent.putExtra(WebViewActivity.EXTRA_WEB_URL, url)
-                startActivity(intent)
+                findNavController().navigate(TermOfUseFragmentDirections.actionTermOfUseToWeb(url))
 //                findNavController().navigate(R.id.nav_webview, WebViewFragment.createBundle(url))
             }
         }

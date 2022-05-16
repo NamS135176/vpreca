@@ -1,25 +1,17 @@
 package com.lifecard.vpreca.ui.signup
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.SignupActivity
-import com.lifecard.vpreca.databinding.FragmentLoginBinding
-import com.lifecard.vpreca.databinding.FragmentPhoneBinding
 import com.lifecard.vpreca.databinding.FragmentPolicyBinding
 import com.lifecard.vpreca.ui.webview.WebViewFragment
 
