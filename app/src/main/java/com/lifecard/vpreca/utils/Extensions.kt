@@ -62,7 +62,7 @@ fun Fragment.setLightStatusBar() = try {
         var flags = window.decorView.systemUiVisibility
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        } // add LIGHT_STATUS_BAR to flag
+        }
         window.decorView.systemUiVisibility = flags
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -58,6 +58,10 @@ class SignupInputFragment : Fragment() {
         val idEdt = binding.idInput
         val usernameEdit = binding.idUsername
         val btnSubmit = binding.btnSubmitPolicy
+        val phoneEdt = binding.idPhone
+        val phoneLayout = binding.phoneInputLayout
+        val answerLayout = binding.secretAnswerInputLayout
+        val answerEdt = binding.idAnswerQuesion
 
         val cal = Calendar.getInstance()
 
@@ -156,12 +160,12 @@ class SignupInputFragment : Fragment() {
         }
 
         viewModel.validForm.observe(viewLifecycleOwner, androidx.lifecycle.Observer { signupFormState ->
-            if(idEdt.text.toString() == "" || usernameEdit.text.toString() == "" || spinnerGender.selectedItem.toString() == "選択してください" || btnDatePicker.text.toString() == "1980年1月1日"){
+            if(idEdt.text.toString() == "" || usernameEdit.text.toString() == "" || spinnerGender.selectedItem.toString() == "選択してください" || btnDatePicker.text.toString() == "1980年1月1日" || spinnerCity.selectedItem.toString() == "選択してください" || phoneEdt.text.toString() == "" || spinnerSecret.selectedItem.toString() == "選択してください" || answerEdt.text.toString() == ""){
                 btnSubmit.isEnabled = false
             }
             else{
                 btnSubmit.isEnabled =
-                    signupFormState.usernameError == null && signupFormState.idError == null && signupFormState.genderError == null && signupFormState.dateError == null
+                    signupFormState.usernameError == null && signupFormState.idError == null && signupFormState.genderError == null && signupFormState.dateError == null && signupFormState.cityError == null && signupFormState.phoneError == null && signupFormState.questionError == null && signupFormState.answerError == null
             }
         })
 
@@ -179,13 +183,21 @@ class SignupInputFragment : Fragment() {
                 null
             }
         })
-
-        viewModel.cityError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+        viewModel.phoneError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+            phoneLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
         })
 
-        viewModel.dateError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+        viewModel.answerError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+            answerLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
         })
-
         btnDatePicker.addTextChangedListener(afterTextChangedListener)
         spinnerGender?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -200,21 +212,39 @@ class SignupInputFragment : Fragment() {
             }
 
         }
-
-        idEdt.doAfterTextChanged { text -> viewModel.idDataChanged(text = text.toString()) }
-        idEdt.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                //focus to password field
-                usernameEdit.requestFocus()
+        spinnerCity?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-            false
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                viewModel.cityDataChanged(text = list.get(position))
+            }
         }
 
+        spinnerSecret?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                viewModel.questionDataChanged(text = list.get(position))
+            }
+        }
+
+        idEdt.doAfterTextChanged { text -> viewModel.idDataChanged(text = text.toString()) }
+
         usernameEdit.doAfterTextChanged { text -> viewModel.usernameDataChanged(text = text.toString()) }
-        usernameEdit.setOnEditorActionListener { _, actionId, _ ->
+        answerEdt.doAfterTextChanged { text -> viewModel.answerDataChanged(text = text.toString()) }
+        phoneEdt.doAfterTextChanged { text -> viewModel.phoneDataChanged(text = text.toString()) }
+        phoneEdt.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                //focus to password field
-//                idEdt.requestFocus()
             }
             false
         }

@@ -144,7 +144,6 @@ class HomeFragment : Fragment() {
                         textBalance.text = Converter.convertCurrency(sumBalance)
                     }
                 }
-
             }
             creditCardResult.error?.let {
                 println("homeViewModel.creditCardResult.observe err: ${getString(it.messageResId!!)}")

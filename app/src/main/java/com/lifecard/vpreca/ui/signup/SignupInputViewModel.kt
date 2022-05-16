@@ -38,6 +38,10 @@ class SignupInputViewModel : ViewModel() {
             val previous = this.value
             this.value = previous?.copy(genderError = value)
         }
+        addSource(cityError) { value ->
+            val previous = this.value
+            this.value = previous?.copy(cityError = value)
+        }
         addSource(questionError) { value ->
             val previous = this.value
             this.value = previous?.copy(questionError = value)

@@ -36,14 +36,9 @@ class IntroduceFragmentSecond : Fragment() {
         })
 
         val btnSubmit = binding.btnSubmitInput
-        val imgIntroduceBack = binding.appbarGiftSecond.imgBackIntroduce
-        val tvIntroduceBack = binding.appbarGiftSecond.tvBackIntroduce
+        val btnBack = binding.appbarGiftSecond.btnBack
 
-        imgIntroduceBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_introduce_first)
-        })
-
-        tvIntroduceBack.setOnClickListener(View.OnClickListener {
+        btnBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_first)
         })
 
