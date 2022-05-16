@@ -1,5 +1,6 @@
 package com.lifecard.vpreca.ui.termofuse
 
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
@@ -26,15 +30,12 @@ class TermOfUseFragment : Fragment() {
     private var _binding: TermOfUseFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: TermOfUseViewModel
+    private val loading = MutableLiveData<Boolean>(false)
 
     private var webViewClient = object : WebViewClient() {
 
         private fun handleOpenUrl(view: WebView?, url: String) {
-            if (url.contains("privacy_policy.html") && url.contains("file://")) {
-                findNavController().navigate(
-                    TermOfUseFragmentDirections.actionTermOfUseToPolicyWeb()
-                )
-            } else if (url.startsWith("http://") || url.startsWith("https://")) {
+            if (url.startsWith("http://") || url.startsWith("https://")) {
                 //open webview fragment
                 findNavController().navigate(TermOfUseFragmentDirections.actionTermOfUseToWeb(url))
             }
@@ -56,6 +57,16 @@ class TermOfUseFragment : Fragment() {
             url?.let { handleOpenUrl(view, it) }
             return true
         }
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
+            loading.value = true
+        }
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+            loading.value = true
+        }
     }
 
     override fun onCreateView(
@@ -68,6 +79,7 @@ class TermOfUseFragment : Fragment() {
         val btnSubmit = binding.btnSubmitTermOfUse
         val cbTermOfUse = binding.cbTermOfUse
         val webView = binding.webview
+        val loadingProgressBar = binding.loading
 
         cbTermOfUse.setOnClickListener(View.OnClickListener {
             context?.let { it1 ->
@@ -94,15 +106,24 @@ class TermOfUseFragment : Fragment() {
         webView.settings.javaScriptEnabled = false
         webView.webViewClient = webViewClient
         webView.loadUrl("file:///android_asset/term_of_use.html")
+
+        loading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> loadingProgressBar.visibility = View.VISIBLE
+                false -> loadingProgressBar.visibility = View.GONE
+            }
+        })
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                requireActivity().finish()
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            })
     }
 }

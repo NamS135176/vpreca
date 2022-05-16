@@ -136,7 +136,7 @@ class HomeFragment : Fragment() {
 
                         val sumBalance: Int = creditCardResult.success.sumOf {
                             try {
-                                it.chargeBalance.toInt()
+                                it.publishAmount.toInt()
                             } catch (e: Exception) {
                                 0
                             }
@@ -183,8 +183,7 @@ class HomeFragment : Fragment() {
         }
         requireActivity().lifecycle.addObserver(lifecycleObserver)
 
-        val view = requireActivity().findViewById<View>(R.id.nav_view)
-        view.visibility = View.VISIBLE
+        unlockDrawer()
     }
 
     private inner class CardSlidePagerAdapter(

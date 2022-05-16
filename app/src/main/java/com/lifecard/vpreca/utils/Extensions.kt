@@ -120,3 +120,24 @@ fun Fragment.navigateToHome() = try {
 } catch (e: Exception) {
 
 }
+
+fun Fragment.lockDrawer() = try {
+    val drawerLayout = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
+    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+} catch (e: Exception) {
+
+}
+
+fun AppCompatActivity.lockDrawer() = try {
+    val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+} catch (e: Exception) {
+
+}
+
+fun Fragment.unlockDrawer() = try {
+    val drawerLayout = requireActivity().findViewById<DrawerLayout>(R.id.drawer_layout)
+    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+} catch (e: Exception) {
+
+}

@@ -14,25 +14,7 @@
             android:id="@+id/action_term_of_use_to_web"
             app:destination="@id/nav_webview" />
         <action
-            android:id="@+id/action_term_of_use_to_policy_web"
-            app:destination="@id/nav_policy_web" />
-        <action
             android:id="@+id/action_term_of_use_to_login"
-            app:destination="@id/nav_login"
-            app:popUpTo="@id/nav_login"
-            app:popUpToInclusive="true" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_policy_web"
-        android:name="com.lifecard.vpreca.ui.termofuse.PolicyFragment"
-        android:label="@string/title_term_of_use"
-        tools:layout="@layout/fragment_policy_web">
-        <action
-            android:id="@+id/action_term_of_use_to_web"
-            app:destination="@id/nav_webview" />
-        <action
-            android:id="@+id/action_policy_web_to_login"
             app:destination="@id/nav_login"
             app:popUpTo="@id/nav_login"
             app:popUpToInclusive="true" />

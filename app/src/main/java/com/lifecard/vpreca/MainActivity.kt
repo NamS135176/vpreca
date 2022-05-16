@@ -20,6 +20,7 @@ import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.ui.custom.DrawerMenuLayout
 import com.lifecard.vpreca.ui.login.LoginFragmentDirections
 import com.lifecard.vpreca.utils.PreferenceHelper
+import com.lifecard.vpreca.utils.lockDrawer
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         if (userRepository.isLoggedIn) {
             navController.setGraph(R.navigation.main_navigation)
         } else {
-            navView.visibility = View.GONE
+            lockDrawer()
             if (!PreferenceHelper.isAcceptTermOfUseFirstTime(appContext = baseContext)) {
                 val navOptions = NavOptions.Builder().apply {
                     setPopUpTo(R.id.nav_term_of_use, inclusive = true)

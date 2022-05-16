@@ -203,10 +203,8 @@ class DrawerMenuLayout @JvmOverloads constructor(
                     "Not yet supported (FaceID/TouchID)",
                     Toast.LENGTH_SHORT
                 ).show()//menu_member_setting -> show faceId/TouchID
-                9 -> Toast.makeText(context, "Not yet supported", Toast.LENGTH_SHORT)
-                    .show()//menu_register_lifecard
-                10 -> Toast.makeText(context, "Not yet supported", Toast.LENGTH_SHORT)
-                    .show()//menu_campain_info
+                9 -> showWebViewActivity("https://www.lifecard.co.jp/card/campaign/ol_nyukai/vpc/1604_1/index.html?utm_source=mail&utm_medium=mail&utm_campaign=vpc_my2&argument=xZcLVgDf&dmai=a627cb5ac0f66f")//menu_register_lifecard
+                10 -> showWebViewActivity("https://vpc.lifecard.co.jp/campaign/index.html")//menu_campain_info
                 12 -> showWebViewActivity("https://vpc.lifecard.co.jp/news/index.html")//menu_news
                 13 -> showWebViewActivity("https://vpreca.dga.jp/")//menu_faq
                 14 -> showWebViewActivity("https://vpc.lifecard.co.jp/contact/index.html")//menu_inquiry
