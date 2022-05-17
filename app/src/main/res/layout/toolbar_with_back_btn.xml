@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:elevation="0dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,10 +26,10 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_back"
-                android:layout_weight="1"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:minWidth="0dp"
@@ -42,29 +43,6 @@
                 app:iconPadding="0dp"
                 app:iconTint="@color/white"
                 tools:ignore="RtlSymmetry" />
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:visibility="visible">-->
-
-<!--                <androidx.appcompat.widget.AppCompatImageView-->
-<!--                    android:id="@+id/imgBackIntroduce"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_baseline_arrow_back_ios_24" />-->
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:id="@+id/tvBackIntroduce"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/phone_back"-->
-<!--                    android:textColor="#fff"-->
-<!--                    android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"-->
-<!--                    android:textSize="16sp" />-->
-<!--            </LinearLayout>-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/Widget.Theme.VPreca.ActionBar.Title"
@@ -77,11 +55,10 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.button.MaterialButton
-                android:visibility="invisible"
-                android:layout_weight="1"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:minWidth="0dp"
@@ -90,30 +67,12 @@
                 android:paddingLeft="0dp"
                 android:text="@string/phone_back"
                 android:textColor="@color/white"
+                android:visibility="invisible"
                 app:icon="@drawable/ic_baseline_arrow_back_ios_24"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
                 app:iconTint="@color/white"
                 tools:ignore="RtlSymmetry" />
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:visibility="invisible">-->
-
-<!--                <androidx.appcompat.widget.AppCompatImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:src="@drawable/ic_baseline_arrow_back_ios_24" />-->
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="@string/phone_back"-->
-<!--                    android:textColor="#fff"-->
-<!--                    android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"-->
-<!--                    android:textSize="18sp" />-->
-<!--            </LinearLayout>-->
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 </layout>

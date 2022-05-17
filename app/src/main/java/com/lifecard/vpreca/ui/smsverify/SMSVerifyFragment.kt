@@ -34,7 +34,7 @@ class SMSVerifyFragment : Fragment() {
     ): View? {_binding = FragmentSmsVerifyBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SMSVerifyViewModel::class.java)
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() { findNavController().navigate(R.id.nav_login) }
         })
 

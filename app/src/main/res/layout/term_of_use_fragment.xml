@@ -11,7 +11,7 @@
 
         <include
             android:id="@+id/appbar"
-            layout="@layout/toolbar_with_back_btn"
+            layout="@layout/toolbar_title_only"
             app:layout_constraintTop_toTopOf="parent"
             app:title="@{@string/title_term_of_use}" />
 
@@ -36,6 +36,16 @@
             android:background="@drawable/border_term_of_use"
             app:layout_constraintBottom_toTopOf="@id/cbTermOfUse"
             app:layout_constraintTop_toBottomOf="@+id/text_caption" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loading"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/webview"
+            app:layout_constraintEnd_toEndOf="@id/webview"
+            app:layout_constraintStart_toStartOf="@id/webview"
+            app:layout_constraintTop_toTopOf="@id/webview" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/cbTermOfUse"

@@ -120,7 +120,14 @@
     <string name='id_input_des'>半角英数字・記号_(アンダーバー)（ハイフン）がご利用いただけます。</string>
     <string name='username_signup_title'>ニックネーム（ローマ字）</string>
     <string name='hint_username'>半角英大文字2~18文字</string>
-    <string name='username_input_des'>記号・スペースはご利用いただけません。</string>
+    <string name="password_signup_title">ログインパスワード</string>
+    <string name="password_hint">半角英数8-12文字</string>
+    <string name="cf_password_hint">半角英数8-12文字(確認用)</string>
+    <string name="password_warning_title">※以下のパスワードはセキュリティ上、登録しないでください。</string>
+    <string name="password_warning_first">・生年月日、電話番号、住所・氏名の一部など</string>
+    <string name="password_warning_second">・2種類のみの英数字の組み合わせ(例:1111AAAA, A2A2A2A2 など) </string>
+    <string name="password_warning_third">・他サイトと同一のパスワード</string>
+    <string name='username_input_des'>Vプリカご利用時に、カードホルダー名(名義人)として利用します。 記号・スペースはご利用いただけません。</string>
     <string name='name_signup_title'>お名前</string>
     <string name='hint_first_name'>セイ（全角）</string>
     <string name="hint_second_name">メイ（全角）</string>
@@ -150,6 +157,7 @@
     <string name="phone_confirm_signup_title">電話番号</string>
     <string name="secret_confirm_signup_title">秘密の質問</string>
     <string name='secret_answer_confirm_signup_title'>秘密の質問の答え</string>
+    <string name="password_confirm_signup_title">パスワード</string>
     <!--    Confirm Signup-->
 
     <!--    Complete Signup-->
@@ -210,6 +218,23 @@
     <string name="sms_code_expired_des_top">SMS認証の有効期限が切れています。</string>
     <string name="sms_code_expired_des_bot">再度お手続きをお願いいたします。</string>
     <!--    SMS Verify-->
+
+    <!--    Change Pass-->
+    <string name="change_pass_appbar_title">パスワード変更</string>
+    <string name="change_pass_title">ログインパスワード変更</string>
+    <string name="change_pass_des">ログインパスワードの再設定を行います。</string>
+    <string name="change_pass_old_pass_title">現在のログインパスワード</string>
+    <string name="change_pass_old_pass_hint">半角英数字8〜12文字</string>
+    <string name="change_pass_new_pass_title">新しいログインパスワード</string>
+    <string name="change_pass_new_pass_hint">半角英数字8〜12文字</string>
+    <string name="change_pass_cf_new_pass_hint">半角英数8~12文字（確認用）</string>
+    <string name="change_pass_warning_title">以下のパスワードはセキュリティ上、登録しないでください。</string>
+    <string name="change_pass_warning_first">生年月日、電話番号、氏名や住所の一部など</string>
+    <string name="change_pass_warning_second">２種類のみの英数字の組み合わせ（例：1111aaaa、A2A2A2A2 など）</string>
+    <string name="change_pass_warning_third">他サイトと同一のパスワード</string>
+    <string name="change_pass_btn_submit">変更</string>
+    <!--    Change Pass-->
+
 
     <string name="menu_app_version">バージョン : %1$s</string>
     <string name="copyright_life_card_co_ltd">Copyright © LIFE CARD Co., Ltd.\nAll rights reserved</string>

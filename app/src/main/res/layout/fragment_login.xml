@@ -66,8 +66,11 @@
                 android:hint="@string/prompt_password"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:importantForContentCapture="yes"
                 android:inputType="textPassword"
-                app:hintTextColor="@color/brown_grey" />
+                app:hintTextColor="@color/brown_grey"
+                tools:targetApi="r" />
 
         </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
 

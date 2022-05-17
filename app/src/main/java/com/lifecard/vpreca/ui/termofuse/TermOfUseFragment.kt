@@ -1,6 +1,6 @@
 package com.lifecard.vpreca.ui.termofuse
 
-import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.appcompat.widget.AppCompatButton
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.TermOfUseFragmentBinding
-import com.lifecard.vpreca.ui.webview.WebViewActivity
 import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.PreferenceHelper
 
@@ -29,20 +30,14 @@ class TermOfUseFragment : Fragment() {
     private var _binding: TermOfUseFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: TermOfUseViewModel
-//    private lateinit var buttonToolbarBack: AppCompatButton
+    private val loading = MutableLiveData<Boolean>(false)
 
     private var webViewClient = object : WebViewClient() {
 
         private fun handleOpenUrl(view: WebView?, url: String) {
-            if (url.contains("privacy_policy.html") && url.contains("file://")) {
-                view?.loadUrl("file:///android_asset/privacy_policy.html")
-//                buttonToolbarBack.visibility = View.VISIBLE
-            } else if (url.startsWith("http://") || url.startsWith("https://")) {
+            if (url.startsWith("http://") || url.startsWith("https://")) {
                 //open webview fragment
-                val intent = Intent(context, WebViewActivity::class.java)
-                intent.putExtra(WebViewActivity.EXTRA_WEB_URL, url)
-                startActivity(intent)
-//                findNavController().navigate(R.id.nav_webview, WebViewFragment.createBundle(url))
+                findNavController().navigate(TermOfUseFragmentDirections.actionTermOfUseToWeb(url))
             }
         }
 
@@ -62,6 +57,16 @@ class TermOfUseFragment : Fragment() {
             url?.let { handleOpenUrl(view, it) }
             return true
         }
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
+            loading.value = true
+        }
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+            loading.value = true
+        }
     }
 
     override fun onCreateView(
@@ -74,13 +79,7 @@ class TermOfUseFragment : Fragment() {
         val btnSubmit = binding.btnSubmitTermOfUse
         val cbTermOfUse = binding.cbTermOfUse
         val webView = binding.webview
-//        buttonToolbarBack = binding.appbar.buttonBack
-
-//        buttonToolbarBack.visibility = View.INVISIBLE
-//        buttonToolbarBack.setOnClickListener(View.OnClickListener {
-//            buttonToolbarBack.visibility = View.INVISIBLE
-//            webView.loadUrl("file:///android_asset/term_of_use.html")
-//        })
+        val loadingProgressBar = binding.loading
 
         cbTermOfUse.setOnClickListener(View.OnClickListener {
             context?.let { it1 ->
@@ -99,10 +98,7 @@ class TermOfUseFragment : Fragment() {
                     value = true
                 )
             }
-            val intent = Intent(activity, LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            startActivity(intent)
+            findNavController().navigate(TermOfUseFragmentDirections.actionTermOfUseToLogin())
         })
         webView.settings.useWideViewPort = true
         webView.settings.loadWithOverviewMode = true
@@ -110,7 +106,24 @@ class TermOfUseFragment : Fragment() {
         webView.settings.javaScriptEnabled = false
         webView.webViewClient = webViewClient
         webView.loadUrl("file:///android_asset/term_of_use.html")
+
+        loading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> loadingProgressBar.visibility = View.VISIBLE
+                false -> loadingProgressBar.visibility = View.GONE
+            }
+        })
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            })
+    }
 }

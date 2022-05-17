@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
+    android:id="@+id/nav_main"
     app:startDestination="@+id/nav_home">
 
     <fragment
@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_to_card_usage"
             app:destination="@id/nav_card_usage" />
+        <action
+            android:id="@+id/action_home_to_login"
+            app:destination="@id/nav_authentication"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_login"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -26,17 +32,22 @@
         android:name="com.lifecard.vpreca.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_login"
-        android:name="com.lifecard.vpreca.ui.login.LoginFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/nav_list_vpreca"
         android:name="com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment"
         android:label="Login"
         tools:layout="@layout/fragment_list_vpreca" />
+    <fragment
+        android:id="@+id/nav_change_pass"
+        android:name="com.lifecard.vpreca.ui.changepass.ChangePassFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_change_pass" />
+    <!--    <fragment-->
+    <!--        android:id="@+id/nav_login"-->
+    <!--        android:name="com.lifecard.vpreca.ui.login.LoginFragment"-->
+    <!--        android:label="Login"-->
+    <!--        tools:layout="@layout/fragment_login" />-->
+
     <fragment
         android:id="@+id/nav_card_usage"
         android:name="com.lifecard.vpreca.ui.card_usage.CardUsageFragment"
@@ -44,22 +55,22 @@
         tools:layout="@layout/fragment_card_usage">
         <argument
             android:name="card"
-            app:nullable="true"
             android:defaultValue="@null"
-            app:argType="com.lifecard.vpreca.data.model.CreditCard" />
+            app:argType="com.lifecard.vpreca.data.model.CreditCard"
+            app:nullable="true" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_webview"
         android:name="com.lifecard.vpreca.ui.webview.WebViewFragment"
-        android:label="Login"
-        android:fitsSystemWindows="true"
         style="@style/Theme.VPreca.Fullscreen"
+        android:fitsSystemWindows="true"
+        android:label="Login"
         tools:layout="@layout/fragment_web_view">
         <argument
             android:name="web_url"
-            app:nullable="true"
             android:defaultValue="@null"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

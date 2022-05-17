@@ -85,5 +85,7 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
 
     fun clear() {
         this.user = null
+        this.accessToken = null
+        this.refreshToken = null
     }
 }

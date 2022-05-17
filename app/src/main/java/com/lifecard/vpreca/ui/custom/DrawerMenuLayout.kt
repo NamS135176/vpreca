@@ -1,28 +1,21 @@
 package com.lifecard.vpreca.ui.custom
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View.OnClickListener
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.fragment.app.FragmentManager
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.BuildConfig
-import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.LayoutDrawerContentBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
-import com.lifecard.vpreca.ui.webview.WebViewActivity
 import com.lifecard.vpreca.ui.webview.WebViewFragment
+import com.lifecard.vpreca.utils.navigateToLogin
 import com.lifecard.vpreca.utils.viewFindNavController
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
@@ -37,8 +30,11 @@ class DrawerMenuLayout @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayoutCompat(context, attrs, defStyleAttr) {
-    @Inject lateinit var userRepository: UserRepository
-    @Inject lateinit var secureStore: SecureStore
+    @Inject
+    lateinit var userRepository: UserRepository
+
+    @Inject
+    lateinit var secureStore: SecureStore
 
     private var _binding: LayoutDrawerContentBinding
     private var adapter: DrawerMenuAdapter
@@ -197,8 +193,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
                     .show()//menu_vpreca_gift_request
                 3 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
                     .show()//menu_member_info
-                4 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
-                    .show()//menu_change_pass
+                4 -> viewFindNavController().navigate(R.id.nav_change_pass)
                 5 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
                     .show()//menu_change_phone
                 6 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
@@ -208,10 +203,8 @@ class DrawerMenuLayout @JvmOverloads constructor(
                     "Not yet supported (FaceID/TouchID)",
                     Toast.LENGTH_SHORT
                 ).show()//menu_member_setting -> show faceId/TouchID
-                9 -> Toast.makeText(context, "Not yet supported", Toast.LENGTH_SHORT)
-                    .show()//menu_register_lifecard
-                10 -> Toast.makeText(context, "Not yet supported", Toast.LENGTH_SHORT)
-                    .show()//menu_campain_info
+                9 -> showWebViewActivity("https://www.lifecard.co.jp/card/campaign/ol_nyukai/vpc/1604_1/index.html?utm_source=mail&utm_medium=mail&utm_campaign=vpc_my2&argument=xZcLVgDf&dmai=a627cb5ac0f66f")//menu_register_lifecard
+                10 -> showWebViewActivity("https://vpc.lifecard.co.jp/campaign/index.html")//menu_campain_info
                 12 -> showWebViewActivity("https://vpc.lifecard.co.jp/news/index.html")//menu_news
                 13 -> showWebViewActivity("https://vpreca.dga.jp/")//menu_faq
                 14 -> showWebViewActivity("https://vpc.lifecard.co.jp/contact/index.html")//menu_inquiry
@@ -248,10 +241,8 @@ class DrawerMenuLayout @JvmOverloads constructor(
         binding.buttonLogout.setOnClickListener(OnClickListener {
             userRepository.clear()
             secureStore.clear()
-            val intent = Intent(context, LoginActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            context.startActivity(intent)
+            closeDrawer()
+            navigateToLogin()
         })
     }
 

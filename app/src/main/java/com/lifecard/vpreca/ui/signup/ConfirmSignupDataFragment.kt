@@ -8,10 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lifecard.vpreca.LoginActivity
+import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentConfirmSignupDataBinding
 import com.lifecard.vpreca.databinding.FragmentPolicyBinding
@@ -34,17 +35,23 @@ class ConfirmSignupDataFragment : Fragment() {
         _binding = FragmentConfirmSignupDataBinding.inflate(inflater, container, false)
         val tvId = binding.tvConfirmID
         val tvUsername = binding.tvConfirmUsername
+        val tvPassword = binding.tvConfirmPassword
         val btnCancelSubmit = binding.appbarConfirmSignup.cancelBtn
         val btnBack = binding.btnCancelConfirm
         val btnSubmit = binding.btnSubmitConfirm
-
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_signup_input)
+            }
+        })
         tvId.setText(args?.signupData?.id)
         tvUsername.setText(args?.signupData?.username)
+
         btnCancelSubmit.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
                     // do something on positive button click
-                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
+                    val intent = Intent(requireContext(), MainActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
                     startActivity(intent)
@@ -55,7 +62,7 @@ class ConfirmSignupDataFragment : Fragment() {
         })
 
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.nav_signup_input)
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {

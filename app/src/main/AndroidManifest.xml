@@ -16,26 +16,6 @@
         tools:overrideLibrary="com.google.firebase.analytics.ktx">
 
         <activity
-            android:name=".ForgotPassActivity"
-            android:exported="false"
-            android:theme="@style/Theme.VPreca.NoActionBar" />
-        <activity
-            android:name=".ui.webview.WebViewActivity"
-            android:exported="false"
-            android:theme="@style/Theme.VPreca.NoActionBar" />
-        <activity
-            android:name=".IntroduceActivity"
-            android:exported="false"
-            android:theme="@style/Theme.VPreca.NoActionBar" />
-        <activity
-            android:name=".TermOfUseActivity"
-            android:exported="false"
-            android:theme="@style/Theme.VPreca.NoActionBar" />
-        <activity
-            android:name=".SignupActivity"
-            android:exported="false"
-            android:theme="@style/Theme.VPreca.NoActionBar" />
-        <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.VPreca.SplashTheme">
@@ -45,14 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:autoRemoveFromRecents="true"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:label="@string/title_activity_login"
-            android:theme="@style/Theme.VPreca.NoActionBar"
-            tools:targetApi="lollipop" />
         <activity
             android:name=".MainActivity"
             android:autoRemoveFromRecents="true"

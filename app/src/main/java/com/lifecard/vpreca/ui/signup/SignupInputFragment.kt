@@ -20,7 +20,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doBeforeTextChanged
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lifecard.vpreca.LoginActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.SignupData
 import com.lifecard.vpreca.databinding.SignupInputFragmentBinding
@@ -43,9 +42,9 @@ class SignupInputFragment : Fragment() {
         _binding = SignupInputFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SignupInputViewModel::class.java)
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().popBackStack()
+                findNavController().navigate(R.id.nav_policy)
             }
         })
 
@@ -62,7 +61,11 @@ class SignupInputFragment : Fragment() {
         val phoneEdt = binding.idPhone
         val phoneLayout = binding.phoneInputLayout
         val answerLayout = binding.secretAnswerInputLayout
-        val answerEdt = binding.idAnswerQuesion
+        val answerEdt = binding.idSecret
+        val passwordLayout = binding.passwordInputLayout
+        val passwordEdt = binding.idPassword
+        val cfPasswordLayout = binding.cfPasswordInputLayout
+        val cfPasswordEdt = binding.idCfPassword
 
         val cal = Calendar.getInstance()
 
@@ -161,12 +164,12 @@ class SignupInputFragment : Fragment() {
         }
 
         viewModel.validForm.observe(viewLifecycleOwner, androidx.lifecycle.Observer { signupFormState ->
-            if(idEdt.text.toString() == "" || usernameEdit.text.toString() == "" || spinnerGender.selectedItem.toString() == "選択してください" || btnDatePicker.text.toString() == "1980年1月1日" || spinnerCity.selectedItem.toString() == "選択してください" || phoneEdt.text.toString() == "" || spinnerSecret.selectedItem.toString() == "選択してください" || answerEdt.text.toString() == ""){
+            if(idEdt.text.toString() == "" || usernameEdit.text.toString() == "" || spinnerGender.selectedItem.toString() == "選択してください" || btnDatePicker.text.toString() == "1980年1月1日" || spinnerCity.selectedItem.toString() == "選択してください" || phoneEdt.text.toString() == "" ||answerEdt.text.toString() == "" ||passwordEdt.text.toString() == "" ||cfPasswordEdt.text.toString() == "" || spinnerSecret.selectedItem.toString() == "選択してください"){
                 btnSubmit.isEnabled = false
             }
             else{
                 btnSubmit.isEnabled =
-                    signupFormState.usernameError == null && signupFormState.idError == null && signupFormState.genderError == null && signupFormState.dateError == null && signupFormState.cityError == null && signupFormState.phoneError == null && signupFormState.questionError == null && signupFormState.answerError == null
+                    signupFormState.usernameError == null && signupFormState.idError == null && signupFormState.genderError == null && signupFormState.dateError == null && signupFormState.cityError == null && signupFormState.phoneError == null && signupFormState.questionError == null && signupFormState.answerError == null && signupFormState.passwordError == null && signupFormState.cfPasswordError == null
             }
         })
 
@@ -194,6 +197,20 @@ class SignupInputFragment : Fragment() {
 
         viewModel.answerError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
             answerLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
+        viewModel.passwordError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+            passwordLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
+        viewModel.cfPasswordError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+            cfPasswordLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
@@ -242,6 +259,8 @@ class SignupInputFragment : Fragment() {
         idEdt.doAfterTextChanged { text -> viewModel.idDataChanged(text = text.toString()) }
 
         usernameEdit.doAfterTextChanged { text -> viewModel.usernameDataChanged(text = text.toString()) }
+        passwordEdt.doAfterTextChanged { text -> viewModel.passwordDataChanged(text = text.toString()) }
+        cfPasswordEdt.doAfterTextChanged { text -> viewModel.cfPasswordDataChanged(text = text.toString(), passwordEdt.text.toString()) }
         answerEdt.doAfterTextChanged { text -> viewModel.answerDataChanged(text = text.toString()) }
         phoneEdt.doAfterTextChanged { text -> viewModel.phoneDataChanged(text = text.toString()) }
         phoneEdt.setOnEditorActionListener { _, actionId, _ ->
@@ -255,7 +274,7 @@ class SignupInputFragment : Fragment() {
         spinnerSecret.adapter = adapter
 
         btnSubmit.setOnClickListener(View.OnClickListener {
-            val signupData = SignupData(idEdt.text.toString(), usernameEdit.text.toString())
+            val signupData = SignupData(idEdt.text.toString(), usernameEdit.text.toString(), passwordEdt.text.toString())
             val action = SignupInputFragmentDirections.actionSignupInputToSignupConfirm(signupData)
             findNavController().navigate(action)
         })

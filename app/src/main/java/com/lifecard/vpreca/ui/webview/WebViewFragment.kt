@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.lifecard.vpreca.databinding.FragmentWebViewBinding
@@ -38,6 +39,7 @@ class WebViewFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private var isHideToolbar = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,12 +64,13 @@ class WebViewFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        isHideToolbar = (requireActivity() as? AppCompatActivity)?.supportActionBar?.isShowing == false
         hideToolbar()
     }
 
     override fun onDetach() {
         super.onDetach()
-        showToolbar()
+        if (!isHideToolbar) showToolbar()//only show toolbar if current is showing
     }
 }
 

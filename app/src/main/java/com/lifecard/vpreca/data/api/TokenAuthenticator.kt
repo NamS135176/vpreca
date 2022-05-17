@@ -3,7 +3,7 @@ package com.lifecard.vpreca.data.api
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.lifecard.vpreca.LoginActivity
+import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.data.model.LoginResponse
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.utils.Constanst
@@ -16,7 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class TokenAuthenticator(private var appContext: Context, private val secureStore: SecureStore) :
     Authenticator {
-    private var blacklistRefreshTokenUrlPath = arrayOf("/login", "/sign-up", "/refresh", "/refresh-token")
+    private var blacklistRefreshTokenUrlPath =
+        arrayOf("/login", "/sign-up", "/refresh", "/refresh-token")
     private val lock = Mutex()
 
     override fun authenticate(route: Route?, response: Response): Request? {
@@ -30,7 +31,7 @@ class TokenAuthenticator(private var appContext: Context, private val secureStor
                     val refreshToken = secureStore.getRefreshToken()
                     if (headerAccessToken != "Bear $accessToken" && !headerAccessToken.isNullOrEmpty()) {
                         //case another api has been update access token, so we just update header and request again
-                        return@runBlocking  response.request().newBuilder()
+                        return@runBlocking response.request().newBuilder()
                             .header("Authorization", headerAccessToken)
                             .build()
 
@@ -46,16 +47,18 @@ class TokenAuthenticator(private var appContext: Context, private val secureStor
                         } catch (err: Throwable) {
                             //go to login screen
                             println("TokenAuthenticator... authenticate err $err")
-                            val intent = Intent(appContext, LoginActivity::class.java).apply {
+                            val intent = Intent(appContext, MainActivity::class.java).apply {
                                 flags =
                                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                putExtra(MainActivity.EXTRA_FORCE_SHOW_LOGIN, true)
                             }
                             appContext.startActivity(intent)
                         }
                     } else {
                         //go to login screen
-                        val intent = Intent(appContext, LoginActivity::class.java).apply {
+                        val intent = Intent(appContext, MainActivity::class.java).apply {
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            putExtra(MainActivity.EXTRA_FORCE_SHOW_LOGIN, true)
                         }
                         appContext.startActivity(intent)
                     }

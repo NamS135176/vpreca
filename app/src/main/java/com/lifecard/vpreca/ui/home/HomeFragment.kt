@@ -1,6 +1,7 @@
 package com.lifecard.vpreca.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -16,10 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.SimpleOnPageChangeCallback
-import com.lifecard.vpreca.utils.clearLightStatusBar
-import com.lifecard.vpreca.utils.setLightStatusBar
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -139,7 +139,7 @@ class HomeFragment : Fragment() {
 
                         val sumBalance: Int = creditCardResult.success.sumOf {
                             try {
-                                it.chargeBalance.toInt()
+                                it.publishAmount.toInt()
                             } catch (e: Exception) {
                                 0
                             }
@@ -159,6 +159,10 @@ class HomeFragment : Fragment() {
         })
         setLightStatusBar()
 
+
+        binding.buttonAddNewCard.setOnClickListener(View.OnClickListener {
+            fragmentFindNavController().navigate(R.id.action_home_to_login)
+        })
         return root
     }
 
@@ -167,6 +171,22 @@ class HomeFragment : Fragment() {
         binding.listCard.cardList.unregisterOnPageChangeCallback(pageChangeCallback)
         _binding = null
         clearLightStatusBar()
+    }
+
+    private lateinit var lifecycleObserver: DefaultLifecycleObserver
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        lifecycleObserver = object : DefaultLifecycleObserver {
+            override fun onCreate(owner: LifecycleOwner) {
+                super.onCreate(owner)
+                showToolbar()
+                owner.lifecycle.removeObserver(lifecycleObserver)
+            }
+        }
+        requireActivity().lifecycle.addObserver(lifecycleObserver)
+
+        unlockDrawer()
     }
 
     private inner class CardSlidePagerAdapter(
