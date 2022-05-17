@@ -229,4 +229,13 @@
     <!--    Error  -->
     <string name="error_default">Error</string>
     <string name="error_no_internet_connection">No internet connection</string>
+    <!--  End error   -->
+
+    <!--   FaceID setting  -->
+    <string name="title_fingerprint_setting">ログイン認証設定</string>
+    <string name="fingerprint_setting_caption">ログイン認証の設定を行います。</string>
+    <string name="fingerprint_option">Biometricでログイン</string>
+    <string name="prompt_biometric_login_title">Biometric login for my app</string>
+    <string name="error_fingerprint_not_support">Biometric not support</string>
+
 </resources>

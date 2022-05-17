@@ -19,5 +19,20 @@ class PreferenceHelper {
                 commit()
             }
         }
+
+        fun isFingerprintSetting(appContext: Context): Boolean {
+            val sharedPreferences =
+                appContext.getSharedPreferences("VPrecaPref", Context.MODE_PRIVATE)
+            return sharedPreferences.getBoolean("fingerprint_setting", false)
+        }
+
+        fun setFingerprintSetting(appContext: Context, value: Boolean) {
+            val sharedPreferences =
+                appContext.getSharedPreferences("VPrecaPref", Context.MODE_PRIVATE)
+            with(sharedPreferences.edit()) {
+                putBoolean("fingerprint_setting", value)
+                commit()
+            }
+        }
     }
 }
