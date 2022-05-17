@@ -82,7 +82,10 @@ class HomeFragment : Fragment() {
         var pagerAdapter: CardSlidePagerAdapter? = null
         val buttonSlideLeft = binding.listCard.buttonSlideLeft
         val buttonSlideRight = binding.listCard.buttonSlideRight
+        val buttonSeeAllCard = binding.buttonSeeAllCard
         val textBalance = binding.textBalance
+
+        buttonSeeAllCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_list_vpreca) })
 
         binding.textLastLogin.text =
             getString(R.string.home_text_last_login, SimpleDateFormat("yyyy M/d").format(Date()))

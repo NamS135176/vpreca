@@ -32,7 +32,11 @@
         android:name="com.lifecard.vpreca.ui.login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login" />
-
+    <fragment
+        android:id="@+id/nav_list_vpreca"
+        android:name="com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_list_vpreca" />
     <fragment
         android:id="@+id/nav_card_usage"
         android:name="com.lifecard.vpreca.ui.card_usage.CardUsageFragment"
