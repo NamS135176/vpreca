@@ -233,8 +233,16 @@
     <string name="change_pass_warning_second">２種類のみの英数字の組み合わせ（例：1111aaaa、A2A2A2A2 など）</string>
     <string name="change_pass_warning_third">他サイトと同一のパスワード</string>
     <string name="change_pass_btn_submit">変更</string>
+    <string name='change_pass_old_pass_error'>パスワードが間違っています</string>
+    <string name="change_pass_new_pass_error">半角英数字8〜12文字で入力してください</string>
+    <string name="change_pass_cf_new_pass_error">一致していません</string>
     <!--    Change Pass-->
 
+    <!--    Complete Change Pass-->
+    <string name="change_pass_complete_title">変更完了</string>
+    <string name="change_pass_complete_des">お手続きが完了しました。</string>
+    <string name="change_pass_complete_btn">ホーム</string>
+    <!--    Complete Change Pass-->
 
     <string name="menu_app_version">バージョン : %1$s</string>
     <string name="copyright_life_card_co_ltd">Copyright © LIFE CARD Co., Ltd.\nAll rights reserved</string>

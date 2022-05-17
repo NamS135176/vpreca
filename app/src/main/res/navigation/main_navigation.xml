@@ -42,6 +42,11 @@
         android:name="com.lifecard.vpreca.ui.changepass.ChangePassFragment"
         android:label="Login"
         tools:layout="@layout/fragment_change_pass" />
+    <fragment
+        android:id="@+id/nav_change_pass_complete"
+        android:name="com.lifecard.vpreca.ui.changepass.ChangePassCompleteFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_change_pass_complete" />
     <!--    <fragment-->
     <!--        android:id="@+id/nav_login"-->
     <!--        android:name="com.lifecard.vpreca.ui.login.LoginFragment"-->
