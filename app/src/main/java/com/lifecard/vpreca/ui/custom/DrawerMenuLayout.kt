@@ -188,11 +188,9 @@ class DrawerMenuLayout @JvmOverloads constructor(
             closeDrawer()
 
             when (position) {
-
                 1 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
                     .show()//menu_vpreca_gift_request
-                3 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
-                    .show()//menu_member_info
+                3 -> viewFindNavController().navigate(R.id.nav_change_info_data)
                 4 -> viewFindNavController().navigate(R.id.nav_change_pass)
                 5 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
                     .show()//menu_change_phone
