@@ -16,6 +16,8 @@ class SignupInputViewModel : ViewModel() {
     val cityError = MutableLiveData<Int?>()
     val genderError = MutableLiveData<Int?>()
     val answerError = MutableLiveData<Int?>()
+    val passwordError = MutableLiveData<Int>()
+    val cfPasswordError = MutableLiveData<Int>()
     val validForm = MediatorLiveData<SignUpFormState>().apply {
         value = SignUpFormState()
         addSource(idError) { value ->
@@ -50,6 +52,14 @@ class SignupInputViewModel : ViewModel() {
             val previous = this.value
             this.value = previous?.copy(answerError = value)
         }
+        addSource(passwordError) { value ->
+            val previous = this.value
+            this.value = previous?.copy(passwordError = value)
+        }
+        addSource(cfPasswordError) { value ->
+            val previous = this.value
+            this.value = previous?.copy(cfPasswordError = value)
+        }
     }
 
     fun usernameDataChanged(text: String) {
@@ -72,6 +82,21 @@ class SignupInputViewModel : ViewModel() {
             dateError.value = R.string.forgot_pass_error_dob
         } else {
             dateError.value = null
+        }
+    }
+    fun passwordDataChanged(text: String) {
+        if (!isPasswordValid(text)) {
+            passwordError.value = R.string.forgot_pass_error_dob
+        } else {
+            passwordError.value = null
+        }
+    }
+
+    fun cfPasswordDataChanged(text: String, password: String) {
+        if (!isCfPasswordValid(password, text)) {
+            cfPasswordError.value = R.string.forgot_pass_error_dob
+        } else {
+            cfPasswordError.value = null
         }
     }
 
@@ -134,7 +159,12 @@ class SignupInputViewModel : ViewModel() {
     }
 
     private fun isAnswerValid(answer: String): Boolean {
-        return answer.length in 0..20
+        return answer.length in 0..20 && isHalfWidth(answer)
+    }
+
+    fun isHalfWidth(text:String):Boolean{
+        val regex = "[０-９ぁ-んァ-ン一-龥]".toRegex()
+        return regex.find(text) == null
     }
 
     // A placeholder username validation check
@@ -145,6 +175,13 @@ class SignupInputViewModel : ViewModel() {
     // A placeholder password validation check
     private fun isIdValid(id: String): Boolean {
         return id.length in 6..10
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+        return password.length in 8..12
+    }
+    private fun isCfPasswordValid(password: String, cfPassword: String): Boolean {
+        return cfPassword.length in 8..12 && cfPassword == password
     }
 
 }

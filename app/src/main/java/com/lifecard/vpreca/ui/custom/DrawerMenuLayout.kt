@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.BuildConfig
 import com.lifecard.vpreca.R
@@ -192,8 +193,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
                     .show()//menu_vpreca_gift_request
                 3 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
                     .show()//menu_member_info
-                4 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
-                    .show()//menu_change_pass
+                4 -> viewFindNavController().navigate(R.id.nav_change_pass)
                 5 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
                     .show()//menu_change_phone
                 6 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)

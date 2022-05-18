@@ -8,5 +8,7 @@ data class SignUpFormState(
     val questionError: Int? = null,
     val cityError: Int? = null,
     val genderError: Int? = null,
-    val answerError: Int? = null
+    val answerError: Int? = null,
+    val passwordError: Int? = null,
+    val cfPasswordError: Int? = null
 )

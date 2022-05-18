@@ -44,7 +44,7 @@ class PolicyFragment : Fragment() {
 //                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 //                }
 //                startActivity(intent)
-                findNavController().popBackStack()
+                findNavController().navigate(R.id.nav_login)
             }
         })
         val btnSubmitPolicy = binding.btnSubmitPolicy

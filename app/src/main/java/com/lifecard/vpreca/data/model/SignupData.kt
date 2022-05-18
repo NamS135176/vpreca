@@ -9,6 +9,8 @@ data class SignupData(
     val id: String,
     @SerializedName("username")
     val username: String,
+    @SerializedName("password")
+    val password: String,
 ): Parcelable {
     override fun hashCode(): Int {
         return super.hashCode()

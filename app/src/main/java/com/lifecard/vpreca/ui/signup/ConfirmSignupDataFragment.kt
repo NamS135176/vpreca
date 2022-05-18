@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -34,12 +35,18 @@ class ConfirmSignupDataFragment : Fragment() {
         _binding = FragmentConfirmSignupDataBinding.inflate(inflater, container, false)
         val tvId = binding.tvConfirmID
         val tvUsername = binding.tvConfirmUsername
+        val tvPassword = binding.tvConfirmPassword
         val btnCancelSubmit = binding.appbarConfirmSignup.cancelBtn
         val btnBack = binding.btnCancelConfirm
         val btnSubmit = binding.btnSubmitConfirm
-
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_signup_input)
+            }
+        })
         tvId.setText(args?.signupData?.id)
         tvUsername.setText(args?.signupData?.username)
+
         btnCancelSubmit.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
@@ -55,7 +62,7 @@ class ConfirmSignupDataFragment : Fragment() {
         })
 
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.nav_signup_input)
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {
