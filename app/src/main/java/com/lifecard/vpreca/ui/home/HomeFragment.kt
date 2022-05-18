@@ -160,6 +160,7 @@ class HomeFragment : Fragment() {
         binding.buttonAddNewCard.setOnClickListener(View.OnClickListener {
             fragmentFindNavController().navigate(R.id.action_home_to_login)
         })
+
         return root
     }
 
