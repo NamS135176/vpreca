@@ -46,6 +46,13 @@
         </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
     </style>
 
+    <style name="Widget.App.Button.Icon.Bold" parent="@style/Widget.MaterialComponents.Button.Icon">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/hiragino_sans_w6</item>
+        <item name="fontFamily">@font/hiragino_sans_w6
+        </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+    </style>
+
     <style name="Widget.App.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <item name="boxCornerRadiusBottomEnd">@dimen/corner_md</item>
         <item name="boxCornerRadiusBottomStart">@dimen/corner_md</item>
@@ -128,5 +135,21 @@
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:windowIsFloating">false</item>
+        </style>
+    <style name="ThemeOverlay.MaterialComponents.MaterialAlertDialog.ProgressBar" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="background">@color/black</item>
+        <item name="android:background">@color/black</item>
+        <item name="android:padding">10dp</item>
+        <item name="alertDialogStyle">@style/ThemeOverlay.MaterialAlertDialog.MaterialComponents
+        </item>
+        <item name="android:layout">@layout/dialog_progress_bar</item>
+    </style>
+
+    <style name="ThemeOverlay.MaterialAlertDialog.MaterialComponents" parent="@style/MaterialAlertDialog.MaterialComponents">
+        <!--        <item name="android:layout">@layout/dialog_progress_bar</item>-->
+        <item name="backgroundInsetStart">0dp</item>
+        <item name="backgroundInsetTop">0dp</item>
+        <item name="backgroundInsetEnd">0dp</item>
+        <item name="backgroundInsetBottom">0dp</item>
     </style>
 </resources>

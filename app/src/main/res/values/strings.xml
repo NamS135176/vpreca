@@ -23,6 +23,8 @@
     <string name="prompt_email">ログインID</string>
     <string name="prompt_password">パスワード</string>
     <string name="action_sign_in">ログイン</string>
+    <string name="action_sign_in_faceid">顔認証でログイン</string>
+    <string name="action_sign_in_fingerprint">指紋認証でログイン</string>
     <string name="action_sign_in_short">ログイン</string>
     <string name="action_forgot_password">ログインID・パスワードを忘れた場合はこちら</string>
     <string name="action_signup">アカウント新規開設はこちら</string>
@@ -317,4 +319,15 @@
     <!--    Error  -->
     <string name="error_default">Error</string>
     <string name="error_no_internet_connection">No internet connection</string>
+    <!--  End error   -->
+
+    <!--   FaceID setting  -->
+    <string name="title_fingerprint_setting">ログイン認証設定</string>
+    <string name="fingerprint_setting_caption">ログイン認証の設定を行います。</string>
+    <string name="fingerprint_option">Biometricでログイン</string>
+    <string name="prompt_biometric_login_title">Biometric login for my app</string>
+    <string name="error_fingerprint_not_support">Biometric not support</string>
+    <string name="error_fingerprint_not_enrolled">Chưa đăng ký vân tay hoặc khuôn mặt. Vui lòng vào cài đặt thiết bị để thêm.</string>
+    <string name="error_bio_authentication_failure">Authentication failure</string>
+    <string name="biometric_setting_success">Success</string>
 </resources>

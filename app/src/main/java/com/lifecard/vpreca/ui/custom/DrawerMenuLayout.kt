@@ -15,6 +15,7 @@ import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.LayoutDrawerContentBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.ui.webview.WebViewFragment
+import com.lifecard.vpreca.utils.PreferenceHelper
 import com.lifecard.vpreca.utils.navigateToLogin
 import com.lifecard.vpreca.utils.viewFindNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -195,11 +196,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
                     .show()//menu_change_phone
                 6 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
                     .show()//menu_credit_card_info
-                7 -> Toast.makeText(
-                    context,
-                    "Not yet supported (FaceID/TouchID)",
-                    Toast.LENGTH_SHORT
-                ).show()//menu_member_setting -> show faceId/TouchID
+                7 -> viewFindNavController().navigate(R.id.nav_fingerprint_setting)//menu_member_setting -> show faceId/TouchID
                 9 -> showWebViewActivity("https://www.lifecard.co.jp/card/campaign/ol_nyukai/vpc/1604_1/index.html?utm_source=mail&utm_medium=mail&utm_campaign=vpc_my2&argument=xZcLVgDf&dmai=a627cb5ac0f66f")//menu_register_lifecard
                 10 -> showWebViewActivity("https://vpc.lifecard.co.jp/campaign/index.html")//menu_campain_info
                 12 -> showWebViewActivity("https://vpc.lifecard.co.jp/news/index.html")//menu_news
@@ -237,7 +234,8 @@ class DrawerMenuLayout @JvmOverloads constructor(
         binding.navHeader.buttonCloseDrawer.setOnClickListener(OnClickListener { closeDrawer() })
         binding.buttonLogout.setOnClickListener(OnClickListener {
             userRepository.clear()
-            secureStore.clear()
+            secureStore.clearDueLogout()
+            PreferenceHelper.clearDueLogout(context)
             closeDrawer()
             navigateToLogin()
         })

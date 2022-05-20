@@ -7,7 +7,7 @@ import com.lifecard.vpreca.utils.Constanst
 class SecureStore(private val appContext: Context) {
 
     private val encryptedSharedPreferences: SharedPreferences =
-        appContext.getSharedPreferences("VPrecaPref", Context.MODE_PRIVATE)
+        appContext.getSharedPreferences("VPrecaSecurePref", Context.MODE_PRIVATE)
 
     private fun saveEncryptText(key: String, textToEncrypt: String) {
         with(encryptedSharedPreferences.edit()) {
@@ -46,10 +46,20 @@ class SecureStore(private val appContext: Context) {
         return getEncryptText(Constanst.SECURE_LOGIN_ACTION)
     }
 
-    fun clear() {
+    fun saveLoginUserId(userId: String) {
+        return saveEncryptText(Constanst.SECURE_USER_ID, userId)
+    }
+
+    fun getLoginUserId(): String? {
+        return getEncryptText(Constanst.SECURE_USER_ID)
+    }
+
+    fun clearDueLogout() {
+        val useId = getLoginUserId()
         with(encryptedSharedPreferences.edit()) {
             clear()
             commit()
         }
+        useId?.let { saveLoginUserId(useId) }
     }
 }

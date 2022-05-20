@@ -1,18 +1,24 @@
 package com.lifecard.vpreca.ui.login
 
+import android.util.Base64
 import android.util.Patterns
 import androidx.lifecycle.*
 
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.model.LoginAction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.security.Signature
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginRepository: UserRepository) :
+class LoginViewModel @Inject constructor(
+    private val loginRepository: UserRepository,
+    private val remoteRepository: RemoteRepository
+) :
     ViewModel() {
     val usernameError = MutableLiveData<Int?>()
     val passwordError = MutableLiveData<Int?>()
@@ -67,8 +73,55 @@ class LoginViewModel @Inject constructor(private val loginRepository: UserReposi
         }
     }
 
+    fun loginWithBio(username: String, signature: Signature) {
+        // can be launched in a separate asynchronous job
+        viewModelScope.launch {
+            loading.value = true
+            val bioChallengeResult = remoteRepository.getBioChallenge(username)
+            if (bioChallengeResult is Result.Success) {
+                val challenge = bioChallengeResult.data.challenge
+                val salt = bioChallengeResult.data.salt
+                val nonce = bioChallengeResult.data.nonce
+
+                val stringToSign = "$challenge$salt$nonce"
+                signature.update(stringToSign.toByteArray())
+                val signatureBytes = signature.sign()
+                val signedBySignature =
+                    Base64.encodeToString(signatureBytes, Base64.URL_SAFE or Base64.NO_WRAP)
+
+                val loginResult = loginRepository.loginWithBiometric(username, signedBySignature)
+
+                if (loginResult is Result.Success) {
+                    val userResult = loginRepository.getUser()
+                    if (userResult is Result.Success) {
+                        _loginResult.value =
+                            LoginResult(success = userResult.data)
+                    } else {
+                        _loginResult.value = LoginResult(error = R.string.login_failed)
+                    }
+                } else {
+                    _loginResult.value = LoginResult(error = R.string.login_failed)
+                }
+            } else {
+                _loginResult.value = LoginResult(error = R.string.login_failed)
+                loading.value = false
+                return@launch
+            }
+
+            loading.value = false
+        }
+    }
+
     fun clearLoginResult() {
         _loginResult.value = LoginResult()
+    }
+
+    fun checkUsername(username: String): Boolean {
+        if (!isUserNameValid(username)) {
+            usernameDataChanged(username)
+            return false
+        }
+        return true
     }
 
     fun usernameDataChanged(text: String) {

@@ -1,7 +1,6 @@
 package com.lifecard.vpreca.utils
 
 import android.app.Activity
-import android.content.Context
 import android.os.Build
 import android.text.Editable
 import android.view.View
@@ -16,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.LoadingDialogFragment
 import com.lifecard.vpreca.ui.custom.DrawerMenuLayout
 
 
@@ -140,4 +140,32 @@ fun Fragment.unlockDrawer() = try {
     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 } catch (e: Exception) {
 
+}
+
+fun Fragment.showLoadingDialog(): Fragment? = try {
+    val supportFragmentManager = requireActivity().supportFragmentManager
+    var fragment =
+        supportFragmentManager.findFragmentByTag(LoadingDialogFragment.FRAGMENT_TAG)
+    if (fragment == null) {
+        fragment = LoadingDialogFragment()
+        supportFragmentManager.beginTransaction()
+            .add(fragment, LoadingDialogFragment.FRAGMENT_TAG)
+            .commitAllowingStateLoss()
+    }
+
+    fragment
+} catch (e: Exception) {
+    print(e)
+    null
+}
+
+fun Fragment.hideLoadingDialog() = try {
+    val supportFragmentManager = requireActivity().supportFragmentManager
+    val fragment =
+        supportFragmentManager.findFragmentByTag(LoadingDialogFragment.FRAGMENT_TAG)
+    fragment?.let {
+        supportFragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss()
+    }
+} catch (e: Exception) {
+    print(e)
 }

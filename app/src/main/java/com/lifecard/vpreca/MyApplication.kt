@@ -1,6 +1,8 @@
 package com.lifecard.vpreca
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.multidex.MultiDexApplication
 import androidx.startup.AppInitializer
 import dagger.hilt.android.HiltAndroidApp
@@ -17,5 +19,9 @@ class MyApplication: MultiDexApplication() {
             .installDefaultEventBus()
 
         AppInitializer.getInstance(this).initializeComponent(JodaTimeInitializer::class.java)
+
+        val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags("ja-jp")
+        // Call this on the main thread as it may require Activity.restart()
+        AppCompatDelegate.setApplicationLocales(appLocale)
     }
 }

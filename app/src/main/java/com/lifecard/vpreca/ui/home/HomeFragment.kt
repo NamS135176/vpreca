@@ -162,10 +162,10 @@ class HomeFragment : Fragment() {
         })
         setLightStatusBar()
 
-
         binding.buttonAddNewCard.setOnClickListener(View.OnClickListener {
             fragmentFindNavController().navigate(R.id.nav_issue_card_main)
         })
+
         return root
     }
 

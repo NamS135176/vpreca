@@ -16,8 +16,8 @@ class SignupInputViewModel : ViewModel() {
     val cityError = MutableLiveData<Int?>()
     val genderError = MutableLiveData<Int?>()
     val answerError = MutableLiveData<Int?>()
-    val passwordError = MutableLiveData<Int>()
-    val cfPasswordError = MutableLiveData<Int>()
+    val passwordError = MutableLiveData<Int?>()
+    val cfPasswordError = MutableLiveData<Int?>()
     val validForm = MediatorLiveData<SignUpFormState>().apply {
         value = SignUpFormState()
         addSource(idError) { value ->

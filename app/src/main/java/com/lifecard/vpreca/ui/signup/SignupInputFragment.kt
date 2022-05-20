@@ -33,7 +33,7 @@ class SignupInputFragment : Fragment() {
     }
 
     private lateinit var viewModel: SignupInputViewModel
-    private var _binding : SignupInputFragmentBinding? = null
+    private var _binding: SignupInputFragmentBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,11 +42,13 @@ class SignupInputFragment : Fragment() {
         _binding = SignupInputFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SignupInputViewModel::class.java)
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_policy)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.nav_policy)
+                }
+            })
 
         val spinnerGender = binding.spinnerGender
         val spinnerCity = binding.spinnerCity
@@ -97,12 +99,7 @@ class SignupInputFragment : Fragment() {
 
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
-                    // do something on positive button click
-//                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-//                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                    }
-//                    startActivity(intent)
+                setPositiveButton("はい") { _, _ ->
                     findNavController().navigate(R.id.nav_login)
                 }
                 setNegativeButton("いいえ", null)
@@ -115,29 +112,29 @@ class SignupInputFragment : Fragment() {
             "Male",
             "Female",
         )
-        val adapter:ArrayAdapter<String> = object: ArrayAdapter<String>(
+        val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item,
             list
-        ){
+        ) {
             override fun getDropDownView(
                 position: Int,
                 convertView: View?,
                 parent: ViewGroup
             ): View {
-                val view:TextView = super.getDropDownView(
+                val view: TextView = super.getDropDownView(
                     position,
                     convertView,
                     parent
                 ) as TextView
                 // set selected item style
-                if (position == spinnerGender.selectedItemPosition && position !=0 ){
+                if (position == spinnerGender.selectedItemPosition && position != 0) {
                     view.background = ColorDrawable(Color.parseColor("#F7E7CE"))
                     view.setTextColor(Color.parseColor("#333399"))
                 }
 
                 // make hint item color gray
-                if(position == 0){
+                if (position == 0) {
                     view.setTextColor(Color.LTGRAY)
                 }
 
@@ -163,23 +160,26 @@ class SignupInputFragment : Fragment() {
             }
         }
 
-        viewModel.validForm.observe(viewLifecycleOwner, androidx.lifecycle.Observer { signupFormState ->
-            if(idEdt.text.toString() == "" || usernameEdit.text.toString() == "" || spinnerGender.selectedItem.toString() == "選択してください" || btnDatePicker.text.toString() == "1980年1月1日" || spinnerCity.selectedItem.toString() == "選択してください" || phoneEdt.text.toString() == "" ||answerEdt.text.toString() == "" ||passwordEdt.text.toString() == "" ||cfPasswordEdt.text.toString() == "" || spinnerSecret.selectedItem.toString() == "選択してください"){
-                btnSubmit.isEnabled = false
-            }
-            else{
-                btnSubmit.isEnabled =
-                    signupFormState.usernameError == null && signupFormState.idError == null && signupFormState.genderError == null && signupFormState.dateError == null && signupFormState.cityError == null && signupFormState.phoneError == null && signupFormState.questionError == null && signupFormState.answerError == null && signupFormState.passwordError == null && signupFormState.cfPasswordError == null
-            }
-        })
+        viewModel.validForm.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { signupFormState ->
+                if (idEdt.text.toString() == "" || usernameEdit.text.toString() == "" || spinnerGender.selectedItem.toString() == "選択してください" || btnDatePicker.text.toString() == "1980年1月1日" || spinnerCity.selectedItem.toString() == "選択してください" || phoneEdt.text.toString() == "" || answerEdt.text.toString() == "" || passwordEdt.text.toString() == "" || cfPasswordEdt.text.toString() == "" || spinnerSecret.selectedItem.toString() == "選択してください") {
+                    btnSubmit.isEnabled = false
+                } else {
+                    btnSubmit.isEnabled =
+                        signupFormState.usernameError == null && signupFormState.idError == null && signupFormState.genderError == null && signupFormState.dateError == null && signupFormState.cityError == null && signupFormState.phoneError == null && signupFormState.questionError == null && signupFormState.answerError == null && signupFormState.passwordError == null && signupFormState.cfPasswordError == null
+                }
+            })
 
-        viewModel.usernameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer {  error: Int? ->
-            usernameLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        })
+        viewModel.usernameError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                usernameLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
         viewModel.idError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
             idLayout.error = try {
                 error?.let { getString(error) }
@@ -187,39 +187,48 @@ class SignupInputFragment : Fragment() {
                 null
             }
         })
-        viewModel.phoneError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
-            phoneLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        })
+        viewModel.phoneError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                phoneLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
 
-        viewModel.answerError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
-            answerLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        })
-        viewModel.passwordError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
-            passwordLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        })
-        viewModel.cfPasswordError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
-            cfPasswordLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        })
+        viewModel.answerError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                answerLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
+        viewModel.passwordError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                passwordLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
+        viewModel.cfPasswordError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                cfPasswordLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
         btnDatePicker.addTextChangedListener(afterTextChangedListener)
-        spinnerGender?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
+
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -230,9 +239,10 @@ class SignupInputFragment : Fragment() {
             }
 
         }
-        spinnerCity?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerCity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
+
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -243,9 +253,10 @@ class SignupInputFragment : Fragment() {
             }
         }
 
-        spinnerSecret?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerSecret.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
+
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -260,7 +271,12 @@ class SignupInputFragment : Fragment() {
 
         usernameEdit.doAfterTextChanged { text -> viewModel.usernameDataChanged(text = text.toString()) }
         passwordEdt.doAfterTextChanged { text -> viewModel.passwordDataChanged(text = text.toString()) }
-        cfPasswordEdt.doAfterTextChanged { text -> viewModel.cfPasswordDataChanged(text = text.toString(), passwordEdt.text.toString()) }
+        cfPasswordEdt.doAfterTextChanged { text ->
+            viewModel.cfPasswordDataChanged(
+                text = text.toString(),
+                passwordEdt.text.toString()
+            )
+        }
         answerEdt.doAfterTextChanged { text -> viewModel.answerDataChanged(text = text.toString()) }
         phoneEdt.doAfterTextChanged { text -> viewModel.phoneDataChanged(text = text.toString()) }
         phoneEdt.setOnEditorActionListener { _, actionId, _ ->
@@ -274,7 +290,11 @@ class SignupInputFragment : Fragment() {
         spinnerSecret.adapter = adapter
 
         btnSubmit.setOnClickListener(View.OnClickListener {
-            val signupData = SignupData(idEdt.text.toString(), usernameEdit.text.toString(), passwordEdt.text.toString())
+            val signupData = SignupData(
+                idEdt.text.toString(),
+                usernameEdit.text.toString(),
+                passwordEdt.text.toString()
+            )
             val action = SignupInputFragmentDirections.actionSignupInputToSignupConfirm(signupData)
             findNavController().navigate(action)
         })
