@@ -106,7 +106,7 @@ class BioManagerImpl : BioManager {
             this.encoded.encodeBase64(),
             Charsets.US_ASCII
         )
-    }\n-----END PUBLIC KEY-----"
+    }-----END PUBLIC KEY-----"
 
     private fun ByteArray.encodeBase64(): ByteArray = Base64.encode(this, Base64.DEFAULT)
 }

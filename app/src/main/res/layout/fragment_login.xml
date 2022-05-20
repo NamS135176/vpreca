@@ -115,6 +115,23 @@
             app:layout_constraintTop_toBottomOf="@+id/text_login_info"
             app:strokeColor="@color/white" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_bio_login"
+            style="@style/Widget.App.Button.Icon.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:layout_marginTop="25dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/action_sign_in_faceid"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:icon="@drawable/ic_android_faceid"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_login"
+            app:strokeColor="@color/white" />
+
         <ProgressBar
             android:id="@+id/loading"
             android:layout_width="wrap_content"
@@ -126,7 +143,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/button_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/button_login"
+            app:layout_constraintTop_toTopOf="@id/button_bio_login"
             tools:targetApi="lollipop" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -138,7 +155,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_login" />
+            app:layout_constraintTop_toBottomOf="@id/button_bio_login" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_signup"

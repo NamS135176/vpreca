@@ -23,6 +23,8 @@
     <string name="prompt_email">ログインID</string>
     <string name="prompt_password">パスワード</string>
     <string name="action_sign_in">ログイン</string>
+    <string name="action_sign_in_faceid">顔認証でログイン</string>
+    <string name="action_sign_in_fingerprint">指紋認証でログイン</string>
     <string name="action_sign_in_short">ログイン</string>
     <string name="action_forgot_password">ログインID・パスワードを忘れた場合はこちら</string>
     <string name="action_signup">アカウント新規開設はこちら</string>

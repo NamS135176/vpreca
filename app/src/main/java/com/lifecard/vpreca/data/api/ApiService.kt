@@ -1,9 +1,6 @@
 package com.lifecard.vpreca.data.api
 
-import com.lifecard.vpreca.data.model.CardResponse
-import com.lifecard.vpreca.data.model.CardUsageHistoryResponse
-import com.lifecard.vpreca.data.model.LoginResponse
-import com.lifecard.vpreca.data.model.User
+import com.lifecard.vpreca.data.model.*
 import retrofit2.http.*
 
 interface ApiService {
@@ -28,4 +25,22 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Field("memberNumber") memberNumber: String = "002",
     ): CardUsageHistoryResponse
+
+    @GET("challenge")
+    suspend fun getBioChallenge(@Query("loginId") memberNumber: String): BioChallenge
+
+    @FormUrlEncoded
+    @POST("biometric")
+    suspend fun registerBiometric(
+        @Header("Authorization") authorization: String,
+        @Field("loginId") memberNumber: String,
+        @Field("bioKey") bioKey: String
+    ): BioChallenge
+
+    @FormUrlEncoded
+    @POST("biometric-authentication")
+    suspend fun loginWithBiometric(
+        @Field("loginId") memberNumber: String,
+        @Field("response") response: String
+    ): LoginResponse
 }

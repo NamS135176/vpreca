@@ -20,8 +20,10 @@ import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.databinding.FragmentFingerprintBinding
 import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showLoadingDialog
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
 
+@AndroidEntryPoint
 class FingerprintFragment : NoToolbarFragment() {
 
     companion object {
@@ -50,6 +52,8 @@ class FingerprintFragment : NoToolbarFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel.setup(requireContext())
+
         _binding = FragmentFingerprintBinding.inflate(inflater)
         val buttonBack = binding.appbar.btnBack
         val fingerprint = binding.fingerprint
@@ -66,9 +70,8 @@ class FingerprintFragment : NoToolbarFragment() {
             }
         })
         viewModel.registerBiometricResult.observe(viewLifecycleOwner, Observer { result ->
-            if (result is Result.Error) {
-                //show alert
-                showAlert(getString(R.string.error_bio_authentication_failure))
+            if (result?.error != null) {
+                showAlert(getString(result?.error))
             }
         })
 
@@ -80,10 +83,10 @@ class FingerprintFragment : NoToolbarFragment() {
                     showAlert(getString(R.string.error_fingerprint_not_support))
                 }
             } else {
-                viewModel.setFingerprintSetting(false)
+                viewModel.setFingerprintSetting(requireContext(), false)
             }
         }
-        if (!viewModel.checkSupportFingerprint()) {
+        if (!viewModel.checkSupportFingerprint(requireContext())) {
             fingerprint.isEnabled = false
             //show alert
             showAlert(getString(R.string.error_fingerprint_not_support))
@@ -97,7 +100,7 @@ class FingerprintFragment : NoToolbarFragment() {
                     errString: CharSequence
                 ) {
                     super.onAuthenticationError(errorCode, errString)
-                    viewModel.setFingerprintSetting(false)
+                    viewModel.setFingerprintSetting(requireContext(), false)
 //                    showAlert(getString(R.string.error_bio_authentication_failure))
                     showAlert(errString.toString())
                 }
@@ -107,24 +110,17 @@ class FingerprintFragment : NoToolbarFragment() {
                 ) {
                     super.onAuthenticationSucceeded(result)
                     bioManager?.getPublicKey()?.let { publicKey: String ->
-                        viewModel.uploadPublicKey(publicKey)
-                        viewModel.setFingerprintSetting(true)
-                        //test
-                        result.cryptoObject?.signature?.let { signature ->
-                            viewModel.testSignature(
-                                signature,
-                                publicKey = publicKey
-                            )
-                        }
+                        viewModel.uploadPublicKey(publicKey, signature = result.cryptoObject?.signature)
+                        viewModel.setFingerprintSetting(requireContext(), true)
                     } ?: run {
-                        viewModel.setFingerprintSetting(false)
+                        viewModel.setFingerprintSetting(requireContext(), false)
                         showAlert(getString(R.string.error_bio_authentication_failure))
                     }
                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    viewModel.setFingerprintSetting(false)
+                    viewModel.setFingerprintSetting(requireContext(), false)
                     showAlert(getString(R.string.error_bio_authentication_failure))
                 }
             })

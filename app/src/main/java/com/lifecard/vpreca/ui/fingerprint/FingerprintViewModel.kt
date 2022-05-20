@@ -1,110 +1,118 @@
 package com.lifecard.vpreca.ui.fingerprint
 
 import android.app.Application
+import android.content.Context
 import android.os.Build
 import android.os.Handler
 import android.util.Base64
 import androidx.biometric.BiometricManager
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.utils.PreferenceHelper
 import java.security.KeyFactory
 import java.security.Signature
 import java.security.spec.X509EncodedKeySpec
 import javax.crypto.Cipher
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.UserRepository
+import com.lifecard.vpreca.data.model.BioChallenge
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FingerprintViewModel(private var app: Application) : AndroidViewModel(app) {
+@HiltViewModel
+class FingerprintViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+    private val remoteRepository: RemoteRepository
+) : ViewModel() {
 
     private val _fingerprintSetting = MutableLiveData<Boolean>()
     val fingerprintSetting: LiveData<Boolean> = _fingerprintSetting
     val loading = MutableLiveData<Boolean>(false)
-    val registerBiometricResult = MutableLiveData<Result<Boolean>?>()
+    val registerBiometricResult = MutableLiveData<BioSettingResult>()
 
-    init {
+    fun setup(context: Context) {
         viewModelScope.let {
             _fingerprintSetting.value =
-                PreferenceHelper.isFingerprintSetting(appContext = app)
+                PreferenceHelper.isFingerprintSetting(appContext = context)
         }
     }
 
-    fun setFingerprintSetting(enable: Boolean) {
+    fun setFingerprintSetting(context: Context, enable: Boolean) {
         _fingerprintSetting.value = enable
-        PreferenceHelper.setFingerprintSetting(app, enable)
+        PreferenceHelper.setFingerprintSetting(context, enable)
     }
 
-    fun checkSupportFingerprint(): Boolean {
-        val biometricManager = BiometricManager.from(app)
+    fun checkSupportFingerprint(context: Context): Boolean {
+        val biometricManager = BiometricManager.from(context)
         return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> return true
             else -> return false
         }
     }
 
-    fun uploadSignature(signature: Signature) {
-        val challenge = "abc"
-        val salt = "salt"
-        val nonce = "nonce"
+    fun uploadPublicKey(publicKey: String, signature: Signature? = null) {
+        viewModelScope.launch {
+            println("uploadPublicKey... start")
+            loading.value = true
+//            registerBiometricResult.value = null
+            val bioChallengeResult =
+                remoteRepository.registerBiometric(userRepository.user!!.id, publicKey)
+            if (bioChallengeResult is Result.Success) {
+                registerBiometricResult.value = BioSettingResult(success = bioChallengeResult.data)
 
-        val stringToSign = "$challenge$salt$nonce"
-        signature.update(stringToSign.toByteArray())
-        val signatureBytes = signature.sign()
-        val signed = Base64.encodeToString(signatureBytes, Base64.URL_SAFE or Base64.NO_WRAP)
-        print("uploadSignature... signed = $signed")
-    }
+                //testing
+                /*
+                signature?.let {
+//                    testSignature(signature, publicKey, bioChallengeResult.data)
+                    val bioChallenge = bioChallengeResult.data
+                    val challenge = bioChallenge.challenge
+                    val salt = bioChallenge.salt
+                    val nonce = bioChallenge.nonce
 
-    fun uploadCipher(cipher: Cipher) {
-        val challenge = "abc"
-        val salt = "salt"
-        val nonce = "nonce"
+                    val stringToSign = "$challenge$salt$nonce"
+                    signature.update(stringToSign.toByteArray())
+                    val signatureBytes = signature.sign()
+                    val signedBySignature =
+                        Base64.encodeToString(signatureBytes, Base64.URL_SAFE or Base64.NO_WRAP)
 
-        val stringToSign = "$challenge$salt$nonce"
-        val signatureBytes = cipher.doFinal(stringToSign.toByteArray())
-        val signed = Base64.encodeToString(signatureBytes, Base64.URL_SAFE or Base64.NO_WRAP)
-        print("uploadCipher... signed = $signed")
-    }
+                    var pk = publicKey
+                    pk = pk?.replace("-----BEGIN PUBLIC KEY-----\n", "")
+                    pk = pk?.replace("-----END PUBLIC KEY-----", "")
+                    pk = pk?.replace("\n", "")
 
-    fun uploadPublicKey(publicKey: String) {
-        loading.value = true
-        registerBiometricResult.value = null
-        print("uploadPublicKey... publicKey = $publicKey")
-        Handler().postDelayed(Runnable {
+                    val pkb = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        java.util.Base64.getDecoder().decode(pk)
+                    } else {
+                        TODO("VERSION.SDK_INT < O")
+                    }
+                    val fact = KeyFactory.getInstance("EC")
+                    var pkKey = fact.generatePublic(X509EncodedKeySpec(pkb))
+
+                    val verificationFunction = Signature.getInstance("SHA256withECDSA")
+                    verificationFunction.initVerify(pkKey)
+                    verificationFunction.update(stringToSign.toByteArray())
+                    val respByte =
+                        Base64.decode(signedBySignature, Base64.URL_SAFE or Base64.NO_WRAP)
+                    val verify = verificationFunction.verify(respByte)
+                    println("uploadSignature... stringToSign = $stringToSign")
+                    println("uploadSignature... signedBySignature = $signedBySignature")
+                    println("uploadSignature... verify result = $verify")
+                    println("uploadSignature... publicKey = $publicKey")
+                }
+                 */
+                //end test
+
+            } else {
+                registerBiometricResult.value
+                BioSettingResult(error = R.string.error_bio_authentication_failure)
+            }
             loading.value = false
-            registerBiometricResult.value = Result.Success(true)
-        }, 500)
-    }
 
-    fun testSignature(signature: Signature, publicKey: String) {
-        val challenge = "challenge"
-        val salt = "salt"
-        val nonce = "nonce"
-
-        val stringToSign = "$challenge$salt$nonce"
-        signature.update(stringToSign.toByteArray())
-        val signatureBytes = signature.sign()
-        val signedBySignature =
-            Base64.encodeToString(signatureBytes, Base64.URL_SAFE or Base64.NO_WRAP)
-
-        var pk = publicKey
-        pk = pk?.replace("-----BEGIN PUBLIC KEY-----\n", "")
-        pk = pk?.replace("-----END PUBLIC KEY-----", "")
-        pk = pk?.replace("\n", "")
-
-        val pkb = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            java.util.Base64.getDecoder().decode(pk)
-        } else {
-            TODO("VERSION.SDK_INT < O")
+            println("uploadPublicKey... end")
         }
-        val fact = KeyFactory.getInstance("EC")
-        var pkKey = fact.generatePublic(X509EncodedKeySpec(pkb))
 
-        val verificationFunction = Signature.getInstance("SHA256withECDSA")
-        verificationFunction.initVerify(pkKey)
-        verificationFunction.update(stringToSign.toByteArray())
-        val respByte = Base64.decode(signedBySignature, Base64.URL_SAFE or Base64.NO_WRAP)
-        val verify = verificationFunction.verify(respByte)
-        print("uploadSignature... stringToSign = $stringToSign - signedBySignature = $signedBySignature - verify = $verify")
+
     }
 }

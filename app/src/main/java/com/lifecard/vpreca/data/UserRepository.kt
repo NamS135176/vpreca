@@ -34,7 +34,7 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
         println("UserRepository... init: accessToken=${accessToken}")
         if (accessToken != null && loginAction == LoginAction.None.value) {
             val fakeUser = User(
-                UUID.randomUUID().toString(),
+                "002",
                 "The Anh",
                 "anhndt@vn-sis.com",
             )
@@ -46,6 +46,23 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
         return withContext(Dispatchers.IO) {
             try {
                 val loginResponse = apiService.login(username, password)
+                secureStore.saveAccessToken(loginResponse.accessToken)
+                secureStore.saveRefreshToken(loginResponse.refreshToken)
+                secureStore.saveLoginAction(loginResponse.action)
+                accessToken = loginResponse.accessToken
+                refreshToken = loginResponse.refreshToken
+                Result.Success(loginResponse)
+            } catch (e: Exception) {
+                println("LoginDataSource... login has error ${e}")
+                Result.Error(IOException("Error logging in", e))
+            }
+        }
+    }
+
+    suspend fun loginWithBiometric(username: String, signed: String): Result<LoginResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val loginResponse = apiService.loginWithBiometric(username, response = signed)
                 secureStore.saveAccessToken(loginResponse.accessToken)
                 secureStore.saveRefreshToken(loginResponse.refreshToken)
                 secureStore.saveLoginAction(loginResponse.action)

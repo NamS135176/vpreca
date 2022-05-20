@@ -2,6 +2,7 @@ package com.lifecard.vpreca.ui.login
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -25,6 +29,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.NoToolbarFragment
+import com.lifecard.vpreca.biometric.BioManager
+import com.lifecard.vpreca.biometric.BioManagerImpl
 import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.KeyboardUtils
@@ -45,6 +51,16 @@ class LoginFragment : NoToolbarFragment() {
     private lateinit var passwordEditText: AppCompatEditText
     private lateinit var lifecycleObserver: DefaultLifecycleObserver
 
+    private val bioManager by lazy { createBioManager() }
+
+    private fun createBioManager(): BioManager? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            BioManagerImpl()
+        } else {
+            return null
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,6 +73,7 @@ class LoginFragment : NoToolbarFragment() {
         val passwordLayout = binding.passwordLayout
         passwordEditText = binding.password
         val loginButton = binding.buttonLogin
+        val buttonBioLogin = binding.buttonBioLogin
         val loadingProgressBar = binding.loading
         val logoGift = binding.logoGift
         val signUpButton = binding.buttonSignup
@@ -73,26 +90,26 @@ class LoginFragment : NoToolbarFragment() {
             findNavController().navigate(R.id.nav_policy)
         })
 
-        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
-            loginButton.isEnabled =
-                loginFormState.usernameError == null && loginFormState.passwordError == null
-            print("loginViewModel.validForm.observe... usernameError: ${loginFormState.usernameError} - passwordError: ${loginFormState.passwordError} ")
-        })
-        loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
-            usernameLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-
-        })
-        loginViewModel.passwordError.observe(viewLifecycleOwner, Observer { error: Int? ->
-            passwordLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        })
+//        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
+//            loginButton.isEnabled =
+//                loginFormState.usernameError == null && loginFormState.passwordError == null
+//            print("loginViewModel.validForm.observe... usernameError: ${loginFormState.usernameError} - passwordError: ${loginFormState.passwordError} ")
+//        })
+//        loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
+//            usernameLayout.error = try {
+//                error?.let { getString(error) }
+//            } catch (e: Error) {
+//                null
+//            }
+//
+//        })
+//        loginViewModel.passwordError.observe(viewLifecycleOwner, Observer { error: Int? ->
+//            passwordLayout.error = try {
+//                error?.let { getString(error) }
+//            } catch (e: Error) {
+//                null
+//            }
+//        })
 
         loginViewModel.loginResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
@@ -163,11 +180,69 @@ class LoginFragment : NoToolbarFragment() {
             context?.let { KeyboardUtils.hideKeyboard(it, passwordEditText) }
         }
 
+        buttonBioLogin.setOnClickListener(View.OnClickListener {
+            showBiometricDialog()
+        })
+
         logoGift.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_first)
         })
         return binding.root
 
+    }
+
+    fun showBiometricDialog() {
+        val executor = ContextCompat.getMainExecutor(requireContext())
+        val biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(
+                    errorCode: Int,
+                    errString: CharSequence
+                ) {
+                    super.onAuthenticationError(errorCode, errString)
+                    showAlert(errString.toString())
+                }
+
+                override fun onAuthenticationSucceeded(
+                    result: BiometricPrompt.AuthenticationResult
+                ) {
+                    super.onAuthenticationSucceeded(result)
+                    result.cryptoObject?.signature?.let { signature ->
+                        loginViewModel.loginWithBio(
+                            binding.username.text.toString(),
+                            signature = signature
+                        )
+                    } ?: run {
+                        showAlert(getString(R.string.error_bio_authentication_failure))
+                    }
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    showAlert(getString(R.string.error_bio_authentication_failure))
+                }
+            })
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle(getString(R.string.prompt_biometric_login_title))
+            .setConfirmationRequired(true)
+//            .setSubtitle("Log in using your biometric credential")
+            .setNegativeButtonText(getString(R.string.cancel))
+            .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+            .build()
+
+        bioManager?.getCryptoObjectForPromtBio()?.let {
+            biometricPrompt.authenticate(promptInfo, it)
+        } ?: run {
+            showAlert(getString(R.string.error_bio_authentication_failure))
+        }
+    }
+
+    fun showAlert(content: String) {
+        MaterialAlertDialogBuilder(requireContext()).apply {
+            setPositiveButton(R.string.button_ok, null)
+            setMessage(content)
+        }.create().show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
