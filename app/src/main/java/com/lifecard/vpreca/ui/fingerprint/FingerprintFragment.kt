@@ -20,6 +20,7 @@ import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.databinding.FragmentFingerprintBinding
 import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showLoadingDialog
+import com.lifecard.vpreca.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
 
@@ -71,7 +72,9 @@ class FingerprintFragment : NoToolbarFragment() {
         })
         viewModel.registerBiometricResult.observe(viewLifecycleOwner, Observer { result ->
             if (result?.error != null) {
-                showAlert(getString(result?.error))
+                showAlert(getString(result.error))
+            } else if (result?.success != null) {
+                showToast(getString(R.string.biometric_setting_success))
             }
         })
 
@@ -101,7 +104,6 @@ class FingerprintFragment : NoToolbarFragment() {
                 ) {
                     super.onAuthenticationError(errorCode, errString)
                     viewModel.setFingerprintSetting(requireContext(), false)
-//                    showAlert(getString(R.string.error_bio_authentication_failure))
                     showAlert(errString.toString())
                 }
 
@@ -110,7 +112,10 @@ class FingerprintFragment : NoToolbarFragment() {
                 ) {
                     super.onAuthenticationSucceeded(result)
                     bioManager?.getPublicKey()?.let { publicKey: String ->
-                        viewModel.uploadPublicKey(publicKey, signature = result.cryptoObject?.signature)
+                        viewModel.uploadPublicKey(
+                            publicKey,
+                            signature = result.cryptoObject?.signature
+                        )
                         viewModel.setFingerprintSetting(requireContext(), true)
                     } ?: run {
                         viewModel.setFingerprintSetting(requireContext(), false)

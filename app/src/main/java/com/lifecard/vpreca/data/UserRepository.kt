@@ -49,6 +49,7 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
                 secureStore.saveAccessToken(loginResponse.accessToken)
                 secureStore.saveRefreshToken(loginResponse.refreshToken)
                 secureStore.saveLoginAction(loginResponse.action)
+                secureStore.saveLoginUserId(username)
                 accessToken = loginResponse.accessToken
                 refreshToken = loginResponse.refreshToken
                 Result.Success(loginResponse)
@@ -66,6 +67,7 @@ class UserRepository(private val secureStore: SecureStore, private val apiServic
                 secureStore.saveAccessToken(loginResponse.accessToken)
                 secureStore.saveRefreshToken(loginResponse.refreshToken)
                 secureStore.saveLoginAction(loginResponse.action)
+                secureStore.saveLoginUserId(username)
                 accessToken = loginResponse.accessToken
                 refreshToken = loginResponse.refreshToken
                 Result.Success(loginResponse)

@@ -74,10 +74,6 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginWithBio(username: String, signature: Signature) {
-//        if (!isUserNameValid(username)) {
-//            usernameDataChanged(username)
-//            return
-//        }
         // can be launched in a separate asynchronous job
         viewModelScope.launch {
             loading.value = true
@@ -120,12 +116,20 @@ class LoginViewModel @Inject constructor(
         _loginResult.value = LoginResult()
     }
 
+    fun checkUsername(username: String): Boolean {
+        if (!isUserNameValid(username)) {
+            usernameDataChanged(username)
+            return false
+        }
+        return true
+    }
+
     fun usernameDataChanged(text: String) {
-//        if (!isUserNameValid(text)) {
-//            usernameError.value = R.string.invalid_username
-//        } else {
-//            usernameError.value = null
-//        }
+        if (!isUserNameValid(text)) {
+            usernameError.value = R.string.invalid_username
+        } else {
+            usernameError.value = null
+        }
     }
 
     fun passwordDataChanged(text: String) {

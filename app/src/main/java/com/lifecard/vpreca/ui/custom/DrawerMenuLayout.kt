@@ -15,6 +15,7 @@ import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.LayoutDrawerContentBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.ui.webview.WebViewFragment
+import com.lifecard.vpreca.utils.PreferenceHelper
 import com.lifecard.vpreca.utils.navigateToLogin
 import com.lifecard.vpreca.utils.viewFindNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -236,7 +237,8 @@ class DrawerMenuLayout @JvmOverloads constructor(
         binding.navHeader.buttonCloseDrawer.setOnClickListener(OnClickListener { closeDrawer() })
         binding.buttonLogout.setOnClickListener(OnClickListener {
             userRepository.clear()
-            secureStore.clear()
+            secureStore.clearDueLogout()
+            PreferenceHelper.clearDueLogout(context)
             closeDrawer()
             navigateToLogin()
         })

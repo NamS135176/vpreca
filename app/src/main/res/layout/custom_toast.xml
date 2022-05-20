@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/toast_text"
+        style="@style/Widget.AppCompat.TextView.Bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
+        android:background="@drawable/toast_success_shape"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+        android:paddingVertical="20dp"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        android:textStyle="normal" />
+</androidx.appcompat.widget.LinearLayoutCompat>

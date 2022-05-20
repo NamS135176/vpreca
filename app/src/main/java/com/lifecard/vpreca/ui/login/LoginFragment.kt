@@ -32,16 +32,19 @@ import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
 import com.lifecard.vpreca.data.model.User
+import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.KeyboardUtils
 import com.lifecard.vpreca.utils.fragmentFindNavController
 import com.lifecard.vpreca.utils.navigateToHome
 import com.lifecard.vpreca.utils.toEditable
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : NoToolbarFragment() {
-
+    @Inject
+    lateinit var secureStore: SecureStore
     private val loginViewModel: LoginViewModel by viewModels()
     private var _binding: FragmentLoginBinding? = null
 
@@ -95,21 +98,21 @@ class LoginFragment : NoToolbarFragment() {
 //                loginFormState.usernameError == null && loginFormState.passwordError == null
 //            print("loginViewModel.validForm.observe... usernameError: ${loginFormState.usernameError} - passwordError: ${loginFormState.passwordError} ")
 //        })
-//        loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
-//            usernameLayout.error = try {
-//                error?.let { getString(error) }
-//            } catch (e: Error) {
-//                null
-//            }
-//
-//        })
-//        loginViewModel.passwordError.observe(viewLifecycleOwner, Observer { error: Int? ->
-//            passwordLayout.error = try {
-//                error?.let { getString(error) }
-//            } catch (e: Error) {
-//                null
-//            }
-//        })
+        loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
+            usernameLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+
+        })
+        loginViewModel.passwordError.observe(viewLifecycleOwner, Observer { error: Int? ->
+            passwordLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
 
         loginViewModel.loginResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
@@ -143,14 +146,20 @@ class LoginFragment : NoToolbarFragment() {
                 true -> {
                     loadingProgressBar.visibility = View.VISIBLE
                     loginButton.visibility = View.INVISIBLE
+                    buttonBioLogin.isEnabled = false
                 }
                 else -> {
                     loadingProgressBar.visibility = View.GONE
                     loginButton.visibility = View.VISIBLE
+                    buttonBioLogin.isEnabled = true
                 }
             }
         })
 
+        val savedUsername = secureStore.getLoginUserId()
+        savedUsername?.let {
+            usernameEditText.text = it.toEditable()
+        }
         usernameEditText.doAfterTextChanged { text -> loginViewModel.usernameDataChanged(text = text.toString()) }
         usernameEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -191,7 +200,10 @@ class LoginFragment : NoToolbarFragment() {
 
     }
 
-    fun showBiometricDialog() {
+    private fun showBiometricDialog() {
+        if (!loginViewModel.checkUsername(binding.username.text.toString())) {
+            return
+        }
         val executor = ContextCompat.getMainExecutor(requireContext())
         val biometricPrompt = BiometricPrompt(this, executor,
             object : BiometricPrompt.AuthenticationCallback() {

@@ -273,4 +273,5 @@
     <string name="prompt_biometric_login_title">Biometric login for my app</string>
     <string name="error_fingerprint_not_support">Biometric not support</string>
     <string name="error_bio_authentication_failure">Authentication failure</string>
+    <string name="biometric_setting_success">Success</string>
 </resources>

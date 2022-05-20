@@ -52,7 +52,6 @@ class RemoteRepository(
             } catch (e: Exception) {
                 println("RemoteRepository...registerBiometric has error $e")
                 Result.Error(IOException("Error registerBiometric", e))
-                throw  e
             }
         }
     }

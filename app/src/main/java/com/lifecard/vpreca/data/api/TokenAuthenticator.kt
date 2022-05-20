@@ -17,15 +17,29 @@ import retrofit2.converter.gson.GsonConverterFactory
 class TokenAuthenticator(private var appContext: Context, private val secureStore: SecureStore) :
     Authenticator {
     private var blacklistRefreshTokenUrlPath =
-        arrayOf("/login", "/sign-up", "/refresh", "/refresh-token")
+        arrayOf(
+            "/login",
+            "/sign-up",
+            "/refresh",
+            "/refresh-token",
+            "/biometric-authentication",
+            "/biometric",
+            "/challenge"
+        )
     private val lock = Mutex()
 
     override fun authenticate(route: Route?, response: Response): Request? {
         return runBlocking {
             lock.withLock {
-                println("TokenAuthenticator... authenticate")
                 val urlPath = response.request().url().encodedPath()
-                if (blacklistRefreshTokenUrlPath.indexOf(urlPath) < 0) {
+                var isBlocked = false
+                blacklistRefreshTokenUrlPath.forEach { s ->
+                    if (urlPath.indexOf(s) > 0) {
+                        isBlocked = true
+                    }
+                }
+                println("TokenAuthenticator... authenticate urlPath = $urlPath - isBlocked = $isBlocked")
+                if (!isBlocked) {
                     val headerAccessToken: String? = response.request().header("Authorization")
                     val accessToken = secureStore.getAccessToken()
                     val refreshToken = secureStore.getRefreshToken()
@@ -63,8 +77,7 @@ class TokenAuthenticator(private var appContext: Context, private val secureStor
                         appContext.startActivity(intent)
                     }
                 }
-
-                return@runBlocking response.request()
+                return@runBlocking null
             }
         }
     }
