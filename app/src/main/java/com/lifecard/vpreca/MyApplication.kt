@@ -22,7 +22,6 @@ class MyApplication: MultiDexApplication() {
 
         val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags("ja-jp")
         // Call this on the main thread as it may require Activity.restart()
-//        AppCompatDelegate.setApplicationLocales(appLocale)
-
+        AppCompatDelegate.setApplicationLocales(appLocale)
     }
 }
