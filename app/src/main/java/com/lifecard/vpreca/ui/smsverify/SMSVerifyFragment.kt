@@ -31,12 +31,17 @@ class SMSVerifyFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {_binding = FragmentSmsVerifyBinding.inflate(inflater, container, false)
+    ): View? {
+        _binding = FragmentSmsVerifyBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SMSVerifyViewModel::class.java)
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() { findNavController().navigate(R.id.nav_login) }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.nav_login)
+                }
+            })
 
         val btnCancel = binding.appbarSmsVerify.cancelBtn
         val btnSubmit = binding.btnVerifySms
@@ -44,7 +49,7 @@ class SMSVerifyFragment : Fragment() {
         val codeLayout = binding.codeInputLayout
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
+                setPositiveButton("はい") { _, _ ->
                     // do something on positive button click
                     findNavController().popBackStack()
                 }
@@ -53,16 +58,17 @@ class SMSVerifyFragment : Fragment() {
             }.create().show()
         })
 
-        viewModel.validForm.observe(viewLifecycleOwner, androidx.lifecycle.Observer { smsVerifyState ->
-            if(codeInput.text.toString() == ""){
-                btnSubmit.isEnabled = false
-            }
-            else{
-                btnSubmit.isEnabled =(smsVerifyState.codeError == null )
-            }
-        })
+        viewModel.validForm.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { smsVerifyState ->
+                if (codeInput.text.toString() == "") {
+                    btnSubmit.isEnabled = false
+                } else {
+                    btnSubmit.isEnabled = (smsVerifyState.codeError == null)
+                }
+            })
 
-        viewModel.codeError.observe(viewLifecycleOwner, androidx.lifecycle.Observer {  error: Int? ->
+        viewModel.codeError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
             codeLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
@@ -80,13 +86,11 @@ class SMSVerifyFragment : Fragment() {
         }
 
         btnSubmit.setOnClickListener(View.OnClickListener {
-            if(codeInput.text.toString() == "1234"){
+            if (codeInput.text.toString() == "1234") {
                 findNavController().navigate(R.id.nav_sms_overtimes)
-            }
-            else if(codeInput.text.toString() == "2345"){
+            } else if (codeInput.text.toString() == "2345") {
                 findNavController().navigate(R.id.nav_code_expired)
-            }
-            else {
+            } else {
                 codeLayout.error = "Wrong code"
             }
         })

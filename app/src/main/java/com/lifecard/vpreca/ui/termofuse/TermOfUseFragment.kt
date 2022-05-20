@@ -11,14 +11,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.TermOfUseFragmentBinding
-import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.PreferenceHelper
 
 class TermOfUseFragment : Fragment() {
@@ -34,7 +31,7 @@ class TermOfUseFragment : Fragment() {
 
     private var webViewClient = object : WebViewClient() {
 
-        private fun handleOpenUrl(view: WebView?, url: String) {
+        private fun handleOpenUrl(url: String) {
             if (url.startsWith("http://") || url.startsWith("https://")) {
                 //open webview fragment
                 findNavController().navigate(TermOfUseFragmentDirections.actionTermOfUseToWeb(url))
@@ -47,14 +44,15 @@ class TermOfUseFragment : Fragment() {
         ): Boolean {
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) return true//only support from 24 and above
             request?.url?.let {
-                handleOpenUrl(view, it.toString())
+                handleOpenUrl(it.toString())
             }
             return true
         }
 
+        @Deprecated("Deprecated in Java")
         override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) return false//only support from 23 and bellow
-            url?.let { handleOpenUrl(view, it) }
+            url?.let { handleOpenUrl(it) }
             return true
         }
 
