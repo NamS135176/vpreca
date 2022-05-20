@@ -244,7 +244,51 @@
     <string name="change_pass_complete_title">変更完了</string>
     <string name="change_pass_complete_des">お手続きが完了しました。</string>
     <string name="change_pass_complete_btn">ホーム</string>
+
     <!--    Complete Change Pass-->
+
+    <!--    Gift Card-->
+    <string name="gift_card_appbar_title">ギフトカード登録</string>
+    <string name="gift_card_title_top">お手持ちギフトカード情報を</string>
+    <string name="gift_card_title_bot">アカウントに登録できます</string>
+    <string name="gift_card_input_card_title">カード番号 （半角数字16桁）</string>
+    <string name="gift_card_input_expired_title">有効期限（MONTH/YEAR）</string>
+    <string name="gift_card_input_pin_code">セキュリティコード（半角数字3桁）</string>
+    <string name="gift_card_input_btn_submit">確認</string>
+    <!--    Gift Card-->
+
+    <!--    Gift Card Confirm-->
+    <string name="gift_card_confirm_appbar_title">カード情報確認</string>
+    <string name="gift_card_confirm_btn">次へ</string>
+    <!--    Gift Card Confirm-->
+
+    <!--    Gift Card Complete-->
+    <string name="gift_card_complete_title">Vプリカの登録が完了いたしました。</string>
+    <string name="gift_card_complete_des_top">ホーム画面でカードが登録されていることを確認してください。</string>
+    <string name="gift_card_complete_des_bot">なお、ご登録いただいいるメールアドレスに確認メールを送信いたしました。</string>
+    <string name="gift_card_complete_btn">ホーム</string>
+    <!--    Gift Card Complete-->
+
+    <!--    Gift Card Confirm Detail-->
+    <string name="gift_card_confirm_detail_title">発行内容を確認してください。</string>
+    <string name="gift_card_confirm_detail_price_title">購入券種（金額）</string>
+    <string name="gift_card_confirm_detail_btn">登録</string>
+    <!--    Gift Card Confirm Detail-->
+
+    <!--    Change info data-->
+    <string name="change_info_appbar_title">会員情報</string>
+    <string name="change_info_data_title">会員情報確認</string>
+    <string name="change_info_data_des">現在ご登録いただいている会員情報</string>
+    <string name="change_info_data_name_title">お名前</string>
+    <string name="change_info_data_furigana_title">フリガナ</string>
+    <string name="change_info_data_adress_title">居住地</string>
+    <string name="change_info_data_phone_title">電話番号</string>
+    <string name="change_info_data_primary_email_title">メールアドレス1</string>
+    <string name="change_info_data_secondary_email_title">メールアドレス2</string>
+    <string name="change_info_data_setting_title">各種通知サービスの設定</string>
+    <string name="change_info_data_btn">会員情報変更</string>
+    <string name="change_info_data_magazine">メールマガジン</string>
+    <!--    Change info data-->
 
     <string name="menu_app_version">バージョン : %1$s</string>
     <string name="copyright_life_card_co_ltd">Copyright © LIFE CARD Co., Ltd.\nAll rights reserved</string>

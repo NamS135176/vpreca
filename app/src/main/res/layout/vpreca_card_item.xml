@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.lifecard.vpreca.utils.Converter" />
+
+        <variable
+            name="card"
+            type="com.lifecard.vpreca.data.model.VprecaCard" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:paddingHorizontal="18dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card_info"
+            style="@style/MyCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_bg_primary"
+
+            android:minHeight="110dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/card_logo"
+                android:layout_width="0dp"
+                android:layout_height="12dp"
+                android:background="@drawable/home_card_logo"
+                app:layout_constraintDimensionRatio="138:36"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_no"
+                style="@style/Widget.AppCompat.TextView.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="7dp"
+                android:text="**** **** **** 9890"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/card_username"
+                app:layout_constraintStart_toStartOf="parent" />
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/card_valid"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="14dp"-->
+<!--                android:text="@{Converter.convertCardValidThu(card.precaExpirationDate)}"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="9sp"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/card_username"-->
+<!--                app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/card_cvc"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="70dp"-->
+<!--                android:layout_marginLeft="70dp"-->
+<!--                android:text="@{card.vcn}"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="9sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/card_valid"-->
+<!--                app:layout_constraintStart_toEndOf="@id/card_valid"-->
+<!--                app:layout_constraintTop_toTopOf="@id/card_valid" />-->
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_username"
+                style="@style/Widget.AppCompat.TextView.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VPRECAUSER"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/card_type_logo"
+                android:layout_width="0dp"
+                android:layout_height="12dp"
+                android:background="@drawable/card_visa"
+                app:layout_constraintBottom_toBottomOf="@id/card_username"
+                app:layout_constraintDimensionRatio="108:36"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/card_username" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/text_balance_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_info">
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/text_card_balance"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:text="@string/text_card_balance"-->
+<!--                android:textColor="#272727"-->
+<!--                android:textSize="11sp" />-->
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_amount"
+                style="@style/Widget.AppCompat.TextView.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:layout_marginRight="40dp"
+                android:textColor="@color/white"
+                android:text="@{card.price}"
+                android:textSize="18sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/card_lock_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_horizontal_margin"
+            android:layout_marginLeft="@dimen/fragment_horizontal_margin"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="@{card.vcnSecurityLockFlg.equals(`1`) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/text_balance_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_balance_container">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_card_lock"
+                android:layout_width="23dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_locked_white" />
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                style="@style/Widget.AppCompat.TextView.Bold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/my_page_card_locked"-->
+<!--                android:textColor="@color/primary"-->
+<!--                android:textSize="10sp" />-->
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
