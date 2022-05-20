@@ -1,24 +1,19 @@
 package com.lifecard.vpreca.ui.fingerprint
 
-import android.app.Application
 import android.content.Context
-import android.os.Build
-import android.os.Handler
-import android.util.Base64
 import androidx.biometric.BiometricManager
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.RemoteRepository
-import com.lifecard.vpreca.utils.PreferenceHelper
-import java.security.KeyFactory
-import java.security.Signature
-import java.security.spec.X509EncodedKeySpec
-import javax.crypto.Cipher
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
-import com.lifecard.vpreca.data.model.BioChallenge
+import com.lifecard.vpreca.utils.PreferenceHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.security.Signature
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,20 +30,29 @@ class FingerprintViewModel @Inject constructor(
     fun setup(context: Context) {
         viewModelScope.let {
             _fingerprintSetting.value =
-                PreferenceHelper.isFingerprintSetting(appContext = context)
+                PreferenceHelper.isEnableBiometricSetting(appContext = context)
         }
     }
 
     fun setFingerprintSetting(context: Context, enable: Boolean) {
         _fingerprintSetting.value = enable
-        PreferenceHelper.setFingerprintSetting(context, enable)
+        PreferenceHelper.setEnableBiometricSetting(context, enable)
     }
 
     fun checkSupportFingerprint(context: Context): Boolean {
         val biometricManager = BiometricManager.from(context)
         return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> return true
-            else -> return false
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                registerBiometricResult.value =
+                    BioSettingResult(error = R.string.error_fingerprint_not_enrolled, bioStatus = BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED)
+                return false
+            }
+            else -> {
+                registerBiometricResult.value =
+                    BioSettingResult(error = R.string.error_fingerprint_not_support)
+                return false
+            }
         }
     }
 

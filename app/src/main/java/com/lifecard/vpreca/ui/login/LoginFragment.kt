@@ -1,7 +1,6 @@
 package com.lifecard.vpreca.ui.login
 
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,34 +9,26 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
+import com.lifecard.vpreca.biometric.BiometricType
 import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
-import com.lifecard.vpreca.utils.KeyboardUtils
-import com.lifecard.vpreca.utils.fragmentFindNavController
-import com.lifecard.vpreca.utils.navigateToHome
-import com.lifecard.vpreca.utils.toEditable
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -58,7 +49,7 @@ class LoginFragment : NoToolbarFragment() {
 
     private fun createBioManager(): BioManager? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            BioManagerImpl()
+            BioManagerImpl(requireContext())
         } else {
             return null
         }
@@ -93,11 +84,11 @@ class LoginFragment : NoToolbarFragment() {
             findNavController().navigate(R.id.nav_policy)
         })
 
-//        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
-//            loginButton.isEnabled =
-//                loginFormState.usernameError == null && loginFormState.passwordError == null
-//            print("loginViewModel.validForm.observe... usernameError: ${loginFormState.usernameError} - passwordError: ${loginFormState.passwordError} ")
-//        })
+        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
+            loginButton.isEnabled =
+                loginFormState.usernameError == null && loginFormState.passwordError == null
+            print("loginViewModel.validForm.observe... usernameError: ${loginFormState.usernameError} - passwordError: ${loginFormState.passwordError} ")
+        })
         loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
             usernameLayout.error = try {
                 error?.let { getString(error) }
@@ -187,6 +178,26 @@ class LoginFragment : NoToolbarFragment() {
                 passwordEditText.text.toString()
             )
             context?.let { KeyboardUtils.hideKeyboard(it, passwordEditText) }
+        }
+
+        when (bioManager?.checkDeviceSupportBiometric() == true || PreferenceHelper.isEnableBiometricSetting(
+            requireContext()
+        )) {
+            true -> buttonBioLogin.visibility = View.VISIBLE
+            else -> buttonBioLogin.visibility = View.GONE
+        }
+        when (bioManager?.getBiometricTypeForAuthentication()) {
+            BiometricType.FACE -> {
+                buttonBioLogin.icon =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_android_faceid)
+                buttonBioLogin.text = getString(R.string.action_sign_in_faceid)
+            }
+            BiometricType.FINGERPRINT -> {
+                buttonBioLogin.icon =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_android_fingerprint)
+                buttonBioLogin.text = getString(R.string.action_sign_in_fingerprint)
+            }
+            else -> buttonBioLogin.visibility = View.GONE
         }
 
         buttonBioLogin.setOnClickListener(View.OnClickListener {

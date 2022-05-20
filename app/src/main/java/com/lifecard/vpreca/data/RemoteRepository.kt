@@ -34,7 +34,6 @@ class RemoteRepository(
             } catch (e: Exception) {
                 println("RemoteRepository...getBioChallenge has error $e")
                 Result.Error(IOException("Error getBioChallenge", e))
-                throw  e
             }
         }
     }

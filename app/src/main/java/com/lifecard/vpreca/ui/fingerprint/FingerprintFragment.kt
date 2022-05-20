@@ -1,7 +1,9 @@
 package com.lifecard.vpreca.ui.fingerprint
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +45,7 @@ class FingerprintFragment : NoToolbarFragment() {
 
     private fun createBioManager(): BioManager? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            BioManagerImpl()
+            BioManagerImpl(requireContext())
         } else {
             return null
         }
@@ -76,6 +78,21 @@ class FingerprintFragment : NoToolbarFragment() {
             } else if (result?.success != null) {
                 showToast(getString(R.string.biometric_setting_success))
             }
+            if (result?.bioStatus == BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+            ) {
+                /*
+                // Prompts the user to create credentials that your app accepts.
+                val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                    putExtra(
+                        Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                        BiometricManager.Authenticators.BIOMETRIC_STRONG
+                    )
+                }
+                startActivity(enrollIntent)
+                 */
+
+            }
         })
 
         fingerprint.setOnCheckedChangeListener { _, isChecked ->
@@ -89,6 +106,7 @@ class FingerprintFragment : NoToolbarFragment() {
                 viewModel.setFingerprintSetting(requireContext(), false)
             }
         }
+
         if (!viewModel.checkSupportFingerprint(requireContext())) {
             fingerprint.isEnabled = false
             //show alert

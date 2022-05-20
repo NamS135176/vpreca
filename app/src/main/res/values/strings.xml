@@ -316,6 +316,7 @@
     <string name="fingerprint_option">Biometricでログイン</string>
     <string name="prompt_biometric_login_title">Biometric login for my app</string>
     <string name="error_fingerprint_not_support">Biometric not support</string>
+    <string name="error_fingerprint_not_enrolled">Chưa đăng ký vân tay hoặc khuôn mặt. Vui lòng vào cài đặt thiết bị để thêm.</string>
     <string name="error_bio_authentication_failure">Authentication failure</string>
     <string name="biometric_setting_success">Success</string>
 </resources>

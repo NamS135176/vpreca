@@ -21,13 +21,13 @@ class PreferenceHelper {
             }
         }
 
-        fun isFingerprintSetting(appContext: Context): Boolean {
+        fun isEnableBiometricSetting(appContext: Context): Boolean {
             val sharedPreferences =
                 appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
             return sharedPreferences.getBoolean("fingerprint_setting", false)
         }
 
-        fun setFingerprintSetting(appContext: Context, value: Boolean) {
+        fun setEnableBiometricSetting(appContext: Context, value: Boolean) {
             val sharedPreferences =
                 appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
             with(sharedPreferences.edit()) {
