@@ -109,8 +109,6 @@ class FingerprintFragment : NoToolbarFragment() {
 
         if (!viewModel.checkSupportFingerprint(requireContext())) {
             fingerprint.isEnabled = false
-            //show alert
-            showAlert(getString(R.string.error_fingerprint_not_support))
         }
 
         executor = ContextCompat.getMainExecutor(requireContext())
