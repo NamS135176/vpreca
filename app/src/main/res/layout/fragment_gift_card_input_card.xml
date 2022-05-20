@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/term_of_use"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        tools:context=".ui.termofuse.TermOfUseFragment">
+
+        <include
+            android:id="@+id/appbar_gift_second"
+            layout="@layout/toolbar_with_back_btn"
+            app:elevation="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{@string/introduce_title}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/desTop"
+            style="@style/Widget.AppCompat.TextView.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="6dp"
+            android:paddingTop="12dp"
+            android:text="@string/introduce_des_top"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_gift_second" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/desBot"
+            style="@style/Widget.AppCompat.TextView.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="6dp"
+            android:text="@string/introduce_des_bot"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/desTop" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/des"
+            style="@style/Widget.AppCompat.TextView.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="6dp"
+            android:paddingHorizontal="29dp"
+            android:paddingTop="34dp"
+            android:paddingBottom="21dp"
+            android:text="@string/introduce_des_second"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/desBot" />
+
+        <LinearLayout
+            android:id="@+id/introduct_input_zone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="29dp"
+            android:paddingRight="18dp"
+            app:layout_constraintTop_toBottomOf="@+id/des">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.App.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_weight="0.2"
+                android:hint="@string/introduce_second_input"
+                android:inputType="number"
+                android:selectAllOnFocus="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#fff"
+                    android:inputType="number"
+                    android:textColor="#a1a1a1"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="0.8"
+                android:src="@drawable/ic_baseline_camera_alt_24" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/introduce_des_bot_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="6dp"
+            android:paddingHorizontal="29dp"
+            android:paddingVertical="23dp"
+            android:text="@string/introduce_second_des"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/introduct_input_zone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/introduc_card_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="6dp"
+            android:paddingHorizontal="29dp"
+            android:paddingVertical="13dp"
+            android:text="@string/introduce_card_title"
+            android:textColor="#fff"
+            android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/introduce_des_bot_input" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="29dp"
+            app:layout_constraintTop_toBottomOf="@+id/introduc_card_title">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.35"
+                android:text="0000 0000 0000"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.App.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_weight="0.65"
+                android:inputType="number"
+                android:selectAllOnFocus="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#fff"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmitInput"
+            style="@style/Widget.AppCompat.TextView.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="49dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint='@color/button_introduce_background'
+            android:enabled="true"
+            android:paddingVertical="11dp"
+            android:text="確認"
+            android:textColor="@color/primary"
+            app:cornerRadius="24dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

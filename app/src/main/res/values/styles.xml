@@ -122,4 +122,11 @@
         </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
         <!--        <item name="rippleColor">@android:color/transparent</item>-->
     </style>
+
+    <style name="DialogTheme" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowBackground">@drawable/round_dialog</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
 </resources>

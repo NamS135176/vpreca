@@ -1,5 +1,6 @@
 package com.lifecard.vpreca.ui.introduce
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,8 +9,10 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.databinding.FragmentChangePassCompleteBinding
-import com.lifecard.vpreca.databinding.FragmentGiftCardCompleteBinding
+import com.lifecard.vpreca.databinding.FragmentGiftCardPolicyBinding
+import com.lifecard.vpreca.databinding.IntroduceFragmentFirstFragmentBinding
+import com.lifecard.vpreca.utils.hideToolbar
+import com.lifecard.vpreca.utils.showToolbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,16 +21,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [GiftCardCompleteFragment.newInstance] factory method to
+ * Use the [GiftCardPolicyFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class GiftCardCompleteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-
-    private var _binding: FragmentGiftCardCompleteBinding? = null
+class GiftCardPolicyFragment : Fragment() {
+    private var _binding: FragmentGiftCardPolicyBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -35,20 +37,39 @@ class GiftCardCompleteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentGiftCardCompleteBinding.inflate(inflater, container, false)
-
+        _binding = FragmentGiftCardPolicyBinding.inflate(inflater, container, false)
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.nav_home)
             }
         })
 
-        val btnComplete = binding.btnSubmitPolicy
-        btnComplete.setOnClickListener(View.OnClickListener {
+        val btnBack = binding.appbarGift.btnBack
+        val checkbox = binding.cbIntroduceFirst
+        val btnSubmit = binding.btnSubmitIntroduceFirst
+        checkbox.isChecked = false
+        btnSubmit.isEnabled = false
+        btnBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_home)
+        })
+
+        checkbox.setOnClickListener(View.OnClickListener {
+            btnSubmit.isEnabled = checkbox.isChecked
+        })
+
+        btnSubmit.setOnClickListener(View.OnClickListener {
+            findNavController().navigate(R.id.nav_gift_card_input_card)
         })
         return binding.root
     }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        hideToolbar()
+    }
 
+    override fun onDetach() {
+        super.onDetach()
+        showToolbar()
+    }
 
 }

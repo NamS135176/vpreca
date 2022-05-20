@@ -37,11 +37,13 @@ class IntroduceFragmentThird : Fragment() {
         })
 
         val btnBack = binding.appbarGiftThird.btnBack
-
+        val btnSubmit = binding.btnSubmitInput
         btnBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_second)
         })
-
+        btnSubmit.setOnClickListener(View.OnClickListener {
+            findNavController().navigate(R.id.nav_login)
+        })
         return binding.root
     }
 

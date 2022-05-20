@@ -31,7 +31,7 @@ class IntroduceFragmentSecond : Fragment() {
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-               findNavController().popBackStack()
+                findNavController().navigate(R.id.nav_introduce_first)
             }
         })
 

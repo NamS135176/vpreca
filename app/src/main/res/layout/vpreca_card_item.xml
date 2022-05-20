@@ -15,20 +15,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:paddingHorizontal="18dp">
-
+        android:layout_marginHorizontal="6dp"
+        android:layout_marginBottom="15dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card_info"
             style="@style/MyCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_bg_primary"
+            android:background="@drawable/bg_card"
 
             android:minHeight="110dp"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="16dp"
+            android:paddingHorizontal="9dp"
+            android:paddingVertical="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -101,35 +99,33 @@
                 app:layout_constraintTop_toTopOf="@id/card_username" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/border_introduce_checkbox"
+            android:visibility="@{card.vcnSecurityLockFlg.equals(`1`) ? View.VISIBLE : View.GONE}"
+            android:backgroundTint="#99000000"
+            android:minHeight="110dp"/>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/text_balance_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
+            android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_info">
 
-<!--            <androidx.appcompat.widget.AppCompatTextView-->
-<!--                android:id="@+id/text_card_balance"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="10dp"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:text="@string/text_card_balance"-->
-<!--                android:textColor="#272727"-->
-<!--                android:textSize="11sp" />-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/card_amount"
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="40dp"
-                android:layout_marginRight="40dp"
                 android:textColor="@color/white"
                 android:text="@{card.price}"
                 android:textSize="18sp" />
