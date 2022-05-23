@@ -57,9 +57,12 @@
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="@{card.cardNickname}"
                 android:textColor="@color/white"
                 android:textSize="11sp"
+                android:paddingRight="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
