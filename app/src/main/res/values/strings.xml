@@ -316,6 +316,10 @@
     <string name="button_ok">はい</string>
     <string name="login_fragment_text_login_info">固定電話をご登録の方へのご案内</string>
 
+<!--    Card Usage-->
+    <string name="card_usage_appbar_title">ご利用明細</string>
+
+
     <!--    Error  -->
     <string name="error_default">Error</string>
     <string name="error_no_internet_connection">No internet connection</string>

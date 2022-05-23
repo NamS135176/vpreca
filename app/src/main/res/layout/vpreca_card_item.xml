@@ -23,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_card"
-
             android:minHeight="110dp"
             android:paddingHorizontal="9dp"
             android:paddingVertical="9dp"
@@ -46,7 +45,7 @@
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="6dp"
                 android:text="**** **** **** 9890"
                 android:textColor="@color/white"
                 android:textSize="12sp"
@@ -84,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:text="VPRECAUSER"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -105,9 +104,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/border_introduce_checkbox"
             android:visibility="@{card.vcnSecurityLockFlg.equals(`1`) ? View.VISIBLE : View.GONE}"
-            android:backgroundTint="#99000000"
+            android:background="@drawable/bg_disable"
             android:minHeight="110dp"/>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/text_balance_container"
@@ -119,8 +117,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_info">
-
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/card_amount"
                 style="@style/Widget.AppCompat.TextView.Bold"

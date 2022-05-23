@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lifecard.vpreca.data.model.VprecaCard
 import com.lifecard.vpreca.databinding.FragmentListVprecaBinding
@@ -30,6 +31,10 @@ class ListVprecaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentListVprecaBinding.inflate(inflater, container, false)
+
+        val btnBack = binding.appbarListVpreca.btnBack
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(com.lifecard.vpreca.R.id.nav_home) })
+
         val listVpreca = binding.listVprecaCard
         val arrPolicy: ArrayList<VprecaCard>
         arrPolicy = ArrayList()
