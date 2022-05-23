@@ -9,5 +9,6 @@ data class LoginResult(
     val success: User? = null,
     val navigateSmsVerify: Boolean? = false,
     val navigateUpdateAccount: Boolean? = false,
-    val error: Int? = null
+    val error: Int? = null,
+    val errorText: String? = null
 )

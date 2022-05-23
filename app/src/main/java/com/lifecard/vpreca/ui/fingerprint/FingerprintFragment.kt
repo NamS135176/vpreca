@@ -119,8 +119,8 @@ class FingerprintFragment : NoToolbarFragment() {
                     errString: CharSequence
                 ) {
                     super.onAuthenticationError(errorCode, errString)
+                    viewModel.handleAuthenticationError(errorCode, errString)
                     viewModel.setFingerprintSetting(requireContext(), false)
-                    showAlert(errString.toString())
                 }
 
                 override fun onAuthenticationSucceeded(
@@ -142,7 +142,7 @@ class FingerprintFragment : NoToolbarFragment() {
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     viewModel.setFingerprintSetting(requireContext(), false)
-                    showAlert(getString(R.string.error_bio_authentication_failure))
+//                    showAlert(getString(R.string.error_bio_authentication_failure))
                 }
             })
 

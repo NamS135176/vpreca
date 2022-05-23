@@ -1,5 +1,7 @@
 package com.lifecard.vpreca.ui.login
 
+import android.hardware.biometrics.BiometricManager
+import android.hardware.biometrics.BiometricPrompt
 import android.util.Base64
 import android.util.Patterns
 import androidx.lifecycle.*
@@ -110,6 +112,17 @@ class LoginViewModel @Inject constructor(
 
             loading.value = false
         }
+    }
+
+    fun handleAuthenticationError(
+        errorCode: Int,
+        errString: CharSequence
+    ) {
+        println("handleAuthenticationError... errorCode=$errorCode errString=$errString")
+//        when (errorCode) {
+//            BiometricPrompt.BIOMETRIC_ERROR_CANCELED -> _loginResult.value =
+//                LoginResult(errorText = errString.toString())
+//        }
     }
 
     fun clearLoginResult() {

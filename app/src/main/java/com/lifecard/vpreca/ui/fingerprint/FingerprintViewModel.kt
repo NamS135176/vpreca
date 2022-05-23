@@ -116,7 +116,16 @@ class FingerprintViewModel @Inject constructor(
 
             println("uploadPublicKey... end")
         }
+    }
 
-
+    fun handleAuthenticationError(
+        errorCode: Int,
+        errString: CharSequence
+    ) {
+        println("handleAuthenticationError... errorCode=$errorCode errString=$errString")
+//        when (errorCode) {
+//            BiometricPrompt.BIOMETRIC_ERROR_CANCELED -> _loginResult.value =
+//                LoginResult(errorText = errString.toString())
+//        }
     }
 }

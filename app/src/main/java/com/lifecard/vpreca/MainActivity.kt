@@ -2,6 +2,7 @@ package com.lifecard.vpreca
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -72,7 +73,11 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.nav_term_of_use, args = null, navOptions = navOptions)
             }
         }
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_home
+            ), drawerLayout
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
@@ -94,5 +99,9 @@ class MainActivity : AppCompatActivity() {
     @Subscribe
     fun handleCloseDrawer(event: CloseDrawerEvent) {
         drawerLayout.close()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 }
