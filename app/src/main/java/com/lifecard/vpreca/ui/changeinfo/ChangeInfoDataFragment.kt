@@ -74,6 +74,7 @@ class ChangeInfoDataFragment : Fragment() {
                     }
 
                 tvDob.setOnClickListener {
+                    Locale.setDefault(Locale.JAPAN)
                     DatePickerDialog(
                         requireContext(),
                         dateSetListener,

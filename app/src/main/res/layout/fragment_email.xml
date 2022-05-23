@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:text="@string/phone_back"
-                    android:textAlignment="center"
+                    android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="18sp"
                     />
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:text="@string/title_appbar_phone"
-                    android:textAlignment="center"
+                    android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="18sp"
                     />
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
                     android:text="@string/title_next_phone"
-                    android:textAlignment="center"
+                    android:gravity="center"
                     android:textColor="#fff"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -154,7 +154,7 @@
                     android:id="@+id/edt_email_signup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#F3F3F3"
+                    android:background="#F3F3F3"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>

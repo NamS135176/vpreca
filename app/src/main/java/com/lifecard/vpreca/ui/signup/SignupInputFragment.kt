@@ -86,6 +86,7 @@ class SignupInputFragment : Fragment() {
             }
 
         btnDatePicker.setOnClickListener {
+            Locale.setDefault(Locale.JAPAN)
             DatePickerDialog(
                 requireContext(),
                 dateSetListener,

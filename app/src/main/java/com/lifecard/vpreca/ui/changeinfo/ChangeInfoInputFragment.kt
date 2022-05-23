@@ -84,6 +84,7 @@ class ChangeInfoInputFragment : Fragment() {
             }
 
         btnDatePicker.setOnClickListener {
+            Locale.setDefault(Locale.JAPAN)
             DatePickerDialog(
                 requireContext(),
                 dateSetListener,

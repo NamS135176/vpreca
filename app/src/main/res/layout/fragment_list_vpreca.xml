@@ -51,6 +51,7 @@
                         android:text="残高合計"/>
                 </LinearLayout>
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_total_amount"
                     android:textColor="@color/white"
                     android:gravity="right"
                     android:layout_weight="1"
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:minHeight="36dp"
                     android:textSize="30sp"
-                    android:text="¥90,000"/>
+                    android:text=""/>
             </LinearLayout>
         </LinearLayout>
         <androidx.core.widget.NestedScrollView

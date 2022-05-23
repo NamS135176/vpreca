@@ -96,6 +96,7 @@ class ForgotPassFragment : Fragment() {
             }
 
         tvDatePicker.setOnClickListener {
+            Locale.setDefault(Locale.JAPAN)
             DatePickerDialog(
                 requireContext(),
                 dateSetListener,
