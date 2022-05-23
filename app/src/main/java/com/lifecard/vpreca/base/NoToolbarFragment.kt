@@ -15,13 +15,6 @@ open class NoToolbarFragment : Fragment() {
         showToolbar()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         lifecycleObserver = object : DefaultLifecycleObserver {
