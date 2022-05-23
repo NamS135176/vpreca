@@ -170,11 +170,18 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        unlockDrawer()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.listCard.cardList.unregisterOnPageChangeCallback(pageChangeCallback)
         _binding = null
         clearLightStatusBar()
+
+        lockDrawer()
     }
 
     private lateinit var lifecycleObserver: DefaultLifecycleObserver
@@ -189,8 +196,6 @@ class HomeFragment : Fragment() {
             }
         }
         requireActivity().lifecycle.addObserver(lifecycleObserver)
-
-        unlockDrawer()
     }
 
     private inner class CardSlidePagerAdapter(
