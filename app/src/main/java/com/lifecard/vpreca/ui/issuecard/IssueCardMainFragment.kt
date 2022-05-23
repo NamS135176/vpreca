@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
@@ -27,8 +29,21 @@ class IssueCardMainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentIssueCardMainBinding.inflate(inflater, container, false)
-        val btnTap = binding.btnTap
-        btnTap.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_home)
+            }
+        })
+        val btnCancel = binding.appbarGiftThird.cancelBtn
+        btnCancel.setOnClickListener(View.OnClickListener {
+            MaterialAlertDialogBuilder(requireContext()).apply {
+                setPositiveButton("はい") { dialog, which ->
+                    findNavController().navigate(R.id.nav_home)
+                }
+                setNegativeButton("いいえ", null)
+                setMessage("途中ですがキャンセルしてもよろしいですか")
+            }.create().show()
+        })
         return binding.root
     }
     override fun onAttach(context: Context) {

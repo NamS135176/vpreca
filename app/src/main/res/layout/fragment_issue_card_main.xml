@@ -57,7 +57,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="4dp"
-                            android:text="コード入力をして発行"
+                            android:text="@string/issue_card_main_title_first"
                             android:textColor="@color/primary"
                             android:textSize="18sp" />
 
@@ -65,7 +65,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="4dp"
-                            android:text="コンビニなど手続きをして発行したコード番号を入力して発行します。"
+                            android:text="@string/issue_card_main_des_first"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -115,7 +115,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="4dp"
-                            android:text="カードを買う"
+                            android:text="@string/issue_card_main_title_second"
                             android:textColor="@color/primary"
                             android:textSize="18sp" />
 
@@ -123,7 +123,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="4dp"
-                            android:text="クレジットカードや銀行振込で今すぐ購入して発行します。"
+                            android:text="@string/issue_card_main_des_second"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -170,7 +170,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="4dp"
-                            android:text="合算をして発行"
+                            android:text="@string/issue_card_main_title_third"
                             android:textColor="@color/primary"
                             android:textSize="18sp" />
 
@@ -178,7 +178,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="4dp"
-                            android:text="すでにある複数のカードを合算して新しいカードを発行します。"
+                            android:text="@string/issue_card_main_des_third"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>

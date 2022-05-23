@@ -66,24 +66,26 @@
             android:paddingRight="18dp"
             app:layout_constraintTop_toBottomOf="@+id/des">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.App.TextInputLayout.FilledBox"
+            <com.lifecard.vpreca.ui.custom.MyTextInputLayout
+                android:id="@+id/username_layout"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.2"
-                android:hint="@string/introduce_second_input"
-                android:inputType="number"
-                android:selectAllOnFocus="true">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logo">
 
                 <com.google.android.material.textfield.TextInputEditText
+
+                    style="@style/TextInputEditTextFilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#fff"
-                    android:inputType="number"
-                    android:textColor="#a1a1a1"
-                    android:textSize="16sp" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="@string/introduce_second_input"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp" />
+            </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -133,21 +135,22 @@
                 android:textColor="@color/white"
                 android:textSize="20dp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.App.TextInputLayout.FilledBox"
+            <com.lifecard.vpreca.ui.custom.MyTextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.65"
-                android:inputType="number"
-                android:selectAllOnFocus="true">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logo">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextInputEditTextFilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#fff"
-                    android:inputType="number" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp" />
+            </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton

@@ -68,7 +68,7 @@
                             android:text="@string/gift_card_confirm_detail_price_title"/>
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_weight="1"
-                            android:gravity="right"
+                            android:gravity="end"
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

@@ -7,11 +7,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CardUsageHistory
+import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.VprecaCard
 import com.lifecard.vpreca.databinding.CardUsageHistoryItemBinding
 import com.lifecard.vpreca.databinding.VprecaCardItemBinding
 
-class ListVprecaAdapter(private var items: List<VprecaCard>) :
+class ListVprecaAdapter(private var items: List<CreditCard>) :
     RecyclerView.Adapter<ListVprecaAdapter.ViewHolder>() {
     class ViewHolder(var binding: VprecaCardItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

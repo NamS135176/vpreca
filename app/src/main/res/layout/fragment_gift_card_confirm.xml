@@ -78,13 +78,13 @@
                             android:textColor="@color/white"
                             android:layout_gravity="center_vertical"
                             android:textSize="11sp"
-                            android:text="残高"/>
+                            android:text="@string/gift_card_confirm_amount_title"/>
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="¥5,000"
+                            android:text="@string/gift_card_confirm_amount_holder"
                             android:paddingLeft="12dp"
                             android:textSize="22sp"/>
                     </LinearLayout>
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:enabled="false"
-                        android:text="利用明細"
+                        android:text="@string/gift_card_confirm_detail_usage"
                         android:textStyle="bold"
                         android:textColor="@color/white"
                         app:strokeColor="@color/white"
@@ -105,7 +105,7 @@
                         android:paddingVertical="11dp"
                         android:layout_marginLeft="45dp"
                         android:layout_marginRight="49dp"
-                        android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"/>
+                        />
                     <LinearLayout
                         android:id="@+id/highlight"
                         android:layout_width="match_parent"
@@ -120,7 +120,7 @@
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="特記事項"
+                            android:text="@string/gift_card_confirm_warning_title"
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:textColor="#fff"
                             android:textSize="14sp"/>
@@ -132,14 +132,14 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="•"
+                                android:text="@string/gift_card_confirm_warning_dot"
                                 android:paddingHorizontal="4dp"
                                 android:textColor="#fff"/>
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:lineSpacingExtra="5dp"
-                                android:text="カード番号はお手元のVプリカをご確認ください。"
+                                android:text="@string/gift_card_confirm_warning_first_line"
                                 android:textColor="#fff"
                                 android:paddingLeft="4dp"
                                 android:textSize="12sp"/>
@@ -152,14 +152,14 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="•"
+                                android:text="@string/gift_card_confirm_warning_dot"
                                 android:paddingHorizontal="4dp"
                                 android:textColor="#fff"/>
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:lineSpacingExtra="5dp"
-                                android:text="カード裏面に「非売品」と記載されているものは、無償提供したものです"
+                                android:text="@string/gift_card_confirm_warning_second_line"
                                 android:textColor="#fff"
                                 android:paddingLeft="4dp"
                                 android:textSize="12sp"/>
@@ -185,7 +185,7 @@
                 android:layout_marginBottom="24dp"
                 app:cornerRadius="24dp"
                 android:paddingVertical="11dp"
-                android:backgroundTint='@color/button_introduce_background'
+                app:backgroundTint='@color/button_introduce_background'
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

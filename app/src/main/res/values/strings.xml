@@ -260,6 +260,13 @@
     <!--    Gift Card Confirm-->
     <string name="gift_card_confirm_appbar_title">カード情報確認</string>
     <string name="gift_card_confirm_btn">次へ</string>
+    <string name="gift_card_confirm_amount_title">残高</string>
+    <string name="gift_card_confirm_amount_holder">¥5,000</string>
+    <string name="gift_card_confirm_detail_usage">利用明細</string>
+    <string name="gift_card_confirm_warning_title">特記事項</string>
+    <string name="gift_card_confirm_warning_dot">•</string>
+    <string name="gift_card_confirm_warning_first_line">カード番号はお手元のVプリカをご確認ください。</string>
+    <string name="gift_card_confirm_warning_second_line">カード裏面に「非売品」と記載されているものは、無償提供したものです</string>
     <!--    Gift Card Confirm-->
 
     <!--    Gift Card Complete-->
@@ -316,9 +323,25 @@
     <string name="button_ok">はい</string>
     <string name="login_fragment_text_login_info">固定電話をご登録の方へのご案内</string>
 
-<!--    Card Usage-->
+    <!--    Card Usage-->
     <string name="card_usage_appbar_title">ご利用明細</string>
 
+    <!--    Birth of Date Dialog-->
+    <string name="bod_dialog_title">会員情報の変更</string>
+    <string name="bod_dialog_des">ご登録情報を変更する場合は、以下の項目を入力のうえ、「変更」ボタンをタップしてください。</string>
+    <string name="bod_dialog_input_title">生年月日</string>
+    <string name="bod_dialog_cancel_btn">キャンセル</string>
+    <string name="bod_dialog_submit_btn">変更</string>
+    <!--    Birth of Date Dialog-->
+
+    <!--    Issue Card Main-->
+    <string name="issue_card_main_title_first">コード入力をして発行</string>
+    <string name="issue_card_main_des_first">コンビニなど手続きをして発行したコード番号を入力して発行します。</string>
+    <string name="issue_card_main_title_second">カードを買う</string>
+    <string name="issue_card_main_des_second">クレジットカードや銀行振込で今すぐ購入して発行します。</string>
+    <string name="issue_card_main_title_third">合算をして発行</string>
+    <string name="issue_card_main_des_third">すでにある複数のカードを合算して新しいカードを発行します。</string>
+    <!--    Issue Card Main-->
 
     <!--    Error  -->
     <string name="error_default">Error</string>

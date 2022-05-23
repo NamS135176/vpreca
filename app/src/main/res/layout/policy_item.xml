@@ -7,7 +7,7 @@ android:orientation="horizontal">
 <androidx.appcompat.widget.AppCompatTextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="•"
+    android:text="@string/gift_card_confirm_warning_dot"
     android:paddingRight="10dp"
     android:paddingLeft="5dp"
     android:textColor="@color/black"/>
