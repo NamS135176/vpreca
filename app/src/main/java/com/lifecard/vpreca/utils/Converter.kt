@@ -1,5 +1,6 @@
 package com.lifecard.vpreca.utils
 
+import android.graphics.Color
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
@@ -22,6 +23,11 @@ object Converter {
 
         val fmt: DateTimeFormatter = DateTimeFormat.forPattern("yyyy月M日")
         return localDate.toString(fmt)
+    }
+
+    @JvmStatic
+    fun convertColor(text: String): Int {
+        return Color.parseColor(text)
     }
 
     @JvmStatic

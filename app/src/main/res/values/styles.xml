@@ -130,10 +130,17 @@
         <!--        <item name="rippleColor">@android:color/transparent</item>-->
     </style>
 
+    <style name="DialogTheme" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowBackground">@drawable/round_dialog</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:windowIsFloating">false</item>
+        </style>
     <style name="ThemeOverlay.MaterialComponents.MaterialAlertDialog.ProgressBar" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="background">@color/black</item>
         <item name="android:background">@color/black</item>
         <item name="android:padding">10dp</item>
+
         <item name="alertDialogStyle">@style/ThemeOverlay.MaterialAlertDialog.MaterialComponents
         </item>
         <item name="android:layout">@layout/dialog_progress_bar</item>

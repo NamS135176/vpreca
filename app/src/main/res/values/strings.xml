@@ -288,8 +288,19 @@
     <string name="change_info_data_setting_title">各種通知サービスの設定</string>
     <string name="change_info_data_btn">会員情報変更</string>
     <string name="change_info_data_magazine">メールマガジン</string>
-    <!--    Change info data-->
 
+    <!--    Change info data-->
+    <string name="change_info_input_appbar_title">会員情報変更</string>
+    <string name="change_info_input_title">会員情報変更</string>
+    <string name="change_info_input_des">ニックネーム（ローマ字）</string>
+    <string name="change_info_input_setting_title">各種通知サービスの設定</string>
+    <string name="change_info_input_first_mail_setting">メールアドレス1で受け取る</string>
+    <string name="change_info_input_second_mail_setting">メールアドレス2で受け取る</string>
+    <string name="change_info_input_magazine_setting_title">メールマガジン</string>
+    <!--    Change Info Confirm-->
+    <string name="change_info_confirm_title">変更内容確認</string>
+    <string name="change_info_confirm_des">入力した項目に誤りがないか確認してください。</string>
+    <!--    Change Info Confirm-->
     <string name="menu_app_version">バージョン : %1$s</string>
     <string name="copyright_life_card_co_ltd">Copyright © LIFE CARD Co., Ltd.\nAll rights reserved</string>
     <string name="logout">ログアウト</string>
@@ -304,6 +315,10 @@
     <string name="my_page_card_locked">ロック中</string>
     <string name="button_ok">はい</string>
     <string name="login_fragment_text_login_info">固定電話をご登録の方へのご案内</string>
+
+<!--    Card Usage-->
+    <string name="card_usage_appbar_title">ご利用明細</string>
+
 
     <!--    Error  -->
     <string name="error_default">Error</string>

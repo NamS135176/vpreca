@@ -59,11 +59,6 @@ class PolicyFragment : Fragment() {
         cancelButton.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
-                    // do something on positive button click
-//                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-//                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                    }
-//                    startActivity(intent)
                     findNavController().popBackStack()
                 }
                 setNegativeButton("いいえ", null)

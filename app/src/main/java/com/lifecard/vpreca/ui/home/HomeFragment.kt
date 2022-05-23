@@ -85,6 +85,9 @@ class HomeFragment : Fragment() {
         val buttonSlideRight = binding.listCard.buttonSlideRight
         val buttonSeeAllCard = binding.buttonSeeAllCard
         val textBalance = binding.textBalance
+        val btnIssueCard = binding.buttonAddNewCard
+
+        btnIssueCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
 
         buttonSeeAllCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_list_vpreca) })
 
@@ -161,7 +164,7 @@ class HomeFragment : Fragment() {
         setLightStatusBar()
 
         binding.buttonAddNewCard.setOnClickListener(View.OnClickListener {
-            fragmentFindNavController().navigate(R.id.action_home_to_login)
+            fragmentFindNavController().navigate(R.id.nav_issue_card_main)
         })
 
         return root
