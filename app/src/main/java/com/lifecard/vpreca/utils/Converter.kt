@@ -37,6 +37,18 @@ object Converter {
     }
 
     @JvmStatic
+    fun convertLongText(text: String): String {
+        var cvText = ""
+        if(text.length >10){
+            cvText = text.substring(0,9) + "..."
+        }
+        else{
+            cvText = text
+        }
+        return cvText
+    }
+
+    @JvmStatic
     fun convertCurrency(value: String?): String {
         return try {
             convertCurrency(value?.let { Integer.parseInt(it) } ?: 0)
