@@ -34,7 +34,10 @@ interface ApiService {
     suspend fun registerBiometric(
         @Header("Authorization") authorization: String,
         @Field("loginId") memberNumber: String,
-        @Field("bioKey") bioKey: String
+        @Field("bioKey") bioKey: String,
+        @Field("platform") platform: String,
+        @Field("os_version") osVersion: String,
+        @Field("algorithm") algorithm: String
     ): BioChallenge
 
     @FormUrlEncoded

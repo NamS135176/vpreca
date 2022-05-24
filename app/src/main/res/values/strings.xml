@@ -173,8 +173,8 @@
     <!--    Forgot Pass Input-->
     <string name='forgot_pass_appbar_title'>パスワード再設定</string>
     <string name='forgot_pass_input_title'>パスワード再設定メール送信</string>
-    <string name="forgot_pass_des_top">ご登録いただいているメールアドレスにログインパスワードの再設定用URLを送信します。</string>
-    <string name="forgot_pass_des_bot">以下の項目を入力して「メール送信」をタップしてください。</string>
+    <string name="forgot_pass_des_top">ご登録いただいているメールアドレスにログインパスワードの再設定用URLを送信します。\n以下の項目を入力して「メール送信」をタップしてください。</string>
+<!--    <string name="forgot_pass_des_bot">以下の項目を入力して「メール送信」をタップしてください。</string>-->
     <string name="forgot_pass_email_title">メールアドレス1</string>
     <string name='forgot_pass_email_hint'>半角256文字以内</string>
     <string name="forgot_pass_dob_title">生年月日</string>

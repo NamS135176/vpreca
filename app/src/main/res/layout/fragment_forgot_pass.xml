@@ -2,9 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.core.widget.NestedScrollView
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,15 +13,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            tools:context=".ui.forgotpass/ForgotPassFragment"
             android:paddingBottom="21dp"
-            >
+            tools:context=".ui.forgotpass/ForgotPassFragment">
+
             <include
                 android:id="@+id/appbar_forgot_pass"
                 layout="@layout/toolbar_back_cancel"
                 app:layout_constraintTop_toTopOf="parent"
-                app:title="@{@string/forgot_pass_appbar_title}"
-                />
+                app:title="@{@string/forgot_pass_appbar_title}" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/forgot_pass_title"
                 style="@style/Widget.AppCompat.TextView.Bold"
@@ -31,43 +32,33 @@
                 android:text="@string/forgot_pass_input_title"
                 android:textColor="#0057b5"
                 android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@+id/appbar_forgot_pass"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/appbar_forgot_pass" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/forgot_pass_des_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="32dp"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="32dp"
+                android:lineSpacingExtra="6sp"
                 android:text="@string/forgot_pass_des_top"
                 android:textColor="#353535"
                 android:textSize="12sp"
-                android:lineSpacingExtra="6dp"
-                android:layout_marginHorizontal="22dp"
-                app:layout_constraintTop_toBottomOf="@+id/forgot_pass_title"
-                />
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/forgot_pass_des_bot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/forgot_pass_des_bot"
-                android:textColor="#353535"
-                android:textSize="12sp"
-                android:lineSpacingExtra="6dp"
-                android:layout_marginHorizontal="22dp"
-                app:layout_constraintTop_toBottomOf="@+id/forgot_pass_des_top"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/forgot_pass_title" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/forgot_email_title"
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
                 android:lineSpacingExtra="6sp"
                 android:paddingHorizontal="22dp"
                 android:text="@string/forgot_pass_email_title"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:layout_marginTop="35dp"
-                app:layout_constraintTop_toBottomOf="@+id/forgot_pass_des_bot" />
+                app:layout_constraintTop_toBottomOf="@+id/forgot_pass_des_top" />
+
             <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
                 android:id="@+id/forgot_pass_email_layout"
                 android:layout_width="match_parent"
@@ -92,26 +83,29 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/forgot_dob_title"
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
                 android:lineSpacingExtra="6sp"
                 android:paddingHorizontal="22dp"
                 android:text="@string/forgot_pass_dob_title"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:layout_marginTop="35dp"
                 app:layout_constraintTop_toBottomOf="@+id/forgot_pass_email_layout" />
+
             <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
                 android:id="@+id/dob_input_layout_forgot_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginTop="9dp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/forgot_dob_title">
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/dob_input_layout_forgot"
                     android:layout_width="match_parent"
@@ -122,8 +116,7 @@
                     android:paddingVertical="19dp"
                     android:text="@string/forgot_pass_dob_hint"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                     />
+                    android:textSize="16sp" />
             </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
 
             <com.google.android.material.textview.MaterialTextView
@@ -131,13 +124,14 @@
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
                 android:lineSpacingExtra="6sp"
                 android:paddingHorizontal="22dp"
                 android:text="@string/forgot_pass_phone_title"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:layout_marginTop="35dp"
                 app:layout_constraintTop_toBottomOf="@+id/dob_input_layout_forgot_lay" />
+
             <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
                 android:id="@+id/forgot_pass_phone_layout"
                 android:layout_width="match_parent"
@@ -162,41 +156,43 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/forgot_warning_des_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:lineSpacingExtra="6dp"
                 android:paddingTop="23dp"
                 android:text="@string/forgot_pass_warning_top"
                 android:textColor="#353535"
                 android:textSize="12sp"
-                android:lineSpacingExtra="6dp"
-                android:layout_marginHorizontal="22dp"
-                app:layout_constraintTop_toBottomOf="@+id/forgot_pass_phone_layout"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/forgot_pass_phone_layout" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/forgot_warning_des_bot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:lineSpacingExtra="6dp"
                 android:text="@string/forgot_pass_warning_bot"
                 android:textColor="#353535"
                 android:textSize="12sp"
-                android:lineSpacingExtra="6dp"
-                android:layout_marginHorizontal="22dp"
-                app:layout_constraintTop_toBottomOf="@+id/forgot_warning_des_top"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/forgot_warning_des_top" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/forgot_secret_question_title"
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
                 android:lineSpacingExtra="6sp"
                 android:paddingHorizontal="22dp"
                 android:text="@string/forgot_pass_secret_question_title"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:layout_marginTop="35dp"
                 app:layout_constraintTop_toBottomOf="@+id/forgot_warning_des_bot" />
+
             <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
                 android:id="@+id/forgot_pass_question_layout"
                 android:layout_width="match_parent"
@@ -205,6 +201,7 @@
                 android:layout_marginTop="9dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/forgot_secret_question_title">
+
                 <Spinner
                     android:id="@+id/spinner_question"
                     android:layout_width="match_parent"
@@ -214,8 +211,7 @@
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="18dp"
                     android:popupBackground="#f1f1f1"
-                    android:spinnerMode="dropdown"
-                   />
+                    android:spinnerMode="dropdown" />
             </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
 
             <com.google.android.material.textview.MaterialTextView
@@ -223,13 +219,14 @@
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
                 android:lineSpacingExtra="6sp"
                 android:paddingHorizontal="22dp"
                 android:text="@string/forgot_pass_secret_answer_title"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:layout_marginTop="35dp"
                 app:layout_constraintTop_toBottomOf="@+id/forgot_pass_question_layout" />
+
             <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
                 android:id="@+id/forgot_pass_secret_answer_layout"
                 android:layout_width="match_parent"
@@ -254,6 +251,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_submit_forgot"
                 style="@style/Widget.AppCompat.TextView.Bold"
@@ -268,8 +266,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:cornerRadius="25dp"
-                app:layout_constraintTop_toBottomOf="@id/forgot_pass_secret_answer_layout"
-                />
+                app:layout_constraintTop_toBottomOf="@id/forgot_pass_secret_answer_layout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

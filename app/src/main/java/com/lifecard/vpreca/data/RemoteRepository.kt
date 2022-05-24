@@ -3,6 +3,7 @@ package com.lifecard.vpreca.data
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.BioChallenge
 import com.lifecard.vpreca.data.model.CardUsageHistory
+import com.lifecard.vpreca.utils.Constanst
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -45,7 +46,10 @@ class RemoteRepository(
                     apiService.registerBiometric(
                         "Bear ${userRepository.accessToken!!}",
                         memberNumber = username,
-                        bioKey = pemKey
+                        bioKey = pemKey,
+                        platform = "Android",
+                        osVersion = android.os.Build.VERSION.SDK_INT.toString(),
+                        algorithm = Constanst.BIOMETRIC_ALGORITHM
                     )
                 Result.Success(bioChallenge)
             } catch (e: Exception) {
