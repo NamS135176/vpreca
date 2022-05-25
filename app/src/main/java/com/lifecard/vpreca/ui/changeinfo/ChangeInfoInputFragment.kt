@@ -1,6 +1,9 @@
 package com.lifecard.vpreca.ui.changeinfo
 
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -24,6 +28,7 @@ import com.lifecard.vpreca.data.model.SignupData
 import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
 import com.lifecard.vpreca.databinding.FragmentChangeInfoInputBinding
 import com.lifecard.vpreca.ui.signup.SignupInputFragmentDirections
+import com.lifecard.vpreca.utils.hideLoadingDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,7 +47,8 @@ class ChangeInfoInputFragment : Fragment() {
     ): View? {
         viewModel = ViewModelProvider(this).get(ChangeInfoInputViewModel::class.java)
         _binding = FragmentChangeInfoInputBinding.inflate(inflater, container, false)
-
+        val container = binding.constraintChangeInfo
+        container.setOnClickListener(View.OnClickListener {closeKeyBoard()  })
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.nav_change_info_data)
@@ -269,5 +275,12 @@ class ChangeInfoInputFragment : Fragment() {
         return binding.root
     }
 
+    private fun closeKeyBoard() {
+        val view = requireActivity().currentFocus
+        if (view != null) {
+            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
 
 }

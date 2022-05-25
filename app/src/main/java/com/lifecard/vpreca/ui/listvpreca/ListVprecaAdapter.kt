@@ -11,28 +11,43 @@ import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.VprecaCard
 import com.lifecard.vpreca.databinding.CardUsageHistoryItemBinding
 import com.lifecard.vpreca.databinding.VprecaCardItemBinding
+import com.lifecard.vpreca.ui.custom.OnItemClickListener
 
 class ListVprecaAdapter(private var items: List<CreditCard>) :
     RecyclerView.Adapter<ListVprecaAdapter.ViewHolder>() {
-    class ViewHolder(var binding: VprecaCardItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+
+
+    private lateinit var mListener: OnItemClickListener
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnClickListener(listener: OnItemClickListener) {
+        mListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             VprecaCardItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, mListener)
+    }
+
+    class ViewHolder(var binding: VprecaCardItemBinding, listener : OnItemClickListener) :
+        RecyclerView.ViewHolder(binding.root) {
+            init {
+                binding.cardInfo.setOnClickListener { listener.onItemClick(adapterPosition) }
+            }
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.card = items[position]
-        if(position%3 == 0){
+        if (position % 3 == 0) {
             holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card_cyan)
-        }
-        else if(position%3 == 1){
+        } else if (position % 3 == 1) {
             holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card_green)
-        }
-        else{
+        } else {
             holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card)
         }
     }

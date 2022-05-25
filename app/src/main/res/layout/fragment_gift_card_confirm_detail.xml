@@ -42,7 +42,7 @@
                         android:paddingTop="26dp"
                         android:textColor="#fff"
                         style="@style/Widget.AppCompat.TextView.Bold"
-                        android:lineSpacingExtra="10dp"
+                        android:lineSpacingExtra="10sp"
                         android:textSize="16sp"
                         />
 

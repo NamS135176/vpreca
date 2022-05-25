@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:text="1234 5678 9238 9890"
                 android:textColor="@color/primary"
-                android:lineSpacingExtra="6dp"
+                android:lineSpacingExtra="6sp"
                 android:lineSpacingMultiplier="0"
                 app:lineHeight="0dp"
                 android:textSize="18sp"

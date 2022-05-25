@@ -343,6 +343,9 @@
     <string name="issue_card_main_des_third">すでにある複数のカードを合算して新しいカードを発行します。</string>
     <!--    Issue Card Main-->
 
+    <!--    Card Detail-->
+    <string name="card_detail_btn_white">カード番号コピー</string>
+    <!--    Card Detail End-->
     <!--    Error  -->
     <string name="error_default">Error</string>
     <string name="error_no_internet_connection">No internet connection</string>

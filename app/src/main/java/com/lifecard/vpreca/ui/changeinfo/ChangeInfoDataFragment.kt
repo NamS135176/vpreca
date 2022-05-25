@@ -6,6 +6,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -38,6 +39,11 @@ class ChangeInfoDataFragment : Fragment() {
         _binding = FragmentChangeInfoDataBinding.inflate(inflater, container, false)
         val btnBack = binding.appbarConfirmSignup.btnBack
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_home)
+            }
+        })
         val btnOpenDialog = binding.btnSubmitPolicy
         var cal = Calendar.getInstance()
         btnOpenDialog.setOnClickListener(
