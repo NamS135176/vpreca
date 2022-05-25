@@ -11,7 +11,7 @@ class Constant {
 //        const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
         const val API_BASE_URL = "https://by4h7iozy5.execute-api.ap-southeast-1.amazonaws.com/dev/"
 
-        const val WEB_DIRECT_BASE_URL = "http://192.168.0.170:8081/LW01/%s.do"
+        const val WEB_DIRECT_BASE_URL = "https://immense-beach-23070.herokuapp.com/LW01/%s.do"
     }
 }
 

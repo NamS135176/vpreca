@@ -15,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VPreca"
-        android:usesCleartextTraffic="true"
         tools:overrideLibrary="com.google.firebase.analytics.ktx">
 
         <activity
