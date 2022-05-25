@@ -20,9 +20,11 @@ class ListVprecaViewModel @Inject constructor(
 ) : ViewModel() {
     private val _creditCardResult = MutableLiveData<CreditCardResult>()
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
-
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
     init {
         viewModelScope.launch {
+            _loading.value = true
             val result = creditCardRepository.getLatestCards(true)
 
             if (result is Result.Success) {
@@ -35,6 +37,7 @@ class ListVprecaViewModel @Inject constructor(
                         CreditCardResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
             }
+            _loading.value = false
         }
     }
 }

@@ -26,6 +26,14 @@ object Converter {
     }
 
     @JvmStatic
+    fun convertCardValidShort(date: Date): String {
+        val localDate = LocalDate.fromDateFields(date)
+
+        val fmt: DateTimeFormatter = DateTimeFormat.forPattern("MM/dd")
+        return localDate.toString(fmt)
+    }
+
+    @JvmStatic
     fun convertColor(text: String): Int {
         return Color.parseColor(text)
     }
