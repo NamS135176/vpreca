@@ -1,7 +1,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
@@ -13,6 +12,8 @@
         android:paddingBottom="21dp"
         android:orientation="vertical"
         android:paddingLeft="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="16dp"
         android:paddingRight="16dp"
         android:paddingTop="34dp">
         <TextView
@@ -27,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:lineSpacingExtra="6dp"
+            android:lineSpacingExtra="6sp"
             android:text="@string/bod_dialog_des"/>
         <TextView
             style="@style/Widget.AppCompat.TextView.Bold"
@@ -35,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:lineSpacingExtra="6dp"
+            android:lineSpacingExtra="6sp"
             android:text="@string/bod_dialog_input_title"/>
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/dob_dialog"
@@ -61,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginRight="9dp"
+                android:layout_marginEnd="9dp"
                 android:paddingVertical="6dp"
                 android:textColor="@color/primary"
                 android:textSize="18sp"
@@ -77,6 +79,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:layout_marginLeft="9dp"
+                android:layout_marginStart="9dp"
                 android:paddingVertical="12dp"
                 android:text="@string/bod_dialog_submit_btn"
                 app:cornerRadius="30dp"

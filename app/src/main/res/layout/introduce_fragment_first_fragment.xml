@@ -80,7 +80,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:lineSpacingExtra="6dp"
+                    android:lineSpacingExtra="6sp"
                     android:paddingLeft="8dp"
                     android:text="@string/introduce_first_line"
                     android:textColor="#fff"
@@ -102,7 +102,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:lineSpacingExtra="6dp"
+                    android:lineSpacingExtra="6sp"
                     android:paddingLeft="8dp"
                     android:text="@string/introduce_second_line"
                     android:textColor="#fff"
@@ -124,7 +124,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:lineSpacingExtra="6dp"
+                    android:lineSpacingExtra="6sp"
                     android:paddingLeft="8dp"
                     android:text="@string/introduce_third_line"
                     android:textColor="#fff"

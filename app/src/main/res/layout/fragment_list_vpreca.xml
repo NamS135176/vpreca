@@ -40,14 +40,14 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:textSize="11sp"
-                        android:lineSpacingExtra="3dp"
+                        android:lineSpacingExtra="3sp"
                         android:text="すべてのVプリカ"/>
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:textSize="11sp"
-                        android:lineSpacingExtra="3dp"
+                        android:lineSpacingExtra="3sp"
                         android:text="残高合計"/>
                 </LinearLayout>
                 <com.google.android.material.textview.MaterialTextView

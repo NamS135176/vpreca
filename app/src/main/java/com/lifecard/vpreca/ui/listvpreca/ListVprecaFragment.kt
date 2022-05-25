@@ -52,7 +52,6 @@ class ListVprecaFragment : Fragment() {
     ): View? {
         _binding = FragmentListVprecaBinding.inflate(inflater, container, false)
 
-//        viewModel = ViewModelProvider(this).get(ListVprecaViewModel::class.java)
         val btnBack = binding.appbarListVpreca.btnBack
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(com.lifecard.vpreca.R.id.nav_home) })
         val tvTotalAmount = binding.tvTotalAmount
@@ -94,6 +93,47 @@ class ListVprecaFragment : Fragment() {
                                     val btnBack = bindingDialog.btnBack
                                     val btnCopy = bindingDialog.buttonCopy
                                     val btnUsage = bindingDialog.buttonUsage
+                                    val btnLock = bindingDialog.buttonLock
+                                    val btnRefresh = bindingDialog.buttonReload
+                                    var currentLock = arrPolicy[position].vcnSecurityLockFlg
+
+                                    btnRefresh.setOnClickListener(View.OnClickListener {
+                                        MaterialAlertDialogBuilder(requireContext()).apply {
+                                            setPositiveButton("はい") { dialog, which ->
+                                                card.card = arrPolicy[position]
+                                                bindingDialog.card = arrPolicy[position]
+                                                Toast(context).showCustomToast(
+                                                    "再発行しました",
+                                                    requireActivity()
+                                                )
+                                            }
+                                            setNegativeButton("いいえ", null)
+                                            setMessage("カードを再発行しますよろしいですか？")
+                                        }.create().show()
+                                    })
+
+                                    btnLock.setOnClickListener(View.OnClickListener {
+                                        var newCard:CreditCard
+                                        if(currentLock == "1"){
+                                            currentLock = "0"
+                                            newCard = arrPolicy[position].copy(vcnSecurityLockFlg = "0", cardImageFile = "", cardUnusableDate = "", thumbnailCardImageFile = "")
+                                            Toast(context).showCustomToast(
+                                                "ロックを解除しました",
+                                                requireActivity()
+                                            )
+                                        }
+                                        else{
+                                            currentLock = "1"
+                                            newCard = arrPolicy[position].copy(vcnSecurityLockFlg = "1", cardImageFile = "", cardUnusableDate = "", thumbnailCardImageFile = "")
+                                            Toast(context).showCustomToast(
+                                                "ロックしました",
+                                                requireActivity()
+                                            )
+                                        }
+                                        card.card = newCard
+                                        bindingDialog.card = newCard
+
+                                    })
 
                                     btnUsage.setOnClickListener(View.OnClickListener {
                                         dialog.dismiss()
@@ -105,17 +145,25 @@ class ListVprecaFragment : Fragment() {
                                     })
 
                                     btnCopy.setOnClickListener(View.OnClickListener {
-                                        val clipboardManager =
-                                            context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                        val clipData = ClipData.newPlainText(
-                                            "text",
-                                            arrPolicy[position].precaNumber
-                                        )
-                                        clipboardManager.setPrimaryClip(clipData)
-                                        Toast(context).showCustomToast(
-                                            "コピーしました！",
-                                            requireActivity()
-                                        )
+                                        if(arrPolicy[position].vcnSecurityLockFlg == "1"){
+                                            MaterialAlertDialogBuilder(requireContext()).apply {
+                                                setMessage("ロックを解除してから\n" + "コピーしてください")
+                                                setNegativeButton("ok", null)
+                                            }.create().show()
+                                        }
+                                        else{
+                                            val clipboardManager =
+                                                context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                            val clipData = ClipData.newPlainText(
+                                                "text",
+                                                arrPolicy[position].precaNumber
+                                            )
+                                            clipboardManager.setPrimaryClip(clipData)
+                                            Toast(context).showCustomToast(
+                                                "コピーしました！",
+                                                requireActivity()
+                                            )
+                                        }
                                     })
 
                                     btnBack.setOnClickListener(View.OnClickListener { dialog.dismiss() })

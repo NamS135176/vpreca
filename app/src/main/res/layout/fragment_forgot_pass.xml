@@ -41,7 +41,7 @@
                 android:text="@string/forgot_pass_des_top"
                 android:textColor="#353535"
                 android:textSize="12sp"
-                android:lineSpacingExtra="6dp"
+                android:lineSpacingExtra="6sp"
                 android:layout_marginHorizontal="22dp"
                 app:layout_constraintTop_toBottomOf="@+id/forgot_pass_title"
                 />
@@ -52,7 +52,7 @@
                 android:text="@string/forgot_pass_des_bot"
                 android:textColor="#353535"
                 android:textSize="12sp"
-                android:lineSpacingExtra="6dp"
+                android:lineSpacingExtra="6sp"
                 android:layout_marginHorizontal="22dp"
                 app:layout_constraintTop_toBottomOf="@+id/forgot_pass_des_top"
                 />
@@ -170,7 +170,7 @@
                 android:text="@string/forgot_pass_warning_top"
                 android:textColor="#353535"
                 android:textSize="12sp"
-                android:lineSpacingExtra="6dp"
+                android:lineSpacingExtra="6sp"
                 android:layout_marginHorizontal="22dp"
                 app:layout_constraintTop_toBottomOf="@+id/forgot_pass_phone_layout"
                 />
@@ -181,7 +181,7 @@
                 android:text="@string/forgot_pass_warning_bot"
                 android:textColor="#353535"
                 android:textSize="12sp"
-                android:lineSpacingExtra="6dp"
+                android:lineSpacingExtra="6sp"
                 android:layout_marginHorizontal="22dp"
                 app:layout_constraintTop_toBottomOf="@+id/forgot_warning_des_top"
                 />

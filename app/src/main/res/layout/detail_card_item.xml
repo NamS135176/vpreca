@@ -33,6 +33,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:contentDescription="@string/close"
                 android:id="@+id/card_logo"
                 android:layout_width="0dp"
                 android:layout_height="17dp"
@@ -57,7 +58,6 @@
                 android:id="@+id/card_valid_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="@string/card_expire_date"
                 android:textColor="@color/white"
                 android:textSize="9sp"
@@ -74,6 +74,9 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:paddingLeft="4dp"
+                android:paddingStart="4dp"
+                android:paddingRight="0dp"
+                android:paddingEnd="0dp"
                 style="@style/Widget.AppCompat.TextView.Bold"
                 app:layout_constraintBottom_toTopOf="@id/card_username"
                 app:layout_constraintStart_toEndOf="@+id/card_valid_title" />
@@ -101,6 +104,9 @@
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:textSize="14sp"
                 android:paddingLeft="4dp"
+                android:paddingStart="4dp"
+                android:paddingRight="0dp"
+                android:paddingEnd="0dp"
                 app:layout_constraintBottom_toTopOf="@id/card_username"
                 app:layout_constraintStart_toEndOf="@+id/card_cvc_title" />
             <androidx.appcompat.widget.AppCompatTextView
@@ -113,11 +119,15 @@
                 android:ellipsize="end"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                android:paddingLeft="0dp"
+                android:paddingStart="0dp"
                 android:paddingRight="60dp"
+                android:paddingEnd="60dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
+                android:contentDescription="@string/close"
                 android:id="@+id/card_type_logo"
                 android:layout_width="0dp"
                 android:layout_height="17dp"

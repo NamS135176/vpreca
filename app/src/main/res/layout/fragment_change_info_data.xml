@@ -46,7 +46,7 @@
                         android:id="@+id/cf_signup_des"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lineSpacingExtra="6dp"
+                        android:lineSpacingExtra="6sp"
                         android:paddingHorizontal="22dp"
                         android:paddingTop="26dp"
                         android:text="@string/change_info_data_des"
@@ -69,7 +69,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="6dp"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_name_title"
                             android:textSize="12sp" />
 
@@ -78,8 +78,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"
-                            android:lineSpacingExtra="6dp"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
                             android:text="ライフ　太郎"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -100,7 +100,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="6dp"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_furigana_title"
                             android:textSize="12sp" />
 
@@ -109,8 +109,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"
-                            android:lineSpacingExtra="6dp"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
                             android:text="ライフ　タロウ"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -131,7 +131,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="6dp"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_adress_title"
                             android:textSize="12sp" />
 
@@ -140,8 +140,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"
-                            android:lineSpacingExtra="6dp"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
                             android:text="神奈川県"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -161,7 +161,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="6dp"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_phone_title"
                             android:textSize="12sp" />
 
@@ -169,8 +169,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"
-                            android:lineSpacingExtra="6dp"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
                             android:text="***-****-0000"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -191,7 +191,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="6dp"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_primary_email_title"
                             android:textSize="12sp" />
 
@@ -199,8 +199,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"
-                            android:lineSpacingExtra="6dp"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
                             android:text="sa****@sample.jp"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -219,7 +219,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="6dp"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_secondary_email_title"
                             android:textSize="12sp" />
 
@@ -227,8 +227,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"
-                            android:lineSpacingExtra="6dp"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
                             android:text="sa*****@sample.jp"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -239,7 +239,7 @@
                         android:paddingTop="26dp"
                         android:layout_marginHorizontal="36dp"
                         android:layout_weight="1"
-                        android:lineSpacingExtra="6dp"
+                        android:lineSpacingExtra="6sp"
                         android:text="@string/change_info_data_setting_title"
                         android:textSize="12sp" />
                     <LinearLayout
@@ -256,7 +256,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="6dp"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_primary_email_title"
                             android:textSize="12sp" />
 
@@ -264,8 +264,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"
-                            android:lineSpacingExtra="6dp"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
                             android:text="受け取る"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -283,7 +283,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="6dp"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_secondary_email_title"
                             android:textSize="12sp" />
 
@@ -291,8 +291,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"
-                            android:lineSpacingExtra="6dp"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
                             android:text="受け取らない"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -304,7 +304,7 @@
                         android:paddingTop="26dp"
                         android:layout_marginHorizontal="36dp"
                         android:layout_weight="1"
-                        android:lineSpacingExtra="6dp"
+                        android:lineSpacingExtra="6sp"
                         android:text="@string/change_info_data_magazine"
                         android:textSize="12sp" />
                     <LinearLayout
@@ -321,7 +321,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="6dp"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_primary_email_title"
                             android:textSize="12sp" />
 
@@ -329,8 +329,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"
-                            android:lineSpacingExtra="6dp"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
                             android:text="受け取る"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -348,7 +348,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:lineSpacingExtra="6dp"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_secondary_email_title"
                             android:textSize="12sp" />
 
@@ -356,8 +356,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"
-                            android:lineSpacingExtra="6dp"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
                             android:text="受け取らない"
                             android:textSize="12sp" />
                     </LinearLayout>
