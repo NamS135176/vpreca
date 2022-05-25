@@ -25,17 +25,23 @@ import com.lifecard.vpreca.utils.showToolbar
 class WebViewFragment : BackPressFragment() {
 
     companion object {
-        fun newInstance(webUrl: String): WebViewFragment {
+        fun newInstance(
+            webUrl: String,
+            method: String? = "get",
+            postData: ByteArray? = null
+        ): WebViewFragment {
             val f = WebViewFragment()
-            val args = Bundle()
-            args.putString("web_url", webUrl)
-            f.arguments = args
+            f.arguments = createBundle(webUrl, method, postData)
 
             return f
         }
 
-        fun createBundle(webUrl: String): Bundle {
-            return bundleOf("web_url" to webUrl)
+        fun createBundle(
+            webUrl: String,
+            method: String? = "get",
+            postData: ByteArray? = null
+        ): Bundle {
+            return bundleOf("web_url" to webUrl, "method" to method, "post_data" to postData)
         }
     }
 
@@ -86,9 +92,16 @@ class WebViewFragment : BackPressFragment() {
         val buttonCancel = binding.appbarWebview.buttonCancel
 
         val webUrl = arguments?.getString("web_url")
+        val method = arguments?.getString("method")
+        val postData = arguments?.getByteArray("post_data")
+
         webView.webViewClient = myWebViewClient
         webView.webChromeClient = MyWebChromeClient()
-        webUrl?.let { webView.loadUrl(webUrl) }
+        webUrl?.let {
+            if ("post" == method && postData != null)
+                webView.postUrl(webUrl, postData)
+            else webView.loadUrl(webUrl)
+        }
 
         buttonCancel.setOnClickListener(View.OnClickListener {
             val navController = fragmentFindNavController()

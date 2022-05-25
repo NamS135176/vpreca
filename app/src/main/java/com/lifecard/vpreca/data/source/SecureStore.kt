@@ -2,7 +2,7 @@ package com.lifecard.vpreca.data.source
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.lifecard.vpreca.utils.Constanst
+import com.lifecard.vpreca.utils.Constant
 
 class SecureStore(private val appContext: Context) {
 
@@ -23,35 +23,35 @@ class SecureStore(private val appContext: Context) {
     }
 
     fun saveAccessToken(token: String) {
-        return saveEncryptText(Constanst.SECURE_ACCESS_TOKEN, token)
+        return saveEncryptText(Constant.SECURE_ACCESS_TOKEN, token)
     }
 
     fun getAccessToken(): String? {
-        return getEncryptText(Constanst.SECURE_ACCESS_TOKEN)
+        return getEncryptText(Constant.SECURE_ACCESS_TOKEN)
     }
 
     fun saveRefreshToken(token: String) {
-        return saveEncryptText(Constanst.SECURE_REFRESH_TOKEN, token)
+        return saveEncryptText(Constant.SECURE_REFRESH_TOKEN, token)
     }
 
     fun getRefreshToken(): String? {
-        return getEncryptText(Constanst.SECURE_REFRESH_TOKEN)
+        return getEncryptText(Constant.SECURE_REFRESH_TOKEN)
     }
 
     fun saveLoginAction(action: String) {
-        return saveEncryptText(Constanst.SECURE_LOGIN_ACTION, action)
+        return saveEncryptText(Constant.SECURE_LOGIN_ACTION, action)
     }
 
     fun getLoginAction(): String? {
-        return getEncryptText(Constanst.SECURE_LOGIN_ACTION)
+        return getEncryptText(Constant.SECURE_LOGIN_ACTION)
     }
 
     fun saveLoginUserId(userId: String) {
-        return saveEncryptText(Constanst.SECURE_USER_ID, userId)
+        return saveEncryptText(Constant.SECURE_USER_ID, userId)
     }
 
     fun getLoginUserId(): String? {
-        return getEncryptText(Constanst.SECURE_USER_ID)
+        return getEncryptText(Constant.SECURE_USER_ID)
     }
 
     fun clearDueLogout() {

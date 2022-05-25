@@ -151,4 +151,15 @@
         android:id="@+id/nav_fingerprint_setting"
         android:name="com.lifecard.vpreca.ui.fingerprint.FingerprintFragment"
         android:label="@string/title_fingerprint_setting" />
+
+    <fragment
+        android:id="@+id/nav_web_direct"
+        android:name="com.lifecard.vpreca.ui.web_direct.WebDirectFragment"
+        android:label="">
+        <argument
+            android:name="screen_id"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

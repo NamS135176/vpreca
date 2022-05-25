@@ -46,4 +46,10 @@ interface ApiService {
         @Field("loginId") memberNumber: String,
         @Field("response") response: String
     ): LoginResponse
+
+    @FormUrlEncoded
+    @POST("otp")
+    suspend fun requestWebDirectOtp(
+        @Header("Authorization") authorization: String
+    ): OtpResponse
 }
