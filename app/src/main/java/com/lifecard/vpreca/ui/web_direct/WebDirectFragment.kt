@@ -5,23 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.base.BackPressFragment
-import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.databinding.FragmentWebDirectBinding
-import com.lifecard.vpreca.databinding.FragmentWebViewBinding
 import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.Constant
-import com.lifecard.vpreca.utils.hideLoadingDialog
-import com.lifecard.vpreca.utils.showLoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.net.URLEncoder
 
 @AndroidEntryPoint
-class WebDirectFragment : NoToolbarFragment() {
+class WebDirectFragment : Fragment() {
 
     companion object {
         fun newInstance() = WebDirectFragment()
@@ -69,7 +65,6 @@ class WebDirectFragment : NoToolbarFragment() {
                     postData = postData.toByteArray()
                 )
                 childFragTrans.add(R.id.webview, webFragment)
-                childFragTrans.addToBackStack("webFragment")
                 childFragTrans.commit()
             }
         })

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val toolbar = binding.appBarMain.toolbar
         setSupportActionBar(binding.appBarMain.toolbar)
 
         drawerLayout = binding.drawerLayout
@@ -73,6 +75,16 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.nav_term_of_use, args = null, navOptions = navOptions)
             }
         }
+
+        navController.enableOnBackPressed(true)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.nav_home) {
+                toolbar.visibility = View.VISIBLE
+            } else {
+                toolbar.visibility = View.GONE
+            }
+        }
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home
