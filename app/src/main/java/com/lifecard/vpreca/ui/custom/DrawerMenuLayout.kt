@@ -197,11 +197,11 @@ class DrawerMenuLayout @JvmOverloads constructor(
                 4 -> viewFindNavController().navigate(R.id.nav_change_pass)
                 5 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
                     .show()//menu_change_phone
-                6 -> viewFindNavController().navigate(R.id.nav_fingerprint_setting)//menu_credit_card_info
-                7 -> viewFindNavController().navigate(
+                6 -> viewFindNavController().navigate(
                     R.id.nav_web_direct,
                     WebDirectFragmentArgs(screenId = WebDirectScreen.SCREEN_CREDIT_CARD_INFO).toBundle()
                 )//menu_member_setting
+                7 -> viewFindNavController().navigate(R.id.nav_fingerprint_setting)//menu_credit_card_info
                 9 -> showWebViewActivity("https://www.lifecard.co.jp/card/campaign/ol_nyukai/vpc/1604_1/index.html?utm_source=mail&utm_medium=mail&utm_campaign=vpc_my2&argument=xZcLVgDf&dmai=a627cb5ac0f66f")//menu_register_lifecard
                 10 -> showWebViewActivity("https://vpc.lifecard.co.jp/campaign/index.html")//menu_campain_info
                 12 -> showWebViewActivity("https://vpc.lifecard.co.jp/news/index.html")//menu_news
