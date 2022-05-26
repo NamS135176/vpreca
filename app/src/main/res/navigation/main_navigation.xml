@@ -82,6 +82,16 @@
         android:label="Login"
         tools:layout="@layout/fragment_issue_card_main" />
     <fragment
+        android:id="@+id/nav_issue_card_by_plus_introduce"
+        android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByPlusIntroduce"
+        android:label="Login"
+        tools:layout="@layout/fragment_issue_card_by_plus_introduce" />
+    <fragment
+        android:id="@+id/nav_issue_card_select_source"
+        android:name="com.lifecard.vpreca.ui.issuecard.IssueCardSelectSourceFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_issue_card_select_source" />
+    <fragment
         android:id="@+id/nav_gift_card_input_card"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardInputCardFragment"
         android:label="Login"

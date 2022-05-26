@@ -35,6 +35,12 @@ class IssueCardMainFragment : Fragment() {
             }
         })
         val btnCancel = binding.appbarGiftThird.cancelBtn
+        val btnDouble = binding.btnDoubleCard
+
+        btnDouble.setOnClickListener(View.OnClickListener {
+            findNavController().navigate(R.id.nav_issue_card_by_plus_introduce)
+        })
+
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->

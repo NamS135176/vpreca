@@ -145,7 +145,7 @@ class ListVprecaFragment : Fragment() {
                                     })
 
                                     btnCopy.setOnClickListener(View.OnClickListener {
-                                        if(arrPolicy[position].vcnSecurityLockFlg == "1"){
+                                        if(currentLock == "1"){
                                             MaterialAlertDialogBuilder(requireContext()).apply {
                                                 setMessage("ロックを解除してから\n" + "コピーしてください")
                                                 setNegativeButton("ok", null)

@@ -343,6 +343,21 @@
     <string name="issue_card_main_des_third">すでにある複数のカードを合算して新しいカードを発行します。</string>
     <!--    Issue Card Main-->
 
+    <!--    Issue Card by plus Introduce-->
+    <string name="issue_card_by_plus_appbar_title">残高合算</string>
+    <string name="issue_card_by_plus_introduce_des">既存のVプリカ残高を合算して\n1枚の新しいカードにまとめることができます。\n（最大5枚、合計残高10万円まで）</string>
+    <string name="issue_card_by_plus_introduce_des_long">合算後は新しいＶプリカが発行されカード情報（カード番号、有効期限、セキュリティコード）も新しくなります\n\n現在ご利用先のサイトにカード情報を登録している場合は、新しいカード情報に変更してください</string>
+    <string name="issue_card_by_plus_introduce_btn">合算カード選択</string>
+    <!--    Issue Card by plus-->
+
+    <!--    Issue Card Select Source-->
+    <string name="issue_card_select_source_total_title">合算金額</string>
+    <string name="issue_card_select_source_des">合算するカードを選択してください。</string>
+    <string name="issue_card_select_source_btn">発行</string>
+    <string name="issue_card_select_source_total">¥0</string>
+    <string name="issue_card_select_source_cross">合算元</string>
+    <!--    Issue Card Select Source-->
+
     <!--    Card Detail-->
     <string name="card_detail_btn_white">カード番号コピー</string>
     <!--    Card Detail End-->
