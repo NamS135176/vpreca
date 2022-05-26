@@ -47,7 +47,7 @@ class ChangeInfoInputFragment : Fragment() {
     ): View? {
         viewModel = ViewModelProvider(this).get(ChangeInfoInputViewModel::class.java)
         _binding = FragmentChangeInfoInputBinding.inflate(inflater, container, false)
-        val container = binding.constraintChangeInfo
+        var container = binding.constraintChangeInfo
         container.setOnClickListener(View.OnClickListener {closeKeyBoard()  })
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
@@ -63,7 +63,7 @@ class ChangeInfoInputFragment : Fragment() {
         val idLayout = binding.idInputLayout
         val usernameLayout = binding.usernameInputLayout
         val idEdt = binding.idInput
-        val usernameEdit = binding.idUsername
+        val nicknameEdt = binding.idNickname
         val btnSubmit = binding.btnSubmitPolicy
         val phoneEdt = binding.idPhone
         val phoneLayout = binding.phoneInputLayout
@@ -171,16 +171,16 @@ class ChangeInfoInputFragment : Fragment() {
         }
 
         viewModel.validForm.observe(viewLifecycleOwner, androidx.lifecycle.Observer { signupFormState ->
-            if(idEdt.text.toString() == "" || usernameEdit.text.toString() == "" || spinnerGender.selectedItem.toString() == "選択してください" || btnDatePicker.text.toString() == "1980年1月1日" || spinnerCity.selectedItem.toString() == "選択してください" || phoneEdt.text.toString() == "" ||answerEdt.text.toString() == "" || spinnerSecret.selectedItem.toString() == "選択してください"){
+            if(idEdt.text.toString() == "" || nicknameEdt.text.toString() == "" || spinnerGender.selectedItem.toString() == "選択してください" || btnDatePicker.text.toString() == "1980年1月1日" || spinnerCity.selectedItem.toString() == "選択してください" || phoneEdt.text.toString() == "" ||answerEdt.text.toString() == "" || spinnerSecret.selectedItem.toString() == "選択してください"){
                 btnSubmit.isEnabled = false
             }
             else{
                 btnSubmit.isEnabled =
-                    signupFormState.usernameError == null && signupFormState.idError == null && signupFormState.genderError == null && signupFormState.dateError == null && signupFormState.cityError == null && signupFormState.phoneError == null && signupFormState.questionError == null && signupFormState.answerError == null
+                    signupFormState.nicknameError == null && signupFormState.idError == null && signupFormState.genderError == null && signupFormState.dateError == null && signupFormState.cityError == null && signupFormState.phoneError == null && signupFormState.questionError == null && signupFormState.answerError == null
             }
         })
 
-        viewModel.usernameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer {  error: Int? ->
+        viewModel.nicknameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer {  error: Int? ->
             usernameLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
@@ -211,7 +211,7 @@ class ChangeInfoInputFragment : Fragment() {
         })
 
         btnDatePicker.addTextChangedListener(afterTextChangedListener)
-        spinnerGender?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
             override fun onItemSelected(
@@ -224,7 +224,7 @@ class ChangeInfoInputFragment : Fragment() {
             }
 
         }
-        spinnerCity?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerCity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
             override fun onItemSelected(
@@ -252,7 +252,7 @@ class ChangeInfoInputFragment : Fragment() {
 
         idEdt.doAfterTextChanged { text -> viewModel.idDataChanged(text = text.toString()) }
 
-        usernameEdit.doAfterTextChanged { text -> viewModel.usernameDataChanged(text = text.toString()) }
+        nicknameEdt.doAfterTextChanged { text -> viewModel.nicknameDataChanged(text = text.toString()) }
         answerEdt.doAfterTextChanged { text -> viewModel.answerDataChanged(text = text.toString()) }
         phoneEdt.doAfterTextChanged { text -> viewModel.phoneDataChanged(text = text.toString()) }
         phoneEdt.setOnEditorActionListener { _, actionId, _ ->
@@ -266,7 +266,7 @@ class ChangeInfoInputFragment : Fragment() {
         spinnerSecret.adapter = adapter
 
         btnSubmit.setOnClickListener(View.OnClickListener {
-//            val signupData = SignupData(idEdt.text.toString(), usernameEdit.text.toString(), passwordEdt.text.toString())
+//            val signupData = SignupData(idEdt.text.toString(), nicknameEdt.text.toString(), passwordEdt.text.toString())
 //            val action = SignupInputFragmentDirections.actionSignupInputToSignupConfirm(signupData)
 //            findNavController().navigate(action)
             findNavController().navigate(R.id.nav_change_info_confirm)

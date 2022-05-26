@@ -31,7 +31,7 @@
     <string name="login_or">または</string>
     <string name="click_here">はこちら</string>
     <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">ログインID can not empty</string>
+    <string name="invalid_username">正しいログインIDを入力してください</string>
     <string name="invalid_password">半角英数字8〜12文字で入力してください</string>
     <string name="login_failed">Login failed</string>
     <string name="title_activity_login">LoginActivity</string>
@@ -174,7 +174,7 @@
     <string name='forgot_pass_appbar_title'>パスワード再設定</string>
     <string name='forgot_pass_input_title'>パスワード再設定メール送信</string>
     <string name="forgot_pass_des_top">ご登録いただいているメールアドレスにログインパスワードの再設定用URLを送信します。\n以下の項目を入力して「メール送信」をタップしてください。</string>
-<!--    <string name="forgot_pass_des_bot">以下の項目を入力して「メール送信」をタップしてください。</string>-->
+    <!--    <string name="forgot_pass_des_bot">以下の項目を入力して「メール送信」をタップしてください。</string>-->
     <string name="forgot_pass_email_title">メールアドレス1</string>
     <string name='forgot_pass_email_hint'>半角256文字以内</string>
     <string name="forgot_pass_dob_title">生年月日</string>
@@ -360,4 +360,14 @@
     <string name="error_fingerprint_not_enrolled">Chưa đăng ký vân tay hoặc khuôn mặt. Vui lòng vào cài đặt thiết bị để thêm.</string>
     <string name="error_bio_authentication_failure">Authentication failure</string>
     <string name="biometric_setting_success">Success</string>
+    <!--   End FaceID setting  -->
+
+    <!--   Regex error  -->
+    <string name="rgx_error_nickname">正しいニックネームを入力してください</string>
+    <string name="rgx_error_datetime">正しい生年月日を入力してください</string>
+    <string name='rgx_error_phone_number'>正しい電話番号を入力してください</string>
+    <string name='rgx_error_gender'>正しい性別を入力してください</string>
+    <string name="btn_confirm">確認</string>
+    <!--   End Regex error  -->
+
 </resources>
