@@ -112,6 +112,9 @@ class LoginFragment : NoToolbarFragment() {
                 loginResult.error?.let {
                     showLoginFailed(it)
                 }
+                loginResult.errorText?.let { errorText ->
+                    showAlert(errorText)
+                }
                 loginResult.success?.let {
                     updateUiWithUser(it)
                     navigateToHome()
@@ -222,8 +225,7 @@ class LoginFragment : NoToolbarFragment() {
                     errorCode: Int,
                     errString: CharSequence
                 ) {
-                    super.onAuthenticationError(errorCode, errString)
-                    showAlert(errString.toString())
+                    loginViewModel.handleAuthenticationError(errorCode, errString)
                 }
 
                 override fun onAuthenticationSucceeded(
@@ -242,7 +244,7 @@ class LoginFragment : NoToolbarFragment() {
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    showAlert(getString(R.string.error_bio_authentication_failure))
+//                    showAlert(getString(R.string.error_bio_authentication_failure))
                 }
             })
 
@@ -259,13 +261,6 @@ class LoginFragment : NoToolbarFragment() {
         } ?: run {
             showAlert(getString(R.string.error_bio_authentication_failure))
         }
-    }
-
-    fun showAlert(content: String) {
-        MaterialAlertDialogBuilder(requireContext()).apply {
-            setPositiveButton(R.string.button_ok, null)
-            setMessage(content)
-        }.create().show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -299,9 +294,13 @@ class LoginFragment : NoToolbarFragment() {
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
+        showAlert(getString(errorString))
+    }
+
+    fun showAlert(content: String) {
         MaterialAlertDialogBuilder(requireContext()).apply {
             setPositiveButton(R.string.button_ok, null)
-            setMessage(errorString)
+            setMessage(content)
         }.create().show()
     }
 

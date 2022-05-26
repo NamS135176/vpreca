@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
@@ -169,11 +170,18 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        unlockDrawer()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.listCard.cardList.unregisterOnPageChangeCallback(pageChangeCallback)
         _binding = null
         clearLightStatusBar()
+
+        lockDrawer()
     }
 
     private lateinit var lifecycleObserver: DefaultLifecycleObserver
@@ -188,8 +196,6 @@ class HomeFragment : Fragment() {
             }
         }
         requireActivity().lifecycle.addObserver(lifecycleObserver)
-
-        unlockDrawer()
     }
 
     private inner class CardSlidePagerAdapter(

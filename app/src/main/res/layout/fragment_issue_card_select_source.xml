@@ -93,6 +93,7 @@
                     android:textColor="@color/white"
                     android:lineSpacingExtra="2sp"/>
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginHorizontal="21dp"
                     android:id="@+id/rv_select_source"
                     android:layout_marginTop="34dp"
                     android:layout_marginBottom="15dp"

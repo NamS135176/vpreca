@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.lifecard.vpreca.utils.Converter" />
+
+        <variable
+            name="card"
+            type="com.lifecard.vpreca.data.model.DesignCard" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="6dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card_info"
+            style="@style/MyCardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="152dp"
+            android:background="@drawable/bg_card"
+            android:minHeight="92dp"
+            android:paddingHorizontal="7dp"
+            android:paddingVertical="7dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:contentDescription="@string/des_phone_input"
+                android:id="@+id/card_logo"
+                android:layout_width="0dp"
+                android:layout_height="9dp"
+                android:background="@drawable/home_card_logo"
+                app:layout_constraintDimensionRatio="138:36"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/card_expire_date"
+                android:textColor="@color/white"
+                android:textSize="4sp"
+                app:layout_constraintBottom_toTopOf="@id/card_username"
+                android:paddingBottom="4dp"
+                app:layout_constraintStart_toStartOf="parent" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_expire_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/expire_holder"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toTopOf="@id/card_username"
+                app:layout_constraintStart_toEndOf="@+id/card_no" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pin_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/sercue_code"
+                android:textColor="@color/white"
+                android:textSize="4sp"
+                app:layout_constraintBottom_toTopOf="@id/card_username"
+                app:layout_constraintStart_toEndOf="@+id/card_expire_data"
+                android:paddingBottom="4dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginStart="9dp"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pin_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/pin_holder"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toTopOf="@id/card_username"
+                app:layout_constraintStart_toEndOf="@+id/pin_title" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/vpreca_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/vpreca_holder"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toTopOf="@id/card_no"
+
+                app:layout_constraintStart_toStartOf="parent" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_username"
+                style="@style/Widget.AppCompat.TextView.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingEnd="40dp"
+                android:paddingRight="40dp"
+                android:paddingLeft="0dp"
+                android:paddingStart="0dp"
+                android:text="@string/name_holder"
+                android:textColor="@color/white"
+                android:textSize="8sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:contentDescription="@string/des_phone_input"
+                android:id="@+id/card_type_logo"
+                android:layout_width="0dp"
+                android:layout_height="9dp"
+                android:background="@drawable/card_visa"
+                app:layout_constraintBottom_toBottomOf="@id/card_username"
+                app:layout_constraintDimensionRatio="108:36"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/card_username" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

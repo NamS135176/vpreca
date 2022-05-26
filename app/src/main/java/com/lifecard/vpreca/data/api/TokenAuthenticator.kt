@@ -2,11 +2,10 @@ package com.lifecard.vpreca.data.api
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.data.model.LoginResponse
 import com.lifecard.vpreca.data.source.SecureStore
-import com.lifecard.vpreca.utils.Constanst
+import com.lifecard.vpreca.utils.Constant
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -87,7 +86,7 @@ class TokenAuthenticator(private var appContext: Context, private val secureStor
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(Constanst.API_BASE_URL)
+            .baseUrl(Constant.API_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

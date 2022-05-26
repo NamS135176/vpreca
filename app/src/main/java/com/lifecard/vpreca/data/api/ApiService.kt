@@ -34,7 +34,10 @@ interface ApiService {
     suspend fun registerBiometric(
         @Header("Authorization") authorization: String,
         @Field("loginId") memberNumber: String,
-        @Field("bioKey") bioKey: String
+        @Field("bioKey") bioKey: String,
+        @Field("platform") platform: String,
+        @Field("os_version") osVersion: String,
+        @Field("algorithm") algorithm: String
     ): BioChallenge
 
     @FormUrlEncoded
@@ -43,4 +46,10 @@ interface ApiService {
         @Field("loginId") memberNumber: String,
         @Field("response") response: String
     ): LoginResponse
+
+    @FormUrlEncoded
+    @POST("otp")
+    suspend fun requestWebDirectOtp(
+        @Header("Authorization") authorization: String
+    ): OtpResponse
 }

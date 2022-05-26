@@ -2,12 +2,14 @@ package com.lifecard.vpreca
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val toolbar = binding.appBarMain.toolbar
         setSupportActionBar(binding.appBarMain.toolbar)
 
         drawerLayout = binding.drawerLayout
@@ -72,7 +75,21 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.nav_term_of_use, args = null, navOptions = navOptions)
             }
         }
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+
+        navController.enableOnBackPressed(true)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.nav_home) {
+                toolbar.visibility = View.VISIBLE
+            } else {
+                toolbar.visibility = View.GONE
+            }
+        }
+
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_home
+            ), drawerLayout
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
@@ -94,5 +111,9 @@ class MainActivity : AppCompatActivity() {
     @Subscribe
     fun handleCloseDrawer(event: CloseDrawerEvent) {
         drawerLayout.close()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 }

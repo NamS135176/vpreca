@@ -5,9 +5,10 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.utils.RegexUtils
 
 class ChangeInfoInputViewModel : ViewModel() {
-    val usernameError = MutableLiveData<Int?>()
+    val nicknameError = MutableLiveData<Int?>()
     val idError = MutableLiveData<Int?>()
     val dateError = MutableLiveData<Int?>()
     val phoneError = MutableLiveData<Int?>()
@@ -22,9 +23,9 @@ class ChangeInfoInputViewModel : ViewModel() {
             val previous = this.value
             this.value = previous?.copy(idError = value)
         }
-        addSource(usernameError) { value ->
+        addSource(nicknameError) { value ->
             val previous = this.value
-            this.value = previous?.copy(usernameError = value)
+            this.value = previous?.copy(nicknameError = value)
         }
         addSource(dateError) { value ->
             val previous = this.value
@@ -53,32 +54,33 @@ class ChangeInfoInputViewModel : ViewModel() {
 
     }
 
-    fun usernameDataChanged(text: String) {
-        if (!isUserNameValid(text)) {
-            usernameError.value = R.string.invalid_username
+    fun nicknameDataChanged(text: String) {
+        if (!RegexUtils.isNicknameValid(text)) {
+            nicknameError.value = R.string.rgx_error_nickname
         } else {
-            usernameError.value = null
+            nicknameError.value = null
         }
     }
 
     fun idDataChanged(text: String) {
-        if (!isIdValid(text)) {
-            idError.value = R.string.invalid_password
+        if (!RegexUtils.isLoginIdValid(text)) {
+            idError.value = R.string.invalid_username
         } else {
             idError.value = null
         }
     }
+
     fun dateDataChanged(text: String) {
         if (!isDateValid(text)) {
-            dateError.value = R.string.forgot_pass_error_dob
+            dateError.value = R.string.rgx_error_datetime
         } else {
             dateError.value = null
         }
     }
 
     fun phoneDataChanged(text: String) {
-        if (!isPhoneValid(text)) {
-            phoneError.value = R.string.forgot_pass_error_phone
+        if (!RegexUtils.isPhoneNumberValid(text)) {
+            phoneError.value = R.string.rgx_error_phone_number
         } else {
             phoneError.value = null
         }
@@ -87,8 +89,7 @@ class ChangeInfoInputViewModel : ViewModel() {
     fun questionDataChanged(text: String) {
         if (!isQuestionValid(text)) {
             questionError.value = R.string.forgot_pass_error_secret_question
-        }
-        else{
+        } else {
             questionError.value = null
         }
     }
@@ -96,17 +97,15 @@ class ChangeInfoInputViewModel : ViewModel() {
     fun cityDataChanged(text: String) {
         if (!isQuestionValid(text)) {
             cityError.value = R.string.forgot_pass_error_secret_question
-        }
-        else{
+        } else {
             cityError.value = null
         }
     }
 
     fun genderDataChanged(text: String) {
         if (!isQuestionValid(text)) {
-            genderError.value = R.string.forgot_pass_error_secret_question
-        }
-        else{
+            genderError.value = R.string.rgx_error_gender
+        } else {
             genderError.value = null
         }
     }
@@ -114,18 +113,12 @@ class ChangeInfoInputViewModel : ViewModel() {
     fun answerDataChanged(text: String) {
         if (!isAnswerValid(text)) {
             answerError.value = R.string.forgot_pass_error_secret_answer
-        }
-        else{
+        } else {
             answerError.value = null
         }
     }
 
-    private fun isPhoneValid(phone: String): Boolean {
-        return Patterns.PHONE.matcher(phone).matches()
-    }
-
     private fun isDateValid(date: String): Boolean {
-
         return date != "1980年1月1日"
     }
 
@@ -138,14 +131,14 @@ class ChangeInfoInputViewModel : ViewModel() {
         return answer.length in 0..20 && isHalfWidth(answer)
     }
 
-    fun isHalfWidth(text:String):Boolean{
+    fun isHalfWidth(text: String): Boolean {
         val regex = "[０-９ぁ-んァ-ン一-龥]".toRegex()
         return regex.find(text) == null
     }
 
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
-        return username.length in 2..18
+        return RegexUtils.isLoginIdValid(username)
     }
 
     // A placeholder password validation check

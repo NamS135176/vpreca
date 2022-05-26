@@ -3,6 +3,8 @@ package com.lifecard.vpreca.data
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.BioChallenge
 import com.lifecard.vpreca.data.model.CardUsageHistory
+import com.lifecard.vpreca.data.model.OtpResponse
+import com.lifecard.vpreca.utils.Constant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -45,9 +47,29 @@ class RemoteRepository(
                     apiService.registerBiometric(
                         "Bear ${userRepository.accessToken!!}",
                         memberNumber = username,
-                        bioKey = pemKey
+                        bioKey = pemKey,
+                        platform = "Android",
+                        osVersion = android.os.Build.VERSION.SDK_INT.toString(),
+                        algorithm = Constant.BIOMETRIC_ALGORITHM
                     )
                 Result.Success(bioChallenge)
+            } catch (e: Exception) {
+                println("RemoteRepository...registerBiometric has error $e")
+                Result.Error(IOException("Error registerBiometric", e))
+            }
+        }
+    }
+
+    suspend fun requestWebDirectOtp(): Result<OtpResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                //fake
+                val otpResponse = OtpResponse(otp = "123456")
+//                val otpResponse =
+//                    apiService.requestWebDirectOtp(
+//                        "Bear ${userRepository.accessToken!!}"
+//                    )
+                Result.Success(otpResponse)
             } catch (e: Exception) {
                 println("RemoteRepository...registerBiometric has error $e")
                 Result.Error(IOException("Error registerBiometric", e))

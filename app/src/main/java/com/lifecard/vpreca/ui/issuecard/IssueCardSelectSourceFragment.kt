@@ -52,6 +52,10 @@ class IssueCardSelectSourceFragment : Fragment() {
         val rcView = binding.rvSelectSource
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val btnBack  = binding.appbarGiftThird.btnBack
+        val btnSubmit = binding.btnSubmitIntroduceFirst
+
+        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_select_design) })
+
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_plus_introduce) })
         btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
 

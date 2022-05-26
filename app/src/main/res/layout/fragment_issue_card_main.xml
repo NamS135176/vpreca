@@ -42,7 +42,9 @@
                     android:paddingTop="33dp"
                     android:paddingRight="44dp"
                     android:paddingBottom="33dp"
-                    app:layout_constraintTop_toTopOf="@+id/layout_issue_card_select">
+                    app:layout_constraintTop_toTopOf="@+id/layout_issue_card_select"
+                    android:paddingStart="26dp"
+                    android:paddingEnd="44dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -138,7 +140,7 @@
                 </LinearLayout>
                 <com.google.android.material.button.MaterialButton
                     android:layout_marginTop="15dp"
-                    android:id="@+id/btn_card"
+                    android:id="@+id/button_credit_card"
                     android:layout_width="match_parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_tap"
                     android:layout_height="140dp"
@@ -193,7 +195,7 @@
                 </LinearLayout>
                 <com.google.android.material.button.MaterialButton
                     android:layout_marginTop="15dp"
-                    android:id="@+id/btn_double_card"
+                    android:id="@+id/button_new_card"
                     android:layout_width="match_parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_single_card"
                     android:layout_height="140dp"
