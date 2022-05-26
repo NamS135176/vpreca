@@ -22,6 +22,7 @@ class RegexUtils {
          */
         const val RegexPhoneNumber = "/^\\d{10}\$/"
 
+        const val RegexEmail = "^\\S+@\\S+\\.\\S+\$"
 
         fun isLoginIdValid(loginId: String?): Boolean {
             return loginId?.let { id ->
@@ -39,6 +40,13 @@ class RegexUtils {
         fun isPhoneNumberValid(phoneNumber: String?): Boolean {
             return phoneNumber?.let {
                 Pattern.compile(RegexPhoneNumber).matcher(phoneNumber)
+                    .matches()
+            } ?: false
+        }
+
+        fun isEmailValid(email: String?): Boolean {
+            return email?.let {
+                Pattern.compile(RegexEmail).matcher(email)
                     .matches()
             } ?: false
         }
