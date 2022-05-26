@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.ui.forgotpass.ForgotPassState
+import com.lifecard.vpreca.utils.RegexUtils
 
 class ChangePassViewModel : ViewModel() {
     val oldPassError = MutableLiveData<Int?>()
@@ -26,41 +27,32 @@ class ChangePassViewModel : ViewModel() {
         }
 
     }
+
     fun oldPasswordDataChanged(text: String) {
-        if (!isPasswordValid(text)) {
-            oldPassError.value = R.string.change_pass_old_pass_error
-        }
-        else{
+        if (!RegexUtils.isPasswordValid(text)) {
+            oldPassError.value = R.string.rgx_error_password
+        } else {
             oldPassError.value = null
         }
     }
+
     fun newPasswordDataChanged(text: String) {
-        if (!isPasswordValid(text)) {
-            newPassError.value = R.string.change_pass_new_pass_error
-        }
-        else{
+        if (!RegexUtils.isPasswordValid(text)) {
+            newPassError.value = R.string.rgx_error_password
+        } else {
             newPassError.value = null
         }
     }
+
     fun cfNewPasswordDataChanged(text: String, newPass: String) {
-        if (!isCfPasswordValid(text,newPass)) {
-            cfNewPassError.value = R.string.change_pass_cf_new_pass_error
-        }
-        else{
+        if (!isCfPasswordValid(text, newPass)) {
+            cfNewPassError.value = R.string.rgx_error_confirm_password
+        } else {
             cfNewPassError.value = null
         }
     }
 
-    private fun isPasswordValid(password: String): Boolean {
-        return password.length in 8..12 && isHalfWidth(password)
-    }
-
     private fun isCfPasswordValid(cfPassword: String, newPass: String): Boolean {
-        return cfPassword.length in 8..12 && isHalfWidth(cfPassword) &&  cfPassword == newPass
-    }
-
-    fun isHalfWidth(text:String):Boolean{
-        val regex = "[０-９ぁ-んァ-ン一-龥]".toRegex()
-        return regex.find(text) == null
+        return RegexUtils.isPasswordValid(cfPassword) && cfPassword == newPass
     }
 }

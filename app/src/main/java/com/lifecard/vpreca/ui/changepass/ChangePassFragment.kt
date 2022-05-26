@@ -43,15 +43,11 @@ class ChangePassFragment : Fragment() {
         viewModel.validForm.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { forgotPassState ->
-                if (oldPassEdt.text.toString() == "" || newPassEdt.text.toString() == "" || cfNewPassEdt.text.toString() == "" ) {
-                    btnSubmit.isEnabled = false
-                } else {
-                    btnSubmit.isEnabled =
-                        (forgotPassState.oldPassError == null && forgotPassState.newPassError == null && forgotPassState.cfNewPassError == null )
-                }
+                btnSubmit.isEnabled =
+                    (forgotPassState.oldPassError == null && forgotPassState.newPassError == null && forgotPassState.cfNewPassError == null)
             })
 
-        viewModel.oldPassError.observe(viewLifecycleOwner, Observer {error: Int? ->
+        viewModel.oldPassError.observe(viewLifecycleOwner, Observer { error: Int? ->
             oldPassLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
@@ -59,7 +55,7 @@ class ChangePassFragment : Fragment() {
             }
         })
 
-        viewModel.newPassError.observe(viewLifecycleOwner, Observer {error: Int? ->
+        viewModel.newPassError.observe(viewLifecycleOwner, Observer { error: Int? ->
             newPassLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
@@ -67,7 +63,7 @@ class ChangePassFragment : Fragment() {
             }
         })
 
-        viewModel.cfNewPassError.observe(viewLifecycleOwner, Observer {error: Int? ->
+        viewModel.cfNewPassError.observe(viewLifecycleOwner, Observer { error: Int? ->
             cfNewPassLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
@@ -77,20 +73,15 @@ class ChangePassFragment : Fragment() {
 
         oldPassEdt.doAfterTextChanged { text -> viewModel.oldPasswordDataChanged(text = text.toString()) }
         newPassEdt.doAfterTextChanged { text -> viewModel.newPasswordDataChanged(text = text.toString()) }
-        cfNewPassEdt.doAfterTextChanged { text -> viewModel.cfNewPasswordDataChanged(text = text.toString(), newPassEdt.text.toString()) }
+        cfNewPassEdt.doAfterTextChanged { text ->
+            viewModel.cfNewPasswordDataChanged(
+                text = text.toString(),
+                newPassEdt.text.toString()
+            )
+        }
 
         btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_pass_complete) })
         btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
         return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        hideToolbar()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        showToolbar()
     }
 }
