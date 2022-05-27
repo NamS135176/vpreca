@@ -36,7 +36,7 @@
                 android:id="@+id/card_logo"
                 android:layout_width="0dp"
                 android:layout_height="9dp"
-                android:background="@drawable/home_card_logo"
+                android:background="@{card.designId.equals(`0`) ? @drawable/logo_card : @drawable/home_card_logo}"
                 app:layout_constraintDimensionRatio="138:36"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="@string/card_expire_date"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
                 android:textSize="4sp"
                 app:layout_constraintBottom_toTopOf="@id/card_username"
                 android:paddingBottom="4dp"
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="@string/expire_holder"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toTopOf="@id/card_username"
                 app:layout_constraintStart_toEndOf="@+id/card_no" />
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="@string/sercue_code"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
                 android:textSize="4sp"
                 app:layout_constraintBottom_toTopOf="@id/card_username"
                 app:layout_constraintStart_toEndOf="@+id/card_expire_data"
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="@string/pin_holder"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toTopOf="@id/card_username"
                 app:layout_constraintStart_toEndOf="@+id/pin_title" />
@@ -90,9 +90,8 @@
                 android:id="@+id/vpreca_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="@string/vpreca_holder"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toTopOf="@id/card_no"
 
@@ -109,7 +108,7 @@
                 android:paddingLeft="0dp"
                 android:paddingStart="0dp"
                 android:text="@string/name_holder"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
                 android:textSize="8sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -119,7 +118,7 @@
                 android:id="@+id/card_type_logo"
                 android:layout_width="0dp"
                 android:layout_height="9dp"
-                android:background="@drawable/card_visa"
+                android:background="@{card.designId.equals(`0`) ? @drawable/visa_gift : @drawable/card_visa}"
                 app:layout_constraintBottom_toBottomOf="@id/card_username"
                 app:layout_constraintDimensionRatio="108:36"
                 app:layout_constraintEnd_toEndOf="parent"

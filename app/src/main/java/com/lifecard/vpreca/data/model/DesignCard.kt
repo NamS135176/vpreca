@@ -9,6 +9,8 @@ import java.util.*
 data class DesignCard(
     @SerializedName("designId")
     val designId: String,
+    @SerializedName("isSelected")
+    var isSelected: String,
 ) : Parcelable {
     override fun hashCode(): Int {
         return super.hashCode()

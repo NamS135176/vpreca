@@ -109,6 +109,9 @@ dependencies {
     //vỉewpager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 
+    //indicator
+    implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"
+
     //hint dagger
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

@@ -362,7 +362,14 @@
     <string name="select_design_appbar_title">デザイン選択</string>
     <string name="issue_card_select_design_des">カードデザインを\n選択してください。</string>
     <string name="expire_holder">02/02</string>
+    <string name="issue_card_select_design_btn">発行</string>
     <!--    Issue Card Select Design-->
+
+    <!--    Issue Card Plus Complete-->
+    <string name="issue_card_plus_complete_appbar_title">残高合算完了</string>
+    <string name="issue_card_plus_complete_title">残高合算が完了しました</string>
+    <string name="issue_card_plus_complete_des">ホーム画面でカードが発行されていることを確認してください。\n\nなお、ご登録いただいいるメールアドレスに確認メールを送信いたしました。</string>
+    <!--    Issue Card Plus Complete-->
 
     <!--    Card Detail-->
     <string name="card_detail_btn_white">カード番号コピー</string>

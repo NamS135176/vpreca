@@ -15,7 +15,9 @@ import com.lifecard.vpreca.databinding.CardUsageHistoryItemBinding
 import com.lifecard.vpreca.databinding.VprecaCardItemBinding
 import com.lifecard.vpreca.ui.custom.OnItemClickListener
 
-class IssueCardSelectDesignAdapter(private var items: List<DesignCard>) :
+class IssueCardSelectDesignAdapter(
+    private var items: List<DesignCard>
+) :
     RecyclerView.Adapter<IssueCardSelectDesignAdapter.ViewHolder>() {
 
 
@@ -35,7 +37,7 @@ class IssueCardSelectDesignAdapter(private var items: List<DesignCard>) :
         return ViewHolder(binding, mListener)
     }
 
-    class ViewHolder(var binding: CardDesignItemBinding, listener : OnItemClickListener) :
+    class ViewHolder(var binding: CardDesignItemBinding, listener: OnItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.cardInfo.setOnClickListener { listener.onItemClick(adapterPosition) }
@@ -45,6 +47,26 @@ class IssueCardSelectDesignAdapter(private var items: List<DesignCard>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.card = items[position]
+        when (position) {
+            0 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_first)
+            1 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_second)
+            2 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_third)
+            3 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fourth)
+            4 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fifth)
+            5 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_six)
+            6 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_seven)
+        }
+        if (items[position].isSelected == "1") {
+            when (position) {
+                0 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_first_selected)
+                1 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_second_selected)
+                2 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_third_selected)
+                3 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fourth_selected)
+                4 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fifth_selected)
+                5 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_six_selected)
+                6 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_seven_selected)
+            }
+        }
     }
 
     override fun getItemCount() = items.size
