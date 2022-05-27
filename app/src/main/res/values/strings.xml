@@ -398,7 +398,12 @@
     <string name="rgx_error_datetime">正しい生年月日を入力してください</string>
     <string name='rgx_error_phone_number'>正しい電話番号を入力してください</string>
     <string name='rgx_error_gender'>正しい性別を入力してください</string>
-    <string name="btn_confirm">確認</string>
+    <string name="rgx_error_password">半角英数字8〜12文字で入力してください</string>
+    <string name="rgx_error_confirm_password">一致していません</string>
+
+
     <!--   End Regex error  -->
+
+    <string name="btn_confirm">確認</string>
 
 </resources>
