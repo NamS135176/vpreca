@@ -52,4 +52,12 @@ interface ApiService {
     suspend fun requestWebDirectOtp(
         @Header("Authorization") authorization: String
     ): OtpResponse
+
+    @FormUrlEncoded
+    @POST("MemberSelReq")
+    suspend fun getUser(
+        @Header("Authorization") authorization: String,
+        @Field("loginId") loginId: String,
+        @Field("memberNumber") memberNumber: String,
+    ): UserResponse
 }

@@ -1,6 +1,7 @@
 package com.lifecard.vpreca.utils
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.os.Build
 import android.text.Editable
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.LoadingDialogFragment
 import com.lifecard.vpreca.ui.custom.DrawerMenuLayout
@@ -166,6 +168,17 @@ fun Fragment.hideLoadingDialog() = try {
     fragment?.let {
         supportFragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss()
     }
+} catch (e: Exception) {
+    print(e)
+}
+
+fun Fragment.showAlertMessage(content: String) = try {
+    MaterialAlertDialogBuilder(requireContext()).apply {
+        setPositiveButton(
+            R.string.button_ok, null
+        )
+        setMessage(content)
+    }.create().show()
 } catch (e: Exception) {
     print(e)
 }

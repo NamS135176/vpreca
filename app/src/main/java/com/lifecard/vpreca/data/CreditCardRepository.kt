@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 
 class CreditCardRepository(
     private val apiService: ApiService,
-    private val userRepository: UserRepository
+    private val userManager: UserManager
 ) {
     // Mutex to make writes to cached values thread-safe.
     private val latestCardsMutex = Mutex()
@@ -21,7 +21,7 @@ class CreditCardRepository(
             if (refresh || latestCards.isEmpty()) {
                 try {
                     val response =
-                        apiService.getListCards(authorization = "Bear ${userRepository.accessToken!!}")
+                        apiService.getListCards(authorization = userManager.bearAccessToken!!)
                     latestCardsMutex.withLock { latestCards = response.data }
                     latestCardsMutex.withLock { Result.Success(latestCards) }
                 } catch (e: Exception) {

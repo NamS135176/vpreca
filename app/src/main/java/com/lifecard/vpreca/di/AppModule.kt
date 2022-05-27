@@ -3,6 +3,7 @@ package com.lifecard.vpreca.di
 import android.content.Context
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.RemoteRepository
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.api.ApiServiceFactory
@@ -31,15 +32,15 @@ class AppModule {
     @Singleton
     fun provideCreditCardRepository(
         apiService: ApiService,
-        userRepository: UserRepository
+        userManager: UserManager
     ): CreditCardRepository {
-        return CreditCardRepository(apiService, userRepository)
+        return CreditCardRepository(apiService, userManager)
     }
 
     @Provides
     @Singleton
-    fun provideUserRepository(secureStore: SecureStore, apiService: ApiService): UserRepository {
-        return UserRepository(secureStore, apiService)
+    fun provideUserRepository(apiService: ApiService, userManager: UserManager): UserRepository {
+        return UserRepository(apiService, userManager)
     }
 
     @Provides
@@ -52,9 +53,17 @@ class AppModule {
     @Singleton
     fun provideRemoteRepository(
         apiService: ApiService,
-        userRepository: UserRepository
+        userManager: UserManager
     ): RemoteRepository {
-        return RemoteRepository(apiService, userRepository)
+        return RemoteRepository(apiService, userManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserManager(
+        secureStore: SecureStore
+    ): UserManager {
+        return UserManager(secureStore)
     }
 
 }
