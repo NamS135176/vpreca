@@ -86,6 +86,9 @@ class HomeFragment : Fragment() {
         val buttonSeeAllCard = binding.buttonSeeAllCard
         val textBalance = binding.textBalance
         val btnIssueCard = binding.buttonAddNewCard
+        val btnBalance = binding.buttonCardNoBalance
+
+        btnBalance.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
 
         btnIssueCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
 

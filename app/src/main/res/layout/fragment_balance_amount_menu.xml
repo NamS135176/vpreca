@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/term_of_use"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        tools:context=".ui.termofuse.TermOfUseFragment">
+
+        <include
+            android:id="@+id/appbar_gift_third"
+            layout="@layout/toolbar_with_back_btn"
+            app:elevation="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{@string/balance_amount_menu_appbar_layout}" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_gift_third">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_issue_card_select"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="19dp">
+                <LinearLayout
+                    android:id="@+id/total_layout"
+                    app:layout_constraintTop_toTopOf="@+id/layout_issue_card_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="34dp"
+                    android:orientation="horizontal">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/white"
+                        android:layout_weight="3"
+                        android:textSize="12sp"
+                        android:lineSpacingExtra="8sp"
+                        android:paddingTop="12dp"
+                        android:text="@string/issue_card_select_source_total_title"/>
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tv_total_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:lineSpacingExtra="0sp"
+                        android:textColor="#ff837b"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:textSize="36sp"
+                        style="@style/Widget.AppCompat.TextView.Bold"
+                        android:text="@string/issue_card_select_source_total"/>
+                </LinearLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    app:layout_constraintTop_toBottomOf="@+id/total_layout"
+                    android:background="@drawable/underline_transapent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="0sp"
+                    android:id="@+id/underline"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:lineSpacingExtra="6sp"/>
+                <LinearLayout
+                    android:layout_marginTop="43dp"
+                    android:id="@+id/layout_tap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_introduce_checkbox"
+                    android:minHeight="140dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="26dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="44dp"
+                    android:paddingBottom="26dp"
+                    app:layout_constraintTop_toBottomOf="@+id/underline"
+                    android:paddingStart="26dp"
+                    android:paddingEnd="44dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingRight="55dp"
+                        android:paddingEnd="55dp"
+                        android:paddingLeft="0dp"
+                        android:paddingStart="0dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/Widget.AppCompat.TextView.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="4sp"
+                            android:text="@string/balance_amount_menu_title_first"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="4sp"
+                            android:text="@string/balance_amount_menu_des_second"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:contentDescription="@string/issue_card_plus_complete_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="4"
+                        android:minHeight="36dp"
+                        android:minWidth="50dp"
+                        android:src="@drawable/ic_balance_icon_first" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginTop="43dp"
+                    android:id="@+id/btn_tap"
+                    android:layout_width="match_parent"
+                    app:layout_constraintTop_toBottomOf="@+id/underline"
+                    android:layout_height="140dp"
+                    android:background="@android:color/transparent"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_single_card"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_introduce_checkbox"
+                    android:minHeight="140dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="26dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="44dp"
+                    android:paddingBottom="26dp"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_tap">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingRight="55dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/Widget.AppCompat.TextView.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="4sp"
+                            android:text="@string/balance_amount_menu_title_second"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="4sp"
+                            android:text="@string/balance_amount_menu_des_second"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:contentDescription="@string/issue_card_plus_complete_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="4"
+                        android:minHeight="65dp"
+                        android:src="@drawable/ic_tap"/>
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/button_credit_card"
+                    android:layout_width="match_parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_tap"
+                    android:layout_height="140dp"
+                    android:background="@android:color/transparent"/>
+                <LinearLayout
+
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_introduce_checkbox"
+                    android:minHeight="140dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="26dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="44dp"
+                    android:paddingBottom="26dp"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_single_card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingRight="55dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/Widget.AppCompat.TextView.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="4sp"
+                            android:text="@string/balance_amount_menu_title_third"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="4sp"
+                            android:text="@string/balance_amount_menu_des_third"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="4"
+                        android:minHeight="36dp"
+                        android:src="@drawable/ic_balance_icon_third" />
+                </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/button_new_card"
+                    android:layout_width="match_parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_single_card"
+                    android:layout_height="140dp"
+                    android:background="@android:color/transparent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

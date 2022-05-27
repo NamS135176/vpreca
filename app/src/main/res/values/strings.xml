@@ -371,6 +371,17 @@
     <string name="issue_card_plus_complete_des">ホーム画面でカードが発行されていることを確認してください。\n\nなお、ご登録いただいいるメールアドレスに確認メールを送信いたしました。</string>
     <!--    Issue Card Plus Complete-->
 
+    <!--    Balanced Amount Menu-->
+    <string name="balance_amount_menu_layout_title">不足残高合計</string>
+    <string name="balance_amount_menu_appbar_layout">残高不足解消</string>
+    <string name="balance_amount_menu_title_first">既存カードから充当する</string>
+    <string name="balance_amount_menu_des_first">すでにお持ちのカードを残高不足のカードに充当します。</string>
+    <string name="balance_amount_menu_title_second">コードを入力して充当する</string>
+    <string name="balance_amount_menu_des_second">発行コードやギフトキーを入力し残高不足のカードに充当します。</string>
+    <string name="balance_amount_menu_title_third">Vプリカを新規購入して充当する</string>
+    <string name="balance_amount_menu_des_third">新規カードを購入し、残高不足のカードに充当します。</string>
+    <!--    Balanced Amount Menu-->
+
     <!--    Card Detail-->
     <string name="card_detail_btn_white">カード番号コピー</string>
     <string name="pin_holder">000</string>
