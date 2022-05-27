@@ -3,52 +3,55 @@ package com.lifecard.vpreca.ui.changeinfo
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.databinding.BodDialogBinding
 import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
-import com.lifecard.vpreca.databinding.FragmentChangePassCompleteBinding
 import com.lifecard.vpreca.utils.hideToolbar
+import com.lifecard.vpreca.utils.showAlertMessage
 import com.lifecard.vpreca.utils.showToolbar
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class ChangeInfoDataFragment : Fragment() {
 
     companion object {
         fun newInstance() = ChangeInfoDataFragment()
     }
 
-    private lateinit var viewModel: ChangeInfoDataViewModel
+    private val viewModel: ChangeInfoDataViewModel by viewModels()
     private var _binding: FragmentChangeInfoDataBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(ChangeInfoDataViewModel::class.java)
-
         _binding = FragmentChangeInfoDataBinding.inflate(inflater, container, false)
         val btnBack = binding.appbarConfirmSignup.btnBack
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.nav_home)
+                }
+            })
         val btnOpenDialog = binding.btnSubmitPolicy
-        var cal = Calendar.getInstance()
+        val cal = Calendar.getInstance()
         btnOpenDialog.setOnClickListener(
             View.OnClickListener {
-                val view = View.inflate(requireContext(),R.layout.bod_dialog, null)
+                val view = View.inflate(requireContext(), R.layout.bod_dialog, null)
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setView(view)
                 val dialog = builder.create()
@@ -60,10 +63,10 @@ class ChangeInfoDataFragment : Fragment() {
                 val btnCancel = view.findViewById<MaterialButton>(R.id.btn_dialog_cancel)
                 val tvDob = view.findViewById<MaterialTextView>(R.id.dob_dialog)
                 val btnSubmit = view.findViewById<MaterialButton>(R.id.btn_dialog_submit)
-                fun doChangeText(text:String){
+                fun doChangeText(text: String) {
                     btnSubmit.isEnabled = text != "年/月/日"
                 }
-                tvDob.doAfterTextChanged { text -> doChangeText(text = text.toString())}
+                tvDob.doAfterTextChanged { text -> doChangeText(text = text.toString()) }
 
                 fun updateDateInView() {
                     val myFormat = "yyyy年MM月dd日" // mention the format you need
@@ -91,14 +94,25 @@ class ChangeInfoDataFragment : Fragment() {
                     ).show()
                 }
 
-                btnCancel.setOnClickListener(View.OnClickListener { dialog.dismiss()
+                btnCancel.setOnClickListener(View.OnClickListener {
+                    dialog.dismiss()
                 })
 
-                btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_info_input)
-                dialog.dismiss()})
+                btnSubmit.setOnClickListener(View.OnClickListener {
+                    findNavController().navigate(R.id.nav_change_info_input)
+                    dialog.dismiss()
+                })
 
             }
         )
+
+        viewModel.user.observe(viewLifecycleOwner, androidx.lifecycle.Observer { user ->
+            user?.let { binding.user = user }
+        })
+        viewModel.error.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { err -> err?.let { showAlertMessage(err) } })
+        viewModel.getUser()
         return binding.root
     }
 

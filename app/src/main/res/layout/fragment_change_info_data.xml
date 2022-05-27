@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+
+        <import type="com.lifecard.vpreca.utils.UserConverter" />
+
+        <variable
+            name="user"
+            type="com.lifecard.vpreca.data.model.User" />
+    </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -79,8 +88,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
+                            android:lines="1"
                             android:lineSpacingExtra="6sp"
-                            android:text="ライフ　太郎"
+                            android:text="@{user.memberName ?? ``}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -111,7 +121,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="ライフ　タロウ"
+                            android:text="@{user.memberKana ?? ``}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -142,7 +152,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="神奈川県"
+                            android:text="@{user.addressHouse ?? ``}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -171,7 +181,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="***-****-0000"
+                            android:text="@{UserConverter.hideUserPhoneNumber(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -201,7 +211,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="sa****@sample.jp"
+                            android:text="@{UserConverter.hideUserEmail1(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout
@@ -229,7 +239,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="sa*****@sample.jp"
+                            android:text="@{UserConverter.hideUserEmail2(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
                     <com.google.android.material.textview.MaterialTextView
@@ -266,7 +276,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="受け取る"
+                            android:text="@{UserConverter.receiveEmail1(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout
@@ -293,7 +303,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="受け取らない"
+                            android:text="@{UserConverter.receiveEmail2(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -331,7 +341,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="受け取る"
+                            android:text="@{UserConverter.receiveAdEmail1(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout
@@ -358,7 +368,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="受け取らない"
+                            android:text="@{UserConverter.receiveAdEmail2(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
 

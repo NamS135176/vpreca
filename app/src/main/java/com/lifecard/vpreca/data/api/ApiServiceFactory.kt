@@ -22,7 +22,7 @@ class ApiServiceFactory {
                 .build()
             val gson = GsonBuilder()
 //                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssSSS")
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                .setDateFormat("yyyyMMddHHmmss")
                 .create()
             val retrofit = Retrofit.Builder().run {
                 client(client)
