@@ -49,15 +49,16 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     userManager.bearAccessToken?.let { bearToken ->
                         val userResponse = apiService.getUser(
                             authorization = bearToken,
-                            loginId = loginId!!,
-                            memberNumber = memberNumber!!
+                            loginId = loginId,
+                            memberNumber = memberNumber
                         )
                         userManager.setLoggedInUser(userResponse.user)
                         Result.Success(userResponse.user)
                     } ?: kotlin.run { Result.Error(IOException("Error logging in")) }
                 }
             } catch (e: Exception) {
-                println("UserRepository... getUser has error ${e}")
+                println("UserRepository... getUser has error $e")
+                e.printStackTrace()
                 Result.Error(IOException("Can not get user", e))
             }
         }

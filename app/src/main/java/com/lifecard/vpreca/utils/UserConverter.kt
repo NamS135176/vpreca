@@ -5,35 +5,54 @@ import com.lifecard.vpreca.data.model.User
 object UserConverter {
     @JvmStatic
     fun hideUserPhoneNumber(user: User?): String {
-        return user?.telephoneNumber1 ?: ""
+        return user?.telephoneNumber1?.let { hidePhone(it) } ?: ""
     }
 
     @JvmStatic
     fun hideUserEmail1(user: User?): String {
-        return user?.mailAddress1 ?: ""
+        return user?.mailAddress1?.let { hideEmail(it) } ?: ""
     }
 
     @JvmStatic
     fun hideUserEmail2(user: User?): String {
-        return user?.mailAddress2 ?: ""
+        return user?.mailAddress2?.let { hideEmail(it) } ?: ""
     }
 
-    private fun hideEmail(email: String): String {
+    fun hidePhone(phone: String): String {
         try {
-            val splits = email.split("@")
+            val result =
+                phone.replace(Regex("[\\d](?=[\\d]{4})"), "*")
+            println("hidePhone... phone = $phone - result: $result")
+            return result
+        } catch (e: Exception) {
+            println(e.toString())
+        }
+        return phone
+    }
 
+    fun hideEmail(email: String): String {
+        try {
+            return email.replace(Regex("^(\\w{3})[\\w-]+@([\\w.]+\\w)"), "$1***@$2")
         } catch (e: Exception) {
             println(e.toString())
         }
         return email
     }
 
-    private fun getReceiveEmailStatus(flag: String?): String {
+    fun getReceiveEmailStatus(flag: String?): String {
         return if (flag == "1") {
             "受け取る"//receive
         } else {
             "受け取らない"//not receive
         }
+    }
+
+    fun formatPhone(phone: String): String {
+        try {
+            return phone.replace(Regex("(\\d{3})(\\d{3})(\\d+)"), "$1-$2-$3")
+        } catch (e: Exception) {
+        }
+        return phone
     }
 
     @JvmStatic
