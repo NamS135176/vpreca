@@ -54,6 +54,14 @@ class SecureStore(private val appContext: Context) {
         return getEncryptText(Constant.SECURE_USER_ID)
     }
 
+    fun saveMemberNumber(userId: String) {
+        return saveEncryptText(Constant.SECURE_MEMBER_NUMBER, userId)
+    }
+
+    fun getMemberNumber(): String? {
+        return getEncryptText(Constant.SECURE_MEMBER_NUMBER)
+    }
+
     fun clearDueLogout() {
         val useId = getLoginUserId()
         with(encryptedSharedPreferences.edit()) {

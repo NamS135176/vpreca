@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.utils.PreferenceHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FingerprintViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val remoteRepository: RemoteRepository
+    private val remoteRepository: RemoteRepository,
+    private val userManager: UserManager
 ) : ViewModel() {
 
     private val _fingerprintSetting = MutableLiveData<Boolean>()
@@ -45,7 +46,10 @@ class FingerprintViewModel @Inject constructor(
             BiometricManager.BIOMETRIC_SUCCESS -> return true
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 registerBiometricResult.value =
-                    BioSettingResult(error = R.string.error_fingerprint_not_enrolled, bioStatus = BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED)
+                    BioSettingResult(
+                        error = R.string.error_fingerprint_not_enrolled,
+                        bioStatus = BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
+                    )
                 return false
             }
             else -> {
@@ -62,7 +66,7 @@ class FingerprintViewModel @Inject constructor(
             loading.value = true
 //            registerBiometricResult.value = null
             val bioChallengeResult =
-                remoteRepository.registerBiometric(userRepository.user!!.id, publicKey)
+                remoteRepository.registerBiometric(userManager.user!!.loginId, publicKey)
             if (bioChallengeResult is Result.Success) {
                 registerBiometricResult.value = BioSettingResult(success = bioChallengeResult.data)
 

@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.BuildConfig
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.UserRepository
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.LayoutDrawerContentBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
-import com.lifecard.vpreca.ui.web_direct.WebDirectFragment
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
 import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.PreferenceHelper
@@ -35,7 +33,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayoutCompat(context, attrs, defStyleAttr) {
     @Inject
-    lateinit var userRepository: UserRepository
+    lateinit var userManager: UserManager
 
     @Inject
     lateinit var secureStore: SecureStore
@@ -238,7 +236,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
             String.format(resources.getString(R.string.menu_app_version), BuildConfig.VERSION_NAME)
         binding.navHeader.buttonCloseDrawer.setOnClickListener(OnClickListener { closeDrawer() })
         binding.buttonLogout.setOnClickListener(OnClickListener {
-            userRepository.clear()
+            userManager.clear()
             secureStore.clearDueLogout()
             PreferenceHelper.clearDueLogout(context)
             closeDrawer()

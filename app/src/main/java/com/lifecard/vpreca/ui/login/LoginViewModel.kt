@@ -53,16 +53,7 @@ class LoginViewModel @Inject constructor(
 
             if (loginResult is Result.Success) {
                 when (loginResult.data.action) {
-                    LoginAction.None.value -> {
-                        val userResult = loginRepository.getUser()
-                        if (userResult is Result.Success) {
-                            _loginResult.value =
-                                LoginResult(success = userResult.data)
-
-                        } else {
-                            _loginResult.value = LoginResult(error = R.string.login_failed)
-                        }
-                    }
+                    LoginAction.None.value -> _loginResult.value = LoginResult(success = loginResult.data.user)
                     LoginAction.SmsVerify.value -> _loginResult.value =
                         LoginResult(navigateSmsVerify = true)
                     LoginAction.UpdateAccount.value -> _loginResult.value =

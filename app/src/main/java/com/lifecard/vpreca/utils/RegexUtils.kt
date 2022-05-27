@@ -31,15 +31,21 @@ class RegexUtils {
          * 10 or 11 number
          * check the screen SC08_2
          */
-        const val RegexPhoneNumber = "/^\\d{10}\$/"
+        const val RegexPhoneNumber = "^\\d{10}\$|^\\d{11}\$"
 
-        const val RegexEmail = "^\\S+@\\S+\\.\\S+\$"
+        //        const val RegexEmail = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}\$"//from internet
+        const val RegexEmail = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,64}"//same with ios
 
         /**
          * only roman included special character  and between 8-12 character
          * check the screen SC09_1
          */
-        const val RegexPassword = "^[a-zA-Z0-9@#\$%^&+=;,.?]{8,12}\$"
+        const val RegexPassword = "^[a-zA-Z0-9@`!#\\\$%()*:+;\\[{,¥|\\-=\\]}.^~/?_]{8,12}\$"
+
+        /**
+         * any character with max 20
+         */
+        const val RegexSecretAnswer = "\\b\\w{1,20}\\b"
 
         fun isLoginIdValid(loginId: String?): Boolean {
             return loginId?.let { id ->
@@ -63,7 +69,7 @@ class RegexUtils {
 
         fun isEmailValid(email: String?): Boolean {
             return email?.let {
-                Pattern.compile(RegexEmail).matcher(email)
+                email.length in 0..256 && Pattern.compile(RegexEmail).matcher(email)
                     .matches()
             } ?: false
         }
@@ -71,6 +77,13 @@ class RegexUtils {
         fun isPasswordValid(password: String?): Boolean {
             return password?.let {
                 Pattern.compile(RegexPassword).matcher(password)
+                    .matches()
+            } ?: false
+        }
+
+        fun isSecretAnswerValid(answer: String?): Boolean {
+            return answer?.let {
+                Pattern.compile(RegexSecretAnswer).matcher(answer)
                     .matches()
             } ?: false
         }

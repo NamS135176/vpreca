@@ -11,14 +11,14 @@ import java.io.IOException
 
 class RemoteRepository(
     private val apiService: ApiService,
-    private val userRepository: UserRepository
+    private val userManager: UserManager
 ) {
 
     suspend fun getCardUsageHistory(): Result<List<CardUsageHistory>> {
         return withContext(Dispatchers.IO) {
             try {
                 val cardUsageHistoryResponse =
-                    apiService.getCardUsageHistory("Bear ${userRepository.accessToken!!}")
+                    apiService.getCardUsageHistory(userManager.bearAccessToken!!)
                 Result.Success(cardUsageHistoryResponse.items)
             } catch (e: Exception) {
                 println("RemoteRepository...getCardUsageHistory has error $e")
@@ -45,7 +45,7 @@ class RemoteRepository(
             try {
                 val bioChallenge =
                     apiService.registerBiometric(
-                        "Bear ${userRepository.accessToken!!}",
+                        userManager.bearAccessToken!!,
                         memberNumber = username,
                         bioKey = pemKey,
                         platform = "Android",
