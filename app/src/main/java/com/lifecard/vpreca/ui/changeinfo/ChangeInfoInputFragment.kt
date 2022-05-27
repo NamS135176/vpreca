@@ -48,59 +48,37 @@ class ChangeInfoInputFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ChangeInfoInputViewModel::class.java)
         _binding = FragmentChangeInfoInputBinding.inflate(inflater, container, false)
         var container = binding.constraintChangeInfo
-        container.setOnClickListener(View.OnClickListener {closeKeyBoard()  })
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_change_info_data)
-            }
-        })
+        container.setOnClickListener(View.OnClickListener { closeKeyBoard() })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.nav_change_info_data)
+                }
+            })
 
-        val spinnerGender = binding.spinnerGender
+
         val spinnerCity = binding.spinnerCity
         val spinnerSecret = binding.spinnerSecret
         val btnCancel = binding.appbarSignup.cancelBtn
-        val btnDatePicker = binding.dobInputLayout
         val idLayout = binding.idInputLayout
         val usernameLayout = binding.usernameInputLayout
         val idEdt = binding.idInput
         val nicknameEdt = binding.idNickname
         val btnSubmit = binding.btnSubmitPolicy
-        val phoneEdt = binding.idPhone
-        val phoneLayout = binding.phoneInputLayout
         val answerLayout = binding.secretAnswerInputLayout
         val answerEdt = binding.idSecret
         val btnBack = binding.appbarSignup.btnBack
+        val email1Layout = binding.changeInfoEmail1Layout
+        val email1Edt = binding.email1Input
+        val email1ConfirmLayout = binding.changeInfoEmail1ConfirmLayout
+        val email1ConfirmEdt = binding.email1ConfirmInput
+        val email2Layout = binding.changeInfoEmail2Layout
+        val email2Edt = binding.email2Input
+        val email2ConfirmLayout = binding.changeInfoEmail2ConfirmLayout
+        val email2ConfirmEdt = binding.email2ConfirmInput
 
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_info_data) })
-
-        val cal = Calendar.getInstance()
-
-        fun updateDateInView() {
-            val myFormat = "yyyy年MM月dd日" // mention the format you need
-            val sdf = SimpleDateFormat(myFormat, Locale.US)
-            btnDatePicker!!.text = sdf.format(cal.getTime())
-        }
-
-        val dateSetListener =
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                updateDateInView()
-            }
-
-        btnDatePicker.setOnClickListener {
-            Locale.setDefault(Locale.JAPAN)
-            DatePickerDialog(
-                requireContext(),
-                dateSetListener,
-                // set DatePickerDialog to point to today's date when it loads up
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
-        }
-
 
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
@@ -122,11 +100,11 @@ class ChangeInfoInputFragment : Fragment() {
             "Male",
             "Female",
         )
-        val adapter: ArrayAdapter<String> = object: ArrayAdapter<String>(
+        val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(
             requireContext(),
             android.R.layout.simple_spinner_item,
             list
-        ){
+        ) {
             override fun getDropDownView(
                 position: Int,
                 convertView: View?,
@@ -138,13 +116,13 @@ class ChangeInfoInputFragment : Fragment() {
                     parent
                 ) as TextView
                 // set selected item style
-                if (position == spinnerGender.selectedItemPosition && position !=0 ){
+                if (position == spinnerCity.selectedItemPosition && position != 0) {
                     view.background = ColorDrawable(Color.parseColor("#F7E7CE"))
                     view.setTextColor(Color.parseColor("#333399"))
                 }
 
                 // make hint item color gray
-                if(position == 0){
+                if (position == 0) {
                     view.setTextColor(Color.LTGRAY)
                 }
 
@@ -156,37 +134,28 @@ class ChangeInfoInputFragment : Fragment() {
             }
         }
 
-        val afterTextChangedListener = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
-            }
 
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
-            }
 
-            override fun afterTextChanged(s: Editable) {
-                viewModel.dateDataChanged(text = s.toString())
-            }
-        }
+        viewModel.validForm.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { signupFormState ->
+                if (idEdt.text.toString() == "" || nicknameEdt.text.toString() == "" || email1Edt.text.toString() == "" || email2Edt.text.toString() == "" || email2ConfirmEdt.text.toString() == "" || email1ConfirmEdt.text.toString() == "" || spinnerCity.selectedItem.toString() == "選択してください" || answerEdt.text.toString() == "" || spinnerSecret.selectedItem.toString() == "選択してください") {
+                    btnSubmit.isEnabled = false
+                } else {
+                    btnSubmit.isEnabled =
+                        signupFormState.nicknameError == null && signupFormState.idError == null && signupFormState.email1Error == null && signupFormState.email2Error == null && signupFormState.email1ConfirmError == null && signupFormState.email2ConfirmError == null && signupFormState.cityError == null && signupFormState.questionError == null && signupFormState.answerError == null
+                }
+            })
 
-        viewModel.validForm.observe(viewLifecycleOwner, androidx.lifecycle.Observer { signupFormState ->
-            if(idEdt.text.toString() == "" || nicknameEdt.text.toString() == "" || spinnerGender.selectedItem.toString() == "選択してください" || btnDatePicker.text.toString() == "1980年1月1日" || spinnerCity.selectedItem.toString() == "選択してください" || phoneEdt.text.toString() == "" ||answerEdt.text.toString() == "" || spinnerSecret.selectedItem.toString() == "選択してください"){
-                btnSubmit.isEnabled = false
-            }
-            else{
-                btnSubmit.isEnabled =
-                    signupFormState.nicknameError == null && signupFormState.idError == null && signupFormState.genderError == null && signupFormState.dateError == null && signupFormState.cityError == null && signupFormState.phoneError == null && signupFormState.questionError == null && signupFormState.answerError == null
-            }
-        })
-
-        viewModel.nicknameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer {  error: Int? ->
-            usernameLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        })
+        viewModel.nicknameError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                usernameLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
         viewModel.idError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
             idLayout.error = try {
                 error?.let { getString(error) }
@@ -194,39 +163,57 @@ class ChangeInfoInputFragment : Fragment() {
                 null
             }
         })
-        viewModel.phoneError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
-            phoneLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        })
+        viewModel.email1Error.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                email1Layout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
+        viewModel.email2Error.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                email2Layout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
+        viewModel.email1ConfirmError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                email1ConfirmLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
+        viewModel.email2ConfirmError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                email2ConfirmLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
+        viewModel.answerError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                answerLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
 
-        viewModel.answerError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
-            answerLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        })
 
-        btnDatePicker.addTextChangedListener(afterTextChangedListener)
-        spinnerGender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                viewModel.genderDataChanged(text = list.get(position))
-            }
-
-        }
         spinnerCity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
+
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -240,6 +227,7 @@ class ChangeInfoInputFragment : Fragment() {
         spinnerSecret?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
+
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -254,14 +242,21 @@ class ChangeInfoInputFragment : Fragment() {
 
         nicknameEdt.doAfterTextChanged { text -> viewModel.nicknameDataChanged(text = text.toString()) }
         answerEdt.doAfterTextChanged { text -> viewModel.answerDataChanged(text = text.toString()) }
-        phoneEdt.doAfterTextChanged { text -> viewModel.phoneDataChanged(text = text.toString()) }
-        phoneEdt.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-            }
-            false
+        email1Edt.doAfterTextChanged { text -> viewModel.email1DataChanged(text = text.toString()) }
+        email2Edt.doAfterTextChanged { text -> viewModel.email2DataChanged(text = text.toString()) }
+        email1ConfirmEdt.doAfterTextChanged { text ->
+            viewModel.email1ConfirmDataChanged(
+                text = text.toString(),
+                email1Edt.text.toString()
+            )
+        }
+        email2ConfirmEdt.doAfterTextChanged { text ->
+            viewModel.email2ConfirmDataChanged(
+                text = text.toString(),
+                email2Edt.text.toString()
+            )
         }
 
-        spinnerGender.adapter = adapter
         spinnerCity.adapter = adapter
         spinnerSecret.adapter = adapter
 
@@ -278,7 +273,8 @@ class ChangeInfoInputFragment : Fragment() {
     private fun closeKeyBoard() {
         val view = requireActivity().currentFocus
         if (view != null) {
-            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }

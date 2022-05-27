@@ -238,59 +238,8 @@
                     </LinearLayout>
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/signup_gender_title"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:lineSpacingExtra="6sp"
-
-                    android:text="@string/gender_signup_title"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-
-                <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
-                    android:id="@+id/gender_input_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/signup_gender_title">
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/spinner_gender"
-                        android:layout_width="match_parent"
-                        android:layout_height="54dp"
-
-                        android:layout_marginTop="9dp"
-                        android:paddingHorizontal="16dp" />
-                </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
 
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/signup_dob_title"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:lineSpacingExtra="6sp"
-
-                    android:text="@string/dob_signup_title"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/dob_input_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp"
-
-                    android:layout_marginTop="9dp"
-                    android:background="@drawable/input_signup_style"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="21dp"
-                    android:text="@string/hint_dob"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_city_title"
@@ -309,40 +258,134 @@
                     android:layout_height="54dp"
                     android:layout_marginTop="9dp"
                     android:paddingHorizontal="16dp" />
-
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/signup_phone_title"
+                    android:id="@+id/change_info_email_1_title"
                     style="@style/Widget.AppCompat.TextView.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
                     android:lineSpacingExtra="6sp"
-                    android:text="@string/phone_signup_title"
+                    android:text="@string/forgot_pass_email_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
                 <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
-                    android:id="@+id/phone_input_layout"
+                    android:id="@+id/change_info_email_1_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="9dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/idPhone"
+                        android:id="@+id/email_1_input"
                         style="@style/TextInputEditTextFilledBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_signup_style"
-                        android:hint="@string/hint_phone"
+                        android:hint="@string/forgot_pass_email_hint"
                         android:imeOptions="actionNext"
-                        android:inputType="phone"
+                        android:inputType="text"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/change_info_email_1_confirm_title"
+                    style="@style/Widget.AppCompat.TextView.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:lineSpacingExtra="6sp"
+                    android:text="@string/change_info_email_1_confirm_title"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
+                <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
+                    android:id="@+id/change_info_email_1_confirm_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email_1_confirm_input"
+                        style="@style/TextInputEditTextFilledBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_signup_style"
+                        android:hint="@string/change_info_email_1_confirm_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingHorizontal="17dp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/change_info_email_2_title"
+                    style="@style/Widget.AppCompat.TextView.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:lineSpacingExtra="6sp"
+                    android:text="@string/change_info_email_2_title"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
+                    android:id="@+id/change_info_email_2_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email_2_input"
+                        style="@style/TextInputEditTextFilledBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_signup_style"
+                        android:hint="@string/forgot_pass_email_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingHorizontal="17dp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/change_info_email_2_confirm_title"
+                    style="@style/Widget.AppCompat.TextView.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:lineSpacingExtra="6sp"
+                    android:text="@string/change_info_email_2_confirm_title"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
+                    android:id="@+id/change_info_email_2_confirm_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email_2_confirm_input"
+                        style="@style/TextInputEditTextFilledBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_signup_style"
+                        android:hint="@string/change_info_email_1_confirm_hint"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:paddingHorizontal="17dp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_secret_title"
                     style="@style/Widget.AppCompat.TextView.Bold"

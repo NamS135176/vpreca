@@ -295,6 +295,10 @@
     <string name="change_info_data_setting_title">各種通知サービスの設定</string>
     <string name="change_info_data_btn">会員情報変更</string>
     <string name="change_info_data_magazine">メールマガジン</string>
+    <string name="change_info_email_1_confirm_title">メールアドレス1 - 確認用</string>
+    <string name="change_info_email_1_confirm_hint">半角256文字以内（確認用）</string>
+    <string name="change_info_email_2_title">メールアドレス2（任意）</string>
+    <string name="change_info_email_2_confirm_title">メールアドレス2 - 確認用</string>
 
     <!--    Change info data-->
     <string name="change_info_input_appbar_title">会員情報変更</string>

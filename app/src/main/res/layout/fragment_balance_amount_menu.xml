@@ -44,7 +44,7 @@
                         android:textSize="12sp"
                         android:lineSpacingExtra="8sp"
                         android:paddingTop="12dp"
-                        android:text="@string/issue_card_select_source_total_title"/>
+                        android:text="@string/balance_amount_menu_layout_title"/>
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tv_total_amount"
                         android:layout_width="match_parent"
