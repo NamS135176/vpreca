@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
+import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
+import com.lifecard.vpreca.utils.WebDirectScreen
 
 
 class BalanceAmountMenuFragment : Fragment() {
@@ -27,6 +29,15 @@ class BalanceAmountMenuFragment : Fragment() {
         _binding = FragmentBalanceAmountMenuBinding.inflate(inflater, container, false)
 
         val btnBack = binding.appbarGiftThird.btnBack
+        val btnToWeb = binding.buttonToWeb
+
+        btnToWeb.setOnClickListener(View.OnClickListener {
+            findNavController().navigate(
+                R.id.nav_web_direct,
+                WebDirectFragmentArgs(screenId = WebDirectScreen.SCREEN_BALANCE_AMOUNT).toBundle()
+            )
+        })
+
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {

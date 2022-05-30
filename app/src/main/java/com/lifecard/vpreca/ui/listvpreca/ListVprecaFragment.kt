@@ -42,7 +42,6 @@ class ListVprecaFragment : Fragment() {
         val tvTotalAmount = binding.tvTotalAmount
         val listVpreca = binding.listVprecaCard
         val loading = binding.loading
-
         listVprecaViewModel.creditCardResult.observe(
             viewLifecycleOwner,
             Observer { creditCardResult ->
