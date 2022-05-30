@@ -92,23 +92,9 @@ data class CreditCard(
     @SerializedName("vcnExpirationDate")
     val vcnExpirationDate: String,
     @SerializedName("vcnSecurityLockFlg")
-    val vcnSecurityLockFlg: String,
+    val vcnSecurityLockFlg: String?,
 ) : Parcelable {
     override fun hashCode(): Int {
         return super.hashCode()
     }
-}
-
-fun CreditCard.isLock(): Boolean {
-    return vcnSecurityLockFlg == "1"
-}
-
-fun CreditCard.copyCardLockInverse(): CreditCard {
-    val newLockStatus = when (this.isLock()) {
-        true -> "0"//not lock
-        else -> "1"//lock
-    }
-    return this.copy(
-        vcnSecurityLockFlg = newLockStatus
-    )
 }

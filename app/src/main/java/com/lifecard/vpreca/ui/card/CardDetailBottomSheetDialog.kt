@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -17,6 +16,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragmentDirections
+import com.lifecard.vpreca.utils.isCardLock
 import showCustomToast
 
 class CardDetailBottomSheetDialog(
@@ -25,6 +25,8 @@ class CardDetailBottomSheetDialog(
 ) : BottomSheetDialog(activity) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        creditCard.isCardLock()
 
         val inflater = LayoutInflater.from(context)
         val bindingDialog =

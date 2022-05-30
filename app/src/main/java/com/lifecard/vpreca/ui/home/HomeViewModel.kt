@@ -10,9 +10,9 @@ import kotlinx.coroutines.launch
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.copyCardLockInverse
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
+import com.lifecard.vpreca.utils.copyCardLockInverse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.lang.Exception
 import javax.inject.Inject
