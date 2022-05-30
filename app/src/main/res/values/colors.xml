@@ -8,6 +8,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#007aff</color>
     <color name="disable_text_color">#7FBCFF</color>
+    <color name="colorOnSurface">#7FBCFF</color>
     <color name="peacock_blue">#0057b5</color>
     <color name="very_light_pink">#d9d9d9</color>
     <color name="brown_grey">#9c9c9c</color>

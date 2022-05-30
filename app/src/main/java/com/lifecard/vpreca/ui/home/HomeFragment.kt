@@ -19,12 +19,14 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.data.model.copyCardLockInverse
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.ui.card.CardDetailBottomSheetDialog
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 
@@ -38,10 +40,12 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private var latestPage = 0
 
     private val pageChangeCallback = object : SimpleOnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
+            latestPage = position
             val buttonSlideLeft = binding.listCard.buttonSlideLeft
             val buttonSlideRight = binding.listCard.buttonSlideRight
             val buttonLock = binding.listCard.buttonLock
@@ -67,6 +71,9 @@ class HomeFragment : Fragment() {
                 binding.listCard.currentCard = currentCreditCard
                 buttonInfo.setOnClickListener(View.OnClickListener {
                     CardDetailBottomSheetDialog(requireActivity(), currentCreditCard).show()
+                })
+                buttonLock.setOnClickListener(View.OnClickListener {
+                    homeViewModel.inverseLockStatus(currentCreditCard, position)
                 })
             }
         }
@@ -140,8 +147,14 @@ class HomeFragment : Fragment() {
                         textNoCard.visibility = View.GONE
                         cardContainer.root.visibility = View.VISIBLE
                         pagerAdapter =
-                            CardSlidePagerAdapter(requireActivity(), creditCardResult.success)
+                            CardSlidePagerAdapter(
+                                requireActivity(),
+                                ArrayList(creditCardResult.success)
+                            )
                         viewPager.adapter = pagerAdapter
+                        if (latestPage > 0 && latestPage < pagerAdapter!!.itemCount) {
+                            viewPager.setCurrentItem(latestPage, false)
+                        }
 
                         viewPager.registerOnPageChangeCallback(pageChangeCallback)
 
@@ -208,7 +221,7 @@ class HomeFragment : Fragment() {
 
     private inner class CardSlidePagerAdapter(
         fa: FragmentActivity,
-        val listCard: List<CreditCard>
+        val listCard: MutableList<CreditCard>
     ) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = listCard.size
 
@@ -216,6 +229,15 @@ class HomeFragment : Fragment() {
 
         fun getItem(position: Int): CreditCard {
             return listCard[position]
+        }
+
+        fun updateCardAtIndex(card: CreditCard, index: Int) {
+            try {
+                listCard[index] = card
+                notifyItemChanged(index)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }

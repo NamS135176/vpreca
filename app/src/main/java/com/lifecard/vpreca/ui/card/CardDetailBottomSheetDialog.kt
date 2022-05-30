@@ -26,7 +26,7 @@ class CardDetailBottomSheetDialog(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(context)
         val bindingDialog =
             CardDetailLayoutBinding.inflate(inflater, null, false)
         setContentView(bindingDialog.root)
@@ -56,14 +56,11 @@ class CardDetailBottomSheetDialog(
         })
 
         btnLock.setOnClickListener(View.OnClickListener {
-            var newCard: CreditCard
+            val newCard: CreditCard
             if (currentLock == "1") {
                 currentLock = "0"
                 newCard = creditCard.copy(
-                    vcnSecurityLockFlg = "0",
-                    cardImageFile = "",
-                    cardUnusableDate = "",
-                    thumbnailCardImageFile = ""
+                    vcnSecurityLockFlg = "0"
                 )
                 Toast(context).showCustomToast(
                     "ロックを解除しました",
@@ -72,10 +69,7 @@ class CardDetailBottomSheetDialog(
             } else {
                 currentLock = "1"
                 newCard = creditCard.copy(
-                    vcnSecurityLockFlg = "1",
-                    cardImageFile = "",
-                    cardUnusableDate = "",
-                    thumbnailCardImageFile = ""
+                    vcnSecurityLockFlg = "1"
                 )
                 Toast(context).showCustomToast(
                     "ロックしました",

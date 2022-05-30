@@ -9,9 +9,12 @@ import com.lifecard.vpreca.data.CreditCardRepository
 import kotlinx.coroutines.launch
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
+import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.data.model.copyCardLockInverse
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,6 +38,22 @@ class HomeViewModel @Inject constructor(
                     else -> _creditCardResult.value =
                         CreditCardResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
+            }
+        }
+    }
+
+    fun inverseLockStatus(creditCard: CreditCard, position: Int) {
+        viewModelScope.launch {
+            //need implement later
+            try {
+                val result = _creditCardResult.value
+                result?.success?.let {
+                    val newList = ArrayList(it)
+                    newList[position] = creditCard.copyCardLockInverse()
+                    _creditCardResult.value = CreditCardResult(success = newList)
+                }
+            } catch (e: Exception) {
+
             }
         }
     }

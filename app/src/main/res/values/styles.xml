@@ -135,7 +135,8 @@
         <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:windowIsFloating">false</item>
-        </style>
+    </style>
+
     <style name="ThemeOverlay.MaterialComponents.MaterialAlertDialog.ProgressBar" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="background">@color/black</item>
         <item name="android:background">@color/black</item>

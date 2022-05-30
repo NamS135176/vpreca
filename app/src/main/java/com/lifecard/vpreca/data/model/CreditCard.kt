@@ -26,19 +26,19 @@ data class CreditCard(
     @SerializedName("cardNickname")
     val cardNickname: String,
     @SerializedName("cardImageFile")
-    val cardImageFile: String,
+    val cardImageFile: String?,
     @SerializedName("cardPublishDate")
     val cardPublishDate: String,
     @SerializedName("cardPublishFlg")
     val cardPublishFlg: String,
     @SerializedName("cardRegistDate")
-    val cardRegistDate: String,
+    val cardRegistDate: String?,
     @SerializedName("cardSchemeId")
     val cardSchemeId: String,
     @SerializedName("cardStatus")
     val cardStatus: String,
     @SerializedName("cardUnusableDate")
-    val cardUnusableDate: String,
+    val cardUnusableDate: String?,
     @SerializedName("cardUseStopFlg")
     val cardUseStopFlg: String,
     @SerializedName("chargeBalance")
@@ -46,11 +46,11 @@ data class CreditCard(
     @SerializedName("chargeLimit")
     val chargeLimit: String,
     @SerializedName("confirmationNumber")
-    val confirmationNumber: String,
+    val confirmationNumber: String?,
     @SerializedName("cooperatorNumber")
-    val cooperatorNumber: String,
+    val cooperatorNumber: String?,
     @SerializedName("cooperatorNumberId")
-    val cooperatorNumberId: String,
+    val cooperatorNumberId: String?,
     @SerializedName("creditBrandId")
     val creditBrandId: String,
     @SerializedName("designId")
@@ -60,13 +60,13 @@ data class CreditCard(
     @SerializedName("initialPurchaseAmount")
     val initialPurchaseAmount: String,
     @SerializedName("lastUseDate")
-    val lastUseDate: String,
+    val lastUseDate: String?,
     @SerializedName("memberRepublishCnt")
     val memberRepublishCnt: String,
     @SerializedName("memberRepublishDate")
     val memberRepublishDate: String,
     @SerializedName("onlinePinRegFlg")
-    val onlinePinRegFlg: String,
+    val onlinePinRegFlg: String?,
     @SerializedName("precaExpirationDate")
     val precaExpirationDate: Date,
     @SerializedName("precaNumber")
@@ -82,7 +82,7 @@ data class CreditCard(
     @SerializedName("rechargedActFlg")
     val rechargedActFlg: String,
     @SerializedName("thumbnailCardImageFile")
-    val thumbnailCardImageFile: String,
+    val thumbnailCardImageFile: String?,
     @SerializedName("useLimit")
     val useLimit: String,
     @SerializedName("vcn")
@@ -97,4 +97,18 @@ data class CreditCard(
     override fun hashCode(): Int {
         return super.hashCode()
     }
+}
+
+fun CreditCard.isLock(): Boolean {
+    return vcnSecurityLockFlg == "1"
+}
+
+fun CreditCard.copyCardLockInverse(): CreditCard {
+    val newLockStatus = when (this.isLock()) {
+        true -> "0"//not lock
+        else -> "1"//lock
+    }
+    return this.copy(
+        vcnSecurityLockFlg = newLockStatus
+    )
 }
