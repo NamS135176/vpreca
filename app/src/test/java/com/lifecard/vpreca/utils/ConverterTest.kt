@@ -16,6 +16,7 @@ class ConverterTest {
 
         Assert.assertEquals("2022月5日", Converter.convertDateTimeMonth(date1))
         Assert.assertEquals("2022月12日", Converter.convertDateTimeMonth(date2))
+        Assert.assertEquals("", Converter.convertDateTimeMonth(null))
     }
 
     @Test

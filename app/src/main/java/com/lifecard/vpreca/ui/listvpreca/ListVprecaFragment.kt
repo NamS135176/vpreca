@@ -1,37 +1,23 @@
 package com.lifecard.vpreca.ui.listvpreca
 
-import android.R
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
-import android.graphics.ColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.VprecaCard
-import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.databinding.FragmentListVprecaBinding
-import com.lifecard.vpreca.ui.home.HomeViewModel
+import com.lifecard.vpreca.ui.card.CardDetailBottomSheetDialog
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.hideToolbar
 import com.lifecard.vpreca.utils.showToolbar
 import dagger.hilt.android.AndroidEntryPoint
-import showCustomToast
 
 @AndroidEntryPoint
 class ListVprecaFragment : Fragment() {
@@ -40,7 +26,6 @@ class ListVprecaFragment : Fragment() {
         fun newInstance() = ListVprecaFragment()
     }
 
-    //    private val viewModel: HomeViewModel by viewModels()
     private val listVprecaViewModel: ListVprecaViewModel by viewModels()
     private var _binding: FragmentListVprecaBinding? = null
     private val binding get() = _binding!!
@@ -81,95 +66,10 @@ class ListVprecaFragment : Fragment() {
                             adapter.setOnClickListener(object :
                                 ListVprecaAdapter.OnItemClickListener {
                                 override fun onItemClick(position: Int) {
-                                    // on below line we are creating a new bottom sheet dialog.
-                                    val dialog = BottomSheetDialog(requireContext())
-
-                                    val bindingDialog =
-                                        CardDetailLayoutBinding.inflate(inflater, container, false)
-                                    dialog.setContentView(bindingDialog.root)
-                                    dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                                    bindingDialog.card = arrPolicy[position]
-                                    val card = bindingDialog.cardZone
-                                    val btnBack = bindingDialog.btnBack
-                                    val btnCopy = bindingDialog.buttonCopy
-                                    val btnUsage = bindingDialog.buttonUsage
-                                    val btnLock = bindingDialog.buttonLock
-                                    val btnRefresh = bindingDialog.buttonReload
-                                    var currentLock = arrPolicy[position].vcnSecurityLockFlg
-
-                                    btnRefresh.setOnClickListener(View.OnClickListener {
-                                        MaterialAlertDialogBuilder(requireContext()).apply {
-                                            setPositiveButton("はい") { dialog, which ->
-                                                card.card = arrPolicy[position]
-                                                bindingDialog.card = arrPolicy[position]
-                                                Toast(context).showCustomToast(
-                                                    "再発行しました",
-                                                    requireActivity()
-                                                )
-                                            }
-                                            setNegativeButton("いいえ", null)
-                                            setMessage("カードを再発行しますよろしいですか？")
-                                        }.create().show()
-                                    })
-
-                                    btnLock.setOnClickListener(View.OnClickListener {
-                                        var newCard:CreditCard
-                                        if(currentLock == "1"){
-                                            currentLock = "0"
-                                            newCard = arrPolicy[position].copy(vcnSecurityLockFlg = "0", cardImageFile = "", cardUnusableDate = "", thumbnailCardImageFile = "")
-                                            Toast(context).showCustomToast(
-                                                "ロックを解除しました",
-                                                requireActivity()
-                                            )
-                                        }
-                                        else{
-                                            currentLock = "1"
-                                            newCard = arrPolicy[position].copy(vcnSecurityLockFlg = "1", cardImageFile = "", cardUnusableDate = "", thumbnailCardImageFile = "")
-                                            Toast(context).showCustomToast(
-                                                "ロックしました",
-                                                requireActivity()
-                                            )
-                                        }
-                                        card.card = newCard
-                                        bindingDialog.card = newCard
-
-                                    })
-
-                                    btnUsage.setOnClickListener(View.OnClickListener {
-                                        dialog.dismiss()
-                                        val action =
-                                            ListVprecaFragmentDirections.actionToCardUsage(
-                                                arrPolicy[position]
-                                            )
-                                        findNavController().navigate(action)
-                                    })
-
-                                    btnCopy.setOnClickListener(View.OnClickListener {
-                                        if(currentLock == "1"){
-                                            MaterialAlertDialogBuilder(requireContext()).apply {
-                                                setMessage("ロックを解除してから\n" + "コピーしてください")
-                                                setNegativeButton("ok", null)
-                                            }.create().show()
-                                        }
-                                        else{
-                                            val clipboardManager =
-                                                context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                                            val clipData = ClipData.newPlainText(
-                                                "text",
-                                                arrPolicy[position].precaNumber
-                                            )
-                                            clipboardManager.setPrimaryClip(clipData)
-                                            Toast(context).showCustomToast(
-                                                "コピーしました！",
-                                                requireActivity()
-                                            )
-                                        }
-                                    })
-
-                                    btnBack.setOnClickListener(View.OnClickListener { dialog.dismiss() })
-                                    card.card = arrPolicy[position]
-//                                    dialog.setCancelable(false)
-                                    dialog.show()
+                                    CardDetailBottomSheetDialog(
+                                        requireActivity(),
+                                        arrPolicy[position]
+                                    ).show()
                                 }
 
                             })

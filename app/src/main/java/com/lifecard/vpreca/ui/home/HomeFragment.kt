@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
+import com.lifecard.vpreca.ui.card.CardDetailBottomSheetDialog
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -44,6 +45,7 @@ class HomeFragment : Fragment() {
             val buttonSlideLeft = binding.listCard.buttonSlideLeft
             val buttonSlideRight = binding.listCard.buttonSlideRight
             val buttonLock = binding.listCard.buttonLock
+            val buttonInfo = binding.listCard.buttonInfo
 
             binding.listCard.cardList.adapter?.let {
                 val adapter = it as CardSlidePagerAdapter
@@ -63,6 +65,9 @@ class HomeFragment : Fragment() {
                 }
                 val currentCreditCard = adapter.getItem(position)
                 binding.listCard.currentCard = currentCreditCard
+                buttonInfo.setOnClickListener(View.OnClickListener {
+                    CardDetailBottomSheetDialog(requireActivity(), currentCreditCard).show()
+                })
             }
         }
     }

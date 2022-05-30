@@ -10,27 +10,34 @@ import java.util.*
 
 object Converter {
     @JvmStatic
-    fun convertDateTimeMonth(date: Date): String {
-        val localDate = LocalDate.fromDateFields(date)
+    fun convertDateTimeMonth(date: Date?): String {
+        return date?.let {
+            val localDate = LocalDate.fromDateFields(date)
 
-        val fmt: DateTimeFormatter = DateTimeFormat.forPattern("yyyy月M日")
-        return localDate.toString(fmt)
+            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("yyyy月M日")
+            localDate.toString(fmt)
+        } ?: ""
     }
 
     @JvmStatic
-    fun convertCardValidThu(date: Date): String {
-        val localDate = LocalDate.fromDateFields(date)
+    fun convertCardValidThu(date: Date?): String {
+        return date?.let {
+            val localDate = LocalDate.fromDateFields(date)
 
-        val fmt: DateTimeFormatter = DateTimeFormat.forPattern("yyyy月M日")
-        return localDate.toString(fmt)
+            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("yyyy月M日")
+            localDate.toString(fmt)
+        } ?: ""
     }
 
     @JvmStatic
-    fun convertCardValidShort(date: Date): String {
-        val localDate = LocalDate.fromDateFields(date)
+    fun convertCardValidShort(date: Date?): String {
+        return date?.let {
+            val localDate = LocalDate.fromDateFields(date)
 
-        val fmt: DateTimeFormatter = DateTimeFormat.forPattern("MM/dd")
-        return localDate.toString(fmt)
+            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("MM/dd")
+            localDate.toString(fmt)
+        } ?: ""
+
     }
 
     @JvmStatic
@@ -47,10 +54,9 @@ object Converter {
     @JvmStatic
     fun convertLongText(text: String): String {
         var cvText = ""
-        if(text.length >10){
-            cvText = text.substring(0,9) + "..."
-        }
-        else{
+        if (text.length > 10) {
+            cvText = text.substring(0, 9) + "..."
+        } else {
             cvText = text
         }
         return cvText
