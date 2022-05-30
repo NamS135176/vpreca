@@ -41,7 +41,7 @@ fun Toast.showCustomToast(
         println("showCustomToast...  - yOffset = $yOffset")
         this.apply {
             setGravity(Gravity.FILL_HORIZONTAL or Gravity.BOTTOM, 0, yOffset)
-            duration = Toast.LENGTH_LONG
+            duration = Toast.LENGTH_SHORT
             view = layout
             show()
         }

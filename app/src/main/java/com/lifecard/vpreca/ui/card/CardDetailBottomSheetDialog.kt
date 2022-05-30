@@ -16,6 +16,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragmentDirections
+import com.lifecard.vpreca.utils.copyCardLockInverse
 import com.lifecard.vpreca.utils.isCardLock
 import showCustomToast
 
@@ -40,7 +41,6 @@ class CardDetailBottomSheetDialog(
         val btnUsage = bindingDialog.buttonUsage
         val btnLock = bindingDialog.buttonLock
         val btnRefresh = bindingDialog.buttonReload
-        var currentLock = creditCard.vcnSecurityLockFlg
 
         btnRefresh.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(context).apply {
@@ -58,26 +58,15 @@ class CardDetailBottomSheetDialog(
         })
 
         btnLock.setOnClickListener(View.OnClickListener {
-            val newCard: CreditCard
-            if (currentLock == "1") {
-                currentLock = "0"
-                newCard = creditCard.copy(
-                    vcnSecurityLockFlg = "0"
-                )
-                Toast(context).showCustomToast(
-                    "ロックを解除しました",
-                    activity
-                )
-            } else {
-                currentLock = "1"
-                newCard = creditCard.copy(
-                    vcnSecurityLockFlg = "1"
-                )
-                Toast(context).showCustomToast(
-                    "ロックしました",
-                    activity
-                )
+            val newCard = creditCard.copyCardLockInverse()
+            val toastMessage = when(newCard.isCardLock()) {
+                true -> "ロックしました"
+                else -> "ロックを解除しました"
             }
+            Toast(context).showCustomToast(
+                message = toastMessage,
+                activity
+            )
             card.card = newCard
             bindingDialog.card = newCard
 
@@ -95,7 +84,7 @@ class CardDetailBottomSheetDialog(
         })
 
         btnCopy.setOnClickListener(View.OnClickListener {
-            if (currentLock == "1") {
+            if (creditCard.isCardLock()) {
                 MaterialAlertDialogBuilder(context).apply {
                     setMessage("ロックを解除してから\n" + "コピーしてください")
                     setNegativeButton("ok", null)
