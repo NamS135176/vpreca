@@ -20,5 +20,6 @@ class WebDirectScreen {
     companion object {
         const val SCREEN_CREDIT_CARD_INFO = "LW1401SC01"
         const val SCREEN_ISSUE_CARD_WITH_CREDIT_CARD = "LW0108SC01"
+        const val SCREEN_BALANCE_AMOUNT = "LW2702SC01"
     }
 }
