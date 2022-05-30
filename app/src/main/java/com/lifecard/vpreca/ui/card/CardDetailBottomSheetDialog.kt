@@ -52,7 +52,7 @@ class CardDetailBottomSheetDialog(
                         activity = activity
                     )
                 }
-                setNegativeButton("いいえ", null)
+//                setNegativeButton("いいえ", null)
                 setMessage("カードを再発行しますよろしいですか？")
             }.create().show()
         })

@@ -49,6 +49,7 @@ class HomeFragment : Fragment() {
             val buttonSlideRight = binding.listCard.buttonSlideRight
             val buttonLock = binding.listCard.buttonLock
             val buttonInfo = binding.listCard.buttonInfo
+            val buttonReload = binding.listCard.buttonReload
 
             binding.listCard.cardList.adapter?.let {
                 val adapter = it as CardSlidePagerAdapter
@@ -81,6 +82,15 @@ class HomeFragment : Fragment() {
                         message = toastMessage,
                         requireActivity()
                     )
+                })
+                buttonReload.setOnClickListener(View.OnClickListener {
+                    MaterialAlertDialogBuilder(requireContext()).apply {
+                        setPositiveButton("はい") { _, _ ->
+                            showToast("再発行しました")
+                        }
+//                        setNegativeButton("いいえ", null)
+                        setMessage("カードを再発行しますよろしいですか？")
+                    }.create().show()
                 })
             }
         }
