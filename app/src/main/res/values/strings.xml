@@ -192,7 +192,17 @@
     <string name='forgot_pass_error_phone'>正しい電話番号を入力してください</string>
     <string name="forgot_pass_error_secret_question">選択してください</string>
     <string name="forgot_pass_error_secret_answer">全宅20文字以内で入力してください</string>
+    <string name="empty"></string>
     <!--    Forgot Pass Input-->
+
+    <!--    Issue card by code select source-->
+    <string name="issue_card_by_code_select_source_confirm_appbar_title">残高加算内容確認</string>
+    <string name="issue_card_by_code_select_source_confirm_title">加算内容を確認してください。</string>
+    <string name="issue_card_by_code_select_source_confirm_des">「発行」ボタンを選択すると手続きが完了いたします。</string>
+    <string name="issue_card_by_code_select_source_confirm_gift_value_title">合算金額</string>
+    <string name="issue_card_by_code_select_source_confirm_select_value_title">合算後の残高</string>
+    <string name="issue_card_by_code_select_source_confirm_btn">発行</string>
+    <!--    Issue card by code select source-->
 
     <!--    Complete Forgot Pass-->
     <string name="complete_forgot_title">メール送信完了</string>
@@ -375,6 +385,39 @@
     <string name="issue_card_plus_complete_des">ホーム画面でカードが発行されていることを確認してください。\n\nなお、ご登録いただいいるメールアドレスに確認メールを送信いたしました。</string>
     <!--    Issue Card Plus Complete-->
 
+    <!--    Issue card by code value confirm title-->
+    <string name="issue_card_by_code_value_confirm_title">発行内容を確認してください。</string>
+    <!--    Issue card by code value confirm title-->
+
+    <!--    Issue Card by code select way-->
+    <string name="issue_card_by_code_select_way_appbar_title">残高加算</string>
+    <string name="issue_card_by_code_select_way_amount_title">購入券種（金額）</string>
+    <string name="issue_card_by_code_select_way_des">すでにあるカードに加算しますか？</string>
+    <string name="issue_card_by_code_select_way_btn_top">加算する</string>
+    <string name="issue_card_by_code_select_way_btn_bot">加算しない</string>
+    <!--    Issue Card by code select way-->
+
+    <!--    Issue Card By Code Complete without card-->
+    <string name="issue_card_by_code_complete_w_card_appbar_title">Vプリカ発行完了</string>
+    <string name="issue_card_by_code_complete_w_card_title">Vプリカの発行が完了いたしました。</string>
+    <string name="issue_card_by_code_complete_w_card_des_top">ホーム画面でカードが発行されていることを確認してください。尚、ご登録いただいいるメールアドレスに確認メールを送信いたしました、</string>
+    <string name="issue_card_by_code_complete_w_card_des_bot">引き続き残高合算を、ご利用の場合は「残高合算」ボタンを選択してください。</string>
+    <!--    Issue Card By Code Complete without card-->
+
+    <!--    Issue Card By Code Complete with card-->
+    <string name="issue_card_by_code_complete_with_card_appbar_title">残高加算内容完了</string>
+    <string name="issue_card_by_code_complete_with_card_title">Vプリカの発行が完了いたしました。</string>
+    <string name="issue_card_by_code_complete_with_card_des">ホーム画面でカードが発行されていることを確認してください。\n\nなお、ご登録いただいいるメールアドレスに確認メールを送信いたしました。</string>
+    <!--    Issue Card By Code Complete without card-->
+
+    <!--    Issue Card By Code Select Soure-->
+    <string name="issue_card_by_code_select_source_des">既存のVプリカ残高を加算して発行できます。\n（最大5枚、合計残高10万円まで）</string>
+    <string name="issue_card_by_code_select_source_appbar_title">残高加算</string>
+    <string name="issue_card_by_code_select_source_amount_title">加算金額</string>
+    <string name="issue_card_by_code_select_source_under_amount_title">加算するカードを選択してください。</string>
+    <string name="issue_card_by_code_select_source_under_amount_des">最大4枚まで選択できます</string>
+    <!--    Issue Card By Code Select Soure-->
+
     <!--    Balanced Amount Menu-->
     <string name="balance_amount_menu_layout_title">不足残高合計</string>
     <string name="balance_amount_menu_appbar_layout">残高不足解消</string>
@@ -392,6 +435,15 @@
     <string name="vpreca_holder">1234 5678 9238 9890</string>
     <string name="name_holder">VPRECAUSER</string>
     <!--    Card Detail End-->
+
+    <!--    Issue Card by code-->
+    <string name="issue_card_by_code_appbar_title">コード入力をして発行</string>
+    <string name="issue_card_by_code_des_top">コンビニエンスストアなどで購入した発行コードでVプリカを発行できます。発行コードを入力していただくか、カメラを使用してQRコードをスキャンしてください。</string>
+    <string name="issue_card_by_code_des_bot">スペースや半角・全角・大文字・小文字の文字の種類を厳密に判定しています。文字列が合致していても文字の種類が異なりますと、入力エラーとなります。</string>
+    <string name="issue_card_by_code_input_hint">半角英数字15桁</string>
+    <string name="issue_card_by_code_confirm_value_title_confirm">発行時残高</string>
+    <!--    Issue Card by code-->
+
     <!--    Error  -->
     <string name="error_default">Error</string>
     <string name="error_no_internet_connection">No internet connection</string>

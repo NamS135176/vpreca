@@ -20,11 +20,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.data.model.SelectedData
 import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectSourceBinding
 import com.lifecard.vpreca.databinding.FragmentListVprecaBinding
 import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
+import com.lifecard.vpreca.ui.introduce.GiftCardInputCardFragmentDirections
 import com.lifecard.vpreca.ui.listvpreca.GridDecoration
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaAdapter
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragmentDirections
@@ -59,7 +61,11 @@ class IssueCardSelectSourceFragment : Fragment() {
                 findNavController().navigate(R.id.nav_issue_card_by_plus_introduce)
             }
         })
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_select_design) })
+        btnSubmit.setOnClickListener(View.OnClickListener {
+            val giftCardConfirmData = GiftCardConfirmData("selectSource")
+            val action = IssueCardSelectSourceFragmentDirections.actionSelectsourceToSelectdesign(giftCardConfirmData)
+            findNavController().navigate(action)
+        })
 
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_plus_introduce) })
         btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })

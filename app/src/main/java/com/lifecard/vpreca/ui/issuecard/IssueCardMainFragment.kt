@@ -30,6 +30,7 @@ class IssueCardMainFragment : Fragment() {
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val buttonCreditCard = binding.buttonCreditCard
         val buttonNewCard = binding.buttonNewCard
+        val buttonIssueByCode = binding.btnTap
 
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
@@ -51,6 +52,8 @@ class IssueCardMainFragment : Fragment() {
         buttonNewCard.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_issue_card_by_plus_introduce)
         })
+
+        buttonIssueByCode.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_input) })
 
         return binding.root
     }

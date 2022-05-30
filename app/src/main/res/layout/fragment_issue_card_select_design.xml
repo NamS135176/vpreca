@@ -17,7 +17,7 @@
             layout="@layout/toolbar_back_cancel"
             app:elevation="0dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@{@string/issue_card_by_plus_appbar_title}" />
+            app:title="@{@string/select_design_appbar_title}" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

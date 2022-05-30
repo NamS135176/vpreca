@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/title_next_policy"
                     android:textColor="#fff"
-                    android:gravity="center_horizontal"
+                    android:gravity="right"
                     android:textSize="14sp"/>
             </LinearLayout>
         </LinearLayout>

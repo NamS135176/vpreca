@@ -104,7 +104,9 @@
     <style name="AppTheme.RoundedCornerMaterialButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/bg_button_cancel_confirm_signup</item>
     </style>
-
+    <style name="AppTheme.RoundedCornerMaterialButtonWhite" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/bg_outline_white</item>
+    </style>
     <style name="MySpinner" parent="Widget.AppCompat.Spinner.DropDown">
         <item name="android:background">@drawable/spinner_bg</item>
         <!--        <item name="android:dropDownSelector">@drawable/my_spinner_selector</item>-->

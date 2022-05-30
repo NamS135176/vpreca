@@ -8,10 +8,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.DesignCard
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectDesignBinding
+import com.lifecard.vpreca.ui.introduce.GiftCardConfirmFragmentArgs
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
 
 
@@ -21,6 +24,7 @@ class IssueCardSelectDesignFragment : Fragment() {
         fun newInstance() = IssueCardSelectDesignFragment()
     }
 
+    private val args: IssueCardSelectDesignFragmentArgs by navArgs()
     private lateinit var viewModel: IssueCardSelectDesignViewModel
     private var _binding: FragmentIssueCardSelectDesignBinding? = null
     private val binding get() = _binding!!
@@ -30,11 +34,27 @@ class IssueCardSelectDesignFragment : Fragment() {
     ): View? {
         _binding = FragmentIssueCardSelectDesignBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(IssueCardSelectDesignViewModel::class.java)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_issue_card_select_source)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    when (args?.selectDesignData?.preRoute) {
+                        "selectSource" -> findNavController().navigate(R.id.nav_issue_card_select_source)
+                        "valueConfirm" ->{
+                            MaterialAlertDialogBuilder(requireContext()).apply {
+                                setPositiveButton("はい") { dialog, which ->
+                                    // do something on positive button click
+                                    findNavController().navigate(R.id.nav_home)
+                                }
+                                setNegativeButton("いいえ", null)
+                                setMessage("操作途中ですがキャンセル\n" +
+                                        "してもよろしいですか？")
+                            }.create().show()
+                        }
+                    }
+
+                }
+            })
 
         val btnBack = binding.appbarGiftThird.btnBack
         val btnCancel = binding.appbarGiftThird.cancelBtn
@@ -45,10 +65,37 @@ class IssueCardSelectDesignFragment : Fragment() {
         val list: List<DesignCard>
         list = ArrayList<DesignCard>()
         val cardLayout = binding.cardZone
+        when (args?.selectDesignData?.preRoute) {
+            "selectSource" -> btnBack.visibility = View.VISIBLE
+            else ->  btnBack.visibility = View.GONE
+        }
+        btnBack.setOnClickListener(View.OnClickListener {
+            findNavController().navigate(R.id.nav_issue_card_select_source)
+        })
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_select_source) })
-        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_complete) })
+        btnCancel.setOnClickListener(View.OnClickListener {
+            when (args?.selectDesignData?.preRoute) {
+                "selectSource" -> findNavController().navigate(R.id.nav_issue_card_main)
+                "valueConfirm" ->{
+                    MaterialAlertDialogBuilder(requireContext()).apply {
+                        setPositiveButton("はい") { dialog, which ->
+                            // do something on positive button click
+                            findNavController().navigate(R.id.nav_home)
+                        }
+                        setNegativeButton("いいえ", null)
+                        setMessage("操作途中ですがキャンセル\n" +
+                                "してもよろしいですか？")
+                    }.create().show()
+                }
+            }
+        })
+
+        btnSubmit.setOnClickListener(View.OnClickListener {
+            when (args?.selectDesignData?.preRoute) {
+                "selectSource" -> findNavController().navigate(R.id.nav_issue_card_complete)
+                "valueConfirm" -> findNavController().navigate(R.id.nav_issue_card_by_code_select_way)
+            }
+        })
 
         cardLayout.card = DesignCard("0", "0")
         for (i in 0 until 7) {

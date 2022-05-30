@@ -68,7 +68,7 @@
                     android:id="@+id/cancel_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    android:gravity="right"
                     android:text="@string/title_next_policy"
                     android:textColor="#fff"
                     android:textSize="14sp" />

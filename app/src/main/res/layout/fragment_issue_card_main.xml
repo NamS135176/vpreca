@@ -73,6 +73,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:contentDescription="@string/btn_next_policy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
