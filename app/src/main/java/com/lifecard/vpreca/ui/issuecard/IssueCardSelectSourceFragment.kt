@@ -106,12 +106,14 @@ class IssueCardSelectSourceFragment : Fragment() {
                                     position: Int,
                                     binding: SelectSourceCardItemBinding
                                 ) {
+                                    btnSubmit.isEnabled = true
                                     var count = 0
                                     for (it in arrSelected){
                                         if(it.isSelected == "1"){
                                             count++
                                         }
                                     }
+
                                     val sum: Int = arrSelected.sumOf {
                                         try {
                                             if(it.isSelected == "1"){
@@ -127,6 +129,7 @@ class IssueCardSelectSourceFragment : Fragment() {
 
                                     if (arrSelected[position].isSelected == "0") {
                                         if(count<5 && sum<=(100000 - arrSelected[position].amount.toInt())){
+
                                             list.add(position)
                                             println(list)
                                             if(count == 0){
@@ -167,6 +170,7 @@ class IssueCardSelectSourceFragment : Fragment() {
                                         }
                                     } else {
                                         list.remove(position)
+                                        btnSubmit.isEnabled = list.size != 0
                                        if(arrSelected[position].isFirst == "1"){
 
                                            println(list)

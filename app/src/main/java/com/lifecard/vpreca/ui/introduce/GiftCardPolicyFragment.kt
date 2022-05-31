@@ -34,11 +34,11 @@ class GiftCardPolicyFragment : NoToolbarFragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentGiftCardPolicyBinding.inflate(inflater, container, false)
-//        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
-//            override fun handleOnBackPressed() {
-//                findNavController().navigate(R.id.nav_home)
-//            }
-//        })
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_home)
+            }
+        })
 
         val btnBack = binding.appbarGift.btnBack
         val checkbox = binding.cbIntroduceFirst

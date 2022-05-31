@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentListVprecaBinding
+import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 import com.lifecard.vpreca.ui.card.CardDetailBottomSheetDialog
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.hideToolbar
@@ -65,7 +66,7 @@ class ListVprecaFragment : Fragment() {
                             adapter.setOnClickListener(object :
                                 ListVprecaAdapter.OnItemClickListener {
                                 override fun onItemClick(position: Int) {
-                                    CardDetailBottomSheetDialog(
+                                    CardBottomSheetCustom(
                                         requireActivity(),
                                         arrPolicy[position]
                                     ).show()
