@@ -85,7 +85,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_marginTop="15dp"
-                    android:id="@+id/btn_tap"
+                    android:id="@+id/button_issue_by_code"
                     android:layout_width="match_parent"
                     app:layout_constraintTop_toTopOf="@+id/layout_issue_card_select"
                     android:layout_height="140dp"

@@ -121,8 +121,6 @@ class HomeFragment : Fragment() {
         btnBalance.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
 
         btnIssueCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
-        //TODO test
-//        btnIssueCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_camera_ocr) })
 
         buttonSeeAllCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_list_vpreca) })
 
@@ -203,15 +201,6 @@ class HomeFragment : Fragment() {
             }
         })
         setLightStatusBar()
-
-
-        val livedata = getNavigationResult("ocr_code")
-        livedata?.observe(viewLifecycleOwner, Observer { ocr ->
-            livedata.removeObservers(viewLifecycleOwner)
-            if (!ocr.isNullOrEmpty()) {
-                println("HomeFragment... get ocr code $ocr")
-            }
-        })
         return root
     }
 

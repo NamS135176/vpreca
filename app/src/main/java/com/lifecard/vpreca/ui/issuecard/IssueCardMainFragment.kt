@@ -30,7 +30,7 @@ class IssueCardMainFragment : Fragment() {
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val buttonCreditCard = binding.buttonCreditCard
         val buttonNewCard = binding.buttonNewCard
-        val buttonIssueByCode = binding.btnTap
+        val buttonIssueByCode = binding.buttonIssueByCode
 
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
