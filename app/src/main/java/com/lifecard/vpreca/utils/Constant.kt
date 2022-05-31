@@ -6,7 +6,6 @@ class Constant {
         const val SECURE_MEMBER_NUMBER = "vpreca_login_member_id"
         const val SECURE_ACCESS_TOKEN = "vpreca_access_token"
         const val SECURE_REFRESH_TOKEN = "vpreca_refresh_token"
-        const val SECURE_LOGIN_ACTION = "vpreca_login_action"
         const val BIOMETRIC_ALGORITHM = "ecdsa-with-SHA256"
 
         //        const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"

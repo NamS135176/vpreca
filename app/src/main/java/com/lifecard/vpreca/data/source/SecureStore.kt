@@ -38,14 +38,6 @@ class SecureStore(private val appContext: Context) {
         return getEncryptText(Constant.SECURE_REFRESH_TOKEN)
     }
 
-    fun saveLoginAction(action: String) {
-        return saveEncryptText(Constant.SECURE_LOGIN_ACTION, action)
-    }
-
-    fun getLoginAction(): String? {
-        return getEncryptText(Constant.SECURE_LOGIN_ACTION)
-    }
-
     fun saveLoginUserId(userId: String) {
         return saveEncryptText(Constant.SECURE_USER_ID, userId)
     }

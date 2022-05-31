@@ -13,8 +13,6 @@ class UserManager(private val secureStore: SecureStore) {
         private set
     var refreshToken: String? = null
         private set
-    var loginAction: String? = null
-        private set
     var loginId: String? = null
         private set
     var memberNumber: String? = null
@@ -36,30 +34,29 @@ class UserManager(private val secureStore: SecureStore) {
         // @see https://developer.android.com/training/articles/keystore
         accessToken = secureStore.getAccessToken()
         refreshToken = secureStore.getRefreshToken()
-        loginAction = secureStore.getLoginAction()
         memberNumber = secureStore.getMemberNumber()
         loginId = secureStore.getLoginUserId()
     }
 
-    fun setToken(accessToken: String, refreshToken: String, loginAction: String) {
+    fun setToken(accessToken: String, refreshToken: String) {
         this.accessToken = accessToken
         this.refreshToken = refreshToken
-        this.loginAction = loginAction
 
         secureStore.saveAccessToken(accessToken)
         secureStore.saveRefreshToken(refreshToken)
-        secureStore.saveLoginAction(loginAction)
     }
 
     fun setLoggedMember(memberResponseContent: MemberResponseContent) {
         memberInfo = memberResponseContent.memberInfo
         memberSubInfo = memberResponseContent.memberSubInfo
+        this.memberNumber = memberInfo!!.memberNumber
+        this.loginId = memberInfo!!.loginId
         secureStore.saveLoginUserId(memberInfo!!.loginId)
         secureStore.saveMemberNumber(memberInfo!!.memberNumber)
     }
 
     fun setLoggedIn(loginResponse: LoginResponse) {
-        setToken(loginResponse.accessToken, loginResponse.refreshToken, loginResponse.action)
+        setToken(loginResponse.accessToken, loginResponse.refreshToken)
         setLoggedMember(loginResponse.brandPrecaApi.response)
     }
 
@@ -68,7 +65,6 @@ class UserManager(private val secureStore: SecureStore) {
         this.memberSubInfo = null
         this.accessToken = null
         this.refreshToken = null
-        this.loginAction = null
         this.loginId = null
         this.memberNumber = null
     }

@@ -7,8 +7,6 @@ data class LoginResponse(
     val accessToken: String,
     @SerializedName("refreshToken")
     val refreshToken: String,
-    @SerializedName("action")
-    val action: String,
     @SerializedName("brandPrecaApi")
     val brandPrecaApi: LoginBrandResponse,
 )
