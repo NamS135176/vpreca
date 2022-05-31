@@ -125,7 +125,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_marginTop="43dp"
-                    android:id="@+id/btn_tap"
+                    android:id="@+id/btn_balance_select_source"
                     android:layout_width="match_parent"
                     app:layout_constraintTop_toBottomOf="@+id/underline"
                     android:layout_height="140dp"
@@ -182,7 +182,7 @@
                 </LinearLayout>
                 <com.google.android.material.button.MaterialButton
                     android:layout_marginTop="15dp"
-                    android:id="@+id/button_credit_card"
+                    android:id="@+id/btn_balance_by_code"
                     android:layout_width="match_parent"
                     app:layout_constraintTop_toBottomOf="@+id/layout_tap"
                     android:layout_height="140dp"

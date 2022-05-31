@@ -404,6 +404,27 @@
     <string name="issue_card_by_code_complete_w_card_des_bot">引き続き残高合算を、ご利用の場合は「残高合算」ボタンを選択してください。</string>
     <!--    Issue Card By Code Complete without card-->
 
+    <!--    Balance amounte select source-->
+    <string name="balance_amount_by_code_select_appbar_title">残高不足解消</string>
+    <string name="balance_amount_by_code_select_title">不足残高合計</string>
+    <string name="balance_amount_by_code_select_title_left">充当金額</string>
+    <string name="balance_amount_by_code_select_title_right">充当後不足残高</string>
+    <string name="balance_amount_by_code_select_des">充当するカードを選択してください</string>
+    <!--    Balance amount select-->
+
+    <!--    Balance by source confirm-->
+    <string name="balance_select_source_confirm_appbar_title">残高不足解消</string>
+    <string name="balance_select_source_confirm_title">残高不足充当の確認</string>
+    <string name="balance_select_source_confirm_des">残高不足充当の内容をご確認ください</string>
+    <string name="balance_select_source_confirm_btn">充当</string>
+    <!--    Balance by source confirm-->
+
+    <!--    Balance by code complete-->
+    <string name="balance_by_source_complete_appbar_title">残高不足解消</string>
+    <string name="balance_by_source_complete_title">残高不足充当完了</string>
+    <string name="balance_by_source_complete_des">残高不足充当が完了しました。\n\n残高不足が解消していない場合は、引き続きお手続きをお願いします。</string>
+    <!--    Balance by code complete-->
+
     <!--    Issue Card By Code Complete with card-->
     <string name="issue_card_by_code_complete_with_card_appbar_title">残高加算内容完了</string>
     <string name="issue_card_by_code_complete_with_card_title">Vプリカの発行が完了いたしました。</string>
