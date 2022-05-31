@@ -10,7 +10,6 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserManager
-import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.utils.PreferenceHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -66,7 +65,7 @@ class FingerprintViewModel @Inject constructor(
             loading.value = true
 //            registerBiometricResult.value = null
             val bioChallengeResult =
-                remoteRepository.registerBiometric(userManager.user!!.loginId, publicKey)
+                remoteRepository.registerBiometric(userManager.memberInfo!!.loginId, publicKey)
             if (bioChallengeResult is Result.Success) {
                 registerBiometricResult.value = BioSettingResult(success = bioChallengeResult.data)
 

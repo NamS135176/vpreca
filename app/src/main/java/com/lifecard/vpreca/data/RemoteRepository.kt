@@ -3,8 +3,10 @@ package com.lifecard.vpreca.data
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.BioChallenge
 import com.lifecard.vpreca.data.model.CardUsageHistory
+import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.OtpResponse
 import com.lifecard.vpreca.utils.Constant
+import com.lifecard.vpreca.utils.RequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -14,12 +16,17 @@ class RemoteRepository(
     private val userManager: UserManager
 ) {
 
-    suspend fun getCardUsageHistory(): Result<List<CardUsageHistory>> {
+    suspend fun getCardUsageHistory(creditCard: CreditCard): Result<List<CardUsageHistory>> {
         return withContext(Dispatchers.IO) {
             try {
                 val cardUsageHistoryResponse =
-                    apiService.getCardUsageHistory(userManager.bearAccessToken!!)
-                Result.Success(cardUsageHistoryResponse.items)
+                    apiService.getCardUsageHistory(
+                        RequestHelper.createCardUsageHistory(
+                            userManager.memberNumber!!,
+                            creditCard
+                        )
+                    )
+                Result.Success(cardUsageHistoryResponse.brandPrecaApi.response.cardInfo)
             } catch (e: Exception) {
                 println("RemoteRepository...getCardUsageHistory has error $e")
                 Result.Error(IOException("Error getCardUsageHistory", e))

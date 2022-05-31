@@ -10,7 +10,8 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
-import com.lifecard.vpreca.data.model.LoginAction
+import com.lifecard.vpreca.data.model.LoginResponse
+import com.lifecard.vpreca.utils.RequestHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.security.Signature
@@ -38,6 +39,7 @@ class LoginViewModel @Inject constructor(
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
+
     val loading = MutableLiveData(false)
 
     fun login(username: String, password: String) {
@@ -49,16 +51,16 @@ class LoginViewModel @Inject constructor(
         // can be launched in a separate asynchronous job
         viewModelScope.launch {
             loading.value = true
-            val loginResult = loginRepository.login(username, password)
+            val loginResult = loginRepository.login(
+                RequestHelper.createLoginRequest(
+                    loginId = username,
+                    loginPassword = password
+                )
+            )
 
             if (loginResult is Result.Success) {
-                when (loginResult.data.action) {
-                    LoginAction.None.value -> _loginResult.value = LoginResult(success = loginResult.data.user)
-                    LoginAction.SmsVerify.value -> _loginResult.value =
-                        LoginResult(navigateSmsVerify = true)
-                    LoginAction.UpdateAccount.value -> _loginResult.value =
-                        LoginResult(navigateUpdateAccount = true)
-                }
+                _loginResult.value =
+                    LoginResult(success = loginResult.data.brandPrecaApi.response.memberInfo)
             } else {
                 _loginResult.value = LoginResult(error = R.string.login_failed)
             }

@@ -25,7 +25,6 @@ import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
 import com.lifecard.vpreca.biometric.BiometricType
-import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.*
@@ -87,7 +86,7 @@ class LoginFragment : NoToolbarFragment() {
         loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
             loginButton.isEnabled =
                 loginFormState.usernameError == null && loginFormState.passwordError == null
-            print("loginViewModel.validForm.observe... usernameError: ${loginFormState.usernameError} - passwordError: ${loginFormState.passwordError} ")
+            println("loginViewModel.validForm.observe... usernameError: ${loginFormState.usernameError} - passwordError: ${loginFormState.passwordError} ")
         })
         loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
             usernameLayout.error = try {
@@ -116,22 +115,7 @@ class LoginFragment : NoToolbarFragment() {
                     showAlert(errorText)
                 }
                 loginResult.success?.let {
-                    updateUiWithUser(it)
                     navigateToHome()
-                }
-                loginResult.navigateSmsVerify?.let {
-                    if (it) {
-                        //navigate to sms verify
-                        fragmentFindNavController().navigate(R.id.nav_sms_verify)
-                        loginViewModel.clearLoginResult()
-                    }
-                }
-                loginResult.navigateUpdateAccount?.let {
-                    if (it) {
-                        //navigate to sms verify
-                        fragmentFindNavController().navigate(R.id.nav_policy)
-                        loginViewModel.clearLoginResult()
-                    }
                 }
             })
 
@@ -288,9 +272,6 @@ class LoginFragment : NoToolbarFragment() {
     override fun onDetach() {
         super.onDetach()
         requireActivity().lifecycle.removeObserver(lifecycleObserver)
-    }
-
-    private fun updateUiWithUser(user: User) {
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

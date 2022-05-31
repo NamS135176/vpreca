@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
+import com.lifecard.vpreca.data.model.MemberInfo
 import com.lifecard.vpreca.data.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,8 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ChangeInfoDataViewModel @Inject constructor(private val userRepository: UserRepository) :
     ViewModel() {
-    private val _user = MutableLiveData<User>()
-    var user: LiveData<User> = _user
+    private val _user = MutableLiveData<MemberInfo>()
+    var user: LiveData<MemberInfo> = _user
     var error = MutableLiveData<String?>()
 
     fun getUser() {

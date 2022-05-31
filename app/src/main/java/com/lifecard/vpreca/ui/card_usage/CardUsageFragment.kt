@@ -71,14 +71,11 @@ class CardUsageFragment : Fragment() {
         card?.let {
             binding.cardNo.text = it.precaNumber
             binding.balance.text = Converter.convertCurrency(it.chargeBalance)
+            viewModel.getCardUsageHistory(card)
         }
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.getCardUsageHistory()
-    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         hideToolbar()

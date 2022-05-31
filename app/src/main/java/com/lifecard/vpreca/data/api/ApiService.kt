@@ -4,26 +4,25 @@ import com.lifecard.vpreca.data.model.*
 import retrofit2.http.*
 
 interface ApiService {
-    @FormUrlEncoded
-    @POST("login")
+    @POST("LoginReq")
     suspend fun login(
-        @Field("loginId") username: String,
-        @Field("loginPassword") password: String
+        @Body loginRequest: BrandRequest
     ): LoginResponse
 
-    @FormUrlEncoded
+    @POST("MemberSelReq")
+    suspend fun getUser(
+        @Body memberSelectRequest: BrandRequest
+    ): MemberResponse
+
     @POST("CardListSelReq")
     suspend fun getListCards(
-        @Header("Authorization") authorization: String,
-        @Field("memberNumber") memberNumber: String = "002",
-        @Field("invalidCardResFlg") invalidCardResFlg: String = "1"
+        @Body cardListRequest: BrandRequest
     ): CardResponse
 
-    @FormUrlEncoded
+
     @POST("CardDealHisReq")
     suspend fun getCardUsageHistory(
-        @Header("Authorization") authorization: String,
-        @Field("memberNumber") memberNumber: String = "002",
+        @Body cardListRequest: BrandRequest
     ): CardUsageHistoryResponse
 
     @GET("challenge")
@@ -52,12 +51,4 @@ interface ApiService {
     suspend fun requestWebDirectOtp(
         @Header("Authorization") authorization: String
     ): OtpResponse
-
-    @FormUrlEncoded
-    @POST("MemberSelReq")
-    suspend fun getUser(
-        @Header("Authorization") authorization: String,
-        @Field("loginId") loginId: String,
-        @Field("memberNumber") memberNumber: String,
-    ): UserResponse
 }

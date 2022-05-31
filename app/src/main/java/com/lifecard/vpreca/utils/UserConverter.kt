@@ -1,20 +1,20 @@
 package com.lifecard.vpreca.utils
 
-import com.lifecard.vpreca.data.model.User
+import com.lifecard.vpreca.data.model.MemberInfo
 
 object UserConverter {
     @JvmStatic
-    fun hideUserPhoneNumber(user: User?): String {
+    fun hideUserPhoneNumber(user: MemberInfo?): String {
         return user?.telephoneNumber1?.let { hidePhone(it) } ?: ""
     }
 
     @JvmStatic
-    fun hideUserEmail1(user: User?): String {
+    fun hideUserEmail1(user: MemberInfo?): String {
         return user?.mailAddress1?.let { hideEmail(it) } ?: ""
     }
 
     @JvmStatic
-    fun hideUserEmail2(user: User?): String {
+    fun hideUserEmail2(user: MemberInfo?): String {
         return user?.mailAddress2?.let { hideEmail(it) } ?: ""
     }
 
@@ -56,22 +56,22 @@ object UserConverter {
     }
 
     @JvmStatic
-    fun receiveEmail1(user: User?): String {
+    fun receiveEmail1(user: MemberInfo?): String {
         return user?.let { getReceiveEmailStatus(it.mail1RecievFlg) } ?: ""
     }
 
     @JvmStatic
-    fun receiveEmail2(user: User?): String {
+    fun receiveEmail2(user: MemberInfo?): String {
         return user?.let { getReceiveEmailStatus(it.mail2RecievFlg) } ?: ""
     }
 
     @JvmStatic
-    fun receiveAdEmail1(user: User?): String {
+    fun receiveAdEmail1(user: MemberInfo?): String {
         return user?.let { getReceiveEmailStatus(it.mail1AdMailRecieveFlg) } ?: ""
     }
 
     @JvmStatic
-    fun receiveAdEmail2(user: User?): String {
+    fun receiveAdEmail2(user: MemberInfo?): String {
         return user?.let { getReceiveEmailStatus(it.mail2AdMailRecieveFlg) } ?: ""
     }
 }

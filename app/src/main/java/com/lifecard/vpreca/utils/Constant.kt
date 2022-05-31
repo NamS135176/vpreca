@@ -9,8 +9,12 @@ class Constant {
         const val SECURE_LOGIN_ACTION = "vpreca_login_action"
         const val BIOMETRIC_ALGORITHM = "ecdsa-with-SHA256"
 
-//        const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
-        const val API_BASE_URL = "https://by4h7iozy5.execute-api.ap-southeast-1.amazonaws.com/dev/"
+        //        const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
+//        const val API_BASE_URL = "https://by4h7iozy5.execute-api.ap-southeast-1.amazonaws.com/dev/"
+        const val API_BASE_URL =
+            "https://btpslgn3o5.execute-api.ap-southeast-1.amazonaws.com/staging/"
+
+        const val GOOGLE_VISION_API = "https://vision.googleapis.com/v1/"
 
         const val WEB_DIRECT_BASE_URL = "https://immense-beach-23070.herokuapp.com/LW01/%s.do"
     }
