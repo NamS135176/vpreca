@@ -1,12 +1,13 @@
 package com.lifecard.vpreca.data
 
-import com.lifecard.vpreca.data.model.LoginResponse
-import com.lifecard.vpreca.data.model.User
+import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.data.source.SecureStore
 
 class UserManager(private val secureStore: SecureStore) {
     // in-memory cache of the loggedInUser object
-    var user: User? = null
+    var memberInfo: MemberInfo? = null
+        private set
+    var memberSubInfo: MemberSubInfo? = null
         private set
     var accessToken: String? = null
         private set
@@ -20,7 +21,7 @@ class UserManager(private val secureStore: SecureStore) {
         private set
 
     val isLoggedIn: Boolean
-        get() = user != null
+        get() = memberInfo != null
     val canCallApi: Boolean
         get() = accessToken != null
 
@@ -40,15 +41,6 @@ class UserManager(private val secureStore: SecureStore) {
         loginId = secureStore.getLoginUserId()
     }
 
-    fun setLoggedInUser(loggedInUser: User) {
-        this.user = loggedInUser
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-        println("UserManager... setLoggedInUser: ${loggedInUser}")
-        secureStore.saveLoginUserId(loggedInUser.loginId)
-        secureStore.saveMemberNumber(loggedInUser.memberNumber)
-    }
-
     fun setToken(accessToken: String, refreshToken: String, loginAction: String) {
         this.accessToken = accessToken
         this.refreshToken = refreshToken
@@ -59,13 +51,21 @@ class UserManager(private val secureStore: SecureStore) {
         secureStore.saveLoginAction(loginAction)
     }
 
+    fun setLoggedMember(memberResponseContent: MemberResponseContent) {
+        memberInfo = memberResponseContent.memberInfo
+        memberSubInfo = memberResponseContent.memberSubInfo
+        secureStore.saveLoginUserId(memberInfo!!.loginId)
+        secureStore.saveMemberNumber(memberInfo!!.memberNumber)
+    }
+
     fun setLoggedIn(loginResponse: LoginResponse) {
         setToken(loginResponse.accessToken, loginResponse.refreshToken, loginResponse.action)
-        setLoggedInUser(loginResponse.user)
+        setLoggedMember(loginResponse.brandPrecaApi.response)
     }
 
     fun clear() {
-        this.user = null
+        this.memberInfo = null
+        this.memberSubInfo = null
         this.accessToken = null
         this.refreshToken = null
         this.loginAction = null

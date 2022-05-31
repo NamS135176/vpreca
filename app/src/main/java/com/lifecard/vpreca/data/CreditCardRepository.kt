@@ -2,6 +2,7 @@ package com.lifecard.vpreca.data
 
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.utils.RequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -21,11 +22,14 @@ class CreditCardRepository(
             if (refresh || latestCards.isEmpty()) {
                 try {
                     val response =
-                        apiService.getListCards(authorization = userManager.bearAccessToken!!)
-                    latestCardsMutex.withLock { latestCards = response.data }
+                        apiService.getListCards(RequestHelper.createCardListRequest(memberNumber = userManager.memberNumber!!))
+                    latestCardsMutex.withLock {
+                        latestCards = response.brandPrecaApi.response.cardInfo
+                    }
                     latestCardsMutex.withLock { Result.Success(latestCards) }
                 } catch (e: Exception) {
-                    print("CreditCardRepository getLatestCards has error ${e}")
+                    println("CreditCardRepository getLatestCards has error $e")
+                    e.printStackTrace()
                     Result.Error(e)
                 }
             } else {

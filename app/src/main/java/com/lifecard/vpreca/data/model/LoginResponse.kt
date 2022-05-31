@@ -2,19 +2,18 @@ package com.lifecard.vpreca.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginResponse (
+data class LoginResponse(
     @SerializedName("accessToken")
     val accessToken: String,
     @SerializedName("refreshToken")
     val refreshToken: String,
     @SerializedName("action")
     val action: String,
-    @SerializedName("user")
-    val user: User,
+    @SerializedName("brandPrecaApi")
+    val brandPrecaApi: LoginBrandResponse,
 )
 
-enum class LoginAction(val value:String) {
-    None("none"),
-    SmsVerify("sms_verify"),
-    UpdateAccount("update_account"),
-}
+data class LoginBrandResponse(
+    @SerializedName("response")
+    val response: MemberResponseContent,
+)

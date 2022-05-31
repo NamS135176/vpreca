@@ -10,7 +10,7 @@
 
         <variable
             name="user"
-            type="com.lifecard.vpreca.data.model.User" />
+            type="com.lifecard.vpreca.data.model.MemberInfo" />
     </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

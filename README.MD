@@ -19,3 +19,9 @@ save those file to root of project to build and run
 get sha1 from debug keystore: 
 
 keytool -list -v -keystore ./app/debugKeystore/debug.keystore -alias androiddebugkey -storepass android -keypass android
+
+keytool -list -v -keystore ./app/keystore/key.jks -alias vpreca
+
+
+- show all signing report
+./gradlew signingReport

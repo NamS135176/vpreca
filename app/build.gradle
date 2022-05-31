@@ -61,7 +61,6 @@ android {
         multiDexEnabled = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -80,6 +79,8 @@ android {
         }
 
         debug {
+            signingConfig signingConfigs.debug
+
             buildConfigField("String", "SECURE_KEY_FILE_NAME", "\"${secureProperties['keystoreFileName']}\"")
             buildConfigField("String", "SECURE_KEY_PASSWORD", "\"${secureProperties['keystorePassword']}\"")
             buildConfigField("String", "SECURE_KEY_ALIAS", "\"${secureProperties['keystoreAlias']}\"")

@@ -1,20 +1,18 @@
 package com.lifecard.vpreca.data
 
 import com.lifecard.vpreca.data.api.ApiService
-import com.lifecard.vpreca.data.model.LoginAction
-import com.lifecard.vpreca.data.model.LoginResponse
-import com.lifecard.vpreca.data.model.User
-import com.lifecard.vpreca.data.source.SecureStore
+import com.lifecard.vpreca.data.model.*
+import com.lifecard.vpreca.utils.RequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.*
 
 class UserRepository(private val apiService: ApiService, private val userManager: UserManager) {
-    suspend fun login(username: String, password: String): Result<LoginResponse> {
+    suspend fun login(loginRequest: BrandRequest): Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                val loginResponse = apiService.login(username, password)
+                val loginResponse = apiService.login(loginRequest)
                 userManager.setLoggedIn(loginResponse)
                 Result.Success(loginResponse)
             } catch (e: Exception) {
@@ -38,23 +36,19 @@ class UserRepository(private val apiService: ApiService, private val userManager
     }
 
     suspend fun getUser(
-        loginId: String? = userManager.user?.loginId,
-        memberNumber: String? = userManager.user?.memberNumber
-    ): Result<User> {
+        loginId: String? = userManager.memberInfo?.loginId,
+        memberNumber: String? = userManager.memberInfo?.memberNumber
+    ): Result<MemberInfo> {
         return withContext(Dispatchers.IO) {
             try {
                 if (loginId == null || memberNumber == null) {
                     Result.Error(IOException("Can not get user"))
                 } else {
-                    userManager.bearAccessToken?.let { bearToken ->
-                        val userResponse = apiService.getUser(
-                            authorization = bearToken,
-                            loginId = loginId,
-                            memberNumber = memberNumber
-                        )
-                        userManager.setLoggedInUser(userResponse.user)
-                        Result.Success(userResponse.user)
-                    } ?: kotlin.run { Result.Error(IOException("Error logging in")) }
+                    val userResponse = apiService.getUser(
+                        RequestHelper.createMemberRequest(loginId, memberNumber)
+                    )
+                    userManager.setLoggedMember(userResponse.brandPrecaApi.response)
+                    Result.Success(userResponse.brandPrecaApi.response.memberInfo)
                 }
             } catch (e: Exception) {
                 println("UserRepository... getUser has error $e")

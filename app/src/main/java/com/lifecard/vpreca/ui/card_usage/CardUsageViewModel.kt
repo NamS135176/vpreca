@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CardUsageHistory
+import com.lifecard.vpreca.data.model.CreditCard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,10 +22,10 @@ class CardUsageViewModel @Inject constructor(private val remoteRepository: Remot
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-    fun getCardUsageHistory() {
+    fun getCardUsageHistory(creditCard: CreditCard) {
         viewModelScope.launch {
             _loading.value = true
-            var result = remoteRepository.getCardUsageHistory()
+            var result = remoteRepository.getCardUsageHistory(creditCard)
             _cardUsageHistoryResult.value = result
             _loading.value = false
         }
