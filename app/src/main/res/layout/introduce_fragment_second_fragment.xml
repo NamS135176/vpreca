@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/introduce_second_input"
                     android:imeOptions="actionNext"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:insetTop="0dp"
                     android:insetBottom="0dp" />
             </com.lifecard.vpreca.ui.custom.MyTextInputLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +35,27 @@ class IntroduceFragmentSecond : Fragment() {
         val btnSubmit = binding.btnSubmitInput
         val btnBack = binding.appbarGiftSecond.btnBack
         val buttonOcrDetection = binding.buttonOcrDetection
+        val giftCodeLayout = binding.usernameLayout
+        val giftCodeEdt = binding.textCode
+        viewModel.validForm.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { signupFormState ->
+                if (giftCodeEdt.text.toString() == "") {
+                    btnSubmit.isEnabled = false
+                } else {
+                    btnSubmit.isEnabled =
+                        signupFormState.giftCodeError == null
+                }
+            })
 
+        viewModel.giftCodeError.observe(viewLifecycleOwner, Observer { error: Int? ->
+            giftCodeLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
+        giftCodeEdt.doAfterTextChanged { text -> viewModel.giftCodeDataChanged(text = text.toString()) }
         btnBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_first)
         })

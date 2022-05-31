@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -30,10 +32,35 @@ class GiftCardInputCardFragment : NoToolbarFragment() {
     ): View? {
         viewModel = ViewModelProvider(this).get(GiftCardInputCardViewModel::class.java)
         _binding = FragmentGiftCardInputCardBinding.inflate(inflater, container, false)
-
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_gift_card_policy)
+            }
+        })
         val btnSubmit = binding.btnSubmitInput
         val btnBack = binding.appbarGiftSecond.btnBack
         val buttonOcrDetection = binding.buttonOcrDetection
+        val giftCodeLayout = binding.usernameLayout
+        val giftCodeEdt = binding.textCode
+
+        viewModel.validForm.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { signupFormState ->
+                if (giftCodeEdt.text.toString() == "" ) {
+                    btnSubmit.isEnabled = false
+                } else {
+                    btnSubmit.isEnabled =
+                        signupFormState.giftCodeError == null
+                }
+            })
+
+        viewModel.giftCodeError.observe(viewLifecycleOwner, Observer { error: Int? ->
+            giftCodeLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            } })
+        giftCodeEdt.doAfterTextChanged { text -> viewModel.giftCodeDataChanged(text = text.toString()) }
 
         btnBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_gift_card_policy)

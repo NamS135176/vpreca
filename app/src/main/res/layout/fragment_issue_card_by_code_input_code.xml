@@ -66,7 +66,7 @@
                             android:background="@drawable/input_signup_style"
                             android:hint="@string/issue_card_by_code_input_hint"
                             android:imeOptions="actionNext"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:paddingHorizontal="17dp"
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
