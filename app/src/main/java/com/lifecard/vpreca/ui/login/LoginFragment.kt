@@ -173,20 +173,6 @@ class LoginFragment : NoToolbarFragment() {
             true -> buttonBioLogin.visibility = View.VISIBLE
             else -> buttonBioLogin.visibility = View.GONE
         }
-        when (bioManager?.getBiometricTypeForAuthentication()) {
-            BiometricType.FACE -> {
-                buttonBioLogin.icon =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_android_faceid)
-                buttonBioLogin.text = getString(R.string.action_sign_in_faceid)
-            }
-            BiometricType.FINGERPRINT -> {
-                buttonBioLogin.icon =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.ic_android_fingerprint)
-                buttonBioLogin.text = getString(R.string.action_sign_in_fingerprint)
-            }
-            else -> buttonBioLogin.visibility = View.GONE
-        }
-
         buttonBioLogin.setOnClickListener(View.OnClickListener {
             showBiometricDialog()
         })

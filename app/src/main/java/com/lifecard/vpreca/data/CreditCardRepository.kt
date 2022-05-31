@@ -37,4 +37,8 @@ class CreditCardRepository(
             }
         }
     }
+
+    fun latestCardEmpty(): Boolean {
+        return latestCards.isEmpty()
+    }
 }

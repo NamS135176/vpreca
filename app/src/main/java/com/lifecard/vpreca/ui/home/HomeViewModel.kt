@@ -26,8 +26,17 @@ class HomeViewModel @Inject constructor(
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
 
     init {
+        if (creditCardRepository.latestCardEmpty()) {
+            loadCard(true)
+        } else {
+            loadCard(false)
+            loadCard(true)
+        }
+    }
+
+    private fun loadCard(refresh: Boolean = true) {
         viewModelScope.launch {
-            val result = creditCardRepository.getLatestCards(true)
+            val result = creditCardRepository.getLatestCards(refresh)
 
             if (result is Result.Success) {
                 _creditCardResult.value = CreditCardResult(success = result.data)
