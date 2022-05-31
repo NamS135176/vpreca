@@ -47,6 +47,11 @@ class RegexUtils {
          */
         const val RegexSecretAnswer = "\\b\\w{1,20}\\b"
 
+        /**
+         * at least: 1 digit, 1 lowercase, one uppercase
+         */
+        private const val RegexOcr = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{12,16}\$"
+
         fun isLoginIdValid(loginId: String?): Boolean {
             return loginId?.let { id ->
                 id.length in 6..10 && Pattern.compile(RegexLoginID).matcher(id).matches()
@@ -86,6 +91,10 @@ class RegexUtils {
                 Pattern.compile(RegexSecretAnswer).matcher(answer)
                     .matches()
             } ?: false
+        }
+
+        fun isOcrCode(code: String): Boolean {
+            return Pattern.compile(RegexOcr).matcher(code).matches()
         }
     }
 }

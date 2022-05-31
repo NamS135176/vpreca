@@ -6,6 +6,7 @@
         <import type="android.view.View" />
 
         <import type="com.lifecard.vpreca.utils.Converter" />
+        <import type="com.lifecard.vpreca.utils.ModelExtKt" />
 
         <variable
             name="card"
@@ -141,7 +142,7 @@
             android:layout_marginLeft="@dimen/fragment_horizontal_margin"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:visibility="@{card.vcnSecurityLockFlg.equals(`1`) ? View.VISIBLE : View.GONE}"
+            android:visibility="@{ModelExtKt.isCardLock(card) ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/text_balance_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_balance_container">

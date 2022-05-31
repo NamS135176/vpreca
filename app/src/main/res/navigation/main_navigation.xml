@@ -36,7 +36,7 @@
         android:id="@+id/nav_list_vpreca"
         android:name="com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_list_vpreca" >
+        tools:layout="@layout/fragment_list_vpreca">
         <action
             android:id="@+id/action_to_card_usage"
             app:destination="@id/nav_card_usage" />
@@ -239,7 +239,7 @@
         android:id="@+id/nav_gift_card_input_card"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardInputCardFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_gift_card_input_card" >
+        tools:layout="@layout/fragment_gift_card_input_card">
         <action
             android:id="@+id/action_giftcardinputcard_to_giftcardconfirm"
             app:destination="@id/nav_gift_card_confirm" />
@@ -248,7 +248,7 @@
         android:id="@+id/nav_gift_card_input"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardInputFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_gift_card_input" >
+        tools:layout="@layout/fragment_gift_card_input">
         <action
             android:id="@+id/action_giftcardinput_to_giftcardconfirm"
             app:destination="@id/nav_gift_card_confirm" />
@@ -257,7 +257,7 @@
         android:id="@+id/nav_gift_card_confirm"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardConfirmFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_gift_card_confirm" >
+        tools:layout="@layout/fragment_gift_card_confirm">
         <argument
             android:name="gift_card_confirm_data"
             android:defaultValue="@null"
@@ -316,4 +316,9 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_camera_ocr"
+        android:name="com.lifecard.vpreca.ui.ocr.CameraFragment"
+        android:label="" />
+
 </navigation>

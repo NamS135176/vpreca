@@ -510,4 +510,8 @@
 
     <string name="btn_confirm">確認</string>
 
+    <!--  Camera ocr  -->
+    <string name="camera_ocr_hint">カード番号を枠内に入れて撮影</string>
+    <string name="camera_ocr_success">読み取り完了</string>
+    <!--  Camera ocr end -->
 </resources>

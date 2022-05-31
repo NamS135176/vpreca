@@ -4,6 +4,7 @@
     <data>
 
         <import type="com.lifecard.vpreca.utils.Converter" />
+        <import type="com.lifecard.vpreca.utils.ModelExtKt" />
 
         <variable
             name="currentCard"
@@ -117,10 +118,10 @@
                 style="@style/Widget.App.Button.IconOnly"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@{currentCard.vcnSecurityLockFlg.equals(`1`) ? @drawable/ic_home_locked_status_background : @drawable/ic_home_unlock_status_background}"
+                android:background="@{ModelExtKt.isCardLock(currentCard) ? @drawable/ic_home_locked_status_background : @drawable/ic_home_unlock_status_background}"
                 app:backgroundTint="@null"
                 app:cornerRadius="24dp"
-                app:icon="@{currentCard.vcnSecurityLockFlg.equals(`1`) ? @drawable/ic_home_lock : @drawable/ic_home_unlock}"
+                app:icon="@{ModelExtKt.isCardLock(currentCard) ? @drawable/ic_home_lock : @drawable/ic_home_unlock}"
                 app:iconSize="20dp"
                 app:layout_constraintEnd_toStartOf="@id/button_reload"
                 app:layout_constraintHorizontal_chainStyle="spread"

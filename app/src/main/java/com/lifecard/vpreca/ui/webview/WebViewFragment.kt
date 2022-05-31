@@ -16,12 +16,13 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.lifecard.vpreca.base.BackPressFragment
 import com.lifecard.vpreca.databinding.FragmentWebViewBinding
 import com.lifecard.vpreca.utils.fragmentFindNavController
 import com.lifecard.vpreca.utils.hideToolbar
 import com.lifecard.vpreca.utils.showToolbar
 
-class WebViewFragment : Fragment() {
+class WebViewFragment : BackPressFragment() {
 
     companion object {
         fun newInstance(

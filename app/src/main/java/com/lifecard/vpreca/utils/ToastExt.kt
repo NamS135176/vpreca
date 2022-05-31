@@ -14,10 +14,16 @@ enum class ToastType {
     Success, Warning, Error
 }
 
+enum class ToastPosition {
+    Bottom,
+    Top
+}
+
 fun Toast.showCustomToast(
     message: String,
     activity: FragmentActivity,
     toastType: ToastType? = ToastType.Success,
+    toastPosition: ToastPosition? = ToastPosition.Bottom
 ) {
     try {
         val layout = activity.layoutInflater.inflate(
@@ -37,11 +43,20 @@ fun Toast.showCustomToast(
         // use the application extension function
 //        val height = activity.window.decorView.height
 //        val yOffset = (0.265 * height).toInt()//0.265 = 110 / 414
-        val yOffset = activity.resources.getDimension(R.dimen.toast_mb).toInt()
+        val yOffsetBottom = activity.resources.getDimension(R.dimen.toast_mb).toInt()
+        val yOffsetTop = activity.resources.getDimension(R.dimen.toast_mt).toInt()
+
         println("showCustomToast...  - yOffset = $yOffset")
         this.apply {
-            setGravity(Gravity.FILL_HORIZONTAL or Gravity.BOTTOM, 0, yOffset)
-            duration = Toast.LENGTH_LONG
+            when (toastPosition) {
+                ToastPosition.Bottom -> setGravity(
+                    Gravity.FILL_HORIZONTAL or Gravity.BOTTOM,
+                    0,
+                    yOffsetBottom
+                )
+                else -> setGravity(Gravity.FILL_HORIZONTAL or Gravity.TOP, 0, yOffsetTop)
+            }
+            duration = Toast.LENGTH_SHORT
             view = layout
             show()
         }
@@ -49,12 +64,17 @@ fun Toast.showCustomToast(
     }
 }
 
-fun Fragment.showToast(message: String, toastType: ToastType? = ToastType.Success) {
+fun Fragment.showToast(
+    message: String,
+    toastType: ToastType? = ToastType.Success,
+    toastPosition: ToastPosition? = ToastPosition.Bottom
+) {
     try {
         Toast(requireContext()).showCustomToast(
             message,
             toastType = toastType,
-            activity = requireActivity()
+            activity = requireActivity(),
+            toastPosition = toastPosition
         )
     } catch (e: Exception) {
 

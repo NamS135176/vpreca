@@ -1,24 +1,21 @@
 package com.lifecard.vpreca.ui.introduce
 
-import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
-import com.lifecard.vpreca.data.model.SignupData
 import com.lifecard.vpreca.databinding.FragmentGiftCardInputCardBinding
-import com.lifecard.vpreca.databinding.IntroduceFragmentSecondFragmentBinding
-import com.lifecard.vpreca.ui.signup.SignupInputFragmentDirections
-import com.lifecard.vpreca.utils.hideToolbar
-import com.lifecard.vpreca.utils.showToolbar
+import com.lifecard.vpreca.utils.ToastPosition
+import com.lifecard.vpreca.utils.getNavigationResult
+import com.lifecard.vpreca.utils.showToast
 
-class GiftCardInputCardFragment : Fragment() {
+class GiftCardInputCardFragment : NoToolbarFragment() {
 
     companion object {
         fun newInstance() = GiftCardInputCardFragment()
@@ -34,14 +31,9 @@ class GiftCardInputCardFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(GiftCardInputCardViewModel::class.java)
         _binding = FragmentGiftCardInputCardBinding.inflate(inflater, container, false)
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_gift_card_policy)
-            }
-        })
-
         val btnSubmit = binding.btnSubmitInput
         val btnBack = binding.appbarGiftSecond.btnBack
+        val buttonOcrDetection = binding.buttonOcrDetection
 
         btnBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_gift_card_policy)
@@ -49,21 +41,32 @@ class GiftCardInputCardFragment : Fragment() {
 
         btnSubmit.setOnClickListener(View.OnClickListener {
             val giftCardConfirmData = GiftCardConfirmData("inputcard")
-            val action = GiftCardInputCardFragmentDirections.actionGiftcardinputcardToGiftcardconfirm(giftCardConfirmData)
+            val action =
+                GiftCardInputCardFragmentDirections.actionGiftcardinputcardToGiftcardconfirm(
+                    giftCardConfirmData
+                )
             findNavController().navigate(action)
 //            findNavController().navigate(R.id.nav_gift_card_confirm)
         })
+        buttonOcrDetection.setOnClickListener(View.OnClickListener {
+            findNavController().navigate(R.id.nav_camera_ocr)
+        })
         return binding.root
     }
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        hideToolbar()
-    }
 
-    override fun onDetach() {
-        super.onDetach()
-        showToolbar()
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        val livedata = getNavigationResult("ocr_code")
+        livedata?.observe(viewLifecycleOwner, Observer { ocr ->
+            livedata.removeObservers(viewLifecycleOwner)
+            if (!ocr.isNullOrEmpty()) {
+                val textCode = binding.textCode
+                textCode.setText(ocr)
+                showToast(getString(R.string.camera_ocr_success), toastPosition = ToastPosition.Top)
+                println("GiftCardPolicyFragment... get ocr code $ocr")
+            }
+        })
+    }
 
 }
