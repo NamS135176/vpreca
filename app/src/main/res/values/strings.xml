@@ -431,6 +431,17 @@
     <string name="issue_card_by_code_complete_with_card_des">ホーム画面でカードが発行されていることを確認してください。\n\nなお、ご登録いただいいるメールアドレスに確認メールを送信いたしました。</string>
     <!--    Issue Card By Code Complete without card-->
 
+    <!--    Balance by code confirm-->
+    <string name="balance_by_code_confirm">購入券種（金額）</string>
+    <!--    Balance by code confirm-->
+
+    <!--    Balance by code input-->
+    <string name="balance_by_code_input_appbar_title">残高不足解消</string>
+    <string name="balance_by_code_input_title">コード入力</string>
+    <string name="balance_by_code_input_des_top">コンビニエンスストアなどで購入した発行コードで残高不足に充当できます。\n\n発行コードを入力していただくか、カメラを使用してQRコードをスキャンしてください。</string>
+    <string name="balance_by_code_input_des_bot">スペースや半角・全角・大文字・小文字の文字の種類を厳密に判定しています。文字列が合致していても文字の種類が異なりますと、入力エラーとなります。</string>
+    <!--    Balance by code input-->
+
     <!--    Issue Card By Code Select Soure-->
     <string name="issue_card_by_code_select_source_des">既存のVプリカ残高を加算して発行できます。\n（最大5枚、合計残高10万円まで）</string>
     <string name="issue_card_by_code_select_source_appbar_title">残高加算</string>
@@ -450,6 +461,11 @@
     <string name="balance_amount_menu_des_third">新規カードを購入し、残高不足のカードに充当します。</string>
     <!--    Balanced Amount Menu-->
 
+    <!--    Balance by code value confirm-->
+    <string name="balance_by_code_confirm_value_appbar_title">残高不足解消</string>
+    <string name="balance_by_code_confirm_value_title">確認完了</string>
+    <!--    Balance by code Input-->
+
     <!--    Card Detail-->
     <string name="card_detail_btn_white">カード番号コピー</string>
     <string name="pin_holder">000</string>
@@ -463,6 +479,7 @@
     <string name="issue_card_by_code_des_bot">スペースや半角・全角・大文字・小文字の文字の種類を厳密に判定しています。文字列が合致していても文字の種類が異なりますと、入力エラーとなります。</string>
     <string name="issue_card_by_code_input_hint">半角英数字15桁</string>
     <string name="issue_card_by_code_confirm_value_title_confirm">発行時残高</string>
+    <string name="issue_card_by_code_complete_des">ホーム画面でカードが発行されていることを確認してください。\n尚、ご登録いただいいるメールアドレスに確認メールを送信いたしました、</string>
     <!--    Issue Card by code-->
 
     <!--    Error  -->

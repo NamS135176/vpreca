@@ -32,6 +32,9 @@ class BalanceAmountMenuFragment : Fragment() {
         val btnToWeb = binding.buttonToWeb
         val btnBySource = binding.btnBalanceSelectSource
         val btnByCode = binding.btnBalanceByCode
+
+        btnByCode.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_by_code_input) })
+
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

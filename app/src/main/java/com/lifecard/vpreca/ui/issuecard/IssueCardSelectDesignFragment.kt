@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.BalanceSelectSourceConfirmData
 import com.lifecard.vpreca.data.model.DesignCard
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectDesignBinding
 import com.lifecard.vpreca.ui.introduce.GiftCardConfirmFragmentArgs
@@ -66,11 +67,26 @@ class IssueCardSelectDesignFragment : Fragment() {
         list = ArrayList<DesignCard>()
         val cardLayout = binding.cardZone
         when (args?.selectDesignData?.preRoute) {
-            "selectSource" -> btnBack.visibility = View.VISIBLE
-            else ->  btnBack.visibility = View.GONE
+            "selectSource" -> {
+                btnBack.visibility = View.VISIBLE
+                btnCancel.visibility = View.VISIBLE
+            }
+            "valueConfirm" ->  {
+                btnBack.visibility = View.GONE
+                btnCancel.visibility = View.VISIBLE
+            }
+            "balanceByCodeValueConfirm" -> {
+                btnBack.visibility = View.VISIBLE
+                btnCancel.visibility = View.GONE
+            }
         }
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_issue_card_select_source)
+            if(args?.selectDesignData?.preRoute == "selectSource"){
+                findNavController().navigate(R.id.nav_issue_card_select_source)
+            }
+            else{
+                findNavController().navigate(R.id.nav_balance_value_confirm)
+            }
         })
 
         btnCancel.setOnClickListener(View.OnClickListener {
@@ -94,6 +110,11 @@ class IssueCardSelectDesignFragment : Fragment() {
             when (args?.selectDesignData?.preRoute) {
                 "selectSource" -> findNavController().navigate(R.id.nav_issue_card_complete)
                 "valueConfirm" -> findNavController().navigate(R.id.nav_issue_card_by_code_select_way)
+                "balanceByCodeValueConfirm" -> {
+                    val action = IssueCardSelectDesignFragmentDirections.selectdesignToConfirm(args?.selectDesignPassData)
+                    findNavController().navigate(action)
+                }
+//                "balanceByCodeValueConfirm" ->
             }
         })
 

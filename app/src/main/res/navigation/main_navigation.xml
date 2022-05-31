@@ -100,10 +100,18 @@
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardSelectDesignFragment"
         android:label="Login"
         tools:layout="@layout/fragment_issue_card_select_design" >
+        <action
+            android:id="@+id/selectdesign_to_confirm"
+            app:destination="@id/nav_balance_by_code_confirm" />
         <argument
             android:name="select_design_data"
             android:defaultValue="@null"
             app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"
+            app:nullable="true" />
+        <argument
+            android:name="select_design_pass_data"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.BalanceSelectSourceConfirmData"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -117,10 +125,43 @@
         android:label="Login"
         tools:layout="@layout/fragment_balance_amount_menu" />
     <fragment
+        android:id="@+id/nav_balance_by_code_input"
+        android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeInputFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_balance_by_code_input" />
+    <fragment
+        android:id="@+id/nav_balance_value_confirm"
+        android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeConfirmValue"
+        android:label="Login"
+        tools:layout="@layout/fragment_balance_by_code_confirm_value" >
+        <action
+            android:id="@+id/action_confirm_to_select_design"
+            app:destination="@id/nav_issue_card_select_design" />
+    </fragment>
+    <fragment
         android:id="@+id/nav_balance_by_source_complete"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceBySourceCompleteFragment"
         android:label="Login"
         tools:layout="@layout/fragment_balance_by_source_complete" />
+    <fragment
+        android:id="@+id/nav_balance_by_code_complete"
+        android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeCompleteFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_balance_by_code_complete" />
+    <fragment
+        android:id="@+id/nav_balance_by_code_confirm"
+        android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeConfirmFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_balance_by_code_confirm" >
+        <action
+            android:id="@+id/action_confirm_to_select_design"
+            app:destination="@id/nav_issue_card_select_design" />
+        <argument
+            android:name="fragment_balance_amount_select_source_confirm"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.BalanceSelectSourceConfirmData"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_balance_amount_select_source"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceAmountByCodeSelectSourceFragment"
