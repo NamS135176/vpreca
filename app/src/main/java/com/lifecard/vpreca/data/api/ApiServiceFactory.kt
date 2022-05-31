@@ -32,5 +32,21 @@ class ApiServiceFactory {
             }
             return retrofit.create(ApiService::class.java)
         }
+
+        fun createGoogleVisionService(): GoogleVisionService {
+            val client = OkHttpClient.Builder()
+                .addInterceptor(HttpLoggingInterceptor().apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                })
+                .build()
+            val gson = GsonBuilder().create()
+            val retrofit = Retrofit.Builder().run {
+                client(client)
+                baseUrl("https://vision.googleapis.com/")
+                addConverterFactory(GsonConverterFactory.create(gson))
+                build()
+            }
+            return retrofit.create(GoogleVisionService::class.java)
+        }
     }
 }

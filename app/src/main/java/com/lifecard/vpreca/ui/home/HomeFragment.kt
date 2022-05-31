@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -74,7 +75,7 @@ class HomeFragment : Fragment() {
                 })
                 buttonLock.setOnClickListener(View.OnClickListener {
                     homeViewModel.inverseLockStatus(currentCreditCard, position)
-                    val toastMessage = when(currentCreditCard.isCardLock()) {
+                    val toastMessage = when (currentCreditCard.isCardLock()) {
                         false -> "ロックしました"
                         else -> "ロックを解除しました"
                     }
@@ -120,6 +121,8 @@ class HomeFragment : Fragment() {
         btnBalance.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
 
         btnIssueCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
+        //TODO test
+//        btnIssueCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_camera_ocr) })
 
         buttonSeeAllCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_list_vpreca) })
 
@@ -201,10 +204,14 @@ class HomeFragment : Fragment() {
         })
         setLightStatusBar()
 
-        binding.buttonAddNewCard.setOnClickListener(View.OnClickListener {
-            fragmentFindNavController().navigate(R.id.nav_issue_card_main)
-        })
 
+        val livedata = getNavigationResult("ocr_code")
+        livedata?.observe(viewLifecycleOwner, Observer { ocr ->
+            livedata.removeObservers(viewLifecycleOwner)
+            if (!ocr.isNullOrEmpty()) {
+                println("HomeFragment... get ocr code $ocr")
+            }
+        })
         return root
     }
 

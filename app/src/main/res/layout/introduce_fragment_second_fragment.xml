@@ -65,6 +65,7 @@
             android:paddingLeft="29dp"
             android:paddingRight="18dp"
             app:layout_constraintTop_toBottomOf="@+id/des">
+
             <com.lifecard.vpreca.ui.custom.MyTextInputLayout
                 android:id="@+id/username_layout"
                 android:layout_width="match_parent"
@@ -74,37 +75,19 @@
                 app:layout_constraintTop_toBottomOf="@id/logo">
 
                 <com.google.android.material.textfield.TextInputEditText
-
+                    android:id="@+id/text_code"
                     style="@style/TextInputEditTextFilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:hint="@string/introduce_second_input"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:insetTop="0dp"
                     android:insetBottom="0dp" />
             </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                style="@style/Widget.App.TextInputLayout.FilledBox"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="54dp"-->
-<!--                android:layout_weight="0.2"-->
-<!--                android:hint="@string/introduce_second_input"-->
-<!--                android:inputType="number"-->
-<!--                android:selectAllOnFocus="true">-->
-
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:backgroundTint="#fff"-->
-<!--                    android:inputType="number"-->
-<!--                    android:textColor="#a1a1a1"-->
-<!--                    android:textSize="16sp" />-->
-
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <ImageView
+                android:id="@+id/button_ocr_detection"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="0.8"

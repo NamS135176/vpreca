@@ -7,6 +7,7 @@ import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.api.ApiServiceFactory
+import com.lifecard.vpreca.data.api.GoogleVisionService
 import com.lifecard.vpreca.data.source.SecureStore
 import dagger.Module
 import dagger.Provides
@@ -64,6 +65,11 @@ class AppModule {
         secureStore: SecureStore
     ): UserManager {
         return UserManager(secureStore)
+    }
+
+    @Provides
+    fun provideGoogleVisionService(): GoogleVisionService {
+        return ApiServiceFactory.createGoogleVisionService()
     }
 
 }

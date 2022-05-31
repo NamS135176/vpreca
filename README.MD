@@ -13,3 +13,9 @@ save those file to root of project to build and run
 
 ## Deploygate link:
 - android dev: https://dply.me/jmfhf5
+
+
+## Generate debug keystore
+get sha1 from debug keystore: 
+
+keytool -list -v -keystore ./app/debugKeystore/debug.keystore -alias androiddebugkey -storepass android -keypass android
