@@ -13,7 +13,7 @@ class Constant {
         const val API_BASE_URL =
             "https://btpslgn3o5.execute-api.ap-southeast-1.amazonaws.com/staging/"
 
-        const val GOOGLE_VISION_API = "https://vision.googleapis.com/v1/"
+        const val GOOGLE_VISION_API = "https://vision.googleapis.com/"
 
         const val WEB_DIRECT_BASE_URL = "https://immense-beach-23070.herokuapp.com/LW01/%s.do"
     }

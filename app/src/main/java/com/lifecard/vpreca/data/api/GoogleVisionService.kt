@@ -7,7 +7,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface GoogleVisionService {
-    @POST("images:annotate")
+    @POST("v1/images:annotate")
     suspend fun detectOcr(
         @Query("key") gcpApiKey: String,
         @Body request: VisionImageRequest

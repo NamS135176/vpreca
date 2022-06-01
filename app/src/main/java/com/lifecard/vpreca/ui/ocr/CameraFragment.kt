@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentCameraBinding
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,7 +88,7 @@ class CameraFragment : Fragment() {
         viewModel.codeOcr.observe(viewLifecycleOwner, androidx.lifecycle.Observer { ocr ->
             //show toast
             when (ocr.isNullOrEmpty()) {
-                true -> showToast("Can not detect ocr", toastType = ToastType.Error)
+                true -> showAlertMessage(getString(R.string.camera_ocr_failure))
                 else -> {
                     setNavigationResult(ocr, "ocr_code")
                     findNavController().popBackStack()
@@ -95,9 +96,9 @@ class CameraFragment : Fragment() {
             }
         })
         viewModel.error.observe(viewLifecycleOwner, androidx.lifecycle.Observer { message ->
-            //show toast
+            //show alert error
             if (!message.isNullOrEmpty()) {
-                showToast(message, toastType = ToastType.Error)
+                showAlertMessage(getString(R.string.camera_ocr_failure))
             }
         })
         return binding.root
