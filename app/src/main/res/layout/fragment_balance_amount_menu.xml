@@ -19,6 +19,7 @@
             app:title="@{@string/balance_amount_menu_appbar_layout}" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/appbar_gift_third">
@@ -242,9 +243,23 @@
                     app:layout_constraintTop_toBottomOf="@+id/layout_single_card"
                     android:layout_height="140dp"
                     android:background="@android:color/transparent"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="64dp"
+            android:visibility="visible"
+            android:indeterminateDrawable="@drawable/loading"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

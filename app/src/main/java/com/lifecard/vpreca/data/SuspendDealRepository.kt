@@ -4,11 +4,16 @@ import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.SuspendDeal
 import com.lifecard.vpreca.utils.RequestHelper
+import dagger.Provides
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class SuspendDealRepository(private val apiService: ApiService, private val userManager: UserManager) {
+
+class SuspendDealRepository(
+    private val apiService: ApiService,
+    private val userManager: UserManager
+) {
     suspend fun getListSuspendDeal(): Result<List<SuspendDeal>> {
         return withContext(Dispatchers.IO) {
             try {

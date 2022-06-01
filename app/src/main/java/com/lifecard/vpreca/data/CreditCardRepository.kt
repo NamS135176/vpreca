@@ -4,6 +4,7 @@ import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.MemberInfo
+import com.lifecard.vpreca.data.model.SuspendDeal
 import com.lifecard.vpreca.utils.RequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
@@ -56,6 +57,20 @@ class CreditCardRepository(
                 println("CreditCardRepository... getCard has error $e")
                 e.printStackTrace()
                 Result.Error(IOException("Can not get card", e))
+            }
+        }
+    }
+    suspend fun getListSuspendDeal(): Result<List<SuspendDeal>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val suspendDealResponse = apiService.getListSuspendDeal(
+                    RequestHelper.createSuspendDealListRequest(memberNumber = userManager.memberNumber!!)
+                )
+                Result.Success(suspendDealResponse.brandPrecaApi.response.suspendDeal)
+            } catch (e: Exception) {
+                println("SuspendDealRepository... getListSuspendDeal has error $e")
+                e.printStackTrace()
+                Result.Error(IOException("Can not get list suspend", e))
             }
         }
     }

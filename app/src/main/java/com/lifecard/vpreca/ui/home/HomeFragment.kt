@@ -119,6 +119,7 @@ class HomeFragment : Fragment() {
         val textBalance = binding.textBalance
         val btnIssueCard = binding.buttonAddNewCard
         val btnBalance = binding.buttonCardNoBalance
+        val loading = binding.loading
 
         btnBalance.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
 
@@ -221,6 +222,47 @@ class HomeFragment : Fragment() {
                     }.create().show()
                 }
             })
+        homeViewModel.suspendDealResult.observe(
+            viewLifecycleOwner,
+            Observer { suspendDealResult ->
+                suspendDealResult ?: return@Observer
+                suspendDealResult.success?.let {
+                    println("BalanceAmountViewModel.suspendDealResult.observe success: ${suspendDealResult.success}")
+                    val sumBalance: Int = suspendDealResult.success.sumOf {
+                        try {
+                            if(it.suspendReasonType == "11" && it.adjustEndFlg == "0"){
+                                it.unadjustDifferenceAmount.toInt()
+                            }
+                            else 0
+                        } catch (e: Exception) {
+                            0
+                        }
+                    }
+                    if(sumBalance > 0){
+                        btnBalance.isEnabled = true
+                        btnBalance.visibility = View.VISIBLE
+                    }
+                }
+                suspendDealResult.error?.let {
+
+                    MaterialAlertDialogBuilder(requireContext()).apply {
+                        setPositiveButton("ok", null)
+                        setMessage(getString(it.messageResId))
+                    }.create().show()
+                }
+            })
+        homeViewModel.loading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> {
+                    loading.visibility = View.VISIBLE
+
+                }
+                else -> {
+                    loading.visibility = View.GONE
+
+                }
+            }
+        })
         setLightStatusBar()
         return root
     }
