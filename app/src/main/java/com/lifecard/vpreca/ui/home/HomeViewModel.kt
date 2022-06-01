@@ -12,6 +12,7 @@ import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
+import com.lifecard.vpreca.ui.listvpreca.CardInfoResult
 import com.lifecard.vpreca.utils.copyCardLockInverse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.lang.Exception
@@ -24,7 +25,9 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val _creditCardResult = MutableLiveData<CreditCardResult>()
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
-
+    private val _cardInfoResult = MutableLiveData<CardInfoResult>()
+    val cardInfoResult: LiveData<CardInfoResult> = _cardInfoResult
+    val creditCardSelect = MutableLiveData<CreditCard>()
     init {
         viewModelScope.launch {
             val result = creditCardRepository.getLatestCards(true)
@@ -57,4 +60,25 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun changeSelect(creditCard: CreditCard){
+        creditCardSelect.value = creditCard
+    }
+
+    fun creditCardSelectDataChanged(creditCard: CreditCard) {
+        viewModelScope.launch {
+            val res = creditCardRepository.getCard(creditCard.cardSchemeId, creditCard.precaNumber, creditCard.vcn)
+            if (res is Result.Success) {
+                _cardInfoResult.value = CardInfoResult(success = res.data)
+            } else if (res is Result.Error) {
+                when (res.exception) {
+                    is NoConnectivityException -> _cardInfoResult.value =
+                        CardInfoResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                    else -> _cardInfoResult.value =
+                        CardInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))
+                }
+            }
+        }
+    }
+
 }

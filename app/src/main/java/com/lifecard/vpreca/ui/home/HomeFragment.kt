@@ -23,6 +23,7 @@ import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 import com.lifecard.vpreca.ui.card.CardDetailBottomSheetDialog
+import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -72,7 +73,7 @@ class HomeFragment : Fragment() {
                 val currentCreditCard = adapter.getItem(position)
                 binding.listCard.currentCard = currentCreditCard
                 buttonInfo.setOnClickListener(View.OnClickListener {
-                    CardBottomSheetCustom(requireActivity(), currentCreditCard).show()
+                    homeViewModel.creditCardSelectDataChanged(currentCreditCard)
                 })
                 buttonLock.setOnClickListener(View.OnClickListener {
                     homeViewModel.inverseLockStatus(currentCreditCard, position)
@@ -201,6 +202,25 @@ class HomeFragment : Fragment() {
                 }.create().show()
             }
         })
+        homeViewModel.cardInfoResult.observe(
+            viewLifecycleOwner,
+            Observer { cardInfoResult ->
+                cardInfoResult ?: return@Observer
+                cardInfoResult.success?.let {
+                    CardBottomSheetCustom(
+                        requireActivity(),
+                        cardInfoResult.success,
+                    ).show()
+
+                }
+                cardInfoResult.error?.let {
+
+                    MaterialAlertDialogBuilder(requireContext()).apply {
+                        setPositiveButton("ok", null)
+                        setMessage(getString(it.messageResId))
+                    }.create().show()
+                }
+            })
         setLightStatusBar()
         return root
     }

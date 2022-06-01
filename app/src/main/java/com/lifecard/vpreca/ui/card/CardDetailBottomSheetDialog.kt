@@ -13,21 +13,23 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragmentDirections
+import com.lifecard.vpreca.utils.copyCardInfoLockInverse
 import com.lifecard.vpreca.utils.copyCardLockInverse
+import com.lifecard.vpreca.utils.isCardInfoLock
 import com.lifecard.vpreca.utils.isCardLock
 import showCustomToast
 
 class CardDetailBottomSheetDialog(
     private val activity: Activity,
-    private val creditCard: CreditCard
+    private val creditCard: CardInfo
 ) : BottomSheetDialog(activity) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        creditCard.isCardLock()
 
         val inflater = LayoutInflater.from(context)
         val bindingDialog =
@@ -58,8 +60,8 @@ class CardDetailBottomSheetDialog(
         })
 
         btnLock.setOnClickListener(View.OnClickListener {
-            val newCard = creditCard.copyCardLockInverse()
-            val toastMessage = when(newCard.isCardLock()) {
+            val newCard = creditCard.copyCardInfoLockInverse()
+            val toastMessage = when(newCard.isCardInfoLock()) {
                 true -> "ロックしました"
                 else -> "ロックを解除しました"
             }
@@ -72,19 +74,19 @@ class CardDetailBottomSheetDialog(
 
         })
 
-        btnUsage.setOnClickListener(View.OnClickListener {
-            dismiss()
-            val action =
-                ListVprecaFragmentDirections.actionToCardUsage(
-                    creditCard
-                )
-            val navController =
-                Navigation.findNavController(activity, R.id.nav_host_fragment_content_main)
-            navController.navigate(action)
-        })
+//        btnUsage.setOnClickListener(View.OnClickListener {
+//            dismiss()
+//            val action =
+//                ListVprecaFragmentDirections.actionToCardUsage(
+//                    creditCard
+//                )
+//            val navController =
+//                Navigation.findNavController(activity, R.id.nav_host_fragment_content_main)
+//            navController.navigate(action)
+//        })
 
         btnCopy.setOnClickListener(View.OnClickListener {
-            if (creditCard.isCardLock()) {
+            if (creditCard.isCardInfoLock()) {
                 MaterialAlertDialogBuilder(context).apply {
                     setMessage("ロックを解除してから\n" + "コピーしてください")
                     setNegativeButton("ok", null)

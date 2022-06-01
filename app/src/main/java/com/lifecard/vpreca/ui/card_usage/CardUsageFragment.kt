@@ -33,7 +33,6 @@ class CardUsageFragment : Fragment() {
 
     private val viewModel: CardUsageViewModel by viewModels()
     private var _binding: FragmentCardUsageBinding? = null
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!

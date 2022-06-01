@@ -1,12 +1,15 @@
 package com.lifecard.vpreca.data
 
 import com.lifecard.vpreca.data.api.ApiService
+import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.data.model.MemberInfo
 import com.lifecard.vpreca.utils.RequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import java.io.IOException
 
 class CreditCardRepository(
     private val apiService: ApiService,
@@ -34,6 +37,25 @@ class CreditCardRepository(
                 }
             } else {
                 latestCardsMutex.withLock { Result.Success(latestCards) }
+            }
+        }
+    }
+
+    suspend fun getCard(
+        cardSchemeId:String,
+        precaNumber: String,
+        vcn: String
+    ): Result<CardInfo> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val cardResponse = apiService.getCard(
+                    RequestHelper.createCardInfoRequest(memberNumber = userManager.memberNumber!!, cardSchemeId, precaNumber, vcn)
+                )
+                Result.Success(cardResponse.brandPrecaApi.response.cardInfo)
+            } catch (e: Exception) {
+                println("CreditCardRepository... getCard has error $e")
+                e.printStackTrace()
+                Result.Error(IOException("Can not get card", e))
             }
         }
     }

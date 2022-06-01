@@ -40,6 +40,15 @@ class IssueCardSourceAdapter(private var items: List<CreditCard>,private var sel
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.card = items[position]
         holder.binding.select = selected[position]
+        when (items[position].designId) {
+            "001" -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_first)
+            "002" -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_second)
+            "003" -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_third)
+            "004" -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_fourth)
+            "005" -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_fifth)
+            "006" -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_six)
+            "007" -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_seven)
+        }
     }
 
     override fun getItemCount() = items.size

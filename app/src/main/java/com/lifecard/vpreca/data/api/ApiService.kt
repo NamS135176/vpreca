@@ -14,11 +14,20 @@ interface ApiService {
         @Body memberSelectRequest: BrandRequest
     ): MemberResponse
 
+    @POST("CardSelReq")
+    suspend fun getCard(
+        @Body cardRequest: BrandRequest
+    ): CardInfoResponse
+
     @POST("CardListSelReq")
     suspend fun getListCards(
         @Body cardListRequest: BrandRequest
     ): CardResponse
 
+    @POST("SuspendDealSelReq")
+    suspend fun getListSuspendDeal(
+        @Body suspendListRequest: BrandRequest
+    ): SuspendDealResponse
 
     @POST("CardDealHisReq")
     suspend fun getCardUsageHistory(

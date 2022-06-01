@@ -12,7 +12,7 @@
 
         <variable
             name="card"
-            type="com.lifecard.vpreca.data.model.CreditCard" />
+            type="com.lifecard.vpreca.data.model.CardInfo" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -76,10 +76,10 @@
                         style="@style/Widget.App.Button.IconOnly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@{ModelExtKt.isCardLock(card) ? @drawable/ic_home_locked_status_background : @drawable/ic_home_unlock_status_background}"
+                        android:background="@{ModelExtKt.isCardInfoLock(card) ? @drawable/ic_home_locked_status_background : @drawable/ic_home_unlock_status_background}"
                         app:backgroundTint="@null"
                         app:cornerRadius="24dp"
-                        app:icon="@{ModelExtKt.isCardLock(card) ? @drawable/ic_home_lock : @drawable/ic_home_unlock}"
+                        app:icon="@{ModelExtKt.isCardInfoLock(card) ? @drawable/ic_home_lock : @drawable/ic_home_unlock}"
                         app:iconSize="20dp"
                         app:layout_constraintEnd_toStartOf="@id/button_reload"
                         app:layout_constraintHorizontal_chainStyle="spread"
@@ -128,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="19dp"
-                    android:alpha="@{ModelExtKt.isCardLock(card) ? 0.42F : 1F}"
+                    android:alpha="@{ModelExtKt.isCardInfoLock(card) ? 0.42F : 1F}"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:minHeight="0dp"
