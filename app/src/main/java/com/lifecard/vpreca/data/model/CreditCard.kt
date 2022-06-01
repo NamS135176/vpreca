@@ -93,6 +93,8 @@ data class CreditCard(
     val vcnExpirationDate: String,
     @SerializedName("vcnSecurityLockFlg")
     val vcnSecurityLockFlg: String?,
+    @SerializedName("securityCode")
+    val securityCode: String?,
 ) : Parcelable {
     override fun hashCode(): Int {
         return super.hashCode()

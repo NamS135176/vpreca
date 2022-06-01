@@ -6,6 +6,7 @@
         <import type="android.view.View" />
 
         <import type="com.lifecard.vpreca.utils.Converter" />
+
         <import type="com.lifecard.vpreca.utils.ModelExtKt" />
 
         <variable
@@ -60,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
-                android:text="@{Converter.convertCardValidThu(card.precaExpirationDate)}"
+                android:text="@string/card_expire_date"
                 android:textColor="@color/white"
                 android:textSize="9sp"
                 app:layout_constraintBottom_toTopOf="@id/card_username"
@@ -72,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="70dp"
                 android:layout_marginLeft="70dp"
-                android:text="@{card.vcn}"
+                android:text="@string/sercue_code"
                 android:textColor="@color/white"
                 android:textSize="9sp"
                 app:layout_constraintBottom_toBottomOf="@id/card_valid"

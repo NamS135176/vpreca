@@ -69,7 +69,6 @@
                 android:id="@+id/card_valid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -98,8 +97,7 @@
                 android:id="@+id/card_cvc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text="@{card.vcn}"
+                android:text="@{card.securityCode, default=``}"
                 android:textColor="@color/white"
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:textSize="14sp"
