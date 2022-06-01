@@ -9,6 +9,7 @@ import com.lifecard.vpreca.exception.NoConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
+import java.net.UnknownHostException
 
 
 class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
@@ -20,11 +21,19 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
             // Throwing our custom exception 'NoConnectivityException'
         }
         val request = chain.request()
-        val response = chain.proceed(request)
-        if (response.code() > 400) {
-            throw ApiException(statusCode = response.code())
+        try {
+            val response = chain.proceed(request)
+            if (response.code() > 400) {
+                throw ApiException(statusCode = response.code())
+            }
+            return response
+        } catch (e: UnknownHostException) {
+            throw NoConnectivityException()
+        } catch (e: IOException) {
+            throw NoConnectivityException()
+        } catch (e: Throwable) {
+            throw e
         }
-        return response
     }
 
     private val isConnected: Boolean

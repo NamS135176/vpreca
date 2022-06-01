@@ -8,7 +8,6 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import kotlinx.coroutines.launch
 import com.lifecard.vpreca.data.Result
-import com.lifecard.vpreca.data.SuspendDealRepository
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.exception.ErrorMessageException
@@ -53,7 +52,7 @@ class HomeViewModel @Inject constructor(
             } else if (result is Result.Error) {
                 when (result.exception) {
                     is NoConnectivityException -> _creditCardResult.value =
-                        CreditCardResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                        CreditCardResult(networkTrouble = true)
                     else -> _creditCardResult.value =
                         CreditCardResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
@@ -94,8 +93,8 @@ class HomeViewModel @Inject constructor(
                 _cardInfoResult.value = CardInfoResult(success = res.data)
             } else if (res is Result.Error) {
                 when (res.exception) {
-                    is NoConnectivityException -> _cardInfoResult.value =
-                        CardInfoResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                    is NoConnectivityException -> _creditCardResult.value =
+                        CreditCardResult(networkTrouble = true)
                     else -> _cardInfoResult.value =
                         CardInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
@@ -114,7 +113,7 @@ class HomeViewModel @Inject constructor(
             } else if (result is Result.Error) {
                 when (result.exception) {
                     is NoConnectivityException -> _suspendDealResult.value =
-                        SuspendDealResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                        SuspendDealResult(error = ErrorMessageException(R.string.error_no_internet_connection_content))
                     else -> _suspendDealResult.value =
                         SuspendDealResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }

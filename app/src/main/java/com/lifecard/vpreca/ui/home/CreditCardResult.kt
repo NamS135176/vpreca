@@ -6,4 +6,5 @@ import com.lifecard.vpreca.exception.ErrorMessageException
 data class CreditCardResult(
     val success: List<CreditCard>? = null,
     val error: ErrorMessageException? = null,
+    val networkTrouble: Boolean? = false
 )

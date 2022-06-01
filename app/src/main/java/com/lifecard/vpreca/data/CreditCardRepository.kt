@@ -65,7 +65,7 @@ class CreditCardRepository(
             } catch (e: Exception) {
                 println("CreditCardRepository... getCard has error $e")
                 e.printStackTrace()
-                Result.Error(IOException("Can not get card", e))
+                Result.Error(e)
             }
         }
     }
@@ -80,7 +80,7 @@ class CreditCardRepository(
             } catch (e: Exception) {
                 println("SuspendDealRepository... getListSuspendDeal has error $e")
                 e.printStackTrace()
-                Result.Error(IOException("Can not get list suspend", e))
+                Result.Error(e)
             }
         }
     }

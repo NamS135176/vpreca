@@ -485,7 +485,8 @@
 
     <!--    Error  -->
     <string name="error_default">Error</string>
-    <string name="error_no_internet_connection">No internet connection</string>
+    <string name="error_no_internet_connection_title">インターネットに接続できません。</string>
+    <string name="error_no_internet_connection_content">通信環境や端末の機内モードを設定をご確認の上、再度お試しください。</string>
     <!--  End error   -->
 
     <!--   FaceID setting  -->
@@ -516,4 +517,7 @@
     <string name="camera_ocr_success">読み取り完了</string>
     <string name="camera_ocr_failure">読み取りに失敗しました</string>
     <!--  Camera ocr end -->
+
+    <!--    -->
+    <string name="get_user_failure">Can not get user</string>
 </resources>

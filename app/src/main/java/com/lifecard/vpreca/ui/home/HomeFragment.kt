@@ -195,12 +195,12 @@ class HomeFragment : Fragment() {
                 }
             }
             creditCardResult.error?.let {
-                println("homeViewModel.creditCardResult.observe err: ${getString(it.messageResId!!)}")
-                //show dialog
-                MaterialAlertDialogBuilder(requireContext()).apply {
-                    setPositiveButton(R.string.button_ok, null)
-                    setMessage(getString(it.messageResId))
-                }.create().show()
+                showAlert(message = getString(it.messageResId))
+            }
+            creditCardResult.networkTrouble?.let {
+                if (it) {
+                    showInternetTrouble()
+                }
             }
         })
         homeViewModel.cardInfoResult.observe(
@@ -230,15 +230,14 @@ class HomeFragment : Fragment() {
                     println("BalanceAmountViewModel.suspendDealResult.observe success: ${suspendDealResult.success}")
                     val sumBalance: Int = suspendDealResult.success.sumOf {
                         try {
-                            if(it.suspendReasonType == "11" && it.adjustEndFlg == "0"){
+                            if (it.suspendReasonType == "11" && it.adjustEndFlg == "0") {
                                 it.unadjustDifferenceAmount.toInt()
-                            }
-                            else 0
+                            } else 0
                         } catch (e: Exception) {
                             0
                         }
                     }
-                    if(sumBalance > 0){
+                    if (sumBalance > 0) {
                         btnBalance.isEnabled = true
                         btnBalance.visibility = View.VISIBLE
                     }

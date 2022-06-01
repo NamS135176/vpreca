@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.*
 import com.lifecard.vpreca.data.UserManager
+import com.lifecard.vpreca.utils.showInternetTrouble
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -24,15 +25,18 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if (userManager.canCallApi && userManager.loginId != null && userManager.memberNumber != null) {
-            viewModel.user.observe(this, androidx.lifecycle.Observer { user ->
-                if (user != null) {
+            viewModel.splashResult.observe(this, androidx.lifecycle.Observer { splashResult ->
+                splashResult.user?.let { _ ->
                     navigateToMainScreen()
-                } else {
-                    showAlert("Can not get user")
                 }
-            })
-            viewModel.error.observe(this, Observer { error ->
-                if (error != null) showAlert(error)
+                splashResult.error?.let { error ->
+                    showAlert(getString(error.messageResId))
+                }
+                splashResult.networkTrouble?.let { networkError ->
+                    if (networkError) {
+                        showInternetTrouble()
+                    }
+                }
             })
             viewModel.getUser()
         } else {

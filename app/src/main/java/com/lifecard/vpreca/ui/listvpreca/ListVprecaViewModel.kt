@@ -39,7 +39,7 @@ class ListVprecaViewModel @Inject constructor(
             } else if (result is Result.Error) {
                 when (result.exception) {
                     is NoConnectivityException -> _creditCardResult.value =
-                        CreditCardResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                        CreditCardResult(error = ErrorMessageException(R.string.error_no_internet_connection_content))
                     else -> _creditCardResult.value =
                         CreditCardResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
@@ -61,7 +61,7 @@ class ListVprecaViewModel @Inject constructor(
             } else if (res is Result.Error) {
                 when (res.exception) {
                     is NoConnectivityException -> _cardInfoResult.value =
-                        CardInfoResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                        CardInfoResult(error = ErrorMessageException(R.string.error_no_internet_connection_content))
                     else -> _cardInfoResult.value =
                         CardInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }

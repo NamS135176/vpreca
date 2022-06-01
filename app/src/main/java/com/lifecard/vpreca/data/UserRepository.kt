@@ -17,7 +17,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                 Result.Success(loginResponse)
             } catch (e: Exception) {
                 println("LoginDataSource... login has error ${e}")
-                Result.Error(IOException("Error logging in", e))
+                Result.Error(e)
             }
         }
     }
@@ -30,7 +30,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                 Result.Success(loginResponse)
             } catch (e: Exception) {
                 println("LoginDataSource... login has error ${e}")
-                Result.Error(IOException("Error logging in", e))
+                Result.Error(e)
             }
         }
     }
@@ -53,7 +53,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
             } catch (e: Exception) {
                 println("UserRepository... getUser has error $e")
                 e.printStackTrace()
-                Result.Error(IOException("Can not get user", e))
+                Result.Error(e)
             }
         }
     }
