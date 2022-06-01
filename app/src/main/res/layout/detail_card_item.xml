@@ -9,7 +9,7 @@
 
         <variable
             name="card"
-            type="com.lifecard.vpreca.data.model.CreditCard" />
+            type="com.lifecard.vpreca.data.model.CardInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -37,7 +37,7 @@
                 android:id="@+id/card_logo"
                 android:layout_width="0dp"
                 android:layout_height="17dp"
-                android:background="@drawable/home_card_logo"
+                android:background="@{card.designId.equals(`001`) ? @drawable/logo_card : @drawable/home_card_logo}"
                 app:layout_constraintDimensionRatio="138:36"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="@{card.precaNumber}"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@id/card_valid_title"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/card_expire_date"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                 android:textSize="9sp"
                 android:gravity="top"
                 android:paddingBottom="10dp"
@@ -69,8 +69,9 @@
                 android:id="@+id/card_valid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                 android:textSize="14sp"
                 android:paddingLeft="4dp"
                 android:paddingStart="4dp"
@@ -87,7 +88,7 @@
                 android:layout_marginStart="70dp"
                 android:layout_marginLeft="70dp"
                 android:text="@string/sercue_code"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                 android:textSize="9sp"
                 android:paddingBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="@id/card_valid_title"
@@ -97,8 +98,9 @@
                 android:id="@+id/card_cvc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{card.securityCode, default=``}"
-                android:textColor="@color/white"
+
+                android:text="@{card.vcn}"
+                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:textSize="14sp"
                 android:paddingLeft="4dp"
@@ -115,7 +117,7 @@
                 android:text="@{card.cardNickname}"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="@color/white"
+                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                 android:textSize="18sp"
                 android:paddingLeft="0dp"
                 android:paddingStart="0dp"
@@ -129,7 +131,7 @@
                 android:id="@+id/card_type_logo"
                 android:layout_width="0dp"
                 android:layout_height="17dp"
-                android:background="@drawable/card_visa"
+                android:background="@{card.designId.equals(`001`) ? @drawable/visa_gift : @drawable/card_visa}"
                 app:layout_constraintBottom_toBottomOf="@id/card_username"
                 app:layout_constraintDimensionRatio="108:36"
                 app:layout_constraintEnd_toEndOf="parent"

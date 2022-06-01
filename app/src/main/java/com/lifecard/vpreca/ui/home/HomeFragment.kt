@@ -23,6 +23,7 @@ import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 import com.lifecard.vpreca.ui.card.CardDetailBottomSheetDialog
+import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -72,7 +73,7 @@ class HomeFragment : Fragment() {
                 val currentCreditCard = adapter.getItem(position)
                 binding.listCard.currentCard = currentCreditCard
                 buttonInfo.setOnClickListener(View.OnClickListener {
-                    CardBottomSheetCustom(requireActivity(), currentCreditCard).show()
+                    homeViewModel.creditCardSelectDataChanged(currentCreditCard)
                 })
                 buttonLock.setOnClickListener(View.OnClickListener {
                     homeViewModel.inverseLockStatus(currentCreditCard, position)
@@ -118,6 +119,7 @@ class HomeFragment : Fragment() {
         val textBalance = binding.textBalance
         val btnIssueCard = binding.buttonAddNewCard
         val btnBalance = binding.buttonCardNoBalance
+        val loading = binding.loading
 
         btnBalance.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
 
@@ -199,6 +201,66 @@ class HomeFragment : Fragment() {
                     setPositiveButton(R.string.button_ok, null)
                     setMessage(getString(it.messageResId))
                 }.create().show()
+            }
+        })
+        homeViewModel.cardInfoResult.observe(
+            viewLifecycleOwner,
+            Observer { cardInfoResult ->
+                cardInfoResult ?: return@Observer
+                cardInfoResult.success?.let {
+                    CardBottomSheetCustom(
+                        requireActivity(),
+                        cardInfoResult.success,
+                    ).show()
+
+                }
+                cardInfoResult.error?.let {
+
+                    MaterialAlertDialogBuilder(requireContext()).apply {
+                        setPositiveButton("ok", null)
+                        setMessage(getString(it.messageResId))
+                    }.create().show()
+                }
+            })
+        homeViewModel.suspendDealResult.observe(
+            viewLifecycleOwner,
+            Observer { suspendDealResult ->
+                suspendDealResult ?: return@Observer
+                suspendDealResult.success?.let {
+                    println("BalanceAmountViewModel.suspendDealResult.observe success: ${suspendDealResult.success}")
+                    val sumBalance: Int = suspendDealResult.success.sumOf {
+                        try {
+                            if(it.suspendReasonType == "11" && it.adjustEndFlg == "0"){
+                                it.unadjustDifferenceAmount.toInt()
+                            }
+                            else 0
+                        } catch (e: Exception) {
+                            0
+                        }
+                    }
+                    if(sumBalance > 0){
+                        btnBalance.isEnabled = true
+                        btnBalance.visibility = View.VISIBLE
+                    }
+                }
+                suspendDealResult.error?.let {
+
+                    MaterialAlertDialogBuilder(requireContext()).apply {
+                        setPositiveButton("ok", null)
+                        setMessage(getString(it.messageResId))
+                    }.create().show()
+                }
+            })
+        homeViewModel.loading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> {
+                    loading.visibility = View.VISIBLE
+
+                }
+                else -> {
+                    loading.visibility = View.GONE
+
+                }
             }
         })
         setLightStatusBar()

@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentListVprecaBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
@@ -37,7 +39,12 @@ class ListVprecaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentListVprecaBinding.inflate(inflater, container, false)
-
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_home)
+            }
+        })
         val btnBack = binding.appbarListVpreca.btnBack
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(com.lifecard.vpreca.R.id.nav_home) })
         val tvTotalAmount = binding.tvTotalAmount
@@ -66,10 +73,7 @@ class ListVprecaFragment : Fragment() {
                             adapter.setOnClickListener(object :
                                 ListVprecaAdapter.OnItemClickListener {
                                 override fun onItemClick(position: Int) {
-                                    CardBottomSheetCustom(
-                                        requireActivity(),
-                                        arrPolicy[position]
-                                    ).show()
+                                    listVprecaViewModel.creditCardSelectDataChanged(arrPolicy[position])
                                 }
 
                             })
@@ -86,6 +90,25 @@ class ListVprecaFragment : Fragment() {
                     }
                 }
                 creditCardResult.error?.let {
+                    MaterialAlertDialogBuilder(requireContext()).apply {
+                        setPositiveButton("ok", null)
+                        setMessage(getString(it.messageResId))
+                    }.create().show()
+                }
+            })
+
+        listVprecaViewModel.cardInfoResult.observe(
+            viewLifecycleOwner,
+            Observer { cardInfoResult ->
+                cardInfoResult ?: return@Observer
+                cardInfoResult.success?.let {
+                    println("homeViewModel.cardInfoResult.observe success: ${cardInfoResult.success}")
+                    CardBottomSheetCustom(
+                                requireActivity(),
+                                cardInfoResult.success,
+                            ).show()
+                }
+                cardInfoResult.error?.let {
 
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("ok", null)
@@ -93,6 +116,7 @@ class ListVprecaFragment : Fragment() {
                     }.create().show()
                 }
             })
+
         listVprecaViewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
                 true -> loading.visibility = View.VISIBLE

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.home.CreditCardResult
@@ -20,6 +21,12 @@ class ListVprecaViewModel @Inject constructor(
 ) : ViewModel() {
     private val _creditCardResult = MutableLiveData<CreditCardResult>()
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
+
+    private val _cardInfoResult = MutableLiveData<CardInfoResult>()
+    val cardInfoResult: LiveData<CardInfoResult> = _cardInfoResult
+
+    private val _creditCardSelect = MutableLiveData<CreditCard>()
+    val creditCardSelect : LiveData<CreditCard> = _creditCardSelect
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
     init {
@@ -40,4 +47,27 @@ class ListVprecaViewModel @Inject constructor(
             _loading.value = false
         }
     }
+
+    fun changeSelect(creditCard: CreditCard){
+        _creditCardSelect.value = creditCard
+    }
+
+    fun creditCardSelectDataChanged(creditCard: CreditCard) {
+        viewModelScope.launch {
+            _loading.value = true
+            val res = creditCardRepository.getCard(creditCard.cardSchemeId, creditCard.precaNumber, creditCard.vcn)
+            if (res is Result.Success) {
+                _cardInfoResult.value = CardInfoResult(success = res.data)
+            } else if (res is Result.Error) {
+                when (res.exception) {
+                    is NoConnectivityException -> _cardInfoResult.value =
+                        CardInfoResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                    else -> _cardInfoResult.value =
+                        CardInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))
+                }
+            }
+            _loading.value = false
+        }
+    }
+
 }

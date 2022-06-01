@@ -37,6 +37,31 @@ class RequestHelper {
             )
         }
 
+        fun createCardInfoRequest(
+            memberNumber: String,
+            cardSchemeId: String,
+            precaNumber: String,
+            vcn: String
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = CardInfoRequestContent(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        cardInfo = CardInfoRequestContentInfo(
+                            cardSchemeId = cardSchemeId,
+                            precaNumber = precaNumber,
+                            vcn = vcn
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.CardSelReq.value
+                    )
+                ),
+            )
+        }
+
         fun createCardListRequest(
             memberNumber: String,
             invalidCardResFlg: String = "0"
@@ -51,6 +76,23 @@ class RequestHelper {
                     ),
                     head = BaseHead(
                         messageType = MessageType.MemberSelReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createSuspendDealListRequest(
+            memberNumber: String
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = SuspendDealRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.SuspendDealSelReq.value
                     )
                 ),
             )

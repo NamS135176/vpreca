@@ -6,17 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
+import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
+import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment
+import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
+import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.WebDirectScreen
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class BalanceAmountMenuFragment : Fragment() {
+
+    companion object {
+        fun newInstance() = BalanceAmountMenuFragment()
+    }
+
     private var _binding: FragmentBalanceAmountMenuBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: BalanceAmountMenuViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -27,11 +41,13 @@ class BalanceAmountMenuFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentBalanceAmountMenuBinding.inflate(inflater, container, false)
-
+        val loading = binding.loading
+        val view = binding.view
         val btnBack = binding.appbarGiftThird.btnBack
         val btnToWeb = binding.buttonToWeb
         val btnBySource = binding.btnBalanceSelectSource
         val btnByCode = binding.btnBalanceByCode
+        val tvTotal = binding.tvTotalAmount
 
         btnByCode.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_by_code_input) })
 
@@ -54,6 +70,46 @@ class BalanceAmountMenuFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.nav_home)
+            }
+        })
+
+        viewModel.suspendDealResult.observe(
+            viewLifecycleOwner,
+            Observer { suspendDealResult ->
+                suspendDealResult ?: return@Observer
+                suspendDealResult.success?.let {
+                    println("BalanceAmountViewModel.suspendDealResult.observe success: ${suspendDealResult.success}")
+                    val sumBalance: Int = suspendDealResult.success.sumOf {
+                        try {
+                           if(it.suspendReasonType == "11" && it.adjustEndFlg == "0"){
+                               it.unadjustDifferenceAmount.toInt()
+                           }
+                            else 0
+                        } catch (e: Exception) {
+                            0
+                        }
+                    }
+                    tvTotal.text = Converter.convertCurrency(sumBalance)
+                }
+                suspendDealResult.error?.let {
+
+                    MaterialAlertDialogBuilder(requireContext()).apply {
+                        setPositiveButton("ok", null)
+                        setMessage(getString(it.messageResId))
+                    }.create().show()
+                }
+            })
+
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> {
+                    loading.visibility = View.VISIBLE
+                    view.visibility = View.GONE
+                }
+                else -> {
+                    loading.visibility = View.GONE
+                    view.visibility = View.VISIBLE
+                }
             }
         })
 
