@@ -88,10 +88,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password_layout" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_login_info"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_login_landline_phone"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:minHeight="0dp"
             android:text="@string/login_fragment_text_login_info"
             android:textColor="@color/white"
             android:textSize="12sp"
@@ -112,7 +116,7 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_login_info"
+            app:layout_constraintTop_toBottomOf="@+id/button_login_landline_phone"
             app:strokeColor="@color/white" />
 
         <com.google.android.material.button.MaterialButton
@@ -128,8 +132,8 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             app:backgroundTint="@android:color/transparent"
-            app:iconTint="@color/white"
             app:iconSize="27dp"
+            app:iconTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_login"

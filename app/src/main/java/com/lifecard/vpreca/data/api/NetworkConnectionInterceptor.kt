@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import androidx.core.content.ContextCompat.startActivity
 import com.lifecard.vpreca.exception.ApiException
+import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -23,7 +24,11 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
         val request = chain.request()
         try {
             val response = chain.proceed(request)
-            if (response.code() > 400) {
+            val code = response.code()
+            if (code == 500) {
+                //TODO need get internal server from response body
+                throw InternalServerException()
+            } else if (code > 400) {
                 throw ApiException(statusCode = response.code())
             }
             return response

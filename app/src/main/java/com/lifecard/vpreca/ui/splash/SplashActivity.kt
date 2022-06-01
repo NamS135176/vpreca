@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.*
 import com.lifecard.vpreca.data.UserManager
@@ -25,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if (userManager.canCallApi && userManager.loginId != null && userManager.memberNumber != null) {
-            viewModel.splashResult.observe(this, androidx.lifecycle.Observer { splashResult ->
+            viewModel.splashState.observe(this, androidx.lifecycle.Observer { splashResult ->
                 splashResult.user?.let { _ ->
                     navigateToMainScreen()
                 }

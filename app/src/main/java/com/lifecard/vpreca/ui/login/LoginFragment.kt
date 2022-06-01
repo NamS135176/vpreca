@@ -1,6 +1,9 @@
 package com.lifecard.vpreca.ui.login
 
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,12 +27,13 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
-import com.lifecard.vpreca.biometric.BiometricType
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
+import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LoginFragment : NoToolbarFragment() {
@@ -71,9 +75,26 @@ class LoginFragment : NoToolbarFragment() {
         val logoGift = binding.logoGift
         val signUpButton = binding.buttonSignup
         val btnForgotPass = binding.buttonForgotPassword
-        val tvLoginInfo = binding.textLoginInfo
+        val buttonLoginLandlinePhone = binding.buttonLoginLandlinePhone
 
-        tvLoginInfo.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_sms_verify) })
+//        buttonLoginLandlinePhone.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_sms_verify) })
+        buttonLoginLandlinePhone.setOnClickListener(View.OnClickListener {
+            MaterialAlertDialogBuilder(requireContext()).apply {
+                setPositiveButton(R.string.button_ok, DialogInterface.OnClickListener { _, _ ->
+                    val webUrl = "https://vpcevssl.lifecard.co.jp/LW01/LW0102OP01BL.do"
+                    val browserIntent =
+                        Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
+                    startActivity(browserIntent)
+//                    findNavController().navigate(
+//                        R.id.nav_webview,
+//                        WebViewFragment.createBundle(webUrl)
+//                    )
+                })
+                    .setNegativeButton(R.string.button_cancel, null)
+                setMessage(getString(R.string.alert_landline_phone))
+            }.create().show()
+        })
+
 
         btnForgotPass.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_forgot_input)

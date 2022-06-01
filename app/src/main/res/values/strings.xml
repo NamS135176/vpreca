@@ -36,7 +36,8 @@
     <string name="invalid_password">半角英数字8〜12文字で入力してください</string>
     <string name="login_failed">Login failed</string>
     <string name="title_activity_login">LoginActivity</string>
-
+    <string name="alert_landline_phone">固定電話を登録されている既存会員さまはブラウザ版で登録電話を携帯電話へ変更してください</string>
+    <!-- End Strings related to login -->
     <!-- Strings related to Home screen -->
     <string name="get_list_card_failure">Get list card failure</string>
     <string name="title_activity_fullscreen">FullscreenActivity</string>
@@ -46,7 +47,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--    Policy Screen-->
     <string name="title_appbar_policy">新規アカウント開設</string>
-    <string name="title_next_policy">キャンセル</string>
+    <string name="title_next_policy">@string/button_cancel</string>
     <string name="confirm_policy">上記全ての項目に同意する</string>
     <string name="btn_next_policy">次へ</string>
     <string name="policy_des">以下の内容をよくお読みのうえ、チェックボックスにチェックをして、「次へ」をタップしてください</string>
@@ -56,7 +57,7 @@
     <!--    Phone Screen-->
     <string name="phone_back">戻る</string>
     <string name="title_appbar_phone">新規アカウント開設</string>
-    <string name="title_next_phone">キャンセル</string>
+    <string name="title_next_phone">@string/button_cancel</string>
     <string name="btn_next_phone">次へ</string>
     <string name="phone_title">電話番号登録</string>
     <string name="phone_des_top">Vプリカアカウントを作成するにはSMS（ショートメールサービス）による認証が必要です。</string>
@@ -328,7 +329,7 @@
     <string name="logout">ログアウト</string>
     <string name="drawer_header_menu" translatable="false">メニュー</string>
     <string name="close">閉じる</string>
-    <string name="cancel">キャンセル</string>
+    <string name="cancel">@string/button_cancel</string>
     <string name="title_webview">カードを買う</string>
     <string name="card_usage_balance">ご利用可能残高</string>
     <string name="card_usage_number">カード番号</string>
@@ -336,6 +337,8 @@
     <string name="my_page_button_card_no_balance">残高不足のカードがあります</string>
     <string name="my_page_card_locked">ロック中</string>
     <string name="button_ok">はい</string>
+    <string name="button_cancel">キャンセル</string>
+
     <string name="login_fragment_text_login_info">固定電話をご登録の方へのご案内</string>
 
     <!--    Card Usage-->
@@ -345,7 +348,7 @@
     <string name="bod_dialog_title">会員情報の変更</string>
     <string name="bod_dialog_des">ご登録情報を変更する場合は、以下の項目を入力のうえ、「変更」ボタンをタップしてください。</string>
     <string name="bod_dialog_input_title">生年月日</string>
-    <string name="bod_dialog_cancel_btn">キャンセル</string>
+    <string name="bod_dialog_cancel_btn">@string/button_cancel</string>
     <string name="bod_dialog_submit_btn">変更</string>
     <!--    Birth of Date Dialog-->
 
