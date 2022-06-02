@@ -104,10 +104,9 @@ class LoginFragment : NoToolbarFragment() {
             findNavController().navigate(R.id.nav_policy)
         })
 
-        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
-            loginButton.isEnabled =
-                loginFormState.usernameError == null && loginFormState.passwordError == null
-            println("loginViewModel.validForm.observe... usernameError: ${loginFormState.usernameError} - passwordError: ${loginFormState.passwordError} ")
+        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { isValid ->
+            loginButton.isEnabled = isValid
+            loginButton.alpha = if (isValid) 1.0f else 0.65f
         })
         loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
             usernameLayout.error = try {
@@ -159,7 +158,12 @@ class LoginFragment : NoToolbarFragment() {
         savedUsername?.let {
             usernameEditText.text = it.toEditable()
         }
-        usernameEditText.doAfterTextChanged { text -> loginViewModel.usernameDataChanged(text = text.toString()) }
+        usernameEditText.doAfterTextChanged {
+            loginViewModel.checkValidForm(
+                username = usernameEditText.text.toString(),
+                password = passwordEditText.text.toString()
+            )
+        }
         usernameEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 //focus to password field
@@ -168,7 +172,12 @@ class LoginFragment : NoToolbarFragment() {
             false
         }
 
-        passwordEditText.doAfterTextChanged { text -> loginViewModel.passwordDataChanged(text = text.toString()) }
+        passwordEditText.doAfterTextChanged {
+            loginViewModel.checkValidForm(
+                username = usernameEditText.text.toString(),
+                password = passwordEditText.text.toString()
+            )
+        }
         passwordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(

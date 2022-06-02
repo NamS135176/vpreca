@@ -104,7 +104,6 @@ class RegexUtils {
         }
 
         fun isMobilePhone(phone: String): Boolean {
-//            return Pattern.compile(RegexMobilePhone).matcher(phone).matches()
             return Regex(RegexMobilePhone).matches(phone)
         }
     }
