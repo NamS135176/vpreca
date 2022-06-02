@@ -10,7 +10,7 @@
 
         <variable
             name="card"
-            type="com.lifecard.vpreca.data.model.BalanceSelectSourceConfirmData" />
+            type="com.lifecard.vpreca.data.model.SelectSourceConfirmData" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"

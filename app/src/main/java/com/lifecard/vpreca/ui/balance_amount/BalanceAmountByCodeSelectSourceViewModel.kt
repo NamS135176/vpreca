@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.SuspendDealRepository
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BalanceAmountByCodeSelectSourceViewModel @Inject constructor(
     private val creditCardRepository: CreditCardRepository,
+    private val suspendDealRepository: SuspendDealRepository
 ) : ViewModel() {
     private val _creditCardResult = MutableLiveData<CreditCardResult>()
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
@@ -46,4 +48,6 @@ class BalanceAmountByCodeSelectSourceViewModel @Inject constructor(
             _loading.value = false
         }
     }
+
+
 }

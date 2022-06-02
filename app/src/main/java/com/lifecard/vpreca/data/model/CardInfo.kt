@@ -89,6 +89,8 @@ data class CardInfo(
     val vcn: String,
     @SerializedName("vcnCardId")
     val vcnCardId: String,
+    @SerializedName("vcnName")
+    val vcnName: String,
     @SerializedName("vcnExpirationDate")
     val vcnExpirationDate: String,
     @SerializedName("vcnSecurityLockFlg")

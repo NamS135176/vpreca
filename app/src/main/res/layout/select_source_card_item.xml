@@ -6,7 +6,7 @@
         <import type="android.view.View" />
 
         <import type="com.lifecard.vpreca.utils.Converter" />
-
+        <import type="com.lifecard.vpreca.utils.ModelExtKt" />
         <variable
             name="card"
             type="com.lifecard.vpreca.data.model.CreditCard" />
@@ -50,7 +50,7 @@
                     android:id="@+id/card_logo"
                     android:layout_width="0dp"
                     android:layout_height="8dp"
-                    android:background="@drawable/logo_card"
+                    android:background="@{card.designId.equals(`001`) ? @drawable/logo_card : @drawable/home_card_logo}"
                     android:contentDescription="@string/card_expire_date"
                     app:layout_constraintDimensionRatio="138:36"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -63,8 +63,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:text="@{card.precaNumber}"
-                    android:textColor="@color/primary"
+                    android:text="@{ModelExtKt.isCardLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"
+                    android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toTopOf="@id/card_expire_title"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -76,7 +76,7 @@
                     android:layout_marginBottom="2dp"
                     android:gravity="top"
                     android:text="@string/card_expire_date"
-                    android:textColor="@color/primary"
+                    android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                     android:textSize="8sp"
                     app:layout_constraintBottom_toTopOf="@id/card_username"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -92,7 +92,7 @@
                     android:paddingRight="0dp"
 
                     android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"
-                    android:textColor="@color/primary"
+                    android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                     android:textSize="10sp"
                     app:layout_constraintBottom_toTopOf="@id/card_username"
                     app:layout_constraintStart_toEndOf="@+id/card_expire_title" />
@@ -109,7 +109,7 @@
                     android:paddingEnd="40dp"
                     android:paddingRight="40dp"
                     android:text="@{card.cardNickname}"
-                    android:textColor="@color/primary"
+                    android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -118,7 +118,7 @@
                     android:id="@+id/card_type_logo"
                     android:layout_width="0dp"
                     android:layout_height="9dp"
-                    android:background="@drawable/visa_gift"
+                    android:background="@{card.designId.equals(`001`) ? @drawable/visa_gift : @drawable/card_visa}"
                     android:contentDescription="@string/card_expire_date"
                     app:layout_constraintBottom_toBottomOf="@id/card_username"
                     app:layout_constraintDimensionRatio="108:36"

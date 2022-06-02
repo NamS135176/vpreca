@@ -385,7 +385,7 @@
                 android:layout_marginBottom="32dp"
                 android:enabled="true"
                 android:paddingVertical="11dp"
-                android:text="確認"
+                android:text="@string/change_info_data_btn"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:cornerRadius="25dp"

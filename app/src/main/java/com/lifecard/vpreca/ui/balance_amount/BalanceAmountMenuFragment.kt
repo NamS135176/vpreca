@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.BalanceTotalRemain
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
@@ -50,7 +51,7 @@ class BalanceAmountMenuFragment : Fragment() {
         val btnBySource = binding.btnBalanceSelectSource
         val btnByCode = binding.btnBalanceByCode
         val tvTotal = binding.tvTotalAmount
-
+        var totalRemain = 0
         btnByCode.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_by_code_input) })
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
@@ -59,7 +60,14 @@ class BalanceAmountMenuFragment : Fragment() {
                 findNavController().navigate(R.id.nav_home)
             }
         })
-        btnBySource.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_select_source) })
+        btnBySource.setOnClickListener(View.OnClickListener {
+            val data = BalanceTotalRemain(totalRemain.toString())
+            val action =
+                BalanceAmountMenuFragmentDirections.actionMenuToSelectsource(
+                    data
+                )
+            findNavController().navigate(action)
+        })
 
         btnToWeb.setOnClickListener(View.OnClickListener {
             findNavController().navigate(
@@ -92,6 +100,7 @@ class BalanceAmountMenuFragment : Fragment() {
                             0
                         }
                     }
+                    totalRemain = sumBalance
                     tvTotal.text = Converter.convertCurrency(sumBalance)
                 }
                 suspendDealResult.error?.let { error ->

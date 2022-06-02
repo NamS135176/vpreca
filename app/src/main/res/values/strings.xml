@@ -320,6 +320,7 @@
     <string name="change_info_input_first_mail_setting">メールアドレス1で受け取る</string>
     <string name="change_info_input_second_mail_setting">メールアドレス2で受け取る</string>
     <string name="change_info_input_magazine_setting_title">メールマガジン</string>
+    <string name="change_info_input_magazine2_setting_title">受け取らない</string>
     <!--    Change Info Confirm-->
     <string name="change_info_confirm_title">変更内容確認</string>
     <string name="change_info_confirm_des">入力した項目に誤りがないか確認してください。</string>

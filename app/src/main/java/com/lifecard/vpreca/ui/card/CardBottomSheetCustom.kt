@@ -218,6 +218,7 @@ class CardBottomSheetCustom(
             cardInfo.useLimit,
             cardInfo.vcn,
             cardInfo.vcnCardId,
+            cardInfo.vcnName,
             cardInfo.vcnExpirationDate,
             cardInfo.vcnSecurityLockFlg
         )
