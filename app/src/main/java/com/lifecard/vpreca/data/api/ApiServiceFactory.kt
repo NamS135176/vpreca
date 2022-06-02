@@ -2,6 +2,7 @@ package com.lifecard.vpreca.data.api
 
 import android.content.Context
 import com.google.gson.GsonBuilder
+import com.lifecard.vpreca.BuildConfig
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.utils.Constant
@@ -34,14 +35,17 @@ class ApiServiceFactory {
                         chain.proceed(chain.request())
                     }
                 })
-                .addInterceptor(HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BODY
-                })
+                .apply {
+                    if (BuildConfig.DEBUG) {
+                        addInterceptor(HttpLoggingInterceptor().apply {
+                            level = HttpLoggingInterceptor.Level.BODY
+                        })
+                    }
+                }
                 .addInterceptor(NetworkConnectionInterceptor(appContext))
                 .authenticator(TokenAuthenticator(appContext, secureStore))
                 .build()
             val gson = GsonBuilder()
-//                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssSSS")
                 .setDateFormat("yyyyMMddHHmmss")
                 .create()
             val retrofit = Retrofit.Builder().run {
@@ -54,11 +58,13 @@ class ApiServiceFactory {
         }
 
         fun createGoogleVisionService(): GoogleVisionService {
-            val client = OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BODY
-                })
-                .build()
+            val client = OkHttpClient.Builder().apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    })
+                }
+            }.build()
             val gson = GsonBuilder().create()
             val retrofit = Retrofit.Builder().run {
                 client(client)
