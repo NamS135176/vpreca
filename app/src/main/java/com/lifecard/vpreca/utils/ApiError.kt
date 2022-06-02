@@ -82,6 +82,14 @@ class ApiError {
             //end receipt number authentication
         )
 
+        val AP1108_memberListError = mapOf(
+            //member list error: 外部インタフェース定義書(IFBPAP1107_受取番号認証).pdf
+            "1108101" to "要求電文で連携された会員が存在しない場合",
+            "1108102" to "要求電文で連携された会員が会員情報取得上限件数（プロパティ）を超えた場合",
+            //end member list error
+        )
+
+
         val AP1202_cardUsageHistoryQueryError = mapOf(
             //card usage history inquiry: 外部インタフェース定義書(IFBPAP1202_カード利用履歴照会).pdf
             "1202101" to "会員情報が存在しません。",
@@ -129,6 +137,46 @@ class ApiError {
             "2105105" to "ACS認証がログインIDを使用する場合、変更されたログインID+パスワードの桁数が3Dパスワードの規定値の桁数を超えています。",
             "2105106" to "ブランドスキーム情報が取得できません。",
             //end Password reset
+        )
+
+        val AP2113_MobileConfirmSendRequestError = mapOf(
+            //Mobile confirm send request: 外部インタフェース定義書(IFBPAP2113_携帯番号確認依頼).xls
+            "2113101" to "要求電文で連携された携帯番号の確認依頼回数が上限回数を超えている場合",
+            "2113102" to "ブランドスキーム外部認証機関設定情報が存在しない場合",
+            "2113103" to "オープン化メール定義情報が存在しない場合",
+            "2113104" to "SMS認証依頼にてエラーが発生した場合",
+            "9999903" to "外部認証設定情報が存在しない場合",
+            //end Mobile confirm send request
+        )
+        val AP2114_MobileConfirmRequestError = mapOf(
+            //Mobile Confirm Req: 外部インタフェース定義書(IFBPAP2114_携帯番号確認).xls
+            "2113101" to "要求電文で連携された携帯番号の確認依頼回数が上限回数を超えている場合",
+            "2113102" to "ブランドスキーム外部認証機関設定情報が存在しない場合",
+            "2113103" to "オープン化メール定義情報が存在しない場合",
+            "2113104" to "SMS認証依頼にてエラーが発生した場合",
+            "9999903" to "外部認証設定情報が存在しない場合",
+            //end Mobile Confirm Req
+        )
+
+        val AP2115_MailConfirmSendReqError = mapOf(
+            //Mail Confirm Send Req: 外部インタフェース定義書(IFBPAP2115_メールアドレス確認依頼).xls
+            "2115101" to "要求電文で連携された会員が存在しない場合",
+            "2115102" to "要求電文で連携された会員が有効でない場合",
+            "2115103" to "要求電文で連携された会員のメールアドレスが存在しない場合",
+            "2115104" to "要求電文で連携されたメールアドレス又は会員番号に紐づくメールアドレスの確認依頼回数が上限回数を超えている場合",
+            "9999903" to "外部認証設定情報が存在しない場合",
+            //end Mail Confirm Send Req
+        )
+
+        val AP2116_MailConfirmReqError = mapOf(
+            //Mail Confirm Req: 外部インタフェース定義書(IFBPAP2116_メールアドレス確認).xls
+            "2116101" to "連絡先確認履歴が存在しない場合",
+            "2116102" to "要求電文で連携された確認コードが既に、認証済みの場合",
+            "2116103" to "要求電文で連携された確認コードがロックされている場合",
+            "2116104" to "要求電文で連携された確認コードがコード有効時間を超過している場合",
+            "2116105" to "要求電文で連携された確認コードが不一致の場合",
+            "9999903" to "外部認証設定情報の閾値情報が取得できない場合",
+            //end Mail Confirm Req
         )
 
         val AP2201_cardLinkRegistrationError = mapOf(
@@ -285,7 +333,7 @@ class ApiError {
             "CardSelReq" to AP1105_cardDetailQueryError,
             "SuspendDealSelReq" to AP1106_pendingTransactionInquiryQueryError,
             "GiftNumberAuthReq" to AP1107_reciptNumberAuthenticationError,
-//            "MemberListSelReq" to AP1108//check,
+            "MemberListSelReq" to AP1108_memberListError,
             "CardDealHisReq" to AP1202_cardUsageHistoryQueryError,
 //            "FeeSelReq" to AP1401,//don't have error
             "CardDesignSelReq" to AP1501_cardDesignError,
@@ -293,10 +341,10 @@ class ApiError {
             "MemberUpdReq" to AP2102_memberInformationChangeError,
             "PasswordResetReq" to AP2104_passwordResetError,
             "PasswordUpdReq" to AP2105_passwordChangeError,
-//            "CellNumCertSendReq" to AP2113 //check,
-//            "TelNumberCertReq" to AP2114//check,
-//            "MailAddrCertSendReq" to AP2115//check,
-//            "MailAddrCertReq" to AP2116//check,
+            "MobileConfirmSendReq" to AP2113_MobileConfirmSendRequestError //check,
+            "MobileConfirmReq" to AP2114_MobileConfirmRequestError//check,
+            "MailConfirmSendReq" to AP2115_MailConfirmSendReqError//check,
+            "MailConfirmReq" to AP2116_MailConfirmReqError//check,
             "CardRelationRegReq" to AP2201_cardLinkRegistrationError,
             "CardUpdReq" to AP2202_cardInformationChangeError,
             "CardRepublishReq" to AP2206_cardReissueError,
