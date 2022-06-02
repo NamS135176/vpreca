@@ -62,6 +62,67 @@ class RequestHelper {
             )
         }
 
+        fun createRepublishCardRequest(
+            memberNumber: String,
+            cardSchemeId: String,
+            precaNumber: String,
+            vcn: String,
+            cooperatorNumber:String?
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = CardRepublishRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        cardInfo = CardRepublishRequestContentInfo(
+                            cardSchemeId = cardSchemeId,
+                            precaNumber = precaNumber,
+                            vcn = vcn,
+                            cooperatorNumber = cooperatorNumber
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.LoginReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createUpdateCardRequest(
+            memberNumber: String,
+            creditCard: CreditCard
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = UpdateCardRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        cardInfo = CardInfoRequestContentInfo(
+                            cardSchemeId = creditCard.cardSchemeId,
+                            precaNumber = creditCard.precaNumber,
+                            vcn = creditCard.vcn
+                        ),
+                        changeInfo = UpdateCardRequestContentInfo(
+                            nickName = NickNameContent(cardNickname = creditCard.cardNickname),
+                            autoCharge = AutoChargeContent(
+                                autoChargeFlg = creditCard.autoChargeFlg,
+                                autoChargeThereshold = creditCard.autoChargeThereshold,
+                                autoChargeAmount = creditCard.autoChargeAmount
+                            )
+                        ),
+                        securityLock = SecurityLockContent(
+                            vcnSecurityLockFlg = creditCard.vcnSecurityLockFlg
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.CardUpdReq.value
+                    )
+                ),
+            )
+        }
+
         fun createCardListRequest(
             memberNumber: String,
             invalidCardResFlg: String = "0"

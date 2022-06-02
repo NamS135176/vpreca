@@ -70,15 +70,39 @@ class CreditCardRepository(
         }
     }
 
-    suspend fun getListSuspendDeal(): Result<List<SuspendDeal>> {
+    suspend fun updateCard(creditCard: CreditCard): Result<CreditCard> {
         return withContext(Dispatchers.IO) {
             try {
-                val suspendDealResponse = apiService.getListSuspendDeal(
-                    RequestHelper.createSuspendDealListRequest(memberNumber = userManager.memberNumber!!)
+                val updateCardResponse = apiService.updateCard(
+                    RequestHelper.createUpdateCardRequest(
+                        memberNumber = userManager.memberNumber!!,
+                        creditCard
+                    )
                 )
-                Result.Success(suspendDealResponse.brandPrecaApi.response.suspendDeal)
+                Result.Success(updateCardResponse.brandPrecaApi.response.cardInfo)
             } catch (e: Exception) {
-                println("SuspendDealRepository... getListSuspendDeal has error $e")
+                println("CreditCardRepository... update card has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
+
+    suspend fun republishCard(creditCard: CreditCard): Result<CreditCard> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val republishCardResponse = apiService.republishCard(
+                    RequestHelper.createRepublishCardRequest(
+                        memberNumber = userManager.memberNumber!!,
+                        creditCard.cardSchemeId,
+                        creditCard.precaNumber,
+                        creditCard.vcn,
+                        creditCard.cooperatorNumber
+                    )
+                )
+                Result.Success(republishCardResponse.brandPrecaApi.response.cardInfo)
+            } catch (e: Exception) {
+                println("CreditCardRepository... republish card has error $e")
                 e.printStackTrace()
                 Result.Error(e)
             }

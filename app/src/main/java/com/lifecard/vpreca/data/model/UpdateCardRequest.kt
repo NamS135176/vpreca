@@ -37,5 +37,5 @@ data class AutoChargeContent(
 
 data class SecurityLockContent(
     @SerializedName("vcnSecurityLockFlg")
-    val vcnSecurityLockFlg: String,
+    val vcnSecurityLockFlg: String?,
 )

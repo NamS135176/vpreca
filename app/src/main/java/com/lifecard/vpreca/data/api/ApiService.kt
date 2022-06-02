@@ -36,7 +36,12 @@ interface ApiService {
 
     @POST("CardUpdReq")
     suspend fun updateCard(
-        @Body cardListRequest: BrandRequest
+        @Body updateCardRequest: BrandRequest
+    ): UpdateCardResponse
+
+    @POST("CardRepublishReq")
+    suspend fun republishCard(
+        @Body cardRepublishRequest: BrandRequest
     ): UpdateCardResponse
 
     @GET("challenge")

@@ -85,6 +85,23 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun updateList(creditCard: CreditCard, position: Int) {
+        viewModelScope.launch {
+            //need implement later
+            try {
+                val result = _creditCardResult.value
+                result?.success?.let {
+                    val newList = ArrayList(it)
+                    newList[position] = creditCard
+                    _creditCardResult.value = CreditCardResult(success = newList)
+                }
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+
     fun changeSelect(creditCard: CreditCard) {
         creditCardSelect.value = creditCard
     }

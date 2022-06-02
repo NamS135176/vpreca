@@ -7,8 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.SuspendDealRepository
+import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
+import com.lifecard.vpreca.ui.listvpreca.CardInfoResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BalanceAmountMenuViewModel @Inject constructor(
     private val creditCardRepository: CreditCardRepository,
+    private val suspendDealRepository: SuspendDealRepository
 ) : ViewModel() {
     private val _suspendDealResult = MutableLiveData<SuspendDealResult>()
     val suspendDealResult: LiveData<SuspendDealResult> = _suspendDealResult
@@ -25,14 +29,19 @@ class BalanceAmountMenuViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _loading.value = true
-            val result = creditCardRepository.getListSuspendDeal()
+            val result = suspendDealRepository.getListSuspendDeal()
 
             if (result is Result.Success) {
                 _suspendDealResult.value = SuspendDealResult(success = result.data)
             } else if (result is Result.Error) {
                 when (result.exception) {
                     is NoConnectivityException -> _suspendDealResult.value =
-                        SuspendDealResult(error = ErrorMessageException(R.string.error_no_internet_connection_content))
+                        SuspendDealResult(networkTrouble = true)
+                    is ApiException -> SuspendDealResult(
+                        error = ErrorMessageException(
+                            errorMessage = result.exception.message
+                        )
+                    )
                     else -> _suspendDealResult.value =
                         SuspendDealResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }

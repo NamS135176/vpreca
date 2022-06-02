@@ -11,13 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentListVprecaBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
-import com.lifecard.vpreca.ui.card.CardDetailBottomSheetDialog
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -108,6 +106,7 @@ class ListVprecaFragment : Fragment() {
                 cardInfoResult ?: return@Observer
                 cardInfoResult.success?.let {
                     println("homeViewModel.cardInfoResult.observe success: ${cardInfoResult.success}")
+
                     CardBottomSheetCustom(
                         requireActivity(),
                         cardInfoResult.success,
