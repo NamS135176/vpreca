@@ -2,12 +2,10 @@ package com.lifecard.vpreca.utils
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.AlertDialogFragment
-import com.lifecard.vpreca.base.LoadingDialogFragment
 
-fun AppCompatActivity.showAlert(title: String? = null, message: String): Fragment? = try {
+fun AppCompatActivity.showPopupMessage(title: String? = null, message: String): Fragment? = try {
     val supportFragmentManager = supportFragmentManager
     var fragment =
         supportFragmentManager.findFragmentByTag(AlertDialogFragment.FRAGMENT_TAG)
@@ -36,7 +34,7 @@ fun AppCompatActivity.hideAlert() = try {
 }
 
 fun AppCompatActivity.showInternetTrouble(): Fragment? {
-    return showAlert(
+    return showPopupMessage(
         title = getString(R.string.error_no_internet_connection_title),
         message = getString(R.string.error_no_internet_connection_content)
     )

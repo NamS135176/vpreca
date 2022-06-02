@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -22,8 +21,6 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
-import com.lifecard.vpreca.ui.card.CardDetailBottomSheetDialog
-import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -196,8 +193,8 @@ class HomeFragment : Fragment() {
             }
             creditCardResult.error?.let { error ->
 
-                error.messageResId?.let { showAlert(message = getString(it)) }
-                error.message?.let { showAlert(message = it) }
+                error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                error.message?.let { showPopupMessage(message = it) }
             }
             creditCardResult.networkTrouble?.let {
                 if (it) {
