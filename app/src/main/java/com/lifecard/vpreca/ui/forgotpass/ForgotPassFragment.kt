@@ -108,7 +108,7 @@ class ForgotPassFragment : Fragment() {
         }
 
         val list = mutableListOf(
-            "選択してください？",
+            "選択してください",
             "Male",
             "Female",
         )
@@ -117,28 +117,28 @@ class ForgotPassFragment : Fragment() {
             android.R.layout.simple_spinner_item,
             list
         ) {
-            override fun getDropDownView(
-                position: Int,
-                convertView: View?,
-                parent: ViewGroup
-            ): View {
-                val view: TextView = super.getDropDownView(
-                    position,
-                    convertView,
-                    parent
-                ) as TextView
-                // set selected item style
-                if (position == spinnerQuestion.selectedItemPosition && position != 0) {
-                    view.background = ColorDrawable(Color.parseColor("#F7E7CE"))
-                    view.setTextColor(Color.parseColor("#333399"))
-                }
-
-                // make hint item color gray
-                if (position == 0) {
-                    view.setTextColor(Color.LTGRAY)
-                }
-                return view
-            }
+//            override fun getDropDownView(
+//                position: Int,
+//                convertView: View?,
+//                parent: ViewGroup
+//            ): View {
+//                val view: TextView = super.getDropDownView(
+//                    position,
+//                    convertView,
+//                    parent
+//                ) as TextView
+//                // set selected item style
+//                if (position == spinnerQuestion.selectedItemPosition && position != 0) {
+//                    view.background = ColorDrawable(Color.parseColor("#F7E7CE"))
+//                    view.setTextColor(Color.parseColor("#333399"))
+//                }
+//
+//                // make hint item color gray
+//                if (position == 0) {
+//                    view.setTextColor(Color.LTGRAY)
+//                }
+//                return view
+//            }
 
             override fun isEnabled(position: Int): Boolean {
                 return position != 0
@@ -146,25 +146,10 @@ class ForgotPassFragment : Fragment() {
         }
         spinnerQuestion.adapter = adapter
 
-
-        val afterTextChangedListener = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                viewModel.dateDataChanged(text = s.toString())
-            }
-        }
-
         viewModel.validForm.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { forgotPassState ->
-                if (emailEdt.text.toString() == "" || tvDatePicker.text.toString() == "年/月/日" || phoneEdt.text.toString() == "" || spinnerQuestion.selectedItem.toString() == "選択してください？" || answerEdt.text.toString() == "") {
+                if (emailEdt.text.toString() == "" || tvDatePicker.text.toString() == "年/月/日" || phoneEdt.text.toString() == "" || spinnerQuestion.selectedItem.toString() == "選択してください" || answerEdt.text.toString() == "") {
                     btnSubmit.isEnabled = false
                 } else {
                     btnSubmit.isEnabled =
@@ -220,7 +205,7 @@ class ForgotPassFragment : Fragment() {
                 }
             })
 
-        spinnerQuestion?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinnerQuestion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -236,7 +221,7 @@ class ForgotPassFragment : Fragment() {
 
         }
 
-        tvDatePicker.addTextChangedListener(afterTextChangedListener)
+        tvDatePicker.doAfterTextChanged { text -> viewModel.dateDataChanged(text = text.toString()) }
         emailEdt.doAfterTextChanged { text -> viewModel.emailDataChanged(text = text.toString()) }
         emailEdt.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
