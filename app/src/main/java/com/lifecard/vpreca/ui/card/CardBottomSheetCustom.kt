@@ -109,7 +109,7 @@ class CardBottomSheetCustom(
                  bindingDialog.card = new
              } else if (res is Result.Error) {
                  when (res.exception) {
-                     is NoConnectivityException -> CardInfoResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                     is NoConnectivityException -> CardInfoResult(error = ErrorMessageException(R.string.error_no_internet_connection_content))
 
                      else -> CardInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))
 

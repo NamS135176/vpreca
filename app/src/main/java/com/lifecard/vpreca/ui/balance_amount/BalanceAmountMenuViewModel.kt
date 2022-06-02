@@ -7,10 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
-import com.lifecard.vpreca.data.SuspendDealRepository
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.ui.home.CreditCardResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,7 +32,7 @@ class BalanceAmountMenuViewModel @Inject constructor(
             } else if (result is Result.Error) {
                 when (result.exception) {
                     is NoConnectivityException -> _suspendDealResult.value =
-                        SuspendDealResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                        SuspendDealResult(error = ErrorMessageException(R.string.error_no_internet_connection_content))
                     else -> _suspendDealResult.value =
                         SuspendDealResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }

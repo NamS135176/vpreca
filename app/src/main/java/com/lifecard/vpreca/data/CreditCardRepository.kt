@@ -42,24 +42,34 @@ class CreditCardRepository(
         }
     }
 
+    fun latestCardEmpty(): Boolean {
+        return latestCards.isEmpty()
+    }
+
     suspend fun getCard(
-        cardSchemeId:String,
+        cardSchemeId: String,
         precaNumber: String,
         vcn: String
     ): Result<CardInfo> {
         return withContext(Dispatchers.IO) {
             try {
                 val cardResponse = apiService.getCard(
-                    RequestHelper.createCardInfoRequest(memberNumber = userManager.memberNumber!!, cardSchemeId, precaNumber, vcn)
+                    RequestHelper.createCardInfoRequest(
+                        memberNumber = userManager.memberNumber!!,
+                        cardSchemeId,
+                        precaNumber,
+                        vcn
+                    )
                 )
                 Result.Success(cardResponse.brandPrecaApi.response.cardInfo)
             } catch (e: Exception) {
                 println("CreditCardRepository... getCard has error $e")
                 e.printStackTrace()
-                Result.Error(IOException("Can not get card", e))
+                Result.Error(e)
             }
         }
     }
+
     suspend fun getListSuspendDeal(): Result<List<SuspendDeal>> {
         return withContext(Dispatchers.IO) {
             try {
@@ -70,7 +80,7 @@ class CreditCardRepository(
             } catch (e: Exception) {
                 println("SuspendDealRepository... getListSuspendDeal has error $e")
                 e.printStackTrace()
-                Result.Error(IOException("Can not get list suspend", e))
+                Result.Error(e)
             }
         }
     }

@@ -54,16 +54,20 @@ class IssueCardSelectSourceFragment : Fragment() {
         val tvTotal = binding.tvTotalAmount
         val rcView = binding.rvSelectSource
         val btnCancel = binding.appbarGiftThird.cancelBtn
-        val btnBack  = binding.appbarGiftThird.btnBack
+        val btnBack = binding.appbarGiftThird.btnBack
         val btnSubmit = binding.btnSubmitIntroduceFirst
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_issue_card_by_plus_introduce)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.nav_issue_card_by_plus_introduce)
+                }
+            })
         btnSubmit.setOnClickListener(View.OnClickListener {
             val giftCardConfirmData = GiftCardConfirmData("selectSource")
-            val action = IssueCardSelectSourceFragmentDirections.actionSelectsourceToSelectdesign(giftCardConfirmData)
+            val action = IssueCardSelectSourceFragmentDirections.actionSelectsourceToSelectdesign(
+                giftCardConfirmData
+            )
             findNavController().navigate(action)
         })
 
@@ -99,7 +103,7 @@ class IssueCardSelectSourceFragment : Fragment() {
                             val adapter = IssueCardSourceAdapter(arrPolicy, arrSelected)
                             rcView.layoutManager = linearLayoutManager
                             rcView.adapter = adapter
-                            val list:MutableList<Int> = ArrayList<Int>()
+                            val list: MutableList<Int> = ArrayList<Int>()
                             adapter.setOnClickListener(object :
                                 IssueCardSourceAdapter.OnItemClickListener {
                                 override fun onItemClick(
@@ -108,18 +112,17 @@ class IssueCardSelectSourceFragment : Fragment() {
                                 ) {
                                     btnSubmit.isEnabled = true
                                     var count = 0
-                                    for (it in arrSelected){
-                                        if(it.isSelected == "1"){
+                                    for (it in arrSelected) {
+                                        if (it.isSelected == "1") {
                                             count++
                                         }
                                     }
 
                                     val sum: Int = arrSelected.sumOf {
                                         try {
-                                            if(it.isSelected == "1"){
+                                            if (it.isSelected == "1") {
                                                 it.amount.toInt()
-                                            }
-                                            else{
+                                            } else {
                                                 0
                                             }
                                         } catch (e: Exception) {
@@ -128,91 +131,85 @@ class IssueCardSelectSourceFragment : Fragment() {
                                     }
 
                                     if (arrSelected[position].isSelected == "0") {
-                                        if(count<5 && sum<=(100000 - arrSelected[position].amount.toInt())){
+                                        if (count < 5 && sum <= (100000 - arrSelected[position].amount.toInt())) {
 
                                             list.add(position)
                                             println(list)
-                                            if(count == 0){
-                                               arrSelected[position].isSelected = "1"
-                                               arrSelected[position].isFirst = "1"
-                                               binding.select = arrSelected[position]
-                                               val sumBalance: Int = arrSelected.sumOf {
-                                                   try {
-                                                       if(it.isSelected == "1"){
-                                                           it.amount.toInt()
-                                                       }
-                                                       else{
-                                                           0
-                                                       }
-                                                   } catch (e: Exception) {
-                                                       0
-                                                   }
-                                               }
-                                               tvTotal.text = Converter.convertCurrency(sumBalance)
-                                           }
-                                            else{
-                                               arrSelected[position].isSelected = "1"
-                                               binding.select = arrSelected[position]
-                                               val sumBalance: Int = arrSelected.sumOf {
-                                                   try {
-                                                       if(it.isSelected == "1"){
-                                                           it.amount.toInt()
-                                                       }
-                                                       else{
-                                                           0
-                                                       }
-                                                   } catch (e: Exception) {
-                                                       0
-                                                   }
-                                               }
-                                               tvTotal.text = Converter.convertCurrency(sumBalance)
-                                           }
+                                            if (count == 0) {
+                                                arrSelected[position].isSelected = "1"
+                                                arrSelected[position].isFirst = "1"
+                                                binding.select = arrSelected[position]
+                                                val sumBalance: Int = arrSelected.sumOf {
+                                                    try {
+                                                        if (it.isSelected == "1") {
+                                                            it.amount.toInt()
+                                                        } else {
+                                                            0
+                                                        }
+                                                    } catch (e: Exception) {
+                                                        0
+                                                    }
+                                                }
+                                                tvTotal.text = Converter.convertCurrency(sumBalance)
+                                            } else {
+                                                arrSelected[position].isSelected = "1"
+                                                binding.select = arrSelected[position]
+                                                val sumBalance: Int = arrSelected.sumOf {
+                                                    try {
+                                                        if (it.isSelected == "1") {
+                                                            it.amount.toInt()
+                                                        } else {
+                                                            0
+                                                        }
+                                                    } catch (e: Exception) {
+                                                        0
+                                                    }
+                                                }
+                                                tvTotal.text = Converter.convertCurrency(sumBalance)
+                                            }
                                         }
                                     } else {
                                         list.remove(position)
                                         btnSubmit.isEnabled = list.size != 0
-                                       if(arrSelected[position].isFirst == "1"){
+                                        if (arrSelected[position].isFirst == "1") {
 
-                                           println(list)
-                                           if(list.size > 0){
-                                               arrSelected[list[0]].isFirst = "1"
-                                               adapter.notifyItemChanged(list[0])
-                                           }
-                                           arrSelected[position].isFirst = "0"
-                                           arrSelected[position].isSelected = "0"
-                                           binding.select = arrSelected[position]
+                                            println(list)
+                                            if (list.size > 0) {
+                                                arrSelected[list[0]].isFirst = "1"
+                                                adapter.notifyItemChanged(list[0])
+                                            }
+                                            arrSelected[position].isFirst = "0"
+                                            arrSelected[position].isSelected = "0"
+                                            binding.select = arrSelected[position]
 
-                                           val sumBalance: Int = arrSelected.sumOf {
-                                               try {
-                                                   if(it.isSelected == "1"){
-                                                       it.amount.toInt()
-                                                   }
-                                                   else{
-                                                       0
-                                                   }
-                                               } catch (e: Exception) {
-                                                   0
-                                               }
-                                           }
-                                           tvTotal.text = Converter.convertCurrency(sumBalance)
-                                       }
-                                        else{
-                                           arrSelected[position].isSelected = "0"
-                                           binding.select = arrSelected[position]
-                                           val sumBalance: Int = arrSelected.sumOf {
-                                               try {
-                                                   if(it.isSelected == "1"){
-                                                       it.amount.toInt()
-                                                   }
-                                                   else{
-                                                       0
-                                                   }
-                                               } catch (e: Exception) {
-                                                   0
-                                               }
-                                           }
-                                           tvTotal.text = Converter.convertCurrency(sumBalance)
-                                       }
+                                            val sumBalance: Int = arrSelected.sumOf {
+                                                try {
+                                                    if (it.isSelected == "1") {
+                                                        it.amount.toInt()
+                                                    } else {
+                                                        0
+                                                    }
+                                                } catch (e: Exception) {
+                                                    0
+                                                }
+                                            }
+                                            tvTotal.text = Converter.convertCurrency(sumBalance)
+                                        } else {
+                                            arrSelected[position].isSelected = "0"
+                                            binding.select = arrSelected[position]
+                                            val sumBalance: Int = arrSelected.sumOf {
+                                                try {
+                                                    if (it.isSelected == "1") {
+                                                        it.amount.toInt()
+                                                    } else {
+                                                        0
+                                                    }
+                                                } catch (e: Exception) {
+                                                    0
+                                                }
+                                            }
+                                            tvTotal.text = Converter.convertCurrency(sumBalance)
+                                        }
                                     }
 
                                 }
@@ -222,11 +219,12 @@ class IssueCardSelectSourceFragment : Fragment() {
                         }
                     }
                 }
-                creditCardResult.error?.let {
+                creditCardResult.error?.let { error ->
 
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
+                        error.messageResId?.let { setMessage(getString(it)) }
+                        error.message?.let { setMessage(it) }
                     }.create().show()
                 }
             })

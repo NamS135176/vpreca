@@ -18,9 +18,7 @@ import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentListVprecaBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 import com.lifecard.vpreca.ui.card.CardDetailBottomSheetDialog
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.hideToolbar
-import com.lifecard.vpreca.utils.showToolbar
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -93,11 +91,14 @@ class ListVprecaFragment : Fragment() {
                         }
                     }
                 }
-                creditCardResult.error?.let {
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
-                    }.create().show()
+                creditCardResult.error?.let { error ->
+                    error.messageResId?.let { showPopupMessage("",getString(it)) }
+                    error.message?.let { showPopupMessage("",it) }
+                }
+                creditCardResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
                 }
             })
 
@@ -113,12 +114,14 @@ class ListVprecaFragment : Fragment() {
                         creditCardRepository
                     ).show()
                 }
-                cardInfoResult.error?.let {
-
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
-                    }.create().show()
+                cardInfoResult.error?.let { error ->
+                    error.messageResId?.let { showPopupMessage("",getString(it)) }
+                    error.message?.let { showPopupMessage("",it) }
+                }
+                cardInfoResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
                 }
             })
 

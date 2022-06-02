@@ -52,6 +52,12 @@ class RegexUtils {
          */
         private const val RegexOcr = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{12,16}\$"
 
+        /**
+         * at least: 1 digit, 1 lowercase, one uppercase
+         */
+        private const val RegexMobilePhone = "^(070|080|090)+\\d+\$"
+
+
         fun isLoginIdValid(loginId: String?): Boolean {
             return loginId?.let { id ->
                 id.length in 6..10 && Pattern.compile(RegexLoginID).matcher(id).matches()
@@ -95,6 +101,11 @@ class RegexUtils {
 
         fun isOcrCode(code: String): Boolean {
             return Pattern.compile(RegexOcr).matcher(code).matches()
+        }
+
+        fun isMobilePhone(phone: String): Boolean {
+//            return Pattern.compile(RegexMobilePhone).matcher(phone).matches()
+            return Regex(RegexMobilePhone).matches(phone)
         }
     }
 }

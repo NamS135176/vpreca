@@ -11,6 +11,7 @@ import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.SuspendDealRepository
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.balance_amount.SuspendDealResult
@@ -23,7 +24,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val creditCardRepository: CreditCardRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val suspendDealRepository: SuspendDealRepository
 ) : ViewModel() {
     private val _creditCardResult = MutableLiveData<CreditCardResult>()
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
@@ -36,15 +38,29 @@ class HomeViewModel @Inject constructor(
     val loading: LiveData<Boolean> = _loading
 
     init {
+        if (creditCardRepository.latestCardEmpty()) {
+            loadCard(true)
+        } else {
+            loadCard(false)
+            loadCard(true)
+        }
+    }
+
+    private fun loadCard(refresh: Boolean = true) {
         viewModelScope.launch {
             _loading.value = true
-            val result = creditCardRepository.getLatestCards(true)
+            val result = creditCardRepository.getLatestCards(refresh)
             if (result is Result.Success) {
                 _creditCardResult.value = CreditCardResult(success = result.data)
             } else if (result is Result.Error) {
                 when (result.exception) {
                     is NoConnectivityException -> _creditCardResult.value =
-                        CreditCardResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                        CreditCardResult(networkTrouble = true)
+                    is ApiException -> CreditCardResult(
+                        error = ErrorMessageException(
+                            errorMessage = result.exception.message
+                        )
+                    )
                     else -> _creditCardResult.value =
                         CreditCardResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
@@ -69,20 +85,29 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun changeSelect(creditCard: CreditCard){
+    fun changeSelect(creditCard: CreditCard) {
         creditCardSelect.value = creditCard
     }
 
     fun creditCardSelectDataChanged(creditCard: CreditCard) {
         viewModelScope.launch {
             _loading.value = true
-            val res = creditCardRepository.getCard(creditCard.cardSchemeId, creditCard.precaNumber, creditCard.vcn)
+            val res = creditCardRepository.getCard(
+                creditCard.cardSchemeId,
+                creditCard.precaNumber,
+                creditCard.vcn
+            )
             if (res is Result.Success) {
                 _cardInfoResult.value = CardInfoResult(success = res.data)
             } else if (res is Result.Error) {
                 when (res.exception) {
                     is NoConnectivityException -> _cardInfoResult.value =
-                        CardInfoResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                        CardInfoResult(networkTrouble = true)
+                    is ApiException -> CardInfoResult(
+                        error = ErrorMessageException(
+                            errorMessage = res.exception.message
+                        )
+                    )
                     else -> _cardInfoResult.value =
                         CardInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
@@ -94,14 +119,19 @@ class HomeViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _loading.value = true
-            val result = creditCardRepository.getListSuspendDeal()
+            val result = suspendDealRepository.getListSuspendDeal()
 
             if (result is Result.Success) {
                 _suspendDealResult.value = SuspendDealResult(success = result.data)
             } else if (result is Result.Error) {
                 when (result.exception) {
                     is NoConnectivityException -> _suspendDealResult.value =
-                        SuspendDealResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                        SuspendDealResult(networkTrouble = true)
+                    is ApiException -> SuspendDealResult(
+                        error = ErrorMessageException(
+                            errorMessage = result.exception.message
+                        )
+                    )
                     else -> _suspendDealResult.value =
                         SuspendDealResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }

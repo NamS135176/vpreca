@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -23,8 +22,6 @@ import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
-import com.lifecard.vpreca.ui.card.CardDetailBottomSheetDialog
-import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -197,13 +194,15 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-            creditCardResult.error?.let {
-                println("homeViewModel.creditCardResult.observe err: ${getString(it.messageResId!!)}")
-                //show dialog
-                MaterialAlertDialogBuilder(requireContext()).apply {
-                    setPositiveButton(R.string.button_ok, null)
-                    setMessage(getString(it.messageResId))
-                }.create().show()
+            creditCardResult.error?.let { error ->
+
+                error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                error.message?.let { showPopupMessage(message = it) }
+            }
+            creditCardResult.networkTrouble?.let {
+                if (it) {
+                    showInternetTrouble()
+                }
             }
         })
         homeViewModel.cardInfoResult.observe(
@@ -218,12 +217,15 @@ class HomeFragment : Fragment() {
                     ).show()
 
                 }
-                cardInfoResult.error?.let {
+                cardInfoResult.error?.let { error ->
 
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
-                    }.create().show()
+                    error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                    error.message?.let { showPopupMessage(message = it) }
+                }
+                cardInfoResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
                 }
             })
         homeViewModel.suspendDealResult.observe(
@@ -234,25 +236,27 @@ class HomeFragment : Fragment() {
                     println("BalanceAmountViewModel.suspendDealResult.observe success: ${suspendDealResult.success}")
                     val sumBalance: Int = suspendDealResult.success.sumOf {
                         try {
-                            if(it.suspendReasonType == "11" && it.adjustEndFlg == "0"){
+                            if (it.suspendReasonType == "11" && it.adjustEndFlg == "0") {
                                 it.unadjustDifferenceAmount.toInt()
-                            }
-                            else 0
+                            } else 0
                         } catch (e: Exception) {
                             0
                         }
                     }
-                    if(sumBalance > 0){
+                    if (sumBalance > 0) {
                         btnBalance.isEnabled = true
                         btnBalance.visibility = View.VISIBLE
                     }
                 }
-                suspendDealResult.error?.let {
+                suspendDealResult.error?.let { error ->
 
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
-                    }.create().show()
+                    error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                    error.message?.let { showPopupMessage(message = it) }
+                }
+                suspendDealResult.networkTrouble?.let {
+                    if (it) {
+//                        showInternetTrouble()
+                    }
                 }
             })
         homeViewModel.loading.observe(viewLifecycleOwner, Observer {

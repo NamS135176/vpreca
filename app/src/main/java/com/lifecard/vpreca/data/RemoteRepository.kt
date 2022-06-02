@@ -29,7 +29,7 @@ class RemoteRepository(
                 Result.Success(cardUsageHistoryResponse.brandPrecaApi.response.cardInfo)
             } catch (e: Exception) {
                 println("RemoteRepository...getCardUsageHistory has error $e")
-                Result.Error(IOException("Error getCardUsageHistory", e))
+                Result.Error(e)
             }
         }
     }
@@ -42,7 +42,7 @@ class RemoteRepository(
                 Result.Success(bioChallenge)
             } catch (e: Exception) {
                 println("RemoteRepository...getBioChallenge has error $e")
-                Result.Error(IOException("Error getBioChallenge", e))
+                Result.Error(e)
             }
         }
     }
@@ -62,7 +62,7 @@ class RemoteRepository(
                 Result.Success(bioChallenge)
             } catch (e: Exception) {
                 println("RemoteRepository...registerBiometric has error $e")
-                Result.Error(IOException("Error registerBiometric", e))
+                Result.Error(e)
             }
         }
     }
@@ -79,7 +79,7 @@ class RemoteRepository(
                 Result.Success(otpResponse)
             } catch (e: Exception) {
                 println("RemoteRepository...registerBiometric has error $e")
-                Result.Error(IOException("Error registerBiometric", e))
+                Result.Error(e)
             }
         }
     }

@@ -41,7 +41,8 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
     ): View? {
         viewModel =
             ViewModelProvider(this).get(BalanceAmountByCodeSelectSourceViewModel::class.java)
-        _binding = FragmentBalanceAmountByCodeSelectSourceBinding.inflate(inflater, container, false)
+        _binding =
+            FragmentBalanceAmountByCodeSelectSourceBinding.inflate(inflater, container, false)
 
         val rcView = binding.rvSelectSource
         val btnBack = binding.appbarGiftThird.btnBack
@@ -139,24 +140,26 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
                         }
                     }
                 }
-                creditCardResult.error?.let {
+                creditCardResult.error?.let { error ->
 
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
+                        error.messageResId?.let { setMessage(getString(it)) }
+                        error.message?.let { setMessage(it) }
                     }.create().show()
                 }
             })
 
         btnSubmit.setOnClickListener(View.OnClickListener {
             val data = BalanceSelectSourceConfirmData(
-              fakeBalanceRamain.toString(),
+                fakeBalanceRamain.toString(),
                 select.toString(),
                 remain.toString()
             )
-            val action = BalanceAmountByCodeSelectSourceFragmentDirections.actionSelectsourceToConfirm(
-                data
-            )
+            val action =
+                BalanceAmountByCodeSelectSourceFragmentDirections.actionSelectsourceToConfirm(
+                    data
+                )
             findNavController().navigate(action)
         })
 

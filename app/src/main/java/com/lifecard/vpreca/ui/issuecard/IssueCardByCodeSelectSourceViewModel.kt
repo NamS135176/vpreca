@@ -32,7 +32,7 @@ class IssueCardByCodeSelectSourceViewModel @Inject constructor(
             } else if (result is Result.Error) {
                 when (result.exception) {
                     is NoConnectivityException -> _creditCardResult.value =
-                        CreditCardResult(error = ErrorMessageException(R.string.error_no_internet_connection))
+                        CreditCardResult(error = ErrorMessageException(R.string.error_no_internet_connection_content))
                     else -> _creditCardResult.value =
                         CreditCardResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }

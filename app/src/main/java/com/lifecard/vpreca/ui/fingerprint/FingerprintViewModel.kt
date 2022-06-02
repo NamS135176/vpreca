@@ -44,16 +44,16 @@ class FingerprintViewModel @Inject constructor(
         return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> return true
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                registerBiometricResult.value =
-                    BioSettingResult(
-                        error = R.string.error_fingerprint_not_enrolled,
-                        bioStatus = BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
-                    )
+//                registerBiometricResult.value =
+//                    BioSettingResult(
+//                        error = R.string.error_fingerprint_not_enrolled,
+//                        bioStatus = BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED
+//                    )
                 return false
             }
             else -> {
-                registerBiometricResult.value =
-                    BioSettingResult(error = R.string.error_fingerprint_not_support)
+//                registerBiometricResult.value =
+//                    BioSettingResult(error = R.string.error_fingerprint_not_support)
                 return false
             }
         }

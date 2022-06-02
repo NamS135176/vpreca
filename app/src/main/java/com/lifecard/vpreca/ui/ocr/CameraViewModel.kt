@@ -88,7 +88,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
             //2. check the regex and length of text in (12..16)
             val texts = textAnnotations.filter { RegexUtils.isOcrCode(it.description) }
             println("findBestCodeFromData... texts: $texts")
-            val results = listOf(15, 16, 14, 13, 12, 11).mapNotNull {
+            val results = listOf(15, 16, 14, 13, 12).mapNotNull {
                 findBestCodeFromTextAnnotation(
                     texts,
                     it

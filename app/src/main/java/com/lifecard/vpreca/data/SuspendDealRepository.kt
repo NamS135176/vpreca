@@ -24,7 +24,7 @@ class SuspendDealRepository(
             } catch (e: Exception) {
                 println("SuspendDealRepository... getListSuspendDeal has error $e")
                 e.printStackTrace()
-                Result.Error(IOException("Can not get list suspend", e))
+                Result.Error(e)
             }
         }
     }

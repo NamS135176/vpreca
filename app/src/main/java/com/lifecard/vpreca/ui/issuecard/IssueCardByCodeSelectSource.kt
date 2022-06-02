@@ -143,11 +143,12 @@ class IssueCardByCodeSelectSource : Fragment() {
                         }
                     }
                 }
-                creditCardResult.error?.let {
+                creditCardResult.error?.let { error ->
 
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
+                        error.messageResId?.let { setMessage(getString(it)) }
+                        error.message?.let { setMessage(it) }
                     }.create().show()
                 }
             })
