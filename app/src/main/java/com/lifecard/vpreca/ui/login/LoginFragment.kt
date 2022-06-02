@@ -188,7 +188,7 @@ class LoginFragment : NoToolbarFragment() {
             context?.let { KeyboardUtils.hideKeyboard(it, passwordEditText) }
         }
 
-        when (bioManager?.checkDeviceSupportBiometric() == true || PreferenceHelper.isEnableBiometricSetting(
+        when (bioManager?.checkDeviceSupportBiometric() == true && PreferenceHelper.isEnableBiometricSetting(
             requireContext()
         )) {
             true -> buttonBioLogin.visibility = View.VISIBLE
