@@ -43,7 +43,7 @@
                     android:text="@string/forgot_pass_input_title"
                     android:textColor="#0057b5"
                     android:textSize="18sp"
-                    app:layout_constraintTop_toBottomOf="@+id/appbar_forgot_pass" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/forgot_pass_des_top"
@@ -122,9 +122,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_signup_style"
+                        android:hint="@string/forgot_pass_dob_hint"
                         android:paddingHorizontal="21dp"
                         android:paddingVertical="19dp"
-                        android:hint="@string/forgot_pass_dob_hint"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
@@ -215,10 +215,10 @@
                         android:id="@+id/spinner_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="22dp"
                         android:background="@drawable/spinner_bg"
                         android:paddingHorizontal="16dp"
                         android:popupBackground="#f1f1f1"
-                        android:layout_marginHorizontal="22dp"
                         android:spinnerMode="dropdown" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
 

@@ -117,28 +117,28 @@ class ForgotPassFragment : Fragment() {
             android.R.layout.simple_spinner_item,
             list
         ) {
-//            override fun getDropDownView(
-//                position: Int,
-//                convertView: View?,
-//                parent: ViewGroup
-//            ): View {
-//                val view: TextView = super.getDropDownView(
-//                    position,
-//                    convertView,
-//                    parent
-//                ) as TextView
-//                // set selected item style
-//                if (position == spinnerQuestion.selectedItemPosition && position != 0) {
-//                    view.background = ColorDrawable(Color.parseColor("#F7E7CE"))
-//                    view.setTextColor(Color.parseColor("#333399"))
-//                }
-//
-//                // make hint item color gray
-//                if (position == 0) {
-//                    view.setTextColor(Color.LTGRAY)
-//                }
-//                return view
-//            }
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val view: TextView = super.getDropDownView(
+                    position,
+                    convertView,
+                    parent
+                ) as TextView
+                // set selected item style
+                if (position == spinnerQuestion.selectedItemPosition && position != 0) {
+                    view.background = ColorDrawable(Color.parseColor("#F7E7CE"))
+                    view.setTextColor(Color.parseColor("#333399"))
+                }
+
+                // make hint item color gray
+                if (position == 0) {
+                    view.setTextColor(Color.LTGRAY)
+                }
+                return view
+            }
 
             override fun isEnabled(position: Int): Boolean {
                 return position != 0
