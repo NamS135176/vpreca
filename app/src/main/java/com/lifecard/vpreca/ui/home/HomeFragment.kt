@@ -194,8 +194,10 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-            creditCardResult.error?.let {
-                showAlert(message = getString(it.messageResId))
+            creditCardResult.error?.let { error ->
+
+                error.messageResId?.let { showAlert(message = getString(it)) }
+                error.message?.let { showAlert(message = it) }
             }
             creditCardResult.networkTrouble?.let {
                 if (it) {
@@ -214,11 +216,12 @@ class HomeFragment : Fragment() {
                     ).show()
 
                 }
-                cardInfoResult.error?.let {
+                cardInfoResult.error?.let { error ->
 
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
+                        error.messageResId?.let { setMessage(getString(it)) }
+                        error.message?.let { setMessage(it) }
                     }.create().show()
                 }
             })
@@ -242,11 +245,12 @@ class HomeFragment : Fragment() {
                         btnBalance.visibility = View.VISIBLE
                     }
                 }
-                suspendDealResult.error?.let {
+                suspendDealResult.error?.let { error ->
 
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
+                        error.messageResId?.let { setMessage(getString(it)) }
+                        error.message?.let { setMessage(it) }
                     }.create().show()
                 }
             })

@@ -89,10 +89,11 @@ class ListVprecaFragment : Fragment() {
                         }
                     }
                 }
-                creditCardResult.error?.let {
+                creditCardResult.error?.let { error ->
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
+                        error.messageResId?.let { setMessage(getString(it)) }
+                        error.message?.let { setMessage(it) }
                     }.create().show()
                 }
             })
@@ -104,15 +105,16 @@ class ListVprecaFragment : Fragment() {
                 cardInfoResult.success?.let {
                     println("homeViewModel.cardInfoResult.observe success: ${cardInfoResult.success}")
                     CardBottomSheetCustom(
-                                requireActivity(),
-                                cardInfoResult.success,
-                            ).show()
+                        requireActivity(),
+                        cardInfoResult.success,
+                    ).show()
                 }
-                cardInfoResult.error?.let {
+                cardInfoResult.error?.let { error ->
 
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
+                        error.messageResId?.let { setMessage(getString(it)) }
+                        error.message?.let { setMessage(it) }
                     }.create().show()
                 }
             })

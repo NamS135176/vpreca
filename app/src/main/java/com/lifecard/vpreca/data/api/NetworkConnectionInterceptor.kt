@@ -7,6 +7,8 @@ import androidx.core.content.ContextCompat.startActivity
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
+import com.lifecard.vpreca.utils.ApiError
+import com.lifecard.vpreca.utils.getMessageType
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -29,7 +31,15 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
                 //TODO need get internal server from response body
                 throw InternalServerException()
             } else if (code > 400) {
-                throw ApiException(statusCode = response.code())
+                val messageType = request.body().getMessageType()
+                throw ApiException(
+                    resultCode = ApiError.otherErrorCode,
+                    messageType = messageType,
+                    ApiError.otherErrorMessage
+                )
+            } else if (code == 200) {
+                //check result code
+                //TODO need implement here
             }
             return response
         } catch (e: UnknownHostException) {

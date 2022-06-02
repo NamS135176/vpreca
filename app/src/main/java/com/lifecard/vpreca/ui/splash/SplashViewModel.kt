@@ -41,8 +41,8 @@ class SplashViewModel @Inject constructor(
                     else -> splashState.value =
                         SplashState(
                             error = ErrorMessageException(
-                                R.string.get_user_failure,
-                                result.exception
+                                messageResId = R.string.get_user_failure,
+                                exception = result.exception
                             )
                         )
                 }

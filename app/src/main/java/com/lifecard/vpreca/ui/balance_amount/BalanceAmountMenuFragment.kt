@@ -67,11 +67,13 @@ class BalanceAmountMenuFragment : Fragment() {
         })
 
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.nav_home)
+                }
+            })
 
         viewModel.suspendDealResult.observe(
             viewLifecycleOwner,
@@ -81,21 +83,21 @@ class BalanceAmountMenuFragment : Fragment() {
                     println("BalanceAmountViewModel.suspendDealResult.observe success: ${suspendDealResult.success}")
                     val sumBalance: Int = suspendDealResult.success.sumOf {
                         try {
-                           if(it.suspendReasonType == "11" && it.adjustEndFlg == "0"){
-                               it.unadjustDifferenceAmount.toInt()
-                           }
-                            else 0
+                            if (it.suspendReasonType == "11" && it.adjustEndFlg == "0") {
+                                it.unadjustDifferenceAmount.toInt()
+                            } else 0
                         } catch (e: Exception) {
                             0
                         }
                     }
                     tvTotal.text = Converter.convertCurrency(sumBalance)
                 }
-                suspendDealResult.error?.let {
+                suspendDealResult.error?.let { error ->
 
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("ok", null)
-                        setMessage(getString(it.messageResId))
+                        error.messageResId?.let { setMessage(getString(it)) }
+                        error.message?.let { setMessage(it) }
                     }.create().show()
                 }
             })

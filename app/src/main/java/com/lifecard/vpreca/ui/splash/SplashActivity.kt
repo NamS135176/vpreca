@@ -29,7 +29,8 @@ class SplashActivity : AppCompatActivity() {
                     navigateToMainScreen()
                 }
                 splashResult.error?.let { error ->
-                    showAlert(getString(error.messageResId))
+                    error.messageResId?.let { showAlert(getString(it)) }
+                    error.message?.let { showAlert(it) }
                 }
                 splashResult.networkTrouble?.let { networkError ->
                     if (networkError) {
