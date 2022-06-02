@@ -34,6 +34,11 @@ interface ApiService {
         @Body cardListRequest: BrandRequest
     ): CardUsageHistoryResponse
 
+    @POST("CardUpdReq")
+    suspend fun updateCard(
+        @Body cardListRequest: BrandRequest
+    ): UpdateCardResponse
+
     @GET("challenge")
     suspend fun getBioChallenge(@Query("loginId") memberNumber: String): BioChallenge
 

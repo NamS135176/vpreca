@@ -19,6 +19,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
@@ -28,13 +29,15 @@ import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-
+    @Inject
+    lateinit var creditCardRepository: CreditCardRepository
     private var _binding: FragmentHomeBinding? = null
 
     private val homeViewModel: HomeViewModel by viewModels()
@@ -211,6 +214,7 @@ class HomeFragment : Fragment() {
                     CardBottomSheetCustom(
                         requireActivity(),
                         cardInfoResult.success,
+                        creditCardRepository
                     ).show()
 
                 }
