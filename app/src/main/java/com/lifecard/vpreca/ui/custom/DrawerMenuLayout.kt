@@ -15,10 +15,7 @@ import com.lifecard.vpreca.databinding.LayoutDrawerContentBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
 import com.lifecard.vpreca.ui.webview.WebViewFragment
-import com.lifecard.vpreca.utils.PreferenceHelper
-import com.lifecard.vpreca.utils.WebDirectScreen
-import com.lifecard.vpreca.utils.navigateToLogin
-import com.lifecard.vpreca.utils.viewFindNavController
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
@@ -179,8 +176,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
     )
 
     private fun showWebViewActivity(webUrl: String) {
-        val navController = viewFindNavController()
-        navController.navigate(R.id.nav_webview, WebViewFragment.createBundle(webUrl))
+        Utils.openBrowser(context, "https://vpcevssl.lifecard.co.jp/LW01/LW0102OP01BL.do")
     }
 
     private var onItemClickListener = object : OnItemClickListener {

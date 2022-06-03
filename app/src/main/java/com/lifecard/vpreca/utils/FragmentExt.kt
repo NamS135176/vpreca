@@ -47,3 +47,7 @@ fun Fragment.showInternetTrouble(): Fragment? {
         message = getString(R.string.error_no_internet_connection_content)
     )
 }
+
+fun Fragment.openBrowser(webUrl: String) {
+    Utils.openBrowser(requireContext(), webUrl)
+}

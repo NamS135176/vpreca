@@ -1,22 +1,14 @@
 package com.lifecard.vpreca.ui.introduce
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.databinding.FragmentGiftCardPolicyBinding
-import com.lifecard.vpreca.databinding.IntroduceFragmentFirstFragmentBinding
-import com.lifecard.vpreca.utils.getNavigationResult
-import com.lifecard.vpreca.utils.hideToolbar
-import com.lifecard.vpreca.utils.showToast
-import com.lifecard.vpreca.utils.showToolbar
 
 
 /**
@@ -24,7 +16,7 @@ import com.lifecard.vpreca.utils.showToolbar
  * Use the [GiftCardPolicyFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class GiftCardPolicyFragment : NoToolbarFragment() {
+class GiftCardPolicyFragment : Fragment() {
     private var _binding: FragmentGiftCardPolicyBinding? = null
     private val binding get() = _binding!!
 

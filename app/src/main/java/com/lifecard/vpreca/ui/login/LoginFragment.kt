@@ -77,18 +77,10 @@ class LoginFragment : NoToolbarFragment() {
         val btnForgotPass = binding.buttonForgotPassword
         val buttonLoginLandlinePhone = binding.buttonLoginLandlinePhone
 
-//        buttonLoginLandlinePhone.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_sms_verify) })
         buttonLoginLandlinePhone.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton(R.string.button_ok, DialogInterface.OnClickListener { _, _ ->
-                    val webUrl = "https://vpcevssl.lifecard.co.jp/LW01/LW0102OP01BL.do"
-                    val browserIntent =
-                        Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
-                    startActivity(browserIntent)
-//                    findNavController().navigate(
-//                        R.id.nav_webview,
-//                        WebViewFragment.createBundle(webUrl)
-//                    )
+                    openBrowser("https://vpcevssl.lifecard.co.jp/LW01/LW0102OP01BL.do")
                 })
                     .setNegativeButton(R.string.button_cancel, null)
                 setMessage(getString(R.string.alert_landline_phone))
@@ -295,10 +287,7 @@ class LoginFragment : NoToolbarFragment() {
     }
 
     fun showAlert(content: String) {
-        MaterialAlertDialogBuilder(requireContext()).apply {
-            setPositiveButton(R.string.button_ok, null)
-            setMessage(content)
-        }.create().show()
+        showPopupMessage(message = content)
     }
 
     override fun onDestroyView() {

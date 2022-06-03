@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentGiftCardInputCardBinding
 import com.lifecard.vpreca.utils.ToastPosition
 import com.lifecard.vpreca.utils.getNavigationResult
 import com.lifecard.vpreca.utils.showToast
 
-class GiftCardInputCardFragment : NoToolbarFragment() {
+class GiftCardInputCardFragment : Fragment() {
 
     companion object {
         fun newInstance() = GiftCardInputCardFragment()
