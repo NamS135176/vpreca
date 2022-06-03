@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            tools:context=".ui.signup/PolicyFragment">
+            tools:context=".ui.signup/SignupFragment">
 
             <include
                 android:id="@+id/appbar_policy"
@@ -40,13 +40,13 @@
                 android:layout_marginHorizontal="22dp"
                 android:layout_marginTop="42dp"
                 android:background="@drawable/border_term_of_use"
-                android:paddingStart="15dp"
                 android:paddingLeft="15dp"
                 android:paddingTop="18dp"
-                android:paddingEnd="24dp"
                 android:paddingRight="24dp"
                 android:paddingBottom="21dp"
-                app:layout_constraintTop_toBottomOf="@+id/policy_des" />
+                app:layout_constraintTop_toBottomOf="@+id/policy_des"
+                android:paddingStart="15dp"
+                android:paddingEnd="24dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_policy"
@@ -76,19 +76,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_policy" />
 
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/cbPolicy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/framgnet_policy_button_submit_mt"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp"
-                android:text="@string/confirm_policy"
-                app:layout_constraintBottom_toTopOf="@+id/btn_submit_policy"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="RtlSymmetry" />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_submit_policy"
                 style="@style/Widget.AppCompat.TextView.Bold"
@@ -103,6 +90,24 @@
                 android:textSize="18sp"
                 app:cornerRadius="25dp"
                 app:layout_constraintBottom_toBottomOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="83dp"
+                app:layout_constraintBottom_toTopOf="@+id/btn_submit_policy">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbPolicy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/confirm_policy"
+                    tools:ignore="RtlSymmetry" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

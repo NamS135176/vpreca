@@ -19,4 +19,6 @@
     <dimen name="my_page_button_card_no_balance_mh">28.45dp</dimen>
     <dimen name="toast_mb">90dp</dimen>
     <dimen name="toast_mt">42dp</dimen>
+
+    <dimen name="framgnet_policy_button_submit_mt">30dp</dimen>
 </resources>
