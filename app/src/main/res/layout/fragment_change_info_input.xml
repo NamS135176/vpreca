@@ -131,7 +131,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6sp"
-
                     android:paddingTop="5dp"
                     android:text="@string/change_info_input_des"
                     android:textColor="@color/black"

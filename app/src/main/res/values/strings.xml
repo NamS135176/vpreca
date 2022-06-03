@@ -313,9 +313,9 @@
     <string name="change_info_email_2_confirm_title">メールアドレス2 - 確認用</string>
 
     <!--    Change info data-->
-    <string name="change_info_input_appbar_title">会員情報変更</string>
+    <string name="change_info_input_appbar_title">会員情報</string>
     <string name="change_info_input_title">会員情報変更</string>
-    <string name="change_info_input_des">ニックネーム（ローマ字）</string>
+    <string name="change_info_input_des">記号・スペースはご利用いただけません。</string>
     <string name="change_info_input_setting_title">各種通知サービスの設定</string>
     <string name="change_info_input_first_mail_setting">メールアドレス1で受け取る</string>
     <string name="change_info_input_second_mail_setting">メールアドレス2で受け取る</string>
