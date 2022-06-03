@@ -12,6 +12,7 @@ import com.lifecard.vpreca.data.SuspendDealRepository
 import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
+import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.home.CreditCardResult
 import com.lifecard.vpreca.ui.listvpreca.CardInfoResult
@@ -51,29 +52,18 @@ class BalanceSelectSourceConfirmViewModel @Inject constructor(
                 when (res.exception) {
                     is NoConnectivityException -> _feeInfoResult.value =
                         FeeInfoResult(networkTrouble = true)
-                    is ApiException -> CardInfoResult(
+                    is ApiException -> FeeInfoResult(
                         error = ErrorMessageException(
                             errorMessage = res.exception.message
                         )
                     )
+                    is InternalServerException -> _feeInfoResult.value =
+                            //TODO this internalError should be html from server, it will be implement later
+                        FeeInfoResult(internalError = "")
                     else -> _feeInfoResult.value =
                         FeeInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
             }
-//            val result = issueCardRepository.getFeeSelReq(cardSchemeId, "1", "1")
-//
-//            if (result is Result.Success) {
-//                val cardInfo =
-//                    CardInfoWithDesignIdContentInfo(cardSchemeId, designId, cardNickName, vcnName)
-//                val sumUpInfo = SumUpInfoContentInfo(
-//                    result.data[0].feeAmount,
-//                    result.data[0].feeGetResultType,
-//                    result.data[0].feeCalculateType,
-//                    result.data[0].feeInclusiveFlg,
-//                    "1"
-//                )
-//
-//            }
             _loading.value = false
         }
     }

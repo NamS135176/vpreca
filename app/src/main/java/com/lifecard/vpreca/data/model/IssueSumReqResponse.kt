@@ -16,11 +16,11 @@ data class IssueSumReqResponseContent(
     @SerializedName("resultCode")
     val resultCode: String,
     @SerializedName("cardInfo")
-    val cardInfo: CreditCard,
+    val cardInfo: CreditCard?,
     @SerializedName("sumUpInfo")
-    val sumUpInfo: SumUpInfoResponseContent,
+    val sumUpInfo: SumUpInfoResponseContent?,
     @SerializedName("sumUpSrcCardInfo")
-    val sumUpSrcCardInfo: SumUpInfoCardInfoResponseContent,
+    val sumUpSrcCardInfo: SumUpInfoCardInfoResponseContent?,
 )
 
 data class SumUpInfoResponseContent(

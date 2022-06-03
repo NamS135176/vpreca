@@ -80,22 +80,14 @@ class TermOfUseFragment : Fragment() {
         val loadingProgressBar = binding.loading
 
         cbTermOfUse.setOnClickListener(View.OnClickListener {
-            context?.let { it1 ->
-                PreferenceHelper.setAcceptTermOfUseFirstTime(
-                    appContext = it1,
-                    value = true
-                )
-            }
             btnSubmit.isEnabled = cbTermOfUse.isChecked
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {
-            context?.let { it1 ->
-                PreferenceHelper.setAcceptTermOfUseFirstTime(
-                    appContext = it1,
-                    value = true
-                )
-            }
+            PreferenceHelper.setAcceptTermOfUseFirstTime(
+                appContext = requireContext(),
+                value = true
+            )
             findNavController().navigate(TermOfUseFragmentDirections.actionTermOfUseToLogin())
         })
         webView.settings.useWideViewPort = true

@@ -21,6 +21,7 @@
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="rippleColor">@android:color/transparent</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemTheme</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
@@ -72,4 +73,21 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <style name="SpinnerTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:gravity">top|left</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">18dp</item>
+        <item name="android:paddingBottom">18dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:dropDownSelector">#f1f1f1</item>
+        <item name="android:dropDownItemStyle">@style/SpinnerItemTheme</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItemTheme</item>
+    </style>
+
+    <style name="SpinnerItemTheme" parent="SpinnerTheme">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">#f1f1f1</item>
+    </style>
 </resources>

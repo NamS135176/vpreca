@@ -22,4 +22,31 @@ class RegexTest {
         Assert.assertEquals(true, RegexUtils.isMobilePhone(phone3))
     }
 
+    @Test
+    fun password_isInCorrect() {
+        val passErrors =
+            listOf("", "ＡＡＡ", "1234567", "1234567890123", "12 345678", "12344\uD83D\uDE00333")
+        passErrors.forEach { pass -> Assert.assertEquals(false, RegexUtils.isPasswordValid(pass)) }
+    }
+
+    @Test
+    fun loginId_isInCorrect() {
+        val loginIdErrors = listOf(
+            "",
+            "ＡＡＡ",
+            "ＡＡＡＡＡＡ",
+            "12345",
+            "12345678901",
+            "12 345678",
+            "12344\uD83D\uDE00333",
+            "abc%^!#$@%@"
+        )
+        loginIdErrors.forEach { loginId ->
+            Assert.assertEquals(
+                false,
+                RegexUtils.isLoginIdValid(loginId)
+            )
+        }
+    }
+
 }

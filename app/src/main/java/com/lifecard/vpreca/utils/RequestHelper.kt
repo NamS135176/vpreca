@@ -54,6 +54,26 @@ class RequestHelper {
             )
         }
 
+        fun createGiftNumberAuthReqRequest(memberNumber: String, giftNumber:String): BrandRequest {
+            return BrandRequest(
+                return BrandRequest(
+                    brandPrecaApi = Request(
+                        request = GiftNumberAuthReqRequest(
+                            memberInfo = MemberInfoContent(
+                                memberNumber = memberNumber
+                            ),
+                            giftNumberInfo = giftNumberRequestContentInfo(
+                                giftNumber = giftNumber
+                            )
+                        ),
+                        head = BaseHead(
+                            messageType = MessageType.GiftNumberAuthReq.value
+                        )
+                    ),
+                )
+            )
+        }
+
         fun createCardInfoRequest(
             memberNumber: String,
             cardSchemeId: String,

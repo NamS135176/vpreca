@@ -13,8 +13,10 @@ import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
+import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.home.CreditCardResult
+import com.lifecard.vpreca.ui.login.LoginResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -46,11 +48,18 @@ class ListVprecaViewModel @Inject constructor(
                         CreditCardResult(networkTrouble = true)
                     is ApiException -> CreditCardResult(
                         error = ErrorMessageException(
-                            errorMessage = result.exception.message
+                            errorMessage = result.exception.errorMessage,
+                            exception = result.exception
                         )
                     )
+                    is InternalServerException -> _creditCardResult.value =
+                            //TODO this internalError should be html from server, it will be implement later
+                        CreditCardResult(internalError = "")
                     else -> _creditCardResult.value =
-                        CreditCardResult(error = ErrorMessageException(R.string.get_list_card_failure))
+                        CreditCardResult( error = ErrorMessageException(
+                            messageResId = R.string.login_failed,
+                            exception = result.exception
+                        ))
                 }
             }
             _loading.value = false
@@ -73,11 +82,18 @@ class ListVprecaViewModel @Inject constructor(
                         CardInfoResult(networkTrouble = true)
                     is ApiException -> CardInfoResult(
                         error = ErrorMessageException(
-                            errorMessage = res.exception.message
+                            errorMessage = res.exception.errorMessage,
+                            exception = res.exception
                         )
                     )
+                    is InternalServerException -> _cardInfoResult.value =
+                            //TODO this internalError should be html from server, it will be implement later
+                        CardInfoResult(internalError = "")
                     else -> _cardInfoResult.value =
-                        CardInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))
+                        CardInfoResult( error = ErrorMessageException(
+                            messageResId = R.string.login_failed,
+                            exception = res.exception
+                        ))
                 }
             }
             _loading.value = false

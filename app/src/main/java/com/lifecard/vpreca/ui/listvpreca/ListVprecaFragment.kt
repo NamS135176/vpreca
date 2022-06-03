@@ -89,10 +89,8 @@ class ListVprecaFragment : Fragment() {
                         }
                     }
                 }
-                creditCardResult.error?.let { error ->
-                    error.messageResId?.let { showPopupMessage("",getString(it)) }
-                    error.message?.let { showPopupMessage("",it) }
-                }
+                creditCardResult.error?.messageResId?.let { showPopupMessage(message = getString(it)) }
+                creditCardResult.error?.errorMessage?.let { showPopupMessage(message = it) }
                 creditCardResult.networkTrouble?.let {
                     if (it) {
                         showInternetTrouble()
@@ -104,6 +102,13 @@ class ListVprecaFragment : Fragment() {
             viewLifecycleOwner,
             Observer { cardInfoResult ->
                 cardInfoResult ?: return@Observer
+                cardInfoResult.error?.messageResId?.let { showPopupMessage(message = getString(it)) }
+                cardInfoResult.error?.errorMessage?.let { showPopupMessage(message = it) }
+                cardInfoResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
+                }
                 cardInfoResult.success?.let {
                     println("homeViewModel.cardInfoResult.observe success: ${cardInfoResult.success}")
 
@@ -113,15 +118,7 @@ class ListVprecaFragment : Fragment() {
                         creditCardRepository
                     ).show()
                 }
-                cardInfoResult.error?.let { error ->
-                    error.messageResId?.let { showPopupMessage("",getString(it)) }
-                    error.message?.let { showPopupMessage("",it) }
-                }
-                cardInfoResult.networkTrouble?.let {
-                    if (it) {
-                        showInternetTrouble()
-                    }
-                }
+
             })
 
         listVprecaViewModel.loading.observe(viewLifecycleOwner, Observer {

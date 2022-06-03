@@ -16,5 +16,5 @@ data class CardInfoResponseContent(
     @SerializedName("resultCode")
     val resultCode: String,
     @SerializedName("cardInfo")
-    val cardInfo: CardInfo,
+    val cardInfo: CardInfo?,
 )

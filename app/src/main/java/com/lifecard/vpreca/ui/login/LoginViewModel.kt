@@ -1,16 +1,17 @@
 package com.lifecard.vpreca.ui.login
 
-import android.hardware.biometrics.BiometricManager
-import android.hardware.biometrics.BiometricPrompt
 import android.util.Base64
-import android.util.Patterns
 import androidx.lifecycle.*
-
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
-import com.lifecard.vpreca.data.model.LoginResponse
+import com.lifecard.vpreca.exception.ApiException
+import com.lifecard.vpreca.exception.ErrorMessageException
+import com.lifecard.vpreca.exception.InternalServerException
+import com.lifecard.vpreca.exception.NoConnectivityException
+import com.lifecard.vpreca.ui.splash.SplashState
+import com.lifecard.vpreca.utils.RegexUtils
 import com.lifecard.vpreca.utils.RequestHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,17 +26,7 @@ class LoginViewModel @Inject constructor(
     ViewModel() {
     val usernameError = MutableLiveData<Int?>()
     val passwordError = MutableLiveData<Int?>()
-    val validForm = MediatorLiveData<LoginFormState>().apply {
-        value = LoginFormState()
-        addSource(usernameError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(usernameError = value)
-        }
-        addSource(passwordError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(passwordError = value)
-        }
-    }
+    val validForm = MutableLiveData<Boolean>(false)
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
@@ -43,9 +34,9 @@ class LoginViewModel @Inject constructor(
     val loading = MutableLiveData(false)
 
     fun login(username: String, password: String) {
-        if (!isUserNameValid(username) || !isPasswordValid(password)) {
-            usernameDataChanged(username)
-            passwordDataChanged(password)
+        val validUsername = checkUsername(username)
+        val validPassword = checkPassword(password)
+        if (!validUsername || !validPassword) {
             return
         }
         // can be launched in a separate asynchronous job
@@ -57,12 +48,11 @@ class LoginViewModel @Inject constructor(
                     loginPassword = password
                 )
             )
-
             if (loginResult is Result.Success) {
                 _loginResult.value =
                     LoginResult(success = loginResult.data.brandPrecaApi.response.memberInfo)
-            } else {
-                _loginResult.value = LoginResult(error = R.string.login_failed)
+            } else if (loginResult is Result.Error) {
+                handleResultErrorException(loginResult.exception)
             }
             loading.value = false
         }
@@ -89,21 +79,43 @@ class LoginViewModel @Inject constructor(
                 if (loginResult is Result.Success) {
                     val userResult = loginRepository.getUser()
                     if (userResult is Result.Success) {
-                        _loginResult.value =
-                            LoginResult(success = userResult.data)
-                    } else {
-                        _loginResult.value = LoginResult(error = R.string.login_failed)
+
+                    } else if (userResult is Result.Error) {
+                        handleResultErrorException(userResult.exception)
                     }
-                } else {
-                    _loginResult.value = LoginResult(error = R.string.login_failed)
+                } else if (loginResult is Result.Error) {
+                    handleResultErrorException(loginResult.exception)
                 }
-            } else {
-                _loginResult.value = LoginResult(error = R.string.login_failed)
+            } else if (bioChallengeResult is Result.Error) {
+                handleResultErrorException(bioChallengeResult.exception)
                 loading.value = false
                 return@launch
             }
 
             loading.value = false
+        }
+    }
+
+    private fun handleResultErrorException(exception: Exception) {
+        when (exception) {
+            is NoConnectivityException -> _loginResult.value =
+                LoginResult(networkTrouble = true)
+            is InternalServerException -> _loginResult.value =
+                    //TODO this internalError should be html from server, it will be implement later
+                LoginResult(internalError = "")
+            is ApiException -> _loginResult.value = LoginResult(
+                error = ErrorMessageException(
+                    errorMessage = exception.errorMessage,
+                    exception = exception
+                )
+            )
+            else -> _loginResult.value =
+                LoginResult(
+                    error = ErrorMessageException(
+                        messageResId = R.string.login_failed,
+                        exception = exception
+                    )
+                )
         }
     }
 
@@ -118,45 +130,25 @@ class LoginViewModel @Inject constructor(
 //        }
     }
 
-    fun clearLoginResult() {
-        _loginResult.value = LoginResult()
-    }
-
     fun checkUsername(username: String): Boolean {
-        if (!isUserNameValid(username)) {
-            usernameDataChanged(username)
+        if (!RegexUtils.isLoginIdValid(username)) {
+            usernameError.value = R.string.invalid_username
             return false
         }
+        usernameError.value = null
         return true
     }
 
-    fun usernameDataChanged(text: String) {
-        if (!isUserNameValid(text)) {
-            usernameError.value = R.string.invalid_username
-        } else {
-            usernameError.value = null
-        }
-    }
-
-    fun passwordDataChanged(text: String) {
-        if (!isPasswordValid(text)) {
+    fun checkPassword(password: String): Boolean {
+        if (!RegexUtils.isPasswordValid(password)) {
             passwordError.value = R.string.invalid_password
-        } else {
-            passwordError.value = null
+            return false
         }
+        passwordError.value = null
+        return true
     }
 
-    // A placeholder username validation check
-    private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains("@")) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else {
-            username.isNotBlank()
-        }
-    }
-
-    // A placeholder password validation check
-    private fun isPasswordValid(password: String): Boolean {
-        return password.length > 5
+    fun checkValidForm(username: String, password: String) {
+        validForm.value = username.isNotEmpty() && password.isNotEmpty()
     }
 }

@@ -104,10 +104,9 @@ class LoginFragment : NoToolbarFragment() {
             findNavController().navigate(R.id.nav_policy)
         })
 
-        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { loginFormState ->
-            loginButton.isEnabled =
-                loginFormState.usernameError == null && loginFormState.passwordError == null
-            println("loginViewModel.validForm.observe... usernameError: ${loginFormState.usernameError} - passwordError: ${loginFormState.passwordError} ")
+        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { isValid ->
+            loginButton.isEnabled = isValid
+            loginButton.alpha = if (isValid) 1.0f else 0.65f
         })
         loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
             usernameLayout.error = try {
@@ -129,9 +128,8 @@ class LoginFragment : NoToolbarFragment() {
             Observer { loginResult ->
                 loginResult ?: return@Observer
 
-                loginResult.error?.let {
-                    showLoginFailed(it)
-                }
+                loginResult.error?.messageResId?.let { showLoginFailed(getString(it)) }
+                loginResult.error?.errorMessage?.let { showLoginFailed(it) }
                 loginResult.errorText?.let { errorText ->
                     showAlert(errorText)
                 }
@@ -159,7 +157,12 @@ class LoginFragment : NoToolbarFragment() {
         savedUsername?.let {
             usernameEditText.text = it.toEditable()
         }
-        usernameEditText.doAfterTextChanged { text -> loginViewModel.usernameDataChanged(text = text.toString()) }
+        usernameEditText.doAfterTextChanged {
+            loginViewModel.checkValidForm(
+                username = usernameEditText.text.toString(),
+                password = passwordEditText.text.toString()
+            )
+        }
         usernameEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 //focus to password field
@@ -168,7 +171,12 @@ class LoginFragment : NoToolbarFragment() {
             false
         }
 
-        passwordEditText.doAfterTextChanged { text -> loginViewModel.passwordDataChanged(text = text.toString()) }
+        passwordEditText.doAfterTextChanged {
+            loginViewModel.checkValidForm(
+                username = usernameEditText.text.toString(),
+                password = passwordEditText.text.toString()
+            )
+        }
         passwordEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(
@@ -188,7 +196,7 @@ class LoginFragment : NoToolbarFragment() {
             context?.let { KeyboardUtils.hideKeyboard(it, passwordEditText) }
         }
 
-        when (bioManager?.checkDeviceSupportBiometric() == true || PreferenceHelper.isEnableBiometricSetting(
+        when (bioManager?.checkDeviceSupportBiometric() == true && PreferenceHelper.isEnableBiometricSetting(
             requireContext()
         )) {
             true -> buttonBioLogin.visibility = View.VISIBLE
@@ -281,8 +289,9 @@ class LoginFragment : NoToolbarFragment() {
         requireActivity().lifecycle.removeObserver(lifecycleObserver)
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        showAlert(getString(errorString))
+    private fun showLoginFailed(errorMessage: String) {
+//        showAlert(errorMessage)
+        showPopupMessage(message = errorMessage)
     }
 
     fun showAlert(content: String) {

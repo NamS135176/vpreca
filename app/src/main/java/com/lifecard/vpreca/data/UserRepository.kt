@@ -16,7 +16,8 @@ class UserRepository(private val apiService: ApiService, private val userManager
                 userManager.setLoggedIn(loginResponse)
                 Result.Success(loginResponse)
             } catch (e: Exception) {
-                println("LoginDataSource... login has error ${e}")
+                println("LoginDataSource... login has error $e")
+                e.printStackTrace()
                 Result.Error(e)
             }
         }
@@ -29,7 +30,8 @@ class UserRepository(private val apiService: ApiService, private val userManager
                 userManager.setLoggedIn(loginResponse)
                 Result.Success(loginResponse)
             } catch (e: Exception) {
-                println("LoginDataSource... login has error ${e}")
+                println("LoginDataSource... login has error $e")
+                e.printStackTrace()
                 Result.Error(e)
             }
         }
@@ -48,7 +50,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                         RequestHelper.createMemberRequest(loginId, memberNumber)
                     )
                     userManager.setLoggedMember(userResponse.brandPrecaApi.response)
-                    Result.Success(userResponse.brandPrecaApi.response.memberInfo)
+                    Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
                 }
             } catch (e: Exception) {
                 println("UserRepository... getUser has error $e")

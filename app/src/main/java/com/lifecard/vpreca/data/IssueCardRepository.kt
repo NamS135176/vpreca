@@ -13,19 +13,17 @@ class IssueCardRepository(
     private val apiService: ApiService,
     private val userManager: UserManager
 ) {
-    suspend fun getFeeSelReq(
-        cardSchemeId: String,
-        feeType: String,
-        targetAmount: String
-    ): Result<List<FeeInfo>> {
+    suspend fun giftNumberAuthReq(
+       giftNumber:String
+    ): Result<GiftInfo> {
         return withContext(Dispatchers.IO) {
             try {
-                val feeSelReqResponse = apiService.getFeeSel(
-                    RequestHelper.createFeeSelReqRequest(cardSchemeId, feeType, targetAmount)
+                val giftNumberAuthResponse = apiService.getGiftInfo(
+                    RequestHelper.createGiftNumberAuthReqRequest(memberNumber = userManager.memberNumber!! , giftNumber)
                 )
-                Result.Success(feeSelReqResponse.brandPrecaApi.response.feeInfo)
+                Result.Success(giftNumberAuthResponse.brandPrecaApi.response.giftNumberInfo!!)
             } catch (e: Exception) {
-                println("IssueCardRepository... getFeeSelReq has error $e")
+                println("IssueCardRepository... giftNumberAuthReq has error $e")
                 e.printStackTrace()
                 Result.Error(e)
             }
@@ -44,11 +42,12 @@ class IssueCardRepository(
                 val res = apiService.getFeeSel(
                     RequestHelper.createFeeSelReqRequest(cardSchemeId, feeType, targetAmount)
                 )
+
                 val sumUpInfo = SumUpInfoContentInfo(
-                    res.brandPrecaApi.response.feeInfo[0].feeAmount,
-                    res.brandPrecaApi.response.feeInfo[0].feeGetResultType,
-                    res.brandPrecaApi.response.feeInfo[0].feeCalculateType,
-                    res.brandPrecaApi.response.feeInfo[0].feeInclusiveFlg,
+                    res.brandPrecaApi.response.feeInfo?.get(0)?.feeAmount!!,
+                    res.brandPrecaApi.response.feeInfo.get(0).feeGetResultType,
+                    res.brandPrecaApi.response.feeInfo.get(0).feeCalculateType,
+                    res.brandPrecaApi.response.feeInfo.get(0).feeInclusiveFlg,
                     "1"
                 )
                 val feeSelReqResponse = apiService.issueSumReq(
@@ -59,7 +58,7 @@ class IssueCardRepository(
                         sumUpSrcCardInfo
                     )
                 )
-                Result.Success(feeSelReqResponse.brandPrecaApi.response.cardInfo)
+                Result.Success(feeSelReqResponse.brandPrecaApi.response.cardInfo!!)
             } catch (e: Exception) {
                 println("IssueCardRepository... issueSumReq has error $e")
                 e.printStackTrace()

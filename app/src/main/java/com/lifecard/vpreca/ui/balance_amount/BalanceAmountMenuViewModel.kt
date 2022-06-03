@@ -10,7 +10,9 @@ import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.SuspendDealRepository
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
+import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
+import com.lifecard.vpreca.ui.home.CreditCardResult
 import com.lifecard.vpreca.ui.listvpreca.CardInfoResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -42,6 +44,10 @@ class BalanceAmountMenuViewModel @Inject constructor(
                             errorMessage = result.exception.message
                         )
                     )
+                    is InternalServerException -> _suspendDealResult.value =
+                            //TODO this internalError should be html from server, it will be implement later
+                        SuspendDealResult(internalError = "")
+
                     else -> _suspendDealResult.value =
                         SuspendDealResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }

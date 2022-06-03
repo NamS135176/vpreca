@@ -8,21 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentBalanceByCodeInputBinding
+import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showPopupMessage
+import dagger.hilt.android.AndroidEntryPoint
 import org.joda.time.convert.Converter
-
+@AndroidEntryPoint
 class BalanceByCodeInputFragment : Fragment() {
 
     companion object {
         fun newInstance() = BalanceByCodeInputFragment()
     }
 
-    private lateinit var viewModel: BalanceByCodeInputViewModel
+    private val viewModel: BalanceByCodeInputViewModel by viewModels()
     private var _binding: FragmentBalanceByCodeInputBinding? = null
     private val binding get() = _binding!!
     private val args: BalanceByCodeInputFragmentArgs by navArgs()
@@ -30,13 +34,13 @@ class BalanceByCodeInputFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(BalanceByCodeInputViewModel::class.java)
         _binding = FragmentBalanceByCodeInputBinding.inflate(inflater, container, false)
         val totalAmount = binding.tvTotalAmount
         val giftCodeLayout = binding.issueCardByCodeInputLayout
         val giftCodeEdt = binding.issueCardByCodeInputCode
         val btnSubmit = binding.btnSubmitPolicy
         val btnBack = binding.appbarSignup.btnBack
+        val loading = binding.loading
 
         val fakeBalanceAmount = args.balanceTotalRemain?.balanceAmount?.toInt()!!
 
@@ -67,7 +71,33 @@ class BalanceByCodeInputFragment : Fragment() {
             } })
         giftCodeEdt.doAfterTextChanged { text -> viewModel.giftCodeDataChanged(text = text.toString()) }
 
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_value_confirm) })
+        viewModel.giftInfoResult.observe(
+            viewLifecycleOwner,
+            Observer { giftInfoResult ->
+                giftInfoResult ?: return@Observer
+                giftInfoResult.success?.let {
+                    findNavController().navigate(R.id.nav_balance_value_confirm)
+                }
+                giftInfoResult.error?.let { error ->
+                    error.messageResId?.let { showPopupMessage("",getString(it)) }
+                    error.message?.let { showPopupMessage("",it) }
+                }
+                giftInfoResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
+                }
+            })
+
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> loading.visibility = View.VISIBLE
+                else -> loading.visibility = View.GONE
+            }
+        })
+
+
+        btnSubmit.setOnClickListener(View.OnClickListener { viewModel.getGiftData(giftCodeEdt.text.toString())})
         return binding.root
     }
 

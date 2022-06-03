@@ -16,9 +16,9 @@ data class CardUsageHistoryResponseContent(
     @SerializedName("resultCode")
     val resultCode: String,
     @SerializedName("selectHitRecordCount")
-    val selectHitRecordCount: Int,
+    val selectHitRecordCount: Int?,
     @SerializedName("responseRecordCount")
-    val responseRecordCount: Int,
+    val responseRecordCount: Int?,
     @SerializedName("cardDealHistoryInfo")
-    val cardInfo: List<CardUsageHistory>,
+    val cardInfo: List<CardUsageHistory>?,
 )

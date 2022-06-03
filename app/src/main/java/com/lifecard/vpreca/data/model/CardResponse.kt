@@ -16,7 +16,7 @@ data class CardResponseContent(
     @SerializedName("resultCode")
     val resultCode: String,
     @SerializedName("cardInfo")
-    val cardInfo: List<CreditCard>,
+    val cardInfo: List<CreditCard>?,
     @SerializedName("recordCount")
-    val recordCount: Int,
+    val recordCount: Int?,
 )

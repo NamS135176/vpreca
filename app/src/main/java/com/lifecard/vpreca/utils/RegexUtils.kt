@@ -20,7 +20,7 @@ class RegexUtils {
          * only half width and underscore
          * check the screen SC08_2
          */
-        const val RegexLoginID = "[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_]+\$"
+        const val RegexLoginID = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_]{6,10}\$"
 
         /**
          * only roman
@@ -60,8 +60,8 @@ class RegexUtils {
 
 
         fun isLoginIdValid(loginId: String?): Boolean {
-            return loginId?.let { id ->
-                id.length in 6..10 && Pattern.compile(RegexLoginID).matcher(id).matches()
+            return loginId?.let { loginId ->
+                Pattern.compile(RegexLoginID).matcher(loginId).matches()
             } ?: false
         }
 
@@ -104,7 +104,6 @@ class RegexUtils {
         }
 
         fun isMobilePhone(phone: String): Boolean {
-//            return Pattern.compile(RegexMobilePhone).matcher(phone).matches()
             return Regex(RegexMobilePhone).matches(phone)
         }
     }

@@ -38,12 +38,15 @@ class UserManager(private val secureStore: SecureStore) {
         loginId = secureStore.getLoginUserId()
     }
 
-    fun setToken(accessToken: String, refreshToken: String) {
-        this.accessToken = accessToken
-        this.refreshToken = refreshToken
-
-        secureStore.saveAccessToken(accessToken)
-        secureStore.saveRefreshToken(refreshToken)
+    fun setToken(accessToken: String?, refreshToken: String?) {
+        accessToken?.let {
+            this.accessToken = it
+            secureStore.saveAccessToken(it)
+        }
+        refreshToken?.let {
+            this.refreshToken = it
+            secureStore.saveRefreshToken(it)
+        }
     }
 
     fun setLoggedMember(memberResponseContent: MemberResponseContent) {

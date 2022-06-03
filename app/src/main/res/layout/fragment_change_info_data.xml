@@ -12,6 +12,7 @@
             name="user"
             type="com.lifecard.vpreca.data.model.MemberInfo" />
     </data>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,11 +37,13 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toTopOf="@id/btn_submit_policy"
                 app:layout_constraintTop_toBottomOf="@+id/appbar_confirm_signup">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:paddingBottom="16dp">
+
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/signup_input_title"
                         style="@style/Widget.AppCompat.TextView.Bold"
@@ -51,6 +54,7 @@
                         android:text="@string/change_info_data_title"
                         android:textColor="#0057b5"
                         android:textSize="18sp" />
+
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/cf_signup_des"
                         android:layout_width="match_parent"
@@ -88,8 +92,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:lines="1"
                             android:lineSpacingExtra="6sp"
+                            android:lines="1"
                             android:text="@{user.memberName ?? ``}"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -214,6 +218,7 @@
                             android:text="@{UserConverter.hideUserEmail1(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -242,16 +247,18 @@
                             android:text="@{UserConverter.hideUserEmail2(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
+
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/Widget.AppCompat.TextView.Bold"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:paddingTop="26dp"
                         android:layout_marginHorizontal="36dp"
                         android:layout_weight="1"
                         android:lineSpacingExtra="6sp"
+                        android:paddingTop="26dp"
                         android:text="@string/change_info_data_setting_title"
                         android:textSize="12sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -279,6 +286,7 @@
                             android:text="@{UserConverter.receiveEmail1(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -311,12 +319,13 @@
                         style="@style/Widget.AppCompat.TextView.Bold"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:paddingTop="26dp"
                         android:layout_marginHorizontal="36dp"
                         android:layout_weight="1"
                         android:lineSpacingExtra="6sp"
+                        android:paddingTop="26dp"
                         android:text="@string/change_info_data_magazine"
                         android:textSize="12sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -344,6 +353,7 @@
                             android:text="@{UserConverter.receiveAdEmail1(user)}"
                             android:textSize="12sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -385,7 +395,7 @@
                 android:layout_marginBottom="32dp"
                 android:enabled="true"
                 android:paddingVertical="11dp"
-                android:text="@string/change_info_data_btn"
+                android:text="@string/button_submit_user_info_data"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:cornerRadius="25dp"

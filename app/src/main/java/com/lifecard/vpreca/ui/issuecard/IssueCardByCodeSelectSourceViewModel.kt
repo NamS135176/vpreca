@@ -9,6 +9,7 @@ import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
+import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.home.CreditCardResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,6 +40,9 @@ class IssueCardByCodeSelectSourceViewModel @Inject constructor(
                             errorMessage = result.exception.message
                         )
                     )
+                    is InternalServerException -> _creditCardResult.value =
+                            //TODO this internalError should be html from server, it will be implement later
+                        CreditCardResult(internalError = "")
                     else -> _creditCardResult.value =
                         CreditCardResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }

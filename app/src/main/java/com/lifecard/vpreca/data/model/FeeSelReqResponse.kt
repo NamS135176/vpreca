@@ -16,7 +16,7 @@ data class FeeSelReqResponseContent(
     @SerializedName("resultCode")
     val resultCode: String,
     @SerializedName("feeInfo")
-    val feeInfo: List<FeeInfo>,
+    val feeInfo: List<FeeInfo>?,
     @SerializedName("recordCount")
-    val recordCount: Int,
+    val recordCount: Int?,
 )

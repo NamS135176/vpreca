@@ -16,7 +16,7 @@ data class SuspendDealResponseContent(
     @SerializedName("resultCode")
     val resultCode: String,
     @SerializedName("recordCount")
-    val recordCount: Int,
+    val recordCount: Int?,
     @SerializedName("suspendDeal")
-    val suspendDeal: List<SuspendDeal>,
+    val suspendDeal: List<SuspendDeal>?,
 )

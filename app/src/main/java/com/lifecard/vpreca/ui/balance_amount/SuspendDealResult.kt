@@ -6,5 +6,6 @@ import com.lifecard.vpreca.exception.ErrorMessageException
 data class SuspendDealResult(
     val success: List<SuspendDeal>? = null,
     val error: ErrorMessageException? = null,
-    val networkTrouble: Boolean? = false
+    val networkTrouble: Boolean? = false,
+    val internalError: String? = null
 )

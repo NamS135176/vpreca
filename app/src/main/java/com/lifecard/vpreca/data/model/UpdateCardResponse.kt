@@ -16,5 +16,5 @@ data class UpdateCardResponseContent(
     @SerializedName("resultCode")
     val resultCode: String,
     @SerializedName("cardInfo")
-    val cardInfo: CreditCard,
+    val cardInfo: CreditCard?,
 )
