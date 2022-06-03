@@ -77,13 +77,13 @@ class PolicyFragment : Fragment() {
         buttonPolicy.setOnClickListener(View.OnClickListener {
             findNavController().navigate(
                 R.id.nav_webview,
-                WebViewFragment.createBundle("https://www.lifecard.co.jp/privacy_policy/")
+                WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/rule03.html")
             )
         })
         buttonTermOfUse.setOnClickListener(View.OnClickListener {
             findNavController().navigate(
                 R.id.nav_webview,
-                WebViewFragment.createBundle("https://www.lifecard.co.jp/efforts/privacy_policy/")
+                WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/index.html")
             )
         })
 
