@@ -548,7 +548,8 @@
     <string name="error_api_common_1101101">そのログインIDの会員情報が存在しません。</string>
     <string name="error_api_common_1101102">アカウントロック中です。</string>
     <string name="error_api_common_1101103">ログインパスワードが正しくありません。</string>
-    <string name="button_submit_user_info_data">会員情報変更</string>
     <!--  Api error login end -->
+    <string name="button_submit_user_info_data">会員情報変更</string>
+    <string name="button_confirm_change_pass" tools:ignore="ExtraTranslation">変更</string>
 
 </resources>
