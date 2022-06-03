@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentBalanceByCodeInputBinding
@@ -24,6 +25,7 @@ class BalanceByCodeInputFragment : Fragment() {
     private lateinit var viewModel: BalanceByCodeInputViewModel
     private var _binding: FragmentBalanceByCodeInputBinding? = null
     private val binding get() = _binding!!
+    private val args: BalanceByCodeInputFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,7 +38,7 @@ class BalanceByCodeInputFragment : Fragment() {
         val btnSubmit = binding.btnSubmitPolicy
         val btnBack = binding.appbarSignup.btnBack
 
-        val fakeBalanceAmount = 5000
+        val fakeBalanceAmount = args.balanceTotalRemain?.balanceAmount?.toInt()!!
 
         totalAmount.text = com.lifecard.vpreca.utils.Converter.convertCurrency(fakeBalanceAmount)
 

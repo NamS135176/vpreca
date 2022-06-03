@@ -37,6 +37,23 @@ class RequestHelper {
             )
         }
 
+        fun createFeeSelReqRequest(cardSchemeId: String,feeType: String, targetAmount: String): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = FeeSelReqRequest(
+                        feeInfo = FeeSelReqRequestContentInfo(
+                            cardSchemeId = cardSchemeId,
+                            feeType = feeType,
+                            targetAmount = targetAmount
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.FeeSelReq.value
+                    )
+                ),
+            )
+        }
+
         fun createCardInfoRequest(
             memberNumber: String,
             cardSchemeId: String,
@@ -57,6 +74,29 @@ class RequestHelper {
                     ),
                     head = BaseHead(
                         messageType = MessageType.CardSelReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createIssueSumRequest(
+            memberNumber: String,
+            cardInfo: CardInfoWithDesignIdContentInfo,
+            sumUpInfo: SumUpInfoContentInfo,
+            sumUpSrcCardInfo: CardInfoRequestContentInfo
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = IssueSumReqRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        cardInfo = cardInfo,
+                        sumUpInfo = sumUpInfo,
+                        sumUpSrcCardInfo = sumUpSrcCardInfo
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.IssueSumReq.value
                     )
                 ),
             )

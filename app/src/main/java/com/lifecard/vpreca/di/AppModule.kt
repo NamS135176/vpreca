@@ -68,6 +68,15 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun provideIssueCardRepository(
+        apiService: ApiService,
+        userManager: UserManager
+    ): IssueCardRepository {
+        return IssueCardRepository(apiService, userManager)
+    }
+
+    @Provides
+    @Singleton
     fun provideUserManager(
         secureStore: SecureStore
     ): UserManager {

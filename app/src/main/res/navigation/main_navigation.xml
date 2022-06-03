@@ -127,12 +127,21 @@
         <action
             android:id="@+id/action_menu_to_selectsource"
             app:destination="@id/nav_balance_amount_select_source" />
+        <action
+            android:id="@+id/action_menu_to_inputcode"
+            app:destination="@id/nav_balance_by_code_input" />
     </fragment>
     <fragment
         android:id="@+id/nav_balance_by_code_input"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeInputFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_balance_by_code_input" />
+        tools:layout="@layout/fragment_balance_by_code_input" >
+        <argument
+            android:name="balance_total_remain"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.BalanceTotalRemain"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_balance_value_confirm"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeConfirmValue"
@@ -141,6 +150,9 @@
         <action
             android:id="@+id/action_confirm_to_select_design"
             app:destination="@id/nav_issue_card_select_design" />
+        <action
+            android:id="@+id/action_confirm_to_inputcode"
+            app:destination="@id/nav_balance_by_code_input" />
     </fragment>
     <fragment
         android:id="@+id/nav_balance_by_source_complete"

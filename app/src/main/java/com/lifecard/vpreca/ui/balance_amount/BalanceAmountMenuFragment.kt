@@ -52,7 +52,14 @@ class BalanceAmountMenuFragment : Fragment() {
         val btnByCode = binding.btnBalanceByCode
         val tvTotal = binding.tvTotalAmount
         var totalRemain = 0
-        btnByCode.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_by_code_input) })
+        btnByCode.setOnClickListener(View.OnClickListener {
+            val data = BalanceTotalRemain(totalRemain.toString())
+            val action =
+                BalanceAmountMenuFragmentDirections.actionMenuToInputcode(
+                    data
+                )
+            findNavController().navigate(action)
+        })
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
