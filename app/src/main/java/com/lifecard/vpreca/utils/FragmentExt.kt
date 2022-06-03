@@ -13,6 +13,7 @@ fun Fragment.setNavigationResult(result: String, key: String) {
 }
 
 fun Fragment.showPopupMessage(title: String? = null, message: String): Fragment? = try {
+    println("showPopupMessage... title = $title, message = $message")
     val supportFragmentManager = requireActivity().supportFragmentManager
     var fragment =
         supportFragmentManager.findFragmentByTag(AlertDialogFragment.FRAGMENT_TAG)

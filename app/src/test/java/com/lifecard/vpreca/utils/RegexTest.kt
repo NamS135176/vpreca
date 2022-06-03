@@ -34,6 +34,7 @@ class RegexTest {
         val loginIdErrors = listOf(
             "",
             "ＡＡＡ",
+            "ＡＡＡＡＡＡ",
             "12345",
             "12345678901",
             "12 345678",

@@ -16,9 +16,9 @@ data class MemberResponseContent(
     @SerializedName("resultCode")
     val resultCode: String,
     @SerializedName("memberInfo")
-    val memberInfo: MemberInfo,
+    val memberInfo: MemberInfo?,
     @SerializedName("memberSubInfo")
-    val memberSubInfo: MemberSubInfo,
+    val memberSubInfo: MemberSubInfo?,
     @SerializedName("creditCardInfo")
-    val creditCardInfo: CreditCardInfo,
+    val creditCardInfo: CreditCardInfo?,
 )

@@ -44,51 +44,53 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
             } else if (code == 200) {
                 //check result code
                 //TODO need implement here
-                try {
 
-                    response.body()?.let { responseBody ->
-                        val source: BufferedSource = responseBody.source()
-                        source.request(Long.MAX_VALUE) // Buffer the entire body.
+                response.body()?.let { responseBody ->
+                    val source: BufferedSource = responseBody.source()
+                    source.request(Long.MAX_VALUE) // Buffer the entire body.
 
-                        var buffer = source.buffer()
-                        val bodyText = buffer.clone().readString(Charset.forName("UTF-8"))
+                    val buffer = source.buffer()
+                    val bodyText = buffer.clone().readString(Charset.forName("UTF-8"))
 
-                        /*
-                        val headers = response.headers()
-                        if ("gzip".equals(headers.get("Content-Encoding"), ignoreCase = true)) {
-                            var gzippedResponseBody: GzipSource? = null
-                            try {
-                                gzippedResponseBody = GzipSource(buffer.clone())
-                                buffer = Buffer()
-                                buffer.writeAll(gzippedResponseBody)
-                            } finally {
-                                gzippedResponseBody?.close()
-                            }
-                        }
-                        */
-                        val json: BaseResponse = gson.fromJson<BaseResponse>(
-                            bodyText,
-                            BaseResponse::class.java
-                        )
-                        val resultCode = json.brandPrecaApi.response.resultCode
-                        if (ApiError.isResultCodeError(resultCode)) {
-                            val messageType = request.body().getMessageType()
-                            throw ApiException.createApiException(
-                                resultCode = resultCode,
-                                messageType = messageType
-                            )
+                    /*
+                    val headers = response.headers()
+                    if ("gzip".equals(headers.get("Content-Encoding"), ignoreCase = true)) {
+                        var gzippedResponseBody: GzipSource? = null
+                        try {
+                            gzippedResponseBody = GzipSource(buffer.clone())
+                            buffer = Buffer()
+                            buffer.writeAll(gzippedResponseBody)
+                        } finally {
+                            gzippedResponseBody?.close()
                         }
                     }
-
-                } catch (e: Throwable) {
+                    */
+                    val json: BaseResponse = gson.fromJson(
+                        bodyText,
+                        BaseResponse::class.java
+                    )
+                    val resultCode = json.brandPrecaApi.response.resultCode
+                    if (ApiError.isResultCodeError(resultCode)) {
+                        val messageType = json.brandPrecaApi.head.messageType
+                        throw ApiException.createApiException(
+                            resultCode = resultCode,
+                            messageType = messageType
+                        )
+                    }
                 }
+
             }
             return response
         } catch (e: UnknownHostException) {
+            e.printStackTrace()
             throw NoConnectivityException()
+        } catch (e: ApiException) {
+            throw e
         } catch (e: IOException) {
+            e.printStackTrace()
             throw NoConnectivityException()
         } catch (e: Throwable) {
+            e.printStackTrace()
             throw e
         }
     }

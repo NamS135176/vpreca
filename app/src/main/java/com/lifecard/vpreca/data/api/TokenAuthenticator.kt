@@ -52,8 +52,8 @@ class TokenAuthenticator(private var appContext: Context, private val secureStor
                     if (!accessToken.isNullOrEmpty() && !refreshToken.isNullOrEmpty()) {
                         try {
                             val loginResponse = refreshToken(accessToken, refreshToken)
-                            secureStore.saveAccessToken(loginResponse.accessToken)
-                            secureStore.saveRefreshToken(loginResponse.refreshToken)
+                            loginResponse.accessToken?.let { secureStore.saveAccessToken(it) }
+                            loginResponse.refreshToken?.let { secureStore.saveRefreshToken(it) }
                             return@runBlocking response.request().newBuilder()
                                 .header("Authorization", "Bearer ${loginResponse.accessToken}")
                                 .build()

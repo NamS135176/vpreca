@@ -6,7 +6,7 @@ import java.io.IOException
 class ApiException(
     val resultCode: String,
     val messageType: String,
-    private val errorMessage: String
+    val errorMessage: String
 ) : IOException() {
     companion object {
         fun createApiException(
@@ -22,5 +22,5 @@ class ApiException(
     }
 
     override val message: String
-        get() = errorMessage
+        get() = "Api Exception: (resultCode = $resultCode, messageType = $messageType, message = $errorMessage)"
 }

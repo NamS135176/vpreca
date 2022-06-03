@@ -128,9 +128,8 @@ class LoginFragment : NoToolbarFragment() {
             Observer { loginResult ->
                 loginResult ?: return@Observer
 
-                loginResult.error?.let {
-                    showLoginFailed(it)
-                }
+                loginResult.error?.messageResId?.let { showLoginFailed(getString(it)) }
+                loginResult.error?.errorMessage?.let { showLoginFailed(it) }
                 loginResult.errorText?.let { errorText ->
                     showAlert(errorText)
                 }
@@ -290,8 +289,9 @@ class LoginFragment : NoToolbarFragment() {
         requireActivity().lifecycle.removeObserver(lifecycleObserver)
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        showAlert(getString(errorString))
+    private fun showLoginFailed(errorMessage: String) {
+//        showAlert(errorMessage)
+        showPopupMessage(message = errorMessage)
     }
 
     fun showAlert(content: String) {
