@@ -44,12 +44,12 @@ class ForgotPassFragment : Fragment() {
         _binding = FragmentForgotPassBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(ForgotPassViewModel::class.java)
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
-            OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                backFunction()
-            }
-        })
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
+//            OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                backFunction()
+//            }
+//        })
 
         val spinnerQuestion = binding.spinnerQuestion
         val tvDatePicker = binding.dobInputLayoutForgot
@@ -65,7 +65,7 @@ class ForgotPassFragment : Fragment() {
         val answerLayout = binding.forgotPassSecretAnswerLayout
         val answerEdt = binding.forgotPassSecretAnswerInput
 
-        var cal = Calendar.getInstance()
+        val cal = Calendar.getInstance()
 
         cancelBtn.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {

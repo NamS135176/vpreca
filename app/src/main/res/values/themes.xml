@@ -75,11 +75,12 @@
 
     <style name="SpinnerTheme">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">44dp</item>
         <item name="android:gravity">top|left</item>
         <item name="android:textSize">16sp</item>
-<!--        <item name="android:paddingTop">18dp</item>-->
-<!--        <item name="android:paddingBottom">18dp</item>-->
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
         <item name="android:background">@color/white</item>
         <item name="android:dropDownSelector">#f1f1f1</item>
         <item name="android:dropDownItemStyle">@style/SpinnerItemTheme</item>
