@@ -242,12 +242,9 @@ class SignupInputViewModel : ViewModel() {
             //TODO need call api here
             formResultState.value = SignupInputResultState(success = true)
         }
-        formResultState.value = SignupInputResultState(success = true)
     }
 
     fun checkValidForm(): Boolean {
-        validForm.value = true
-        return true
         val isValid = formState.value?.let { form ->
             val kataName = "${form.kanaFirstName ?: ""}${form.kanaLastName ?: ""}"
             val hiraName = "${form.hiraFirstName ?: ""}${form.hiraLastName ?: ""}"
