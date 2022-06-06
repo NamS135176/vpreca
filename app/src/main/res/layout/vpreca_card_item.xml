@@ -6,7 +6,7 @@
         <import type="android.view.View" />
 
         <import type="com.lifecard.vpreca.utils.Converter" />
-
+        <import type="com.lifecard.vpreca.utils.ModelExtKt" />
         <variable
             name="card"
             type="com.lifecard.vpreca.data.model.CreditCard" />
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:text="@{card.precaNumber}"
+                android:text="@{ModelExtKt.isCardLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@id/card_username"

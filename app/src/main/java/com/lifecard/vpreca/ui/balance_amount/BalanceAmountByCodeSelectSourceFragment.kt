@@ -9,19 +9,19 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.BalanceSelectSourceConfirmData
-import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.IssueByCodeSelectSourceConfirmData
-import com.lifecard.vpreca.data.model.SelectedData
+import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountByCodeSelectSourceBinding
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
 import com.lifecard.vpreca.ui.issuecard.IssueCardByCodeSelectSourceDirections
 import com.lifecard.vpreca.ui.issuecard.IssueCardSourceAdapter
 import com.lifecard.vpreca.utils.Converter
+import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +34,7 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
     private var _binding: FragmentBalanceAmountByCodeSelectSourceBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: BalanceAmountByCodeSelectSourceViewModel
-
+    private val args: BalanceAmountByCodeSelectSourceFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,11 +51,17 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
         val tvRemain = binding.tvRemain
         val btnSubmit = binding.btnSubmitIntroduceFirst
 
-        val fakeBalanceRamain = 5000
-        var remain = 5000
+        var fakeBalanceRamain = args?.balanceTotalRemain?.balanceAmount?.toInt()
+        var remain = fakeBalanceRamain!!
         var select = 0
+        var cardSchemeId = ""
+        var designId = ""
+        var cardNickname = ""
+        var vcnName = ""
+        var precaNumber = ""
+        var vcn = ""
 
-        tvTotalAmount.text = Converter.convertCurrency(fakeBalanceRamain)
+        tvTotalAmount.text = Converter.convertCurrency(fakeBalanceRamain!!)
         tvSelect.text = Converter.convertCurrency(select)
         tvRemain.text = Converter.convertCurrency(remain)
 
@@ -104,6 +110,7 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
                                     position: Int,
                                     binding: SelectSourceCardItemBinding
                                 ) {
+
                                     if (arrSelected[position].isSelected == "0") {
                                         for (i in 0 until arrSelected.size) {
                                             if (i == position) {
@@ -116,8 +123,23 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
                                         adapter.notifyDataSetChanged()
                                         select = arrPolicy[position].publishAmount.toInt()
                                         remain = fakeBalanceRamain - select
-                                        tvSelect.text = Converter.convertCurrency(select)
-                                        tvRemain.text = Converter.convertCurrency(remain)
+                                        if(remain > 0){
+                                            tvSelect.text = Converter.convertCurrency(select)
+                                            tvRemain.text = Converter.convertCurrency(remain)
+                                        }
+                                        else{
+                                            remain = 0
+                                            tvSelect.text = Converter.convertCurrency(select)
+                                            tvRemain.text = Converter.convertCurrency(0)
+                                        }
+
+                                        cardSchemeId = arrPolicy[position].cardSchemeId
+                                        designId = arrPolicy[position].designId
+                                        cardNickname = arrPolicy[position].cardNickname
+                                        vcnName = arrPolicy[position].vcnName
+                                        precaNumber = arrPolicy[position].precaNumber
+                                        vcn = arrPolicy[position].vcn
+
                                         btnSubmit.isEnabled = true
 //                                        dataSelectCard = arrPolicy[position].publishAmount
 //                                        name = arrPolicy[position].cardNickname
@@ -142,19 +164,28 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
                 }
                 creditCardResult.error?.let { error ->
 
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("ok", null)
-                        error.messageResId?.let { setMessage(getString(it)) }
-                        error.message?.let { setMessage(it) }
-                    }.create().show()
+                    error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                    error.message?.let { showPopupMessage(message = it) }
+                }
+                creditCardResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
                 }
             })
 
+
         btnSubmit.setOnClickListener(View.OnClickListener {
-            val data = BalanceSelectSourceConfirmData(
+            val data = SelectSourceConfirmData(
                 fakeBalanceRamain.toString(),
                 select.toString(),
-                remain.toString()
+                remain.toString(),
+                cardSchemeId,
+                designId,
+                cardNickname,
+                vcnName,
+                precaNumber,
+                vcn
             )
             val action =
                 BalanceAmountByCodeSelectSourceFragmentDirections.actionSelectsourceToConfirm(

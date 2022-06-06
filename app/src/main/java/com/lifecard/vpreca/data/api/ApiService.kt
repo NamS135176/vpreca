@@ -19,6 +19,21 @@ interface ApiService {
         @Body cardRequest: BrandRequest
     ): CardInfoResponse
 
+    @POST("GiftNumberAuthReq")
+    suspend fun getGiftInfo(
+        @Body giftNumberAuthRequest: BrandRequest
+    ): GiftNumberAuthReqResponse
+
+    @POST("FeeSelReq")
+    suspend fun getFeeSel(
+        @Body feeSelReqRequest: BrandRequest
+    ): FeeSelReqResponse
+
+    @POST("IssueSumReq")
+    suspend fun issueSumReq(
+        @Body issueSumReqResponse: BrandRequest
+    ): IssueSumReqResponse
+
     @POST("CardListSelReq")
     suspend fun getListCards(
         @Body cardListRequest: BrandRequest
@@ -33,6 +48,16 @@ interface ApiService {
     suspend fun getCardUsageHistory(
         @Body cardListRequest: BrandRequest
     ): CardUsageHistoryResponse
+
+    @POST("CardUpdReq")
+    suspend fun updateCard(
+        @Body updateCardRequest: BrandRequest
+    ): UpdateCardResponse
+
+    @POST("CardRepublishReq")
+    suspend fun republishCard(
+        @Body cardRepublishRequest: BrandRequest
+    ): UpdateCardResponse
 
     @GET("challenge")
     suspend fun getBioChallenge(@Query("loginId") memberNumber: String): BioChallenge

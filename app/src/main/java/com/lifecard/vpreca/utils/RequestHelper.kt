@@ -37,6 +37,43 @@ class RequestHelper {
             )
         }
 
+        fun createFeeSelReqRequest(cardSchemeId: String,feeType: String, targetAmount: String): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = FeeSelReqRequest(
+                        feeInfo = FeeSelReqRequestContentInfo(
+                            cardSchemeId = cardSchemeId,
+                            feeType = feeType,
+                            targetAmount = targetAmount
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.FeeSelReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createGiftNumberAuthReqRequest(memberNumber: String, giftNumber:String): BrandRequest {
+            return BrandRequest(
+                return BrandRequest(
+                    brandPrecaApi = Request(
+                        request = GiftNumberAuthReqRequest(
+                            memberInfo = MemberInfoContent(
+                                memberNumber = memberNumber
+                            ),
+                            giftNumberInfo = giftNumberRequestContentInfo(
+                                giftNumber = giftNumber
+                            )
+                        ),
+                        head = BaseHead(
+                            messageType = MessageType.GiftNumberAuthReq.value
+                        )
+                    ),
+                )
+            )
+        }
+
         fun createCardInfoRequest(
             memberNumber: String,
             cardSchemeId: String,
@@ -57,6 +94,90 @@ class RequestHelper {
                     ),
                     head = BaseHead(
                         messageType = MessageType.CardSelReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createIssueSumRequest(
+            memberNumber: String,
+            cardInfo: CardInfoWithDesignIdContentInfo,
+            sumUpInfo: SumUpInfoContentInfo,
+            sumUpSrcCardInfo: CardInfoRequestContentInfo
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = IssueSumReqRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        cardInfo = cardInfo,
+                        sumUpInfo = sumUpInfo,
+                        sumUpSrcCardInfo = sumUpSrcCardInfo
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.IssueSumReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createRepublishCardRequest(
+            memberNumber: String,
+            cardSchemeId: String,
+            precaNumber: String,
+            vcn: String,
+            cooperatorNumber:String?
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = CardRepublishRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        cardInfo = CardRepublishRequestContentInfo(
+                            cardSchemeId = cardSchemeId,
+                            precaNumber = precaNumber,
+                            vcn = vcn,
+                            cooperatorNumber = cooperatorNumber
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.LoginReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createUpdateCardRequest(
+            memberNumber: String,
+            creditCard: CreditCard
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = UpdateCardRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        cardInfo = CardInfoRequestContentInfo(
+                            cardSchemeId = creditCard.cardSchemeId,
+                            precaNumber = creditCard.precaNumber,
+                            vcn = creditCard.vcn
+                        ),
+                        changeInfo = UpdateCardRequestContentInfo(
+                            nickName = NickNameContent(cardNickname = creditCard.cardNickname),
+                            autoCharge = AutoChargeContent(
+                                autoChargeFlg = creditCard.autoChargeFlg,
+                                autoChargeThereshold = creditCard.autoChargeThereshold,
+                                autoChargeAmount = creditCard.autoChargeAmount
+                            )
+                        ),
+                        securityLock = SecurityLockContent(
+                            vcnSecurityLockFlg = creditCard.vcnSecurityLockFlg
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.CardUpdReq.value
                     )
                 ),
             )

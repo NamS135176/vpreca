@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.BalanceTotalRemain
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
@@ -19,6 +20,8 @@ import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.WebDirectScreen
+import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,8 +51,15 @@ class BalanceAmountMenuFragment : Fragment() {
         val btnBySource = binding.btnBalanceSelectSource
         val btnByCode = binding.btnBalanceByCode
         val tvTotal = binding.tvTotalAmount
-
-        btnByCode.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_by_code_input) })
+        var totalRemain = 0
+        btnByCode.setOnClickListener(View.OnClickListener {
+            val data = BalanceTotalRemain(totalRemain.toString())
+            val action =
+                BalanceAmountMenuFragmentDirections.actionMenuToInputcode(
+                    data
+                )
+            findNavController().navigate(action)
+        })
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
@@ -57,7 +67,14 @@ class BalanceAmountMenuFragment : Fragment() {
                 findNavController().navigate(R.id.nav_home)
             }
         })
-        btnBySource.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_select_source) })
+        btnBySource.setOnClickListener(View.OnClickListener {
+            val data = BalanceTotalRemain(totalRemain.toString())
+            val action =
+                BalanceAmountMenuFragmentDirections.actionMenuToSelectsource(
+                    data
+                )
+            findNavController().navigate(action)
+        })
 
         btnToWeb.setOnClickListener(View.OnClickListener {
             findNavController().navigate(
@@ -90,15 +107,18 @@ class BalanceAmountMenuFragment : Fragment() {
                             0
                         }
                     }
+                    totalRemain = sumBalance
                     tvTotal.text = Converter.convertCurrency(sumBalance)
                 }
                 suspendDealResult.error?.let { error ->
 
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("ok", null)
-                        error.messageResId?.let { setMessage(getString(it)) }
-                        error.message?.let { setMessage(it) }
-                    }.create().show()
+                    error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                    error.message?.let { showPopupMessage(message = it) }
+                }
+                suspendDealResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
                 }
             })
 

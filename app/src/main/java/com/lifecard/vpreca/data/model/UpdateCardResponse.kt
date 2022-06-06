@@ -2,19 +2,19 @@ package com.lifecard.vpreca.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class CardInfoResponse(
+data class UpdateCardResponse(
     @SerializedName("brandPrecaApi")
-    val brandPrecaApi: CardInfoBrandResponse,
+    val brandPrecaApi: UpdateCardBrandResponse,
 )
 
-data class CardInfoBrandResponse(
+data class UpdateCardBrandResponse(
     @SerializedName("response")
-    val response: CardInfoResponseContent,
+    val response: UpdateCardResponseContent,
 )
 
-data class CardInfoResponseContent(
+data class UpdateCardResponseContent(
     @SerializedName("resultCode")
     val resultCode: String,
     @SerializedName("cardInfo")
-    val cardInfo: CardInfo?,
+    val cardInfo: CreditCard?,
 )

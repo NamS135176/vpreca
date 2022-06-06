@@ -6,7 +6,7 @@
         <import type="android.view.View" />
 
         <import type="com.lifecard.vpreca.utils.Converter" />
-
+        <import type="com.lifecard.vpreca.utils.ModelExtKt" />
         <variable
             name="card"
             type="com.lifecard.vpreca.data.model.DesignCard" />

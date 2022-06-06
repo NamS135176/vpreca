@@ -32,6 +32,8 @@ import com.lifecard.vpreca.ui.listvpreca.ListVprecaAdapter
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragmentDirections
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.showCustomToast
+import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -221,11 +223,13 @@ class IssueCardSelectSourceFragment : Fragment() {
                 }
                 creditCardResult.error?.let { error ->
 
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("ok", null)
-                        error.messageResId?.let { setMessage(getString(it)) }
-                        error.message?.let { setMessage(it) }
-                    }.create().show()
+                    error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                    error.message?.let { showPopupMessage(message = it) }
+                }
+                creditCardResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
                 }
             })
 

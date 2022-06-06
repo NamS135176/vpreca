@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
@@ -18,22 +19,33 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.CreditCardRepository
+import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
+import com.lifecard.vpreca.exception.ApiException
+import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlin.coroutines.CoroutineContext
 import kotlin.math.max
 import kotlin.math.min
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-
+class HomeFragment : Fragment(), CoroutineScope {
+    @Inject
+    lateinit var creditCardRepository: CreditCardRepository
     private var _binding: FragmentHomeBinding? = null
-
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main
     private val homeViewModel: HomeViewModel by viewModels()
 
     // This property is only valid between onCreateView and
@@ -67,30 +79,69 @@ class HomeFragment : Fragment() {
                     buttonSlideLeft.visibility = View.VISIBLE
                     buttonSlideRight.visibility = View.VISIBLE
                 }
-                val currentCreditCard = adapter.getItem(position)
+                var currentCreditCard = adapter.getItem(position)
                 binding.listCard.currentCard = currentCreditCard
                 buttonInfo.setOnClickListener(View.OnClickListener {
                     homeViewModel.creditCardSelectDataChanged(currentCreditCard)
                 })
                 buttonLock.setOnClickListener(View.OnClickListener {
-                    homeViewModel.inverseLockStatus(currentCreditCard, position)
-                    val toastMessage = when (currentCreditCard.isCardLock()) {
-                        false -> "ロックしました"
-                        else -> "ロックを解除しました"
+                    launch {
+                        binding.loading.visibility = View.VISIBLE
+                        val res = creditCardRepository.updateCard(currentCreditCard)
+                        if(res is Result.Success){
+                            homeViewModel.inverseLockStatus(currentCreditCard, position)
+                            val toastMessage = when (currentCreditCard.isCardLock()) {
+                                false -> "ロックしました"
+                                else -> "ロックを解除しました"
+                            }
+                            Toast(context).showCustomToast(
+                                message = toastMessage,
+                                requireActivity()
+                            )
+                        }
+                        else if (res is Result.Error) {
+                            when (res.exception) {
+                                is NoConnectivityException -> showInternetTrouble()
+                                is ApiException -> showPopupMessage("", res.exception.message)
+                                else -> showPopupMessage("", getString( R.string.get_list_card_failure))
+
+                            }
+                        }
+                        binding.loading.visibility = View.GONE
                     }
-                    Toast(context).showCustomToast(
-                        message = toastMessage,
-                        requireActivity()
-                    )
                 })
                 buttonReload.setOnClickListener(View.OnClickListener {
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("はい") { _, _ ->
-                            showToast("再発行しました")
-                        }
-//                        setNegativeButton("いいえ", null)
-                        setMessage("カードを再発行しますよろしいですか？")
-                    }.create().show()
+                    if(!adapter.getItem(position).isCardLock()){
+                        MaterialAlertDialogBuilder(requireContext()).apply {
+                            setPositiveButton("はい") { _, _ ->
+
+                                launch {
+                                    binding.loading.visibility = View.VISIBLE
+                                    val res = creditCardRepository.republishCard(currentCreditCard)
+                                    if(res is Result.Success){
+                                        binding.listCard.currentCard = res.data
+                                        homeViewModel.updateList(res.data, position)
+
+                                        showToast("再発行しました")
+                                    }
+                                    else if (res is Result.Error) {
+                                        when (res.exception) {
+                                            is NoConnectivityException -> showInternetTrouble()
+                                            is ApiException -> showPopupMessage("", res.exception.message)
+                                            else -> showPopupMessage("", getString( R.string.get_list_card_failure))
+
+                                        }
+                                    }
+                                    binding.loading.visibility = View.GONE
+                                }
+
+
+                            }
+                            setNegativeButton("いいえ", null)
+                            setMessage("カードを再発行しますよろしいですか？")
+                        }.create().show()
+                    }
+
                 })
             }
         }
@@ -210,16 +261,19 @@ class HomeFragment : Fragment() {
                     CardBottomSheetCustom(
                         requireActivity(),
                         cardInfoResult.success,
+                        creditCardRepository
                     ).show()
 
                 }
                 cardInfoResult.error?.let { error ->
 
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("ok", null)
-                        error.messageResId?.let { setMessage(getString(it)) }
-                        error.message?.let { setMessage(it) }
-                    }.create().show()
+                    error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                    error.message?.let { showPopupMessage(message = it) }
+                }
+                cardInfoResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
                 }
             })
         homeViewModel.suspendDealResult.observe(
@@ -244,11 +298,13 @@ class HomeFragment : Fragment() {
                 }
                 suspendDealResult.error?.let { error ->
 
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("ok", null)
-                        error.messageResId?.let { setMessage(getString(it)) }
-                        error.message?.let { setMessage(it) }
-                    }.create().show()
+                    error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                    error.message?.let { showPopupMessage(message = it) }
+                }
+                suspendDealResult.networkTrouble?.let {
+                    if (it) {
+//                        showInternetTrouble()
+                    }
                 }
             })
         homeViewModel.loading.observe(viewLifecycleOwner, Observer {

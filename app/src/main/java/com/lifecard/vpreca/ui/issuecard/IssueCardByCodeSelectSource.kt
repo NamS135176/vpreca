@@ -21,6 +21,8 @@ import com.lifecard.vpreca.databinding.FragmentIssueCardSelectDesignBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectSourceBinding
 import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
 import com.lifecard.vpreca.utils.Converter
+import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -145,11 +147,13 @@ class IssueCardByCodeSelectSource : Fragment() {
                 }
                 creditCardResult.error?.let { error ->
 
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("ok", null)
-                        error.messageResId?.let { setMessage(getString(it)) }
-                        error.message?.let { setMessage(it) }
-                    }.create().show()
+                    error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                    error.message?.let { showPopupMessage(message = it) }
+                }
+                creditCardResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
                 }
             })
         btnSubmit.setOnClickListener(View.OnClickListener {

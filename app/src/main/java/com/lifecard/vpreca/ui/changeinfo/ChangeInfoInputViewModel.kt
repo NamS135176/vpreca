@@ -93,33 +93,33 @@ class ChangeInfoInputViewModel : ViewModel() {
 
     fun email1DataChanged(text: String) {
         if (!isEmailValid(text)) {
-            cityError.value = R.string.rgx_error_email
+            email1Error.value = R.string.rgx_error_email
         } else {
-            cityError.value = null
+            email1Error.value = null
         }
     }
 
     fun email2DataChanged(text: String) {
         if (!isEmailValid(text)) {
-            cityError.value = R.string.rgx_error_email
+            email2Error.value = R.string.rgx_error_email
         } else {
-            cityError.value = null
+            email2Error.value = null
         }
     }
 
     fun email1ConfirmDataChanged(text: String, email: String) {
         if (!isEmail1ConfirmValid(text,email)) {
-            cityError.value = R.string.rgx_error_email
+            email1ConfirmError.value = R.string.rgx_error_email
         } else {
-            cityError.value = null
+            email1ConfirmError.value = null
         }
     }
 
     fun email2ConfirmDataChanged(text: String, email: String) {
         if (!isEmail2ConfirmValid(text, email)) {
-            cityError.value = R.string.rgx_error_email
+            email2ConfirmError.value = R.string.rgx_error_email
         } else {
-            cityError.value = null
+            email2ConfirmError.value = null
         }
     }
 

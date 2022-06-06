@@ -70,4 +70,10 @@ object Converter {
             convertCurrency(0)
         }
     }
+
+    @JvmStatic
+    fun convertPrecaNumber(value: String?): String {
+        val show = value?.substring(value.length.minus(5), value.length)
+        return "**** **** **** "+show
+    }
 }

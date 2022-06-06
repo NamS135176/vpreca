@@ -1,5 +1,6 @@
 package com.lifecard.vpreca.utils
 
+import android.util.Patterns
 import java.util.regex.Pattern
 
 class RegexUtils {
@@ -80,8 +81,7 @@ class RegexUtils {
 
         fun isEmailValid(email: String?): Boolean {
             return email?.let {
-                email.length in 0..256 && Pattern.compile(RegexEmail).matcher(email)
-                    .matches()
+                email.length in 0..256 && Patterns.EMAIL_ADDRESS.matcher(email).matches()
             } ?: false
         }
 
