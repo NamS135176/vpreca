@@ -19,6 +19,11 @@ interface ApiService {
         @Body cardRequest: BrandRequest
     ): CardInfoResponse
 
+    @POST("IssueGiftReq")
+    suspend fun issueGiftCard(
+        @Body cardRequest: BrandRequest
+    ): IssueGiftReqResponse
+
     @POST("GiftNumberAuthReq")
     suspend fun getGiftInfo(
         @Body giftNumberAuthRequest: BrandRequest
@@ -38,6 +43,11 @@ interface ApiService {
     suspend fun getListCards(
         @Body cardListRequest: BrandRequest
     ): CardResponse
+
+    @POST("CardDesignSelReq")
+    suspend fun getListDesign(
+        @Body listDesignRequest: BrandRequest
+    ): ListDesignResponse
 
     @POST("SuspendDealSelReq")
     suspend fun getListSuspendDeal(

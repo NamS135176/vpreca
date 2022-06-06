@@ -33,13 +33,7 @@ class IssueCardMainFragment : Fragment() {
         val buttonIssueByCode = binding.buttonIssueByCode
 
         btnCancel.setOnClickListener(View.OnClickListener {
-            MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
-                    findNavController().navigate(R.id.nav_home)
-                }
-                setNegativeButton("いいえ", null)
-                setMessage("途中ですがキャンセルしてもよろしいですか")
-            }.create().show()
+            findNavController().navigate(R.id.nav_home)
         })
 
         buttonCreditCard.setOnClickListener(View.OnClickListener {

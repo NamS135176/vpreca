@@ -48,6 +48,7 @@ class IssueCardSourceAdapter(private var items: List<CreditCard>,private var sel
             "005" -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_fifth)
             "006" -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_six)
             "007" -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_seven)
+            else -> holder.binding.cardItem.setBackgroundResource(R.drawable.bg_seven)
         }
     }
 

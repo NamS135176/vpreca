@@ -6,11 +6,11 @@ data class GiftNumberAuthReqRequest(
     @SerializedName("memberInfo")
     val memberInfo: MemberInfoContent,
     @SerializedName("giftNumberInfo")
-    val giftNumberInfo: giftNumberRequestContentInfo
+    val giftNumberInfo: GiftNumberRequestContentInfo
 )
 
 
-data class giftNumberRequestContentInfo(
+data class GiftNumberRequestContentInfo(
     @SerializedName("giftNumber")
     val giftNumber: String,
 )

@@ -61,6 +61,7 @@
             android:enabled="true"
             android:paddingVertical="12dp"
             android:text="@string/gift_card_complete_btn"
+            android:textSize="18sp"
             android:textColor="@color/primary"
             android:textStyle="bold"
             app:backgroundTint='@color/button_introduce_background'

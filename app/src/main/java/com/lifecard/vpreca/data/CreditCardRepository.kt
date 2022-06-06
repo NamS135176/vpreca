@@ -1,10 +1,7 @@
 package com.lifecard.vpreca.data
 
 import com.lifecard.vpreca.data.api.ApiService
-import com.lifecard.vpreca.data.model.CardInfo
-import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.MemberInfo
-import com.lifecard.vpreca.data.model.SuspendDeal
+import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.utils.RequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
@@ -101,6 +98,23 @@ class CreditCardRepository(
                     )
                 )
                 Result.Success(republishCardResponse.brandPrecaApi.response.cardInfo!!)
+            } catch (e: Exception) {
+                println("CreditCardRepository... republish card has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
+
+    suspend fun getListDesign(cardSchemeId: String): Result<ListDesignResponseContent> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val republishCardResponse = apiService.getListDesign(
+                    RequestHelper.createListDesignRequest(
+                      cardSchemeId = cardSchemeId
+                    )
+                )
+                Result.Success(republishCardResponse.brandPrecaApi.response!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... republish card has error $e")
                 e.printStackTrace()

@@ -111,7 +111,6 @@ class BalanceAmountMenuFragment : Fragment() {
                     tvTotal.text = Converter.convertCurrency(sumBalance)
                 }
                 suspendDealResult.error?.let { error ->
-
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
                     error.message?.let { showPopupMessage(message = it) }
                 }

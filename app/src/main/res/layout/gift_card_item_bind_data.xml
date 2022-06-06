@@ -48,7 +48,7 @@
                     android:id="@+id/card_logo"
                     android:layout_width="69dp"
                     android:layout_height="17dp"
-                    android:background="@{card.designId.equals(`0`) ? @drawable/logo_card : @drawable/home_card_logo}"
+                    android:background="@{card.designId.equals(`001`) ? @drawable/logo_card : @drawable/home_card_logo}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/name_holder"
-                    android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
+                    android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -67,7 +67,7 @@
                     android:id="@+id/card_type_logo"
                     android:layout_width="53dp"
                     android:layout_height="17dp"
-                    android:background="@{card.designId.equals(`0`) ? @drawable/visa_gift : @drawable/card_visa}"
+                    android:background="@{card.designId.equals(`001`) ? @drawable/visa_gift : @drawable/card_visa}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/card_username" />
@@ -89,7 +89,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="@string/card_expire_date"
-                            android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
+                            android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                             android:textSize="8sp" />
 
                         <com.google.android.material.textview.MaterialTextView
@@ -98,8 +98,11 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="clip_vertical"
                             android:paddingLeft="4dp"
-                            android:text="02/02"
-                            android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
+                            android:paddingStart="4dp"
+                            android:paddingRight="0dp"
+                            android:paddingEnd="0dp"
+                            android:text="@string/expire_holder"
+                            android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -107,14 +110,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingLeft="9dp">
+                        android:paddingLeft="9dp"
+                        android:paddingStart="9dp"
+                        android:paddingEnd="0dp"
+                        android:paddingRight="0dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="@string/sercue_code"
-                            android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
+                            android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                             android:textSize="8sp" />
 
                         <com.google.android.material.textview.MaterialTextView
@@ -123,8 +129,11 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="clip_vertical"
                             android:paddingLeft="4dp"
-                            android:text="000"
-                            android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
+                            android:paddingStart="4dp"
+                            android:paddingEnd="0dp"
+                            android:paddingRight="0dp"
+                            android:text="@string/pin_holder"
+                            android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                             android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -134,7 +143,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/vpreca_holder"
-                    android:textColor="@{card.designId.equals(`0`) ? @color/primary : @color/white}"
+                    android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
                     android:lineSpacingExtra="6sp"
                     android:lineSpacingMultiplier="0"
                     app:lineHeight="0dp"

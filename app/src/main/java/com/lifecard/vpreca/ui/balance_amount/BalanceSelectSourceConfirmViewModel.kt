@@ -43,9 +43,11 @@ class BalanceSelectSourceConfirmViewModel @Inject constructor(
             _loading.value = true
             val cardInfo =
                 CardInfoWithDesignIdContentInfo(cardSchemeId, designId, cardNickName, vcnName)
-            val sumUpSrcCardInfo = CardInfoRequestContentInfo(cardSchemeId, precaNumber, vcn)
+            val sumUpSrcCardInfo = ArrayList<CardInfoRequestContentInfo>()
+            val data = CardInfoRequestContentInfo(cardSchemeId, precaNumber, vcn)
+            sumUpSrcCardInfo.add(data)
             val res =
-                issueCardRepository.issueSumReq(cardInfo, sumUpSrcCardInfo, cardSchemeId, "1", "1")
+                issueCardRepository.issueSumReq(cardInfo, sumUpSrcCardInfo, cardSchemeId, "1", "1","1")
             if (res is Result.Success) {
                 _feeInfoResult.value = FeeInfoResult(success = res.data)
             } else if (res is Result.Error) {

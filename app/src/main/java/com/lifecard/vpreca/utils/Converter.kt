@@ -76,4 +76,18 @@ object Converter {
         val show = value?.substring(value.length.minus(5), value.length)
         return "**** **** **** "+show
     }
+
+    @JvmStatic
+    fun convertRemain(total: String?, gift: String?): String {
+        val totalInt = total?.toInt()
+        val giftInt = gift?.toInt()
+        val remain = totalInt!! - giftInt!!
+        if(remain > 0){
+            return remain.toString()
+        }
+        else{
+            return "0"
+        }
+
+    }
 }
