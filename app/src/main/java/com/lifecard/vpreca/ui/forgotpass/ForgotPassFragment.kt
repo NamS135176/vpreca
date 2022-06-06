@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentForgotPassBinding
+import com.lifecard.vpreca.utils.closeKeyBoard
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,6 +36,7 @@ class ForgotPassFragment : Fragment() {
         _binding = FragmentForgotPassBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(ForgotPassViewModel::class.java)
 
+        val container = binding.container
         val spinnerQuestion = binding.spinnerQuestion
         val tvDatePicker = binding.dobInputLayoutForgot
         val emailEdt = binding.forgotPassEmailInput
@@ -49,6 +51,7 @@ class ForgotPassFragment : Fragment() {
         val answerLayout = binding.forgotPassSecretAnswerLayout
         val answerEdt = binding.forgotPassSecretAnswerInput
 
+        container.setOnClickListener { closeKeyBoard() }
         spinnerQuestion.lifecycleOwner = viewLifecycleOwner
 
         val cal = Calendar.getInstance()

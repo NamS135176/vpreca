@@ -192,7 +192,8 @@
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:layout_marginStart="8dp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -216,7 +217,8 @@
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:layout_marginEnd="8dp" />
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/idLastName"
@@ -233,11 +235,10 @@
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:layout_marginStart="8dp" />
                     </LinearLayout>
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
-
-
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -251,12 +252,16 @@
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
+                <com.skydoves.powerspinner.PowerSpinnerView
                     android:id="@+id/spinner_city"
+                    style="@style/PowerSpinnerView"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="9dp"
-                    android:paddingHorizontal="16dp" />
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+                    app:spinner_item_array="@array/secret_question" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/change_info_email_1_title"
                     style="@style/Widget.AppCompat.TextView.Bold"
@@ -289,6 +294,7 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/change_info_email_1_confirm_title"
                     style="@style/Widget.AppCompat.TextView.Bold"
@@ -321,6 +327,7 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/change_info_email_2_title"
                     style="@style/Widget.AppCompat.TextView.Bold"
@@ -353,6 +360,7 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/change_info_email_2_confirm_title"
                     style="@style/Widget.AppCompat.TextView.Bold"
@@ -385,6 +393,7 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_secret_title"
                     style="@style/Widget.AppCompat.TextView.Bold"
@@ -396,12 +405,15 @@
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
+                <com.skydoves.powerspinner.PowerSpinnerView
                     android:id="@+id/spinner_secret"
+                    style="@style/PowerSpinnerView"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="9dp"
-                    android:paddingHorizontal="16dp" />
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+                    app:spinner_item_array="@array/secret_question" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_secret_answer_title"

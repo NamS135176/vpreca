@@ -1,11 +1,14 @@
 package com.lifecard.vpreca.ui.changeinfo
 
-import android.util.Patterns
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.utils.RegexUtils
+
+data class ChangeInfoInputResultState(
+    val success: Boolean? = null
+)
 
 class ChangeInfoInputViewModel : ViewModel() {
     val nicknameError = MutableLiveData<Int?>()
@@ -17,128 +20,148 @@ class ChangeInfoInputViewModel : ViewModel() {
     val email1ConfirmError = MutableLiveData<Int?>()
     val email2Error = MutableLiveData<Int?>()
     val email2ConfirmError = MutableLiveData<Int?>()
+    val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
+    val formState = MutableLiveData(ChangeInfoInputState())
 
+    val validForm = MutableLiveData<Boolean>()
 
-    val validForm = MediatorLiveData<ChangeInfoInputState>().apply {
-        value = ChangeInfoInputState()
-        addSource(idError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(idError = value)
-        }
-        addSource(nicknameError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(nicknameError = value)
-        }
-        addSource(cityError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(cityError = value)
-        }
-        addSource(questionError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(questionError = value)
-        }
-        addSource(answerError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(answerError = value)
-        }
-        addSource(email1Error) { value ->
-            val previous = this.value
-            this.value = previous?.copy(email1Error = value)
-        }
-        addSource(email1ConfirmError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(email1ConfirmError = value)
-        }
-        addSource(email2Error) { value ->
-            val previous = this.value
-            this.value = previous?.copy(email2Error = value)
-        }
-        addSource(email2ConfirmError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(email2ConfirmError = value)
+    private fun checkNicknameValid(): Boolean {
+        return if (!RegexUtils.isEmailValid(formState.value?.nickname)) {
+            nicknameError.value = R.string.rgx_error_nickname
+            false
+        } else {
+            nicknameError.value = null
+            true
         }
     }
 
     fun nicknameDataChanged(text: String) {
-        if (!RegexUtils.isNicknameValid(text)) {
-            nicknameError.value = R.string.rgx_error_nickname
+        formState.value = formState.value?.copy(nickname = text)
+    }
+
+
+    private fun checkLoginIdValid(): Boolean {
+        return if (!RegexUtils.isLoginIdValid(formState.value?.loginId)) {
+            idError.value = R.string.invalid_username
+            false
         } else {
-            nicknameError.value = null
+            idError.value = null
+            true
         }
     }
 
-    fun idDataChanged(text: String) {
-        if (!RegexUtils.isLoginIdValid(text)) {
-            idError.value = R.string.invalid_username
+    fun loginIdDataChanged(text: String) {
+        formState.value = formState.value?.copy(loginId = text)
+    }
+
+    private fun checkQuestionValid(): Boolean {
+        return if (!isQuestionValid(formState.value?.question)) {
+            questionError.value = R.string.forgot_pass_error_secret_question
+            false
         } else {
-            idError.value = null
+            questionError.value = null
+            true
         }
     }
 
     fun questionDataChanged(text: String) {
-        if (!isQuestionValid(text)) {
-            questionError.value = R.string.forgot_pass_error_secret_question
+        formState.value = formState.value?.copy(question = text)
+    }
+
+    private fun checkCityValid(): Boolean {
+        return if (!isCityValid(formState.value?.city)) {
+            cityError.value = R.string.forgot_pass_error_secret_question
+            false
         } else {
-            questionError.value = null
+            cityError.value = null
+            true
         }
     }
 
     fun cityDataChanged(text: String) {
-        if (!isQuestionValid(text)) {
-            cityError.value = R.string.forgot_pass_error_secret_question
+        formState.value = formState.value?.copy(city = text)
+    }
+
+    private fun checkEmail1Valid(): Boolean {
+        return if (!RegexUtils.isEmailValid(formState.value?.email1)) {
+            email1Error.value = R.string.rgx_error_email
+            false
         } else {
-            cityError.value = null
+            email1Error.value = null
+            true
         }
     }
 
     fun email1DataChanged(text: String) {
-        if (!isEmailValid(text)) {
-            email1Error.value = R.string.rgx_error_email
+        formState.value = formState.value?.copy(email1 = text)
+    }
+
+    private fun checkEmail2Valid(): Boolean {
+        return if (!RegexUtils.isEmailValid(formState.value?.email2)) {
+            email2Error.value = R.string.rgx_error_email
+            false
         } else {
-            email1Error.value = null
+            email2Error.value = null
+            true
         }
     }
 
     fun email2DataChanged(text: String) {
-        if (!isEmailValid(text)) {
-            email2Error.value = R.string.rgx_error_email
+        formState.value = formState.value?.copy(email2 = text)
+    }
+
+    private fun checkEmail1ConfirmValid(): Boolean {
+        return if (!isEmail1ConfirmValid(formState.value?.email1Confirm, formState.value?.email1)) {
+            email1ConfirmError.value = R.string.rgx_error_email
+            false
         } else {
-            email2Error.value = null
+            email1ConfirmError.value = null
+            true
         }
     }
 
     fun email1ConfirmDataChanged(text: String, email: String) {
-        if (!isEmail1ConfirmValid(text,email)) {
-            email1ConfirmError.value = R.string.rgx_error_email
+        formState.value = formState.value?.copy(email1Confirm = text)
+    }
+
+    private fun checkEmail2ConfirmValid(): Boolean {
+        return if (!isEmail2ConfirmValid(formState.value?.email2Confirm, formState.value?.email2)) {
+            email2ConfirmError.value = R.string.rgx_error_email
+            false
         } else {
-            email1ConfirmError.value = null
+            email2ConfirmError.value = null
+            true
         }
     }
 
     fun email2ConfirmDataChanged(text: String, email: String) {
-        if (!isEmail2ConfirmValid(text, email)) {
-            email2ConfirmError.value = R.string.rgx_error_email
+        formState.value = formState.value?.copy(email2Confirm = text)
+    }
+
+    private fun checkAnswerValid(): Boolean {
+        return if (!isAnswerValid(formState.value?.answer)) {
+            answerError.value = R.string.forgot_pass_error_secret_answer
+            true
         } else {
-            email2ConfirmError.value = null
+            answerError.value = null
+            false
         }
     }
 
     fun answerDataChanged(text: String) {
-        if (!isAnswerValid(text)) {
-            answerError.value = R.string.forgot_pass_error_secret_answer
-        } else {
-            answerError.value = null
-        }
+        formState.value = formState.value?.copy(answer = text)
     }
 
-
-    private fun isQuestionValid(question: String): Boolean {
-
-        return true
+    private fun isQuestionValid(question: String?): Boolean {
+        return !question.isNullOrEmpty()
     }
 
-    private fun isAnswerValid(answer: String): Boolean {
-        return answer.length in 0..20 && isHalfWidth(answer)
+    private fun isCityValid(city: String?): Boolean {
+        return !city.isNullOrEmpty()
+    }
+
+    private fun isAnswerValid(answer: String?): Boolean {
+        return !answer.isNullOrEmpty() && answer.length in 0..20 && isHalfWidth(answer)
     }
 
     fun isHalfWidth(text: String): Boolean {
@@ -146,26 +169,46 @@ class ChangeInfoInputViewModel : ViewModel() {
         return regex.find(text) == null
     }
 
-    fun isEmailValid(email: String): Boolean {
-        return RegexUtils.isEmailValid(email)
-    }
-
-    fun isEmail1ConfirmValid(cfEmail: String, email: String): Boolean {
+    private fun isEmail1ConfirmValid(cfEmail: String?, email: String?): Boolean {
         return RegexUtils.isEmailValid(cfEmail) && email == cfEmail
     }
 
-    fun isEmail2ConfirmValid(cfEmail: String, email: String): Boolean {
+    private fun isEmail2ConfirmValid(cfEmail: String?, email: String?): Boolean {
         return RegexUtils.isEmailValid(email) && email == cfEmail
     }
 
-    // A placeholder username validation check
-    private fun isUserNameValid(username: String): Boolean {
-        return RegexUtils.isLoginIdValid(username)
+    fun submit() {
+        val isValidEmail1 = checkEmail1Valid()
+        val isValidEmail1Confirm = checkEmail1ConfirmValid()
+        val isValidEmail2 = checkEmail2Valid()
+        val isValidEmail2Confirm = checkEmail2ConfirmValid()
+        val isValidNickname = checkNicknameValid()
+        val isValidLoginId = checkLoginIdValid()
+        val isValidQuestion = checkQuestionValid()
+        val isValidCity = checkCityValid()
+        val isValidAnswer = checkAnswerValid()
+        if (isValidEmail1 && isValidEmail1Confirm && isValidEmail2 && isValidEmail2Confirm && isValidNickname && isValidLoginId && isValidQuestion && isValidCity && isValidAnswer) {
+            formResultState.value = ChangeInfoInputResultState(success = true)
+        }
     }
 
-    // A placeholder password validation check
-    private fun isIdValid(id: String): Boolean {
-        return id.length in 6..10
+    fun checkValidForm(): Boolean {
+        val isValid = formState.value?.let { form ->
+            val fields = arrayOf(
+                form.nickname,
+                form.loginId,
+                form.question,
+                form.city,
+                form.answer,
+                form.email1,
+                form.email1Confirm,
+                form.email2,
+                form.email2Confirm
+            )
+            !fields.any { it.isNullOrEmpty() }
+        } ?: false
+        validForm.value = isValid
+        return isValid
     }
 
 }
