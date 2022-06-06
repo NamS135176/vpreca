@@ -8,7 +8,7 @@ class Constant {
         const val SECURE_REFRESH_TOKEN = "vpreca_refresh_token"
         const val BIOMETRIC_ALGORITHM = "ecdsa-with-SHA256"
 
-        //        const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
+        const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
         const val API_BASE_URL = "https://by4h7iozy5.execute-api.ap-southeast-1.amazonaws.com/dev/"
         //staging
 //        const val API_BASE_URL =
@@ -16,8 +16,6 @@ class Constant {
 
 
         const val GOOGLE_VISION_API = "https://vision.googleapis.com/"
-
-        const val WEB_DIRECT_BASE_URL = "https://immense-beach-23070.herokuapp.com/LW01/%s.do"
     }
 }
 

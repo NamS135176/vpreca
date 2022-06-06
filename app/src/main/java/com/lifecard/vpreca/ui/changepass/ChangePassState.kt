@@ -1,9 +1,7 @@
 package com.lifecard.vpreca.ui.changepass
 
 data class ChangePassState(
-    val oldPassError: Int? = null,
-    val newPassError: Int? = null,
-    val cfNewPassError: Int? = null,
-
-
-)
+    val oldPass: String? = null,
+    val newPass: String? = null,
+    val cfNewPass: String? = null,
+    )

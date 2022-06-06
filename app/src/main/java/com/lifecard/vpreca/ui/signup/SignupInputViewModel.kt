@@ -1,15 +1,20 @@
 package com.lifecard.vpreca.ui.signup
 
 import android.util.Patterns
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.ui.login.LoginFormState
+import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
+import com.lifecard.vpreca.utils.Converter
+import com.lifecard.vpreca.utils.RegexUtils
+
+data class SignupInputResultState(
+    val success: Boolean? = null
+)
 
 class SignupInputViewModel : ViewModel() {
     val usernameError = MutableLiveData<Int?>()
-    val idError = MutableLiveData<Int?>()
+    val loginIdError = MutableLiveData<Int?>()
     val dateError = MutableLiveData<Int?>()
     val phoneError = MutableLiveData<Int?>()
     val questionError = MutableLiveData<Int?>()
@@ -18,170 +23,252 @@ class SignupInputViewModel : ViewModel() {
     val answerError = MutableLiveData<Int?>()
     val passwordError = MutableLiveData<Int?>()
     val cfPasswordError = MutableLiveData<Int?>()
-    val validForm = MediatorLiveData<SignUpFormState>().apply {
-        value = SignUpFormState()
-        addSource(idError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(idError = value)
-        }
-        addSource(usernameError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(usernameError = value)
-        }
-        addSource(dateError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(dateError = value)
-        }
-        addSource(phoneError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(phoneError = value)
-        }
-        addSource(genderError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(genderError = value)
-        }
-        addSource(cityError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(cityError = value)
-        }
-        addSource(questionError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(questionError = value)
-        }
-        addSource(answerError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(answerError = value)
-        }
-        addSource(passwordError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(passwordError = value)
-        }
-        addSource(cfPasswordError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(cfPasswordError = value)
+    val kanaFullNameError = MutableLiveData<Int?>()
+    val hiraFullNameError = MutableLiveData<Int?>()
+    val validForm = MutableLiveData<Boolean>()
+    val formState = MutableLiveData(SignupInputState())
+    val formResultState = MutableLiveData<SignupInputResultState>()
+
+    private fun checkUsernameValid(): Boolean {
+        return if (!RegexUtils.isNicknameValid(formState.value?.username)) {
+            usernameError.value = R.string.invalid_username
+            false
+        } else {
+            usernameError.value = null
+            true
         }
     }
 
     fun usernameDataChanged(text: String) {
-        if (!isUserNameValid(text)) {
-            usernameError.value = R.string.invalid_username
+        formState.value = formState.value?.copy(username = text)
+    }
+
+    private fun checkLoginIdValid(): Boolean {
+        return if (!RegexUtils.isLoginIdValid(formState.value?.loginId)) {
+            loginIdError.value = R.string.invalid_password
+            false
         } else {
-            usernameError.value = null
+            loginIdError.value = null
+            true
         }
     }
 
-    fun idDataChanged(text: String) {
-        if (!isIdValid(text)) {
-            idError.value = R.string.invalid_password
-        } else {
-            idError.value = null
-        }
+    fun loginIdDataChanged(text: String) {
+        formState.value = formState.value?.copy(loginId = text)
     }
-    fun dateDataChanged(text: String) {
-        if (!isDateValid(text)) {
+
+    private fun checkDateValid(): Boolean {
+        return if (!isDateValid(formState.value?.date)) {
             dateError.value = R.string.forgot_pass_error_dob
+            false
         } else {
             dateError.value = null
-        }
-    }
-    fun passwordDataChanged(text: String) {
-        if (!isPasswordValid(text)) {
-            passwordError.value = R.string.forgot_pass_error_dob
-        } else {
-            passwordError.value = null
+            true
         }
     }
 
-    fun cfPasswordDataChanged(text: String, password: String) {
-        if (!isCfPasswordValid(password, text)) {
+    fun dateDataChanged(text: String) {
+        formState.value = formState.value?.copy(date = text)
+    }
+
+    private fun checkPasswordValid(): Boolean {
+        return if (!RegexUtils.isPasswordValid(formState.value?.password)) {
+            passwordError.value = R.string.forgot_pass_error_dob
+            false
+        } else {
+            passwordError.value = null
+            true
+        }
+    }
+
+    fun passwordDataChanged(text: String) {
+        formState.value = formState.value?.copy(password = text)
+    }
+
+    private fun checkCfPasswordValid(): Boolean {
+        return if (!isCfPasswordValid(formState.value?.password, formState.value?.cfPassword)) {
             cfPasswordError.value = R.string.forgot_pass_error_dob
+            false
         } else {
             cfPasswordError.value = null
+            true
+        }
+    }
+
+    fun cfPasswordDataChanged(text: String) {
+        formState.value = formState.value?.copy(cfPassword = text)
+    }
+
+    private fun checkPhoneValid(): Boolean {
+        return if (!RegexUtils.isPhoneNumberValid(formState.value?.phone)) {
+            phoneError.value = R.string.forgot_pass_error_phone
+            false
+        } else {
+            phoneError.value = null
+            true
         }
     }
 
     fun phoneDataChanged(text: String) {
-        if (!isPhoneValid(text)) {
-            phoneError.value = R.string.forgot_pass_error_phone
+        formState.value = formState.value?.copy(phone = text)
+    }
+
+    private fun checkQuestionValid(): Boolean {
+        return if (!RegexUtils.isQuestionValid(formState.value?.question)) {
+            questionError.value = R.string.forgot_pass_error_secret_question
+            false
         } else {
-            phoneError.value = null
+            questionError.value = null
+            true
         }
     }
 
     fun questionDataChanged(text: String) {
-        if (!isQuestionValid(text)) {
-            questionError.value = R.string.forgot_pass_error_secret_question
-        }
-        else{
-            questionError.value = null
+        formState.value = formState.value?.copy(question = text)
+    }
+
+    private fun checkCityValid(): Boolean {
+        return if (!RegexUtils.isCityValid(formState.value?.city)) {
+            cityError.value = R.string.forgot_pass_error_secret_question
+            false
+        } else {
+            cityError.value = null
+            true
         }
     }
 
     fun cityDataChanged(text: String) {
-        if (!isQuestionValid(text)) {
-            cityError.value = R.string.forgot_pass_error_secret_question
-        }
-        else{
-            cityError.value = null
+        formState.value = formState.value?.copy(city = text)
+    }
+
+    private fun checkGenderValid(): Boolean {
+        return if (!RegexUtils.isGenderValid(formState.value?.gender)) {
+            genderError.value = R.string.forgot_pass_error_secret_question
+            false
+        } else {
+            genderError.value = null
+            true
         }
     }
 
     fun genderDataChanged(text: String) {
-        if (!isQuestionValid(text)) {
-            genderError.value = R.string.forgot_pass_error_secret_question
-        }
-        else{
-            genderError.value = null
+        formState.value = formState.value?.copy(gender = text)
+    }
+
+    private fun checkAnswerValid(): Boolean {
+        return if (!RegexUtils.isAnswerValid(formState.value?.answer)) {
+            answerError.value = R.string.forgot_pass_error_secret_answer
+            true
+        } else {
+            answerError.value = null
+            false
         }
     }
 
     fun answerDataChanged(text: String) {
-        if (!isAnswerValid(text)) {
-            answerError.value = R.string.forgot_pass_error_secret_answer
+        formState.value = formState.value?.copy(answer = text)
+    }
+
+    private fun checkKanaNameValid(): Boolean {
+        val kanaFirstName = formState.value?.kanaFirstName
+        val kanaLastName = formState.value?.kanaLastName
+        return if (kanaFirstName.isNullOrEmpty() || kanaLastName.isNullOrEmpty()
+            || !RegexUtils.isKatakanaFullWidth(kanaFirstName)
+            || !RegexUtils.isKatakanaFullWidth(kanaLastName)
+            || kanaFirstName.length.plus(kanaLastName.length) !in 0..19
+        ) {
+            kanaFullNameError.value = R.string.rgx_error_kana_name
+            true
+        } else {
+            kanaFullNameError.value = null
+            false
         }
-        else{
-            answerError.value = null
+    }
+
+    private fun checkHiraNameValid(): Boolean {
+        val hiraFirstName = formState.value?.hiraFirstName
+        val hiraLastName = formState.value?.hiraLastName
+        return if (hiraFirstName.isNullOrEmpty() || hiraLastName.isNullOrEmpty()
+            || !RegexUtils.isSecondName(hiraFirstName)
+            || !RegexUtils.isSecondName(hiraLastName)
+            || hiraFirstName.length.plus(hiraLastName.length) !in 0..19
+        ) {
+            hiraFullNameError.value = R.string.rgx_error_hira_name
+            true
+        } else {
+            hiraFullNameError.value = null
+            false
         }
     }
 
-    private fun isPhoneValid(phone: String): Boolean {
-        return Patterns.PHONE.matcher(phone).matches()
+    fun kanaFirstNameDataChanged(text: String) {
+        formState.value = formState.value?.copy(kanaFirstName = text)
     }
 
-    private fun isDateValid(date: String): Boolean {
-
-        return date != "1980年1月1日"
+    fun kanaLastNameDataChanged(text: String) {
+        formState.value = formState.value?.copy(kanaLastName = text)
     }
 
-    private fun isQuestionValid(question: String): Boolean {
-
-        return true
+    fun hiraFirstNameDataChanged(text: String) {
+        formState.value = formState.value?.copy(hiraFirstName = text)
     }
 
-    private fun isAnswerValid(answer: String): Boolean {
-        return answer.length in 0..20 && isHalfWidth(answer)
+    fun hiraLastNameDataChanged(text: String) {
+        formState.value = formState.value?.copy(hiraLastName = text)
     }
 
-    fun isHalfWidth(text:String):Boolean{
-        val regex = "[０-９ぁ-んァ-ン一-龥]".toRegex()
-        return regex.find(text) == null
+    private fun isDateValid(date: String?): Boolean {
+        return Converter.isDateValid(date)
     }
 
-    // A placeholder username validation check
-    private fun isUserNameValid(username: String): Boolean {
-        return username.length in 2..18
+    private fun isCfPasswordValid(password: String?, cfPassword: String?): Boolean {
+        return RegexUtils.isPasswordValid(cfPassword) && cfPassword == password
     }
 
-    // A placeholder password validation check
-    private fun isIdValid(id: String): Boolean {
-        return id.length in 6..10
+    fun submit() {
+        val isValidUsername = checkUsernameValid()
+        val isValidLoginId = checkLoginIdValid()
+        val isValidDate = checkDateValid()
+        val isValidPhone = checkPhoneValid()
+        val isValidQuestion = checkQuestionValid()
+        val isValidCity = checkCityValid()
+        val isValidGender = checkGenderValid()
+        val isValidAnswer = checkAnswerValid()
+        val isValidPassword = checkPasswordValid()
+        val isValidCfPassword = checkCfPasswordValid()
+        val isValidKanaName = checkKanaNameValid()
+        val isValidHiraName = checkHiraNameValid()
+        if (isValidUsername && isValidLoginId && isValidDate && isValidPhone && isValidQuestion && isValidCity && isValidGender && isValidAnswer && isValidPassword && isValidCfPassword
+            && isValidKanaName && isValidHiraName
+        ) {
+            //TODO need call api here
+            formResultState.value = SignupInputResultState(success = true)
+        }
     }
 
-    private fun isPasswordValid(password: String): Boolean {
-        return password.length in 8..12
-    }
-    private fun isCfPasswordValid(password: String, cfPassword: String): Boolean {
-        return cfPassword.length in 8..12 && cfPassword == password
+    fun checkValidForm(): Boolean {
+        val isValid = formState.value?.let { form ->
+            val kataName = "${form.kanaFirstName ?: ""}${form.kanaLastName ?: ""}"
+            val hiraName = "${form.hiraFirstName ?: ""}${form.hiraLastName ?: ""}"
+            val fields = arrayOf(
+                form.username,
+                form.loginId,
+                form.date,
+                form.phone,
+                form.question,
+                form.city,
+                form.gender,
+                form.answer,
+                form.password,
+                form.cfPassword,
+                kataName,
+                hiraName,
+            )
+            val valid = !fields.any { it.isNullOrEmpty() }
+            valid
+        } ?: false
+        validForm.value = isValid
+        return isValid
     }
 
 }

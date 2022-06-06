@@ -11,48 +11,65 @@ class ChangePassViewModel : ViewModel() {
     val oldPassError = MutableLiveData<Int?>()
     val newPassError = MutableLiveData<Int?>()
     val cfNewPassError = MutableLiveData<Int?>()
-    val validForm = MediatorLiveData<ChangePassState>().apply {
-        value = ChangePassState()
-        addSource(oldPassError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(oldPassError = value)
-        }
-        addSource(newPassError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(newPassError = value)
-        }
-        addSource(cfNewPassError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(cfNewPassError = value)
-        }
+    val validForm = MutableLiveData<Boolean>()
+    val formState = MutableLiveData(ChangePassState())
 
+    private fun checkOldPassValid(): Boolean {
+        return if (!RegexUtils.isPasswordValid(formState.value?.oldPass)) {
+            oldPassError.value = R.string.rgx_error_password
+            false
+        } else {
+            oldPassError.value = null
+            true
+        }
     }
 
     fun oldPasswordDataChanged(text: String) {
-        if (!RegexUtils.isPasswordValid(text)) {
-            oldPassError.value = R.string.rgx_error_password
+        formState.value = formState.value?.copy(oldPass = text)
+    }
+
+    private fun checkNewPassValid(): Boolean {
+        return if (!RegexUtils.isPasswordValid(formState.value?.newPass)) {
+            newPassError.value = R.string.rgx_error_password
+            false
         } else {
-            oldPassError.value = null
+            newPassError.value = null
+            true
         }
     }
 
     fun newPasswordDataChanged(text: String) {
-        if (!RegexUtils.isPasswordValid(text)) {
-            newPassError.value = R.string.rgx_error_password
-        } else {
-            newPassError.value = null
-        }
+        formState.value = formState.value?.copy(newPass = text)
     }
 
-    fun cfNewPasswordDataChanged(text: String, newPass: String) {
-        if (!isCfPasswordValid(text, newPass)) {
+    private fun checkCfNewPassValid(): Boolean {
+        return if (!isCfPasswordValid(formState.value?.cfNewPass, formState.value?.newPass)) {
             cfNewPassError.value = R.string.rgx_error_confirm_password
+            false
         } else {
             cfNewPassError.value = null
+            true
         }
     }
 
-    private fun isCfPasswordValid(cfPassword: String, newPass: String): Boolean {
+    fun cfNewPasswordDataChanged(text: String) {
+        formState.value = formState.value?.copy(cfNewPass = text)
+    }
+
+    private fun isCfPasswordValid(cfPassword: String?, newPass: String?): Boolean {
         return RegexUtils.isPasswordValid(cfPassword) && cfPassword == newPass
+    }
+
+    fun submit() {
+
+    }
+
+    fun checkFormValid(): Boolean {
+        return formState.value?.let { form ->
+            val isValid = !arrayOf(form.oldPass, form.newPass, form.cfNewPass)
+                .any { it.isNullOrEmpty() }
+            validForm.value = isValid
+            return isValid
+        } ?: false
     }
 }

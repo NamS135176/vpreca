@@ -125,8 +125,29 @@ class RegexUtils {
             return text?.let { Regex(RegexKanji).matches(it) } ?: false
         }
 
-        fun isSecondName(text: String?) : Boolean {
+        fun isSecondName(text: String?): Boolean {
             return text?.let { Regex(RegexSecondNameFullWidth).matches(it) } ?: false
+        }
+
+        fun isHalfWidth(text: String): Boolean {
+            val regex = "[０-９a-zA-Zぁ-んァ-ン一-龥]".toRegex()
+            return regex.find(text) == null
+        }
+
+        fun isQuestionValid(question: String?): Boolean {
+            return !question.isNullOrEmpty()
+        }
+
+        fun isCityValid(city: String?): Boolean {
+            return !city.isNullOrEmpty()
+        }
+
+        fun isGenderValid(gender: String?): Boolean {
+            return !gender.isNullOrEmpty()
+        }
+
+        fun isAnswerValid(answer: String?): Boolean {
+            return !answer.isNullOrEmpty() && answer.length in 0..20 && isHalfWidth(answer)
         }
 
     }

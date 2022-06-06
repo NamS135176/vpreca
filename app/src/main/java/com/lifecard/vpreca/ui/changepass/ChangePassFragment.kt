@@ -40,11 +40,11 @@ class ChangePassFragment : Fragment() {
         val btnSubmit = binding.btnSubmitPolicy
         val btnBack = binding.appbarSignup.btnBack
 
+        viewModel.formState.observe(viewLifecycleOwner, Observer { viewModel.checkFormValid() })
         viewModel.validForm.observe(
             viewLifecycleOwner,
-            androidx.lifecycle.Observer { forgotPassState ->
-                btnSubmit.isEnabled =
-                    (forgotPassState.oldPassError == null && forgotPassState.newPassError == null && forgotPassState.cfNewPassError == null)
+            androidx.lifecycle.Observer { isValid ->
+                btnSubmit.isEnabled = isValid
             })
 
         viewModel.oldPassError.observe(viewLifecycleOwner, Observer { error: Int? ->
@@ -73,15 +73,13 @@ class ChangePassFragment : Fragment() {
 
         oldPassEdt.doAfterTextChanged { text -> viewModel.oldPasswordDataChanged(text = text.toString()) }
         newPassEdt.doAfterTextChanged { text -> viewModel.newPasswordDataChanged(text = text.toString()) }
-        cfNewPassEdt.doAfterTextChanged { text ->
-            viewModel.cfNewPasswordDataChanged(
-                text = text.toString(),
-                newPassEdt.text.toString()
-            )
-        }
+        cfNewPassEdt.doAfterTextChanged { text -> viewModel.cfNewPasswordDataChanged(text = text.toString()) }
 
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_pass_complete) })
+
         btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
+        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_pass_complete) })
+
+
         return binding.root
     }
 }
