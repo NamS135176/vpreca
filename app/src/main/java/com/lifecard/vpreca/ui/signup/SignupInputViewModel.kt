@@ -1,10 +1,8 @@
 package com.lifecard.vpreca.ui.signup
 
-import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.RegexUtils
 
@@ -30,7 +28,7 @@ class SignupInputViewModel : ViewModel() {
     val formResultState = MutableLiveData<SignupInputResultState>()
 
     private fun checkUsernameValid(): Boolean {
-        return if (!RegexUtils.isNicknameValid(formState.value?.username)) {
+        return if (!RegexUtils.isNicknameValid(formState.value?.nickname)) {
             usernameError.value = R.string.invalid_username
             false
         } else {
@@ -40,7 +38,7 @@ class SignupInputViewModel : ViewModel() {
     }
 
     fun usernameDataChanged(text: String) {
-        formState.value = formState.value?.copy(username = text)
+        formState.value = formState.value?.copy(nickname = text)
     }
 
     private fun checkLoginIdValid(): Boolean {
@@ -87,7 +85,7 @@ class SignupInputViewModel : ViewModel() {
 
     private fun checkCfPasswordValid(): Boolean {
         return if (!isCfPasswordValid(formState.value?.password, formState.value?.cfPassword)) {
-            cfPasswordError.value = R.string.forgot_pass_error_dob
+            cfPasswordError.value = R.string.rgx_error_cf_password
             false
         } else {
             cfPasswordError.value = null
@@ -244,14 +242,17 @@ class SignupInputViewModel : ViewModel() {
             //TODO need call api here
             formResultState.value = SignupInputResultState(success = true)
         }
+        formResultState.value = SignupInputResultState(success = true)
     }
 
     fun checkValidForm(): Boolean {
+        validForm.value = true
+        return true
         val isValid = formState.value?.let { form ->
             val kataName = "${form.kanaFirstName ?: ""}${form.kanaLastName ?: ""}"
             val hiraName = "${form.hiraFirstName ?: ""}${form.hiraLastName ?: ""}"
             val fields = arrayOf(
-                form.username,
+                form.nickname,
                 form.loginId,
                 form.date,
                 form.phone,

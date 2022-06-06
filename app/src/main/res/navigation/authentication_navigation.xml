@@ -68,9 +68,7 @@
         tools:layout="@layout/fragment_confirm_signup_data">
         <argument
             android:name="signup_data"
-            android:defaultValue="@null"
-            app:argType="com.lifecard.vpreca.data.model.SignupData"
-            app:nullable="true" />
+            app:argType="com.lifecard.vpreca.ui.signup.SignupInputState" />
     </fragment>
     <fragment
         android:id="@+id/nav_complete"

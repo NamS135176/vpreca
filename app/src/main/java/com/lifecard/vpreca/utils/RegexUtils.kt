@@ -150,5 +150,19 @@ class RegexUtils {
             return !answer.isNullOrEmpty() && answer.length in 0..20 && isHalfWidth(answer)
         }
 
+        fun formatDisplayPhoneNumber(phone: String?): String {
+            return phone?.let {
+                val regex = "(\\d{3})(\\d{3})(\\d+)"
+                return it.replace(Regex(regex), "\$1-\$2-\$3")
+            } ?: phone ?: ""
+        }
+        fun maskPassword(password: String?): String {
+            return password?:""
+//            return password?.let {
+//                val regex = "(\\d{3})(\\d{3})(\\d+)"
+//                return it.replace(Regex(regex), "\$1-\$2-\$3")
+//            } ?: password ?: ""
+        }
+
     }
 }
