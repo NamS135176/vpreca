@@ -176,7 +176,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
     )
 
     private fun showWebViewActivity(webUrl: String) {
-        Utils.openBrowser(context, "https://vpcevssl.lifecard.co.jp/LW01/LW0102OP01BL.do")
+        Utils.openBrowser(context, webUrl)
     }
 
     private var onItemClickListener = object : OnItemClickListener {
