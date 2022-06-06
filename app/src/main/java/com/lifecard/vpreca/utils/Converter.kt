@@ -6,6 +6,7 @@ import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 object Converter {
@@ -82,12 +83,20 @@ object Converter {
         val totalInt = total?.toInt()
         val giftInt = gift?.toInt()
         val remain = totalInt!! - giftInt!!
-        if(remain > 0){
+        if (remain > 0) {
             return remain.toString()
-        }
-        else{
+        } else {
             return "0"
         }
+    }
 
+    @JvmStatic
+    fun isDateValid(date: String?, pattern: String? = "yyyy年MM月dd日"): Boolean {
+        return try {
+            date?.let { SimpleDateFormat(pattern, Locale.JAPAN).parse(date).before(Date()) }
+                ?: false
+        } catch (e: java.lang.Exception) {
+            false
+        }
     }
 }

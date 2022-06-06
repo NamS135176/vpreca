@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingTop="32dp"
-                android:text="@string/complete_signup_title"
+                android:text="@string/complete_forgot_title"
                 android:textColor="#0057b5"
                 android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@+id/appbar_complete_forgot"

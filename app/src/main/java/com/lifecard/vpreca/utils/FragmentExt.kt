@@ -1,5 +1,7 @@
 package com.lifecard.vpreca.utils
 
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
@@ -46,4 +48,21 @@ fun Fragment.showInternetTrouble(): Fragment? {
         title = getString(R.string.error_no_internet_connection_title),
         message = getString(R.string.error_no_internet_connection_content)
     )
+}
+
+fun Fragment.openBrowser(webUrl: String) {
+    Utils.openBrowser(requireContext(), webUrl)
+}
+
+fun Fragment.closeKeyBoard() {
+    try {
+        val view = requireActivity().currentFocus
+        if (view != null) {
+            val imm =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    } catch (e: Exception) {
+
+    }
 }

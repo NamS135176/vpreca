@@ -15,6 +15,7 @@ import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.databinding.ActivityMainBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.ui.custom.DrawerMenuLayout
+import com.lifecard.vpreca.utils.KeyboardUtils
 import com.lifecard.vpreca.utils.PreferenceHelper
 import com.lifecard.vpreca.utils.lockDrawer
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,6 +73,8 @@ class MainActivity : AppCompatActivity() {
 
         navController.enableOnBackPressed(true)
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            //hide keyboard due issue https://bjm.backlog.com/view/LC_VPC-166 on Aquos SHV45, GalaxyS4
+            KeyboardUtils.hideKeyboard(this, binding.root)
             if(destination.id == R.id.nav_home) {
                 toolbar.visibility = View.VISIBLE
             } else {

@@ -24,12 +24,6 @@ class PolicyFragment : Fragment() {
 
     private var _binding: FragmentPolicyBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,16 +31,12 @@ class PolicyFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentPolicyBinding.inflate(inflater, container, false)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
-            OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-//                val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-//                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                }
-//                startActivity(intent)
-                findNavController().navigate(R.id.nav_login)
-            }
-        })
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
+//            OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                findNavController().navigate(R.id.nav_login)
+//            }
+//        })
         val btnSubmitPolicy = binding.btnSubmitPolicy
         val cbPolicy = binding.cbPolicy
         val rcPolicy = binding.svPolicy
@@ -77,28 +67,28 @@ class PolicyFragment : Fragment() {
         buttonPolicy.setOnClickListener(View.OnClickListener {
             findNavController().navigate(
                 R.id.nav_webview,
-                WebViewFragment.createBundle("https://www.lifecard.co.jp/privacy_policy/")
+                WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/rule03.html")
             )
         })
         buttonTermOfUse.setOnClickListener(View.OnClickListener {
             findNavController().navigate(
                 R.id.nav_webview,
-                WebViewFragment.createBundle("https://www.lifecard.co.jp/efforts/privacy_policy/")
+                WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/index.html")
             )
         })
 
 
-        val arrPolicy: ArrayList<String>
-        arrPolicy = ArrayList()
-        for (i in 0 until 12) {
-            arrPolicy.add("私は、暴力団などの反社会的勢力や、反社会的勢力の関係者ではないことを表明します。")
-        }
-        Log.e("months", arrPolicy.toString())
+        val arrPolicy = arrayOf(
+            "私は、18歳以上です。未成年の場合は親権者の同意を得ています。",
+            "私は、暴力団などの反社会的勢力や、反社会的勢力の関係者ではないことを表明します。",
+            "私は、個人情報の取扱いに関する同意約款、会員規約に同意します。",
+            "私は、アカウント登録情報に不備があった等でライフカードが必要と判断した場合は運転免許証等の本人確認用書類を提出することに同意します。"
+        )
         val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         val adapter = PolicyAdapter(arrPolicy)
-        rcPolicy?.layoutManager = linearLayoutManager
-        rcPolicy?.adapter = adapter
+        rcPolicy.layoutManager = linearLayoutManager
+        rcPolicy.adapter = adapter
 
         return binding.root
 //        return inflater.inflate(R.layout.fragment_policy, container, false)

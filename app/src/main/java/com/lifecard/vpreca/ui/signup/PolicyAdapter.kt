@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lifecard.vpreca.R
 
 
-class PolicyAdapter(private val dataSet: ArrayList<String>) :
+class PolicyAdapter(private val dataSet: Array<String>) :
     RecyclerView.Adapter<PolicyAdapter.ViewHolder>() {
 
     /**

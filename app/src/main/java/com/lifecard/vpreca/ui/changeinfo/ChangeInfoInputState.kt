@@ -1,13 +1,17 @@
 package com.lifecard.vpreca.ui.changeinfo
 
 data class ChangeInfoInputState(
-    val idError: Int? = null,
-    val nicknameError: Int? = null,
-    val questionError: Int? = null,
-    val cityError: Int? = null,
-    val answerError: Int? = null,
-    val email1Error: Int? = null,
-    val email1ConfirmError: Int? = null,
-    val email2Error: Int? = null,
-    val email2ConfirmError: Int? = null
+    val nickname: String? = null,
+    val loginId: String? = null,
+    val question: String? = null,
+    val city: String? = null,
+    val answer: String? = null,
+    val email1: String? = null,
+    val email1Confirm: String? = null,
+    val email2: String? = null,
+    val email2Confirm: String? = null,
+    val kanaFirstName: String? = null,
+    val kanaLastName: String? = null,
+    val hiraFirstName: String? = null,
+    val hiraLastName: String? = null,
 )

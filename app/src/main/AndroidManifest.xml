@@ -6,11 +6,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
     <uses-feature android:name="android.hardware.camera.any" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
+
+    <uses-sdk tools:overrideLibrary="com.google.firebase.analytics.ktx, com.skydoves.powerspinner" />
 
     <application
         android:name=".MyApplication"
@@ -20,11 +25,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VPreca"
-        tools:overrideLibrary="com.google.firebase.analytics.ktx">
+        tools:overrideLibrary="com.google.firebase.analytics.ktx, com.skydoves.powerspinner">
 
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.VPreca.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,6 +43,7 @@
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.VPreca.NoActionBar"
             tools:targetApi="lollipop" />
     </application>

@@ -1,24 +1,21 @@
 package com.lifecard.vpreca.ui.fingerprint
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
-import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.databinding.FragmentFingerprintBinding
 import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showLoadingDialog
@@ -27,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
 
 @AndroidEntryPoint
-class FingerprintFragment : NoToolbarFragment() {
+class FingerprintFragment : Fragment() {
 
     companion object {
         fun newInstance() = FingerprintFragment()

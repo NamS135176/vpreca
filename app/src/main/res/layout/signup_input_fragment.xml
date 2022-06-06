@@ -21,8 +21,8 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/appbar_signup"
-            app:layout_constraintBottom_toTopOf="@id/btn_submit_policy">
+            app:layout_constraintBottom_toTopOf="@id/btn_submit_policy"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_signup">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:text="@string/signup_input_id_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -57,7 +57,7 @@
                     android:id="@+id/id_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
                     android:layout_marginTop="9dp"
                     app:layout_constraintStart_toStartOf="parent">
 
@@ -82,11 +82,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:paddingTop="5dp"
                     android:text="@string/id_input_des"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_password_title"
                     style="@style/Widget.AppCompat.TextView.Bold"
@@ -94,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="26dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:text="@string/password_signup_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -103,7 +104,7 @@
                     android:id="@+id/password_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
                     android:layout_marginTop="9dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -121,11 +122,12 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
                 <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
                     android:id="@+id/cf_password_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
                     android:layout_marginTop="25dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -143,42 +145,47 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:paddingTop="16dp"
                     android:text="@string/password_warning_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:paddingTop="5dp"
                     android:text="@string/password_warning_first"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:paddingTop="5dp"
                     android:text="@string/password_warning_second"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:paddingTop="5dp"
                     android:text="@string/password_warning_third"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_username_title"
                     style="@style/Widget.AppCompat.TextView.Bold"
@@ -186,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:text="@string/username_signup_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -195,7 +202,7 @@
                     android:id="@+id/username_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
                     android:layout_marginTop="9dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -219,7 +226,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:paddingTop="5dp"
                     android:text="@string/username_input_des"
                     android:textColor="@color/black"
@@ -232,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:text="@string/name_signup_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -241,7 +248,7 @@
                     android:id="@+id/name_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
                     android:layout_marginTop="9dp">
 
                     <LinearLayout
@@ -250,7 +257,7 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/idFirstName"
+                            android:id="@+id/kanaFirstName"
                             style="@style/TextInputEditTextFilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -267,7 +274,7 @@
                             android:textSize="16sp" />
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/idSecondName"
+                            android:id="@+id/kanaLastName"
                             style="@style/TextInputEditTextFilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -283,6 +290,13 @@
                             android:textColor="@color/black"
                             android:textSize="16sp" />
                     </LinearLayout>
+                </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
+
+                <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
+                    android:id="@+id/hira_name_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -291,7 +305,7 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/id_third_name"
+                            android:id="@+id/hiraFirstName"
                             style="@style/TextInputEditTextFilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -308,7 +322,7 @@
                             android:textSize="16sp" />
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/idLastName"
+                            android:id="@+id/hiraLastName"
                             style="@style/TextInputEditTextFilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -324,6 +338,7 @@
                             android:textColor="@color/black"
                             android:textSize="16sp" />
                     </LinearLayout>
+
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -333,7 +348,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:text="@string/gender_signup_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -345,13 +360,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/signup_gender_title">
 
-                    <androidx.appcompat.widget.AppCompatSpinner
+                    <com.skydoves.powerspinner.PowerSpinnerView
                         android:id="@+id/spinner_gender"
+                        style="@style/PowerSpinnerView"
                         android:layout_width="match_parent"
-                        android:layout_height="54dp"
-                        android:layout_marginHorizontal="22dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="9dp"
-                        android:paddingHorizontal="16dp" />
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/forgot_secret_question_title"
+                        app:spinner_item_array="@array/genders" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
 
 
@@ -362,7 +382,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:text="@string/dob_signup_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -371,12 +391,12 @@
                     android:id="@+id/dob_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="54dp"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
                     android:layout_marginTop="9dp"
                     android:background="@drawable/input_signup_style"
                     android:gravity="center_vertical"
-                    android:paddingHorizontal="21dp"
-                    android:text="@string/hint_dob"
+                    android:hint="@string/hint_dob"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -387,18 +407,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:text="@string/city_signup_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
+                <com.skydoves.powerspinner.PowerSpinnerView
                     android:id="@+id/spinner_city"
+                    style="@style/PowerSpinnerView"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="9dp"
-                    android:paddingHorizontal="16dp" />
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+                    app:spinner_item_array="@array/cities" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_phone_title"
@@ -407,7 +430,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:text="@string/phone_signup_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -416,7 +439,7 @@
                     android:id="@+id/phone_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
                     android:layout_marginTop="9dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -442,18 +465,29 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:text="@string/secret_signup_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
+                <!--                <androidx.appcompat.widget.AppCompatSpinner-->
+                <!--                    android:id="@+id/spinner_secret"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="54dp"-->
+                <!--                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"-->
+                <!--                    android:layout_marginTop="9dp"-->
+                <!--                    android:paddingHorizontal="16dp" />-->
+
+                <com.skydoves.powerspinner.PowerSpinnerView
                     android:id="@+id/spinner_secret"
+                    style="@style/PowerSpinnerView"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="9dp"
-                    android:paddingHorizontal="16dp" />
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+                    app:spinner_item_array="@array/cities" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_secret_answer_title"
@@ -462,7 +496,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="22dp"
+                    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     android:text="@string/secret_answer_signup_title"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -471,7 +505,7 @@
                     android:id="@+id/secret_answer_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
                     android:layout_marginTop="9dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -497,7 +531,7 @@
             style="@style/Widget.AppCompat.TextView.Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="22dp"
+            android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
             android:layout_marginTop="34dp"
             android:layout_marginBottom="24dp"
             android:enabled="false"

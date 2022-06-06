@@ -313,9 +313,9 @@
     <string name="change_info_email_2_confirm_title">メールアドレス2 - 確認用</string>
 
     <!--    Change info data-->
-    <string name="change_info_input_appbar_title">会員情報変更</string>
+    <string name="change_info_input_appbar_title">会員情報</string>
     <string name="change_info_input_title">会員情報変更</string>
-    <string name="change_info_input_des">ニックネーム（ローマ字）</string>
+    <string name="change_info_input_des">記号・スペースはご利用いただけません。</string>
     <string name="change_info_input_setting_title">各種通知サービスの設定</string>
     <string name="change_info_input_first_mail_setting">メールアドレス1で受け取る</string>
     <string name="change_info_input_second_mail_setting">メールアドレス2で受け取る</string>
@@ -512,6 +512,8 @@
     <string name="rgx_error_password">半角英数字8〜12文字で入力してください</string>
     <string name="rgx_error_confirm_password">一致していません</string>
     <string name="rgx_error_email">正しいメールアドレスを入力してください</string>
+    <string name="rgx_error_kana_name">お名前セイメイは合わせて19文字以内で入力してください。</string>
+    <string name="rgx_error_hira_name">お名前姓名は合わせて19文字以内で入力してください。</string>
     <!--   End Regex error  -->
 
     <string name="btn_confirm">確認</string>
@@ -549,7 +551,9 @@
     <string name="error_api_common_1101101">そのログインIDの会員情報が存在しません。</string>
     <string name="error_api_common_1101102">アカウントロック中です。</string>
     <string name="error_api_common_1101103">ログインパスワードが正しくありません。</string>
-    <string name="button_submit_user_info_data">会員情報変更</string>
     <!--  Api error login end -->
+    <string name="button_submit_user_info_data">会員情報変更</string>
+    <string name="button_confirm_change_pass" tools:ignore="ExtraTranslation">変更</string>
+    <string name="hint_dropdown">選択してください</string>
 
 </resources>
