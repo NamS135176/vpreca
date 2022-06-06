@@ -69,6 +69,10 @@ class ChangeInfoInputFragment : Fragment() {
         val email2Edt = binding.email2Input
         val email2ConfirmLayout = binding.changeInfoEmail2ConfirmLayout
         val email2ConfirmEdt = binding.email2ConfirmInput
+        val kanaFirstName = binding.kanaFirstName
+        val kanaLastName = binding.kanaLastName
+        val hiraFirstName = binding.hiraFirstName
+        val hiraLastName = binding.hiraLastName
 
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_info_data) })
 
@@ -158,6 +162,25 @@ class ChangeInfoInputFragment : Fragment() {
                 }
             })
 
+        viewModel.hiraFullNameError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                binding.hiraNameInputLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
+        viewModel.kanaFullNameError.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { error: Int? ->
+                binding.nameInputLayout.error = try {
+                    error?.let { getString(error) }
+                } catch (e: Error) {
+                    null
+                }
+            })
+
         viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.success?.let { findNavController().navigate(R.id.nav_change_info_confirm) }
         })
@@ -173,23 +196,18 @@ class ChangeInfoInputFragment : Fragment() {
         })
 
         idEdt.doAfterTextChanged { text -> viewModel.loginIdDataChanged(text = text.toString()) }
-
         nicknameEdt.doAfterTextChanged { text -> viewModel.nicknameDataChanged(text = text.toString()) }
         answerEdt.doAfterTextChanged { text -> viewModel.answerDataChanged(text = text.toString()) }
         email1Edt.doAfterTextChanged { text -> viewModel.email1DataChanged(text = text.toString()) }
         email2Edt.doAfterTextChanged { text -> viewModel.email2DataChanged(text = text.toString()) }
-        email1ConfirmEdt.doAfterTextChanged { text ->
-            viewModel.email1ConfirmDataChanged(
-                text = text.toString(),
-                email1Edt.text.toString()
-            )
-        }
-        email2ConfirmEdt.doAfterTextChanged { text ->
-            viewModel.email2ConfirmDataChanged(
-                text = text.toString(),
-                email2Edt.text.toString()
-            )
-        }
+
+        kanaFirstName.doAfterTextChanged { text -> viewModel.kanaFirstNameDataChanged(text = text.toString()) }
+        kanaLastName.doAfterTextChanged { text -> viewModel.kanaLastNameDataChanged(text = text.toString()) }
+        hiraFirstName.doAfterTextChanged { text -> viewModel.hiraFirstNameDataChanged(text = text.toString()) }
+        hiraLastName.doAfterTextChanged { text -> viewModel.hiraLastNameDataChanged(text = text.toString()) }
+
+        email1ConfirmEdt.doAfterTextChanged { text -> viewModel.email1ConfirmDataChanged(text = text.toString()) }
+        email2ConfirmEdt.doAfterTextChanged { text -> viewModel.email2ConfirmDataChanged(text = text.toString()) }
 
         btnSubmit.setOnClickListener(View.OnClickListener {
             viewModel.submit()

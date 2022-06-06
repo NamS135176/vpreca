@@ -512,6 +512,8 @@
     <string name="rgx_error_password">半角英数字8〜12文字で入力してください</string>
     <string name="rgx_error_confirm_password">一致していません</string>
     <string name="rgx_error_email">正しいメールアドレスを入力してください</string>
+    <string name="rgx_error_kana_name">お名前セイメイは合わせて19文字以内で入力してください。</string>
+    <string name="rgx_error_hira_name">お名前姓名は合わせて19文字以内で入力してください。</string>
     <!--   End Regex error  -->
 
     <string name="btn_confirm">確認</string>

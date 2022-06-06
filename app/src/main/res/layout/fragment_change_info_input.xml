@@ -122,6 +122,7 @@
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp"
+                        android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
@@ -148,11 +149,10 @@
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
-                <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
+                <com.lifecard.vpreca.ui.custom.MyTextInputLayout
                     android:id="@+id/name_input_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="9dp">
 
                     <LinearLayout
@@ -161,10 +161,11 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/idFirstName"
+                            android:id="@+id/kanaFirstName"
                             style="@style/TextInputEditTextFilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/input_signup_style"
@@ -178,10 +179,11 @@
                             android:textSize="16sp" />
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/idSecondName"
+                            android:id="@+id/kanaLastName"
                             style="@style/TextInputEditTextFilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/input_signup_style"
@@ -192,9 +194,14 @@
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
                             android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:layout_marginStart="8dp" />
+                            android:textSize="16sp" />
                     </LinearLayout>
+                </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
+
+                <com.lifecard.vpreca.ui.custom.MyTextInputLayout
+                    android:id="@+id/hira_name_input_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -203,10 +210,11 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/id_third_name"
+                            android:id="@+id/hiraFirstName"
                             style="@style/TextInputEditTextFilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
                             android:layout_marginRight="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/input_signup_style"
@@ -217,14 +225,14 @@
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
                             android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:layout_marginEnd="8dp" />
+                            android:textSize="16sp" />
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/idLastName"
+                            android:id="@+id/hiraLastName"
                             style="@style/TextInputEditTextFilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:background="@drawable/input_signup_style"
@@ -235,11 +243,9 @@
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
                             android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:layout_marginStart="8dp" />
+                            android:textSize="16sp" />
                     </LinearLayout>
-                </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
-
+                </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_city_title"

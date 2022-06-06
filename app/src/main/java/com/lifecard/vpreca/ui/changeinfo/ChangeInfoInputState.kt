@@ -9,5 +9,9 @@ data class ChangeInfoInputState(
     val email1: String? = null,
     val email1Confirm: String? = null,
     val email2: String? = null,
-    val email2Confirm: String? = null
+    val email2Confirm: String? = null,
+    val kanaFirstName: String? = null,
+    val kanaLastName: String? = null,
+    val hiraFirstName: String? = null,
+    val hiraLastName: String? = null,
 )

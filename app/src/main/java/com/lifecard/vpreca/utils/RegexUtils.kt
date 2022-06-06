@@ -26,7 +26,7 @@ class RegexUtils {
          * only roman
          * check the screen SC08_2
          */
-        const val RegexNickname = "^[a-zA-Z0-9]{2,18}\$"
+        const val RegexNickname = "^[A-Z0-9]{2,18}\$"
 
         /**
          * 10 or 11 number
@@ -58,6 +58,12 @@ class RegexUtils {
          */
         private const val RegexMobilePhone = "^(070|080|090)+\\d+\$"
 
+        private const val RegexKatakanaFullWidth = "^([ァ-ン]|ー)+\$"
+        private const val RegexHiragana = "^[ぁ-ゞ]+$"
+        private const val RegexKanji = "^[一-龯]+$"
+
+        private const val RegexHiraganaFullWidth = "^[ぁ-ん]+\$"
+        private const val RegexSecondNameFullWidth = "^[一-龥ぁ-ん]+\$"
 
         fun isLoginIdValid(loginId: String?): Boolean {
             return loginId?.let { loginId ->
@@ -106,5 +112,22 @@ class RegexUtils {
         fun isMobilePhone(phone: String): Boolean {
             return Regex(RegexMobilePhone).matches(phone)
         }
+
+        fun isKatakanaFullWidth(text: String?): Boolean {
+            return text?.let { Regex(RegexKatakanaFullWidth).matches(it) } ?: false
+        }
+
+        fun isHiragana(text: String?): Boolean {
+            return text?.let { Regex(RegexHiragana).matches(it) } ?: false
+        }
+
+        fun isKanji(text: String?): Boolean {
+            return text?.let { Regex(RegexKanji).matches(it) } ?: false
+        }
+
+        fun isSecondName(text: String?) : Boolean {
+            return text?.let { Regex(RegexSecondNameFullWidth).matches(it) } ?: false
+        }
+
     }
 }

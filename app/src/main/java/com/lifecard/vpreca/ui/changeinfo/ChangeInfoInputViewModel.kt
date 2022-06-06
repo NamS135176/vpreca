@@ -20,13 +20,15 @@ class ChangeInfoInputViewModel : ViewModel() {
     val email1ConfirmError = MutableLiveData<Int?>()
     val email2Error = MutableLiveData<Int?>()
     val email2ConfirmError = MutableLiveData<Int?>()
+    val kanaFullNameError = MutableLiveData<Int?>()
+    val hiraFullNameError = MutableLiveData<Int?>()
     val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
     val formState = MutableLiveData(ChangeInfoInputState())
 
     val validForm = MutableLiveData<Boolean>()
 
     private fun checkNicknameValid(): Boolean {
-        return if (!RegexUtils.isEmailValid(formState.value?.nickname)) {
+        return if (!RegexUtils.isNicknameValid(formState.value?.nickname)) {
             nicknameError.value = R.string.rgx_error_nickname
             false
         } else {
@@ -97,7 +99,14 @@ class ChangeInfoInputViewModel : ViewModel() {
     }
 
     private fun checkEmail2Valid(): Boolean {
-        return if (!RegexUtils.isEmailValid(formState.value?.email2)) {
+        val email2 = formState.value?.email2
+        return if (email2.isNullOrEmpty()) {
+            true
+        } else if (!RegexUtils.isEmailValid(email2) || email2.contentEquals(
+                formState.value?.email1,
+                true
+            )
+        ) {
             email2Error.value = R.string.rgx_error_email
             false
         } else {
@@ -120,7 +129,7 @@ class ChangeInfoInputViewModel : ViewModel() {
         }
     }
 
-    fun email1ConfirmDataChanged(text: String, email: String) {
+    fun email1ConfirmDataChanged(text: String) {
         formState.value = formState.value?.copy(email1Confirm = text)
     }
 
@@ -134,7 +143,7 @@ class ChangeInfoInputViewModel : ViewModel() {
         }
     }
 
-    fun email2ConfirmDataChanged(text: String, email: String) {
+    fun email2ConfirmDataChanged(text: String) {
         formState.value = formState.value?.copy(email2Confirm = text)
     }
 
@@ -150,6 +159,54 @@ class ChangeInfoInputViewModel : ViewModel() {
 
     fun answerDataChanged(text: String) {
         formState.value = formState.value?.copy(answer = text)
+    }
+
+    private fun checkKanaNameValid(): Boolean {
+        val kanaFirstName = formState.value?.kanaFirstName
+        val kanaLastName = formState.value?.kanaLastName
+        return if (kanaFirstName.isNullOrEmpty() || kanaLastName.isNullOrEmpty()
+            || !RegexUtils.isKatakanaFullWidth(kanaFirstName)
+            || !RegexUtils.isKatakanaFullWidth(kanaLastName)
+            || kanaFirstName.length.plus(kanaLastName.length) !in 0..19
+        ) {
+            kanaFullNameError.value = R.string.rgx_error_kana_name
+            true
+        } else {
+            kanaFullNameError.value = null
+            false
+        }
+    }
+
+    private fun checkHiraNameValid(): Boolean {
+        val hiraFirstName = formState.value?.hiraFirstName
+        val hiraLastName = formState.value?.hiraLastName
+        return if (hiraFirstName.isNullOrEmpty() || hiraLastName.isNullOrEmpty()
+            || !RegexUtils.isSecondName(hiraFirstName)
+            || !RegexUtils.isSecondName(hiraLastName)
+            || hiraFirstName.length.plus(hiraLastName.length) !in 0..19
+        ) {
+            hiraFullNameError.value = R.string.rgx_error_hira_name
+            true
+        } else {
+            hiraFullNameError.value = null
+            false
+        }
+    }
+
+    fun kanaFirstNameDataChanged(text: String) {
+        formState.value = formState.value?.copy(kanaFirstName = text)
+    }
+
+    fun kanaLastNameDataChanged(text: String) {
+        formState.value = formState.value?.copy(kanaLastName = text)
+    }
+
+    fun hiraFirstNameDataChanged(text: String) {
+        formState.value = formState.value?.copy(hiraFirstName = text)
+    }
+
+    fun hiraLastNameDataChanged(text: String) {
+        formState.value = formState.value?.copy(hiraLastName = text)
     }
 
     private fun isQuestionValid(question: String?): Boolean {
@@ -187,13 +244,19 @@ class ChangeInfoInputViewModel : ViewModel() {
         val isValidQuestion = checkQuestionValid()
         val isValidCity = checkCityValid()
         val isValidAnswer = checkAnswerValid()
-        if (isValidEmail1 && isValidEmail1Confirm && isValidEmail2 && isValidEmail2Confirm && isValidNickname && isValidLoginId && isValidQuestion && isValidCity && isValidAnswer) {
+        val isValidKanaName = checkKanaNameValid()
+        val isValidHiraNam = checkHiraNameValid()
+        if (isValidEmail1 && isValidEmail1Confirm && isValidEmail2 && isValidEmail2Confirm && isValidNickname && isValidLoginId && isValidQuestion && isValidCity && isValidAnswer
+            && isValidKanaName && isValidHiraNam
+        ) {
             formResultState.value = ChangeInfoInputResultState(success = true)
         }
     }
 
     fun checkValidForm(): Boolean {
         val isValid = formState.value?.let { form ->
+            val kataName = "${form.kanaFirstName ?: ""}${form.kanaLastName ?: ""}"
+            val hiraName = "${form.hiraFirstName ?: ""}${form.hiraLastName ?: ""}"
             val fields = arrayOf(
                 form.nickname,
                 form.loginId,
@@ -202,8 +265,8 @@ class ChangeInfoInputViewModel : ViewModel() {
                 form.answer,
                 form.email1,
                 form.email1Confirm,
-                form.email2,
-                form.email2Confirm
+                kataName,
+                hiraName,
             )
             !fields.any { it.isNullOrEmpty() }
         } ?: false
