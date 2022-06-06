@@ -552,5 +552,6 @@
     <!--  Api error login end -->
     <string name="button_submit_user_info_data">会員情報変更</string>
     <string name="button_confirm_change_pass" tools:ignore="ExtraTranslation">変更</string>
+    <string name="hint_dropdown">選択してください</string>
 
 </resources>
