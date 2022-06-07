@@ -30,6 +30,7 @@
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"
+            android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.VPreca.SplashTheme">
             <intent-filter>
@@ -43,6 +44,7 @@
             android:autoRemoveFromRecents="true"
             android:excludeFromRecents="true"
             android:exported="false"
+            android:resizeableActivity="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.VPreca.NoActionBar"
             tools:targetApi="lollipop" />
