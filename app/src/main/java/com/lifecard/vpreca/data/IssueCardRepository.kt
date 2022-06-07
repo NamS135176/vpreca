@@ -14,12 +14,15 @@ class IssueCardRepository(
     private val userManager: UserManager
 ) {
     suspend fun giftNumberAuthReq(
-       giftNumber:String
+        giftNumber: String
     ): Result<GiftInfo> {
         return withContext(Dispatchers.IO) {
             try {
                 val giftNumberAuthResponse = apiService.getGiftInfo(
-                    RequestHelper.createGiftNumberAuthReqRequest(memberNumber = userManager.memberNumber!! , giftNumber)
+                    RequestHelper.createGiftNumberAuthReqRequest(
+                        memberNumber = userManager.memberNumber!!,
+                        giftNumber
+                    )
                 )
                 Result.Success(giftNumberAuthResponse.brandPrecaApi.response.giftNumberInfo!!)
             } catch (e: Exception) {
@@ -32,10 +35,11 @@ class IssueCardRepository(
 
     suspend fun issueSumReq(
         cardInfo: CardInfoWithDesignIdContentInfo,
-        sumUpSrcCardInfo: CardInfoRequestContentInfo,
+        sumUpSrcCardInfo: ArrayList<CardInfoRequestContentInfo>,
         cardSchemeId: String,
         feeType: String,
-        targetAmount: String
+        targetAmount: String,
+        sumCount: String
     ): Result<CreditCard> {
         return withContext(Dispatchers.IO) {
             try {
@@ -48,17 +52,64 @@ class IssueCardRepository(
                     res.brandPrecaApi.response.feeInfo.get(0).feeGetResultType,
                     res.brandPrecaApi.response.feeInfo.get(0).feeCalculateType,
                     res.brandPrecaApi.response.feeInfo.get(0).feeInclusiveFlg,
-                    "1"
+                    sumCount
                 )
                 val feeSelReqResponse = apiService.issueSumReq(
                     RequestHelper.createIssueSumRequest(
-                        memberNumber = userManager.memberNumber!! ,
+                        memberNumber = userManager.memberNumber!!,
                         cardInfo,
                         sumUpInfo,
                         sumUpSrcCardInfo
                     )
                 )
                 Result.Success(feeSelReqResponse.brandPrecaApi.response.cardInfo!!)
+            } catch (e: Exception) {
+                println("IssueCardRepository... issueSumReq has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
+
+    suspend fun issueGiftReqWithouCard(
+        designId: String,
+        giftNumber: String
+    ): Result<IssueGiftReqResponseContent> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val res = apiService.issueGiftCard(
+                    RequestHelper.createIssueGiftRequestWithoutCard(
+                        memberNumber = userManager.memberNumber!!,
+                        CardInfoOnlyDesignId(designId),
+                        giftNumber
+                    )
+                )
+                Result.Success(res.brandPrecaApi.response)
+            } catch (e: Exception) {
+                println("IssueCardRepository... issueSumReq has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
+
+    suspend fun issueGiftReqWithCard(
+        designId: String,
+        giftNumber: String,
+        cardSchemeId: String,
+        cardNickname: String,
+        vcnName: String
+    ): Result<IssueGiftReqResponseContent> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val res = apiService.issueGiftCard(
+                    RequestHelper.createIssueGiftRequestWithCard(
+                        memberNumber = userManager.memberNumber!!,
+                        CardInfoWithCard(cardSchemeId, designId, cardNickname, vcnName),
+                        giftNumber
+                    )
+                )
+                Result.Success(res.brandPrecaApi.response)
             } catch (e: Exception) {
                 println("IssueCardRepository... issueSumReq has error $e")
                 e.printStackTrace()

@@ -47,24 +47,26 @@ class IssueCardSelectDesignAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.card = items[position]
-        when (position) {
-            0 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_first)
-            1 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_second)
-            2 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_third)
-            3 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fourth)
-            4 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fifth)
-            5 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_six)
-            6 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_seven)
+        when (items[position].designId) {
+            "001" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_first)
+            "002" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_second)
+            "003" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_third)
+            "004" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fourth)
+            "005"-> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fifth)
+            "006" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_six)
+            "007" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_seven)
+            else -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_seven)
         }
         if (items[position].isSelected == "1") {
-            when (position) {
-                0 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_first_selected)
-                1 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_second_selected)
-                2 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_third_selected)
-                3 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fourth_selected)
-                4 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fifth_selected)
-                5 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_six_selected)
-                6 -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_seven_selected)
+            when (items[position].designId) {
+                "001" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_first_selected)
+                "002" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_second_selected)
+                "003" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_third_selected)
+                "004" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fourth_selected)
+                "005" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_fifth_selected)
+                "006" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_six_selected)
+                "007" -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_seven_selected)
+                else -> holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_seven_selected)
             }
         }
     }

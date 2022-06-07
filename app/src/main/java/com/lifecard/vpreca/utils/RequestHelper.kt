@@ -62,7 +62,7 @@ class RequestHelper {
                             memberInfo = MemberInfoContent(
                                 memberNumber = memberNumber
                             ),
-                            giftNumberInfo = giftNumberRequestContentInfo(
+                            giftNumberInfo = GiftNumberRequestContentInfo(
                                 giftNumber = giftNumber
                             )
                         ),
@@ -103,7 +103,7 @@ class RequestHelper {
             memberNumber: String,
             cardInfo: CardInfoWithDesignIdContentInfo,
             sumUpInfo: SumUpInfoContentInfo,
-            sumUpSrcCardInfo: CardInfoRequestContentInfo
+            sumUpSrcCardInfo: ArrayList<CardInfoRequestContentInfo>
         ): BrandRequest {
             return BrandRequest(
                 brandPrecaApi = Request(
@@ -117,6 +117,63 @@ class RequestHelper {
                     ),
                     head = BaseHead(
                         messageType = MessageType.IssueSumReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createIssueGiftRequestWithoutCard(
+            memberNumber: String,
+            cardInfo: CardInfoOnlyDesignId,
+            giftNumber: String
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = IssueGiftReqWithoutCardRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        cardInfo = cardInfo,
+                        chargeInfo = GiftNumberRequestContentInfo(giftNumber = giftNumber)
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.IssueGiftReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createIssueGiftRequestWithCard(
+            memberNumber: String,
+            cardInfo: CardInfoWithCard,
+            giftNumber: String
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = IssueGiftReqWithCardRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        cardInfo = cardInfo,
+                        chargeInfo = GiftNumberRequestContentInfo(giftNumber = giftNumber)
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.IssueGiftReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createListDesignRequest(
+           cardSchemeId: String
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = ListDesignRequest(
+                        cardSchemeId = cardSchemeId
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.CardDesignSelReq.value
                     )
                 ),
             )

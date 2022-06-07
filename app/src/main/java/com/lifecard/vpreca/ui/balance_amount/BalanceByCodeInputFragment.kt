@@ -13,6 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.BalanceGiftData
+import com.lifecard.vpreca.data.model.BalanceTotalRemain
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentBalanceByCodeInputBinding
 import com.lifecard.vpreca.utils.showInternetTrouble
@@ -76,7 +78,12 @@ class BalanceByCodeInputFragment : Fragment() {
             Observer { giftInfoResult ->
                 giftInfoResult ?: return@Observer
                 giftInfoResult.success?.let {
-                    findNavController().navigate(R.id.nav_balance_value_confirm)
+                    val data = BalanceGiftData(args.balanceTotalRemain?.balanceAmount!!, giftInfoResult.success.giftAmount, giftInfoResult.success.giftNumber)
+                    val action =
+                        BalanceByCodeInputFragmentDirections.actionInputToValueConfirm(
+                            data
+                        )
+                    findNavController().navigate(action)
                 }
                 giftInfoResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("",getString(it)) }

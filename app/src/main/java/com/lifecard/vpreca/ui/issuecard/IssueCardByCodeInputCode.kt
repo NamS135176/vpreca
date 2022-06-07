@@ -8,35 +8,39 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.BalanceGiftData
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeInputCodeBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardByPlusIntroduceBinding
-import com.lifecard.vpreca.utils.ToastPosition
-import com.lifecard.vpreca.utils.getNavigationResult
-import com.lifecard.vpreca.utils.showToast
+import com.lifecard.vpreca.ui.balance_amount.BalanceByCodeInputFragmentDirections
+import com.lifecard.vpreca.utils.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class IssueCardByCodeInputCode : Fragment() {
 
     companion object {
         fun newInstance() = IssueCardByCodeInputCode()
     }
 
-    private lateinit var viewModel: IssueCardByCodeInputCodeViewModel
+    private val viewModel: IssueCardByCodeInputCodeViewModel by viewModels()
     private var _binding: FragmentIssueCardByCodeInputCodeBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(IssueCardByCodeInputCodeViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(IssueCardByCodeInputCodeViewModel::class.java)
         _binding = FragmentIssueCardByCodeInputCodeBinding.inflate(inflater, container, false)
         val giftCodeLayout = binding.issueCardByCodeInputLayout
         val giftCodeEdt = binding.issueCardByCodeInputCode
         val btnSubmit = binding.btnSubmitPolicy
         val btnCancel = binding.appbarSignup.cancelBtn
         val buttonOcrDetection = binding.buttonOcrDetection
+        val loading = binding.loading
 
         btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
         viewModel.validForm.observe(
@@ -59,8 +63,36 @@ class IssueCardByCodeInputCode : Fragment() {
         })
         giftCodeEdt.doAfterTextChanged { text -> viewModel.giftCodeDataChanged(text = text.toString()) }
 
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_value_confirm) })
+        viewModel.giftInfoResult.observe(
+            viewLifecycleOwner,
+            Observer { giftInfoResult ->
+                giftInfoResult ?: return@Observer
+                giftInfoResult.success?.let {
+                    val data = BalanceGiftData("",giftInfoResult.success.giftAmount, giftInfoResult.success.giftNumber)
+                    val action = IssueCardByCodeInputCodeDirections.actionInputcodeToConfirmValue(data)
+                    findNavController().navigate(action)
+                }
+                giftInfoResult.error?.let { error ->
+                    error.messageResId?.let { showPopupMessage("",getString(it)) }
+                    error.message?.let { showPopupMessage("",it) }
+                }
+                giftInfoResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
+                }
+            })
 
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> loading.visibility = View.VISIBLE
+                else -> loading.visibility = View.GONE
+            }
+        })
+
+
+//        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_value_confirm) })
+        btnSubmit.setOnClickListener(View.OnClickListener { viewModel.getGiftData(giftCodeEdt.text.toString())})
         buttonOcrDetection.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_camera_ocr) })
         return binding.root
     }

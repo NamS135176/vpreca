@@ -55,6 +55,7 @@
                 android:paddingVertical="18dp"
                 android:text="@string/change_pass_complete_btn"
                 app:cornerRadius="30dp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/btn_complete_forgot"
                 style="@style/Widget.AppCompat.TextView.Bold"

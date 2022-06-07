@@ -10,7 +10,7 @@ data class IssueSumReqRequest(
     @SerializedName("sumUpInfo")
     val sumUpInfo: SumUpInfoContentInfo,
     @SerializedName("sumUpSrcCardInfo")
-    val sumUpSrcCardInfo: CardInfoRequestContentInfo
+    val sumUpSrcCardInfo: ArrayList<CardInfoRequestContentInfo>
 )
 
 data class CardInfoWithDesignIdContentInfo(

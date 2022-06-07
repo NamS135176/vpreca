@@ -19,6 +19,14 @@ data class IssueByCodeSelectSourceConfirmData(
     val name: String,
     @SerializedName("number")
     val number: String,
+    @SerializedName("giftNumber")
+    val giftNumber: String,
+    @SerializedName("vcnName")
+    val vcnName: String,
+    @SerializedName("cardSchemeId")
+    val cardSchemeId: String,
+    @SerializedName("designId")
+    val designId: String,
 ): Parcelable {
     override fun hashCode(): Int {
         return super.hashCode()

@@ -21,6 +21,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
+import com.lifecard.vpreca.data.model.IssueSelectSourceData
 import com.lifecard.vpreca.data.model.SelectedData
 import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectSourceBinding
@@ -58,6 +59,8 @@ class IssueCardSelectSourceFragment : Fragment() {
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val btnBack = binding.appbarGiftThird.btnBack
         val btnSubmit = binding.btnSubmitIntroduceFirst
+        var arrSelected: List<SelectedData> = emptyList()
+        var arrPolicy: List<CreditCard> = emptyList()
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -67,8 +70,12 @@ class IssueCardSelectSourceFragment : Fragment() {
             })
         btnSubmit.setOnClickListener(View.OnClickListener {
             val giftCardConfirmData = GiftCardConfirmData("selectSource")
+            val issueSelectSourceData = IssueSelectSourceData(arrPolicy, arrSelected)
             val action = IssueCardSelectSourceFragmentDirections.actionSelectsourceToSelectdesign(
-                giftCardConfirmData
+                giftCardConfirmData,
+                null,
+                null,
+                issueSelectSourceData
             )
             findNavController().navigate(action)
         })
@@ -87,8 +94,6 @@ class IssueCardSelectSourceFragment : Fragment() {
                         0 -> {
                         }
                         else -> {
-                            var arrSelected: List<SelectedData>
-                            val arrPolicy: List<CreditCard>
                             arrPolicy = creditCardResult.success
 
                             arrSelected = arrPolicy.mapIndexed { index, creditCard ->

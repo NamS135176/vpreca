@@ -79,6 +79,18 @@ object Converter {
     }
 
     @JvmStatic
+    fun convertRemain(total: String?, gift: String?): String {
+        val totalInt = total?.toInt()
+        val giftInt = gift?.toInt()
+        val remain = totalInt!! - giftInt!!
+        if (remain > 0) {
+            return remain.toString()
+        } else {
+            return "0"
+        }
+    }
+
+    @JvmStatic
     fun isDateValid(date: String?, pattern: String? = "yyyy年MM月dd日"): Boolean {
         return try {
             date?.let { SimpleDateFormat(pattern, Locale.JAPAN).parse(date).before(Date()) }

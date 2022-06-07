@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
@@ -36,7 +37,7 @@ class IssueCardByCodeSelectSource : Fragment() {
     private lateinit var viewModel: IssueCardByCodeSelectSourceViewModel
     private var _binding: FragmentIssueCardByCodeSelectSourceBinding? = null
     private val binding get() = _binding!!
-
+    private val args: IssueCardByCodeSelectSourceArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,28 +50,59 @@ class IssueCardByCodeSelectSource : Fragment() {
         val btnBack = binding.appbarGiftThird.btnBack
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val tvTotal = binding.tvTotalAmount
-
-        val fakeGiftValue = 5000
+        val loading = binding.loading
+        val fakeGiftValue = args.issuePlusData?.giftAmount
         tvTotal.text = Converter.convertCurrency(fakeGiftValue)
         var dataSelectCard = "0"
         var number = ""
         var expireDate = Date()
         var pin = ""
         var name = ""
+        var cardSchemeId = ""
+        var vcnName = ""
+
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_issue_card_by_code_select_way)
+                val action = IssueCardByCodeSelectSourceDirections.actionSelectsourceToSelectway(args.issuePlusData)
+                findNavController().navigate(action)
             }
         })
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_select_way) })
+        viewModel.issueGiftReqResult.observe(
+            viewLifecycleOwner,
+            Observer { issueGiftReqResult ->
+                issueGiftReqResult ?: return@Observer
+                issueGiftReqResult.success?.let {
+                    findNavController().navigate(R.id.nav_issue_card_by_code_complete_without_card)
+                }
+                issueGiftReqResult.error?.let { error ->
+                    error.messageResId?.let { showPopupMessage("",getString(it)) }
+                    error.message?.let { showPopupMessage("",it) }
+                }
+                issueGiftReqResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
+                }
+            })
+
+        viewModel.loading.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                true -> loading.visibility = View.VISIBLE
+                else -> loading.visibility = View.GONE
+            }
+        })
+        btnBack.setOnClickListener(View.OnClickListener {
+            val action = IssueCardByCodeSelectSourceDirections.actionSelectsourceToSelectway(args.issuePlusData)
+            findNavController().navigate(action)
+        })
 
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
                     // do something on positive button click
-                    findNavController().navigate(R.id.nav_issue_card_by_code_complete_without_card)
+                    viewModel.issueGiftCardWithoutCard(args.issuePlusData?.balanceAmount!!, args.issuePlusData?.giftNumber!!)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage(
@@ -133,6 +165,8 @@ class IssueCardByCodeSelectSource : Fragment() {
                                         expireDate = arrPolicy[position].precaExpirationDate
                                         pin = arrPolicy[position].vcn
                                         number = arrPolicy[position].precaNumber
+                                        vcnName = arrPolicy[position].vcnName
+                                        cardSchemeId = arrPolicy[position].cardSchemeId
                                     } else {
                                         arrSelected[position].isSelected = "0"
                                         println(arrSelected)
@@ -157,14 +191,18 @@ class IssueCardByCodeSelectSource : Fragment() {
                 }
             })
         btnSubmit.setOnClickListener(View.OnClickListener {
-            val dataTotal = dataSelectCard.toInt() + fakeGiftValue.toInt()
+            val dataTotal = dataSelectCard.toInt() + fakeGiftValue?.toInt()!!
             val data = IssueByCodeSelectSourceConfirmData(
                 fakeGiftValue.toString(),
                 dataTotal.toString(),
                 expireDate,
                 pin,
                 name,
-                number
+                number,
+                args.issuePlusData?.giftNumber!!,
+                vcnName,
+                cardSchemeId,
+                args.issuePlusData?.balanceAmount!!
             )
             val action = IssueCardByCodeSelectSourceDirections.actionSelectsourceToConfirm(
                 data

@@ -7,14 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeInputCodeBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeValueConfirmBinding
+import com.lifecard.vpreca.utils.Converter
 
 class IssueCardByCodeValueConfirm : Fragment() {
     private var _binding: FragmentIssueCardByCodeValueConfirmBinding? = null
     private val binding get() = _binding!!
+    private val args: IssueCardByCodeValueConfirmArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -26,10 +29,13 @@ class IssueCardByCodeValueConfirm : Fragment() {
         _binding = FragmentIssueCardByCodeValueConfirmBinding.inflate(inflater, container, false)
         val btnCancel = binding.appbarSignup.cancelBtn
         val btnSubmit = binding.btnSubmitPolicy
+        val tvTotalAmount = binding.tvTotalAmount
+
+        tvTotalAmount.text = Converter.convertCurrency(args.giftData?.giftAmount)
 
         btnSubmit.setOnClickListener(View.OnClickListener {
             val giftCardConfirmData = GiftCardConfirmData("valueConfirm")
-            val action = IssueCardByCodeValueConfirmDirections.actionValueconfirmToSelectdesign(giftCardConfirmData)
+            val action = IssueCardByCodeValueConfirmDirections.actionValueconfirmToSelectdesign(giftCardConfirmData, args.giftData)
             findNavController().navigate(action)
         })
 
