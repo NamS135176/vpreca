@@ -3,6 +3,7 @@ package com.lifecard.vpreca.ui.signup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.SignupInputState
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.RegexUtils
 

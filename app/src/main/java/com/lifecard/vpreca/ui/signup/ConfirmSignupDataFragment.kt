@@ -22,7 +22,7 @@ class ConfirmSignupDataFragment : Fragment() {
     }
 
     private val viewModel: ConfirmSignupDataViewModel by viewModels()
-    private val args: ConfirmSignupDataFragmentArgs by navArgs()
+//    private val args: ConfirmSignupDataFragmentArgs by navArgs()
     private var _binding: FragmentConfirmSignupDataBinding? = null
     private val binding get() = _binding!!
 
@@ -31,7 +31,7 @@ class ConfirmSignupDataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentConfirmSignupDataBinding.inflate(inflater, container, false)
-        binding.data = args.signupData
+//        args.signupData?.let { data -> binding.data = data }
         val btnCancelSubmit = binding.appbarConfirmSignup.cancelBtn
         val btnBack = binding.btnCancelConfirm
         val btnSubmit = binding.btnSubmitConfirm

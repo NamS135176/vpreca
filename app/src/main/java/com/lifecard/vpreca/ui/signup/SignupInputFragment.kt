@@ -9,14 +9,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.SignupData
 import com.lifecard.vpreca.databinding.SignupInputFragmentBinding
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import java.text.SimpleDateFormat
@@ -209,9 +206,9 @@ class SignupInputFragment : Fragment() {
 
         viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.success?.let {
-                val action =
-                    SignupInputFragmentDirections.actionSignupInputToSignupConfirm(viewModel.formState.value!!)
-                findNavController().navigate(action)
+//                val action =
+//                    SignupInputFragmentDirections.actionSignupInputToSignupConfirm(viewModel.formState.value!!)
+//                findNavController().navigate(action)
             }
 
         })

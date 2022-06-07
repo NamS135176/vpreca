@@ -40,10 +40,12 @@ class PreferenceHelper {
             val sharedPreferences =
                 appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
             val isAcceptTermOfUseFirstTime = isAcceptTermOfUseFirstTime(appContext)
+            val isEnableBiometricSetting = isEnableBiometricSetting(appContext)
             with(sharedPreferences.edit()) {
                 clear()
                 if (isAcceptTermOfUseFirstTime) {
                     putBoolean("accept_term_of_use_first_time", isAcceptTermOfUseFirstTime)
+                    putBoolean("fingerprint_setting", isEnableBiometricSetting)
                 }
                 commit()
             }

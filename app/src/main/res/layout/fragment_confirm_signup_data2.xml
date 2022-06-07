@@ -9,7 +9,7 @@
 
         <variable
             name="data"
-            type="com.lifecard.vpreca.ui.signup.SignupInputState" />
+            type="com.lifecard.vpreca.data.model.SignupInputState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

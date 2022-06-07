@@ -1,4 +1,4 @@
-package com.lifecard.vpreca.ui.signup
+package com.lifecard.vpreca.data.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

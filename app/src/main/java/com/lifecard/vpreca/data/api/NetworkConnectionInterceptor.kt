@@ -2,6 +2,7 @@ package com.lifecard.vpreca.data.api
 
 import android.content.Context
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import com.lifecard.vpreca.data.model.BaseResponse
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.InternalServerException
@@ -10,9 +11,7 @@ import com.lifecard.vpreca.utils.ApiError
 import com.lifecard.vpreca.utils.getMessageType
 import okhttp3.Interceptor
 import okhttp3.Response
-import okio.Buffer
 import okio.BufferedSource
-import okio.GzipSource
 import java.io.IOException
 import java.net.UnknownHostException
 import java.nio.charset.Charset
@@ -65,17 +64,21 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
                         }
                     }
                     */
-                    val json: BaseResponse = gson.fromJson(
-                        bodyText,
-                        BaseResponse::class.java
-                    )
-                    val resultCode = json.brandPrecaApi.response.resultCode
-                    if (ApiError.isResultCodeError(resultCode)) {
-                        val messageType = json.brandPrecaApi.head.messageType
-                        throw ApiException.createApiException(
-                            resultCode = resultCode,
-                            messageType = messageType
+                    try {
+                        val json: BaseResponse = gson.fromJson(
+                            bodyText,
+                            BaseResponse::class.java
                         )
+                        val resultCode = json.brandPrecaApi.response.resultCode
+                        if (ApiError.isResultCodeError(resultCode)) {
+                            val messageType = json.brandPrecaApi.head.messageType
+                            throw ApiException.createApiException(
+                                resultCode = resultCode,
+                                messageType = messageType
+                            )
+                        }
+                    } catch (e: JsonSyntaxException) {
+                    } catch (e: NullPointerException) {
                     }
                 }
 

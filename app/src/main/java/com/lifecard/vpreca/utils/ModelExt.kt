@@ -1,12 +1,8 @@
 package com.lifecard.vpreca.utils
 
-import android.os.Build
-import android.telephony.PhoneNumberUtils
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.MemberInfo
-import com.lifecard.vpreca.ui.signup.SignUpFormState
-import com.lifecard.vpreca.ui.signup.SignupInputState
+import com.lifecard.vpreca.data.model.SignupInputState
 import java.text.SimpleDateFormat
 import java.util.*
 

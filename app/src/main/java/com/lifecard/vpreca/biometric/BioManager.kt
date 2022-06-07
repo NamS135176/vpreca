@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
 import android.util.Base64
 import androidx.annotation.RequiresApi
@@ -15,7 +16,7 @@ import java.security.spec.ECGenParameterSpec
 interface BioManager {
     fun getPublicKey(): String?
     fun getInitializedSignatureForEncryption(): Signature
-    fun getCryptoObjectForPromtBio(): BiometricPrompt.CryptoObject?
+    fun getCryptoObjectForPromtBio(forceDeleteIfError: Boolean? = false): BiometricPrompt.CryptoObject?
     fun getSupportBiometricType(): BiometricType
     fun getBiometricTypeForAuthentication(): BiometricType
     fun checkDeviceSupportBiometric(): Boolean
@@ -107,10 +108,16 @@ class BioManagerImpl constructor(private val context: Context) : BioManager {
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
-    override fun getCryptoObjectForPromtBio(): BiometricPrompt.CryptoObject? {
+    override fun getCryptoObjectForPromtBio(forceDeleteIfError: Boolean?): BiometricPrompt.CryptoObject? {
         return try {
+            if (forceDeleteIfError == true) {
+                keyStore.load(null) // Keystore must be loaded before it can be accessed
+                keyStore.deleteEntry(KEY_NAME)
+            }
             val signature = getInitializedSignatureForEncryption()
             BiometricPrompt.CryptoObject(signature)
+        } catch (e: KeyPermanentlyInvalidatedException) {
+            return getCryptoObjectForPromtBio(true)
         } catch (e: Exception) {
             null
         }
