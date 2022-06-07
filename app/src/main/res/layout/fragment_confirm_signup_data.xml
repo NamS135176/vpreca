@@ -2,406 +2,184 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <androidx.core.widget.NestedScrollView
-        android:layout_height="match_parent"
+
+    <data>
+
+        <import type="com.lifecard.vpreca.utils.ModelExtKt" />
+
+        <variable
+            name="data"
+            type="com.lifecard.vpreca.ui.signup.SignupInputState" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.signup/ConfirmSignupDataFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container"
+        <include
+            android:id="@+id/appbar_confirm_signup"
+            layout="@layout/tool_bar_with_cancel_btn"
+            app:elevation="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{@string/title_appbar_policy}" />
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            tools:context=".ui.signup/SignupFragment"
-            android:paddingBottom="25dp"
-            >
-            <include
-                android:id="@+id/appbar_confirm_signup"
-                layout="@layout/tool_bar_with_cancel_btn"
-                app:layout_constraintTop_toTopOf="parent"
-                app:title="@{@string/title_appbar_policy}"
-                app:elevation="0dp"
-                />
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/signup_input_title"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingTop="32dp"
-                android:text="@string/confirm_signup_title"
-                android:textColor="#0057b5"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@+id/appbar_confirm_signup"
-                />
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/cf_signup_des"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="26dp"
-                android:text="@string/confirm_signup_des"
-                android:textColor="#353535"
-                android:textSize="12sp"
-                android:lineSpacingExtra="6dp"
-                app:layout_constraintTop_toBottomOf="@+id/signup_input_title"
-                android:paddingHorizontal="22dp"
-                />
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintTop_toBottomOf="@id/appbar_confirm_signup">
+
             <LinearLayout
-                android:id="@+id/layour_show_id"
+                android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/cf_signup_des"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="26dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
-                <com.google.android.material.textview.MaterialTextView
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="25dp">
+
+                <include
+                    android:id="@+id/loginId"
+                    layout="@layout/layout_info_item"
+                    app:content="@{data.loginId}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{@string/id_confirm_signup_title}" />
+
+                <include
+                    android:id="@+id/password"
+                    layout="@layout/layout_info_item"
+                    app:content="@{ModelExtKt.maskPassword(data)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{@string/password_confirm_signup_title}" />
+
+                <include
+                    android:id="@+id/nickname"
+                    layout="@layout/layout_info_item"
+                    app:content="@{data.nickname}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{@string/username_confirm_signup_title}" />
+
+                <include
+                    android:id="@+id/nameKana"
+                    layout="@layout/layout_info_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/id_confirm_signup_title"
-                    android:textSize="12sp"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:lineSpacingExtra="6dp"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="lifecard"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp"
-                    android:gravity="right"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layour_show_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/layour_show_id"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="26dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/password_confirm_signup_title"
-                    android:textSize="12sp"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:lineSpacingExtra="6dp"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="*********"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp"
-                    android:gravity="right"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layout_show_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/layour_show_password"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/username_confirm_signup_title"
-                    android:textSize="12sp"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:lineSpacingExtra="6dp"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="LIFECARD"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp"
-                    android:gravity="right"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layout_show_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/layout_show_username"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="49dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/name_confirm_signup_tile"
-                    android:textSize="12sp"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:lineSpacingExtra="6dp"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="雷府　太郎"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp"
-                    android:gravity="right"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layout_show_furigana"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/layout_show_name"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/furigana_confirm_signup_title"
-                    android:textSize="12sp"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:lineSpacingExtra="6dp"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmFurigana"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="ライフ　タロウ"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp"
-                    android:gravity="right"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layout_show_gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/layout_show_furigana"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/gender_confirm_signup_title"
-                    android:textSize="12sp"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:lineSpacingExtra="6dp"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmGender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="男性"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp"
-                    android:gravity="right"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layout_show_dob"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/layout_show_gender"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/dob_signup_title"
-                    android:textSize="12sp"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:lineSpacingExtra="6dp"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmDob"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="1980年1月1日"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp"
-                    android:gravity="right"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layout_show_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/layout_show_dob"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/addres_confirm_signup_title"
-                    android:textSize="12sp"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:lineSpacingExtra="6dp"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmAdress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="神奈川県"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp"
-                    android:gravity="right"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layout_show_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/layout_show_address"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/phone_confirm_signup_title"
-                    android:textSize="12sp"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:lineSpacingExtra="6dp"/>
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="080-0000-0000"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp"
-                    android:gravity="right"/>
-            </LinearLayout>
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/secret_comfirm_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/secret_confirm_signup_title"
-                android:textSize="12sp"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                app:layout_constraintTop_toBottomOf="@+id/layout_show_phone"
-                android:layout_marginTop="15dp"
-                android:paddingHorizontal="39dp"
-                android:lineSpacingExtra="6dp"/>
-            <LinearLayout
-                android:id="@+id/layout_show_secret_question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/secret_comfirm_title"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
+                    android:layout_marginTop="25dp"
+                    app:content="@{ModelExtKt.getKanaName(data)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{@string/change_info_data_name_title}" />
+
+                <include
+                    android:id="@+id/nameFurigana"
+                    layout="@layout/layout_info_item"
+                    app:content="@{ModelExtKt.getFurigana(data)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{@string/change_info_data_furigana_title}" />
+
+                <include
+                    android:id="@+id/gender"
+                    layout="@layout/layout_info_item"
+                    app:content="@{data.gender}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{@string/gender_confirm_signup_title}" />
+
+                <include
+                    android:id="@+id/birthdate"
+                    layout="@layout/layout_info_item"
+                    app:content="@{data.date}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{@string/dov_confirm_signup_title}" />
+
+                <include
+                    android:id="@+id/address"
+                    layout="@layout/layout_info_item"
+                    app:content="@{data.city}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{@string/addres_confirm_signup_title}" />
+
+                <include
+                    android:id="@+id/phone"
+                    layout="@layout/layout_info_item"
+                    app:content="@{ModelExtKt.formatPhoneNumber(data)}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="@{@string/phone_confirm_signup_title}" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmSecret"
+                    android:id="@+id/questionCaption"
+                    style="@style/Widget.AppCompat.TextView.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="子供の頃のあだ名は？"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp" />
-            </LinearLayout>
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/secret_answer_comfirm_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/secret_answer_confirm_signup_title"
-                android:textSize="12sp"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                app:layout_constraintTop_toBottomOf="@+id/layout_show_secret_question"
-                android:layout_marginTop="25dp"
-                android:paddingHorizontal="39dp"
-                android:lineSpacingExtra="6dp"/>
-            <LinearLayout
-                android:id="@+id/layout_show_secret_answer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/secret_answer_comfirm_title"
-                android:layout_marginHorizontal="31dp"
-                android:paddingBottom="14dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/underline_bg"
-                android:paddingHorizontal="8dp">
+                    android:layout_marginTop="25dp"
+                    android:lineSpacingExtra="6sp"
+                    android:paddingHorizontal="32dp"
+                    android:text="@string/secret_signup_title"
+                    android:textSize="12sp" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvConfirmSecretAnswer"
+                    android:id="@+id/question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="ライフカードマン"
-                    android:textSize="12sp"
-                    android:lineSpacingExtra="6dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/layout_show_secret_answer"
-                android:layout_marginTop="32dp"
-                android:layout_marginHorizontal="22dp"
-                >
-                 <com.google.android.material.button.MaterialButton
-                     android:id="@+id/btnCancelConfirm"
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_weight="1"
-                     android:layout_marginRight="9dp"
-                     android:paddingVertical="12dp"
-                     android:textColor="@color/primary"
-                     style="@style/AppTheme.RoundedCornerMaterialButton"
-                     android:text="修正"/>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSubmitConfirm"
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingExtra="6sp"
+                    android:paddingHorizontal="32dp"
+                    android:text="@{data.question, default=``}"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/answerCaption"
+                    style="@style/Widget.AppCompat.TextView.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="9dp"
-                    android:paddingVertical="18dp"
-                    android:text="登録"
-                    app:cornerRadius="30dp"
-                    />
+                    android:layout_marginTop="25dp"
+                    android:lineSpacingExtra="6sp"
+                    android:paddingHorizontal="32dp"
+                    android:text="@string/secret_answer_signup_title"
+                    android:textSize="12sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingExtra="6sp"
+                    android:paddingHorizontal="32dp"
+                    android:text="@{data.answer, default=``}"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/btn_submit_policy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="22dp"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCancelConfirm"
+                        style="@style/AppTheme.RoundedCornerMaterialButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="9dp"
+                        android:layout_marginRight="9dp"
+                        android:layout_weight="1"
+                        android:paddingVertical="12dp"
+                        android:text="@string/button_edit"
+                        android:textColor="@color/primary" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSubmitConfirm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginLeft="9dp"
+                        android:layout_weight="1"
+                        android:paddingVertical="18dp"
+                        android:text="@string/button_confirm"
+                        app:cornerRadius="30dp" />
+                </LinearLayout>
             </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -49,4 +49,20 @@ class RegexTest {
         }
     }
 
+    @Test
+    fun formatDisplayPhoneNumber_isCorrect() {
+        Assert.assertEquals(
+            "090-123-45678",
+            RegexUtils.formatDisplayPhoneNumber("09012345678")
+        )
+        Assert.assertEquals(
+            "090-123-4567",
+            RegexUtils.formatDisplayPhoneNumber("0901234567")
+        )
+        Assert.assertEquals(
+            "090-123-4567",
+            RegexUtils.formatDisplayPhoneNumber("090-123-4567")
+        )
+    }
+
 }

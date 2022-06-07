@@ -209,13 +209,8 @@ class SignupInputFragment : Fragment() {
 
         viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.success?.let {
-                val signupData = SignupData(
-                    idEdt.text.toString(),
-                    usernameEdit.text.toString(),
-                    passwordEdt.text.toString()
-                )
                 val action =
-                    SignupInputFragmentDirections.actionSignupInputToSignupConfirm(signupData)
+                    SignupInputFragmentDirections.actionSignupInputToSignupConfirm(viewModel.formState.value!!)
                 findNavController().navigate(action)
             }
 
@@ -248,6 +243,7 @@ class SignupInputFragment : Fragment() {
         btnSubmit.setOnClickListener(View.OnClickListener {
             viewModel.submit()
         })
+
 
         return binding.root
     }
