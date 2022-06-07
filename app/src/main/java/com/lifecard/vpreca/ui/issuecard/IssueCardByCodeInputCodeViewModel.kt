@@ -36,7 +36,7 @@ class IssueCardByCodeInputCodeViewModel @Inject constructor(
                 when (result.exception) {
                     is NoConnectivityException -> _giftInfoResult.value =
                         GiftInfoResult(networkTrouble = true)
-                    is ApiException -> GiftInfoResult(
+                    is ApiException -> _giftInfoResult.value = GiftInfoResult(
                         error = ErrorMessageException(
                             errorMessage = result.exception.message
                         )

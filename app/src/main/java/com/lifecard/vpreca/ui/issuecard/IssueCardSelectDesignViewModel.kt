@@ -45,7 +45,7 @@ class IssueCardSelectDesignViewModel @Inject constructor(
                 when (result.exception) {
                     is NoConnectivityException -> _listDesignResult.value =
                         ListDesignState(networkTrouble = true)
-                    is ApiException -> ListDesignState(
+                    is ApiException -> _listDesignResult.value = ListDesignState(
                         error = ErrorMessageException(
                             errorMessage = result.exception.errorMessage,
                             exception = result.exception
@@ -86,7 +86,7 @@ class IssueCardSelectDesignViewModel @Inject constructor(
                 when (res.exception) {
                     is NoConnectivityException -> _feeInfoResult.value =
                         FeeInfoResult(networkTrouble = true)
-                    is ApiException -> FeeInfoResult(
+                    is ApiException -> _feeInfoResult.value = FeeInfoResult(
                         error = ErrorMessageException(
                             errorMessage = res.exception.message
                         )

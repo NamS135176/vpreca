@@ -78,7 +78,7 @@ class IssueCardByCodeSelectSource : Fragment() {
                 }
                 issueGiftReqResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("",getString(it)) }
-                    error.message?.let { showPopupMessage("",it) }
+                    error.errorMessage?.let { showPopupMessage("",it) }
                 }
                 issueGiftReqResult.networkTrouble?.let {
                     if (it) {
@@ -182,7 +182,7 @@ class IssueCardByCodeSelectSource : Fragment() {
                 creditCardResult.error?.let { error ->
 
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
-                    error.message?.let { showPopupMessage(message = it) }
+                    error.errorMessage?.let { showPopupMessage(message = it) }
                 }
                 creditCardResult.networkTrouble?.let {
                     if (it) {

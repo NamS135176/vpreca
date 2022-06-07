@@ -112,7 +112,7 @@ class BalanceAmountMenuFragment : Fragment() {
                 }
                 suspendDealResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
-                    error.message?.let { showPopupMessage(message = it) }
+                    error.errorMessage?.let { showPopupMessage(message = it) }
                 }
                 suspendDealResult.networkTrouble?.let {
                     if (it) {

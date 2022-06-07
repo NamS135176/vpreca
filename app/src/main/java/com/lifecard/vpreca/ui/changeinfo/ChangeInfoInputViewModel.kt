@@ -100,7 +100,7 @@ class ChangeInfoInputViewModel : ViewModel() {
 
     private fun checkEmail2Valid(): Boolean {
         val email2 = formState.value?.email2
-        return if (email2.isNullOrEmpty()) {
+        return if (email2.isNullOrEmpty() || email2 == "") {
             true
         } else if (!RegexUtils.isEmailValid(email2) || email2.contentEquals(
                 formState.value?.email1,
@@ -231,7 +231,13 @@ class ChangeInfoInputViewModel : ViewModel() {
     }
 
     private fun isEmail2ConfirmValid(cfEmail: String?, email: String?): Boolean {
-        return RegexUtils.isEmailValid(email) && email == cfEmail
+        if(email.isNullOrEmpty()){
+            return true
+        }
+        else{
+            return RegexUtils.isEmailValid(email) && email == cfEmail
+        }
+
     }
 
     fun submit() {
@@ -246,17 +252,6 @@ class ChangeInfoInputViewModel : ViewModel() {
         val isValidAnswer = checkAnswerValid()
         val isValidKanaName = checkKanaNameValid()
         val isValidHiraName = checkHiraNameValid()
-        println(isValidEmail1)
-        println(isValidEmail1Confirm)
-        println(isValidEmail2)
-        println(isValidEmail2Confirm)
-        println(isValidNickname)
-        println(isValidLoginId)
-        println(isValidQuestion)
-        println(isValidCity)
-        println(isValidAnswer)
-        println(isValidKanaName)
-        println(isValidHiraName)
         if (isValidEmail1 && isValidEmail1Confirm && isValidEmail2 && isValidEmail2Confirm && isValidNickname && isValidLoginId && isValidQuestion && isValidCity && !isValidAnswer
             && !isValidKanaName && !isValidHiraName
         ) {

@@ -142,7 +142,7 @@ class IssueCardSelectDesignFragment : Fragment() {
                 }
                 feeInfoResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("", getString(it)) }
-                    error.message?.let { showPopupMessage("", it) }
+                    error.errorMessage?.let { showPopupMessage("", it) }
                 }
                 feeInfoResult.networkTrouble?.let {
                     if (it) {
@@ -246,7 +246,7 @@ class IssueCardSelectDesignFragment : Fragment() {
                 }
                 listDesignResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("", getString(it)) }
-                    error.message?.let { showPopupMessage("", it) }
+                    error.errorMessage?.let { showPopupMessage("", it) }
                 }
                 listDesignResult.networkTrouble?.let {
                     if (it) {

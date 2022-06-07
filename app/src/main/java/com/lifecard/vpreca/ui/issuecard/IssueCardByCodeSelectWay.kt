@@ -76,7 +76,7 @@ class IssueCardByCodeSelectWay : Fragment() {
                 }
                 issueGiftReqResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("",getString(it)) }
-                    error.message?.let { showPopupMessage("",it) }
+                    error.errorMessage?.let { showPopupMessage("",it) }
                 }
                 issueGiftReqResult.networkTrouble?.let {
                     if (it) {

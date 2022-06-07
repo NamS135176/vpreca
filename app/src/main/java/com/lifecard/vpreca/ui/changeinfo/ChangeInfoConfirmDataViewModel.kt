@@ -38,7 +38,7 @@ class ChangeInfoConfirmDataViewModel @Inject constructor(
                 when (res.exception) {
                     is NoConnectivityException -> _changeInfoState.value =
                         ChangeInfoState(networkTrouble = true)
-                    is ApiException -> ChangeInfoState(
+                    is ApiException -> _changeInfoState.value = ChangeInfoState(
                         error = ErrorMessageException(
                             errorMessage = res.exception.errorMessage,
                             exception = res.exception
