@@ -39,7 +39,6 @@ class PolicyFragment : Fragment() {
 //        })
         val btnSubmitPolicy = binding.btnSubmitPolicy
         val cbPolicy = binding.cbPolicy
-        val rcPolicy = binding.svPolicy
         val cancelButton = binding.appbarPolicy.cancelBtn
         val buttonTermOfUse = binding.buttonTermOfUse
         val buttonPolicy = binding.buttonPolicy
@@ -76,20 +75,6 @@ class PolicyFragment : Fragment() {
                 WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/index.html")
             )
         })
-
-
-        val arrPolicy = arrayOf(
-            "私は、18歳以上です。未成年の場合は親権者の同意を得ています。",
-            "私は、暴力団などの反社会的勢力や、反社会的勢力の関係者ではないことを表明します。",
-            "私は、個人情報の取扱いに関する同意約款、会員規約に同意します。",
-            "私は、アカウント登録情報に不備があった等でライフカードが必要と判断した場合は運転免許証等の本人確認用書類を提出することに同意します。"
-        )
-        val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        val adapter = PolicyAdapter(arrPolicy)
-        rcPolicy.layoutManager = linearLayoutManager
-        rcPolicy.adapter = adapter
-
         return binding.root
 //        return inflater.inflate(R.layout.fragment_policy, container, false)
 

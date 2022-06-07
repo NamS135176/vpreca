@@ -188,10 +188,6 @@ class LoginFragment : NoToolbarFragment() {
             context?.let { KeyboardUtils.hideKeyboard(it, passwordEditText) }
         }
 
-        val checkDeviceSupportBiometric = bioManager?.checkDeviceSupportBiometric()
-        val isEnableBiometricSetting = PreferenceHelper.isEnableBiometricSetting(
-            requireContext()
-        )
         when (bioManager?.checkDeviceSupportBiometric() == true && PreferenceHelper.isEnableBiometricSetting(
             requireContext()
         )) {
