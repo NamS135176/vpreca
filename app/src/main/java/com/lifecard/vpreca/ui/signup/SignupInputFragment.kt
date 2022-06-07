@@ -35,14 +35,9 @@ class SignupInputFragment : Fragment() {
         _binding = SignupInputFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SignupInputViewModel::class.java)
 
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_policy)
-                }
-            })
 
+        val container = binding.container
+        val scrollView = binding.scrollView
         val spinnerGender = binding.spinnerGender
         val spinnerCity = binding.spinnerCity
         val spinnerSecret = binding.spinnerSecret
@@ -65,6 +60,26 @@ class SignupInputFragment : Fragment() {
         val kanaLastName = binding.kanaLastName
         val hiraFirstName = binding.hiraFirstName
         val hiraLastName = binding.hiraLastName
+
+        fun dismissAllSpinner() {
+            if (spinnerCity.isShowing) spinnerCity.dismiss()
+            if (spinnerGender.isShowing) spinnerGender.dismiss()
+            if (spinnerSecret.isShowing) spinnerSecret.dismiss()
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (spinnerCity.isShowing || spinnerGender.isShowing || spinnerSecret.isShowing) {
+                        dismissAllSpinner()
+                        return
+                    }
+                    findNavController().navigate(R.id.nav_policy)
+                }
+            })
+
+        scrollView.setOnClickListener(View.OnClickListener { dismissAllSpinner() })
 
         val cal = Calendar.getInstance()
 
@@ -244,5 +259,6 @@ class SignupInputFragment : Fragment() {
 
         return binding.root
     }
+
 
 }
