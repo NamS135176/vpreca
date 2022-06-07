@@ -124,6 +124,8 @@ class ChangeInfoDataFragment : Fragment() {
                     val sdf = SimpleDateFormat(myFormat, Locale.US)
                     val date1 = sdf.format(cal.getTime())
                     val date2 = sdf.format(Date(dateData.toLong()))
+                    println(date1)
+                    println(date2)
                     if (date1 == date2) {
                         val action = ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
                             PhoneData(phone, memberNumber)

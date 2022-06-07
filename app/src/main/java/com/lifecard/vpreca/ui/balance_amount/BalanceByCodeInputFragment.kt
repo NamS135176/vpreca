@@ -87,7 +87,7 @@ class BalanceByCodeInputFragment : Fragment() {
                 }
                 giftInfoResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("",getString(it)) }
-                    error.message?.let { showPopupMessage("",it) }
+                    error.errorMessage?.let { showPopupMessage("",it) }
                 }
                 giftInfoResult.networkTrouble?.let {
                     if (it) {

@@ -1,18 +1,38 @@
 package com.lifecard.vpreca.ui.changepass
 
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.UserRepository
+import com.lifecard.vpreca.data.model.ChangeInfoMemberData
+import com.lifecard.vpreca.exception.ApiException
+import com.lifecard.vpreca.exception.ErrorMessageException
+import com.lifecard.vpreca.exception.InternalServerException
+import com.lifecard.vpreca.exception.NoConnectivityException
+import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
+import com.lifecard.vpreca.ui.changeinfo.ChangeInfoState
 import com.lifecard.vpreca.ui.forgotpass.ForgotPassState
 import com.lifecard.vpreca.utils.RegexUtils
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ChangePassViewModel : ViewModel() {
+@HiltViewModel
+class ChangePassViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+) : ViewModel() {
     val oldPassError = MutableLiveData<Int?>()
     val newPassError = MutableLiveData<Int?>()
     val cfNewPassError = MutableLiveData<Int?>()
     val validForm = MutableLiveData<Boolean>()
     val formState = MutableLiveData(ChangePassState())
+    val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
+
+    private val _changePassState = MutableLiveData<ChangePassRequestState>()
+    val changePassState: LiveData<ChangePassRequestState> = _changePassState
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
 
     private fun checkOldPassValid(): Boolean {
         return if (!RegexUtils.isPasswordValid(formState.value?.oldPass)) {
@@ -61,7 +81,12 @@ class ChangePassViewModel : ViewModel() {
     }
 
     fun submit() {
-
+        val isOldPassValid = checkOldPassValid()
+        val isNewPassValid = checkNewPassValid()
+        val isCfNewPassValid = checkCfNewPassValid()
+        if(isNewPassValid && isOldPassValid && isCfNewPassValid){
+            formResultState.value = ChangeInfoInputResultState(success = true)
+        }
     }
 
     fun checkFormValid(): Boolean {
@@ -71,5 +96,37 @@ class ChangePassViewModel : ViewModel() {
             validForm.value = isValid
             return isValid
         } ?: false
+    }
+
+    fun changePassData(oldPass:String, newPass:String) {
+        viewModelScope.launch {
+            _loading.value = true
+            val res = userRepository.updatePassword(oldPass, newPass)
+            if (res is Result.Success) {
+                _changePassState.value = ChangePassRequestState(success = res.data)
+            } else if (res is Result.Error) {
+                when (res.exception) {
+                    is NoConnectivityException -> _changePassState.value =
+                        ChangePassRequestState(networkTrouble = true)
+                    is ApiException -> _changePassState.value = ChangePassRequestState(
+                        error = ErrorMessageException(
+                            errorMessage = res.exception.errorMessage,
+                            exception = res.exception
+                        )
+                    )
+                    is InternalServerException -> _changePassState.value =
+                            //TODO this internalError should be html from server, it will be implement later
+                        ChangePassRequestState(internalError = "")
+                    else -> _changePassState.value =
+                        ChangePassRequestState(
+                            error = ErrorMessageException(
+                                messageResId = R.string.login_failed,
+                                exception = res.exception
+                            )
+                        )
+                }
+            }
+            _loading.value = false
+        }
     }
 }

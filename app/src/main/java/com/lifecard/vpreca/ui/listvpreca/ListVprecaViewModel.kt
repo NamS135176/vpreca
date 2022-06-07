@@ -46,7 +46,7 @@ class ListVprecaViewModel @Inject constructor(
                 when (result.exception) {
                     is NoConnectivityException -> _creditCardResult.value =
                         CreditCardResult(networkTrouble = true)
-                    is ApiException -> CreditCardResult(
+                    is ApiException -> _creditCardResult.value = CreditCardResult(
                         error = ErrorMessageException(
                             errorMessage = result.exception.errorMessage,
                             exception = result.exception

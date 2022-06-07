@@ -46,7 +46,7 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
                 when (res.exception) {
                     is NoConnectivityException -> _issueGiftReqResult.value =
                         IssueGiftResult(networkTrouble = true)
-                    is ApiException -> IssueGiftResult(
+                    is ApiException -> _issueGiftReqResult.value = IssueGiftResult(
                         error = ErrorMessageException(
                             errorMessage = res.exception.message
                         )
@@ -80,7 +80,7 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
                 when (res.exception) {
                     is NoConnectivityException -> _issueGiftReqResultWithCard.value =
                         IssueGiftResult(networkTrouble = true)
-                    is ApiException -> IssueGiftResult(
+                    is ApiException -> _issueGiftReqResultWithCard.value = IssueGiftResult(
                         error = ErrorMessageException(
                             errorMessage = res.exception.message
                         )

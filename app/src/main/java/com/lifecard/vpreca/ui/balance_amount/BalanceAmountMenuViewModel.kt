@@ -39,7 +39,7 @@ class BalanceAmountMenuViewModel @Inject constructor(
                 when (result.exception) {
                     is NoConnectivityException -> _suspendDealResult.value =
                         SuspendDealResult(networkTrouble = true)
-                    is ApiException -> SuspendDealResult(
+                    is ApiException -> _suspendDealResult.value = SuspendDealResult(
                         error = ErrorMessageException(
                             errorMessage = result.exception.message
                         )

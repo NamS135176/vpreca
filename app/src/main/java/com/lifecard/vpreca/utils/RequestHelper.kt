@@ -312,6 +312,21 @@ class RequestHelper {
                 ),
             )
         }
+
+        fun createChangePassRequest(
+            memberInfo:PasswordUpdateMemberInfoContent
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = PasswordUpdateRequest(
+                        memberInfo = memberInfo
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.PasswordUpdReq.value
+                    )
+                ),
+            )
+        }
     }
 
 

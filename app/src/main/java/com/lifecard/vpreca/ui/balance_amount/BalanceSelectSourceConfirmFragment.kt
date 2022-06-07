@@ -64,7 +64,7 @@ class BalanceSelectSourceConfirmFragment : Fragment() {
                 }
                 feeInfoResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("",getString(it)) }
-                    error.message?.let { showPopupMessage("",it) }
+                    error.errorMessage?.let { showPopupMessage("",it) }
                 }
                 feeInfoResult.networkTrouble?.let {
                     if (it) {

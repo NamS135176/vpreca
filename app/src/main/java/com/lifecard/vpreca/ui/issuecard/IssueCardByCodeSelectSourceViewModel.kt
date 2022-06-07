@@ -46,7 +46,7 @@ class IssueCardByCodeSelectSourceViewModel @Inject constructor(
                 when (res.exception) {
                     is NoConnectivityException -> _issueGiftReqResult.value =
                         IssueGiftResult(networkTrouble = true)
-                    is ApiException -> IssueGiftResult(
+                    is ApiException -> _issueGiftReqResult.value = IssueGiftResult(
                         error = ErrorMessageException(
                             errorMessage = res.exception.message
                         )
@@ -73,7 +73,7 @@ class IssueCardByCodeSelectSourceViewModel @Inject constructor(
                 when (result.exception) {
                     is NoConnectivityException -> _creditCardResult.value =
                         CreditCardResult(networkTrouble = true)
-                    is ApiException -> CreditCardResult(
+                    is ApiException -> _creditCardResult.value = CreditCardResult(
                         error = ErrorMessageException(
                             errorMessage = result.exception.message
                         )

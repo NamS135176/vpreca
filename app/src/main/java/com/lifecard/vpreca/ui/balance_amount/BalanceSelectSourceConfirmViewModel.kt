@@ -54,7 +54,7 @@ class BalanceSelectSourceConfirmViewModel @Inject constructor(
                 when (res.exception) {
                     is NoConnectivityException -> _feeInfoResult.value =
                         FeeInfoResult(networkTrouble = true)
-                    is ApiException -> FeeInfoResult(
+                    is ApiException -> _feeInfoResult.value = FeeInfoResult(
                         error = ErrorMessageException(
                             errorMessage = res.exception.message
                         )

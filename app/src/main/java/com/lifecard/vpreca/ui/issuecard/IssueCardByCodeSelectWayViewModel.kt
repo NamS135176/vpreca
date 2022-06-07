@@ -42,7 +42,7 @@ class IssueCardByCodeSelectWayViewModel  @Inject constructor(
                 when (res.exception) {
                     is NoConnectivityException -> _issueGiftReqResult.value =
                         IssueGiftResult(networkTrouble = true)
-                    is ApiException -> IssueGiftResult(
+                    is ApiException -> _issueGiftReqResult.value = IssueGiftResult(
                         error = ErrorMessageException(
                             errorMessage = res.exception.message
                         )
