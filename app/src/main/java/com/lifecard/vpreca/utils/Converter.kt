@@ -75,7 +75,7 @@ object Converter {
     @JvmStatic
     fun convertPrecaNumber(value: String?): String {
         val show = value?.substring(value.length.minus(5), value.length)
-        return "**** **** **** "+show
+        return "**** **** **** " + show
     }
 
     @JvmStatic
@@ -99,4 +99,13 @@ object Converter {
             false
         }
     }
+
+    @JvmStatic
+    fun convertBooleanToString(state: Boolean): String {
+        if (state) {
+            return "1"
+        } else return "0"
+    }
+
+
 }

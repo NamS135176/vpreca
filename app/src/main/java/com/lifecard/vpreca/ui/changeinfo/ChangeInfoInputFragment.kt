@@ -16,9 +16,12 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.ChangeInfoMemberData
 import com.lifecard.vpreca.databinding.FragmentChangeInfoInputBinding
+import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.closeKeyBoard
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import java.util.*
@@ -32,6 +35,7 @@ class ChangeInfoInputFragment : Fragment() {
     private lateinit var viewModel: ChangeInfoInputViewModel
     private var _binding: FragmentChangeInfoInputBinding? = null
     private val binding get() = _binding!!
+    private val args: ChangeInfoInputFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,6 +77,12 @@ class ChangeInfoInputFragment : Fragment() {
         val kanaLastName = binding.kanaLastName
         val hiraFirstName = binding.hiraFirstName
         val hiraLastName = binding.hiraLastName
+        val toggle1 = binding.toggleSettingFirst
+        val toggle2 = binding.toggleSettingSecond
+        val toggle3 = binding.toggleMagazineFirst
+        val toggle4 = binding.toggleMagazineSecond
+        var city = ""
+        var question = ""
 
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_info_data) })
 
@@ -182,17 +192,39 @@ class ChangeInfoInputFragment : Fragment() {
             })
 
         viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            it?.success?.let { findNavController().navigate(R.id.nav_change_info_confirm) }
+            it?.success?.let {
+                val data = ChangeInfoMemberData(
+                    args.phoneData?.memberNumber!!,
+                    idEdt.text.toString(),
+                    nicknameEdt.text.toString(),
+                    kanaFirstName.text.toString() + " " + kanaLastName.text.toString(),
+                    hiraFirstName.text.toString() + " " + hiraLastName.text.toString(),
+                    city,
+                    email1Edt.text.toString(),
+                    email2Edt.text.toString(),
+                    question,
+                    answerEdt.text.toString(),
+                    Converter.convertBooleanToString(toggle1.isChecked),
+                    Converter.convertBooleanToString(toggle2.isChecked),
+                    Converter.convertBooleanToString(toggle3.isChecked),
+                    Converter.convertBooleanToString(toggle4.isChecked),
+                    args.phoneData?.phone!!
+                )
+                val action = ChangeInfoInputFragmentDirections.actionChangeInfoInputToConfirm(data)
+                findNavController().navigate(action)
+            }
         })
         viewModel.formState.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { viewModel.checkValidForm() })
 
         spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
-            newItem?.let { viewModel.questionDataChanged(text = it) }
+            newItem?.let { viewModel.questionDataChanged(text = it)
+            question = it}
         })
         spinnerCity.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
-            newItem?.let { viewModel.cityDataChanged(text = it) }
+            newItem?.let { viewModel.cityDataChanged(text = it)
+            city = it}
         })
 
         idEdt.doAfterTextChanged { text -> viewModel.loginIdDataChanged(text = text.toString()) }

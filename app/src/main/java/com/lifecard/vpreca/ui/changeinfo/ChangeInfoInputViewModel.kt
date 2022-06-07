@@ -246,8 +246,19 @@ class ChangeInfoInputViewModel : ViewModel() {
         val isValidAnswer = checkAnswerValid()
         val isValidKanaName = checkKanaNameValid()
         val isValidHiraName = checkHiraNameValid()
-        if (isValidEmail1 && isValidEmail1Confirm && isValidEmail2 && isValidEmail2Confirm && isValidNickname && isValidLoginId && isValidQuestion && isValidCity && isValidAnswer
-            && isValidKanaName && isValidHiraName
+        println(isValidEmail1)
+        println(isValidEmail1Confirm)
+        println(isValidEmail2)
+        println(isValidEmail2Confirm)
+        println(isValidNickname)
+        println(isValidLoginId)
+        println(isValidQuestion)
+        println(isValidCity)
+        println(isValidAnswer)
+        println(isValidKanaName)
+        println(isValidHiraName)
+        if (isValidEmail1 && isValidEmail1Confirm && isValidEmail2 && isValidEmail2Confirm && isValidNickname && isValidLoginId && isValidQuestion && isValidCity && !isValidAnswer
+            && !isValidKanaName && !isValidHiraName
         ) {
             formResultState.value = ChangeInfoInputResultState(success = true)
         }

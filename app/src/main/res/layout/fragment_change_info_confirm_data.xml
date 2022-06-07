@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="com.lifecard.vpreca.utils.UserConverter" />
+
+        <variable
+            name="user"
+            type="com.lifecard.vpreca.data.model.ChangeInfoMemberData" />
+    </data>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -76,7 +84,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="lifecard"
+                            android:text="@{user.loginId}"
                             android:textSize="12sp"
                             android:lineSpacingExtra="6sp"
                             android:gravity="end"/>
@@ -105,7 +113,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="LIFECARD"
+                            android:text="@{user.memberRoman}"
                             android:textSize="12sp"
                             android:lineSpacingExtra="6sp"
                             android:gravity="end"/>
@@ -137,7 +145,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="ライフ　太郎"
+                            android:text="@{user.memberName}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -168,7 +176,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="ライフ　タロウ"
+                            android:text="@{user.memberKana}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -199,7 +207,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="神奈川県"
+                            android:text="@{user.addressCity}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -228,7 +236,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="080-0000-0000"
+                            android:text="@{user.telephoneNumber1}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -258,7 +266,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="sample@sample.jp"
+                            android:text="@{user.mailAddress1}"
                             android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout
@@ -286,7 +294,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="sample2@sample.jp"
+                            android:text="@{user.mailAddress2}"
                             android:textSize="12sp" />
                     </LinearLayout>
                     <com.google.android.material.textview.MaterialTextView
@@ -323,7 +331,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="受け取る"
+                            android:text="@{UserConverter.convertReceiveState(user.mail1AdMailRecieveFlg)}"
                             android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout
@@ -350,7 +358,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="受け取らない"
+                            android:text="@{UserConverter.convertReceiveState(user.mail2AdMailRecieveFlg)}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -388,7 +396,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="受け取る"
+                            android:text="@{UserConverter.convertReceiveState(user.mail1RecievFlg)}"
                             android:textSize="12sp" />
                     </LinearLayout>
                     <LinearLayout
@@ -415,7 +423,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="受け取らない"
+                            android:text="@{UserConverter.convertReceiveState(user.mail2RecievFlg)}"
                             android:textSize="12sp" />
                     </LinearLayout>
                     <com.google.android.material.textview.MaterialTextView
@@ -447,7 +455,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="子供の頃のあだ名は？"
+                            android:text="@{user.secretQuestion}"
                             android:textSize="12sp"
                             android:lineSpacingExtra="6sp" />
                     </LinearLayout>
@@ -480,7 +488,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="ライフカードマン"
+                            android:text="@{user.secretQuestionAnswer}"
                             android:textSize="12sp"
                             android:lineSpacingExtra="6sp" />
                     </LinearLayout>
@@ -518,6 +526,20 @@
                     app:cornerRadius="30dp"
                     />
             </LinearLayout>
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="64dp"
+                android:visibility="gone"
+                android:indeterminateDrawable="@drawable/loading"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

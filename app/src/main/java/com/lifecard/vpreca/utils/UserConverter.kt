@@ -74,4 +74,11 @@ object UserConverter {
     fun receiveAdEmail2(user: MemberInfo?): String {
         return user?.let { getReceiveEmailStatus(it.mail2AdMailRecieveFlg) } ?: ""
     }
+
+    @JvmStatic
+    fun convertReceiveState(state: String): String {
+        if (state == "0") {
+            return "受け取らない"
+        } else return "受け取る"
+    }
 }

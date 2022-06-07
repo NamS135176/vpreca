@@ -55,12 +55,25 @@
         android:id="@+id/nav_change_info_data"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoDataFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_change_info_data" />
+        tools:layout="@layout/fragment_change_info_data" >
+        <action
+            android:id="@+id/action_change_info_data_to_input"
+            app:destination="@id/nav_change_info_input" />
+    </fragment>
     <fragment
         android:id="@+id/nav_change_info_confirm"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoConfirmDataFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_change_info_confirm_data" />
+        tools:layout="@layout/fragment_change_info_confirm_data" >
+        <action
+            android:id="@+id/action_change_confirm_data_to_input"
+            app:destination="@id/nav_change_info_input" />
+        <argument
+            android:name="change_info_data"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.ChangeInfoMemberData"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_change_info_complete"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoCompleteFragment"
@@ -70,7 +83,16 @@
         android:id="@+id/nav_change_info_input"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_change_info_input" />
+        tools:layout="@layout/fragment_change_info_input" >
+        <action
+            android:id="@+id/action_change_info_input_to_confirm"
+            app:destination="@id/nav_change_info_confirm" />
+        <argument
+            android:name="phone_data"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.PhoneData"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_gift_card_policy"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardPolicyFragment"
