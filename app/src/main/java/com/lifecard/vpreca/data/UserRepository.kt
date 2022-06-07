@@ -61,7 +61,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
     }
 
     suspend fun changeInfoMember(
-      memberInfo: ChangeInfoMemberData
+        memberInfo: ChangeInfoMemberData
     ): Result<ChangeInfoMemberData> {
         return withContext(Dispatchers.IO) {
             try {
@@ -79,24 +79,57 @@ class UserRepository(private val apiService: ApiService, private val userManager
     }
 
     suspend fun updatePassword(
-        currentPass:String,
-        newPass:String
+        currentPass: String,
+        newPass: String
     ): Result<MemberInfo> {
         return withContext(Dispatchers.IO) {
             try {
                 val userResponse = apiService.updatePassword(
-                    RequestHelper.createChangePassRequest(PasswordUpdateMemberInfoContent(
-                        userManager.loginId!!,
-                        userManager.memberNumber!!,
-                        "1",
-                        currentPass,
-                        newPass
-                    ))
+                    RequestHelper.createChangePassRequest(
+                        PasswordUpdateMemberInfoContent(
+                            userManager.loginId!!,
+                            userManager.memberNumber!!,
+                            "1",
+                            currentPass,
+                            newPass
+                        )
+                    )
                 )
 
                 Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
             } catch (e: Exception) {
                 println("UserRepository... change pass has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
+
+    suspend fun resetPassword(
+        email: String,
+        birthday: String,
+        phone: String,
+        secretQuestion: String,
+        secretAnswer: String
+    ): Result<String> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userResponse = apiService.resetPassword(
+                    RequestHelper.createResetPassRequest(
+                        PasswordResetMemberInfoContent(
+                            userManager.loginId!!,
+                            email,
+                            birthday,
+                            phone,
+                            secretQuestion,
+                            secretAnswer
+                        )
+                    )
+                )
+
+                Result.Success(userResponse.brandPrecaApi.response.resultCode)
+            } catch (e: Exception) {
+                println("UserRepository... reset pass has error $e")
                 e.printStackTrace()
                 Result.Error(e)
             }

@@ -9,24 +9,28 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentForgotPassBinding
 import com.lifecard.vpreca.utils.closeKeyBoard
+import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showPopupMessage
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@AndroidEntryPoint
 class ForgotPassFragment : Fragment() {
 
     companion object {
         fun newInstance() = ForgotPassFragment()
     }
 
-    private lateinit var viewModel: ForgotPassViewModel
+    private val viewModel: ForgotPassViewModel by viewModels()
     private var _binding: FragmentForgotPassBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -34,7 +38,7 @@ class ForgotPassFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentForgotPassBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(ForgotPassViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(ForgotPassViewModel::class.java)
 
         val container = binding.container
         val spinnerQuestion = binding.spinnerQuestion
@@ -50,7 +54,8 @@ class ForgotPassFragment : Fragment() {
         val questionLayout = binding.forgotPassQuestionLayout
         val answerLayout = binding.forgotPassSecretAnswerLayout
         val answerEdt = binding.forgotPassSecretAnswerInput
-
+        var question = ""
+        val loading = binding.loading
         container.setOnClickListener { closeKeyBoard() }
         spinnerQuestion.lifecycleOwner = viewLifecycleOwner
 
@@ -154,12 +159,47 @@ class ForgotPassFragment : Fragment() {
                 }
             })
 
+        viewModel.resetPassState.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { changeInfoState ->
+                changeInfoState ?: return@Observer
+                changeInfoState.error?.messageResId?.let { showPopupMessage(message = getString(it)) }
+                changeInfoState.error?.errorMessage?.let { showPopupMessage(message = it) }
+                changeInfoState.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
+                }
+                changeInfoState.success?.let {
+                    findNavController().navigate(R.id.nav_change_pass_complete)
+                }
+            })
+
+        viewModel.loading.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            when (it) {
+                true -> loading.visibility = View.VISIBLE
+                else -> loading.visibility = View.GONE
+            }
+        })
+
         viewModel.forgotPassState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            findNavController().navigate(R.id.nav_forgot_complete)
+            it?.success?.let {
+                viewModel.resetPassData(
+                    emailEdt.text.toString(),
+                    tvDatePicker.text.toString(),
+                    phoneEdt.text.toString(),
+                    question,
+                    answerEdt.text.toString()
+                )
+//                println(question)
+            }
         })
 
         spinnerQuestion.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
-            checkValidForm()
+            newItem?.let {
+                checkValidForm()
+                question = it
+            }
         })
 
         tvDatePicker.doAfterTextChanged { _ -> checkValidForm() }

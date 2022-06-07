@@ -327,6 +327,20 @@ class RequestHelper {
                 ),
             )
         }
+        fun createResetPassRequest(
+            memberInfo:PasswordResetMemberInfoContent
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = PasswordResetRequest(
+                        memberInfo = memberInfo
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.PasswordResetReq.value
+                    )
+                ),
+            )
+        }
     }
 
 
