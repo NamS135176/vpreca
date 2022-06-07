@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.PhoneData
 import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
 import com.lifecard.vpreca.utils.hideToolbar
 import com.lifecard.vpreca.utils.showAlertMessage
@@ -50,6 +51,9 @@ class ChangeInfoDataFragment : Fragment() {
             })
         val btnOpenDialog = binding.btnSubmitPolicy
         val cal = Calendar.getInstance()
+        var dateData = ""
+        var phone = ""
+        var memberNumber = ""
         btnOpenDialog.setOnClickListener(
             View.OnClickListener {
                 val view = View.inflate(requireContext(), R.layout.bod_dialog, null)
@@ -92,13 +96,21 @@ class ChangeInfoDataFragment : Fragment() {
                         cal.get(Calendar.YEAR),
                         cal.get(Calendar.MONTH),
                         cal.get(Calendar.DAY_OF_MONTH)
-                    ).apply { datePicker
+                    ).apply {
+                        datePicker
                         setButton(DatePickerDialog.BUTTON_POSITIVE, getString(R.string.button_ok),
                             DialogInterface.OnClickListener { _, _ ->
-                                dateSetListener.onDateSet(datePicker, datePicker.year, datePicker.month, datePicker.dayOfMonth)
+                                dateSetListener.onDateSet(
+                                    datePicker,
+                                    datePicker.year,
+                                    datePicker.month,
+                                    datePicker.dayOfMonth
+                                )
                             })
-                        setButton(DatePickerDialog.BUTTON_NEGATIVE, getString(R.string.button_cancel),
-                            null as DialogInterface.OnClickListener?)
+                        setButton(
+                            DatePickerDialog.BUTTON_NEGATIVE, getString(R.string.button_cancel),
+                            null as DialogInterface.OnClickListener?
+                        )
                     }
                         .show()
                 }
@@ -108,8 +120,19 @@ class ChangeInfoDataFragment : Fragment() {
                 })
 
                 btnSubmit.setOnClickListener(View.OnClickListener {
-                    findNavController().navigate(R.id.nav_change_info_input)
+                    val myFormat = "yyyy年MM月dd日" // mention the format you need
+                    val sdf = SimpleDateFormat(myFormat, Locale.US)
+                    val date1 = sdf.format(cal.getTime())
+                    val date2 = sdf.format(Date(dateData.toLong()))
+                    if (date1 == date2) {
+                        val action = ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
+                            PhoneData(phone, memberNumber)
+                        )
+                        findNavController().navigate(action)
+                    }
                     dialog.dismiss()
+//                    findNavController().navigate(R.id.nav_change_info_input)
+//                    dialog.dismiss()
                 })
 
             }
@@ -117,6 +140,9 @@ class ChangeInfoDataFragment : Fragment() {
 
         viewModel.user.observe(viewLifecycleOwner, androidx.lifecycle.Observer { user ->
             user?.let { binding.user = user }
+            dateData = user.birthday!!
+            phone = user.telephoneNumber1!!
+            memberNumber = user.memberNumber!!
         })
         viewModel.error.observe(
             viewLifecycleOwner,

@@ -297,6 +297,21 @@ class RequestHelper {
                 ),
             )
         }
+
+        fun createChangeInfoMember(
+            memberInfo:ChangeInfoMemberData
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = ChangeInfoMemberRequest(
+                        memberInfo = memberInfo
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.MemberUpdReq.value
+                    )
+                ),
+            )
+        }
     }
 
 

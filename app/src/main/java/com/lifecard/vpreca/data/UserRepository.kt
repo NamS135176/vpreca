@@ -59,4 +59,22 @@ class UserRepository(private val apiService: ApiService, private val userManager
             }
         }
     }
+
+    suspend fun changeInfoMember(
+      memberInfo: ChangeInfoMemberData
+    ): Result<ChangeInfoMemberData> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userResponse = apiService.changeInfoMember(
+                    RequestHelper.createChangeInfoMember(memberInfo)
+                )
+
+                Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
+            } catch (e: Exception) {
+                println("UserRepository... change info has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
 }

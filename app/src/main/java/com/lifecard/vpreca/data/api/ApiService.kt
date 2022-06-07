@@ -49,6 +49,11 @@ interface ApiService {
         @Body listDesignRequest: BrandRequest
     ): ListDesignResponse
 
+    @POST("MemberUpdReq")
+    suspend fun changeInfoMember(
+        @Body changeInfoMemberRequest: BrandRequest
+    ): ChangeInfoMemberResponse
+
     @POST("SuspendDealSelReq")
     suspend fun getListSuspendDeal(
         @Body suspendListRequest: BrandRequest
