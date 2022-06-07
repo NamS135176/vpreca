@@ -266,8 +266,8 @@
                     android:layout_marginTop="9dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="@dimen/fragment_horizontal_margin"
-                    app:spinner_popup_height="350dp"
-                    app:spinner_item_array="@array/cities" />
+                    app:spinner_item_array="@array/cities"
+                    app:spinner_popup_height="@dimen/spinner_popup_height_cities" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/change_info_email_1_title"

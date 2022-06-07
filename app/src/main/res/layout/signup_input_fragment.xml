@@ -421,7 +421,8 @@
                     android:layout_marginTop="9dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="@dimen/fragment_horizontal_margin"
-                    app:spinner_item_array="@array/cities" />
+                    app:spinner_item_array="@array/cities"
+                    app:spinner_popup_height="@dimen/spinner_popup_height_cities"/>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_phone_title"
@@ -470,14 +471,6 @@
                     android:textColor="@color/black"
                     android:textSize="12sp" />
 
-                <!--                <androidx.appcompat.widget.AppCompatSpinner-->
-                <!--                    android:id="@+id/spinner_secret"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="54dp"-->
-                <!--                    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"-->
-                <!--                    android:layout_marginTop="9dp"-->
-                <!--                    android:paddingHorizontal="16dp" />-->
-
                 <com.skydoves.powerspinner.PowerSpinnerView
                     android:id="@+id/spinner_secret"
                     style="@style/PowerSpinnerView"
@@ -487,7 +480,7 @@
                     android:layout_marginTop="9dp"
                     android:gravity="center_vertical"
                     android:paddingHorizontal="@dimen/fragment_horizontal_margin"
-                    app:spinner_item_array="@array/cities" />
+                    app:spinner_item_array="@array/secret_question" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_secret_answer_title"
