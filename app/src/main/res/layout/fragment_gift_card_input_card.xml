@@ -80,12 +80,14 @@
                     android:id="@+id/text_code"
                     style="@style/TextInputEditTextFilledBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="54dp"
+                    android:textSize="16sp"
                     android:hint="@string/introduce_second_input"
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
+                    android:paddingVertical="0dp"
                     android:textColor="@color/peacock_blue" />
             </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
 
@@ -148,12 +150,14 @@
                 <com.google.android.material.textfield.TextInputEditText
                     style="@style/TextInputEditTextFilledBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="54dp"
+                    android:paddingVertical="0dp"
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:textColor="@color/peacock_blue" />
+                    android:textColor="@color/peacock_blue"
+                    android:textSize="20sp" />
             </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
         </LinearLayout>
 
