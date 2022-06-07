@@ -79,6 +79,8 @@ class LoginViewModel @Inject constructor(
                 if (loginResult is Result.Success) {
                     val userResult = loginRepository.getUser()
                     if (userResult is Result.Success) {
+                        _loginResult.value =
+                            LoginResult(success = userResult.data)
 
                     } else if (userResult is Result.Error) {
                         handleResultErrorException(userResult.exception)
