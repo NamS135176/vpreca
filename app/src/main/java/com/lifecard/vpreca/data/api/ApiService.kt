@@ -74,6 +74,11 @@ interface ApiService {
         @Body updatePasswordRequest: BrandRequest
     ): PasswordUpdateResponse
 
+    @POST("PasswordResetReq")
+    suspend fun resetPassword(
+        @Body resetPasswordRequest: BrandRequest
+    ): PasswordResetResponse
+
     @POST("CardRepublishReq")
     suspend fun republishCard(
         @Body cardRepublishRequest: BrandRequest

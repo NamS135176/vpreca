@@ -4,11 +4,13 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -23,6 +25,8 @@ import com.lifecard.vpreca.utils.showAlertMessage
 import com.lifecard.vpreca.utils.showToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 @AndroidEntryPoint
@@ -35,6 +39,7 @@ class ChangeInfoDataFragment : Fragment() {
     private val viewModel: ChangeInfoDataViewModel by viewModels()
     private var _binding: FragmentChangeInfoDataBinding? = null
     private val binding get() = _binding!!
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -120,19 +125,27 @@ class ChangeInfoDataFragment : Fragment() {
                 })
 
                 btnSubmit.setOnClickListener(View.OnClickListener {
-                    val myFormat = "yyyy年MM月dd日" // mention the format you need
+                    val myFormat = "yyyyMMdd" // mention the format you need
                     val sdf = SimpleDateFormat(myFormat, Locale.US)
                     val date1 = sdf.format(cal.getTime())
-                    val date2 = sdf.format(Date(dateData.toLong()))
-                    println(date1)
-                    println(date2)
-                    if (date1 == date2) {
+//                    val l = LocalDate.parse(dateData)
+//                    val date2 = sdf.format(l)
+//                    println(date1)
+//                    println(date2)
+                    val layout = view.findViewById<MaterialTextView>(R.id.tv_error)
+
+                    if (date1 == dateData) {
+                        layout.visibility = View.INVISIBLE
                         val action = ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
                             PhoneData(phone, memberNumber)
                         )
+                        dialog.dismiss()
                         findNavController().navigate(action)
                     }
-                    dialog.dismiss()
+                    else{
+                        layout.visibility = View.VISIBLE
+                    }
+
 //                    findNavController().navigate(R.id.nav_change_info_input)
 //                    dialog.dismiss()
                 })
@@ -142,6 +155,7 @@ class ChangeInfoDataFragment : Fragment() {
 
         viewModel.user.observe(viewLifecycleOwner, androidx.lifecycle.Observer { user ->
             user?.let { binding.user = user }
+
             dateData = user.birthday!!
             phone = user.telephoneNumber1!!
             memberNumber = user.memberNumber!!
