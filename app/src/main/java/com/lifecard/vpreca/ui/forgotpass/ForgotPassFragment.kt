@@ -171,7 +171,7 @@ class ForgotPassFragment : Fragment() {
                     }
                 }
                 changeInfoState.success?.let {
-                    findNavController().navigate(R.id.nav_change_pass_complete)
+                    findNavController().navigate(R.id.nav_forgot_complete)
                 }
             })
 

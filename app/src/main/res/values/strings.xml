@@ -71,12 +71,12 @@
     <string name="confirm_phone_des_left">送信先電話番号</string>
     <string name="confirm_phone_des_right">080-0000-0000</string>
     <string name="confirm_phone_hint">認証コード</string>
-    <string name="confirm_phone_des_input">認証コードが届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
+    <string name="confirm_phone_des_input">認証手続きの有効時間は10分です。\n認証番号の入力を複数回間違えると、同日中の入力が行えなくなります。\n\n認証番号が届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
 
     <!--    Email Screen-->
     <string name="email_title">メールアドレス登録</string>
     <string name="email_des_top">続いて、メールアドレスによる認証を行います。</string>
-    <string name="email_des_bot">以下に、認証コードを受信するメールアドレスを入力し、「メールアドレス認証」をタップしてください。</string>
+    <string name="email_des_bot">続いて、メールアドレスによる認証を行います。\n以下に、認証コードを受信するメールアドレスを入力し、「メールアドレス認証」をタップしてください。</string>
     <string name="email_hint">メールアドレス</string>
     <string name="email_des_input">メールアドレスは、ご連絡先として登録いたします。</string>
 

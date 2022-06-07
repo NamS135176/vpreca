@@ -37,8 +37,8 @@ class EmailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val inputEmail = binding.edtEmailSignup
-        val btnSubmitEmail = binding.btnSubmitEmailSignup
+        val inputEmail = binding.forgotPassEmailInput
+        val btnSubmitEmail = binding.btnSubmitPolicy
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
                 // ignore
