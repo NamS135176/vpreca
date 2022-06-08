@@ -55,7 +55,7 @@
         android:id="@+id/nav_change_info_data"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoDataFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_change_info_data" >
+        tools:layout="@layout/fragment_change_info_data">
         <action
             android:id="@+id/action_change_info_data_to_input"
             app:destination="@id/nav_change_info_input" />
@@ -64,7 +64,7 @@
         android:id="@+id/nav_change_info_confirm"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoConfirmDataFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_change_info_confirm_data" >
+        tools:layout="@layout/fragment_change_info_confirm_data">
         <action
             android:id="@+id/action_change_confirm_data_to_input"
             app:destination="@id/nav_change_info_input" />
@@ -83,7 +83,7 @@
         android:id="@+id/nav_change_info_input"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_change_info_input" >
+        tools:layout="@layout/fragment_change_info_input">
         <action
             android:id="@+id/action_change_info_input_to_confirm"
             app:destination="@id/nav_change_info_confirm" />
@@ -112,7 +112,7 @@
         android:id="@+id/nav_issue_card_select_source"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardSelectSourceFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_issue_card_select_source" >
+        tools:layout="@layout/fragment_issue_card_select_source">
         <action
             android:id="@+id/action_selectsource_to_selectdesign"
             app:destination="@id/nav_issue_card_select_design" />
@@ -121,7 +121,7 @@
         android:id="@+id/nav_issue_card_select_design"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardSelectDesignFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_issue_card_select_design" >
+        tools:layout="@layout/fragment_issue_card_select_design">
         <action
             android:id="@+id/selectdesign_to_confirm"
             app:destination="@id/nav_balance_by_code_confirm" />
@@ -161,7 +161,7 @@
         android:id="@+id/nav_balance_amount_menu"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceAmountMenuFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_balance_amount_menu" >
+        tools:layout="@layout/fragment_balance_amount_menu">
         <action
             android:id="@+id/action_menu_to_selectsource"
             app:destination="@id/nav_balance_amount_select_source" />
@@ -173,10 +173,15 @@
         android:id="@+id/nav_balance_by_code_input"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeInputFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_balance_by_code_input" >
+        tools:layout="@layout/fragment_balance_by_code_input">
         <action
             android:id="@+id/action_input_to_value_confirm"
             app:destination="@id/nav_balance_value_confirm" />
+
+        <action
+            android:id="@+id/action_to_camera_ocr"
+            app:destination="@id/nav_camera_ocr" />
+
         <argument
             android:name="balance_total_remain"
             android:defaultValue="@null"
@@ -187,7 +192,7 @@
         android:id="@+id/nav_balance_value_confirm"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeConfirmValue"
         android:label="Login"
-        tools:layout="@layout/fragment_balance_by_code_confirm_value" >
+        tools:layout="@layout/fragment_balance_by_code_confirm_value">
         <action
             android:id="@+id/action_confirm_to_select_design"
             app:destination="@id/nav_issue_card_select_design" />
@@ -214,7 +219,7 @@
         android:id="@+id/nav_balance_by_code_confirm"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeConfirmFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_balance_by_code_confirm" >
+        tools:layout="@layout/fragment_balance_by_code_confirm">
         <action
             android:id="@+id/action_confirm_to_select_design"
             app:destination="@id/nav_issue_card_select_design" />
@@ -233,7 +238,7 @@
         android:id="@+id/nav_balance_amount_select_source"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceAmountByCodeSelectSourceFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_balance_amount_by_code_select_source" >
+        tools:layout="@layout/fragment_balance_amount_by_code_select_source">
         <action
             android:id="@+id/action_selectsource_to_confirm"
             app:destination="@id/nav_balance_amount_select_source_confirm" />
@@ -247,7 +252,7 @@
         android:id="@+id/nav_balance_amount_select_source_confirm"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceSelectSourceConfirmFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_balance_select_source_confirm" >
+        tools:layout="@layout/fragment_balance_select_source_confirm">
         <action
             android:id="@+id/action_confirm_to_selectsource"
             app:destination="@id/nav_balance_amount_select_source" />
@@ -261,10 +266,13 @@
         android:id="@+id/nav_issue_card_by_code_input"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeInputCode"
         android:label="Login"
-        tools:layout="@layout/fragment_issue_card_by_code_input_code" >
+        tools:layout="@layout/fragment_issue_card_by_code_input_code">
         <action
             android:id="@+id/action_inputcode_to_confirm_value"
             app:destination="@id/nav_issue_card_by_code_value_confirm" />
+        <action
+            android:id="@+id/action_to_camera_ocr"
+            app:destination="@id/nav_camera_ocr" />
     </fragment>
     <fragment
         android:id="@+id/nav_issue_card_by_code_complete_without_card"
@@ -280,7 +288,7 @@
         android:id="@+id/nav_issue_card_by_code_select_source"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeSelectSource"
         android:label="Login"
-        tools:layout="@layout/fragment_issue_card_by_code_select_source" >
+        tools:layout="@layout/fragment_issue_card_by_code_select_source">
         <action
             android:id="@+id/action_selectsource_to_confirm"
             app:destination="@id/nav_issue_card_by_code_select_source_confirm" />
@@ -297,7 +305,7 @@
         android:id="@+id/nav_issue_card_by_code_select_source_confirm"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeSelectSoureConfirmFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_issue_card_by_code_select_soure_confirm" >
+        tools:layout="@layout/fragment_issue_card_by_code_select_soure_confirm">
         <action
             android:id="@+id/action_confirm_to_selectsource"
             app:destination="@id/nav_issue_card_by_code_select_source" />
@@ -311,7 +319,7 @@
         android:id="@+id/nav_issue_card_by_code_select_way"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeSelectWay"
         android:label="Login"
-        tools:layout="@layout/fragment_issue_card_by_code_select_way" >
+        tools:layout="@layout/fragment_issue_card_by_code_select_way">
         <action
             android:id="@+id/action_selectway_to_selectdesign"
             app:destination="@id/nav_issue_card_select_design" />
@@ -328,7 +336,7 @@
         android:id="@+id/nav_issue_card_by_code_value_confirm"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeValueConfirm"
         android:label="Login"
-        tools:layout="@layout/fragment_issue_card_by_code_value_confirm" >
+        tools:layout="@layout/fragment_issue_card_by_code_value_confirm">
         <action
             android:id="@+id/action_valueconfirm_to_selectdesign"
             app:destination="@id/nav_issue_card_select_design" />
@@ -346,6 +354,9 @@
         <action
             android:id="@+id/action_giftcardinputcard_to_giftcardconfirm"
             app:destination="@id/nav_gift_card_confirm" />
+        <action
+            android:id="@+id/action_giftcardinputcard_to_camera_ocr"
+            app:destination="@id/nav_camera_ocr" />
     </fragment>
     <fragment
         android:id="@+id/nav_gift_card_input"
@@ -387,7 +398,7 @@
         android:id="@+id/nav_gift_card_confirm_detail"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardConfirmDetailFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_gift_card_confirm_detail" >
+        tools:layout="@layout/fragment_gift_card_confirm_detail">
         <action
             android:id="@+id/action_giftcardinputcard_to_giftcardconfirm"
             app:destination="@id/nav_gift_card_confirm" />
@@ -452,6 +463,13 @@
     <fragment
         android:id="@+id/nav_camera_ocr"
         android:name="com.lifecard.vpreca.ui.ocr.CameraFragment"
-        android:label="" />
+        android:label="Camera"
+        tools:layout="@layout/fragment_camera">
+        <argument
+            android:name="hint"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>
