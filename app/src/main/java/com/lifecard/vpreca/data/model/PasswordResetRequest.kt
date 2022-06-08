@@ -8,8 +8,6 @@ data class PasswordResetRequest(
 )
 
 data class PasswordResetMemberInfoContent(
-    @SerializedName("loginId")
-    val loginId: String,
     @SerializedName("mailAddress1")
     val mailAddress1: String,
     @SerializedName("birthday")
