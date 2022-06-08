@@ -311,7 +311,16 @@
     <string name="change_info_email_1_confirm_hint">半角256文字以内（確認用）</string>
     <string name="change_info_email_2_title">メールアドレス2（任意）</string>
     <string name="change_info_email_2_confirm_title">メールアドレス2 - 確認用</string>
-
+    <string name="change_phone_first_des">現在ご登録いただいている電話番号</string>
+    <string name="change_phone_first_title">電話番号確認</string>
+    <string name="change_phone_appbar_title">電話番号変更</string>
+    <string name="change_phone_second_title">メールコード送信完了</string>
+    <string name="change_phone_des_top">現在ご登録いただいているメールアドレスに、電話番号変更のためのメールコードを送信しました。</string>
+    <string name="change_phone_des_bot">メールに記載しているメールコードを入力してください</string>
+    <string name="change_phone_second_hint">メールコード</string>
+    <string name="change_phone_second_des_bot">メールを再送信</string>
+    <string name="change_phone_second_btn">送信</string>
+    <string name="change_phone_input_phone_des">電話番号の変更にはSMS（ショートメールサービス）による認証が必要です。</string>
     <!--    Change info data-->
     <string name="change_info_input_appbar_title">会員情報</string>
     <string name="change_info_input_title">会員情報変更</string>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+        <import type="com.lifecard.vpreca.utils.UserConverter" />
+        <import type="com.lifecard.vpreca.utils.RegexUtils" />
+        <variable
+            name="user"
+            type="com.lifecard.vpreca.data.model.MemberInfo" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            tools:context=".ui.signup/SignupFragment">
+
+            <include
+                android:id="@+id/appbar_confirm_signup"
+                layout="@layout/toolbar_title_only"
+                app:elevation="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="@{@string/change_phone_appbar_title}"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/btn_submit_policy"
+                app:layout_constraintTop_toBottomOf="@+id/appbar_confirm_signup">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/signup_input_title"
+                        style="@style/Widget.AppCompat.TextView.Bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:paddingTop="32dp"
+                        android:text="@string/change_phone_first_title"
+                        android:textColor="#0057b5"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/cf_signup_des"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="6sp"
+                        android:paddingHorizontal="22dp"
+                        android:paddingTop="26dp"
+                        android:text="@string/change_phone_first_des"
+                        android:textColor="#353535"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:id="@+id/layour_show_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="31dp"
+                        android:layout_marginTop="26dp"
+                        android:background="@drawable/underline_bg"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+                        android:paddingBottom="14dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/Widget.AppCompat.TextView.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:lineSpacingExtra="6sp"
+                            android:text="@string/change_info_data_phone_title"
+                            android:textSize="12sp" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvConfirmID"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:lineSpacingExtra="6sp"
+                            android:lines="1"
+                            android:textColor="@color/black"
+                            android:text=""
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <LinearLayout
+                android:id="@+id/btn_submit_policy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="32dp"
+                android:layout_marginHorizontal="22dp"
+                >
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCancelConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="9dp"
+                    android:layout_marginEnd="9dp"
+                    android:paddingVertical="12dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/primary"
+                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    android:text="修正"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSubmitConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginStart="9dp"
+                    android:paddingVertical="18dp"
+                    android:text="登録"
+                    app:cornerRadius="30dp"
+                    />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

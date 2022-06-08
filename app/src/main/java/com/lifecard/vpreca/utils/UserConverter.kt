@@ -46,7 +46,7 @@ object UserConverter {
             "受け取らない"//not receive
         }
     }
-
+    @JvmStatic
     fun formatPhone(phone: String): String {
         try {
             return phone.replace(Regex("(\\d{3})(\\d{3})(\\d+)"), "$1-$2-$3")
