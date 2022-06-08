@@ -7,77 +7,122 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentGiftCardInputCardBinding
-import com.lifecard.vpreca.utils.ToastPosition
-import com.lifecard.vpreca.utils.getNavigationResult
-import com.lifecard.vpreca.utils.showToast
+import com.lifecard.vpreca.databinding.IntroduceFragmentSecondFragmentBinding
+import com.lifecard.vpreca.utils.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GiftCardInputCardFragment : Fragment() {
 
     companion object {
-        fun newInstance() = GiftCardInputCardFragment()
+        fun newInstance() = IntroduceFragmentSecond()
     }
 
-    private lateinit var viewModel: GiftCardInputCardViewModel
     private var _binding: FragmentGiftCardInputCardBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: GiftCardInputCardViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(GiftCardInputCardViewModel::class.java)
         _binding = FragmentGiftCardInputCardBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_gift_card_policy)
-            }
-        })
+//        viewModel = ViewModelProvider(this).get(IntroduceFragmentSecondViewModel::class.java)
+
         val btnSubmit = binding.btnSubmitInput
         val btnBack = binding.appbarGiftSecond.btnBack
         val buttonOcrDetection = binding.buttonOcrDetection
         val giftCodeLayout = binding.usernameLayout
         val giftCodeEdt = binding.textCode
+        val vcnLayout = binding.giftVcnLayout
+        val vcnInput = binding.giftVcnInput
+        val loading = binding.loading
 
-        viewModel.validForm.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { signupFormState ->
-                if (giftCodeEdt.text.toString() == "" ) {
-                    btnSubmit.isEnabled = false
-                } else {
-                    btnSubmit.isEnabled =
-                        signupFormState.giftCodeError == null
-                }
-            })
-
-        viewModel.giftCodeError.observe(viewLifecycleOwner, Observer { error: Int? ->
-            giftCodeLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            } })
-        giftCodeEdt.doAfterTextChanged { text -> viewModel.giftCodeDataChanged(text = text.toString()) }
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_gift_card_policy)
+            }
+        })
 
         btnBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_gift_card_policy)
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {
-            val giftCardConfirmData = GiftCardConfirmData("inputcard")
-            val action =
-                GiftCardInputCardFragmentDirections.actionGiftcardinputcardToGiftcardconfirm(
-                    giftCardConfirmData
-                )
-            findNavController().navigate(action)
-//            findNavController().navigate(R.id.nav_gift_card_confirm)
+//            findNavController().navigate(R.id.nav_introduce_third)
+            viewModel.submit()
         })
         buttonOcrDetection.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_camera_ocr)
         })
+
+        viewModel.formState.observe(viewLifecycleOwner, Observer { viewModel.checkFormValid() })
+
+        viewModel.giftError.observe(viewLifecycleOwner, Observer { error: Int? ->
+            giftCodeLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
+
+        viewModel.vcnError.observe(viewLifecycleOwner, Observer { error: Int? ->
+            vcnLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
+
+        viewModel.validForm.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { isValid ->
+                btnSubmit.isEnabled = isValid
+            })
+
+
+        viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            it?.success?.let {
+                viewModel.getGiftCardInfo(giftCodeEdt.text.toString(), vcnInput.text.toString())
+//                findNavController().navigate(R.id.nav_signup_input)
+            }
+        })
+
+        viewModel.giftCardState.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { changeInfoState ->
+                changeInfoState ?: return@Observer
+                changeInfoState.error?.messageResId?.let { showPopupMessage(message = getString(it)) }
+                changeInfoState.error?.errorMessage?.let { showPopupMessage(message = it) }
+                changeInfoState.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
+                }
+                changeInfoState.success?.let {
+                    val action = GiftCardInputCardFragmentDirections.actionGiftcardinputcardToGiftcardconfirm(changeInfoState.success, GiftCardConfirmData("inputcard"))
+                    findNavController().navigate(action)
+                }
+            })
+
+        viewModel.loading.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            when (it) {
+                true -> loading.visibility = View.VISIBLE
+                else -> loading.visibility = View.GONE
+            }
+        })
+
+        giftCodeEdt.doAfterTextChanged { text -> viewModel.giftNumberDataChanged(text = text.toString()) }
+        vcnInput.doAfterTextChanged { text -> viewModel.vcnDataChanged(text = text.toString()) }
+
         return binding.root
     }
 
@@ -91,9 +136,10 @@ class GiftCardInputCardFragment : Fragment() {
                 val textCode = binding.textCode
                 textCode.setText(ocr)
                 showToast(getString(R.string.camera_ocr_success), toastPosition = ToastPosition.Top)
-                println("GiftCardPolicyFragment... get ocr code $ocr")
+                println("IntroduceFragmentSecond... get ocr code $ocr")
             }
         })
     }
+
 
 }

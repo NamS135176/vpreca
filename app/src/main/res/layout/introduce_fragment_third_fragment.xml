@@ -111,7 +111,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:text="利用明細"
                         android:textStyle="bold"
                         android:textColor="@color/white"
@@ -202,7 +202,7 @@
                 android:layout_marginRight="49dp"
                 android:layout_marginLeft="45dp"
                 app:cornerRadius="24dp"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:paddingVertical="11dp"
                 android:backgroundTint='@color/button_introduce_background'
                 />

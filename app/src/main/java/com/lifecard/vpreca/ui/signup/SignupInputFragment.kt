@@ -229,6 +229,7 @@ class SignupInputFragment : Fragment() {
 
         viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.success?.let {
+                findNavController().navigate(R.id.nav_complete)
 //                val action =
 //                    SignupInputFragmentDirections.actionSignupInputToSignupConfirm(viewModel.formState.value!!)
 //                findNavController().navigate(action)

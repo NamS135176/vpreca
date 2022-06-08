@@ -166,6 +166,7 @@
                             android:insetBottom="0dp"
                             android:paddingVertical="0dp"
                             android:textColor="@color/peacock_blue"
+                            android:maxLength="4"
                             android:textSize="20sp" />
                     </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
                 </LinearLayout>
@@ -186,7 +187,7 @@
             android:enabled="true"
             android:paddingVertical="11dp"
             android:text="確認"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textColor="@color/primary"
             app:cornerRadius="24dp"
             app:layout_constraintBottom_toBottomOf="parent" />

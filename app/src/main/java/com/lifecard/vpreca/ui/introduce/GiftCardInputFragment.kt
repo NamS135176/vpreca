@@ -29,9 +29,9 @@ class GiftCardInputFragment : Fragment() {
         _binding = FragmentGiftCardInputBinding.inflate(inflater, container, false)
         val btnSubmit = binding.btnSubmitPolicy
         btnSubmit.setOnClickListener(View.OnClickListener {
-            val giftCardConfirmData = GiftCardConfirmData("input")
-            val action = GiftCardInputFragmentDirections.actionGiftcardinputToGiftcardconfirm(giftCardConfirmData)
-            findNavController().navigate(action)
+//            val giftCardConfirmData = GiftCardConfirmData("input")
+//            val action = GiftCardInputFragmentDirections.actionGiftcardinputToGiftcardconfirm(giftCardConfirmData)
+//            findNavController().navigate(action)
         })
         return binding.root
     }

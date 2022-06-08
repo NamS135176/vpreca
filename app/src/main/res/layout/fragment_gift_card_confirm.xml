@@ -2,6 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+    <import type="android.view.View" />
+
+    <import type="com.lifecard.vpreca.utils.Converter" />
+    <import type="com.lifecard.vpreca.utils.ModelExtKt" />
+    <variable
+        name="card"
+        type="com.lifecard.vpreca.data.model.CardInfo" />
+    </data>
     <androidx.core.widget.NestedScrollView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -84,7 +94,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="@string/gift_card_confirm_amount_holder"
+                            android:text="@{Converter.convertCurrency(card.publishAmount)}"
                             android:paddingLeft="12dp"
                             android:textSize="22sp"/>
                     </LinearLayout>
@@ -94,7 +104,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        android:enabled="false"
+                        android:enabled="true"
                         android:text="@string/gift_card_confirm_detail_usage"
                         android:textStyle="bold"
                         android:textColor="@color/white"
@@ -179,6 +189,7 @@
                 style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_marginTop="131dp"
                 android:enabled="true"
+                android:textSize="15sp"
                 android:textColor="@color/primary"
                 android:layout_marginRight="49dp"
                 android:layout_marginLeft="45dp"
