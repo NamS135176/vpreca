@@ -38,7 +38,7 @@ class IssueCardByCodeInputCodeViewModel @Inject constructor(
                         GiftInfoResult(networkTrouble = true)
                     is ApiException -> _giftInfoResult.value = GiftInfoResult(
                         error = ErrorMessageException(
-                            errorMessage = result.exception.message
+                            errorMessage = result.exception.errorMessage
                         )
                     )
                     is InternalServerException -> _giftInfoResult.value =

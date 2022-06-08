@@ -49,7 +49,7 @@
     <string name="title_appbar_policy">新規アカウント開設</string>
     <string name="title_next_policy">@string/button_cancel</string>
     <string name="confirm_policy">上記全ての項目に同意する</string>
-    <string name="btn_next_policy">次へ</string>
+    <string name="btn_next_policy">@string/button_next</string>
     <string name="policy_des">以下の内容をよくお読みのうえ、チェックボックスにチェックをして、「次へ」をタップしてください</string>
     <string name="policy_note_top">個人情報の取り扱いに関する同意約款</string>
     <string name="policy_note_bot">会員規約</string>
@@ -58,7 +58,7 @@
     <string name="phone_back">戻る</string>
     <string name="title_appbar_phone">新規アカウント開設</string>
     <string name="title_next_phone">@string/button_cancel</string>
-    <string name="btn_next_phone">次へ</string>
+    <string name="btn_next_phone">@string/button_next</string>
     <string name="phone_title">電話番号登録</string>
     <string name="phone_des_top">Vプリカアカウントを作成するにはSMS（ショートメールサービス）による認証が必要です。</string>
     <string name="phone_des_bot">以下にSMSを受信できる090/080/070ではじまる電話番号をハイフンを入れずに入力、「電話番号認証」をタップしてください。</string>
@@ -103,7 +103,7 @@
     <string name='introduce_second_line'>私は、Vプリカギフト利用規約に同意します。</string>
     <string name='introduce_third_line'>私は、アカウント登録情報に不備があった等でライフカードが必要と判断した場合は運転免許証等の本人確認 用書類を提出することに同意します。</string>
     <string name='introduce_highlight_bot'>Vプリカギフト利用規約</string>
-    <string name='introduce_btn'>次へ</string>
+    <string name='introduce_btn'>@string/button_next</string>
 
     <string name='introduce_des_second'>認証コード(半角英数字15文字)</string>
     <string name='introduce_second_input'>半角英数字15文字</string>
@@ -271,7 +271,7 @@
 
     <!--    Gift Card Confirm-->
     <string name="gift_card_confirm_appbar_title">カード情報確認</string>
-    <string name="gift_card_confirm_btn">次へ</string>
+    <string name="gift_card_confirm_btn">@string/button_next</string>
     <string name="gift_card_confirm_amount_title">残高</string>
     <string name="gift_card_confirm_amount_holder">¥5,000</string>
     <string name="gift_card_confirm_detail_usage">利用明細</string>
@@ -363,6 +363,7 @@
     <!--    Birth of Date Dialog-->
 
     <!--    Issue Card Main-->
+    <string name="issue_card_main_appbar_title">カードを発行する</string>
     <string name="issue_card_main_title_first">コード入力をして発行</string>
     <string name="issue_card_main_des_first">コンビニなど手続きをして発行したコード番号を入力して発行します。</string>
     <string name="issue_card_main_title_second">カードを買う</string>
@@ -375,7 +376,7 @@
     <string name="issue_card_by_plus_appbar_title">残高合算</string>
     <string name="issue_card_by_plus_introduce_des">既存のVプリカ残高を合算して\n1枚の新しいカードにまとめることができます。\n（最大5枚、合計残高10万円まで）</string>
     <string name="issue_card_by_plus_introduce_des_long">合算後は新しいＶプリカが発行されカード情報（カード番号、有効期限、セキュリティコード）も新しくなります\n\n現在ご利用先のサイトにカード情報を登録している場合は、新しいカード情報に変更してください</string>
-    <string name="issue_card_by_plus_introduce_btn">合算カード選択</string>
+    <string name="issue_card_by_plus_introduce_btn">@string/button_next</string>
     <!--    Issue Card by plus-->
 
     <!--    Issue Card Select Source-->
@@ -576,4 +577,5 @@
     <string name="policy_text3">・ 私は、個人情報の取扱いに関する同意約款、会員規約に同意します。</string>
     <string name="policy_text4">・ 私は、アカウント登録情報に不備があった等でライフカードが必要と判断した場合は運転免許証等の本人確認用書類を提出することに同意します。</string>
 
+    <string name="button_next">次へ</string>
 </resources>

@@ -140,6 +140,13 @@ class SecureStore(private val appContext: Context) : AuthTokenStore {
         return bioAuthTokenStore?.getAuthToken() ?: normalAuthToken.getAuthToken()
     }
 
+    fun moveAuthTokenToNormalStore(authToken: AuthToken) {
+        bioAuthTokenStore?.clear()
+        bioAuthTokenStore = null
+        normalAuthToken.saveAuthToken(authToken)
+    }
+
+
     override fun clear() {
         bioAuthTokenStore?.clear()
         normalAuthToken.clear()

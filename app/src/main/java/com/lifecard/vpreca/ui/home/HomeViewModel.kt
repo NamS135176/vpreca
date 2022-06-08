@@ -58,7 +58,7 @@ class HomeViewModel @Inject constructor(
                         CreditCardResult(networkTrouble = true)
                     is ApiException -> CreditCardResult(
                         error = ErrorMessageException(
-                            errorMessage = result.exception.message
+                            errorMessage = result.exception.errorMessage
                         )
                     )
                     else -> _creditCardResult.value =

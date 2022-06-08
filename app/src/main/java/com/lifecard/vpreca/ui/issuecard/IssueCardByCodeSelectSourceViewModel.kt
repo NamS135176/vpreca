@@ -75,7 +75,7 @@ class IssueCardByCodeSelectSourceViewModel @Inject constructor(
                         CreditCardResult(networkTrouble = true)
                     is ApiException -> _creditCardResult.value = CreditCardResult(
                         error = ErrorMessageException(
-                            errorMessage = result.exception.message
+                            errorMessage = result.exception.errorMessage
                         )
                     )
                     is InternalServerException -> _creditCardResult.value =

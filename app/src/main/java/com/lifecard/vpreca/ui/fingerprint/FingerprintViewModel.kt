@@ -62,68 +62,6 @@ class FingerprintViewModel @Inject constructor(
         }
     }
 
-    fun uploadPublicKey(publicKey: String, signature: Signature? = null) {
-        viewModelScope.launch {
-            println("uploadPublicKey... start")
-            loading.value = true
-//            registerBiometricResult.value = null
-            val bioChallengeResult =
-                remoteRepository.registerBiometric(userManager.loginId!!, publicKey)
-
-            if (bioChallengeResult is Result.Success) {
-                registerBiometricResult.value = BioSettingResult(success = bioChallengeResult.data)
-
-                //testing
-                /*
-                signature?.let {
-//                    testSignature(signature, publicKey, bioChallengeResult.data)
-                    val bioChallenge = bioChallengeResult.data
-                    val challenge = bioChallenge.challenge
-                    val salt = bioChallenge.salt
-                    val nonce = bioChallenge.nonce
-
-                    val stringToSign = "$challenge$salt$nonce"
-                    signature.update(stringToSign.toByteArray())
-                    val signatureBytes = signature.sign()
-                    val signedBySignature =
-                        Base64.encodeToString(signatureBytes, Base64.URL_SAFE or Base64.NO_WRAP)
-
-                    var pk = publicKey
-                    pk = pk?.replace("-----BEGIN PUBLIC KEY-----\n", "")
-                    pk = pk?.replace("-----END PUBLIC KEY-----", "")
-                    pk = pk?.replace("\n", "")
-
-                    val pkb = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        java.util.Base64.getDecoder().decode(pk)
-                    } else {
-                        TODO("VERSION.SDK_INT < O")
-                    }
-                    val fact = KeyFactory.getInstance("EC")
-                    var pkKey = fact.generatePublic(X509EncodedKeySpec(pkb))
-
-                    val verificationFunction = Signature.getInstance("SHA256withECDSA")
-                    verificationFunction.initVerify(pkKey)
-                    verificationFunction.update(stringToSign.toByteArray())
-                    val respByte =
-                        Base64.decode(signedBySignature, Base64.URL_SAFE or Base64.NO_WRAP)
-                    val verify = verificationFunction.verify(respByte)
-                    println("uploadSignature... stringToSign = $stringToSign")
-                    println("uploadSignature... signedBySignature = $signedBySignature")
-                    println("uploadSignature... verify result = $verify")
-                    println("uploadSignature... publicKey = $publicKey")
-                }
-                 */
-                //end test
-
-            } else {
-                registerBiometricResult.value
-                BioSettingResult(error = R.string.error_bio_authentication_failure)
-            }
-            loading.value = false
-
-            println("uploadPublicKey... end")
-        }
-    }
 
     fun handleAuthenticationError(
         errorCode: Int,

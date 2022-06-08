@@ -22,5 +22,5 @@ class ApiException(
     }
 
     override val message: String
-        get() = "Api Exception: (resultCode = $resultCode, messageType = $messageType, message = $errorMessage)"
+        get() = errorMessage
 }

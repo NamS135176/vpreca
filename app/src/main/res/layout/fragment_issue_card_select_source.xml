@@ -111,7 +111,6 @@
             android:layout_marginHorizontal="45dp"
             app:backgroundTint='@color/button_introduce_background'
             android:enabled="false"
-
             android:paddingVertical="12dp"
             android:text="@string/issue_card_by_plus_introduce_btn"
             android:textColor="@color/primary"

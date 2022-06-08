@@ -65,45 +65,6 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun loginWithBio(username: String, signature: Signature) {
-        // can be launched in a separate asynchronous job
-        viewModelScope.launch {
-            loading.value = true
-            val bioChallengeResult = remoteRepository.getBioChallenge(username)
-            if (bioChallengeResult is Result.Success) {
-                val challenge = bioChallengeResult.data.challenge
-                val salt = bioChallengeResult.data.salt
-                val nonce = bioChallengeResult.data.nonce
-
-                val stringToSign = "$challenge$salt$nonce"
-                signature.update(stringToSign.toByteArray())
-                val signatureBytes = signature.sign()
-                val signedBySignature =
-                    Base64.encodeToString(signatureBytes, Base64.URL_SAFE or Base64.NO_WRAP)
-
-                val loginResult = loginRepository.loginWithBiometric(username, signedBySignature)
-
-                if (loginResult is Result.Success) {
-                    val userResult = loginRepository.getUser()
-                    if (userResult is Result.Success) {
-                        _loginResult.value =
-                            LoginResult(success = userResult.data)
-
-                    } else if (userResult is Result.Error) {
-                        handleResultErrorException(userResult.exception)
-                    }
-                } else if (loginResult is Result.Error) {
-                    handleResultErrorException(loginResult.exception)
-                }
-            } else if (bioChallengeResult is Result.Error) {
-                handleResultErrorException(bioChallengeResult.exception)
-                loading.value = false
-                return@launch
-            }
-
-            loading.value = false
-        }
-    }
 
     fun loginWithCipher(cipher: Cipher) {
         viewModelScope.launch {
