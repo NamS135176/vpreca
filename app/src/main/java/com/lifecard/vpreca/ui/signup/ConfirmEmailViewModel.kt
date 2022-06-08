@@ -2,17 +2,15 @@ package com.lifecard.vpreca.ui.signup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lifecard.vpreca.R
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
-import com.lifecard.vpreca.utils.RegexUtils
 
-class ConfirmPhoneViewModel : ViewModel() {
-    val cfPhoneError = MutableLiveData<Int?>()
+class ConfirmEmailViewModel:ViewModel() {
+    val cfEmailError = MutableLiveData<Int?>()
     val validForm = MutableLiveData<Boolean>()
-    val formState = MutableLiveData(ConfirmPhoneState())
+    val formState = MutableLiveData(ConfirmEmailState())
     val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
 
-    private fun checkCfPhoneValid(): Boolean {
+    private fun checkCfEmailValid(): Boolean {
 //        return if (!RegexUtils.isPhoneNumberValid(formState.value?.confirmCode)) {
 //            cfPhoneError.value = R.string.rgx_error_phone_number
 //            false
@@ -23,12 +21,12 @@ class ConfirmPhoneViewModel : ViewModel() {
         return true
     }
 
-    fun cfPhoneDataChanged(text: String) {
-        formState.value = formState.value?.copy(confirmCode = text)
+    fun cfEmailDataChanged(text: String) {
+        formState.value = formState.value?.copy(confirmEmail = text)
     }
 
     fun submit() {
-        val isCfPhoneValid = checkCfPhoneValid()
+        val isCfPhoneValid = checkCfEmailValid()
         if(isCfPhoneValid){
             formResultState.value = ChangeInfoInputResultState(success = true)
         }
@@ -36,7 +34,7 @@ class ConfirmPhoneViewModel : ViewModel() {
 
     fun checkFormValid(): Boolean {
         return formState.value?.let { form ->
-            val isValid = !arrayOf(form.confirmCode)
+            val isValid = !arrayOf(form.confirmEmail)
                 .any { it.isNullOrEmpty() }
             validForm.value = isValid
             return isValid

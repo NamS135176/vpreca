@@ -9,7 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
 import com.lifecard.vpreca.databinding.FragmentEmailBinding
@@ -18,12 +23,9 @@ class EmailFragment : Fragment() {
 
     private var _binding:FragmentEmailBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var viewModel:EmailViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
     }
 
     override fun onCreateView(
@@ -31,36 +33,61 @@ class EmailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        viewModel = ViewModelProvider(this).get(EmailViewModel::class.java)
         _binding = FragmentEmailBinding.inflate(inflater, container, false)
+        val inputEmail = binding.forgotPassEmailInput
+        val btnSubmitEmail = binding.btnSubmitPolicy
+        val layout = binding.forgotPassEmailLayout
+        val btnBack = binding.appbarForgotPass.btnBack
+        val btnCancel = binding.appbarForgotPass.cancelBtn
+
+        btnCancel.setOnClickListener(View.OnClickListener {
+            MaterialAlertDialogBuilder(requireContext()).apply {
+                setPositiveButton("はい") { _, _ ->
+                    findNavController().navigate(R.id.nav_login)
+                }
+                setNegativeButton("いいえ", null)
+                setMessage("途中ですがキャンセルしてもよろしいですか")
+            }.create().show()
+        })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_signup_confirm_phone) })
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_signup_confirm_phone)
+            }
+        })
+
+        viewModel.formState.observe(viewLifecycleOwner, Observer { viewModel.checkFormValid() })
+
+        viewModel.emailError.observe(viewLifecycleOwner, Observer { error: Int? ->
+            layout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
+
+        viewModel.validForm.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { isValid ->
+                btnSubmitEmail.isEnabled = isValid
+            })
+
+
+        viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            it?.success?.let {
+                findNavController().navigate(R.id.nav_signup_confirm_email)
+            }
+        })
+
+        inputEmail.doAfterTextChanged { text -> viewModel.emailDataChanged(text = text.toString()) }
+
+        btnSubmitEmail.setOnClickListener(View.OnClickListener {
+            viewModel.submit()
+        })
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val inputEmail = binding.forgotPassEmailInput
-        val btnSubmitEmail = binding.btnSubmitPolicy
-        val afterTextChangedListener = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                if(s.length > 0 && android.util.Patterns.EMAIL_ADDRESS.matcher(s).matches()){
-                    btnSubmitEmail.isEnabled = true
-                }
-            }
-        }
-        inputEmail.addTextChangedListener(afterTextChangedListener)
-
-        btnSubmitEmail.setOnClickListener(View.OnClickListener {
-
-        })
-    }
-
-    companion object {
-    }
 }
