@@ -160,9 +160,7 @@ class ChangeInfoDataFragment : Fragment() {
                 state.networkTrouble?.let { if (it) showInternetTrouble() }
                 state.error?.messageResId?.let { showPopupMessage(message = getString(it)) }
                 state.error?.errorMessage?.let { showPopupMessage(message = it) }
-                state.errorText?.let { errorText ->
-                    showAlertMessage(errorText)
-                }
+                state.errorText?.let { errorText -> showPopupMessage(message = errorText) }
                 state.success?.let { memberInfo ->
                     binding.user = memberInfo
                     btnOpenDialog.isEnabled = true

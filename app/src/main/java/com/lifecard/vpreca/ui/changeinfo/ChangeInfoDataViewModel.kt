@@ -57,10 +57,11 @@ class ChangeInfoDataViewModel @Inject constructor(private val userRepository: Us
                     exception = exception
                 )
             )
+
             else -> _changeInfoDataState.value =
                 ChangeInfoDataState(
                     error = ErrorMessageException(
-                        messageResId = R.string.login_failed,
+                        errorMessage = exception.message,
                         exception = exception
                     )
                 )
