@@ -2,6 +2,7 @@ package com.lifecard.vpreca.utils
 
 class Constant {
     companion object {
+        const val SECURE_AUTH_TOKEN = "vpreca_auth_token"
         const val SECURE_USER_ID = "vpreca_login_user_id"
         const val SECURE_MEMBER_NUMBER = "vpreca_login_member_id"
         const val SECURE_ACCESS_TOKEN = "vpreca_access_token"

@@ -11,12 +11,26 @@ class UserManager(private val secureStore: SecureStore) {
         private set
     var accessToken: String? = null
         private set
+        get() {
+            return authToken?.accessToken
+        }
     var refreshToken: String? = null
         private set
+        get() {
+            return authToken?.refreshToken
+        }
     var loginId: String? = null
         private set
+        get() {
+            return authToken?.loginId ?: memberInfo?.loginId
+        }
     var memberNumber: String? = null
         private set
+        get() {
+            return authToken?.memberNumber ?: memberInfo?.memberNumber
+        }
+
+    var authToken: AuthToken? = null
 
     val isLoggedIn: Boolean
         get() = memberInfo != null
@@ -30,46 +44,33 @@ class UserManager(private val secureStore: SecureStore) {
         }
 
     init {
-        // If user credentials will be cached in local storage, it is recommended it be encrypted
-        // @see https://developer.android.com/training/articles/keystore
-        accessToken = secureStore.getAccessToken()
-        refreshToken = secureStore.getRefreshToken()
-        memberNumber = secureStore.getMemberNumber()
-        loginId = secureStore.getLoginUserId()
-    }
-
-    fun setToken(accessToken: String?, refreshToken: String?) {
-        accessToken?.let {
-            this.accessToken = it
-            secureStore.saveAccessToken(it)
-        }
-        refreshToken?.let {
-            this.refreshToken = it
-            secureStore.saveRefreshToken(it)
-        }
+        authToken = secureStore.getAuthToken()
     }
 
     fun setLoggedMember(memberResponseContent: MemberResponseContent) {
         memberInfo = memberResponseContent.memberInfo
         memberSubInfo = memberResponseContent.memberSubInfo
-        this.memberNumber = memberInfo!!.memberNumber
-        this.loginId = memberInfo!!.loginId
-        secureStore.saveLoginUserId(memberInfo!!.loginId)
-        secureStore.saveMemberNumber(memberInfo!!.memberNumber)
     }
 
     fun setLoggedIn(loginResponse: LoginResponse) {
-        setToken(loginResponse.accessToken, loginResponse.refreshToken)
         setLoggedMember(loginResponse.brandPrecaApi.response)
+
+        authToken = AuthToken()
+        //save to secure store
+        authToken?.let { authToken ->
+            authToken.accessToken = loginResponse.accessToken
+            authToken.refreshToken = loginResponse.refreshToken
+            authToken.loginId = memberInfo?.loginId
+            authToken.memberNumber = memberInfo?.memberNumber
+
+            secureStore.saveAuthToken(authToken)
+        }
     }
 
     fun clear() {
         this.memberInfo = null
         this.memberSubInfo = null
-        this.accessToken = null
-        this.refreshToken = null
-        this.loginId = null
-        this.memberNumber = null
+        this.authToken = null
     }
 
 }

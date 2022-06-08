@@ -1,7 +1,6 @@
 package com.lifecard.vpreca.biometric
 
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyPermanentlyInvalidatedException
@@ -10,16 +9,26 @@ import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
+import com.lifecard.vpreca.data.source.SecurityKey
 import java.security.*
-import java.security.spec.ECGenParameterSpec
+import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
+import javax.crypto.spec.GCMParameterSpec
 
 interface BioManager {
     fun getPublicKey(): String?
-    fun getInitializedSignatureForEncryption(): Signature
-    fun getCryptoObjectForPromtBio(forceDeleteIfError: Boolean? = false): BiometricPrompt.CryptoObject?
+    fun getInitializedCipherForEncryption(): Cipher
+    fun getInitializedCipherForDecryption(): Cipher
+    fun getCryptoObjectForPromptBio(
+        cipherMode: Int,
+        forceDeleteIfError: Boolean? = false
+    ): BiometricPrompt.CryptoObject?
+
     fun getSupportBiometricType(): BiometricType
     fun getBiometricTypeForAuthentication(): BiometricType
     fun checkDeviceSupportBiometric(): Boolean
+    fun clearCache()
 }
 
 enum class BiometricType {
@@ -34,10 +43,13 @@ enum class BiometricType {
 class BioManagerImpl constructor(private val context: Context) : BioManager {
 
     companion object {
-        private const val ENCRYPTION_ALGORITHM = KeyProperties.KEY_ALGORITHM_EC
         private const val ANDROID_KEYSTORE = "AndroidKeyStore"
-        private const val ENCRYPTION_SIGNATURE_ALGORITHM = "SHA256withECDSA"
         private const val KEY_NAME = "vpreca_bio_authentication_key"
+        private const val CIPHER_ALGORITHM_AES =
+            "${KeyProperties.KEY_ALGORITHM_AES}/${KeyProperties.BLOCK_MODE_GCM}/${KeyProperties.ENCRYPTION_PADDING_NONE}"
+
+        @JvmStatic
+        var authenticatedEncryptCipher: Cipher? = null
     }
 
     private val biometricManager: BiometricManager by lazy { BiometricManager.from(context) }
@@ -45,7 +57,6 @@ class BioManagerImpl constructor(private val context: Context) : BioManager {
         listOf(
             "android.hardware.biometrics.face" to BiometricType.FACE,//PackageManager.FEATURE_FACE
             "android.hardware.fingerprint" to BiometricType.FINGERPRINT,//PackageManager.FEATURE_FINGERPRINT
-            "android.hardware.biometrics.iris" to BiometricType.IRIS,//PackageManager.FEATURE_IRIS
         ).filter { context.packageManager.hasSystemFeature(it.first) }.map { it.second }
     }
 
@@ -100,58 +111,89 @@ class BioManagerImpl constructor(private val context: Context) : BioManager {
         }
     }
 
-    override fun getInitializedSignatureForEncryption(): Signature {
-        val signature = Signature.getInstance(ENCRYPTION_SIGNATURE_ALGORITHM)
-        val privateKey = getOrCreateKey()
-        signature.initSign(privateKey)
-        return signature
+    override fun getInitializedCipherForEncryption(): Cipher {
+        val secretKey = getOrCreateKey()
+        val cipher = Cipher.getInstance(CIPHER_ALGORITHM_AES)
+        cipher.init(
+            Cipher.ENCRYPT_MODE,
+            secretKey,
+            GCMParameterSpec(128, CIPHER_ALGORITHM_AES.toByteArray(), 0, 12)
+        )
+        return cipher
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
-    override fun getCryptoObjectForPromtBio(forceDeleteIfError: Boolean?): BiometricPrompt.CryptoObject? {
+    override fun getInitializedCipherForDecryption(): Cipher {
+        val secretKey = getOrCreateKey()
+        val cipher = Cipher.getInstance(CIPHER_ALGORITHM_AES)
+        cipher.init(
+            Cipher.DECRYPT_MODE,
+            secretKey,
+            GCMParameterSpec(128, CIPHER_ALGORITHM_AES.toByteArray(), 0, 12)
+        )
+        return cipher
+    }
+
+    override fun getCryptoObjectForPromptBio(
+        cipherMode: Int,
+        forceDeleteIfError: Boolean?
+    ): BiometricPrompt.CryptoObject? {
         return try {
             if (forceDeleteIfError == true) {
                 keyStore.load(null) // Keystore must be loaded before it can be accessed
                 keyStore.deleteEntry(KEY_NAME)
             }
-            val signature = getInitializedSignatureForEncryption()
-            BiometricPrompt.CryptoObject(signature)
+            val cipher =
+                if (cipherMode == Cipher.ENCRYPT_MODE) getInitializedCipherForEncryption() else getInitializedCipherForDecryption()
+            BiometricPrompt.CryptoObject(cipher)
         } catch (e: KeyPermanentlyInvalidatedException) {
-            return getCryptoObjectForPromtBio(true)
+            println(e)
+            return getCryptoObjectForPromptBio(cipherMode, true)
         } catch (e: Exception) {
+            println(e)
             null
         }
     }
 
-    private fun getOrCreateKey(): PrivateKey? {
+
+    private fun getOrCreateKey(): SecretKey? {
         val keyName = KEY_NAME
         // If Secretkey was previously created for that keyName, then grab and return it.
         keyStore.load(null) // Keystore must be loaded before it can be accessed
-        keyStore.getKey(keyName, null)?.let { return it as PrivateKey }
+        keyStore.getKey(keyName, null)?.let { return it as SecretKey }
 
         // if you reach here, then a new SecretKey must be generated for that keyName
         val paramsBuilder = KeyGenParameterSpec.Builder(
             keyName,
-            KeyProperties.PURPOSE_SIGN
+            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
         )
         paramsBuilder.apply {
-            setDigests(KeyProperties.DIGEST_SHA256)
-            setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
+            //old for private key
+//            setDigests(KeyProperties.DIGEST_SHA256)
+//            setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
+//            setUserAuthenticationRequired(true)
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                setInvalidatedByBiometricEnrollment(true)
+//            }
+
+            //new for secret key
+            setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+            setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+            setRandomizedEncryptionRequired(false)
             setUserAuthenticationRequired(true)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                setInvalidatedByBiometricEnrollment(true)
-            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                setInvalidatedByBiometricEnrollment(true)
+//            }
         }
 
         val keyGenParams = paramsBuilder.build()
-        val keyGenerator = KeyPairGenerator.getInstance(
-            ENCRYPTION_ALGORITHM,
+        val keyGenerator = KeyGenerator.getInstance(
+            KeyProperties.KEY_ALGORITHM_AES,
             ANDROID_KEYSTORE
         )
-        keyGenerator.initialize(keyGenParams)
-        keyGenerator.generateKeyPair()
+        keyGenerator.init(keyGenParams)
+        keyGenerator.generateKey()
 
-        return keyStore.getKey(keyName, null)?.let { return it as PrivateKey }
+        return keyStore.getKey(keyName, null)?.let { return it as SecretKey }
     }
 
     private fun PublicKey.toPEM() = "-----BEGIN PUBLIC KEY-----\n${
@@ -162,4 +204,8 @@ class BioManagerImpl constructor(private val context: Context) : BioManager {
     }-----END PUBLIC KEY-----"
 
     private fun ByteArray.encodeBase64(): ByteArray = Base64.encode(this, Base64.DEFAULT)
+
+    override fun clearCache() {
+        authenticatedEncryptCipher = null
+    }
 }
