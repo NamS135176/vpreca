@@ -237,8 +237,20 @@ class SignupInputViewModel : ViewModel() {
         val isValidCfPassword = checkCfPasswordValid()
         val isValidKanaName = checkKanaNameValid()
         val isValidHiraName = checkHiraNameValid()
-        if (isValidUsername && isValidLoginId && isValidDate && isValidPhone && isValidQuestion && isValidCity && isValidGender && isValidAnswer && isValidPassword && isValidCfPassword
-            && isValidKanaName && isValidHiraName
+        println(isValidUsername)
+        println(isValidLoginId)
+        println(isValidDate)
+        println(isValidPhone)
+        println(isValidQuestion)
+        println(isValidCity)
+        println(isValidGender)
+        println(isValidAnswer)
+        println(isValidPassword)
+        println(isValidCfPassword)
+        println(isValidKanaName)
+        println(isValidHiraName)
+        if (isValidUsername && isValidLoginId && isValidDate && isValidPhone && isValidQuestion && isValidCity && isValidGender && !isValidAnswer && isValidPassword && isValidCfPassword
+            && !isValidKanaName && !isValidHiraName
         ) {
             //TODO need call api here
             formResultState.value = SignupInputResultState(success = true)

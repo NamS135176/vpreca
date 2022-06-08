@@ -20,6 +20,7 @@ import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
@@ -141,9 +142,11 @@ class CardBottomSheetCustom(
 
         btnUsage.setOnClickListener(View.OnClickListener {
             dismiss()
+            val data = GiftCardConfirmData("logged")
             val action =
                 ListVprecaFragmentDirections.actionToCardUsage(
-                    convertObject(newCard)
+                    convertObject(newCard),
+                    data
                 )
             val navController =
                 Navigation.findNavController(activity, R.id.nav_host_fragment_content_main)

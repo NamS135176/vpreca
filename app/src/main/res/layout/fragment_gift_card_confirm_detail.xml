@@ -2,6 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.lifecard.vpreca.utils.Converter" />
+        <import type="com.lifecard.vpreca.utils.ModelExtKt" />
+        <variable
+            name="card"
+            type="com.lifecard.vpreca.data.model.CardInfo" />
+    </data>
     <androidx.core.widget.NestedScrollView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -73,7 +83,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="¥5,000"
+                            android:text="@{Converter.convertCurrency(card.publishAmount)}"
                             android:paddingLeft="12dp"
                             android:textSize="36sp"/>
                     </LinearLayout>
@@ -98,6 +108,20 @@
                 android:paddingVertical="11dp"
                 app:backgroundTint='@color/button_introduce_background'
                 />
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="64dp"
+                android:visibility="gone"
+                android:indeterminateDrawable="@drawable/loading"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

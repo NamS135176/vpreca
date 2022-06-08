@@ -8,19 +8,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentCardUsageBinding
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.ui.login.LoginViewModel
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.hideToolbar
+import com.lifecard.vpreca.utils.isCardLock
 import com.lifecard.vpreca.utils.showToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,6 +39,7 @@ class CardUsageFragment : Fragment() {
     private var _binding: FragmentCardUsageBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
+    private val args:CardUsageFragmentArgs by  navArgs()
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -45,8 +50,32 @@ class CardUsageFragment : Fragment() {
         val listCardUsageHistory = binding.listCardUsageHistory
         val loading = binding.loading
         val btnBack = binding.appbarCardUsage.btnBack
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if(args.preRoute?.preRoute == "logged"){
+                    findNavController().navigate(R.id.nav_home)
+                }
+                else{
+                    findNavController().navigate(R.id.nav_login)
+                }
+            }
+        })
+        btnBack.setOnClickListener(View.OnClickListener {
+            if(args.preRoute?.preRoute == "logged"){
+                findNavController().navigate(R.id.nav_home)
+            }
+            else{
+                findNavController().navigate(R.id.nav_login)
+            }
+        })
+        if(args.preRoute?.preRoute == "logged"){
+            viewModel.getCardUsageHistory(args.card!!)
+        }
+        else{
+            viewModel.getCardUsageHistoryWithoutMember(args.card!!)
+        }
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
 
         viewModel.cardUsageHistoryResult.observe(viewLifecycleOwner, Observer {
             if (it is Result.Success) {
@@ -65,13 +94,15 @@ class CardUsageFragment : Fragment() {
                 else -> loading.visibility = View.GONE
             }
         })
-
-        val card = arguments?.getParcelable<CreditCard>("card")
-        card?.let {
-            binding.cardNo.text = it.precaNumber
-            binding.balance.text = Converter.convertCurrency(it.chargeBalance)
-            viewModel.getCardUsageHistory(card)
+        if(args.card.isCardLock()){
+            binding.cardNo.text = Converter.convertPrecaNumber(args.card?.precaNumber)
         }
+        else{
+            binding.cardNo.text = args.card?.precaNumber
+        }
+        binding.balance.text = Converter.convertCurrency(args.card?.chargeBalance)
+
+
         return binding.root
     }
 

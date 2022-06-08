@@ -89,6 +89,11 @@ interface ApiService {
         @Body giftCardCertifiRequest: BrandRequest
     ): GiftCertifiResponse
 
+    @POST("CardRelationRegReq")
+    suspend fun cardRelation(
+        @Body cardRelationRequest: BrandRequest
+    ): CardRelationRegReqResponse
+
     @GET("challenge")
     suspend fun getBioChallenge(@Query("loginId") memberNumber: String): BioChallenge
 

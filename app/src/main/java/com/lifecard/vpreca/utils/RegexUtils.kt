@@ -154,7 +154,7 @@ class RegexUtils {
         }
 
         fun isAnswerValid(answer: String?): Boolean {
-            return !answer.isNullOrEmpty() && answer.length in 0..20 && isHalfWidth(answer)
+            return !answer.isNullOrEmpty() && answer.length in 0..20 && !isHalfWidth(answer)
         }
 
         fun formatDisplayPhoneNumber(phone: String?): String {

@@ -319,6 +319,24 @@ class RequestHelper {
             )
         }
 
+        fun createCardUsageHistoryWithouMember(
+            creditCard: CreditCard
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = CardUsageHistoryWithouMemberRequestContent(
+                        cardInfo = CardUsageCardInfoRequest(
+                            cardSchemeId = creditCard.cardSchemeId,
+                            precaNumber = creditCard.precaNumber,
+                        ),
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.MemberSelReq.value
+                    )
+                ),
+            )
+        }
+
         fun createChangeInfoMember(
             memberInfo:ChangeInfoMemberData
         ): BrandRequest {
@@ -373,6 +391,25 @@ class RequestHelper {
                     ),
                     head = BaseHead(
                         messageType = MessageType.CardCertifiNoMemReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createCardRelationRequest(
+            memberNumber:String,
+            cardInfo:CardRelationRegRequestContentInfo
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = CardRelationRegReqRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        cardInfo = cardInfo
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.CardRelationRegReq.value
                     )
                 ),
             )

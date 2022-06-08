@@ -30,4 +30,13 @@ class CardUsageViewModel @Inject constructor(private val remoteRepository: Remot
             _loading.value = false
         }
     }
+
+    fun getCardUsageHistoryWithoutMember(creditCard: CreditCard) {
+        viewModelScope.launch {
+            _loading.value = true
+            var result = remoteRepository.getCardUsageHistoryWithoutMember(creditCard)
+            _cardUsageHistoryResult.value = result
+            _loading.value = false
+        }
+    }
 }

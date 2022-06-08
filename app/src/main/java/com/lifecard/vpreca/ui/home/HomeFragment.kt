@@ -22,6 +22,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.NoConnectivityException
@@ -182,8 +183,9 @@ class HomeFragment : Fragment(), CoroutineScope {
 //            findNavController().navigate(R.id.action_to_card_usage)
             val card = pagerAdapter?.getItem(viewPager.currentItem)
             card?.let {
+                val data = GiftCardConfirmData("logged")
                 val action =
-                    HomeFragmentDirections.actionToCardUsage(it)
+                    HomeFragmentDirections.actionToCardUsage(it, data)
                 findNavController().navigate(action)
             }
         })

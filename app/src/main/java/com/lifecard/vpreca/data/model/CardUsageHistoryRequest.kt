@@ -15,6 +15,17 @@ data class CardUsageHistoryRequestContent(
     val cardUseHisSelTerm: Int? = null,
 )
 
+data class CardUsageHistoryWithouMemberRequestContent(
+    @SerializedName("cardInfo")
+    val cardInfo: CardUsageCardInfoRequest,
+    @SerializedName("startLine")
+    val startLine: Int = 1,
+    @SerializedName("endLine")
+    val endLine: Int = 1,
+    @SerializedName("cardUseHisSelTerm")
+    val cardUseHisSelTerm: Int? = null,
+)
+
 data class CardUsageMemberInfoRequest(
     @SerializedName("memberNumber")
     val memberNumber: String,

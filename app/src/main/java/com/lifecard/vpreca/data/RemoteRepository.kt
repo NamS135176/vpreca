@@ -34,6 +34,23 @@ class RemoteRepository(
         }
     }
 
+    suspend fun getCardUsageHistoryWithoutMember(creditCard: CreditCard): Result<List<CardUsageHistory>> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val cardUsageHistoryResponse =
+                    apiService.getCardUsageHistory(
+                        RequestHelper.createCardUsageHistoryWithouMember(
+                            creditCard
+                        )
+                    )
+                Result.Success(cardUsageHistoryResponse.brandPrecaApi.response.cardInfo!!)
+            } catch (e: Exception) {
+                println("RemoteRepository...getCardUsageHistory has error $e")
+                Result.Error(e)
+            }
+        }
+    }
+
     suspend fun getBioChallenge(username: String): Result<BioChallenge> {
         return withContext(Dispatchers.IO) {
             try {

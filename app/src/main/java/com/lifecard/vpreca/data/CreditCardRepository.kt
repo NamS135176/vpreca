@@ -146,4 +146,22 @@ class CreditCardRepository(
             }
         }
     }
+
+    suspend fun cardRelation(vcn: String, vcnExpirationDate:String, vcnSecurityCode:String,cardNickname:String): Result<CreditCard> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val republishCardResponse = apiService.cardRelation(
+                    RequestHelper.createCardRelationRequest(
+                        memberNumber = userManager.memberNumber!!,
+                        CardRelationRegRequestContentInfo(vcn, vcnExpirationDate, vcnSecurityCode, cardNickname)
+                    )
+                )
+                Result.Success(republishCardResponse.brandPrecaApi.response.cardInfo!!)
+            } catch (e: Exception) {
+                println("CreditCardRepository... cardRelation has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
 }
