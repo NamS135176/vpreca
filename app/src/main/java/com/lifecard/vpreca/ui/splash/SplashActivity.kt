@@ -74,16 +74,9 @@ class SplashActivity : AppCompatActivity() {
         })
 
         if (userManager.canCallApi && userManager.loginId != null && userManager.memberNumber != null) {
-
             viewModel.getUser()
         } else {
-
-            if (PreferenceHelper.isEnableBiometricSetting(applicationContext) && bioManager?.checkDeviceSupportBiometric() == true) {
-                showBiometricDialog()
-            } else {
-                navigateToMainScreen()
-            }
-
+            navigateToMainScreen()
         }
     }
 

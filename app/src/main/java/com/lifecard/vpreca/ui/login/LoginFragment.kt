@@ -200,6 +200,10 @@ class LoginFragment : NoToolbarFragment() {
         logoGift.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_first)
         })
+
+//        if (PreferenceHelper.isEnableBiometricSetting(requireContext()) && bioManager?.checkDeviceSupportBiometric() == true) {
+//            showBiometricDialog()
+//        }
         return binding.root
 
     }
@@ -264,6 +268,12 @@ class LoginFragment : NoToolbarFragment() {
                 super.onPause(owner)
 
                 passwordEditText.text = "".toEditable()
+            }
+            override fun onCreate(owner: LifecycleOwner) {
+                super.onCreate(owner)
+                if (PreferenceHelper.isEnableBiometricSetting(requireContext()) && bioManager?.checkDeviceSupportBiometric() == true) {
+                    showBiometricDialog()
+                }
             }
         }
         requireActivity().lifecycle.addObserver(lifecycleObserver)
