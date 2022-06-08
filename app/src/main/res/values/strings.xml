@@ -498,8 +498,8 @@
     <string name="fingerprint_setting_caption">ログイン認証の設定を行います。</string>
     <string name="fingerprint_option">生体認証でログイン</string>
     <string name="prompt_biometric_login_title">Biometric login for my app</string>
-    <string name="error_fingerprint_not_support">Biometric not support</string>
-    <string name="error_fingerprint_not_enrolled">Chưa đăng ký vân tay hoặc khuôn mặt. Vui lòng vào cài đặt thiết bị để thêm.</string>
+    <string name="error_fingerprint_not_support">@string/fingerprint_error_hw_not_available_custom</string>
+    <string name="error_fingerprint_not_enrolled">@string/fingerprint_error_no_fingerprints_custom</string>
     <string name="error_bio_authentication_failure">Authentication failure</string>
     <string name="biometric_setting_success">読み取り完了</string>
     <!--   End FaceID setting  -->

@@ -1,5 +1,8 @@
 package com.lifecard.vpreca
 
+import android.content.Context
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -22,6 +25,7 @@ import com.lifecard.vpreca.utils.lockDrawer
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -115,5 +119,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                val newOverride = Configuration(newBase?.resources?.configuration)
+                newOverride.fontScale = 1.0f
+                applyOverrideConfiguration(newOverride)
+            }
+        } catch (e: Exception) {
+        }
+        super.attachBaseContext(newBase)
     }
 }

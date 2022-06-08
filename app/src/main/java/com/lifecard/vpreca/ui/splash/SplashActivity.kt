@@ -1,12 +1,15 @@
 package com.lifecard.vpreca.ui.splash
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -21,6 +24,7 @@ import com.lifecard.vpreca.ui.login.LoginResult
 import com.lifecard.vpreca.utils.PreferenceHelper
 import com.lifecard.vpreca.utils.showInternetTrouble
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 import javax.crypto.Cipher
 import javax.inject.Inject
 
@@ -47,6 +51,8 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         viewModel.splashState.observe(this, androidx.lifecycle.Observer { splashResult ->
             splashResult.user?.let { _ ->
@@ -142,5 +148,17 @@ class SplashActivity : AppCompatActivity() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                val newOverride = Configuration(newBase?.resources?.configuration)
+                newOverride.fontScale = 1.0f
+                applyOverrideConfiguration(newOverride)
+            }
+        } catch (e: Exception) {
+        }
+        super.attachBaseContext(newBase)
     }
 }

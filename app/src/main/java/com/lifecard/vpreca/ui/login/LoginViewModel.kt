@@ -1,5 +1,6 @@
 package com.lifecard.vpreca.ui.login
 
+import android.hardware.biometrics.BiometricPrompt
 import android.util.Base64
 import androidx.lifecycle.*
 import com.lifecard.vpreca.R
@@ -13,6 +14,7 @@ import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.splash.SplashState
+import com.lifecard.vpreca.utils.BiometricHelper
 import com.lifecard.vpreca.utils.RegexUtils
 import com.lifecard.vpreca.utils.RequestHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -150,10 +152,17 @@ class LoginViewModel @Inject constructor(
         errString: CharSequence
     ) {
         println("handleAuthenticationError... errorCode=$errorCode errString=$errString")
-//        when (errorCode) {
-//            BiometricPrompt.BIOMETRIC_ERROR_CANCELED -> _loginResult.value =
+        val messageResId = BiometricHelper.getMessageIdByErrorCode(errorCode)
+        messageResId?.let {
+            _loginResult.value = LoginResult(
+                error = ErrorMessageException(
+                    messageResId = it
+                )
+            )
+        } ?: kotlin.run {
+//            _loginResult.value =
 //                LoginResult(errorText = errString.toString())
-//        }
+        }
     }
 
     fun checkUsername(username: String): Boolean {

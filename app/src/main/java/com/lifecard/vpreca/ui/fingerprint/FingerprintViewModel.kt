@@ -10,6 +10,9 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserManager
+import com.lifecard.vpreca.exception.ErrorMessageException
+import com.lifecard.vpreca.ui.login.LoginResult
+import com.lifecard.vpreca.utils.BiometricHelper
 import com.lifecard.vpreca.utils.PreferenceHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -127,9 +130,14 @@ class FingerprintViewModel @Inject constructor(
         errString: CharSequence
     ) {
         println("handleAuthenticationError... errorCode=$errorCode errString=$errString")
-//        when (errorCode) {
-//            BiometricPrompt.BIOMETRIC_ERROR_CANCELED -> _loginResult.value =
+        val messageResId = BiometricHelper.getMessageIdByErrorCode(errorCode)
+        messageResId?.let {
+            registerBiometricResult.value = BioSettingResult(
+                error = it
+            )
+        } ?: kotlin.run {
+//            _loginResult.value =
 //                LoginResult(errorText = errString.toString())
-//        }
+        }
     }
 }
