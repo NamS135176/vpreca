@@ -2,6 +2,7 @@ package com.lifecard.vpreca.ui.fingerprint
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +17,15 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
+import com.lifecard.vpreca.data.UserManager
+import com.lifecard.vpreca.data.model.AuthToken
 import com.lifecard.vpreca.databinding.FragmentFingerprintBinding
 import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FingerprintFragment : Fragment() {
@@ -29,6 +33,9 @@ class FingerprintFragment : Fragment() {
     companion object {
         fun newInstance() = FingerprintFragment()
     }
+
+    @Inject
+    lateinit var userManager: UserManager
 
     private val viewModel: FingerprintViewModel by viewModels()
     private var _binding: FragmentFingerprintBinding? = null
@@ -124,16 +131,33 @@ class FingerprintFragment : Fragment() {
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
-                    bioManager?.getPublicKey()?.let { publicKey: String ->
-                        viewModel.uploadPublicKey(
-                            publicKey,
-                            signature = result.cryptoObject?.signature
-                        )
-                        viewModel.setFingerprintSetting(requireContext(), true)
-                    } ?: run {
-                        viewModel.setFingerprintSetting(requireContext(), false)
-                        showAlert(getString(R.string.error_bio_authentication_failure))
-                    }
+                    val cipher = result.cryptoObject?.cipher!!
+                    val accessToken = "myAccessToken"
+                    val encrypted = cipher.doFinal(accessToken.toByteArray())
+                    val accessTokenEncryptedBase64 = Base64.encodeToString(encrypted, Base64.URL_SAFE)
+                    println("accessTokenEncryptedBase64 = ${accessTokenEncryptedBase64}")
+//                        val accessTokenEncryptedBase64 = Base64.encodeToString(encrypted, Base64.URL_SAFE)
+
+                    viewModel.setFingerprintSetting(requireContext(), true)
+
+//                    bioManager?.getPublicKey()?.let { publicKey: String ->
+////                        viewModel.uploadPublicKey(
+////                            publicKey,
+////                            signature = result.cryptoObject?.signature
+////                        )
+////                        val authToken = AuthToken(accessToken = "myAccessToken", "")
+//                        val cipher = result.cryptoObject?.cipher!!
+//                        val accessToken = "myAccessToken"
+//                        val encrypted = cipher.doFinal(accessToken.toByteArray())
+//                        val accessTokenEncryptedBase64 = Base64.encodeToString(encrypted, Base64.URL_SAFE)
+//                        println("accessTokenEncryptedBase64 = ${accessTokenEncryptedBase64}")
+////                        val accessTokenEncryptedBase64 = Base64.encodeToString(encrypted, Base64.URL_SAFE)
+//
+//                        viewModel.setFingerprintSetting(requireContext(), true)
+//                    } ?: run {
+//                        viewModel.setFingerprintSetting(requireContext(), false)
+//                        showAlert(getString(R.string.error_bio_authentication_failure))
+//                    }
                 }
 
                 override fun onAuthenticationFailed() {
