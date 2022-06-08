@@ -2,7 +2,6 @@ package com.lifecard.vpreca.ui.fingerprint
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +17,14 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
 import com.lifecard.vpreca.data.UserManager
-import com.lifecard.vpreca.data.model.AuthToken
+import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentFingerprintBinding
 import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
+import javax.crypto.Cipher
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,6 +36,9 @@ class FingerprintFragment : Fragment() {
 
     @Inject
     lateinit var userManager: UserManager
+
+    @Inject
+    lateinit var secureStore: SecureStore
 
     private val viewModel: FingerprintViewModel by viewModels()
     private var _binding: FragmentFingerprintBinding? = null
@@ -101,7 +104,7 @@ class FingerprintFragment : Fragment() {
 
         fingerprint.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                bioManager?.getCryptoObjectForPromtBio()?.let {
+                bioManager?.getCryptoObjectForPromptBio(Cipher.ENCRYPT_MODE)?.let {
                     biometricPrompt.authenticate(promptInfo, it)
                 } ?: run {
                     showAlert(getString(R.string.error_fingerprint_not_support))
@@ -131,14 +134,18 @@ class FingerprintFragment : Fragment() {
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
-                    val cipher = result.cryptoObject?.cipher!!
-                    val accessToken = "myAccessToken"
-                    val encrypted = cipher.doFinal(accessToken.toByteArray())
-                    val accessTokenEncryptedBase64 = Base64.encodeToString(encrypted, Base64.URL_SAFE)
-                    println("accessTokenEncryptedBase64 = ${accessTokenEncryptedBase64}")
+                    val cipher = result.cryptoObject?.cipher
+                    result.cryptoObject?.cipher?.let {
+                        secureStore.updateEncryptBioAuthTokenStore(it)
+                        userManager.authToken?.let { authToken ->
+                            secureStore.saveAuthToken(
+                                authToken
+                            )
+                        }
+                        viewModel.setFingerprintSetting(requireContext(), true)
+                    }
 //                        val accessTokenEncryptedBase64 = Base64.encodeToString(encrypted, Base64.URL_SAFE)
 
-                    viewModel.setFingerprintSetting(requireContext(), true)
 
 //                    bioManager?.getPublicKey()?.let { publicKey: String ->
 ////                        viewModel.uploadPublicKey(

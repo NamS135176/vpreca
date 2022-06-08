@@ -65,7 +65,7 @@ class FingerprintViewModel @Inject constructor(
             loading.value = true
 //            registerBiometricResult.value = null
             val bioChallengeResult =
-                remoteRepository.registerBiometric(userManager.memberInfo!!.loginId, publicKey)
+                remoteRepository.registerBiometric(userManager.loginId!!, publicKey)
 
             if (bioChallengeResult is Result.Success) {
                 registerBiometricResult.value = BioSettingResult(success = bioChallengeResult.data)

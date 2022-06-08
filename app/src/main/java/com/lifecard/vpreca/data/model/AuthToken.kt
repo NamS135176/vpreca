@@ -6,21 +6,31 @@ import com.google.gson.annotations.SerializedName
 
 data class AuthToken(
     @SerializedName("accessToken")
-    val accessToken: String,
+    var accessToken: String? = null,
     @SerializedName("refreshToken")
-    val refreshToken: String,
+    var refreshToken: String? = null,
     @SerializedName("memberNumber")
-    val memberNumber: String,
+    var memberNumber: String? = null,
     @SerializedName("loginId")
-    val loginId: String,
+    var loginId: String? = null,
 )
 
-fun AuthToken.toJSON(): String {
-    val gson = Gson()
-    return gson.toJson(this)
+fun AuthToken.toJSON(): String? {
+    try {
+        val gson = Gson()
+        return gson.toJson(this)
+    } catch (e: Exception) {
+
+    }
+    return null
 }
 
-fun String.toAuthToken(): AuthToken {
-    val gson = Gson()
-    return gson.fromJson(this, AuthToken::class.java)
+fun String.toAuthToken(): AuthToken? {
+    try {
+        val gson = Gson()
+        return gson.fromJson(this, AuthToken::class.java)
+    } catch (e: Exception) {
+
+    }
+    return null
 }

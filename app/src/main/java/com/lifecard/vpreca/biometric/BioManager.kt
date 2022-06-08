@@ -1,7 +1,6 @@
 package com.lifecard.vpreca.biometric
 
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyPermanentlyInvalidatedException
@@ -12,7 +11,6 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import com.lifecard.vpreca.data.source.SecurityKey
 import java.security.*
-import java.security.spec.ECGenParameterSpec
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -20,9 +18,13 @@ import javax.crypto.spec.GCMParameterSpec
 
 interface BioManager {
     fun getPublicKey(): String?
-    fun getInitializedSignatureForEncryption(): Signature
     fun getInitializedCipherForEncryption(): Cipher
-    fun getCryptoObjectForPromtBio(forceDeleteIfError: Boolean? = false): BiometricPrompt.CryptoObject?
+    fun getInitializedCipherForDecryption(): Cipher
+    fun getCryptoObjectForPromptBio(
+        cipherMode: Int,
+        forceDeleteIfError: Boolean? = false
+    ): BiometricPrompt.CryptoObject?
+
     fun getSupportBiometricType(): BiometricType
     fun getBiometricTypeForAuthentication(): BiometricType
     fun checkDeviceSupportBiometric(): Boolean
@@ -42,9 +44,9 @@ class BioManagerImpl constructor(private val context: Context) : BioManager {
 
     companion object {
         private const val ANDROID_KEYSTORE = "AndroidKeyStore"
-        private const val ENCRYPTION_SIGNATURE_ALGORITHM = "SHA256withECDSA"
         private const val KEY_NAME = "vpreca_bio_authentication_key"
-        private const val CIPHER_ALGORITHM_AES = "AES/GCM/NoPadding"
+        private const val CIPHER_ALGORITHM_AES =
+            "${KeyProperties.KEY_ALGORITHM_AES}/${KeyProperties.BLOCK_MODE_GCM}/${KeyProperties.ENCRYPTION_PADDING_NONE}"
 
         @JvmStatic
         var authenticatedEncryptCipher: Cipher? = null
@@ -109,43 +111,49 @@ class BioManagerImpl constructor(private val context: Context) : BioManager {
         }
     }
 
-    override fun getInitializedSignatureForEncryption(): Signature {
-        val signature = Signature.getInstance(ENCRYPTION_SIGNATURE_ALGORITHM)
-//        val privateKey = getOrCreateKey()
-//        signature.initSign(privateKey)
-        return signature
-    }
-
     override fun getInitializedCipherForEncryption(): Cipher {
         val secretKey = getOrCreateKey()
         val cipher = Cipher.getInstance(CIPHER_ALGORITHM_AES)
         cipher.init(
             Cipher.ENCRYPT_MODE,
-            secretKey
+            secretKey,
+            GCMParameterSpec(128, CIPHER_ALGORITHM_AES.toByteArray(), 0, 12)
         )
         return cipher
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
-    override fun getCryptoObjectForPromtBio(forceDeleteIfError: Boolean?): BiometricPrompt.CryptoObject? {
+    override fun getInitializedCipherForDecryption(): Cipher {
+        val secretKey = getOrCreateKey()
+        val cipher = Cipher.getInstance(CIPHER_ALGORITHM_AES)
+        cipher.init(
+            Cipher.DECRYPT_MODE,
+            secretKey,
+            GCMParameterSpec(128, CIPHER_ALGORITHM_AES.toByteArray(), 0, 12)
+        )
+        return cipher
+    }
+
+    override fun getCryptoObjectForPromptBio(
+        cipherMode: Int,
+        forceDeleteIfError: Boolean?
+    ): BiometricPrompt.CryptoObject? {
         return try {
             if (forceDeleteIfError == true) {
                 keyStore.load(null) // Keystore must be loaded before it can be accessed
                 keyStore.deleteEntry(KEY_NAME)
             }
-//            val signature = getInitializedSignatureForEncryption()
-//            BiometricPrompt.CryptoObject(signature)
-            val cipher = getInitializedCipherForEncryption()
+            val cipher =
+                if (cipherMode == Cipher.ENCRYPT_MODE) getInitializedCipherForEncryption() else getInitializedCipherForDecryption()
             BiometricPrompt.CryptoObject(cipher)
         } catch (e: KeyPermanentlyInvalidatedException) {
-            return getCryptoObjectForPromtBio(true)
-        } catch (e: ClassCastException) {
-            return getCryptoObjectForPromtBio(true)
+            println(e)
+            return getCryptoObjectForPromptBio(cipherMode, true)
         } catch (e: Exception) {
             println(e)
             null
         }
     }
+
 
     private fun getOrCreateKey(): SecretKey? {
         val keyName = KEY_NAME

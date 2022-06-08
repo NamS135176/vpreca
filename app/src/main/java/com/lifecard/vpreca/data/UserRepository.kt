@@ -38,8 +38,8 @@ class UserRepository(private val apiService: ApiService, private val userManager
     }
 
     suspend fun getUser(
-        loginId: String? = userManager.memberInfo?.loginId,
-        memberNumber: String? = userManager.memberInfo?.memberNumber
+        loginId: String? = userManager.loginId,
+        memberNumber: String? = userManager.memberNumber
     ): Result<MemberInfo> {
         return withContext(Dispatchers.IO) {
             try {
