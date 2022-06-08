@@ -117,7 +117,6 @@ class UserRepository(private val apiService: ApiService, private val userManager
                 val userResponse = apiService.resetPassword(
                     RequestHelper.createResetPassRequest(
                         PasswordResetMemberInfoContent(
-                            userManager.loginId!!,
                             email,
                             birthday,
                             phone,

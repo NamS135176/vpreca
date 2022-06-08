@@ -99,6 +99,27 @@ class RequestHelper {
             )
         }
 
+        fun createCardInfoWithouMemberRequest(
+            cardSchemeId: String,
+            precaNumber: String,
+            vcn: String
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = CardInfoWithouMemberRequestContent(
+                        cardInfo = CardInfoRequestContentInfo(
+                            cardSchemeId = cardSchemeId,
+                            precaNumber = precaNumber,
+                            vcn = vcn
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.CardSelReq.value
+                    )
+                ),
+            )
+        }
+
         fun createIssueSumRequest(
             memberNumber: String,
             cardInfo: CardInfoWithDesignIdContentInfo,
@@ -337,6 +358,21 @@ class RequestHelper {
                     ),
                     head = BaseHead(
                         messageType = MessageType.PasswordResetReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createGiftCertifiRequest(
+            cardInfo:GiftCertifiCardInfoRequestContentInfo
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = GiftCertifiRequest(
+                        cardInfo = cardInfo
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.CardCertifiNoMemReq.value
                     )
                 ),
             )

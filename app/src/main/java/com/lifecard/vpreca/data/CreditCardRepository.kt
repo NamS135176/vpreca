@@ -122,4 +122,28 @@ class CreditCardRepository(
             }
         }
     }
+
+    suspend fun giftCardInfo(confirmationNumber: String, vcnFourDigits:String): Result<CardInfo> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val republishCardResponse = apiService.certifiGift(
+                    RequestHelper.createGiftCertifiRequest(
+                       GiftCertifiCardInfoRequestContentInfo(confirmationNumber, vcnFourDigits)
+                    )
+                )
+                val cardResponse = apiService.getCard(
+                    RequestHelper.createCardInfoWithouMemberRequest(
+                        republishCardResponse.brandPrecaApi.response.cardSchemeId!!,
+                        republishCardResponse.brandPrecaApi.response.precaNumber!!,
+                        republishCardResponse.brandPrecaApi.response.vcn!!,
+                    )
+                )
+                Result.Success(cardResponse.brandPrecaApi.response.cardInfo!!)
+            } catch (e: Exception) {
+                println("CreditCardRepository... giftCardInfo has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
 }

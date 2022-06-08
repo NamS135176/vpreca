@@ -10,6 +10,8 @@ class Constant {
 
         const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
         const val API_BASE_URL = "https://by4h7iozy5.execute-api.ap-southeast-1.amazonaws.com/dev/"
+        const val FEE_TYPE_BALANCE = "31"
+        const val FEE_TYPE_ISSUE = "34"
         //staging
 //        const val API_BASE_URL =
 //            "https://btpslgn3o5.execute-api.ap-southeast-1.amazonaws.com/staging/"

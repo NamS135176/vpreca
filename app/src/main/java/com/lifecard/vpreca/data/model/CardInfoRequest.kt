@@ -9,6 +9,11 @@ data class CardInfoRequestContent(
     val cardInfo: CardInfoRequestContentInfo
 )
 
+data class CardInfoWithouMemberRequestContent(
+    @SerializedName("cardInfo")
+    val cardInfo: CardInfoRequestContentInfo
+)
+
 data class MemberInfoContent(
     @SerializedName("memberNumber")
     val memberNumber: String,

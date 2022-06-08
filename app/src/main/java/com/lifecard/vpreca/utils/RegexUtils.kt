@@ -64,7 +64,7 @@ class RegexUtils {
 
         private const val RegexHiraganaFullWidth = "^[ぁ-ん]+\$"
         private const val RegexSecondNameFullWidth = "^[一-龥ぁ-ん]+\$"
-
+        private const val RegexGiftNumber = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_]{15}\$"
         fun isLoginIdValid(loginId: String?): Boolean {
             return loginId?.let { loginId ->
                 Pattern.compile(RegexLoginID).matcher(loginId).matches()
@@ -102,6 +102,12 @@ class RegexUtils {
         fun isSecretAnswerValid(answer: String?): Boolean {
             return answer?.let {
                 Pattern.compile(RegexSecretAnswer).matcher(answer)
+                    .matches()
+            } ?: false
+        }
+        fun isGiftNumberValid(gift: String?): Boolean {
+            return gift?.let {
+                Pattern.compile(RegexGiftNumber).matcher(gift)
                     .matches()
             } ?: false
         }

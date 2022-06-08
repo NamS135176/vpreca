@@ -86,12 +86,22 @@
         android:id="@+id/nav_introduce_second"
         android:name="com.lifecard.vpreca.ui.introduce.IntroduceFragmentSecond"
         android:label="fragment_introduce_second"
-        tools:layout="@layout/introduce_fragment_second_fragment" />
+        tools:layout="@layout/introduce_fragment_second_fragment" >
+        <action
+            android:id="@+id/action_second_to_third"
+            app:destination="@id/nav_introduce_third" />
+    </fragment>
     <fragment
         android:id="@+id/nav_introduce_third"
         android:name="com.lifecard.vpreca.ui.introduce.IntroduceFragmentThird"
         android:label="fragment_introduce_third"
-        tools:layout="@layout/introduce_fragment_third_fragment" />
+        tools:layout="@layout/introduce_fragment_third_fragment" >
+        <argument
+            android:name="card_data"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.CardInfo"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_forgot_input"
         android:name="com.lifecard.vpreca.ui.forgotpass.ForgotPassFragment"
