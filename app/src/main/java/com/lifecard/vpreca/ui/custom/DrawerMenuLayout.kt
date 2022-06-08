@@ -189,8 +189,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
                 1 -> viewFindNavController().navigate(R.id.nav_gift_card_policy)
                 3 -> viewFindNavController().navigate(R.id.nav_change_info_data)
                 4 -> viewFindNavController().navigate(R.id.nav_change_pass)
-                5 -> Toast.makeText(context, "Not yet supported)", Toast.LENGTH_SHORT)
-                    .show()//menu_change_phone
+                5 -> viewFindNavController().navigate(R.id.nav_change_phone_first)
                 6 -> viewFindNavController().navigate(
                     R.id.nav_web_direct,
                     WebDirectFragmentArgs(screenId = WebDirectScreen.SCREEN_CREDIT_CARD_INFO).toBundle()

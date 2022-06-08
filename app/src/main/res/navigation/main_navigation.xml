@@ -444,7 +444,55 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
-
+    <fragment
+        android:id="@+id/nav_change_phone_first"
+        android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneFirstFragment"
+        android:label="@string/title_fingerprint_setting"
+        tools:layout="@layout/fragment_change_phone_first"/>
+    <fragment
+        android:id="@+id/nav_change_phone_second"
+        android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneSecondFragment"
+        android:label="@string/title_fingerprint_setting"
+        tools:layout="@layout/fragment_change_phone_second"/>
+    <fragment
+        android:id="@+id/nav_change_phone_input_phone"
+        android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneInputPhoneFragment"
+        android:label="@string/title_fingerprint_setting"
+        tools:layout="@layout/fragment_change_phone_input_phone">
+        <action
+            android:id="@+id/action_to_confirm"
+            app:destination="@id/nav_change_phone_confirm_phone" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_change_phone_confirm_phone"
+        android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneConfirmPhoneFragment"
+        android:label="@string/title_fingerprint_setting"
+        tools:layout="@layout/fragment_change_phone_confirm_phone">
+        <action
+            android:id="@+id/action_to_confirm"
+            app:destination="@id/nav_change_phone_confirm" />
+        <argument
+            android:name="card_data"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_change_phone_confirm"
+        android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneConfirm"
+        android:label="@string/title_fingerprint_setting"
+        tools:layout="@layout/fragment_change_phone_confirm">
+        <argument
+            android:name="card_data"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_change_phone_complete"
+        android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneCompleteFragment"
+        android:label="@string/title_fingerprint_setting"
+        tools:layout="@layout/fragment_change_phone_complete"/>
     <fragment
         android:id="@+id/nav_fingerprint_setting"
         android:name="com.lifecard.vpreca.ui.fingerprint.FingerprintFragment"
