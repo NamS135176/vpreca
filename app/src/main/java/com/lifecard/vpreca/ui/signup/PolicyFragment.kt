@@ -42,7 +42,12 @@ class PolicyFragment : Fragment() {
         val cancelButton = binding.appbarPolicy.cancelBtn
         val buttonTermOfUse = binding.buttonTermOfUse
         val buttonPolicy = binding.buttonPolicy
-
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_login)
+            }
+        })
         cbPolicy.isChecked = false
         btnSubmitPolicy.isEnabled = false
         cancelButton.setOnClickListener(View.OnClickListener {
@@ -60,7 +65,7 @@ class PolicyFragment : Fragment() {
         })
 
         btnSubmitPolicy.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_signup_input)
+            findNavController().navigate(R.id.nav_signup_phone)
         })
 
         buttonPolicy.setOnClickListener(View.OnClickListener {

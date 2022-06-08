@@ -9,7 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
 
@@ -19,6 +22,7 @@ class ConfirmPhoneFragment : Fragment() {
 
     private var _binding:FragmentConfirmPhoneBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel: ConfirmPhoneViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -31,41 +35,36 @@ class ConfirmPhoneFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        viewModel = ViewModelProvider(this).get(ConfirmPhoneViewModel::class.java)
         _binding = FragmentConfirmPhoneBinding.inflate(inflater, container, false)
+        val inputPhoneConfirm = binding.forgotPassEmailInput
+        val btnSubmitPhoneConfirm = binding.btnSubmitPolicy
+        val layout = binding.forgotPassEmailLayout
+        val btnBack = binding.appbarForgotPass.btnBack
+        val btnCancel = binding.appbarForgotPass.cancelBtn
+
+        btnCancel.setOnClickListener(View.OnClickListener {
+            MaterialAlertDialogBuilder(requireContext()).apply {
+                setPositiveButton("はい") { _, _ ->
+                    findNavController().navigate(R.id.nav_login)
+                }
+                setNegativeButton("いいえ", null)
+                setMessage("途中ですがキャンセルしてもよろしいですか")
+            }.create().show()
+        })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_signup_phone) })
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_signup_phone)
+            }
+        })
+
+        btnSubmitPhoneConfirm.setOnClickListener(View.OnClickListener {
+        })
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val inputPhoneConfirm = binding.edtPhoneConfirm
-        val btnSubmitPhoneConfirm = binding.btnSubmitPhoneConfirm
-        val afterTextChangedListener = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                if(s?.length > 0){
-                    btnSubmitPhoneConfirm.isEnabled = true
-                }
-            }
-        }
-        inputPhoneConfirm.addTextChangedListener(afterTextChangedListener)
-
-        btnSubmitPhoneConfirm.setOnClickListener(View.OnClickListener {
-//            val emailFragment = EmailFragment()
-//            val manager = parentFragmentManager
-//            val transaction = manager.beginTransaction()
-//            transaction.replace(R.id.fmSignup, emailFragment)
-//            transaction.addToBackStack(null)
-//            transaction.setCustomAnimations(R.anim.in_from_right, R.anim.out_from_left)
-//            transaction.commit()
-        })
-    }
 
 }

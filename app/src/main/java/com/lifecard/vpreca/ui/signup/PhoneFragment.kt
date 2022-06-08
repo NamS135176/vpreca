@@ -9,62 +9,90 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.BalanceTotalRemain
 import com.lifecard.vpreca.databinding.FragmentPhoneBinding
 import com.lifecard.vpreca.databinding.FragmentPolicyBinding
+import com.lifecard.vpreca.ui.balance_amount.BalanceSelectSourceConfirmFragmentDirections
+import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputViewModel
 
 
 class PhoneFragment : Fragment() {
 
-    private val phoneViewModel by lazy { ViewModelProvider(this).get(PhoneViewModel::class.java) }
+    private lateinit var phoneViewModel: PhoneViewModel
     private var _binding:FragmentPhoneBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
-//        return inflater.inflate(R.layout.fragment_phone, container, false)
+        phoneViewModel = ViewModelProvider(this).get(PhoneViewModel::class.java)
         _binding = FragmentPhoneBinding.inflate(inflater, container, false)
+        val inputPhone = binding.forgotPassEmailInput
+        val btnSubmitPhone = binding.btnSubmitPolicy
+        val btnBack = binding.appbarForgotPass.btnBack
+        val btnCancel = binding.appbarForgotPass.cancelBtn
+        val layout = binding.forgotPassEmailLayout
+        btnCancel.setOnClickListener(View.OnClickListener {
+            MaterialAlertDialogBuilder(requireContext()).apply {
+                setPositiveButton("はい") { _, _ ->
+                    findNavController().navigate(R.id.nav_login)
+                }
+                setNegativeButton("いいえ", null)
+                setMessage("途中ですがキャンセルしてもよろしいですか")
+            }.create().show()
+        })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_policy) })
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_policy)
+            }
+        })
+
+        phoneViewModel.formState.observe(viewLifecycleOwner, Observer { phoneViewModel.checkFormValid() })
+
+        phoneViewModel.phoneError.observe(viewLifecycleOwner, Observer { error: Int? ->
+            layout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        })
+
+        phoneViewModel.validForm.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { isValid ->
+                btnSubmitPhone.isEnabled = isValid
+            })
+
+
+        phoneViewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            it?.success?.let {
+                findNavController().navigate(R.id.nav_signup_confirm_phone)
+            }
+        })
+
+        inputPhone.doAfterTextChanged { text -> phoneViewModel.phoneDataChanged(text = text.toString()) }
+
+        btnSubmitPhone.setOnClickListener(View.OnClickListener {
+            phoneViewModel.submit()
+        })
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val inputPhone = binding.edtPhone
-        val btnSubmitPhone = binding.btnSubmitPhone
-        val afterTextChangedListener = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // ignore
-            }
 
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                // ignore
-            }
-
-            override fun afterTextChanged(s: Editable) {
-//                if(phoneViewModel.isPhoneValid(s.toString())){
-//                    btnSubmitPhone.isEnabled = true
-//                }
-                phoneViewModel.checkPhone(s.toString())
-                btnSubmitPhone.isEnabled = phoneViewModel.enableNext
-            }
-        }
-        inputPhone.addTextChangedListener(afterTextChangedListener)
-
-        btnSubmitPhone.setOnClickListener(View.OnClickListener {
-
-        })
-    }
 
 }

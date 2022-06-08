@@ -147,7 +147,7 @@ class ForgotPassViewModel @Inject constructor(
     fun resetPassData(email:String, birthday:String, phone:String, secretQuestion:String, secretAnswer:String) {
         viewModelScope.launch {
             _loading.value = true
-            val res = userRepository.resetPassword("email", "fgdfgdfg", "0123456789", "sdfsdfsf", "sdfsdf")
+            val res = userRepository.resetPassword(email, birthday, phone, secretQuestion, secretAnswer)
             if (res is Result.Success) {
                 _resetPassState.value = ResetPassReqState(success = res.data)
             } else if (res is Result.Error) {

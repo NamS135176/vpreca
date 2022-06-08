@@ -104,6 +104,26 @@
         tools:layout="@layout/fragment_forgot_pass_complete" />
 
     <fragment
+        android:id="@+id/nav_signup_phone"
+        android:name="com.lifecard.vpreca.ui.signup.PhoneFragment"
+        android:label="fragment_forgot_pass_input"
+        tools:layout="@layout/fragment_phone" />
+    <fragment
+        android:id="@+id/nav_signup_confirm_phone"
+        android:name="com.lifecard.vpreca.ui.signup.ConfirmPhoneFragment"
+        android:label="fragment_forgot_pass_input"
+        tools:layout="@layout/fragment_confirm_phone" />
+    <fragment
+        android:id="@+id/nav_signup_email"
+        android:name="com.lifecard.vpreca.ui.signup.EmailFragment"
+        android:label="fragment_forgot_pass_input"
+        tools:layout="@layout/fragment_email" />
+    <fragment
+        android:id="@+id/nav_signup_confirm_email"
+        android:name="com.lifecard.vpreca.ui.signup.ConfirmEmailFragment"
+        android:label="fragment_forgot_pass_input"
+        tools:layout="@layout/fragment_confirm_email" />
+    <fragment
         android:id="@+id/nav_webview"
         android:name="com.lifecard.vpreca.ui.webview.WebViewFragment"
         style="@style/Theme.VPreca.Fullscreen"
