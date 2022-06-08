@@ -79,6 +79,14 @@ class SignupInputFragment : Fragment() {
                 }
             })
 
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.nav_signup_confirm_email)
+            }
+        })
+
+
         scrollView.setOnClickListener(View.OnClickListener { dismissAllSpinner() })
 
         val cal = Calendar.getInstance()

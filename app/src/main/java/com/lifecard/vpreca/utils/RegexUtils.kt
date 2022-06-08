@@ -85,6 +85,7 @@ class RegexUtils {
             } ?: false
         }
 
+
         fun isEmailValid(email: String?): Boolean {
             return email?.let {
                 email.length in 0..256 && Patterns.EMAIL_ADDRESS.matcher(email).matches()

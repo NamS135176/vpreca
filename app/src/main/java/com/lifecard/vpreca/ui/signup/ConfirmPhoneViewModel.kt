@@ -13,14 +13,14 @@ class ConfirmPhoneViewModel : ViewModel() {
     val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
 
     private fun checkCfPhoneValid(): Boolean {
-//        return if (!RegexUtils.isPhoneNumberValid(formState.value?.confirmCode)) {
-//            cfPhoneError.value = R.string.rgx_error_phone_number
-//            false
-//        } else {
-//            cfPhoneError.value = null
-//            true
-//        }
-        return true
+        return if (formState.value?.confirmCode?.length != 4) {
+            cfPhoneError.value = R.string.error_code
+            false
+        } else {
+            cfPhoneError.value = null
+            true
+        }
+//        return true
     }
 
     fun cfPhoneDataChanged(text: String) {

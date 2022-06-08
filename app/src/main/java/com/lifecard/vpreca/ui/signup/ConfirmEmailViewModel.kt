@@ -2,6 +2,7 @@ package com.lifecard.vpreca.ui.signup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lifecard.vpreca.R
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
 
 class ConfirmEmailViewModel:ViewModel() {
@@ -11,14 +12,13 @@ class ConfirmEmailViewModel:ViewModel() {
     val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
 
     private fun checkCfEmailValid(): Boolean {
-//        return if (!RegexUtils.isPhoneNumberValid(formState.value?.confirmCode)) {
-//            cfPhoneError.value = R.string.rgx_error_phone_number
-//            false
-//        } else {
-//            cfPhoneError.value = null
-//            true
-//        }
-        return true
+        return if (formState.value?.confirmEmail?.length != 4) {
+            cfEmailError.value = R.string.error_code
+            false
+        } else {
+            cfEmailError.value = null
+            true
+        }
     }
 
     fun cfEmailDataChanged(text: String) {

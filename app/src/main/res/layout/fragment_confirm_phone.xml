@@ -146,6 +146,7 @@
                                 android:background="@drawable/input_signup_style"
                                 android:hint="@string/confirm_phone_hint"
                                 android:inputType="number"
+                                android:maxLength="4"
                                 android:minHeight="@dimen/min_height_input"
                                 android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                                 android:textColor="@color/black"
