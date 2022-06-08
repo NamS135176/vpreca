@@ -84,6 +84,11 @@ interface ApiService {
         @Body cardRepublishRequest: BrandRequest
     ): UpdateCardResponse
 
+    @POST("CardCertifiNoMemReq")
+    suspend fun certifiGift(
+        @Body giftCardCertifiRequest: BrandRequest
+    ): GiftCertifiResponse
+
     @GET("challenge")
     suspend fun getBioChallenge(@Query("loginId") memberNumber: String): BioChallenge
 
