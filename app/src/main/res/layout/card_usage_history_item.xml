@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@{Converter.convertDateTimeMonth(item.historyAddDate)}"
+            android:text="@{Converter.formatCardDateTimeMonth(item.historyAddDate)}"
             android:textSize="10sp" />
 
         <androidx.appcompat.widget.AppCompatTextView

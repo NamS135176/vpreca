@@ -58,16 +58,13 @@
                         style="@style/Widget.AppCompat.TextView.Bold"
                         android:text="@string/issue_card_select_source_total"/>
                 </LinearLayout>
-                <com.google.android.material.textview.MaterialTextView
-                    app:layout_constraintTop_toBottomOf="@+id/total_layout"
-                    android:background="@drawable/underline_transapent"
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/underline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="0sp"
-                    android:id="@+id/underline"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/white"
-                    android:lineSpacingExtra="6sp"/>
+                    app:dividerColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/total_layout" />
+
                 <LinearLayout
                     android:layout_marginTop="43dp"
                     android:id="@+id/layout_tap"

@@ -462,7 +462,7 @@
     <string name="issue_card_by_code_select_source_des">既存のVプリカ残高を加算して発行できます。\n（最大5枚、合計残高10万円まで）</string>
     <string name="issue_card_by_code_select_source_appbar_title">残高加算</string>
     <string name="issue_card_by_code_select_source_amount_title">加算金額</string>
-    <string name="issue_card_by_code_select_source_under_amount_title">最大4枚まで選択できます</string>
+    <string name="issue_card_by_code_select_source_under_amount_title">加算するカードを選択してください。</string>
     <string name="issue_card_by_code_select_source_under_amount_des">最大4枚まで選択できます</string>
     <!--    Issue Card By Code Select Soure-->
 
