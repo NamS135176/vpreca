@@ -86,16 +86,19 @@
         android:id="@+id/nav_introduce_second"
         android:name="com.lifecard.vpreca.ui.introduce.IntroduceFragmentSecond"
         android:label="fragment_introduce_second"
-        tools:layout="@layout/introduce_fragment_second_fragment" >
+        tools:layout="@layout/introduce_fragment_second_fragment">
         <action
             android:id="@+id/action_second_to_third"
             app:destination="@id/nav_introduce_third" />
+        <action
+            android:id="@+id/action_to_camera_ocr"
+            app:destination="@id/nav_camera_ocr" />
     </fragment>
     <fragment
         android:id="@+id/nav_introduce_third"
         android:name="com.lifecard.vpreca.ui.introduce.IntroduceFragmentThird"
         android:label="fragment_introduce_third"
-        tools:layout="@layout/introduce_fragment_third_fragment" >
+        tools:layout="@layout/introduce_fragment_third_fragment">
         <action
             android:id="@+id/action_third_to_usage"
             app:destination="@id/nav_card_usage" />
@@ -168,5 +171,12 @@
     <fragment
         android:id="@+id/nav_camera_ocr"
         android:name="com.lifecard.vpreca.ui.ocr.CameraFragment"
-        android:label="" />
+        android:label="Camera"
+        tools:layout="@layout/fragment_camera">
+        <argument
+            android:name="hint"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

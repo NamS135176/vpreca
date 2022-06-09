@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -176,8 +177,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
         buttonSeeAllCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_list_vpreca) })
 
-        binding.textLastLogin.text =
-            getString(R.string.home_text_last_login, SimpleDateFormat("yyyy M/d").format(Date()))
+        binding.textLastLoginDate.text = SimpleDateFormat("yyyy M/d").format(Date())
 
         binding.listCard.buttonUsage.setOnClickListener(View.OnClickListener {
 //            findNavController().navigate(R.id.action_to_card_usage)
@@ -328,6 +328,13 @@ class HomeFragment : Fragment(), CoroutineScope {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         unlockDrawer()
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        })
     }
 
     override fun onDestroyView() {

@@ -108,7 +108,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="4sp"
-                            android:text="@string/balance_amount_menu_des_second"
+                            android:text="@string/balance_amount_menu_des_first"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>

@@ -41,7 +41,7 @@ class BalanceAmountMenuViewModel @Inject constructor(
                         SuspendDealResult(networkTrouble = true)
                     is ApiException -> _suspendDealResult.value = SuspendDealResult(
                         error = ErrorMessageException(
-                            errorMessage = result.exception.message
+                            errorMessage = result.exception.errorMessage
                         )
                     )
                     is InternalServerException -> _suspendDealResult.value =

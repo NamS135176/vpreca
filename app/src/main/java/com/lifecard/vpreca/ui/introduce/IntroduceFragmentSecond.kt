@@ -59,7 +59,9 @@ class IntroduceFragmentSecond : Fragment() {
             viewModel.submit()
         })
         buttonOcrDetection.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_camera_ocr)
+            val action =
+                IntroduceFragmentSecondDirections.actionToCameraOcr(getString(R.string.camera_ocr_hint_input_gift_card))
+            findNavController().navigate(action)
         })
 
         viewModel.formState.observe(viewLifecycleOwner, Observer { viewModel.checkFormValid() })
@@ -106,7 +108,8 @@ class IntroduceFragmentSecond : Fragment() {
                     }
                 }
                 changeInfoState.success?.let {
-                    val action = IntroduceFragmentSecondDirections.actionSecondToThird(changeInfoState.success)
+                    val action =
+                        IntroduceFragmentSecondDirections.actionSecondToThird(changeInfoState.success)
                     findNavController().navigate(action)
                 }
             })

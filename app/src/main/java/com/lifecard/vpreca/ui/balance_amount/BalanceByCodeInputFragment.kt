@@ -17,10 +17,11 @@ import com.lifecard.vpreca.data.model.BalanceGiftData
 import com.lifecard.vpreca.data.model.BalanceTotalRemain
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentBalanceByCodeInputBinding
-import com.lifecard.vpreca.utils.showInternetTrouble
-import com.lifecard.vpreca.utils.showPopupMessage
+import com.lifecard.vpreca.ui.introduce.GiftCardInputCardFragmentDirections
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import org.joda.time.convert.Converter
+
 @AndroidEntryPoint
 class BalanceByCodeInputFragment : Fragment() {
 
@@ -43,13 +44,21 @@ class BalanceByCodeInputFragment : Fragment() {
         val btnSubmit = binding.btnSubmitPolicy
         val btnBack = binding.appbarSignup.btnBack
         val loading = binding.loading
+        val buttonOcrDetection = binding.buttonOcrDetection
+
+        buttonOcrDetection.setOnClickListener(View.OnClickListener {
+            val action =
+                BalanceByCodeInputFragmentDirections.actionToCameraOcr(getString(R.string.camera_ocr_hint_missing_balance))
+            findNavController().navigate(action)
+        })
 
         val fakeBalanceAmount = args.balanceTotalRemain?.balanceAmount?.toInt()!!
 
         totalAmount.text = com.lifecard.vpreca.utils.Converter.convertCurrency(fakeBalanceAmount)
 
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.nav_balance_amount_menu)
             }
@@ -57,7 +66,7 @@ class BalanceByCodeInputFragment : Fragment() {
         viewModel.validForm.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { signupFormState ->
-                if (giftCodeEdt.text.toString() == "" ) {
+                if (giftCodeEdt.text.toString() == "") {
                     btnSubmit.isEnabled = false
                 } else {
                     btnSubmit.isEnabled =
@@ -70,7 +79,8 @@ class BalanceByCodeInputFragment : Fragment() {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
-            } })
+            }
+        })
         giftCodeEdt.doAfterTextChanged { text -> viewModel.giftCodeDataChanged(text = text.toString()) }
 
         viewModel.giftInfoResult.observe(
@@ -78,7 +88,11 @@ class BalanceByCodeInputFragment : Fragment() {
             Observer { giftInfoResult ->
                 giftInfoResult ?: return@Observer
                 giftInfoResult.success?.let {
-                    val data = BalanceGiftData(args.balanceTotalRemain?.balanceAmount!!, giftInfoResult.success.giftAmount, giftInfoResult.success.giftNumber)
+                    val data = BalanceGiftData(
+                        args.balanceTotalRemain?.balanceAmount!!,
+                        giftInfoResult.success.giftAmount,
+                        giftInfoResult.success.giftNumber
+                    )
                     val action =
                         BalanceByCodeInputFragmentDirections.actionInputToValueConfirm(
                             data
@@ -86,8 +100,8 @@ class BalanceByCodeInputFragment : Fragment() {
                     findNavController().navigate(action)
                 }
                 giftInfoResult.error?.let { error ->
-                    error.messageResId?.let { showPopupMessage("",getString(it)) }
-                    error.errorMessage?.let { showPopupMessage("",it) }
+                    error.messageResId?.let { showPopupMessage("", getString(it)) }
+                    error.errorMessage?.let { showPopupMessage("", it) }
                 }
                 giftInfoResult.networkTrouble?.let {
                     if (it) {
@@ -104,8 +118,22 @@ class BalanceByCodeInputFragment : Fragment() {
         })
 
 
-        btnSubmit.setOnClickListener(View.OnClickListener { viewModel.getGiftData(giftCodeEdt.text.toString())})
+        btnSubmit.setOnClickListener(View.OnClickListener { viewModel.getGiftData(giftCodeEdt.text.toString()) })
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val livedata = getNavigationResult("ocr_code")
+        livedata?.observe(viewLifecycleOwner, Observer { ocr ->
+            livedata.removeObservers(viewLifecycleOwner)
+            if (!ocr.isNullOrEmpty()) {
+                val textCode = binding.issueCardByCodeInputCode
+                textCode.setText(ocr)
+                showToast(getString(R.string.camera_ocr_success), toastPosition = ToastPosition.Top)
+            }
+        })
     }
 
 }

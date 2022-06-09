@@ -1,6 +1,8 @@
 package com.lifecard.vpreca
 
 import android.app.Application
+import android.content.Context
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.multidex.MultiDexApplication
@@ -24,4 +26,6 @@ class MyApplication: MultiDexApplication() {
         // Call this on the main thread as it may require Activity.restart()
         AppCompatDelegate.setApplicationLocales(appLocale)
     }
+
+
 }

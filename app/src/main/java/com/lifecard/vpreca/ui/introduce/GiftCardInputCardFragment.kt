@@ -61,7 +61,9 @@ class GiftCardInputCardFragment : Fragment() {
             viewModel.submit()
         })
         buttonOcrDetection.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_camera_ocr)
+            val action =
+                GiftCardInputCardFragmentDirections.actionGiftcardinputcardToCameraOcr(getString(R.string.camera_ocr_hint_input_gift_card))
+            findNavController().navigate(action)
         })
 
         viewModel.formState.observe(viewLifecycleOwner, Observer { viewModel.checkFormValid() })
@@ -108,7 +110,11 @@ class GiftCardInputCardFragment : Fragment() {
                     }
                 }
                 changeInfoState.success?.let {
-                    val action = GiftCardInputCardFragmentDirections.actionGiftcardinputcardToGiftcardconfirm(changeInfoState.success, GiftCardConfirmData("inputcard"))
+                    val action =
+                        GiftCardInputCardFragmentDirections.actionGiftcardinputcardToGiftcardconfirm(
+                            changeInfoState.success,
+                            GiftCardConfirmData("inputcard")
+                        )
                     findNavController().navigate(action)
                 }
             })

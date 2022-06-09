@@ -20,9 +20,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.PhoneData
 import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
-import com.lifecard.vpreca.utils.hideToolbar
-import com.lifecard.vpreca.utils.showAlertMessage
-import com.lifecard.vpreca.utils.showToolbar
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -39,6 +37,7 @@ class ChangeInfoDataFragment : Fragment() {
     private val viewModel: ChangeInfoDataViewModel by viewModels()
     private var _binding: FragmentChangeInfoDataBinding? = null
     private val binding get() = _binding!!
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,18 +46,18 @@ class ChangeInfoDataFragment : Fragment() {
         _binding = FragmentChangeInfoDataBinding.inflate(inflater, container, false)
         val btnBack = binding.appbarConfirmSignup.btnBack
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_home)
-                }
-            })
+//        requireActivity().onBackPressedDispatcher.addCallback(
+//            viewLifecycleOwner,
+//            object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    findNavController().navigate(R.id.nav_home)
+//                }
+//            })
         val btnOpenDialog = binding.btnSubmitPolicy
         val cal = Calendar.getInstance()
-        var dateData = ""
-        var phone = ""
-        var memberNumber = ""
+        val dateData = ""
+        val phone = ""
+        val memberNumber = ""
         btnOpenDialog.setOnClickListener(
             View.OnClickListener {
                 val view = View.inflate(requireContext(), R.layout.bod_dialog, null)
@@ -141,8 +140,7 @@ class ChangeInfoDataFragment : Fragment() {
                         )
                         dialog.dismiss()
                         findNavController().navigate(action)
-                    }
-                    else{
+                    } else {
                         layout.visibility = View.VISIBLE
                     }
 
@@ -153,17 +151,24 @@ class ChangeInfoDataFragment : Fragment() {
             }
         )
 
-        viewModel.user.observe(viewLifecycleOwner, androidx.lifecycle.Observer { user ->
-            user?.let { binding.user = user }
-
-            dateData = user.birthday!!
-            phone = user.telephoneNumber1!!
-            memberNumber = user.memberNumber!!
-        })
-        viewModel.error.observe(
+        viewModel.changeInfoDataState.observe(
             viewLifecycleOwner,
-            androidx.lifecycle.Observer { err -> err?.let { showAlertMessage(err) } })
+            androidx.lifecycle.Observer { state ->
+
+                state ?: return@Observer
+
+                state.networkTrouble?.let { if (it) showInternetTrouble() }
+                state.error?.messageResId?.let { showPopupMessage(message = getString(it)) }
+                state.error?.errorMessage?.let { showPopupMessage(message = it) }
+                state.errorText?.let { errorText -> showPopupMessage(message = errorText) }
+                state.success?.let { memberInfo ->
+                    binding.user = memberInfo
+                    btnOpenDialog.isEnabled = true
+                }
+            })
+
         viewModel.getUser()
+
         return binding.root
     }
 

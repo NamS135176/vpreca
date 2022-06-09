@@ -68,13 +68,18 @@ class IssueCardByCodeInputCode : Fragment() {
             Observer { giftInfoResult ->
                 giftInfoResult ?: return@Observer
                 giftInfoResult.success?.let {
-                    val data = BalanceGiftData("",giftInfoResult.success.giftAmount, giftInfoResult.success.giftNumber)
-                    val action = IssueCardByCodeInputCodeDirections.actionInputcodeToConfirmValue(data)
+                    val data = BalanceGiftData(
+                        "",
+                        giftInfoResult.success.giftAmount,
+                        giftInfoResult.success.giftNumber
+                    )
+                    val action =
+                        IssueCardByCodeInputCodeDirections.actionInputcodeToConfirmValue(data)
                     findNavController().navigate(action)
                 }
                 giftInfoResult.error?.let { error ->
-                    error.messageResId?.let { showPopupMessage("",getString(it)) }
-                    error.errorMessage?.let { showPopupMessage("",it) }
+                    error.messageResId?.let { showPopupMessage("", getString(it)) }
+                    error.errorMessage?.let { showPopupMessage("", it) }
                 }
                 giftInfoResult.networkTrouble?.let {
                     if (it) {
@@ -92,8 +97,12 @@ class IssueCardByCodeInputCode : Fragment() {
 
 
 //        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_value_confirm) })
-        btnSubmit.setOnClickListener(View.OnClickListener { viewModel.getGiftData(giftCodeEdt.text.toString())})
-        buttonOcrDetection.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_camera_ocr) })
+        btnSubmit.setOnClickListener(View.OnClickListener { viewModel.getGiftData(giftCodeEdt.text.toString()) })
+        buttonOcrDetection.setOnClickListener(View.OnClickListener {
+            val action =
+                IssueCardByCodeInputCodeDirections.actionToCameraOcr(getString(R.string.camera_ocr_hint_input_gift_card))
+            findNavController().navigate(action)
+        })
         return binding.root
     }
 

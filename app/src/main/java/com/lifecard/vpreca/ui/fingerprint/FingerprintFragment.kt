@@ -16,12 +16,17 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
+import com.lifecard.vpreca.data.UserManager
+import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentFingerprintBinding
 import com.lifecard.vpreca.utils.hideLoadingDialog
+import com.lifecard.vpreca.utils.showAlertMessage
 import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executor
+import javax.crypto.Cipher
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FingerprintFragment : Fragment() {
@@ -29,6 +34,12 @@ class FingerprintFragment : Fragment() {
     companion object {
         fun newInstance() = FingerprintFragment()
     }
+
+    @Inject
+    lateinit var userManager: UserManager
+
+    @Inject
+    lateinit var secureStore: SecureStore
 
     private val viewModel: FingerprintViewModel by viewModels()
     private var _binding: FragmentFingerprintBinding? = null
@@ -71,7 +82,7 @@ class FingerprintFragment : Fragment() {
         })
         viewModel.registerBiometricResult.observe(viewLifecycleOwner, Observer { result ->
             if (result?.error != null) {
-                showAlert(getString(result.error))
+                showAlertMessage(getString(result.error))
             } else if (result?.success != null) {
                 showToast(getString(R.string.biometric_setting_success))
             }
@@ -94,13 +105,18 @@ class FingerprintFragment : Fragment() {
 
         fingerprint.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                bioManager?.getCryptoObjectForPromtBio()?.let {
+                bioManager?.getCryptoObjectForPromptBio(Cipher.ENCRYPT_MODE)?.let {
                     biometricPrompt.authenticate(promptInfo, it)
                 } ?: run {
-                    showAlert(getString(R.string.error_fingerprint_not_support))
+                    showAlertMessage(getString(R.string.error_fingerprint_not_support))
                 }
             } else {
                 viewModel.setFingerprintSetting(requireContext(), false)
+                userManager.authToken?.let { authToken ->
+                    secureStore.moveAuthTokenToNormalStore(
+                        authToken
+                    )
+                }
             }
         }
 
@@ -124,15 +140,16 @@ class FingerprintFragment : Fragment() {
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
-                    bioManager?.getPublicKey()?.let { publicKey: String ->
-                        viewModel.uploadPublicKey(
-                            publicKey,
-                            signature = result.cryptoObject?.signature
-                        )
+                    result.cryptoObject?.cipher?.let {
+                        secureStore.updateEncryptBioAuthTokenStore(it)
+                        userManager.authToken?.let { authToken ->
+                            secureStore.saveAuthToken(
+                                authToken
+                            )
+                        }
                         viewModel.setFingerprintSetting(requireContext(), true)
-                    } ?: run {
-                        viewModel.setFingerprintSetting(requireContext(), false)
-                        showAlert(getString(R.string.error_bio_authentication_failure))
+                        //show toast
+                        showToast(getString(R.string.biometric_setting_success))
                     }
                 }
 
@@ -146,18 +163,10 @@ class FingerprintFragment : Fragment() {
         promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(getString(R.string.prompt_biometric_login_title))
             .setConfirmationRequired(true)
-//            .setSubtitle("Log in using your biometric credential")
             .setNegativeButtonText(getString(R.string.cancel))
             .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
             .build()
 
         return binding.root
-    }
-
-    fun showAlert(content: String) {
-        MaterialAlertDialogBuilder(requireContext()).apply {
-            setPositiveButton(R.string.button_ok, null)
-            setMessage(content)
-        }.create().show()
     }
 }

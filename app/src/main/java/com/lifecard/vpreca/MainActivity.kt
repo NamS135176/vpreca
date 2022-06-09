@@ -1,8 +1,12 @@
 package com.lifecard.vpreca
 
+import android.content.Context
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
@@ -21,6 +25,7 @@ import com.lifecard.vpreca.utils.lockDrawer
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -43,6 +48,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -112,5 +119,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                val newOverride = Configuration(newBase?.resources?.configuration)
+                newOverride.fontScale = 1.0f
+                applyOverrideConfiguration(newOverride)
+            }
+        } catch (e: Exception) {
+        }
+        super.attachBaseContext(newBase)
     }
 }

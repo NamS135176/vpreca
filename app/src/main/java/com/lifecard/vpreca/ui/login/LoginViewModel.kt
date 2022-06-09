@@ -1,27 +1,34 @@
 package com.lifecard.vpreca.ui.login
 
+import android.hardware.biometrics.BiometricPrompt
 import android.util.Base64
 import androidx.lifecycle.*
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.UserRepository
+import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.splash.SplashState
+import com.lifecard.vpreca.utils.BiometricHelper
 import com.lifecard.vpreca.utils.RegexUtils
 import com.lifecard.vpreca.utils.RequestHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.security.Signature
+import javax.crypto.Cipher
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginRepository: UserRepository,
-    private val remoteRepository: RemoteRepository
+    private val remoteRepository: RemoteRepository,
+    private val secureStore: SecureStore,
+    private val userManager: UserManager
 ) :
     ViewModel() {
     val usernameError = MutableLiveData<Int?>()
@@ -58,42 +65,22 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun loginWithBio(username: String, signature: Signature) {
-        // can be launched in a separate asynchronous job
+
+    fun loginWithCipher(cipher: Cipher) {
         viewModelScope.launch {
             loading.value = true
-            val bioChallengeResult = remoteRepository.getBioChallenge(username)
-            if (bioChallengeResult is Result.Success) {
-                val challenge = bioChallengeResult.data.challenge
-                val salt = bioChallengeResult.data.salt
-                val nonce = bioChallengeResult.data.nonce
+            secureStore.updateDecryptBioAuthTokenStore(cipher)
+            secureStore.getAuthToken()?.let { authToken ->
+                userManager.authToken = authToken
+                val userResult = loginRepository.getUser()
+                if (userResult is Result.Success) {
+                    _loginResult.value =
+                        LoginResult(success = userResult.data)
 
-                val stringToSign = "$challenge$salt$nonce"
-                signature.update(stringToSign.toByteArray())
-                val signatureBytes = signature.sign()
-                val signedBySignature =
-                    Base64.encodeToString(signatureBytes, Base64.URL_SAFE or Base64.NO_WRAP)
-
-                val loginResult = loginRepository.loginWithBiometric(username, signedBySignature)
-
-                if (loginResult is Result.Success) {
-                    val userResult = loginRepository.getUser()
-                    if (userResult is Result.Success) {
-                        _loginResult.value =
-                            LoginResult(success = userResult.data)
-
-                    } else if (userResult is Result.Error) {
-                        handleResultErrorException(userResult.exception)
-                    }
-                } else if (loginResult is Result.Error) {
-                    handleResultErrorException(loginResult.exception)
+                } else if (userResult is Result.Error) {
+                    handleResultErrorException(userResult.exception)
                 }
-            } else if (bioChallengeResult is Result.Error) {
-                handleResultErrorException(bioChallengeResult.exception)
-                loading.value = false
-                return@launch
             }
-
             loading.value = false
         }
     }
@@ -126,10 +113,17 @@ class LoginViewModel @Inject constructor(
         errString: CharSequence
     ) {
         println("handleAuthenticationError... errorCode=$errorCode errString=$errString")
-//        when (errorCode) {
-//            BiometricPrompt.BIOMETRIC_ERROR_CANCELED -> _loginResult.value =
+        val messageResId = BiometricHelper.getMessageIdByErrorCode(errorCode)
+        messageResId?.let {
+            _loginResult.value = LoginResult(
+                error = ErrorMessageException(
+                    messageResId = it
+                )
+            )
+        } ?: kotlin.run {
+//            _loginResult.value =
 //                LoginResult(errorText = errString.toString())
-//        }
+        }
     }
 
     fun checkUsername(username: String): Boolean {

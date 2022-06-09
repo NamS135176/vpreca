@@ -2,8 +2,6 @@ package com.lifecard.vpreca.ui.login
 
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -27,11 +24,12 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
-import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.crypto.Cipher
 import javax.inject.Inject
 
 
@@ -39,6 +37,10 @@ import javax.inject.Inject
 class LoginFragment : NoToolbarFragment() {
     @Inject
     lateinit var secureStore: SecureStore
+
+    @Inject
+    lateinit var userManager: UserManager
+
     private val loginViewModel: LoginViewModel by viewModels()
     private var _binding: FragmentLoginBinding? = null
 
@@ -120,6 +122,7 @@ class LoginFragment : NoToolbarFragment() {
             Observer { loginResult ->
                 loginResult ?: return@Observer
 
+                loginResult.networkTrouble?.let { if (it) showInternetTrouble() }
                 loginResult.error?.messageResId?.let { showLoginFailed(getString(it)) }
                 loginResult.error?.errorMessage?.let { showLoginFailed(it) }
                 loginResult.errorText?.let { errorText ->
@@ -145,10 +148,6 @@ class LoginFragment : NoToolbarFragment() {
             }
         })
 
-        val savedUsername = secureStore.getLoginUserId()
-        savedUsername?.let {
-            usernameEditText.text = it.toEditable()
-        }
         usernameEditText.doAfterTextChanged {
             loginViewModel.checkValidForm(
                 username = usernameEditText.text.toString(),
@@ -201,14 +200,15 @@ class LoginFragment : NoToolbarFragment() {
         logoGift.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_first)
         })
+
+//        if (PreferenceHelper.isEnableBiometricSetting(requireContext()) && bioManager?.checkDeviceSupportBiometric() == true) {
+//            showBiometricDialog()
+//        }
         return binding.root
 
     }
 
     private fun showBiometricDialog() {
-        if (!loginViewModel.checkUsername(binding.username.text.toString())) {
-            return
-        }
         val executor = ContextCompat.getMainExecutor(requireContext())
         val biometricPrompt = BiometricPrompt(this, executor,
             object : BiometricPrompt.AuthenticationCallback() {
@@ -223,11 +223,10 @@ class LoginFragment : NoToolbarFragment() {
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     super.onAuthenticationSucceeded(result)
-                    result.cryptoObject?.signature?.let { signature ->
-                        loginViewModel.loginWithBio(
-                            binding.username.text.toString(),
-                            signature = signature
-                        )
+
+                    result.cryptoObject?.cipher?.let { cipher ->
+                        loginViewModel.loginWithCipher(cipher = cipher)
+
                     } ?: run {
                         showAlert(getString(R.string.error_bio_authentication_failure))
                     }
@@ -235,19 +234,17 @@ class LoginFragment : NoToolbarFragment() {
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-//                    showAlert(getString(R.string.error_bio_authentication_failure))
                 }
             })
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(getString(R.string.prompt_biometric_login_title))
             .setConfirmationRequired(true)
-//            .setSubtitle("Log in using your biometric credential")
             .setNegativeButtonText(getString(R.string.cancel))
             .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
             .build()
 
-        bioManager?.getCryptoObjectForPromtBio()?.let {
+        bioManager?.getCryptoObjectForPromptBio(Cipher.DECRYPT_MODE)?.let {
             biometricPrompt.authenticate(promptInfo, it)
         } ?: run {
             showAlert(getString(R.string.error_bio_authentication_failure))
@@ -271,6 +268,12 @@ class LoginFragment : NoToolbarFragment() {
                 super.onPause(owner)
 
                 passwordEditText.text = "".toEditable()
+            }
+            override fun onCreate(owner: LifecycleOwner) {
+                super.onCreate(owner)
+                if (PreferenceHelper.isEnableBiometricSetting(requireContext()) && bioManager?.checkDeviceSupportBiometric() == true) {
+                    showBiometricDialog()
+                }
             }
         }
         requireActivity().lifecycle.addObserver(lifecycleObserver)

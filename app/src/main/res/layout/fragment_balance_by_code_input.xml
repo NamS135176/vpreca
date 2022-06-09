@@ -124,6 +124,7 @@
                     </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
 
                     <ImageView
+                        android:id="@+id/button_ocr_detection"
                         android:contentDescription="@string/issue_card_by_code_input_hint"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
