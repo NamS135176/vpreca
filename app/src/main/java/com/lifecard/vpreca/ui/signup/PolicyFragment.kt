@@ -9,11 +9,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentPolicyBinding
 import com.lifecard.vpreca.ui.webview.WebViewFragment
+import com.lifecard.vpreca.utils.Converter
 
 
 class PolicyFragment : Fragment() {
@@ -24,7 +26,7 @@ class PolicyFragment : Fragment() {
 
     private var _binding: FragmentPolicyBinding? = null
     private val binding get() = _binding!!
-
+    private val args:PolicyFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,8 +50,8 @@ class PolicyFragment : Fragment() {
                 findNavController().navigate(R.id.nav_login)
             }
         })
-        cbPolicy.isChecked = false
-        btnSubmitPolicy.isEnabled = false
+        cbPolicy.isChecked = Converter.convertStringToBoolean(args.checkData?.preRoute!!)
+        btnSubmitPolicy.isEnabled = Converter.convertStringToBoolean(args.checkData?.preRoute!!)
         cancelButton.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->

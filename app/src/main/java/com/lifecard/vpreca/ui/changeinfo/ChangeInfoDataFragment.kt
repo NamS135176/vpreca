@@ -129,38 +129,45 @@ class ChangeInfoDataFragment : Fragment() {
                     val myFormat = "yyyyMMdd" // mention the format you need
                     val sdf = SimpleDateFormat(myFormat, Locale.US)
                     val date1 = sdf.format(cal.getTime())
-//                    val l = LocalDate.parse(dateData)
-//                    val date2 = sdf.format(l)
-                    println(date1)
-                    println(dateData)
+                    val datenow = sdf.format(Date())
+                    val cmp = sdf.parse(date1).compareTo(sdf.parse(datenow))
                     val layout = view.findViewById<MaterialTextView>(R.id.tv_error)
 
-                    if (date1 == dateData) {
-                        layout.visibility = View.INVISIBLE
-                        val action = ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
-                            ChangeInfoMemberData(
-                                memberNumber,
-                                binding.user?.loginId!!,
-                                binding.user?.memberRoman!!,
-                                binding.user?.memberKana!!,
-                                binding.user?.memberName!!,
-                                binding.user?.addressPrefecture!!,
-                                binding.user?.mailAddress1!!,
-                                binding.user?.mailAddress2!!,
-                                binding.user?.secretQuestion!!,
-                                binding.user?.secretQuestionAnswer!!,
-                                binding.user?.mail1AdMailRecieveFlg!!,
-                                binding.user?.mail2AdMailRecieveFlg!!,
-                                binding.user?.mail1RecievFlg!!,
-                                binding.user?.mail2RecievFlg!!,
-                                phone,
-                            )
-                        )
-                        dialog.dismiss()
-                        findNavController().navigate(action)
-                    } else {
-                        layout.visibility = View.VISIBLE
+                    when{
+                        cmp < 0 -> {
+                            if (date1 == dateData) {
+                                layout.visibility = View.INVISIBLE
+                                val action = ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
+                                    ChangeInfoMemberData(
+                                        memberNumber,
+                                        binding.user?.loginId!!,
+                                        binding.user?.memberRoman!!,
+                                        binding.user?.memberKana!!,
+                                        binding.user?.memberName!!,
+                                        binding.user?.addressPrefecture!!,
+                                        binding.user?.mailAddress1!!,
+                                        binding.user?.mailAddress2!!,
+                                        binding.user?.secretQuestion!!,
+                                        binding.user?.secretQuestionAnswer!!,
+                                        binding.user?.mail1AdMailRecieveFlg!!,
+                                        binding.user?.mail2AdMailRecieveFlg!!,
+                                        binding.user?.mail1RecievFlg!!,
+                                        binding.user?.mail2RecievFlg!!,
+                                        phone,
+                                    )
+                                )
+                                dialog.dismiss()
+                                findNavController().navigate(action)
+                            } else {
+                                layout.visibility = View.VISIBLE
+                            }
+
+                        }
+                        else -> {
+                            layout.visibility = View.VISIBLE
+                        }
                     }
+
 
 //                    findNavController().navigate(R.id.nav_change_info_input)
 //                    dialog.dismiss()

@@ -119,16 +119,24 @@ class ChangePhoneFirstFragment : Fragment() {
                     val sdf = SimpleDateFormat(myFormat, Locale.US)
                     val date1 = sdf.format(cal.getTime())
                     val layout = view.findViewById<MaterialTextView>(R.id.tv_error)
-                    println(date1)
-                    println(dateData)
-                    if (date1 == dateData) {
-                        layout.visibility = View.INVISIBLE
-                        findNavController().navigate(R.id.nav_change_phone_second)
-                        dialog.dismiss()
+                    val datenow = sdf.format(Date())
+                    val cmp = sdf.parse(date1).compareTo(sdf.parse(datenow))
+
+                    when{
+                        cmp < 0 -> {
+                            if (date1 == dateData) {
+                                layout.visibility = View.INVISIBLE
+                                findNavController().navigate(R.id.nav_change_phone_second)
+                                dialog.dismiss()
+                            }
+                            else{
+                                layout.visibility = View.VISIBLE
+                            }
+                        }
+                        else -> layout.visibility = View.VISIBLE
                     }
-                    else{
-                        layout.visibility = View.VISIBLE
-                    }
+
+
                 })
 
             }

@@ -15,6 +15,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.TermOfUseFragmentBinding
 import com.lifecard.vpreca.utils.PreferenceHelper
 
@@ -88,7 +89,7 @@ class TermOfUseFragment : Fragment() {
                 appContext = requireContext(),
                 value = true
             )
-            findNavController().navigate(TermOfUseFragmentDirections.actionTermOfUseToLogin())
+            findNavController().navigate(R.id.nav_login)
         })
         webView.settings.useWideViewPort = true
         webView.settings.loadWithOverviewMode = true

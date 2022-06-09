@@ -13,11 +13,6 @@
         <action
             android:id="@+id/action_term_of_use_to_web"
             app:destination="@id/nav_webview" />
-        <action
-            android:id="@+id/action_term_of_use_to_login"
-            app:destination="@id/nav_login"
-            app:popUpTo="@id/nav_login"
-            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -26,10 +21,8 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_login_to_term_of_use"
-            app:destination="@id/nav_term_of_use"
-            app:popUpTo="@id/nav_term_of_use"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_to_policy"
+            app:destination="@id/nav_policy" />
     </fragment>
 
     <fragment
@@ -51,7 +44,13 @@
         android:id="@+id/nav_policy"
         android:name="com.lifecard.vpreca.ui.signup.PolicyFragment"
         android:label="fragment_policy"
-        tools:layout="@layout/fragment_policy" />
+        tools:layout="@layout/fragment_policy" >
+        <argument
+            android:name="check_data"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_signup_input"
         android:name="com.lifecard.vpreca.ui.signup.SignupInputFragment"
@@ -124,6 +123,9 @@
         android:name="com.lifecard.vpreca.ui.signup.PhoneFragment"
         android:label="fragment_forgot_pass_input"
         tools:layout="@layout/fragment_phone" >
+        <action
+            android:id="@+id/action_to_policy"
+            app:destination="@id/nav_policy" />
         <action
             android:id="@+id/action_phone_to_confirm"
             app:destination="@id/nav_signup_confirm_phone" />

@@ -55,12 +55,20 @@ class PhoneFragment : Fragment() {
                 setMessage("途中ですがキャンセルしてもよろしいですか")
             }.create().show()
         })
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_policy) })
+        btnBack.setOnClickListener(View.OnClickListener {
+            val action = PhoneFragmentDirections.actionToPolicy(
+                GiftCardConfirmData("1")
+            )
+            findNavController().navigate(action)
+        })
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_policy)
+                val action = PhoneFragmentDirections.actionToPolicy(
+                    GiftCardConfirmData("1")
+                )
+                findNavController().navigate(action)
             }
         })
 
