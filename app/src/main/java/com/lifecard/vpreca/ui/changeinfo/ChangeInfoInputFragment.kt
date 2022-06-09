@@ -86,23 +86,6 @@ class ChangeInfoInputFragment : Fragment() {
         var city = ""
         var question = ""
         val res = resources
-        val listCity = res.getStringArray(R.array.cities)
-        val listQuestion = res.getStringArray(R.array.secret_question)
-//        idEdt.setText(args.phoneData?.loginId)
-//        nicknameEdt.setText(args.phoneData?.memberRoman)
-//        kanaFirstName.setText(args.phoneData?.memberKana?.split(" ")?.toTypedArray()?.get(0))
-//        kanaLastName.setText(args.phoneData?.memberKana?.split(" ")?.toTypedArray()?.get(1))
-//        hiraFirstName.setText(args.phoneData?.memberName?.split(" ")?.toTypedArray()?.get(0)  )
-//        hiraLastName.setText(args.phoneData?.memberName?.split(" ")?.toTypedArray()?.get(1) )
-//        spinnerCity.selectItemByIndex(listCity.indexOf(args.phoneData?.addressCity))
-//        email1Edt.setText(args.phoneData?.mailAddress1)
-//        email2Edt.setText(args.phoneData?.mailAddress2)
-//        spinnerSecret.selectItemByIndex(listQuestion.indexOf(args.phoneData?.secretQuestion))
-//        answerEdt.setText(args.phoneData?.secretQuestionAnswer)
-//        toggle1.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail1AdMailRecieveFlg!!)
-//        toggle2.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail2AdMailRecieveFlg!!)
-//        toggle3.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail1RecievFlg!!)
-//        toggle4.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail2RecievFlg!!)
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_info_data) })
 
         btnCancel.setOnClickListener(View.OnClickListener {
@@ -238,12 +221,16 @@ class ChangeInfoInputFragment : Fragment() {
             androidx.lifecycle.Observer { viewModel.checkValidForm() })
 
         spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
-            newItem?.let { viewModel.questionDataChanged(text = it)
-            question = it}
+            newItem?.let {
+                viewModel.questionDataChanged(text = it)
+                question = it
+            }
         })
         spinnerCity.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
-            newItem?.let { viewModel.cityDataChanged(text = it)
-            city = it}
+            newItem?.let {
+                viewModel.cityDataChanged(text = it)
+                city = it
+            }
         })
 
         idEdt.doAfterTextChanged { text -> viewModel.loginIdDataChanged(text = text.toString()) }

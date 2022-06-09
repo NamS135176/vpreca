@@ -207,7 +207,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="@{user.addressCity}"
+                            android:text="@{user.addressPrefecture}"
                             android:textSize="12sp" />
                     </LinearLayout>
 

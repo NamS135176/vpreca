@@ -16,8 +16,8 @@ data class ChangeInfoMemberData(
     val memberKana: String?,
     @SerializedName("memberName")
     val memberName: String?,
-    @SerializedName("addressCity")
-    val addressCity: String?,
+    @SerializedName("addressPrefecture")
+    val addressPrefecture: String?,
     @SerializedName("mailAddress1")
     val mailAddress1: String?,
     @SerializedName("mailAddress2")

@@ -104,8 +104,6 @@ class ChangeInfoDataFragment : Fragment() {
                         cal.get(Calendar.MONTH),
                         cal.get(Calendar.DAY_OF_MONTH)
                     ).apply {
-                        datePicker
-
                         setButton(DatePickerDialog.BUTTON_POSITIVE, getString(R.string.button_ok),
                             DialogInterface.OnClickListener { _, _ ->
                                 dateSetListener.onDateSet(
@@ -146,7 +144,7 @@ class ChangeInfoDataFragment : Fragment() {
                                 binding.user?.memberRoman!!,
                                 binding.user?.memberKana!!,
                                 binding.user?.memberName!!,
-                                binding.user?.addressCity!!,
+                                binding.user?.addressPrefecture!!,
                                 binding.user?.mailAddress1!!,
                                 binding.user?.mailAddress2!!,
                                 binding.user?.secretQuestion!!,

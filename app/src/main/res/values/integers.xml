@@ -3,4 +3,5 @@
     <integer name="max_pass">12</integer>
     <integer name="max_nickname">18</integer>
     <integer name="max_login_id">10</integer>
+    <integer name="max_email">256</integer>
 </resources>
