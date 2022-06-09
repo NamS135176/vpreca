@@ -20,7 +20,14 @@ class RegexUtils {
          * only half width and underscore
          * check the screen SC08_2
          */
-        const val RegexLoginID = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_]{6,10}\$"
+        const val RegexLoginID = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_-]{6,10}\$"
+
+        /**
+         * Regex detect text has special character excludes underscore and -
+         * We will using this regex for check login id contain any special characters
+         * check the screen SC08_2
+         */
+        private const val RegexSpecialCharacterForLoginID = "[^\\w\\s-_]"
 
         /**
          * only roman
@@ -105,6 +112,7 @@ class RegexUtils {
                     .matches()
             } ?: false
         }
+
         fun isGiftNumberValid(gift: String?): Boolean {
             return gift?.let {
                 Pattern.compile(RegexGiftNumber).matcher(gift)
@@ -163,12 +171,17 @@ class RegexUtils {
                 return it.replace(Regex(regex), "\$1-\$2-\$3")
             } ?: phone ?: ""
         }
+
         fun maskPassword(password: String?): String {
-            return password?:""
+            return password ?: ""
 //            return password?.let {
 //                val regex = "(\\d{3})(\\d{3})(\\d+)"
 //                return it.replace(Regex(regex), "\$1-\$2-\$3")
 //            } ?: password ?: ""
+        }
+
+        fun checkLoginIdContainSpecialCharacter(loginId: String?): Boolean {
+            return loginId?.let { Regex(RegexSpecialCharacterForLoginID).matches(it) } ?: false
         }
 
     }

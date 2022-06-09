@@ -126,7 +126,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun checkUsername(username: String): Boolean {
+    private fun checkUsername(username: String): Boolean {
         if (!RegexUtils.isLoginIdValid(username)) {
             usernameError.value = R.string.invalid_username
             return false
@@ -135,7 +135,7 @@ class LoginViewModel @Inject constructor(
         return true
     }
 
-    fun checkPassword(password: String): Boolean {
+    private fun checkPassword(password: String): Boolean {
         if (!RegexUtils.isPasswordValid(password)) {
             passwordError.value = R.string.invalid_password
             return false

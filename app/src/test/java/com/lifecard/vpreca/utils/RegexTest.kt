@@ -65,4 +65,17 @@ class RegexTest {
         )
     }
 
+    @Test
+    fun checkLoginIdContainSpecialCharacter_isCorrect() {
+        Assert.assertEquals(
+            true,
+            RegexUtils.checkLoginIdContainSpecialCharacter("!@#$%%^^&&**")
+        )
+        Assert.assertEquals(
+            false,
+            RegexUtils.checkLoginIdContainSpecialCharacter("-_")
+        )
+    }
+
+
 }

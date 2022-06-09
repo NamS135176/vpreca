@@ -94,8 +94,8 @@ class BioManagerImpl constructor(private val context: Context) : BioManager {
 
     override fun checkDeviceSupportBiometric(): Boolean =
         when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
-            BiometricManager.BIOMETRIC_SUCCESS,
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> true
+            BiometricManager.BIOMETRIC_SUCCESS -> true
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> false
             else -> false
         }
 
