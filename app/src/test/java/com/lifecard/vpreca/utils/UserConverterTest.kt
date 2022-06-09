@@ -21,4 +21,10 @@ class UserConverterTest {
         Assert.assertEquals("123-456-7890", UserConverter.formatPhone("1234567890"))
     }
 
+    @Test
+    fun hideCreditCard_isCorrect() {
+        Assert.assertEquals("**** **** **** 9424", UserConverter.hideCreditCard("6011 0009 9013 9424"))
+        Assert.assertEquals("****-****-****-9424", UserConverter.hideCreditCard("6011-0009-9013-9424"))
+        Assert.assertEquals("************0002", UserConverter.hideCreditCard("6500000000000002"))
+    }
 }

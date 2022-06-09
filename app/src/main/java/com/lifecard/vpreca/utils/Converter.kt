@@ -11,11 +11,11 @@ import java.util.*
 
 object Converter {
     @JvmStatic
-    fun convertDateTimeMonth(date: Date?): String {
+    fun formatCardDateTimeMonth(date: Date?): String {
         return date?.let {
             val localDate = LocalDate.fromDateFields(date)
 
-            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("yyyy月M日")
+            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("yyyyM月d日")
             localDate.toString(fmt)
         } ?: ""
     }

@@ -101,12 +101,7 @@ class ForgotPassViewModel @Inject constructor(
     }
 
     private fun isAnswerValid(answer: String?): Boolean {
-        return !answer.isNullOrEmpty() && answer.length in 0..20 && isHalfWidth(answer)
-    }
-
-    fun isHalfWidth(text: String): Boolean {
-        val regex = "[０-９ぁ-んァ-ン一-龥]".toRegex()
-        return regex.find(text) == null
+        return RegexUtils.isAnswerValid(answer)
     }
 
     fun submit(

@@ -218,12 +218,7 @@ class ChangeInfoInputViewModel : ViewModel() {
     }
 
     private fun isAnswerValid(answer: String?): Boolean {
-        return !answer.isNullOrEmpty() && answer.length in 0..20 && isHalfWidth(answer)
-    }
-
-    fun isHalfWidth(text: String): Boolean {
-        val regex = "[０-９ぁ-んァ-ン一-龥]".toRegex()
-        return regex.find(text) == null
+        return RegexUtils.isAnswerValid(answer = answer)
     }
 
     private fun isEmail1ConfirmValid(cfEmail: String?, email: String?): Boolean {

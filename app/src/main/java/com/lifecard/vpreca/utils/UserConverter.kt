@@ -39,6 +39,16 @@ object UserConverter {
         return email
     }
 
+    fun hideCreditCard(card: String): String {
+        try {
+            if (!RegexUtils.isCreditCard(card)) return card
+            return card.replace(Regex("(?!(?:\\*\\d){14}\$|(?:\\D*\\d){1,4}\$)\\d"), "*")
+        } catch (e: Exception) {
+            println(e.toString())
+        }
+        return card
+    }
+
     fun getReceiveEmailStatus(flag: String?): String {
         return if (flag == "1") {
             "受け取る"//receive
@@ -46,6 +56,7 @@ object UserConverter {
             "受け取らない"//not receive
         }
     }
+
     @JvmStatic
     fun formatPhone(phone: String): String {
         try {
