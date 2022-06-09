@@ -122,7 +122,7 @@
                             android:paddingHorizontal="17dp"
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/peacock_blue"
                             android:textSize="16sp" />
                     </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
 
