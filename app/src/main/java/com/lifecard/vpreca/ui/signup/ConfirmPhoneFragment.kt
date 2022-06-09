@@ -15,10 +15,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
-
+import com.lifecard.vpreca.utils.UserConverter
 
 
 class ConfirmPhoneFragment : Fragment() {
@@ -26,6 +27,7 @@ class ConfirmPhoneFragment : Fragment() {
     private var _binding:FragmentConfirmPhoneBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: ConfirmPhoneViewModel
+    private val args:ConfirmPhoneFragmentArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,6 +47,9 @@ class ConfirmPhoneFragment : Fragment() {
         val layout = binding.forgotPassEmailLayout
         val btnBack = binding.appbarForgotPass.btnBack
         val btnCancel = binding.appbarForgotPass.cancelBtn
+        val phone = binding.tvPhone
+
+        phone.text = UserConverter.formatPhone(args.cardData?.preRoute!!)
 
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {

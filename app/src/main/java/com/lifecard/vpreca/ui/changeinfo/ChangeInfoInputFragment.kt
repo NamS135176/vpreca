@@ -83,42 +83,42 @@ class ChangeInfoInputFragment : Fragment() {
         val toggle2 = binding.toggleSettingSecond
         val toggle3 = binding.toggleMagazineFirst
         val toggle4 = binding.toggleMagazineSecond
-        var city = args.phoneData?.addressPrefecture
-        var question = args.phoneData?.secretQuestion
+        var city = args.userData?.addressPrefecture
+        var question = args.userData?.secretQuestion
         val res = resources
 
         val listCity = res.getStringArray(R.array.cities)
         val listQuestion = res.getStringArray(R.array.secret_question)
-        idEdt.setText(args.phoneData?.loginId)
-        nicknameEdt.setText(args.phoneData?.memberRoman)
-        kanaFirstName.setText(args.phoneData?.memberKana?.split(" ")?.toTypedArray()?.get(0))
-        kanaLastName.setText(args.phoneData?.memberKana?.split(" ")?.toTypedArray()?.get(1))
-        hiraFirstName.setText(args.phoneData?.memberName?.split(" ")?.toTypedArray()?.get(0)  )
-        hiraLastName.setText(args.phoneData?.memberName?.split(" ")?.toTypedArray()?.get(1) )
-        spinnerCity.selectItemByIndex(listCity.indexOf(args.phoneData?.addressPrefecture))
-        email1Edt.setText(args.phoneData?.mailAddress1)
-        email1ConfirmEdt.setText(args.phoneData?.mailAddress1)
-        email2Edt.setText(args.phoneData?.mailAddress2)
-        email2ConfirmEdt.setText(args.phoneData?.mailAddress2)
-        spinnerSecret.selectItemByIndex(listQuestion.indexOf(args.phoneData?.secretQuestion))
-        answerEdt.setText(args.phoneData?.secretQuestionAnswer)
-        toggle1.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail1AdMailRecieveFlg!!)
-        toggle2.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail2AdMailRecieveFlg!!)
-        toggle3.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail1RecievFlg!!)
-        toggle4.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail2RecievFlg!!)
-        viewModel.loginIdDataChanged(args.phoneData?.loginId!!)
-        viewModel.nicknameDataChanged(args.phoneData?.memberRoman!!)
-        viewModel.kanaFirstNameDataChanged(args.phoneData?.memberKana?.split(" ")?.toTypedArray()?.get(0)!!)
-        viewModel.kanaLastNameDataChanged(args.phoneData?.memberKana?.split(" ")?.toTypedArray()?.get(1)!!)
-        viewModel.hiraFirstNameDataChanged(args.phoneData?.memberName?.split(" ")?.toTypedArray()?.get(0) !!)
-        viewModel.hiraLastNameDataChanged(args.phoneData?.memberName?.split(" ")?.toTypedArray()?.get(1) !!)
-        viewModel.cityDataChanged(args.phoneData?.addressPrefecture!!)
-        viewModel.email1DataChanged(args.phoneData?.mailAddress1!!)
-        viewModel.email1ConfirmDataChanged(args.phoneData?.mailAddress1!!)
-        viewModel.email2DataChanged(args.phoneData?.mailAddress2!!)
-        viewModel.email2ConfirmDataChanged(args.phoneData?.mailAddress2!!)
-        viewModel.questionDataChanged(args.phoneData?.secretQuestion!!)
-        viewModel.answerDataChanged(args.phoneData?.secretQuestionAnswer!!)
+        idEdt.setText(args.userData?.loginId)
+        nicknameEdt.setText(args.userData?.memberRoman)
+        kanaFirstName.setText(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(0))
+        kanaLastName.setText(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(1))
+        hiraFirstName.setText(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(0)  )
+        hiraLastName.setText(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(1) )
+        spinnerCity.selectItemByIndex(listCity.indexOf(args.userData?.addressPrefecture))
+        email1Edt.setText(args.userData?.mailAddress1)
+        email1ConfirmEdt.setText(args.userData?.mailAddress1)
+        email2Edt.setText(args.userData?.mailAddress2)
+        email2ConfirmEdt.setText(args.userData?.mailAddress2)
+        spinnerSecret.selectItemByIndex(listQuestion.indexOf(args.userData?.secretQuestion))
+        answerEdt.setText(args.userData?.secretQuestionAnswer)
+        toggle1.isChecked = Converter.convertStringToBoolean(args.userData?.mail1AdMailRecieveFlg!!)
+        toggle2.isChecked = Converter.convertStringToBoolean(args.userData?.mail2AdMailRecieveFlg!!)
+        toggle3.isChecked = Converter.convertStringToBoolean(args.userData?.mail1RecievFlg!!)
+        toggle4.isChecked = Converter.convertStringToBoolean(args.userData?.mail2RecievFlg!!)
+        viewModel.loginIdDataChanged(args.userData?.loginId!!)
+        viewModel.nicknameDataChanged(args.userData?.memberRoman!!)
+        viewModel.kanaFirstNameDataChanged(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(0)!!)
+        viewModel.kanaLastNameDataChanged(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(1)!!)
+        viewModel.hiraFirstNameDataChanged(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(0) !!)
+        viewModel.hiraLastNameDataChanged(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(1) !!)
+        viewModel.cityDataChanged(args.userData?.addressPrefecture!!)
+        viewModel.email1DataChanged(args.userData?.mailAddress1!!)
+        viewModel.email1ConfirmDataChanged(args.userData?.mailAddress1!!)
+        viewModel.email2DataChanged(args.userData?.mailAddress2!!)
+        viewModel.email2ConfirmDataChanged(args.userData?.mailAddress2!!)
+        viewModel.questionDataChanged(args.userData?.secretQuestion!!)
+        viewModel.answerDataChanged(args.userData?.secretQuestionAnswer!!)
 
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_info_data) })
 
@@ -230,7 +230,7 @@ class ChangeInfoInputFragment : Fragment() {
         viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.success?.let {
                 val data = ChangeInfoMemberData(
-                    args.phoneData?.memberNumber!!,
+                    args.userData?.memberNumber!!,
                     idEdt.text.toString(),
                     nicknameEdt.text.toString(),
                     kanaFirstName.text.toString() + " " + kanaLastName.text.toString(),
@@ -244,7 +244,7 @@ class ChangeInfoInputFragment : Fragment() {
                     Converter.convertBooleanToString(toggle2.isChecked),
                     Converter.convertBooleanToString(toggle3.isChecked),
                     Converter.convertBooleanToString(toggle4.isChecked),
-                    args.phoneData?.telephoneNumber1!!,
+                    args.userData?.telephoneNumber1!!,
                 )
                 val action = ChangeInfoInputFragmentDirections.actionChangeInfoInputToConfirm(data)
                 findNavController().navigate(action)

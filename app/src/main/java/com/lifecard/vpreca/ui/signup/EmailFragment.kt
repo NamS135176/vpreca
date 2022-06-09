@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
 import com.lifecard.vpreca.databinding.FragmentEmailBinding
 
@@ -50,12 +51,12 @@ class EmailFragment : Fragment() {
                 setMessage("途中ですがキャンセルしてもよろしいですか")
             }.create().show()
         })
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_signup_confirm_phone) })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_signup_phone) })
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_signup_confirm_phone)
+                findNavController().navigate(R.id.nav_signup_phone)
             }
         })
 
@@ -78,7 +79,10 @@ class EmailFragment : Fragment() {
 
         viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.success?.let {
-                findNavController().navigate(R.id.nav_signup_confirm_email)
+                val action = EmailFragmentDirections.actionEmailCfemail(
+                    GiftCardConfirmData(inputEmail.text.toString())
+                )
+                findNavController().navigate(action)
             }
         })
 

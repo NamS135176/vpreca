@@ -88,7 +88,7 @@
             android:id="@+id/action_change_info_input_to_confirm"
             app:destination="@id/nav_change_info_confirm" />
         <argument
-            android:name="phone_data"
+            android:name="user_data"
             android:defaultValue="@null"
             app:argType="com.lifecard.vpreca.data.model.ChangeInfoMemberData"
             app:nullable="true" />
