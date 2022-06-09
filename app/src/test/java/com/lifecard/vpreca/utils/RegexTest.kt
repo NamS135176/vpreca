@@ -2,9 +2,6 @@ package com.lifecard.vpreca.utils
 
 import org.junit.Assert
 import org.junit.Test
-import java.text.SimpleDateFormat
-import java.util.*
-
 class RegexTest {
     @Test
     fun ocrCode_isCorrect() {
@@ -52,16 +49,16 @@ class RegexTest {
     @Test
     fun formatDisplayPhoneNumber_isCorrect() {
         Assert.assertEquals(
-            "090-123-45678",
+            "090-1234-5678",
             RegexUtils.formatDisplayPhoneNumber("09012345678")
         )
         Assert.assertEquals(
-            "090-123-4567",
+            "090-1234-567",
             RegexUtils.formatDisplayPhoneNumber("0901234567")
         )
         Assert.assertEquals(
-            "090-123-4567",
-            RegexUtils.formatDisplayPhoneNumber("090-123-4567")
+            "090-1234-567",
+            RegexUtils.formatDisplayPhoneNumber("090-1234-567")
         )
     }
 
@@ -77,5 +74,39 @@ class RegexTest {
         )
     }
 
+    @Test
+    fun isFullWidth_isCorrect() {
+        Assert.assertEquals(true, RegexUtils.isFullWidth("アキ・秋・あき・ａｋｉ・ＡＫＩ|ーＺｚ"))
+        Assert.assertEquals(true, RegexUtils.isFullWidth("テアィン"))
+    }
 
+    @Test
+    fun isAnswer_isCorrect() {
+        Assert.assertEquals(true, RegexUtils.isAnswerValid("アキ・秋・あき・ａｋｉ・ＡＫＩ|ーＺｚ"))
+        Assert.assertEquals(true, RegexUtils.isAnswerValid("テアィン"))
+        Assert.assertEquals(false, RegexUtils.isAnswerValid("テアィンテアィンテアィンテアィンテアィンテアィンテアィンテアィンテアィン"))
+    }
+
+    @Test
+    fun isCreditCard_isCorrect() {
+        //American Express
+        Assert.assertEquals(true, RegexUtils.isCreditCard("3711-078176-01234"))
+        Assert.assertEquals(true, RegexUtils.isCreditCard("371107817601234"))
+        Assert.assertEquals(true, RegexUtils.isCreditCard("3711 078176 01234"))
+
+        //Visa
+        Assert.assertEquals(true, RegexUtils.isCreditCard("4123-5123-6123-7123"))
+        Assert.assertEquals(true, RegexUtils.isCreditCard("4123512361237123"))
+        Assert.assertEquals(true, RegexUtils.isCreditCard("4123 5123 6123 7123"))
+
+        //Master Card
+        Assert.assertEquals(true, RegexUtils.isCreditCard("5123-4123-6123-7123"))
+        Assert.assertEquals(true, RegexUtils.isCreditCard("5123412361237123"))
+        Assert.assertEquals(true, RegexUtils.isCreditCard("5123 4123 6123 7123"))
+
+        //Discover
+        Assert.assertEquals(true, RegexUtils.isCreditCard("6011-0009-9013-9424"))
+        Assert.assertEquals(true, RegexUtils.isCreditCard("6500000000000002"))
+        Assert.assertEquals(true, RegexUtils.isCreditCard(" 6011 0009 9013 9424"))
+    }
 }

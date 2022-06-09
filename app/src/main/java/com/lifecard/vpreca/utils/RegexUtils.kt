@@ -72,6 +72,22 @@ class RegexUtils {
         private const val RegexHiraganaFullWidth = "^[ぁ-ん]+\$"
         private const val RegexSecondNameFullWidth = "^[一-龥ぁ-ん]+\$"
         private const val RegexGiftNumber = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_]{15}\$"
+
+        /**
+         * Fullwidth for hiragana, katakan, kanji, number and alphabet
+         */
+        private const val RegexFullWidth = "^[ａ-ｚＡ-Ｚ０-９ぁ-んァ-ン一-龥・|ー]+\$"
+
+        /**
+         * Fullwidth for hiragana, katakan, kanji, number and alphabet
+         */
+        private const val RegexAnswer = "^[ａ-ｚＡ-Ｚ０-９ぁ-んァ-ン一-龥・|ー]{1,20}\$"
+
+        /**
+         * see sample https://support.sumologic.com/hc/en-us/articles/205565718-Regular-expression-for-masking-credit-card-numbers
+         */
+        private const val RegexCreditCard = "((?:(?:4\\d{3})|(?:5[1-5]\\d{2})|6(?:011|5[0-9]{2}))(?:-?|\\040?)(?:\\d{4}(?:-?|\\040?)){3}|(?:3[4,7]\\d{2})(?:-?|\\040?)\\d{6}(?:-?|\\040?)\\d{5})"
+
         fun isLoginIdValid(loginId: String?): Boolean {
             return loginId?.let { loginId ->
                 Pattern.compile(RegexLoginID).matcher(loginId).matches()
@@ -144,11 +160,6 @@ class RegexUtils {
             return text?.let { Regex(RegexSecondNameFullWidth).matches(it) } ?: false
         }
 
-        fun isHalfWidth(text: String): Boolean {
-            val regex = "[０-９a-zA-Zぁ-んァ-ン一-龥]".toRegex()
-            return regex.find(text) == null
-        }
-
         fun isQuestionValid(question: String?): Boolean {
             return !question.isNullOrEmpty()
         }
@@ -162,12 +173,12 @@ class RegexUtils {
         }
 
         fun isAnswerValid(answer: String?): Boolean {
-            return !answer.isNullOrEmpty() && answer.length in 0..20 && !isHalfWidth(answer)
+            return answer?.let { Regex(RegexAnswer).matches(it) } ?: false
         }
 
         fun formatDisplayPhoneNumber(phone: String?): String {
             return phone?.let {
-                val regex = "(\\d{3})(\\d{3})(\\d+)"
+                val regex = "(\\d{3})(\\d{4})(\\d+)"
                 return it.replace(Regex(regex), "\$1-\$2-\$3")
             } ?: phone ?: ""
         }
@@ -182,6 +193,14 @@ class RegexUtils {
 
         fun checkLoginIdContainSpecialCharacter(loginId: String?): Boolean {
             return loginId?.let { Regex(RegexSpecialCharacterForLoginID).matches(it) } ?: false
+        }
+
+        fun isFullWidth(text: String?): Boolean {
+            return text?.let { Regex(RegexFullWidth).matches(it) } ?: false
+        }
+
+        fun isCreditCard(card: String?): Boolean {
+            return card?.let { Regex(RegexCreditCard).matches(it) } ?: false
         }
 
     }
