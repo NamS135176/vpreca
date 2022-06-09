@@ -14,14 +14,13 @@ class ChangePhoneSecondViewModel : ViewModel() {
     val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
 
     private fun checkEmailValid(): Boolean {
-//        return if (!RegexUtils.isEmailValid(formState.value?.email)) {
-//            emailError.value = R.string.rgx_error_email
-//            false
-//        } else {
-//            emailError.value = null
-//            true
-//        }
-        return true
+        return if (formState.value?.email?.length != 4) {
+            emailError.value = R.string.error_code
+            false
+        } else {
+            emailError.value = null
+            true
+        }
     }
 
     fun emailDataChanged(text: String) {
