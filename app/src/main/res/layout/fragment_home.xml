@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:text="@string/home_text_info"
             android:textSize="11sp"
+            android:lineSpacingExtra="3sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,6 +59,17 @@
             app:layout_constraintBottom_toBottomOf="@id/button_see_all_card"
             app:layout_constraintStart_toStartOf="@id/text_info"
             app:layout_constraintTop_toTopOf="@id/button_see_all_card" />
+
+        <TextView
+            android:id="@+id/text_last_login_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:layout_marginLeft="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/button_see_all_card"
+            app:layout_constraintStart_toEndOf="@id/text_last_login"
+            app:layout_constraintTop_toTopOf="@id/button_see_all_card"
+            android:layout_marginStart="10dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_card_no_balance"

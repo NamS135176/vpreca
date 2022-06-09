@@ -4,6 +4,7 @@
     <data>
 
         <import type="com.lifecard.vpreca.utils.Converter" />
+
         <import type="com.lifecard.vpreca.utils.ModelExtKt" />
 
         <variable
@@ -92,6 +93,7 @@
                 style="@style/Widget.App.Button.IconOnly"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:elevation="0dp"
                 app:backgroundTint="#ff9900"
                 app:cornerRadius="24dp"
                 app:icon="@drawable/ic_home_usage"
@@ -119,6 +121,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="@{ModelExtKt.isCardLock(currentCard) ? @drawable/ic_home_locked_status_background : @drawable/ic_home_unlock_status_background}"
+                android:elevation="0dp"
                 app:backgroundTint="@null"
                 app:cornerRadius="24dp"
                 app:icon="@{ModelExtKt.isCardLock(currentCard) ? @drawable/ic_home_lock : @drawable/ic_home_unlock}"
@@ -133,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="@string/home_button_lock"
+                android:text="@{ModelExtKt.isCardLock(currentCard) ? @string/home_button_lock : @string/home_button_unlock}"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toEndOf="@id/button_lock"
                 app:layout_constraintStart_toStartOf="@id/button_lock"
@@ -144,6 +147,7 @@
                 style="@style/Widget.App.Button.IconOnly"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:elevation="0dp"
                 app:backgroundTint="#53c312"
                 app:cornerRadius="24dp"
                 app:icon="@drawable/ic_home_reload"
