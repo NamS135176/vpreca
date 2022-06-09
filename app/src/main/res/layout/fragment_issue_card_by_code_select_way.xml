@@ -92,7 +92,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_use_card"
-                    style="@style/Widget.AppCompat.TextView.Bold"
+                    style="@style/Widget.App.Button.BoldText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
@@ -107,7 +107,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_dont_use_card"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    style="@style/Widget.App.Button.Outlined.BoldText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
