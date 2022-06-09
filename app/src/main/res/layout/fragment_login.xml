@@ -45,7 +45,8 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:insetTop="0dp"
-                android:insetBottom="0dp" />
+                android:insetBottom="0dp"
+                android:maxLength="@integer/max_login_id" />
         </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
 
         <com.lifecard.vpreca.ui.custom.MyTextInputLayout
