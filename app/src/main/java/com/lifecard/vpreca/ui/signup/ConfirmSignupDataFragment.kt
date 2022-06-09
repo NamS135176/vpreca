@@ -22,7 +22,7 @@ class ConfirmSignupDataFragment : Fragment() {
     }
 
     private val viewModel: ConfirmSignupDataViewModel by viewModels()
-//    private val args: ConfirmSignupDataFragmentArgs by navArgs()
+    private val args: ConfirmSignupDataFragmentArgs by navArgs()
     private var _binding: FragmentConfirmSignupDataBinding? = null
     private val binding get() = _binding!!
 
@@ -31,7 +31,7 @@ class ConfirmSignupDataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentConfirmSignupDataBinding.inflate(inflater, container, false)
-//        args.signupData?.let { data -> binding.data = data }
+        args.signupData?.let { data -> binding.data = data }
         val btnCancelSubmit = binding.appbarConfirmSignup.cancelBtn
         val btnBack = binding.btnCancelConfirm
         val btnSubmit = binding.btnSubmitConfirm
@@ -47,10 +47,7 @@ class ConfirmSignupDataFragment : Fragment() {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
                     // do something on positive button click
-                    val intent = Intent(requireContext(), MainActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    }
-                    startActivity(intent)
+                   findNavController().navigate(R.id.nav_login)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
@@ -59,7 +56,7 @@ class ConfirmSignupDataFragment : Fragment() {
 
         btnBack.setOnClickListener(View.OnClickListener {
 //            findNavController().navigate(R.id.nav_signup_input)
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.nav_signup_input)
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {

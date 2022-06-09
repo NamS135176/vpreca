@@ -167,7 +167,7 @@ class RegexUtils {
 
         fun formatDisplayPhoneNumber(phone: String?): String {
             return phone?.let {
-                val regex = "(\\d{3})(\\d{3})(\\d+)"
+                val regex = "(\\d{3})(\\d{4})(\\d+)"
                 return it.replace(Regex(regex), "\$1-\$2-\$3")
             } ?: phone ?: ""
         }

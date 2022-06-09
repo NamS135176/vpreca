@@ -76,16 +76,16 @@ class SignupInputFragment : Fragment() {
                         dismissAllSpinner()
                         return
                     }
-                    findNavController().navigate(R.id.nav_policy)
+                    MaterialAlertDialogBuilder(requireContext()).apply {
+                        setPositiveButton("はい") { _, _ ->
+                            findNavController().navigate(R.id.nav_login)
+                        }
+                        setNegativeButton("いいえ", null)
+                        setMessage("途中ですがキャンセルしてもよろしいですか")
+                    }.create().show()
                 }
             })
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
-            OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_signup_confirm_email)
-            }
-        })
 
 
         scrollView.setOnClickListener(View.OnClickListener { dismissAllSpinner() })
@@ -247,10 +247,10 @@ class SignupInputFragment : Fragment() {
 
         viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.success?.let {
-                findNavController().navigate(R.id.nav_complete)
-//                val action =
-//                    SignupInputFragmentDirections.actionSignupInputToSignupConfirm(viewModel.formState.value!!)
-//                findNavController().navigate(action)
+//                findNavController().navigate(R.id.nav_complete)
+                val action =
+                    SignupInputFragmentDirections.actionSignupInputToSignupConfirm(viewModel.formState.value!!)
+                findNavController().navigate(action)
             }
 
         })

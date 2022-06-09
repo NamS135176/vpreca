@@ -127,7 +127,7 @@
                             android:layout_gravity="clip_vertical"
                             android:paddingLeft="4dp"
                             android:paddingStart="4dp"
-                            android:text="@{card.vcn}"
+                            android:text="@{ModelExtKt.isCardInfoLock(card) ? `***` : card.vcn}"
                             android:textColor="@color/primary"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -137,7 +137,7 @@
                     style="@style/Widget.AppCompat.TextView.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{card.precaNumber}"
+                    android:text="@{ModelExtKt.isCardInfoLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"
                     android:textColor="@color/primary"
                     android:lineSpacingExtra="6sp"
                     android:lineSpacingMultiplier="0"

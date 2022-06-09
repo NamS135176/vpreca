@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:paddingTop="32dp"
-                        android:text="@string/change_phone_first_title"
+                        android:text="@string/change_info_confirm_title"
                         android:textColor="#0057b5"
                         android:textSize="18sp" />
 
