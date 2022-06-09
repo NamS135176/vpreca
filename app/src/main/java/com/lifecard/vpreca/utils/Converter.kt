@@ -106,6 +106,9 @@ object Converter {
             return "1"
         } else return "0"
     }
-
+    @JvmStatic
+    fun convertStringToBoolean(state: String): Boolean {
+        return state == "1"
+    }
 
 }

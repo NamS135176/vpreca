@@ -90,7 +90,7 @@
         <argument
             android:name="phone_data"
             android:defaultValue="@null"
-            app:argType="com.lifecard.vpreca.data.model.PhoneData"
+            app:argType="com.lifecard.vpreca.data.model.ChangeInfoMemberData"
             app:nullable="true" />
     </fragment>
     <fragment

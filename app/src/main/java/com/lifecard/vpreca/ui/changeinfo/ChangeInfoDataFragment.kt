@@ -18,7 +18,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.ChangeInfoMemberData
 import com.lifecard.vpreca.data.model.PhoneData
+import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +57,8 @@ class ChangeInfoDataFragment : Fragment() {
 //            })
         val btnOpenDialog = binding.btnSubmitPolicy
         val cal = Calendar.getInstance()
-        val dateData = ""
+
+        var dateData = ""
         val phone = ""
         val memberNumber = ""
         btnOpenDialog.setOnClickListener(
@@ -129,14 +132,30 @@ class ChangeInfoDataFragment : Fragment() {
                     val date1 = sdf.format(cal.getTime())
 //                    val l = LocalDate.parse(dateData)
 //                    val date2 = sdf.format(l)
-//                    println(date1)
-//                    println(date2)
+                    println(date1)
+                    println(dateData)
                     val layout = view.findViewById<MaterialTextView>(R.id.tv_error)
 
                     if (date1 == dateData) {
                         layout.visibility = View.INVISIBLE
                         val action = ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
-                            PhoneData(phone, memberNumber)
+                            ChangeInfoMemberData(
+                                memberNumber,
+                                binding.user?.loginId!!,
+                                binding.user?.memberRoman!!,
+                                binding.user?.memberKana!!,
+                                binding.user?.memberName!!,
+                                binding.user?.addressCity!!,
+                                binding.user?.mailAddress1!!,
+                                binding.user?.mailAddress2!!,
+                                binding.user?.secretQuestion!!,
+                                binding.user?.secretQuestionAnswer!!,
+                                binding.user?.mail1AdMailRecieveFlg!!,
+                                binding.user?.mail2AdMailRecieveFlg!!,
+                                binding.user?.mail1RecievFlg!!,
+                                binding.user?.mail2RecievFlg!!,
+                                phone,
+                            )
                         )
                         dialog.dismiss()
                         findNavController().navigate(action)
@@ -163,6 +182,7 @@ class ChangeInfoDataFragment : Fragment() {
                 state.errorText?.let { errorText -> showPopupMessage(message = errorText) }
                 state.success?.let { memberInfo ->
                     binding.user = memberInfo
+                    dateData = memberInfo.birthday!!
                     btnOpenDialog.isEnabled = true
                 }
             })
