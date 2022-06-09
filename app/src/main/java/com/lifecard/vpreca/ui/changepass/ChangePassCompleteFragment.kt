@@ -35,7 +35,7 @@ class ChangePassCompleteFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentChangePassCompleteBinding.inflate(inflater, container, false)
-        val btnSubmit = binding.btnCompleteForgot
+        val btnSubmit = binding.btnSubmitPolicy
         btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
         return binding.root
     }

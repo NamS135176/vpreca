@@ -49,7 +49,7 @@ object UserConverter {
     @JvmStatic
     fun formatPhone(phone: String): String {
         try {
-            return phone.replace(Regex("(\\d{3})(\\d{3})(\\d+)"), "$1-$2-$3")
+            return phone.replace(Regex("(\\d{3})(\\d{4})(\\d+)"), "$1-$2-$3")
         } catch (e: Exception) {
         }
         return phone

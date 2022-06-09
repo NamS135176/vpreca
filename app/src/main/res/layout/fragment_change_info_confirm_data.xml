@@ -236,7 +236,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="@{user.telephoneNumber1}"
+                            android:text="@{UserConverter.formatPhone(user.telephoneNumber1)}"
                             android:textSize="12sp" />
                     </LinearLayout>
 

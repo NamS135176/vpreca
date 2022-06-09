@@ -63,7 +63,7 @@
                         android:lineSpacingExtra="6sp"
                         android:paddingHorizontal="22dp"
                         android:paddingTop="26dp"
-                        android:text="@string/change_phone_first_des"
+                        android:text="@string/change_info_confirm_des"
                         android:textColor="#353535"
                         android:textSize="12sp" />
 
@@ -126,7 +126,7 @@
                     android:textSize="18sp"
                     android:textColor="@color/primary"
                     style="@style/AppTheme.RoundedCornerMaterialButton"
-                    android:text="修正"/>
+                    android:text="@string/button_edit"/>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSubmitConfirm"
                     android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                     android:layout_marginLeft="9dp"
                     android:layout_marginStart="9dp"
                     android:paddingVertical="18dp"
-                    android:text="登録"
+                    android:text="@string/bod_dialog_submit_btn"
                     app:cornerRadius="30dp"
                     />
             </LinearLayout>
