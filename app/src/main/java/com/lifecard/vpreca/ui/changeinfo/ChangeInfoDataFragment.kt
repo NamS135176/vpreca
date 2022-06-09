@@ -59,7 +59,7 @@ class ChangeInfoDataFragment : Fragment() {
         val cal = Calendar.getInstance()
 
         var dateData = ""
-        val phone = ""
+        var phone = ""
         val memberNumber = ""
         btnOpenDialog.setOnClickListener(
             View.OnClickListener {
@@ -183,6 +183,7 @@ class ChangeInfoDataFragment : Fragment() {
                 state.success?.let { memberInfo ->
                     binding.user = memberInfo
                     dateData = memberInfo.birthday!!
+                    phone = memberInfo.telephoneNumber1!!
                     btnOpenDialog.isEnabled = true
                 }
             })
