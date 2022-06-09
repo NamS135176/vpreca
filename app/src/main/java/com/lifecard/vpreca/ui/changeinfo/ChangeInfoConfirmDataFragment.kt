@@ -53,20 +53,14 @@ class ChangeInfoConfirmDataFragment : Fragment() {
         binding.user = args.changeInfoData
         btnBack.setOnClickListener(View.OnClickListener {
             val action = ChangeInfoConfirmDataFragmentDirections.actionChangeConfirmDataToInput(
-                PhoneData(
-                    args.changeInfoData?.telephoneNumber1!!,
-                    args.changeInfoData?.memberNumber!!
-                )
+                args.changeInfoData
             )
             findNavController().navigate(action)
         })
 
         btnCancelConfirm.setOnClickListener(View.OnClickListener {
             val action = ChangeInfoConfirmDataFragmentDirections.actionChangeConfirmDataToInput(
-                PhoneData(
-                    args.changeInfoData?.telephoneNumber1!!,
-                    args.changeInfoData?.memberNumber!!
-                )
+                args.changeInfoData
             )
             findNavController().navigate(action)
         })

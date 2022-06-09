@@ -104,7 +104,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/change_info_input_des"
+                            android:text="@string/username_signup_title"
                             android:textSize="12sp"
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:lineSpacingExtra="6sp"/>
@@ -514,7 +514,7 @@
                     android:textSize="18sp"
                     android:textColor="@color/primary"
                     style="@style/AppTheme.RoundedCornerMaterialButton"
-                    android:text="修正"/>
+                    android:text="@string/button_edit"/>
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSubmitConfirm"
                     android:layout_width="match_parent"
@@ -524,7 +524,7 @@
                     android:layout_marginLeft="9dp"
                     android:layout_marginStart="9dp"
                     android:paddingVertical="18dp"
-                    android:text="登録"
+                    android:text="@string/change_pass_btn_submit"
                     app:cornerRadius="30dp"
                     />
             </LinearLayout>

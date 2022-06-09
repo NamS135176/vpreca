@@ -1,6 +1,7 @@
 package com.lifecard.vpreca.ui.changeinfo
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +21,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.ChangeInfoMemberData
+import com.lifecard.vpreca.data.model.PhoneData
 import com.lifecard.vpreca.databinding.FragmentChangeInfoInputBinding
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.closeKeyBoard
@@ -83,7 +85,24 @@ class ChangeInfoInputFragment : Fragment() {
         val toggle4 = binding.toggleMagazineSecond
         var city = ""
         var question = ""
-
+        val res = resources
+        val listCity = res.getStringArray(R.array.cities)
+        val listQuestion = res.getStringArray(R.array.secret_question)
+//        idEdt.setText(args.phoneData?.loginId)
+//        nicknameEdt.setText(args.phoneData?.memberRoman)
+//        kanaFirstName.setText(args.phoneData?.memberKana?.split(" ")?.toTypedArray()?.get(0))
+//        kanaLastName.setText(args.phoneData?.memberKana?.split(" ")?.toTypedArray()?.get(1))
+//        hiraFirstName.setText(args.phoneData?.memberName?.split(" ")?.toTypedArray()?.get(0)  )
+//        hiraLastName.setText(args.phoneData?.memberName?.split(" ")?.toTypedArray()?.get(1) )
+//        spinnerCity.selectItemByIndex(listCity.indexOf(args.phoneData?.addressCity))
+//        email1Edt.setText(args.phoneData?.mailAddress1)
+//        email2Edt.setText(args.phoneData?.mailAddress2)
+//        spinnerSecret.selectItemByIndex(listQuestion.indexOf(args.phoneData?.secretQuestion))
+//        answerEdt.setText(args.phoneData?.secretQuestionAnswer)
+//        toggle1.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail1AdMailRecieveFlg!!)
+//        toggle2.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail2AdMailRecieveFlg!!)
+//        toggle3.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail1RecievFlg!!)
+//        toggle4.isChecked = Converter.convertStringToBoolean(args.phoneData?.mail2RecievFlg!!)
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_info_data) })
 
         btnCancel.setOnClickListener(View.OnClickListener {
@@ -208,7 +227,7 @@ class ChangeInfoInputFragment : Fragment() {
                     Converter.convertBooleanToString(toggle2.isChecked),
                     Converter.convertBooleanToString(toggle3.isChecked),
                     Converter.convertBooleanToString(toggle4.isChecked),
-                    args.phoneData?.phone!!
+                    args.phoneData?.telephoneNumber1!!,
                 )
                 val action = ChangeInfoInputFragmentDirections.actionChangeInfoInputToConfirm(data)
                 findNavController().navigate(action)
