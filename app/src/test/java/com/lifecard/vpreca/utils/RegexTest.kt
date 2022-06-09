@@ -109,4 +109,15 @@ class RegexTest {
         Assert.assertEquals(true, RegexUtils.isCreditCard("6500000000000002"))
         Assert.assertEquals(true, RegexUtils.isCreditCard(" 6011 0009 9013 9424"))
     }
+
+    @Test
+    fun isKatakanaFullWidth_isCorrect() {
+        Assert.assertEquals(true, RegexUtils.isKatakanaFullWidth("アキ"))
+
+        Assert.assertEquals(false, RegexUtils.isKatakanaFullWidth("AKI"))
+        Assert.assertEquals(false, RegexUtils.isKatakanaFullWidth("aki"))
+        Assert.assertEquals(false, RegexUtils.isKatakanaFullWidth("ａｋｉ"))
+        Assert.assertEquals(false, RegexUtils.isKatakanaFullWidth("ＡＫＩ"))
+        Assert.assertEquals(false, RegexUtils.isKatakanaFullWidth("ｱｷ"))
+    }
 }
