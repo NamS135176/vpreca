@@ -10,10 +10,12 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentConfirmEmailBinding
 import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
+import com.lifecard.vpreca.utils.UserConverter
 
 
 class ConfirmEmailFragment : Fragment() {
@@ -21,6 +23,8 @@ class ConfirmEmailFragment : Fragment() {
     private var _binding:FragmentConfirmEmailBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel : ConfirmEmailViewModel
+    private val args:ConfirmEmailFragmentArgs by navArgs()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -37,7 +41,9 @@ class ConfirmEmailFragment : Fragment() {
         val layout = binding.forgotPassEmailLayout
         val btnBack = binding.appbarForgotPass.btnBack
         val btnCancel = binding.appbarForgotPass.cancelBtn
+        val tvEmail = binding.tvEmail
 
+        tvEmail.text = UserConverter.formatPhone(args.mailData?.preRoute!!)
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->

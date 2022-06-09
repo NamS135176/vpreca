@@ -122,6 +122,7 @@
                                 android:lineSpacingExtra="6sp"
                                 android:layout_weight="1"/>
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_phone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 style="@style/Widget.AppCompat.TextView.Bold"

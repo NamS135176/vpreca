@@ -17,10 +17,12 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.BalanceTotalRemain
+import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentPhoneBinding
 import com.lifecard.vpreca.databinding.FragmentPolicyBinding
 import com.lifecard.vpreca.ui.balance_amount.BalanceSelectSourceConfirmFragmentDirections
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputViewModel
+import com.lifecard.vpreca.ui.changephone.ChangePhoneInputPhoneFragmentDirections
 
 
 class PhoneFragment : Fragment() {
@@ -81,7 +83,11 @@ class PhoneFragment : Fragment() {
 
         phoneViewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.success?.let {
-                findNavController().navigate(R.id.nav_signup_confirm_phone)
+                val action = PhoneFragmentDirections.actionPhoneToConfirm(
+                    GiftCardConfirmData(inputPhone.text.toString())
+                )
+                findNavController().navigate(action)
+//                findNavController().navigate(R.id.nav_signup_confirm_phone)
             }
         })
 

@@ -21,7 +21,7 @@ class ChangePhoneCompleteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentChangePhoneCompleteBinding.inflate(inflater, container, false)
-        val btnComplete = binding.btnCompleteForgot
+        val btnComplete = binding.btnSubmitPolicy
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
