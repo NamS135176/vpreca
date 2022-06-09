@@ -70,7 +70,16 @@ class RegexUtils {
         private const val RegexKanji = "^[一-龯]+$"
 
         private const val RegexHiraganaFullWidth = "^[ぁ-ん]+\$"
-        private const val RegexSecondNameFullWidth = "^[一-龥ぁ-ん]+\$"
+
+        /**
+         * Name katakana full width with space
+         */
+        private const val RegexKanaNameFullWidth = "^([ァ-ン\\s]{1,19})\$"
+
+        /**
+         * Check name full width with space
+         */
+        private const val RegexNameFullWidth = "^[Ａ-ｚ０-９ぁ-んァ-ン一-龥・|ー\\s]{1,19}\$"
         private const val RegexGiftNumber = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_]{15}\$"
 
         /**
@@ -86,7 +95,8 @@ class RegexUtils {
         /**
          * see sample https://support.sumologic.com/hc/en-us/articles/205565718-Regular-expression-for-masking-credit-card-numbers
          */
-        private const val RegexCreditCard = "((?:(?:4\\d{3})|(?:5[1-5]\\d{2})|6(?:011|5[0-9]{2}))(?:-?|\\040?)(?:\\d{4}(?:-?|\\040?)){3}|(?:3[4,7]\\d{2})(?:-?|\\040?)\\d{6}(?:-?|\\040?)\\d{5})"
+        private const val RegexCreditCard =
+            "((?:(?:4\\d{3})|(?:5[1-5]\\d{2})|6(?:011|5[0-9]{2}))(?:-?|\\040?)(?:\\d{4}(?:-?|\\040?)){3}|(?:3[4,7]\\d{2})(?:-?|\\040?)\\d{6}(?:-?|\\040?)\\d{5})"
 
         fun isLoginIdValid(loginId: String?): Boolean {
             return loginId?.let { loginId ->
@@ -156,8 +166,12 @@ class RegexUtils {
             return text?.let { Regex(RegexKanji).matches(it) } ?: false
         }
 
-        fun isSecondName(text: String?): Boolean {
-            return text?.let { Regex(RegexSecondNameFullWidth).matches(it) } ?: false
+        fun isNameFullWidth(text: String?): Boolean {
+            return text?.let { Regex(RegexNameFullWidth).matches(it) } ?: false
+        }
+
+        fun isKanaNameFullWidth(text: String?): Boolean {
+            return text?.let { Regex(RegexKanaNameFullWidth).matches(it) } ?: false
         }
 
         fun isQuestionValid(question: String?): Boolean {

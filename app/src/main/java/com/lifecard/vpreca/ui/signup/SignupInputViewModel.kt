@@ -22,8 +22,7 @@ class SignupInputViewModel : ViewModel() {
     val answerError = MutableLiveData<Int?>()
     val passwordError = MutableLiveData<Int?>()
     val cfPasswordError = MutableLiveData<Int?>()
-    val kanaFullNameError = MutableLiveData<Int?>()
-    val hiraFullNameError = MutableLiveData<Int?>()
+    val nameError = MutableLiveData<Array<Number?>?>()
     val validForm = MutableLiveData<Boolean>()
     val formState = MutableLiveData(SignupInputState())
     val formResultState = MutableLiveData<SignupInputResultState>()
@@ -168,36 +167,28 @@ class SignupInputViewModel : ViewModel() {
         formState.value = formState.value?.copy(answer = text)
     }
 
-    private fun checkKanaNameValid(): Boolean {
+    private fun checkNameError(): Boolean {
+        var errors = arrayOfNulls<Number>(2)
+
         val kanaFirstName = formState.value?.kanaFirstName
         val kanaLastName = formState.value?.kanaLastName
-        return if (kanaFirstName.isNullOrEmpty() || kanaLastName.isNullOrEmpty()
-            || !RegexUtils.isKatakanaFullWidth(kanaFirstName)
-            || !RegexUtils.isKatakanaFullWidth(kanaLastName)
-            || kanaFirstName.length.plus(kanaLastName.length) !in 0..19
-        ) {
-            kanaFullNameError.value = R.string.rgx_error_kana_name
-            true
-        } else {
-            kanaFullNameError.value = null
-            false
-        }
-    }
 
-    private fun checkHiraNameValid(): Boolean {
         val hiraFirstName = formState.value?.hiraFirstName
         val hiraLastName = formState.value?.hiraLastName
-        return if (hiraFirstName.isNullOrEmpty() || hiraLastName.isNullOrEmpty()
-            || !RegexUtils.isSecondName(hiraFirstName)
-            || !RegexUtils.isSecondName(hiraLastName)
-            || hiraFirstName.length.plus(hiraLastName.length) !in 0..19
+
+        if (kanaFirstName.isNullOrEmpty() || kanaLastName.isNullOrEmpty()
+            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName $kanaLastName")
         ) {
-            hiraFullNameError.value = R.string.rgx_error_hira_name
-            true
-        } else {
-            hiraFullNameError.value = null
-            false
+            errors[0] = R.string.rgx_error_name_kana_full_width
         }
+        if (hiraFirstName.isNullOrEmpty() || hiraLastName.isNullOrEmpty()
+            || !RegexUtils.isNameFullWidth("$hiraFirstName $hiraLastName")
+        ) {
+            errors[1] = R.string.rgx_error_name_full_width
+        }
+        errors = errors.filterNotNull().toTypedArray()
+        nameError.value = if (errors.isNullOrEmpty()) null else errors
+        return errors.isNotEmpty()
     }
 
     fun kanaFirstNameDataChanged(text: String) {
@@ -235,24 +226,13 @@ class SignupInputViewModel : ViewModel() {
         val isValidAnswer = checkAnswerValid()
         val isValidPassword = checkPasswordValid()
         val isValidCfPassword = checkCfPasswordValid()
-        val isValidKanaName = checkKanaNameValid()
-        val isValidHiraName = checkHiraNameValid()
-        println(isValidUsername)
-        println(isValidLoginId)
-        println(isValidDate)
-        println(isValidPhone)
-        println(isValidQuestion)
-        println(isValidCity)
-        println(isValidGender)
-        println(isValidAnswer)
-        println(isValidPassword)
-        println(isValidCfPassword)
-        println(isValidKanaName)
-        println(isValidHiraName)
-        if (isValidUsername && isValidLoginId && isValidDate && isValidPhone && isValidQuestion && isValidCity && isValidGender && !isValidAnswer && isValidPassword && isValidCfPassword
-            && !isValidKanaName && !isValidHiraName
+        val isValidName = checkNameError()
+        if (isValidUsername && isValidLoginId &&
+            isValidDate && isValidPhone &&
+            isValidQuestion && isValidCity &&
+            isValidGender && !isValidAnswer &&
+            isValidPassword && isValidCfPassword && isValidName
         ) {
-            //TODO need call api here
             formResultState.value = SignupInputResultState(success = true)
         }
     }
