@@ -102,6 +102,7 @@ class ChangeInfoDataFragment : Fragment() {
                         cal.get(Calendar.DAY_OF_MONTH)
                     ).apply {
                         datePicker
+
                         setButton(DatePickerDialog.BUTTON_POSITIVE, getString(R.string.button_ok),
                             DialogInterface.OnClickListener { _, _ ->
                                 dateSetListener.onDateSet(

@@ -19,9 +19,9 @@
             app:title="@{@string/title_appbar_policy}" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/scrollView"
             app:layout_constraintBottom_toTopOf="@id/btn_submit_policy"
             app:layout_constraintTop_toBottomOf="@+id/appbar_signup">
 
@@ -71,6 +71,7 @@
                         android:hint="@string/hint_id"
                         android:imeOptions="actionNext"
                         android:inputType="text"
+                        android:maxLength="@integer/max_login_id"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp"
@@ -117,6 +118,7 @@
                         android:hint="@string/password_hint"
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"
+                        android:maxLength="@integer/max_pass"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp"
@@ -140,6 +142,7 @@
                         android:hint="@string/cf_password_hint"
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"
+                        android:maxLength="@integer/max_pass"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp"
@@ -423,7 +426,7 @@
                     android:gravity="center_vertical"
                     android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                     app:spinner_item_array="@array/cities"
-                    app:spinner_popup_height="@dimen/spinner_popup_height_cities"/>
+                    app:spinner_popup_height="@dimen/spinner_popup_height_cities" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_phone_title"

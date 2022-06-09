@@ -121,11 +121,6 @@ class ForgotPassViewModel @Inject constructor(
         val isValidPhone = checkPhoneValid(phone)
         val isValidQuestion = checkQuestionValid(question)
         val isValidAnswer = checkAnswerValid(answer)
-        println(isValidEmail)
-        println(isValidDate)
-        println(isValidPhone)
-        println(isValidQuestion)
-        println(isValidAnswer)
         if (isValidEmail && isValidDate && isValidPhone && isValidQuestion && isValidAnswer) {
             forgotPassState.value = ForgotPassState(success = true)
         }

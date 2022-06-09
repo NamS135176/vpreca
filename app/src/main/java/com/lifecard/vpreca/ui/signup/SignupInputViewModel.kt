@@ -58,7 +58,7 @@ class SignupInputViewModel : ViewModel() {
 
     private fun checkDateValid(): Boolean {
         return if (!isDateValid(formState.value?.date)) {
-            dateError.value = R.string.forgot_pass_error_dob
+            dateError.value = R.string.rgx_error_birthdate
             false
         } else {
             dateError.value = null
@@ -72,7 +72,7 @@ class SignupInputViewModel : ViewModel() {
 
     private fun checkPasswordValid(): Boolean {
         return if (!RegexUtils.isPasswordValid(formState.value?.password)) {
-            passwordError.value = R.string.forgot_pass_error_dob
+            passwordError.value = R.string.rgx_error_password
             false
         } else {
             passwordError.value = null

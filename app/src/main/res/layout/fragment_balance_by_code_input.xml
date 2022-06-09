@@ -118,6 +118,7 @@
                             android:inputType="text"
                             android:paddingHorizontal="17dp"
                             android:paddingTop="16dp"
+                            android:maxLength="15"
                             android:paddingBottom="16dp"
                             android:textColor="@color/black"
                             android:textSize="16sp" />

@@ -67,6 +67,7 @@
                             android:hint="@string/issue_card_by_code_input_hint"
                             android:imeOptions="actionNext"
                             android:inputType="text"
+                            android:maxLength="15"
                             android:paddingHorizontal="17dp"
                             android:paddingVertical="0dp"
                             android:textColor="@color/peacock_blue"
