@@ -16,6 +16,7 @@ import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.home.CreditCardResult
 import com.lifecard.vpreca.ui.listvpreca.CardInfoResult
+import com.lifecard.vpreca.utils.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -47,7 +48,7 @@ class BalanceSelectSourceConfirmViewModel @Inject constructor(
             val data = CardInfoRequestContentInfo(cardSchemeId, precaNumber, vcn)
             sumUpSrcCardInfo.add(data)
             val res =
-                issueCardRepository.issueSumReq(cardInfo, sumUpSrcCardInfo, cardSchemeId, "1", "1","1")
+                issueCardRepository.issueSumReq(cardInfo, sumUpSrcCardInfo, cardSchemeId, Constant.FEE_TYPE_BALANCE, "1","1")
             if (res is Result.Success) {
                 _feeInfoResult.value = FeeInfoResult(success = res.data)
             } else if (res is Result.Error) {
