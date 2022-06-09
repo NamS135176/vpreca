@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
-            android:background="@{select.isSelected().equals(`0`) ? @drawable/bg_card_outline_white : (select.isFirst().equals(`0`) ? @drawable/bg_card_outline_selectd : @drawable/bg_card_outline_selected_first)}"
+            android:background="@{select.isSelected().equals(`0`) ? @drawable/bg_card_outline_white : (select.isFirst().equals(`0`) ? @drawable/bg_card_outline_selectd : @drawable/ic_bg_card_outline_selected_first2)}"
             android:orientation="horizontal"
             android:padding="10dp"
             app:layout_constraintTop_toTopOf="parent">
