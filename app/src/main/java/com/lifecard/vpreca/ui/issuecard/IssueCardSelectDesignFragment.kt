@@ -273,6 +273,7 @@ class IssueCardSelectDesignFragment : Fragment() {
                                 creditCard.precaNumber,
                                 creditCard.vcn
                             )
+                            sumUpSrcCardInfo.add(data)
                         }
                     }
                     viewModel.creditCardSelectDataChanged(

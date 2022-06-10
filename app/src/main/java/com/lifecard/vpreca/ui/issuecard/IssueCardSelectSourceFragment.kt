@@ -61,6 +61,7 @@ class IssueCardSelectSourceFragment : Fragment() {
         val btnSubmit = binding.btnSubmitIntroduceFirst
         var arrSelected: List<SelectedData> = emptyList()
         var arrPolicy: List<CreditCard> = emptyList()
+        val tvError = binding.error
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -117,6 +118,7 @@ class IssueCardSelectSourceFragment : Fragment() {
                                     position: Int,
                                     binding: SelectSourceCardItemBinding
                                 ) {
+                                    tvError.visibility = View.INVISIBLE
                                     btnSubmit.isEnabled = true
                                     var count = 0
                                     for (it in arrSelected) {
@@ -173,6 +175,15 @@ class IssueCardSelectSourceFragment : Fragment() {
                                                     }
                                                 }
                                                 tvTotal.text = Converter.convertCurrency(sumBalance)
+                                            }
+                                        }
+                                        else{
+                                            tvError.visibility = View.VISIBLE
+                                            if(count >= 5 ){
+                                                tvError.text = "最大5枚を選択してください"
+                                            }
+                                            if(sum > (100000 - arrSelected[position].amount.toInt())){
+                                                tvError.text = "合算金額は10万円以内です。"
                                             }
                                         }
                                     } else {

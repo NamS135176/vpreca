@@ -1,5 +1,7 @@
 package com.lifecard.vpreca.ui.termofuse
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +15,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
@@ -79,9 +82,21 @@ class TermOfUseFragment : Fragment() {
         val cbTermOfUse = binding.cbTermOfUse
         val webView = binding.webview
         val loadingProgressBar = binding.loading
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+
+        viewModel.phoneDataChanged(sharedPref?.getBoolean("checked",false)!!)
 
         cbTermOfUse.setOnClickListener(View.OnClickListener {
-            btnSubmit.isEnabled = cbTermOfUse.isChecked
+            val editor: SharedPreferences.Editor = sharedPref.edit()
+            editor.putBoolean("checked", cbTermOfUse.isChecked )
+            editor.apply()
+            editor.commit()
+            viewModel.phoneDataChanged(cbTermOfUse.isChecked)
+        })
+
+        viewModel.validForm.observe(viewLifecycleOwner, Observer {
+            btnSubmit.isEnabled = it
+            cbTermOfUse.isChecked = it
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {

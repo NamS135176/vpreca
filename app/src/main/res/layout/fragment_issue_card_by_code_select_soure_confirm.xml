@@ -8,10 +8,11 @@
         <import type="android.view.View" />
 
         <import type="com.lifecard.vpreca.utils.Converter" />
+        <import type="com.lifecard.vpreca.utils.ModelExtKt" />
 
         <variable
             name="card"
-            type="com.lifecard.vpreca.data.model.IssueByCodeSelectSourceConfirmData" />
+            type="com.lifecard.vpreca.data.model.CardInfo" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -110,7 +111,7 @@
                                     android:id="@+id/card_username"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@{card.name}"
+                                    android:text="@{card.cardNickname}"
                                     android:textColor="@color/primary"
                                     android:textSize="18sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -155,7 +156,7 @@
                                             android:paddingStart="4dp"
                                             android:paddingEnd="0dp"
                                             android:paddingRight="0dp"
-                                            android:text="@{Converter.convertCardValidShort(card.expireDate)}"
+                                            android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"
                                             android:textColor="@color/primary"
                                             android:textSize="16sp" />
                                     </LinearLayout>
@@ -186,7 +187,7 @@
                                             android:paddingStart="4dp"
                                             android:paddingEnd="0dp"
                                             android:paddingRight="0dp"
-                                            android:text="@{card.pin}"
+                                            android:text="@{ModelExtKt.isCardInfoLock(card) ? `***` : card.vcn}"
                                             android:textColor="@color/primary"
                                             android:textSize="16sp" />
                                     </LinearLayout>
@@ -196,7 +197,7 @@
                                     style="@style/Widget.AppCompat.TextView.Bold"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@{card.number}"
+                                    android:text="@{ModelExtKt.isCardInfoLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"
                                     android:textColor="@color/primary"
                                     android:lineSpacingExtra="6sp"
                                     android:lineSpacingMultiplier="0"
@@ -228,7 +229,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="@{Converter.convertCurrency(card.giftAmount)}"
+                            android:text=""
                             android:paddingLeft="12dp"
                             android:paddingStart="12dp"
                             android:paddingRight="0dp"
@@ -256,7 +257,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="@{Converter.convertCurrency(card.giftAmount)}"
+                            android:text=""
                             android:paddingLeft="12dp"
                             android:paddingStart="12dp"
                             android:paddingRight="0dp"
@@ -283,7 +284,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:text="@{Converter.convertCurrency(card.selectAmount)}"
+                            android:text=""
                             android:paddingLeft="12dp"
                             android:paddingRight="0dp"
                             android:paddingEnd="0dp"

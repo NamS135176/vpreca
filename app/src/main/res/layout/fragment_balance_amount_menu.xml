@@ -21,7 +21,9 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appbar_gift_third">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:paddingBottom="50dp"
                 android:paddingHorizontal="19dp">
                 <LinearLayout
                     android:id="@+id/total_layout"
@@ -87,8 +90,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingRight="55dp"
-                        android:paddingEnd="55dp"
+                        android:paddingRight="40dp"
+                        android:paddingEnd="40dp"
                         android:paddingLeft="0dp"
                         android:paddingStart="0dp">
 
@@ -149,7 +152,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingRight="55dp">
+                        android:paddingRight="40dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -205,7 +208,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingRight="55dp">
+                        android:paddingRight="40dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
