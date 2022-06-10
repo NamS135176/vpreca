@@ -92,12 +92,24 @@ class LoginViewModel @Inject constructor(
             is InternalServerException -> _loginResult.value =
                     //TODO this internalError should be html from server, it will be implement later
                 LoginResult(internalError = "")
-            is ApiException -> _loginResult.value = LoginResult(
-                error = ErrorMessageException(
-                    errorMessage = exception.errorMessage,
-                    exception = exception
-                )
-            )
+            is ApiException -> {
+                if(exception.resultCode == "1101302"){
+                    _loginResult.value = LoginResult(
+                        error = ErrorMessageException(
+                            messageResId = 1101302,
+                            exception = exception,
+                        )
+                    )
+                }
+                else{
+                    _loginResult.value = LoginResult(
+                        error = ErrorMessageException(
+                            errorMessage = exception.errorMessage,
+                            exception = exception,
+                        )
+                    )
+                }
+            }
             else -> _loginResult.value =
                 LoginResult(
                     error = ErrorMessageException(
