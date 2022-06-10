@@ -310,9 +310,14 @@
             android:id="@+id/action_confirm_to_selectsource"
             app:destination="@id/nav_issue_card_by_code_select_source" />
         <argument
-            android:name="fragment_issue_card_by_code_select_soure_confirm_data"
+            android:name="select_source_data"
             android:defaultValue="@null"
-            app:argType="com.lifecard.vpreca.data.model.IssueByCodeSelectSourceConfirmData"
+            app:argType="com.lifecard.vpreca.data.model.IssueSelectSourceData"
+            app:nullable="true" />
+        <argument
+            android:name="design_data"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.BalanceGiftData"
             app:nullable="true" />
     </fragment>
     <fragment

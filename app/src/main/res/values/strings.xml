@@ -469,13 +469,18 @@
     <!--    Balanced Amount Menu-->
     <string name="balance_amount_menu_layout_title">不足残高合計</string>
     <string name="balance_amount_menu_appbar_layout">残高不足解消</string>
-    <string name="balance_amount_menu_title_first">既存カードから充当する</string>
-    <string name="balance_amount_menu_des_first">すでにお持ちのカードを 残高不足のカードに充当します。</string>
-    <string name="balance_amount_menu_title_second">コードを入力して充当する</string>
+    <string name="balance_amount_menu_title_first">既存カードから\n充当する</string>
+    <string name="balance_amount_menu_des_first">すでにお持ちのカードを\n残高不足のカードに充当します。</string>
+    <string name="balance_amount_menu_title_second">コードを入力して\n充当する</string>
     <string name="balance_amount_menu_des_second">発行コードやギフトキーを入力し残高不足のカードに充当します。</string>
     <string name="balance_amount_menu_title_third">Vプリカを新規購入して充当する</string>
-    <string name="balance_amount_menu_des_third">新規カードを購入し、残高不足のカードに充当します。</string>
+    <string name="balance_amount_menu_des_third">新規カードを購入し、\n残高不足のカードに充当します。</string>
     <!--    Balanced Amount Menu-->
+
+    <string name="first_row">利用日</string>
+    <string name="sec_row">ステータス</string>
+    <string name="third_row">利用先</string>
+    <string name="four_row">利用金額</string>
 
     <!--    Balance by code value confirm-->
     <string name="balance_by_code_confirm_value_appbar_title">残高不足解消</string>
