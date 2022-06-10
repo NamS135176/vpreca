@@ -165,6 +165,7 @@
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
                             android:paddingVertical="0dp"
+                            android:textAlignment="center"
                             android:textColor="@color/peacock_blue"
                             android:maxLength="4"
                             android:textSize="20sp" />
