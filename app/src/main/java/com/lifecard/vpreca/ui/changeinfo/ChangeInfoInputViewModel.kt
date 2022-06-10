@@ -98,7 +98,7 @@ class ChangeInfoInputViewModel : ViewModel() {
 
     private fun checkEmail2Valid(): Boolean {
         val email2 = formState.value?.email2
-        return if (email2.isNullOrEmpty() || email2 == "") {
+        return if (email2.isNullOrEmpty()) {
             true
         } else if (!RegexUtils.isEmailValid(email2) || email2.contentEquals(
                 formState.value?.email1,
@@ -119,7 +119,7 @@ class ChangeInfoInputViewModel : ViewModel() {
 
     private fun checkEmail1ConfirmValid(): Boolean {
         return if (!isEmail1ConfirmValid(formState.value?.email1Confirm, formState.value?.email1)) {
-            email1ConfirmError.value = R.string.rgx_error_email
+            email1ConfirmError.value = R.string.rgx_error_email_confirm_not_match
             false
         } else {
             email1ConfirmError.value = null
@@ -133,7 +133,7 @@ class ChangeInfoInputViewModel : ViewModel() {
 
     private fun checkEmail2ConfirmValid(): Boolean {
         return if (!isEmail2ConfirmValid(formState.value?.email2Confirm, formState.value?.email2)) {
-            email2ConfirmError.value = R.string.rgx_error_email
+            email2ConfirmError.value = R.string.rgx_error_email_confirm_not_match
             false
         } else {
             email2ConfirmError.value = null
