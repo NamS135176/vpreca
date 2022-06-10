@@ -167,7 +167,7 @@ class SignupInputViewModel : ViewModel() {
         formState.value = formState.value?.copy(answer = text)
     }
 
-    private fun checkNameError(): Boolean {
+    private fun checkNameValid(): Boolean {
         var errors = arrayOfNulls<Number>(2)
 
         val kanaFirstName = formState.value?.kanaFirstName
@@ -188,7 +188,7 @@ class SignupInputViewModel : ViewModel() {
         }
         errors = errors.filterNotNull().toTypedArray()
         nameError.value = if (errors.isNullOrEmpty()) null else errors
-        return errors.isNotEmpty()
+        return errors.isNullOrEmpty()
     }
 
     fun kanaFirstNameDataChanged(text: String) {
@@ -226,7 +226,7 @@ class SignupInputViewModel : ViewModel() {
         val isValidAnswer = checkAnswerValid()
         val isValidPassword = checkPasswordValid()
         val isValidCfPassword = checkCfPasswordValid()
-        val isValidName = checkNameError()
+        val isValidName = checkNameValid()
         if (isValidUsername && isValidLoginId &&
             isValidDate && isValidPhone &&
             isValidQuestion && isValidCity &&
