@@ -31,10 +31,7 @@ import com.lifecard.vpreca.ui.introduce.GiftCardInputCardFragmentDirections
 import com.lifecard.vpreca.ui.listvpreca.GridDecoration
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaAdapter
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragmentDirections
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.showCustomToast
-import com.lifecard.vpreca.utils.showInternetTrouble
-import com.lifecard.vpreca.utils.showPopupMessage
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -119,7 +116,7 @@ class IssueCardSelectSourceFragment : Fragment() {
                                     binding: SelectSourceCardItemBinding
                                 ) {
                                     tvError.visibility = View.INVISIBLE
-                                    btnSubmit.isEnabled = true
+                                    btnSubmit.isEnabled = list.size > 0
                                     var count = 0
                                     for (it in arrSelected) {
                                         if (it.isSelected == "1") {
@@ -181,14 +178,16 @@ class IssueCardSelectSourceFragment : Fragment() {
                                             tvError.visibility = View.VISIBLE
                                             if(count >= 5 ){
                                                 tvError.text = "最大5枚を選択してください"
+                                                showAlertMessage("最大5枚を選択してください")
                                             }
                                             if(sum > (100000 - arrSelected[position].amount.toInt())){
                                                 tvError.text = "合算金額は10万円以内です。"
+                                                showAlertMessage("合算金額は10万円以内です")
                                             }
                                         }
                                     } else {
                                         list.remove(position)
-                                        btnSubmit.isEnabled = list.size != 0
+                                        btnSubmit.isEnabled = list.size > 1
                                         if (arrSelected[position].isFirst == "1") {
 
                                             println(list)

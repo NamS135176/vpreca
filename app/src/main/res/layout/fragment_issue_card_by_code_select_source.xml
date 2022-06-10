@@ -106,6 +106,7 @@
                 android:layout_marginLeft="21dp"
                 android:layout_marginRight="11dp"
                 android:scrollbars="vertical"
+                android:scrollbarThumbVertical="@drawable/scrollbars"
                 android:id="@+id/rv_select_source"
                 android:layout_marginTop="34dp"
                 android:layout_marginBottom="15dp"

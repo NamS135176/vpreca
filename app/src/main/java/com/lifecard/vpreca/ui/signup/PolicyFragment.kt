@@ -1,5 +1,7 @@
 package com.lifecard.vpreca.ui.signup
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,12 +52,14 @@ class PolicyFragment : Fragment() {
                 findNavController().navigate(R.id.nav_login)
             }
         })
-        cbPolicy.isChecked = Converter.convertStringToBoolean(args.checkData?.preRoute!!)
-        btnSubmitPolicy.isEnabled = Converter.convertStringToBoolean(args.checkData?.preRoute!!)
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+
+        cbPolicy.isChecked = sharedPref?.getBoolean("checkedPolicy",false)!!
+        btnSubmitPolicy.isEnabled = sharedPref.getBoolean("checkedPolicy",false)
         cancelButton.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
-                    findNavController().popBackStack()
+                    findNavController().navigate(R.id.nav_login)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
@@ -63,6 +67,10 @@ class PolicyFragment : Fragment() {
         })
 
         cbPolicy.setOnClickListener(View.OnClickListener {
+            val editor: SharedPreferences.Editor = sharedPref.edit()
+            editor.putBoolean("checkedPolicy", cbPolicy.isChecked )
+            editor.apply()
+            editor.commit()
             btnSubmitPolicy.isEnabled = cbPolicy.isChecked
         })
 

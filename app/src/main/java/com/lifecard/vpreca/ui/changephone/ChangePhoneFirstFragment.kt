@@ -22,6 +22,8 @@ import com.lifecard.vpreca.databinding.FragmentChangePhoneFirstBinding
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoDataFragmentDirections
 import com.lifecard.vpreca.utils.UserConverter
 import com.lifecard.vpreca.utils.showAlertMessage
+import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -122,14 +124,13 @@ class ChangePhoneFirstFragment : Fragment() {
                     val datenow = sdf.format(Date())
                     val cmp = sdf.parse(date1).compareTo(sdf.parse(datenow))
 
-                    when{
+                    when {
                         cmp < 0 -> {
                             if (date1 == dateData) {
                                 layout.visibility = View.INVISIBLE
                                 findNavController().navigate(R.id.nav_change_phone_second)
                                 dialog.dismiss()
-                            }
-                            else{
+                            } else {
                                 layout.visibility = View.VISIBLE
                             }
                         }
@@ -152,14 +153,28 @@ class ChangePhoneFirstFragment : Fragment() {
                     findNavController().navigate(R.id.nav_home)
                 }
             })
-        viewModel.user.observe(viewLifecycleOwner, androidx.lifecycle.Observer { user ->
-            user?.let { tvPhone.text = UserConverter.formatPhone(user.telephoneNumber1!!)
-            dateData = user.birthday!!
-            }
-        })
-        viewModel.error.observe(
+
+        viewModel.changeInfoDataState.observe(
             viewLifecycleOwner,
-            androidx.lifecycle.Observer { err -> err?.let { showAlertMessage(err) } })
+            androidx.lifecycle.Observer { state ->
+
+                state ?: return@Observer
+
+                state.networkTrouble?.let { if (it) showInternetTrouble() }
+                state.error?.messageResId?.let { showPopupMessage(message = getString(it)) }
+                state.error?.errorMessage?.let { showPopupMessage(message = it) }
+                state.errorText?.let { errorText -> showPopupMessage(message = errorText) }
+                state.success?.let { memberInfo ->
+                    tvPhone.text = UserConverter.formatPhone(memberInfo.telephoneNumber1!!)
+                    dateData = memberInfo.birthday!!
+                }
+            })
+//        viewModel.changeInfoDataState.observe(viewLifecycleOwner, androidx.lifecycle.Observer { user ->
+//            user?.let {
+//                tvPhone.text = UserConverter.formatPhone(user.telephoneNumber1!!)
+//                dateData = user.birthday!!
+//            }
+//        })
         viewModel.getUser()
 
         return binding.root
