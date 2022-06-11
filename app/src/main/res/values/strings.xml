@@ -527,7 +527,7 @@
     <string name='rgx_error_phone_number'>正しい電話番号を入力してください。</string>
     <string name='rgx_error_gender'>正しい性別を入力してください</string>
     <string name="rgx_error_password">半角英数字8〜12文字で入力してください。</string>
-    <string name="rgx_error_confirm_password">一致していません</string>
+    <string name="rgx_error_confirm_password">@string/rgx_error_not_match</string>
     <string name="rgx_error_email">正しいメールアドレスを入力してください。</string>
     <string name="rgx_error_name_kana_full_width">お名前セイメイは合わせて全角カナ19文字以内で入力してください。</string>
     <string name="rgx_error_name_full_width">お名前姓名は合わせて全角19文字以内で入力してください。</string>
@@ -536,7 +536,8 @@
     <string name="rgx_error_vcn">カード番号入力が正しくありません。</string>
     <string name="rgx_error_birthdate">生年月日が正しくありません。</string>
     <string name="rgx_error_login_id">半角英数6~10文字で入力してください。</string>
-    <string name="rgx_error_email_confirm_not_match">一致していません。</string>
+    <string name="rgx_error_email_confirm_not_match">@string/rgx_error_not_match</string>
+    <string name="rgx_error_not_match">一致していません。</string>
     <!--   End Regex error  -->
     <string name="error_code">番号が正しくありません</string>
     <string name="btn_confirm">確認</string>

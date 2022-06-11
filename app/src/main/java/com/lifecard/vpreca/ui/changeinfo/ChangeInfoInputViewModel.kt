@@ -212,14 +212,16 @@ class ChangeInfoInputViewModel : ViewModel() {
     }
 
     private fun isEmail1ConfirmValid(cfEmail: String?, email: String?): Boolean {
-        return RegexUtils.isEmailValid(cfEmail) && email == cfEmail
+//        return RegexUtils.isEmailValid(cfEmail) && email == cfEmail
+        return email == cfEmail//only check not match
     }
 
     private fun isEmail2ConfirmValid(cfEmail: String?, email: String?): Boolean {
         if (email.isNullOrEmpty()) {
             return true
         } else {
-            return RegexUtils.isEmailValid(email) && email == cfEmail
+//            return RegexUtils.isEmailValid(email) && email == cfEmail
+            return email == cfEmail//only check not match
         }
 
     }

@@ -105,14 +105,4 @@ class CardUsageFragment : Fragment() {
 
         return binding.root
     }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        hideToolbar()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        showToolbar()
-    }
 }
