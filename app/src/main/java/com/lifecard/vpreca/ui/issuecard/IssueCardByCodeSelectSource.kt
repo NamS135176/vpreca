@@ -243,7 +243,7 @@ class IssueCardByCodeSelectSource : Fragment() {
                                                 tvError.text = "最大4枚を選択してください"
                                                 showAlertMessage("最大4枚を選択してください")
                                             }
-                                            if(sum > (100000 - arrSelected[position].amount.toInt())){
+                                            else if(sum > (100000 - arrSelected[position].amount.toInt())){
                                                 tvError.text = "合算金額は10万円以内です。"
                                                 showAlertMessage("合算金額は10万円以内です")
                                             }

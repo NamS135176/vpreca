@@ -185,7 +185,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="@{UserConverter.hideUserPhoneNumber(user)}"
+                            android:text="@{UserConverter.formatPhoneSpecial(UserConverter.hideUserPhoneNumber(user))}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
