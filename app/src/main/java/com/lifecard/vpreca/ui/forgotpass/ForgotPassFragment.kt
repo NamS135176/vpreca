@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -61,7 +62,11 @@ class ForgotPassFragment : Fragment() {
         spinnerQuestion.lifecycleOwner = viewLifecycleOwner
 
         val cal = Calendar.getInstance()
-
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                backFunction()
+            }
+        })
         cancelBtn.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
@@ -253,6 +258,6 @@ class ForgotPassFragment : Fragment() {
     }
 
     fun backFunction() {
-        findNavController().popBackStack()
+        findNavController().navigate(R.id.nav_login)
     }
 }

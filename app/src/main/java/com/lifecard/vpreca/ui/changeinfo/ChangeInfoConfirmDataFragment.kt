@@ -42,7 +42,10 @@ class ChangeInfoConfirmDataFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_change_info_input)
+                    val action = ChangeInfoConfirmDataFragmentDirections.actionChangeConfirmDataToInput(
+                        args.changeInfoData
+                    )
+                    findNavController().navigate(action)
                 }
             })
         val btnCancelConfirm = binding.btnCancelConfirm

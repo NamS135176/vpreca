@@ -200,7 +200,7 @@ class IssueCardByCodeSelectSource : Fragment() {
                                     position: Int,
                                     binding: SelectSourceCardItemBinding
                                 ) {
-                                    tvError.visibility = View.INVISIBLE
+//                                    tvError.visibility = View.INVISIBLE
                                     btnSubmit.isEnabled = true
                                     var count = 0
                                     for (it in arrSelected) {
@@ -238,13 +238,13 @@ class IssueCardByCodeSelectSource : Fragment() {
                                             }
                                         }
                                         else{
-                                            tvError.visibility = View.VISIBLE
+//                                            tvError.visibility = View.VISIBLE
                                             if(count >= 4 ){
-                                                tvError.text = "最大4枚を選択してください"
+//                                                tvError.text = "最大4枚を選択してください"
                                                 showAlertMessage("最大4枚を選択してください")
                                             }
                                             else if(sum > (100000 - arrSelected[position].amount.toInt())){
-                                                tvError.text = "合算金額は10万円以内です。"
+//                                                tvError.text = "合算金額は10万円以内です。"
                                                 showAlertMessage("合算金額は10万円以内です")
                                             }
                                         }

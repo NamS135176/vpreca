@@ -16,6 +16,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
+import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.BackPressFragment
 import com.lifecard.vpreca.databinding.FragmentWebViewBinding
 import com.lifecard.vpreca.utils.fragmentFindNavController
@@ -47,7 +49,7 @@ class WebViewFragment : BackPressFragment() {
 
     private val viewModel: WebViewViewModel by viewModels()
     private var _binding: FragmentWebViewBinding? = null
-
+    private val args:WebViewFragmentArgs by navArgs()
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -105,7 +107,14 @@ class WebViewFragment : BackPressFragment() {
 
         buttonCancel.setOnClickListener(View.OnClickListener {
             val navController = fragmentFindNavController()
-            navController.popBackStack()
+            if(navController.previousBackStackEntry?.destination?.id == R.id.nav_policy){
+
+                val action = WebViewFragmentDirections.actionToPolicy(args.checkState)
+                navController.navigate(action)
+            }
+            else{
+                navController.popBackStack()
+            }
         })
 
         binding.buttonPrev.setOnClickListener(View.OnClickListener { webView.goBack() })
