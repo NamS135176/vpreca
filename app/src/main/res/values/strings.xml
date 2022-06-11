@@ -194,7 +194,7 @@
     <string name="forgot_pass_error_dob">@string/rgx_error_birthdate</string>
     <string name='forgot_pass_error_phone'>電話番号の形式が正しくありません。</string>
     <string name="forgot_pass_error_secret_question">選択してください</string>
-    <string name="forgot_pass_error_secret_answer">全宅20文字以内で入力してください</string>
+    <string name="forgot_pass_error_secret_answer">@string/rgx_error_secret_answer</string>
     <string name="empty"></string>
     <!--    Forgot Pass Input-->
 
@@ -538,6 +538,7 @@
     <string name="rgx_error_login_id">半角英数6~10文字で入力してください。</string>
     <string name="rgx_error_email_confirm_not_match">@string/rgx_error_not_match</string>
     <string name="rgx_error_not_match">一致していません。</string>
+    <string name="rgx_error_secret_answer">全宅20文字以内で入力してください</string>
     <!--   End Regex error  -->
     <string name="error_code">番号が正しくありません</string>
     <string name="btn_confirm">確認</string>

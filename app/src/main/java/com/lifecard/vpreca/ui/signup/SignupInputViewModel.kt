@@ -156,10 +156,10 @@ class SignupInputViewModel : ViewModel() {
     private fun checkAnswerValid(): Boolean {
         return if (!RegexUtils.isAnswerValid(formState.value?.answer)) {
             answerError.value = R.string.forgot_pass_error_secret_answer
-            true
+            false
         } else {
             answerError.value = null
-            false
+            true
         }
     }
 
