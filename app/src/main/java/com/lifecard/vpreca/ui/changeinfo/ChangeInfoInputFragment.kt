@@ -272,6 +272,9 @@ class ChangeInfoInputFragment : Fragment() {
             }
         })
 
+        spinnerSecret.setOnSpinnerOutsideTouchListener { _, _ -> spinnerSecret.dismiss() }
+        spinnerCity.setOnSpinnerOutsideTouchListener { _, _ -> spinnerCity.dismiss() }
+
         idEdt.doAfterTextChanged { text -> viewModel.loginIdDataChanged(text = text.toString()) }
         nicknameEdt.doAfterTextChanged { text -> viewModel.nicknameDataChanged(text = text.toString()) }
         answerEdt.doAfterTextChanged { text -> viewModel.answerDataChanged(text = text.toString()) }

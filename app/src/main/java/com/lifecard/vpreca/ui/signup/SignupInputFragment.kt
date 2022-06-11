@@ -264,6 +264,10 @@ class SignupInputFragment : Fragment() {
             newItem?.let { viewModel.questionDataChanged(text = it) }
         })
 
+        spinnerGender.setOnSpinnerOutsideTouchListener { _, _ -> spinnerGender.dismiss() }
+        spinnerSecret.setOnSpinnerOutsideTouchListener { _, _ -> spinnerSecret.dismiss() }
+        spinnerCity.setOnSpinnerOutsideTouchListener { _, _ -> spinnerCity.dismiss() }
+
         idEdt.doAfterTextChanged { text -> viewModel.loginIdDataChanged(text = text.toString()) }
 
         usernameEdit.doAfterTextChanged { text -> viewModel.usernameDataChanged(text = text.toString()) }
