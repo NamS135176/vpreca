@@ -67,6 +67,16 @@ object UserConverter {
     }
 
     @JvmStatic
+    fun formatPhoneSpecial(phone: String): String {
+        try {
+            val split = phone.substring(phone.length-4)
+            return "***-****-"+split
+        } catch (e: Exception) {
+        }
+        return phone
+    }
+
+    @JvmStatic
     fun receiveEmail1(user: MemberInfo?): String {
         return user?.let { getReceiveEmailStatus(it.mail1RecievFlg) } ?: ""
     }
