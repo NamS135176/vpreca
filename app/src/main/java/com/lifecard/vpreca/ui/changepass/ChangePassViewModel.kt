@@ -77,7 +77,8 @@ class ChangePassViewModel @Inject constructor(
     }
 
     private fun isCfPasswordValid(cfPassword: String?, newPass: String?): Boolean {
-        return RegexUtils.isPasswordValid(cfPassword) && cfPassword == newPass
+//        return RegexUtils.isPasswordValid(cfPassword) && cfPassword == newPass
+        return cfPassword == newPass//only compare
     }
 
     fun submit() {

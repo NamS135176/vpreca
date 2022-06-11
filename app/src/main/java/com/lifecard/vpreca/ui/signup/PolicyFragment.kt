@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentPolicyBinding
 import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.Converter
@@ -28,7 +29,7 @@ class PolicyFragment : Fragment() {
 
     private var _binding: FragmentPolicyBinding? = null
     private val binding get() = _binding!!
-    private val args:PolicyFragmentArgs by navArgs()
+    private val args: PolicyFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +42,7 @@ class PolicyFragment : Fragment() {
 //                findNavController().navigate(R.id.nav_login)
 //            }
 //        })
+
         val btnSubmitPolicy = binding.btnSubmitPolicy
         val cbPolicy = binding.cbPolicy
         val cancelButton = binding.appbarPolicy.cancelBtn
@@ -52,10 +54,21 @@ class PolicyFragment : Fragment() {
                 findNavController().navigate(R.id.nav_login)
             }
         })
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
 
-        cbPolicy.isChecked = sharedPref?.getBoolean("checkedPolicy",false)!!
-        btnSubmitPolicy.isEnabled = sharedPref.getBoolean("checkedPolicy",false)
+        val data = findNavController().previousBackStackEntry?.destination?.id
+        if (data == R.id.nav_signup_phone) {
+            cbPolicy.isChecked = true
+            btnSubmitPolicy.isEnabled = true
+        }
+        if(data == R.id.nav_webview){
+            cbPolicy.isChecked = Converter.convertStringToBoolean(args.checkData?.preRoute!!)
+            btnSubmitPolicy.isEnabled = Converter.convertStringToBoolean(args.checkData?.preRoute!!)
+        }
+
+//        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+////
+////        cbPolicy.isChecked = sharedPref?.getBoolean("checkedPolicy",false)!!
+////        btnSubmitPolicy.isEnabled = sharedPref.getBoolean("checkedPolicy",false)
         cancelButton.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
@@ -67,10 +80,6 @@ class PolicyFragment : Fragment() {
         })
 
         cbPolicy.setOnClickListener(View.OnClickListener {
-            val editor: SharedPreferences.Editor = sharedPref.edit()
-            editor.putBoolean("checkedPolicy", cbPolicy.isChecked )
-            editor.apply()
-            editor.commit()
             btnSubmitPolicy.isEnabled = cbPolicy.isChecked
         })
 
@@ -79,16 +88,26 @@ class PolicyFragment : Fragment() {
         })
 
         buttonPolicy.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(
-                R.id.nav_webview,
-                WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/rule03.html")
+//            findNavController().navigate(
+//                R.id.nav_webview,
+//                WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/rule03.html")
+//            )
+            val action = PolicyFragmentDirections.actionSignupInputToSignupConfirm(
+                "https://vpc.lifecard.co.jp/rule/rule03.html",
+                GiftCardConfirmData(Converter.convertBooleanToString(cbPolicy.isChecked))
             )
+            findNavController().navigate(action)
         })
         buttonTermOfUse.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(
-                R.id.nav_webview,
-                WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/index.html")
+//            findNavController().navigate(
+//                R.id.nav_webview,
+//                WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/index.html")
+//            )
+            val action = PolicyFragmentDirections.actionSignupInputToSignupConfirm(
+                "https://vpc.lifecard.co.jp/rule/index.html",
+            GiftCardConfirmData(Converter.convertBooleanToString(cbPolicy.isChecked))
             )
+            findNavController().navigate(action)
         })
         return binding.root
 //        return inflater.inflate(R.layout.fragment_policy, container, false)

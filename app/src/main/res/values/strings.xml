@@ -250,7 +250,7 @@
     <string name="change_pass_btn_submit">変更</string>
     <string name='change_pass_old_pass_error'>パスワードが間違っています</string>
     <string name="change_pass_new_pass_error">半角英数字8〜12文字で入力してください。</string>
-    <string name="change_pass_cf_new_pass_error">一致していません。</string>
+    <string name="change_pass_cf_new_pass_error">@string/rgx_error_email_confirm_not_match</string>
     <!--    Change Pass-->
 
     <!--    Complete Change Pass-->
@@ -339,7 +339,7 @@
     <string name="copyright_life_card_co_ltd">Copyright © LIFE CARD Co., Ltd.\nAll rights reserved</string>
     <string name="logout">ログアウト</string>
     <string name="drawer_header_menu" translatable="false">メニュー</string>
-    <string name="close">閉じる</string>
+    <string name="close">@string/button_close</string>
     <string name="cancel">@string/button_cancel</string>
     <string name="title_webview">カードを買う</string>
     <string name="card_usage_balance">ご利用可能残高</string>
@@ -349,6 +349,7 @@
     <string name="my_page_card_locked">ロック中</string>
     <string name="button_ok">はい</string>
     <string name="button_cancel">キャンセル</string>
+    <string name="button_close">閉じる</string>
 
     <string name="login_fragment_text_login_info">固定電話をご登録の方へのご案内</string>
 
@@ -526,15 +527,17 @@
     <string name='rgx_error_phone_number'>正しい電話番号を入力してください。</string>
     <string name='rgx_error_gender'>正しい性別を入力してください</string>
     <string name="rgx_error_password">半角英数字8〜12文字で入力してください。</string>
-    <string name="rgx_error_confirm_password">一致していません</string>
+    <string name="rgx_error_confirm_password">@string/rgx_error_not_match</string>
     <string name="rgx_error_email">正しいメールアドレスを入力してください。</string>
-    <string name="rgx_error_kana_name">お名前セイメイは合わせて19文字以内で入力してください。</string>
-    <string name="rgx_error_hira_name">お名前姓名は合わせて19文字以内で入力してください。</string>
+    <string name="rgx_error_name_kana_full_width">お名前セイメイは合わせて全角カナ19文字以内で入力してください。</string>
+    <string name="rgx_error_name_full_width">お名前姓名は合わせて全角19文字以内で入力してください。</string>
     <string name="rgx_error_cf_password">半角英数字8〜12文字で入力してください。</string>
     <string name="rgx_error_gift_number">認証コードが正しくありません。</string>
     <string name="rgx_error_vcn">カード番号入力が正しくありません。</string>
     <string name="rgx_error_birthdate">生年月日が正しくありません。</string>
     <string name="rgx_error_login_id">半角英数6~10文字で入力してください。</string>
+    <string name="rgx_error_email_confirm_not_match">@string/rgx_error_not_match</string>
+    <string name="rgx_error_not_match">一致していません。</string>
     <!--   End Regex error  -->
     <string name="error_code">番号が正しくありません</string>
     <string name="btn_confirm">確認</string>

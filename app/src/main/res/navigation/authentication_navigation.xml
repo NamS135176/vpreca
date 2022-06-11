@@ -13,6 +13,11 @@
         <action
             android:id="@+id/action_term_of_use_to_web"
             app:destination="@id/nav_webview" />
+        <argument
+            android:name="check_state"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"
+            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -45,6 +50,9 @@
         android:name="com.lifecard.vpreca.ui.signup.PolicyFragment"
         android:label="fragment_policy"
         tools:layout="@layout/fragment_policy" >
+        <action
+            android:id="@+id/action_SignupInput_to_SignupConfirm"
+            app:destination="@id/nav_webview" />
         <argument
             android:name="check_data"
             android:defaultValue="@null"
@@ -168,10 +176,21 @@
         android:fitsSystemWindows="true"
         android:label="WebView"
         tools:layout="@layout/fragment_web_view">
+        <action
+            android:id="@+id/action_to_policy"
+            app:destination="@id/nav_policy" />
+        <action
+            android:id="@+id/action_to_term"
+            app:destination="@id/nav_term_of_use" />
         <argument
             android:name="web_url"
             android:defaultValue="@null"
             app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="check_state"
+            android:defaultValue="@null"
+            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"
             app:nullable="true" />
     </fragment>
     <fragment

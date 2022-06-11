@@ -313,7 +313,7 @@ class RequestHelper {
                         ),
                     ),
                     head = BaseHead(
-                        messageType = MessageType.MemberSelReq.value
+                        messageType = MessageType.CardDealHisReq.value
                     )
                 ),
             )
@@ -331,7 +331,7 @@ class RequestHelper {
                         ),
                     ),
                     head = BaseHead(
-                        messageType = MessageType.MemberSelReq.value
+                        messageType = MessageType.CardDealHisReq.value
                     )
                 ),
             )

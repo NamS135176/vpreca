@@ -134,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="22dp"
                     android:layout_marginTop="23dp"
-                    android:enabled="true"
+                    android:enabled="false"
                     android:paddingVertical="11dp"
                     android:text="@string/btn_next_policy"
                     android:textColor="@color/white"

@@ -78,6 +78,7 @@ class RegexTest {
     fun isFullWidth_isCorrect() {
         Assert.assertEquals(true, RegexUtils.isFullWidth("アキ・秋・あき・ａｋｉ・ＡＫＩ|ーＺｚ"))
         Assert.assertEquals(true, RegexUtils.isFullWidth("テアィン"))
+        Assert.assertEquals(false, RegexUtils.isFullWidth("abc"))
     }
 
     @Test

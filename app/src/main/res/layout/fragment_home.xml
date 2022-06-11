@@ -9,18 +9,19 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/fragment_vertical_margin"
         android:layout_marginBottom="36dp"
-        android:paddingHorizontal="16dp"
         tools:context=".ui.home.HomeFragment">
 
         <TextView
             android:id="@+id/text_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_horizontal_margin"
+            android:layout_marginLeft="@dimen/fragment_horizontal_margin"
+            android:lineSpacingExtra="3sp"
             android:text="@string/home_text_info"
             android:textSize="11sp"
-            android:lineSpacingExtra="3sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,6 +30,8 @@
             style="@style/Widget.AppCompat.TextView.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/fragment_horizontal_margin"
+            android:layout_marginRight="@dimen/fragment_horizontal_margin"
             android:text="¥0"
             android:textSize="26sp"
             app:layout_constraintBottom_toBottomOf="@id/text_info"
@@ -46,7 +49,7 @@
             android:paddingVertical="0dp"
             android:text="@string/home_button_see_all_card"
             android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/text_balance"
             app:layout_constraintTop_toBottomOf="@id/text_balance"
             tools:targetApi="lollipop" />
 
@@ -64,12 +67,12 @@
             android:id="@+id/text_last_login_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11sp"
+            android:layout_marginStart="10dp"
             android:layout_marginLeft="12dp"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@id/button_see_all_card"
             app:layout_constraintStart_toEndOf="@id/text_last_login"
-            app:layout_constraintTop_toTopOf="@id/button_see_all_card"
-            android:layout_marginStart="10dp" />
+            app:layout_constraintTop_toTopOf="@id/button_see_all_card" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_card_no_balance"
@@ -78,6 +81,7 @@
             android:layout_height="36dp"
             android:layout_marginHorizontal="@dimen/my_page_button_card_no_balance_mh"
             android:layout_marginTop="24dp"
+            android:enabled="false"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:minHeight="0dp"
@@ -86,7 +90,6 @@
             android:textColor="@color/danger"
             android:textSize="12sp"
             android:visibility="invisible"
-            android:enabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_see_all_card"
@@ -122,8 +125,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_add_new_card"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="44dp"
+            android:layout_marginHorizontal="@dimen/home_card_item_page_margin_offset"
             android:layout_marginTop="60dp"
             android:background="@drawable/button_outlined"
             android:paddingHorizontal="40dp"
@@ -137,8 +141,9 @@
             app:iconSize="16dp"
             app:iconTint="@color/primary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/card_container"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_container" />
+
         <ProgressBar
             android:id="@+id/loading"
             android:layout_width="wrap_content"
@@ -147,8 +152,8 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="64dp"
-            android:visibility="visible"
             android:indeterminateDrawable="@drawable/loading"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

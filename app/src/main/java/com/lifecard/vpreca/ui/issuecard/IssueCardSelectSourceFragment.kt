@@ -116,7 +116,7 @@ class IssueCardSelectSourceFragment : Fragment() {
                                     binding: SelectSourceCardItemBinding
                                 ) {
                                     tvError.visibility = View.INVISIBLE
-                                    btnSubmit.isEnabled = list.size > 0
+
                                     var count = 0
                                     for (it in arrSelected) {
                                         if (it.isSelected == "1") {
@@ -138,7 +138,7 @@ class IssueCardSelectSourceFragment : Fragment() {
 
                                     if (arrSelected[position].isSelected == "0") {
                                         if (count < 5 && sum <= (100000 - arrSelected[position].amount.toInt())) {
-
+                                            btnSubmit.isEnabled = list.size > 0
                                             list.add(position)
                                             println(list)
                                             if (count == 0) {
@@ -175,7 +175,7 @@ class IssueCardSelectSourceFragment : Fragment() {
                                             }
                                         }
                                         else{
-                                            tvError.visibility = View.VISIBLE
+//                                            tvError.visibility = View.VISIBLE
                                             if(count >= 5 ){
                                                 tvError.text = "最大5枚を選択してください"
                                                 showAlertMessage("最大5枚を選択してください")

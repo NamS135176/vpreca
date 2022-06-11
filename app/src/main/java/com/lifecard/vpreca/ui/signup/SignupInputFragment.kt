@@ -226,20 +226,18 @@ class SignupInputFragment : Fragment() {
                 }
             })
 
-        viewModel.hiraFullNameError.observe(
+
+        viewModel.nameError.observe(
             viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
+            androidx.lifecycle.Observer { errors: Array<Number?>? ->
                 binding.hiraNameInputLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
-        viewModel.kanaFullNameError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                binding.nameInputLayout.error = try {
-                    error?.let { getString(error) }
+                    val errorInt = errors?.filterNotNull()
+                    if (!errorInt.isNullOrEmpty()) {
+                        println("errorInt: $errorInt - text ${errorInt.map { getString(it as Int) }}")
+                        errorInt.joinToString(separator = "\n") { getString(it as Int) }
+                    } else {
+                        null
+                    }
                 } catch (e: Error) {
                     null
                 }
@@ -265,6 +263,10 @@ class SignupInputFragment : Fragment() {
         spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
             newItem?.let { viewModel.questionDataChanged(text = it) }
         })
+
+        spinnerGender.setOnSpinnerOutsideTouchListener { _, _ -> spinnerGender.dismiss() }
+        spinnerSecret.setOnSpinnerOutsideTouchListener { _, _ -> spinnerSecret.dismiss() }
+        spinnerCity.setOnSpinnerOutsideTouchListener { _, _ -> spinnerCity.dismiss() }
 
         idEdt.doAfterTextChanged { text -> viewModel.loginIdDataChanged(text = text.toString()) }
 

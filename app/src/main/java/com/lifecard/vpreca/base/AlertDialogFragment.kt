@@ -7,15 +7,21 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentAlertBinding
 
 class AlertDialogFragment : DialogFragment() {
     companion object {
         const val FRAGMENT_TAG = "AlertDialogFragment";
 
-        fun newInstance(title: String? = null, message: String): AlertDialogFragment {
+        fun newInstance(
+            title: String? = null,
+            message: String,
+            buttonCancel: Int? = R.string.button_ok
+        ): AlertDialogFragment {
             val f = AlertDialogFragment()
-            f.arguments = bundleOf("title" to title, "message" to message)
+            f.arguments =
+                bundleOf("title" to title, "message" to message, "buttonCancel" to buttonCancel)
             return f
         }
     }
@@ -32,8 +38,10 @@ class AlertDialogFragment : DialogFragment() {
 
         val title = arguments?.getString("title")
         val message = arguments?.getString("message")
+        val buttonCancel = arguments?.getInt("buttonCancel")
         title?.let { binding.alertTitle = it }
         message?.let { binding.alertMessage = message }
+        buttonCancel?.let { binding.buttonOk.text = getString(buttonCancel) }
         binding.buttonOk.setOnClickListener(View.OnClickListener {
             dismiss()
         })

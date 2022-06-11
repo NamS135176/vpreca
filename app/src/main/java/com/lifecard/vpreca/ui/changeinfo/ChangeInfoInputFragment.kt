@@ -93,8 +93,8 @@ class ChangeInfoInputFragment : Fragment() {
         nicknameEdt.setText(args.userData?.memberRoman)
         kanaFirstName.setText(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(0))
         kanaLastName.setText(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(1))
-        hiraFirstName.setText(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(0)  )
-        hiraLastName.setText(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(1) )
+        hiraFirstName.setText(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(0))
+        hiraLastName.setText(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(1))
         spinnerCity.selectItemByIndex(listCity.indexOf(args.userData?.addressPrefecture))
         email1Edt.setText(args.userData?.mailAddress1)
         email1ConfirmEdt.setText(args.userData?.mailAddress1)
@@ -108,10 +108,18 @@ class ChangeInfoInputFragment : Fragment() {
         toggle4.isChecked = Converter.convertStringToBoolean(args.userData?.mail2RecievFlg!!)
         viewModel.loginIdDataChanged(args.userData?.loginId!!)
         viewModel.nicknameDataChanged(args.userData?.memberRoman!!)
-        viewModel.kanaFirstNameDataChanged(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(0)!!)
-        viewModel.kanaLastNameDataChanged(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(1)!!)
-        viewModel.hiraFirstNameDataChanged(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(0) !!)
-        viewModel.hiraLastNameDataChanged(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(1) !!)
+        viewModel.kanaFirstNameDataChanged(
+            args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(0)!!
+        )
+        viewModel.kanaLastNameDataChanged(
+            args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(1)!!
+        )
+        viewModel.hiraFirstNameDataChanged(
+            args.userData?.memberName?.split(" ")?.toTypedArray()?.get(0)!!
+        )
+        viewModel.hiraLastNameDataChanged(
+            args.userData?.memberName?.split(" ")?.toTypedArray()?.get(1)!!
+        )
         viewModel.cityDataChanged(args.userData?.addressPrefecture!!)
         viewModel.email1DataChanged(args.userData?.mailAddress1!!)
         viewModel.email1ConfirmDataChanged(args.userData?.mailAddress1!!)
@@ -208,20 +216,17 @@ class ChangeInfoInputFragment : Fragment() {
                 }
             })
 
-        viewModel.hiraFullNameError.observe(
+        viewModel.nameError.observe(
             viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
+            androidx.lifecycle.Observer { errors: Array<Number?>? ->
                 binding.hiraNameInputLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
-        viewModel.kanaFullNameError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                binding.nameInputLayout.error = try {
-                    error?.let { getString(error) }
+                    val errorInt = errors?.filterNotNull()
+                    if (!errorInt.isNullOrEmpty()) {
+                        println("errorInt: $errorInt - text ${errorInt.map { getString(it as Int) }}")
+                        errorInt.joinToString(separator = "\n") { getString(it as Int) }
+                    } else {
+                        null
+                    }
                 } catch (e: Error) {
                     null
                 }
@@ -266,6 +271,9 @@ class ChangeInfoInputFragment : Fragment() {
                 city = it
             }
         })
+
+        spinnerSecret.setOnSpinnerOutsideTouchListener { _, _ -> spinnerSecret.dismiss() }
+        spinnerCity.setOnSpinnerOutsideTouchListener { _, _ -> spinnerCity.dismiss() }
 
         idEdt.doAfterTextChanged { text -> viewModel.loginIdDataChanged(text = text.toString()) }
         nicknameEdt.doAfterTextChanged { text -> viewModel.nicknameDataChanged(text = text.toString()) }
