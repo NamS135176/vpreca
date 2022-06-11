@@ -6,6 +6,7 @@
         <import type="android.view.View" />
 
         <import type="com.lifecard.vpreca.utils.Converter" />
+
         <import type="com.lifecard.vpreca.utils.ModelExtKt" />
 
         <variable
@@ -16,19 +17,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:paddingHorizontal="18dp">
+        android:paddingHorizontal="@dimen/home_card_item_page_margin_offset">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card_info"
             style="@style/MyCardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="@drawable/round_bg_primary"
-            android:minHeight="175dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="16dp"
+            app:layout_constraintDimensionRatio="@string/card_design_dimens"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

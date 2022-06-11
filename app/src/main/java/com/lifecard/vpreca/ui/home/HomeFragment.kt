@@ -2,13 +2,14 @@ package com.lifecard.vpreca.ui.home
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
@@ -36,10 +37,11 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), CoroutineScope {
@@ -90,7 +92,7 @@ class HomeFragment : Fragment(), CoroutineScope {
                     launch {
                         binding.loading.visibility = View.VISIBLE
                         val res = creditCardRepository.updateCard(currentCreditCard)
-                        if(res is Result.Success){
+                        if (res is Result.Success) {
                             homeViewModel.inverseLockStatus(currentCreditCard, position)
                             val toastMessage = when (currentCreditCard.isCardLock()) {
                                 false -> "ロックしました"
@@ -100,12 +102,14 @@ class HomeFragment : Fragment(), CoroutineScope {
                                 message = toastMessage,
                                 requireActivity()
                             )
-                        }
-                        else if (res is Result.Error) {
+                        } else if (res is Result.Error) {
                             when (res.exception) {
                                 is NoConnectivityException -> showInternetTrouble()
                                 is ApiException -> showPopupMessage("", res.exception.message)
-                                else -> showPopupMessage("", getString( R.string.get_list_card_failure))
+                                else -> showPopupMessage(
+                                    "",
+                                    getString(R.string.get_list_card_failure)
+                                )
 
                             }
                         }
@@ -113,24 +117,29 @@ class HomeFragment : Fragment(), CoroutineScope {
                     }
                 })
                 buttonReload.setOnClickListener(View.OnClickListener {
-                    if(!adapter.getItem(position).isCardLock()){
+                    if (!adapter.getItem(position).isCardLock()) {
                         MaterialAlertDialogBuilder(requireContext()).apply {
                             setPositiveButton("はい") { _, _ ->
 
                                 launch {
                                     binding.loading.visibility = View.VISIBLE
                                     val res = creditCardRepository.republishCard(currentCreditCard)
-                                    if(res is Result.Success){
+                                    if (res is Result.Success) {
                                         binding.listCard.currentCard = res.data
                                         homeViewModel.updateList(res.data, position)
 
                                         showToast("再発行しました")
-                                    }
-                                    else if (res is Result.Error) {
+                                    } else if (res is Result.Error) {
                                         when (res.exception) {
                                             is NoConnectivityException -> showInternetTrouble()
-                                            is ApiException -> showPopupMessage("", res.exception.message)
-                                            else -> showPopupMessage("", getString( R.string.get_list_card_failure))
+                                            is ApiException -> showPopupMessage(
+                                                "",
+                                                res.exception.message
+                                            )
+                                            else -> showPopupMessage(
+                                                "",
+                                                getString(R.string.get_list_card_failure)
+                                            )
 
                                         }
                                     }
@@ -223,6 +232,23 @@ class HomeFragment : Fragment(), CoroutineScope {
                                 ArrayList(creditCardResult.success)
                             )
                         viewPager.adapter = pagerAdapter
+
+                        viewPager.offscreenPageLimit = 3
+
+                        val pageMargin =
+                            resources.getDimensionPixelOffset(R.dimen.home_card_item_page_margin)
+                        val pageOffset =
+                            resources.getDimensionPixelOffset(R.dimen.home_card_item_page_offset)
+                        println("pageMargin = $pageMargin - pageOffset = $pageOffset")
+                        viewPager.setPageTransformer { page, position ->
+                            val myOffset: Float = position * -(2 * pageOffset + pageMargin)
+                            if (position < -1) {
+                                page.translationX = -myOffset
+                            }
+                            else {
+                                page.translationX = myOffset
+                            }
+                        }
                         if (latestPage > 0 && latestPage < pagerAdapter!!.itemCount) {
                             viewPager.setCurrentItem(latestPage, false)
                         }
@@ -325,6 +351,14 @@ class HomeFragment : Fragment(), CoroutineScope {
         return root
     }
 
+    fun dp2px(resource: Resources, dp: Int): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp.toFloat(),
+            resource.displayMetrics
+        )
+            .toInt()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         unlockDrawer()
