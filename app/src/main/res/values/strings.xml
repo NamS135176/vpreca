@@ -339,7 +339,7 @@
     <string name="copyright_life_card_co_ltd">Copyright © LIFE CARD Co., Ltd.\nAll rights reserved</string>
     <string name="logout">ログアウト</string>
     <string name="drawer_header_menu" translatable="false">メニュー</string>
-    <string name="close">閉じる</string>
+    <string name="close">@string/button_close</string>
     <string name="cancel">@string/button_cancel</string>
     <string name="title_webview">カードを買う</string>
     <string name="card_usage_balance">ご利用可能残高</string>
@@ -349,6 +349,7 @@
     <string name="my_page_card_locked">ロック中</string>
     <string name="button_ok">はい</string>
     <string name="button_cancel">キャンセル</string>
+    <string name="button_close">閉じる</string>
 
     <string name="login_fragment_text_login_info">固定電話をご登録の方へのご案内</string>
 

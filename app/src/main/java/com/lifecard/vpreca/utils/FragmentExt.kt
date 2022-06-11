@@ -14,13 +14,21 @@ fun Fragment.setNavigationResult(result: String, key: String) {
     findNavController().previousBackStackEntry?.savedStateHandle?.set(key, result)
 }
 
-fun Fragment.showPopupMessage(title: String? = null, message: String): Fragment? = try {
+fun Fragment.showPopupMessage(
+    title: String? = null,
+    message: String,
+    buttonCancel: Int? = R.string.button_ok
+): Fragment? = try {
     println("showPopupMessage... title = $title, message = $message")
     val supportFragmentManager = requireActivity().supportFragmentManager
     var fragment =
         supportFragmentManager.findFragmentByTag(AlertDialogFragment.FRAGMENT_TAG)
     if (fragment == null) {
-        fragment = AlertDialogFragment.newInstance(title = title, message = message)
+        fragment = AlertDialogFragment.newInstance(
+            title = title,
+            message = message,
+            buttonCancel = buttonCancel
+        )
         supportFragmentManager.beginTransaction()
             .add(fragment, AlertDialogFragment.FRAGMENT_TAG)
             .commitAllowingStateLoss()
@@ -46,7 +54,8 @@ fun Fragment.hidePopupMessage() = try {
 fun Fragment.showInternetTrouble(): Fragment? {
     return showPopupMessage(
         title = getString(R.string.error_no_internet_connection_title),
-        message = getString(R.string.error_no_internet_connection_content)
+        message = getString(R.string.error_no_internet_connection_content),
+        buttonCancel = R.string.button_close
     )
 }
 
