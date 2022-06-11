@@ -53,14 +53,20 @@
                     android:id="@+id/rv_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="31dp"
                     android:layout_marginLeft="31dp"
                     android:layout_marginTop="56dp" />
+
                 <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
                     android:id="@+id/indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="26dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    app:spi_dotColor="#63ADFF"
+                    app:spi_dotSelectedColor="@color/white"
+                    app:spi_dotSelectedSize="8dp"
+                    app:spi_dotSize="8dp" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -71,13 +77,14 @@
             android:layout_marginHorizontal="45dp"
             android:enabled="true"
             android:paddingVertical="12dp"
-            android:textSize="18sp"
             android:text="@string/issue_card_select_design_btn"
             android:textColor="@color/primary"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:backgroundTint='@color/button_introduce_background'
             app:cornerRadius="24dp"
             app:layout_constraintBottom_toBottomOf="parent" />
+
         <ProgressBar
             android:id="@+id/loading"
             android:layout_width="wrap_content"
@@ -86,8 +93,8 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="64dp"
-            android:visibility="gone"
             android:indeterminateDrawable="@drawable/loading"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
