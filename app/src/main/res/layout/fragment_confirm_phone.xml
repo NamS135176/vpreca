@@ -145,7 +145,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/input_signup_style"
-                                android:hint="@string/confirm_phone_hint"
+                                android:hint="@string/sms_verify_code_hint"
                                 android:inputType="number"
                                 android:maxLength="4"
                                 android:minHeight="@dimen/min_height_input"
