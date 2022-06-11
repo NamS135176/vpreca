@@ -57,7 +57,7 @@ class CardUsageFragment : Fragment() {
                     findNavController().navigate(R.id.nav_home)
                 }
                 else{
-                    findNavController().navigate(R.id.nav_login)
+                    findNavController().popBackStack()
                 }
             }
         })
@@ -66,7 +66,7 @@ class CardUsageFragment : Fragment() {
                 findNavController().navigate(R.id.nav_home)
             }
             else{
-                findNavController().navigate(R.id.nav_login)
+                findNavController().popBackStack()
             }
         })
         if(args.preRoute?.preRoute == "logged"){
@@ -111,8 +111,10 @@ class CardUsageFragment : Fragment() {
         hideToolbar()
     }
 
+
+
     override fun onDetach() {
         super.onDetach()
-        showToolbar()
+        hideToolbar()
     }
 }
