@@ -8,6 +8,7 @@
         <import type="android.view.View" />
 
         <import type="com.lifecard.vpreca.utils.Converter" />
+
         <import type="com.lifecard.vpreca.utils.ModelExtKt" />
 
         <variable
@@ -16,64 +17,66 @@
     </data>
 
     <androidx.core.widget.NestedScrollView
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:fillViewport="true">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/term_of_use"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.termofuse.TermOfUseFragment"
+            android:background="@color/primary"
             android:paddingBottom="43dp"
-            android:background="@color/primary">
+            tools:context=".ui.termofuse.TermOfUseFragment">
+
             <include
                 android:id="@+id/appbar_gift_third"
                 layout="@layout/toolbar_back_cancel"
-                app:layout_constraintTop_toTopOf="parent"
-                app:title="@{@string/issue_card_by_code_select_source_confirm_appbar_title}"
                 app:elevation="0dp"
-                />
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="@{@string/issue_card_by_code_select_source_confirm_appbar_title}" />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/appbar_gift_third"
-                app:layout_constraintBottom_toTopOf="@id/btn_submit_input">
+                app:layout_constraintBottom_toTopOf="@id/btn_submit_input"
+                app:layout_constraintTop_toBottomOf="@+id/appbar_gift_third">
+
                 <LinearLayout
-                    android:paddingBottom="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="29dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/desThird"
+                        style="@style/Widget.AppCompat.TextView.Bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/issue_card_by_code_select_source_confirm_title"
                         android:gravity="center_horizontal"
-                        android:paddingTop="26dp"
-                        android:textColor="#fff"
-                        style="@style/Widget.AppCompat.TextView.Bold"
                         android:lineSpacingExtra="10sp"
-                        android:textSize="16sp"
-                        />
+                        android:paddingTop="26dp"
+                        android:text="@string/issue_card_by_code_select_source_confirm_title"
+                        android:textColor="#fff"
+                        android:textSize="16sp" />
+
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/issue_card_by_code_select_source_confirm_des"
                         android:gravity="center_horizontal"
-                        android:paddingTop="19dp"
-                        android:textColor="#fff"
                         android:lineSpacingExtra="6sp"
-                        android:textSize="12sp"
-                        />
+                        android:paddingTop="19dp"
+                        android:text="@string/issue_card_by_code_select_source_confirm_des"
+                        android:textColor="#fff"
+                        android:textSize="12sp" />
+
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_marginTop="42dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:context=".ui.termofuse.TermOfUseFragment"
-                        android:background="@color/primary">
+                        android:layout_marginTop="42dp"
+                        android:background="@color/primary"
+                        tools:context=".ui.termofuse.TermOfUseFragment">
 
                         <com.google.android.material.card.MaterialCardView
                             style="@style/MyCardView"
@@ -99,11 +102,11 @@
                                 android:paddingVertical="16dp">
 
                                 <ImageView
-                                    android:contentDescription="@string/issue_card_by_code_select_source_confirm_btn"
                                     android:id="@+id/card_logo"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/logo_card"
+                                    android:contentDescription="@string/issue_card_by_code_select_source_confirm_btn"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -118,11 +121,11 @@
                                     app:layout_constraintStart_toStartOf="parent" />
 
                                 <ImageView
-                                    android:contentDescription="@string/issue_card_by_code_select_source_confirm_btn"
                                     android:id="@+id/card_type_logo"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/visa_gift"
+                                    android:contentDescription="@string/issue_card_by_code_select_source_confirm_btn"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintTop_toTopOf="@id/card_username" />
@@ -152,8 +155,8 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="clip_vertical"
-                                            android:paddingLeft="4dp"
                                             android:paddingStart="4dp"
+                                            android:paddingLeft="4dp"
                                             android:paddingEnd="0dp"
                                             android:paddingRight="0dp"
                                             android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"
@@ -165,10 +168,10 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:orientation="horizontal"
-                                        android:paddingLeft="9dp"
-                                        android:paddingRight="0dp"
                                         android:paddingStart="9dp"
-                                        android:paddingEnd="0dp">
+                                        android:paddingLeft="9dp"
+                                        android:paddingEnd="0dp"
+                                        android:paddingRight="0dp">
 
                                         <com.google.android.material.textview.MaterialTextView
                                             android:layout_width="wrap_content"
@@ -183,8 +186,8 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="clip_vertical"
-                                            android:paddingLeft="4dp"
                                             android:paddingStart="4dp"
+                                            android:paddingLeft="4dp"
                                             android:paddingEnd="0dp"
                                             android:paddingRight="0dp"
                                             android:text="@{ModelExtKt.isCardInfoLock(card) ? `***` : card.vcn}"
@@ -197,121 +200,128 @@
                                     style="@style/Widget.AppCompat.TextView.Bold"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@{ModelExtKt.isCardInfoLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"
-                                    android:textColor="@color/primary"
                                     android:lineSpacingExtra="6sp"
                                     android:lineSpacingMultiplier="0"
-                                    app:lineHeight="0dp"
+                                    android:text="@{ModelExtKt.isCardInfoLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"
+                                    android:textColor="@color/primary"
                                     android:textSize="18sp"
-                                    app:layout_constraintBottom_toTopOf="@id/code_zone" />
+                                    app:layout_constraintBottom_toTopOf="@id/code_zone"
+                                    app:lineHeight="0dp" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </com.google.android.material.card.MaterialCardView>
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
                     <LinearLayout
-                        android:background="@drawable/underline_bg_primary"
                         android:id="@+id/ammount_zone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="43dp">
+                        android:layout_marginTop="43dp"
+                        android:background="@drawable/underline_bg_primary">
+
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/white"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:textSize="11sp"
-                            android:text="@string/gift_card_confirm_detail_price_title"/>
+                            android:text="@string/gift_card_confirm_detail_price_title"
+                            android:textColor="@color/white"
+                            android:textSize="11sp" />
+
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tv_big_gift_value"
-                            android:layout_weight="1"
-                            android:gravity="end"
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:text=""
-                            android:paddingLeft="12dp"
+                            android:layout_weight="1"
+                            android:gravity="end"
                             android:paddingStart="12dp"
-                            android:paddingRight="0dp"
+                            android:paddingLeft="12dp"
                             android:paddingEnd="0dp"
-                            android:textSize="36sp"/>
+                            android:paddingRight="0dp"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="36sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp">
+
                         <com.google.android.material.textview.MaterialTextView
+                            style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/white"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:textSize="14sp"
-                            style="@style/Widget.AppCompat.TextView.Bold"
-                            android:text="@string/issue_card_by_code_select_source_confirm_gift_value_title"/>
+                            android:text="@string/issue_card_by_code_select_source_confirm_gift_value_title"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tv_gift_value"
-                            android:layout_weight="1"
-                            android:gravity="end"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:text=""
-                            android:paddingLeft="12dp"
+                            android:layout_weight="1"
+                            android:gravity="end"
                             android:paddingStart="12dp"
-                            android:paddingRight="0dp"
+                            android:paddingLeft="12dp"
                             android:paddingEnd="0dp"
-                            android:textSize="18sp"/>
+                            android:paddingRight="0dp"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp">
+
                         <com.google.android.material.textview.MaterialTextView
+                            style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/white"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:textSize="14sp"
-                            style="@style/Widget.AppCompat.TextView.Bold"
-                            android:text="@string/issue_card_by_code_select_source_confirm_select_value_title"/>
+                            android:text="@string/issue_card_by_code_select_source_confirm_select_value_title"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tv_select_amount"
-                            android:layout_weight="1"
-                            android:gravity="end"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:text=""
-                            android:paddingLeft="12dp"
-                            android:paddingRight="0dp"
-                            android:paddingEnd="0dp"
+                            android:layout_weight="1"
+                            android:gravity="end"
                             android:paddingStart="12dp"
-                            android:textSize="18sp"/>
+                            android:paddingLeft="12dp"
+                            android:paddingEnd="0dp"
+                            android:paddingRight="0dp"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
 
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_submit_input"
+                style="@style/Widget.AppCompat.TextView.Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:text="@string/issue_card_by_code_select_source_confirm_btn"
-                style="@style/Widget.AppCompat.TextView.Bold"
+                android:layout_marginHorizontal="45dp"
                 android:layout_marginTop="131dp"
                 android:enabled="true"
-                android:textColor="@color/primary"
-                android:layout_marginHorizontal="45dp"
-                app:cornerRadius="24dp"
-                android:textSize="18sp"
                 android:paddingVertical="11dp"
+                android:text="@string/issue_card_by_code_select_source_confirm_btn"
+                android:textColor="@color/primary"
+                android:textSize="18sp"
                 app:backgroundTint='@color/button_introduce_background'
-                />
+                app:cornerRadius="24dp"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
             <ProgressBar
                 android:id="@+id/loading"
                 android:layout_width="wrap_content"
@@ -320,8 +330,8 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="64dp"
-                android:visibility="gone"
                 android:indeterminateDrawable="@drawable/loading"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

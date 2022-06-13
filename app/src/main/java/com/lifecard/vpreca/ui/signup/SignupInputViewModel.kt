@@ -230,7 +230,7 @@ class SignupInputViewModel : ViewModel() {
         if (isValidUsername && isValidLoginId &&
             isValidDate && isValidPhone &&
             isValidQuestion && isValidCity &&
-            isValidGender && !isValidAnswer &&
+            isValidGender && isValidAnswer &&
             isValidPassword && isValidCfPassword && isValidName
         ) {
             formResultState.value = SignupInputResultState(success = true)
