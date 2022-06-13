@@ -55,7 +55,7 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
         var listCardInfo:List<CardInfo> = emptyList()
 
         tvGiftAmount.text = Converter.convertCurrency(args.designData?.giftAmount)
-        tvGift.text = Converter.convertCurrency(args.designData?.giftAmount)
+
         viewModel.issueGiftCardWithoutCard(
             args.designData?.balanceAmount!!,
             args.designData?.giftNumber!!
@@ -70,6 +70,7 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
                 }
             }
         }
+        tvGift.text = Converter.convertCurrency(sum)
         tvTotal.text = Converter.convertCurrency((sum + args.designData?.giftAmount?.toInt()!!))
 
         btnSubmit.setOnClickListener(View.OnClickListener {
