@@ -67,10 +67,10 @@ fun Fragment.setLightStatusBar() = try {
         }
         window.decorView.systemUiVisibility = flags
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        window.statusBarColor = getColor(requireContext(), R.color.white)
-    } else {
-    }
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//        window.statusBarColor = getColor(requireContext(), R.color.white)
+//    } else {
+//    }
 
 } catch (e: Exception) {
 }
@@ -90,10 +90,10 @@ fun Fragment.clearLightStatusBar() = try {
         } // use XOR here for remove LIGHT_STATUS_BAR from flags
         window.decorView.systemUiVisibility = flags
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        window.statusBarColor = getColor(requireContext(), R.color.primary)
-    } else {
-    }
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//        window.statusBarColor = getColor(requireContext(), R.color.primary)
+//    } else {
+//    }
 
 } catch (e: Exception) {
 }
