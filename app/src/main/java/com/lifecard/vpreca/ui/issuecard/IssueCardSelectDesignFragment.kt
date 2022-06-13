@@ -79,6 +79,7 @@ class IssueCardSelectDesignFragment : Fragment() {
         val btnSubmit = binding.btnSubmitIntroduceFirst
         var designId = "001"
         val loading = binding.loading
+        val recyclerIndicator = binding.indicator
 
         val cardLayout = binding.cardZone
         when (args.selectDesignData?.preRoute) {
@@ -168,9 +169,19 @@ class IssueCardSelectDesignFragment : Fragment() {
                     cardLayout.card = DesignCard("001", "0")
                     for (i in 0 until listDesignResult.success.cardDesignInfo?.size!!) {
                         if (i == 0) {
-                            list.add(DesignCard(listDesignResult.success.cardDesignInfo[i].designId, "1"))
+                            list.add(
+                                DesignCard(
+                                    listDesignResult.success.cardDesignInfo[i].designId,
+                                    "1"
+                                )
+                            )
                         } else {
-                            list.add(DesignCard(listDesignResult.success.cardDesignInfo[i].designId, "0"))
+                            list.add(
+                                DesignCard(
+                                    listDesignResult.success.cardDesignInfo[i].designId,
+                                    "0"
+                                )
+                            )
                         }
                     }
 
@@ -183,6 +194,7 @@ class IssueCardSelectDesignFragment : Fragment() {
                     adapter.setOnClickListener(object :
                         IssueCardSelectDesignAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
+                            recyclerIndicator.setCurrentPosition(position)
                             if (list[position].isSelected != "1") {
                                 for (i in 0 until list.size) {
                                     if (i == position) {
@@ -241,7 +253,6 @@ class IssueCardSelectDesignFragment : Fragment() {
                     })
                     rcView.adapter = adapter
 //        rcView.addItemDecoration(PagerDecorator())
-                    val recyclerIndicator: ScrollingPagerIndicator = binding.indicator
                     recyclerIndicator.attachToRecyclerView(rcView)
                 }
                 listDesignResult.error?.let { error ->

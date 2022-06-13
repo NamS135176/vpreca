@@ -499,6 +499,7 @@
                         android:text=""
                         android:textOff=""
                         android:textOn="" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -512,7 +513,7 @@
                     android:paddingBottom="14dp">
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:lineSpacingExtra="6sp"
