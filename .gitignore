@@ -18,3 +18,5 @@ keystore.properties
 secure.properties
 deploygate-submit.sh
 release-apk.sh
+
+*.pem

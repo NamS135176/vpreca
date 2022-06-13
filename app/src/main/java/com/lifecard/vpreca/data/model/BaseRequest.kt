@@ -33,7 +33,7 @@ data class BaseHead(
     @SerializedName("searchKey")
     val searchKey: String = "",
     @SerializedName("messageDigest")
-    val messageDigest: String = "",
+    val messageDigest: String? = null,
 )
 
 enum class MessageType(val value: String) {
