@@ -192,8 +192,24 @@ class RegexUtils {
 
         fun formatDisplayPhoneNumber(phone: String?): String {
             return phone?.let {
-                val regex = "(\\d{3})(\\d{4})(\\d+)"
+                val regex =
+                    if (phone.length == 10) "(\\d{3})(\\d{3})(\\d+)" else "(\\d{3})(\\d{4})(\\d+)"
                 return it.replace(Regex(regex), "\$1-\$2-\$3")
+            } ?: phone ?: ""
+        }
+
+        /**
+         * @return ex: ***-***-6090
+         */
+        fun formatHideDisplayPhoneNumber(phone: String?): String {
+            return phone?.let {
+                if (phone.length == 10) {
+                    val regex = "(\\d{3})(\\d{3})(\\d+)"
+                    return it.replace(Regex(regex), "***-***-\$3")
+                } else {
+                    val regex = "(\\d{3})(\\d{4})(\\d+)"
+                    return it.replace(Regex(regex), "***-****-\$3")
+                }
             } ?: phone ?: ""
         }
 
@@ -215,6 +231,37 @@ class RegexUtils {
 
         fun isCreditCard(card: String?): Boolean {
             return card?.let { Regex(RegexCreditCard).matches(it) } ?: false
+        }
+
+        fun hidePhone(phone: String): String {
+            try {
+                val result =
+                    phone.replace(Regex("[\\d](?=[\\d]{4})"), "*")
+                println("hidePhone... phone = $phone - result: $result")
+                return result
+            } catch (e: Exception) {
+                println(e.toString())
+            }
+            return phone
+        }
+
+        fun hideEmail(email: String): String {
+            try {
+                return email.replace(Regex("^(\\w{3})[\\w-]+@([\\w.]+\\w)"), "$1***@$2")
+            } catch (e: Exception) {
+                println(e.toString())
+            }
+            return email
+        }
+
+        fun hideCreditCard(card: String): String {
+            try {
+                if (!isCreditCard(card)) return card
+                return card.replace(Regex("(?!(?:\\*\\d){14}\$|(?:\\D*\\d){1,4}\$)\\d"), "*")
+            } catch (e: Exception) {
+                println(e.toString())
+            }
+            return card
         }
 
     }

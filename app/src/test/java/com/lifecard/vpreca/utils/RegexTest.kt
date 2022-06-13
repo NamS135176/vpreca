@@ -2,6 +2,7 @@ package com.lifecard.vpreca.utils
 
 import org.junit.Assert
 import org.junit.Test
+
 class RegexTest {
     @Test
     fun ocrCode_isCorrect() {
@@ -49,18 +50,9 @@ class RegexTest {
 
     @Test
     fun formatDisplayPhoneNumber_isCorrect() {
-        Assert.assertEquals(
-            "090-1234-5678",
-            RegexUtils.formatDisplayPhoneNumber("09012345678")
-        )
-        Assert.assertEquals(
-            "090-1234-567",
-            RegexUtils.formatDisplayPhoneNumber("0901234567")
-        )
-        Assert.assertEquals(
-            "090-1234-567",
-            RegexUtils.formatDisplayPhoneNumber("090-1234-567")
-        )
+        Assert.assertEquals("090-1234-5678", RegexUtils.formatDisplayPhoneNumber("09012345678"))
+        Assert.assertEquals("090-123-4567", RegexUtils.formatDisplayPhoneNumber("0901234567"))
+        Assert.assertEquals("090-123-4567", RegexUtils.formatDisplayPhoneNumber("090-123-4567"))
     }
 
     @Test
@@ -132,5 +124,32 @@ class RegexTest {
         Assert.assertEquals(false, RegexUtils.isNicknameValid("ABCABCABCABCABCABCA"))
         Assert.assertEquals(false, RegexUtils.isNicknameValid("abc"))
         Assert.assertEquals(false, RegexUtils.isNicknameValid("アキ"))
+    }
+
+    @Test
+    fun hideEmailAddress_isCorrect() {
+        Assert.assertEquals("anh***@gmail.com", RegexUtils.hideEmail("anhndt@gmail.com"))
+        Assert.assertEquals("anh***@vn-sis.com", RegexUtils.hideEmail("anhndt@vn-sis.com"))
+        Assert.assertEquals("an@vn-sis.com", RegexUtils.hideEmail("an@vn-sis.com"))
+        Assert.assertEquals("anh***@vn-sis.com", RegexUtils.hideEmail("anhdt-test123@vn-sis.com"))
+    }
+
+    @Test
+    fun hidePhone_isCorrect() {
+        Assert.assertEquals("******0690", RegexUtils.hidePhone("0946670690"))
+    }
+
+    @Test
+    fun hideCreditCard_isCorrect() {
+        Assert.assertEquals("**** **** **** 9424", RegexUtils.hideCreditCard("6011 0009 9013 9424"))
+        Assert.assertEquals("****-****-****-9424", RegexUtils.hideCreditCard("6011-0009-9013-9424"))
+        Assert.assertEquals("************0002", RegexUtils.hideCreditCard("6500000000000002"))
+    }
+
+    @Test
+    fun formatHideDisplayPhoneNumber_isCorrect() {
+        Assert.assertEquals("***-****-5678", RegexUtils.formatHideDisplayPhoneNumber("09012345678"))
+        Assert.assertEquals("***-***-4567", RegexUtils.formatHideDisplayPhoneNumber("0901234567"))
+//        Assert.assertEquals("***-***-4567", RegexUtils.formatHideDisplayPhoneNumber("090-123-4567"))
     }
 }
