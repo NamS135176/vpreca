@@ -4,6 +4,7 @@
 
     <data>
 
+        <import type="com.lifecard.vpreca.utils.Converter" />
         <variable
             name="title"
             type="java.lang.String" />
@@ -28,7 +29,7 @@
                 style="@style/Widget.Theme.VPreca.ActionBar.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{title}" />
+                android:text="@{Converter.formatToolbarTitle(title, 20)}" />
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 </layout>
