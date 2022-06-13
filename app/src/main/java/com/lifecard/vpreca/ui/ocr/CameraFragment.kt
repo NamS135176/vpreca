@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentCameraBinding
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoConfirmDataFragmentArgs
@@ -95,7 +96,7 @@ class CameraFragment : Fragment() {
         viewModel.codeOcr.observe(viewLifecycleOwner, androidx.lifecycle.Observer { ocr ->
             //show toast
             when (ocr.isNullOrEmpty()) {
-                true -> showAlertMessage(getString(R.string.camera_ocr_failure))
+                true -> showAlertErrorOcr()
                 else -> {
                     setNavigationResult(ocr, "ocr_code")
                     findNavController().popBackStack()
@@ -105,10 +106,29 @@ class CameraFragment : Fragment() {
         viewModel.error.observe(viewLifecycleOwner, androidx.lifecycle.Observer { message ->
             //show alert error
             if (!message.isNullOrEmpty()) {
-                showAlertMessage(getString(R.string.camera_ocr_failure))
+                showAlertErrorOcr()
             }
         })
+
+        viewModel.lockButtonTakePhoto.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { locked ->
+                binding.buttonTakePhoto.isEnabled = !locked
+                binding.buttonTakePhoto.background = if (locked) ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_button_camera_disable
+                ) else ContextCompat.getDrawable(requireContext(), R.drawable.ic_button_camera)
+            })
         return binding.root
+    }
+
+    private fun showAlertErrorOcr() {
+        MaterialAlertDialogBuilder(requireContext()).apply {
+            setPositiveButton(
+                R.string.button_retry, null
+            )
+            setTitle(R.string.camera_ocr_failure)
+        }.create().show()
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -165,6 +185,8 @@ class CameraFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun takePhoto() {
+        viewModel.startTakePhoto()
+
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
         // Create time stamped name and MediaStore entry.
@@ -195,6 +217,7 @@ class CameraFragment : Fragment() {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
                     exc.printStackTrace()
+                    viewModel.releaseLockTakePhoto()
                 }
 
                 override fun

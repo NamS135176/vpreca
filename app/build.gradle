@@ -55,7 +55,7 @@ android {
     defaultConfig {
         applicationId "com.lifecard.vpreca"
         minSdk 16
-        targetSdk 31
+        targetSdk 32
         versionCode 1
         versionName "1.0"
         multiDexEnabled = true
@@ -102,7 +102,7 @@ android {
 }
 
 dependencies {
-    def camerax_version = "1.2.0-alpha02"
+    def camerax_version = "1.2.0-alpha01"
 
     implementation("androidx.multidex:multidex:2.0.1")
 

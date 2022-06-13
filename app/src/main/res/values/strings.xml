@@ -350,6 +350,7 @@
     <string name="button_ok">はい</string>
     <string name="button_cancel">キャンセル</string>
     <string name="button_close">閉じる</string>
+    <string name="button_retry">やり直す</string>
 
     <string name="login_fragment_text_login_info">固定電話をご登録の方へのご案内</string>
 

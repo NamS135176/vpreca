@@ -25,11 +25,13 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
     var codeOcr = MutableLiveData<String?>()
     var loading = MutableLiveData<Boolean?>()
     var error = MutableLiveData<String?>()
+    var lockButtonTakePhoto = MutableLiveData<Boolean>(false)
 
     fun getCodeByGoogleVisionOcr(bitmap: Bitmap) {
         viewModelScope.launch {
             loading.value = true
             val ocr = callApiGetOcr(bitmap)
+            releaseLockTakePhoto()
             if (ocr is Result.Success) {
                 codeOcr.value = ocr.data
             } else if (ocr is Result.Error) {
@@ -37,6 +39,14 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
             }
             loading.value = false
         }
+    }
+
+    fun startTakePhoto() {
+        lockButtonTakePhoto.value = true
+    }
+
+    fun releaseLockTakePhoto() {
+        lockButtonTakePhoto.value = false
     }
 
     private suspend fun callApiGetOcr(bitmap: Bitmap): Result<String> {
