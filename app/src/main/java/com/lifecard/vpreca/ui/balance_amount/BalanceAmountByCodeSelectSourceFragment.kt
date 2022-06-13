@@ -110,9 +110,12 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
                                     position: Int,
                                     binding: SelectSourceCardItemBinding
                                 ) {
-
+                                    var lastPost = 0
                                     if (arrSelected[position].isSelected == "0") {
                                         for (i in 0 until arrSelected.size) {
+                                            if(arrSelected[i].isSelected == "1"){
+                                                lastPost = i
+                                            }
                                             if (i == position) {
                                                 arrSelected[i].isSelected = "1"
                                             } else {
@@ -120,7 +123,7 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
                                             }
                                         }
                                         println(arrSelected)
-                                        adapter.notifyDataSetChanged()
+
                                         select = arrPolicy[position].publishAmount.toInt()
                                         remain = fakeBalanceRamain - select
                                         if(remain > 0){
@@ -139,7 +142,8 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
                                         vcnName = arrPolicy[position].vcnName
                                         precaNumber = arrPolicy[position].precaNumber
                                         vcn = arrPolicy[position].vcn
-
+                                        adapter.notifyItemChanged(position)
+                                        adapter.notifyItemChanged(lastPost)
                                         btnSubmit.isEnabled = true
 //                                        dataSelectCard = arrPolicy[position].publishAmount
 //                                        name = arrPolicy[position].cardNickname

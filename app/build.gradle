@@ -27,7 +27,7 @@ debugKeystoreProperties.load(new FileInputStream(debugKeystorePropertiesFile))
 secureProperties.load(new FileInputStream(securePropertiesFile))
 
 android {
-    compileSdk 31
+    compileSdk 32
 
     buildFeatures {
 
