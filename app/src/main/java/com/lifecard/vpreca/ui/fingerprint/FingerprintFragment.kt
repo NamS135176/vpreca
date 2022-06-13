@@ -122,6 +122,7 @@ class FingerprintFragment : Fragment() {
 
         if (!viewModel.checkSupportFingerprint(requireContext())) {
             fingerprint.isEnabled = false
+            viewModel.setFingerprintSetting(requireContext(), false)
         }
 
         executor = ContextCompat.getMainExecutor(requireContext())

@@ -36,7 +36,7 @@ class RegexTest {
             "12345678901",
             "12 345678",
             "12344\uD83D\uDE00333",
-            "abc%^!#$@%@"
+            "abc%^!#$@%@",
         )
         loginIdErrors.forEach { loginId ->
             Assert.assertEquals(
@@ -44,6 +44,7 @@ class RegexTest {
                 RegexUtils.isLoginIdValid(loginId)
             )
         }
+        Assert.assertEquals(true, RegexUtils.isLoginIdValid("-23_202020"))
     }
 
     @Test
@@ -120,5 +121,16 @@ class RegexTest {
         Assert.assertEquals(false, RegexUtils.isKatakanaFullWidth("ａｋｉ"))
         Assert.assertEquals(false, RegexUtils.isKatakanaFullWidth("ＡＫＩ"))
         Assert.assertEquals(false, RegexUtils.isKatakanaFullWidth("ｱｷ"))
+    }
+
+    @Test
+    fun isNickname_isCorrect() {
+        Assert.assertEquals(true, RegexUtils.isNicknameValid("ABC"))
+        Assert.assertEquals(true, RegexUtils.isNicknameValid("ABCABCABCABCABCABC"))
+
+        Assert.assertEquals(false, RegexUtils.isNicknameValid("ABC123"))
+        Assert.assertEquals(false, RegexUtils.isNicknameValid("ABCABCABCABCABCABCA"))
+        Assert.assertEquals(false, RegexUtils.isNicknameValid("abc"))
+        Assert.assertEquals(false, RegexUtils.isNicknameValid("アキ"))
     }
 }
