@@ -18,7 +18,7 @@ class Constant {
 //        const val API_BASE_URL = "https://by4h7iozy5.execute-api.ap-southeast-1.amazonaws.com/dev/"
         //staging
         const val API_BASE_URL =
-            "https://btpslgn3o5.execute-api.ap-southeast-1.amazonaws.com/staging/"
+            "https://xvojcilpig.execute-api.ap-southeast-1.amazonaws.com/staging/"
 
         const val GOOGLE_VISION_API = "https://vision.googleapis.com/"
     }

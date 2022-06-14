@@ -26,6 +26,8 @@ import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
+import com.lifecard.vpreca.eventbus.CloseDrawerEvent
+import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
@@ -34,6 +36,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -91,11 +95,12 @@ class HomeFragment : Fragment(), CoroutineScope {
                 buttonLock.setOnClickListener(View.OnClickListener {
                     launch {
                         binding.loading.visibility = View.VISIBLE
+                        currentCreditCard = currentCreditCard.copyCardLockInverse()
                         val res = creditCardRepository.updateCard(currentCreditCard)
                         if (res is Result.Success) {
-                            homeViewModel.inverseLockStatus(currentCreditCard, position)
+                            homeViewModel.updateCard(currentCreditCard, position)
                             val toastMessage = when (currentCreditCard.isCardLock()) {
-                                false -> "ロックしました"
+                                true -> "ロックしました"
                                 else -> "ロックを解除しました"
                             }
                             Toast(context).showCustomToast(
@@ -156,6 +161,11 @@ class HomeFragment : Fragment(), CoroutineScope {
                 })
             }
         }
+    }
+
+    @Subscribe
+    fun handleCloseDrawer(event: ReloadCard) {
+        homeViewModel.loadCard(true)
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -244,8 +254,7 @@ class HomeFragment : Fragment(), CoroutineScope {
                             val myOffset: Float = position * -(2 * pageOffset + pageMargin)
                             if (position < -1) {
                                 page.translationX = -myOffset
-                            }
-                            else {
+                            } else {
                                 page.translationX = myOffset
                             }
                         }
@@ -359,6 +368,7 @@ class HomeFragment : Fragment(), CoroutineScope {
         )
             .toInt()
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         unlockDrawer()
@@ -392,6 +402,12 @@ class HomeFragment : Fragment(), CoroutineScope {
             }
         }
         requireActivity().lifecycle.addObserver(lifecycleObserver)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        EventBus.getDefault().unregister(this)
     }
 
     private inner class CardSlidePagerAdapter(
