@@ -54,17 +54,18 @@ class CardBottomSheetCustom(
             CardDetailLayoutBinding.inflate(inflater, null, false)
         val loading = bindingDialog.loading
         when (creditCard.designId) {
-            "001" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_first)
-            "002" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_second)
-            "003" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_third)
-            "004" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_fourth)
-            "005" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_fifth)
-            "006" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_six)
-            "007" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_seven)
+            "001" -> bindingDialog.cardZone.cardInfo.cardInfo.setBackgroundResource(R.drawable.first)
+            "002" -> bindingDialog.cardZone.cardInfo.cardInfo.setBackgroundResource(R.drawable.second)
+            "003" -> bindingDialog.cardZone.cardInfo.cardInfo.setBackgroundResource(R.drawable.third)
+            else -> bindingDialog.cardZone.cardInfo.cardInfo.setBackgroundResource(R.drawable.first)
+//            "005" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_fifth)
+//            "006" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_six)
+//            "007" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_seven)
         }
         setContentView(bindingDialog.root)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         bindingDialog.card = convertObject(newCard)
+
         val card = bindingDialog.cardZone
         val btnBack = bindingDialog.btnBack
         val btnCopy = bindingDialog.buttonCopy
@@ -82,6 +83,7 @@ class CardBottomSheetCustom(
                             if(res is Result.Success){
                                 card.card = res.data
                                 bindingDialog.card = res.data
+                                card.cardInfo.card = res.data
                                 newCard = creditCard.copy()
                                 Toast(context).showCustomToast(
                                     "再発行しました",
@@ -125,6 +127,7 @@ class CardBottomSheetCustom(
 //            println(new.isCardLock())
                  newCard = new.copy()
                  card.card = convertObject(new)
+                 card.cardInfo.card = convertObject(new)
                  bindingDialog.card = convertObject(new)
              } else if (res is Result.Error) {
                  when (res.exception) {
@@ -176,6 +179,7 @@ class CardBottomSheetCustom(
 
         btnBack.setOnClickListener(View.OnClickListener { dismiss() })
         card.card = convertObject(newCard)
+        card.cardInfo.card = convertObject(newCard)
     }
 
     fun convertObject(cardInfo: CardInfo): CreditCard {

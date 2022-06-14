@@ -137,6 +137,7 @@ class ChangeInfoDataFragment : Fragment() {
                         cmp < 0 -> {
                             if (date1 == dateData) {
                                 layout.visibility = View.INVISIBLE
+                                tvDob.setBackgroundResource(R.drawable.input_signup_style)
                                 val action = ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
                                     ChangeInfoMemberData(
                                         memberNumber,
@@ -159,11 +160,13 @@ class ChangeInfoDataFragment : Fragment() {
                                 dialog.dismiss()
                                 findNavController().navigate(action)
                             } else {
+                                tvDob.setBackgroundResource(R.drawable.input_signup_selected)
                                 layout.visibility = View.VISIBLE
                             }
 
                         }
                         else -> {
+                            tvDob.setBackgroundResource(R.drawable.input_signup_selected)
                             layout.visibility = View.VISIBLE
                         }
                     }
