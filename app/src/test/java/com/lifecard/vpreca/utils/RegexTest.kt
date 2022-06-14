@@ -38,13 +38,18 @@ class RegexTest {
             "12 345678",
             "12344\uD83D\uDE00333",
             "abc%^!#$@%@",
+            "マチヤタナヤ"
         )
-        loginIdErrors.forEach { loginId ->
-            Assert.assertEquals(
-                false,
-                RegexUtils.isLoginIdValid(loginId)
-            )
-        }
+        Assert.assertEquals(false, RegexUtils.isLoginIdValid(""))
+        Assert.assertEquals(false, RegexUtils.isLoginIdValid("ＡＡＡ"))
+        Assert.assertEquals(false, RegexUtils.isLoginIdValid("ＡＡＡＡＡＡ"))
+        Assert.assertEquals(false, RegexUtils.isLoginIdValid("12345"))
+        Assert.assertEquals(false, RegexUtils.isLoginIdValid("12345678901"))
+        Assert.assertEquals(false, RegexUtils.isLoginIdValid("12 345678"))
+        Assert.assertEquals(false, RegexUtils.isLoginIdValid("12344\uD83D\uDE00333"))
+        Assert.assertEquals(false, RegexUtils.isLoginIdValid("abc%^!#\$@%@"))
+        Assert.assertEquals(false, RegexUtils.isLoginIdValid("マチヤタナヤ"))
+
         Assert.assertEquals(true, RegexUtils.isLoginIdValid("-23_202020"))
     }
 

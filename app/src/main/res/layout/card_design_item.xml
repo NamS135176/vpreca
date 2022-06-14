@@ -12,117 +12,165 @@
             type="com.lifecard.vpreca.data.model.DesignCard" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="6dp">
+   <com.google.android.material.card.MaterialCardView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginHorizontal="6dp"
+       style="@style/MyCardView">
+       <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:background="@drawable/bg_card"
+           android:id="@+id/card_border"
+      >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/card_info"
-            style="@style/MyCardView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="152dp"
-            android:background="@drawable/bg_card"
-            android:minHeight="92dp"
-            android:paddingHorizontal="7dp"
-            android:paddingVertical="7dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+           <androidx.constraintlayout.widget.ConstraintLayout
+               android:id="@+id/card_info"
+               style="@style/MyCardView"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:minWidth="152dp"
+               android:background="@drawable/bg_card"
+               android:minHeight="92dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent">
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideline"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   app:layout_constraintGuide_percent="0.14" />
 
-            <ImageView
-                android:contentDescription="@string/des_phone_input"
-                android:id="@+id/card_logo"
-                android:layout_width="0dp"
-                android:layout_height="9dp"
-                android:background="@{card.designId.equals(`001`) ? @drawable/logo_card : @drawable/home_card_logo}"
-                app:layout_constraintDimensionRatio="138:36"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideline_2"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   app:layout_constraintGuide_percent="0.48" />
 
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideline_3"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   app:layout_constraintGuide_percent="0.08" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideline_vertical"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   app:layout_constraintGuide_percent="0.96" />
 
-                android:text="@string/card_expire_date"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="4sp"
-                app:layout_constraintBottom_toTopOf="@id/card_username"
-                android:paddingBottom="4dp"
-                app:layout_constraintStart_toStartOf="parent" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_expire_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideline_vertical_1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   app:layout_constraintGuide_percent="0.82" />
 
-                android:text="@string/expire_holder"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="8sp"
-                app:layout_constraintBottom_toTopOf="@id/card_username"
-                app:layout_constraintStart_toEndOf="@+id/card_no" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/pin_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideline_vertical_1_1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   app:layout_constraintGuide_percent="0.73" />
 
-                android:text="@string/sercue_code"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="4sp"
-                app:layout_constraintBottom_toTopOf="@id/card_username"
-                app:layout_constraintStart_toEndOf="@+id/card_expire_data"
-                android:paddingBottom="4dp"
-                android:layout_marginLeft="9dp"
-                android:layout_marginStart="9dp"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/pin_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideline_vertical_1_2"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   app:layout_constraintGuide_percent="0.85" />
 
-                android:text="@string/pin_holder"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="8sp"
-                app:layout_constraintBottom_toTopOf="@id/card_username"
-                app:layout_constraintStart_toEndOf="@+id/pin_title" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/vpreca_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/vpreca_holder"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="8sp"
-                app:layout_constraintBottom_toTopOf="@id/card_no"
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideline_vertical_2"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   app:layout_constraintGuide_percent="0.67" />
 
-                app:layout_constraintStart_toStartOf="parent" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_username"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:paddingEnd="40dp"
-                android:paddingRight="40dp"
-                android:paddingLeft="0dp"
-                android:paddingStart="0dp"
-                android:text="@string/name_holder"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="8sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideline_vertical_2_1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   app:layout_constraintGuide_percent="0.53" />
 
-            <ImageView
-                android:contentDescription="@string/des_phone_input"
-                android:id="@+id/card_type_logo"
-                android:layout_width="0dp"
-                android:layout_height="9dp"
-                android:background="@{card.designId.equals(`001`) ? @drawable/visa_gift : @drawable/card_visa}"
-                app:layout_constraintBottom_toBottomOf="@id/card_username"
-                app:layout_constraintDimensionRatio="108:36"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/card_username" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+               <androidx.appcompat.widget.AppCompatTextView
+                   android:id="@+id/card_username"
+                   style="@style/Widget.AppCompat.TextView.Bold"
+                   android:layout_width="0dp"
+                   android:layout_height="0dp"
+                   android:gravity="center_vertical"
+                   android:text="@string/name_holder"
+                   android:maxLines="1"
+                   android:ellipsize="end"
+                   android:textColor="@color/black"
+                   app:autoSizeMaxTextSize="16sp"
+                   app:autoSizeMinTextSize="6sp"
+                   app:autoSizeStepGranularity="2dp"
+                   app:autoSizeTextType="uniform"
+                   app:layout_constraintBottom_toTopOf="@+id/guideline_vertical"
+                   app:layout_constraintDimensionRatio="235:36"
+                   app:layout_constraintStart_toStartOf="@+id/guideline"
+                   app:layout_constraintTop_toTopOf="@+id/guideline_vertical_1_2" />
+
+               <androidx.appcompat.widget.AppCompatTextView
+                   android:id="@+id/tv_date"
+                   style="@style/Widget.AppCompat.TextView.Bold"
+                   android:layout_width="0dp"
+                   android:layout_height="0dp"
+                   android:gravity="center_vertical"
+                   android:text="@string/expire_holder"
+                   android:textColor="@color/black"
+                   app:autoSizeMaxTextSize="15sp"
+                   app:autoSizeMinTextSize="5sp"
+                   app:autoSizeStepGranularity="2dp"
+                   app:autoSizeTextType="uniform"
+                   app:layout_constraintBottom_toTopOf="@+id/guideline_vertical_1"
+                   app:layout_constraintDimensionRatio="80:20"
+                   app:layout_constraintStart_toStartOf="@+id/guideline"
+                   app:layout_constraintTop_toTopOf="@+id/guideline_vertical_1_1" />
+
+               <androidx.appcompat.widget.AppCompatTextView
+                   android:id="@+id/tv_vcn"
+                   style="@style/Widget.AppCompat.TextView.Bold"
+                   android:layout_width="0dp"
+                   android:layout_height="0dp"
+                   android:layout_marginStart="4dp"
+                   android:layout_marginLeft="4dp"
+                   android:gravity="center_vertical"
+                   android:text="@string/pin_holder"
+                   android:textColor="@color/black"
+                   app:autoSizeMaxTextSize="15sp"
+                   app:autoSizeMinTextSize="5sp"
+                   app:autoSizeStepGranularity="2dp"
+                   app:autoSizeTextType="uniform"
+                   app:layout_constraintBottom_toTopOf="@+id/guideline_vertical_1"
+                   app:layout_constraintDimensionRatio="60:22"
+                   app:layout_constraintStart_toStartOf="@+id/guideline_2"
+                   app:layout_constraintTop_toTopOf="@+id/guideline_vertical_1_1" />
+
+               <androidx.appcompat.widget.AppCompatTextView
+                   android:id="@+id/tv_preca"
+                   style="@style/Widget.AppCompat.TextView.Bold"
+                   android:layout_width="0dp"
+                   android:layout_height="0dp"
+                   android:gravity="center_vertical"
+                   android:text="@string/vpreca_holder"
+                   android:textColor="@color/black"
+                   app:autoSizeMaxTextSize="26sp"
+                   app:autoSizeMinTextSize="8sp"
+                   app:autoSizeStepGranularity="4dp"
+                   app:autoSizeTextType="uniform"
+                   app:layout_constraintBottom_toTopOf="@+id/guideline_vertical_2"
+                   app:layout_constraintDimensionRatio="240:30"
+                   app:layout_constraintStart_toStartOf="@+id/guideline_3"
+                   app:layout_constraintTop_toTopOf="@+id/guideline_vertical_2_1"
+                   app:layout_constraintVertical_bias="0.615" />
+           </androidx.constraintlayout.widget.ConstraintLayout>
+       </androidx.constraintlayout.widget.ConstraintLayout>
+   </com.google.android.material.card.MaterialCardView>
 </layout>

@@ -63,6 +63,7 @@ class GiftCardConfirmFragment : Fragment() {
         })
 
         binding.card = args.cardData
+        binding.cardZone.cardInclude.card = args.cardData
         binding.cardZone.card  = args.cardData
         btnBack.setOnClickListener(View.OnClickListener {
             if (args.giftCardConfirmData?.preRoute == "inputcard") {
