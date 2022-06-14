@@ -584,10 +584,10 @@
     <string name="hint_dropdown">選択してください</string>
     <string name="button_confirm">登録</string>
     <string name="button_edit">修正</string>
-    <string name="policy_text1">・ 私は、18歳以上です。未成年の場合は親権者の同意を得ています。</string>
-    <string name="policy_text2">・ 私は、暴力団などの反社会的勢力や、反社会的勢力の関係者ではないことを表明します。</string>
-    <string name="policy_text3">・ 私は、個人情報の取扱いに関する同意約款、会員規約に同意します。</string>
-    <string name="policy_text4">・ 私は、アカウント登録情報に不備があった等でライフカードが必要と判断した場合は運転免許証等の本人確認用書類を提出することに同意します。</string>
+    <string name="policy_text1">私は、18歳以上です。未成年の場合は親権者の同意を得ています。</string>
+    <string name="policy_text2">私は、暴力団などの反社会的勢力や、反社会的勢力の関係者ではないことを表明します。</string>
+    <string name="policy_text3">私は、個人情報の取扱いに関する同意約款、会員規約に同意します。</string>
+    <string name="policy_text4">私は、アカウント登録情報に不備があった等でライフカードが必要と判断した場合は運転免許証等の本人確認用書類を提出することに同意します。</string>
 
     <string name="button_next">次へ</string>
 </resources>

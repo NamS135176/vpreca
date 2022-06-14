@@ -94,6 +94,16 @@ interface ApiService {
         @Body cardRelationRequest: BrandRequest
     ): CardRelationRegReqResponse
 
+    @POST("SmsAuthCodeSendReq")
+    suspend fun sendSmsRequest(
+        @Body sendSmsRequest: BrandRequest
+    ): SMSAuthCodeSendResponse
+
+    @POST("SmsAuthReq")
+    suspend fun confirmSMS(
+        @Body sendSmsRequest: BrandRequest
+    ): SMSAuthResponse
+
     @GET("challenge")
     suspend fun getBioChallenge(@Query("loginId") memberNumber: String): BioChallenge
 

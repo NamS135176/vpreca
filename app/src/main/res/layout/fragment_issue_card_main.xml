@@ -32,8 +32,9 @@
                 android:paddingHorizontal="19dp">
 
                 <LinearLayout
-                    android:layout_marginTop="15dp"
+
                     android:id="@+id/layout_tap"
+                    android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_introduce_checkbox"
@@ -43,9 +44,9 @@
                     android:paddingTop="33dp"
                     android:paddingRight="30dp"
                     android:paddingBottom="33dp"
-                    app:layout_constraintTop_toTopOf="@+id/layout_issue_card_select"
                     android:paddingStart="26dp"
-                    android:paddingEnd="30dp">
+                    android:paddingEnd="30dp"
+                    app:layout_constraintTop_toTopOf="@+id/layout_issue_card_select">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -101,9 +102,11 @@
                     android:minHeight="140dp"
                     android:orientation="horizontal"
                     android:paddingLeft="26dp"
-                    android:paddingTop="1dp"
+                    android:paddingTop="33dp"
                     android:paddingRight="30dp"
                     android:paddingBottom="33dp"
+                    android:paddingStart="26dp"
+                    android:paddingEnd="30dp"
                     app:layout_constraintTop_toBottomOf="@+id/layout_tap">
 
                     <LinearLayout
@@ -193,7 +196,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="4"
                         android:minHeight="90dp"
-                        android:src="@drawable/ic_double_card" />
+                        android:src="@drawable/ic_svg_2_card" />
                 </LinearLayout>
                 <com.google.android.material.button.MaterialButton
                     android:layout_marginTop="15dp"

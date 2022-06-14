@@ -8,5 +8,4 @@ data class CreditCardResult(
     val error: ErrorMessageException? = null,
     val networkTrouble: Boolean? = false,
     val internalError: String? = null
-
 )
