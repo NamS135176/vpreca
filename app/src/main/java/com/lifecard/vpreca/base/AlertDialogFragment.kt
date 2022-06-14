@@ -17,7 +17,7 @@ class AlertDialogFragment : DialogFragment() {
         fun newInstance(
             title: String? = null,
             message: String,
-            buttonCancel: Int? = R.string.button_ok
+            buttonCancel: Int? = R.string.button_close
         ): AlertDialogFragment {
             val f = AlertDialogFragment()
             f.arguments =

@@ -20,7 +20,7 @@ class RegexUtils {
          * only half width and underscore
          * check the screen SC08_2
          */
-        const val RegexLoginID = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_-]{6,10}\$"
+        private const val RegexLoginID = "^[a-zA-Z0-9ぁ-んｧ-ﾝﾞﾟ_-]{6,10}\$"
 
         /**
          * Regex detect text has special character excludes underscore and -
@@ -33,13 +33,13 @@ class RegexUtils {
          * only roman
          * check the screen SC08_2
          */
-        const val RegexNickname = "^[A-Z0-9]{2,18}\$"
+        private const val RegexNickname = "^[A-Z]{2,18}\$"
 
         /**
          * 10 or 11 number
          * check the screen SC08_2
          */
-        const val RegexPhoneNumber = "^\\d{10}\$|^\\d{11}\$"
+        private const val RegexPhoneNumber = "^\\d{10}\$|^\\d{11}\$"
 
         //        const val RegexEmail = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}\$"//from internet
         const val RegexEmail = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,64}"//same with ios
@@ -48,12 +48,12 @@ class RegexUtils {
          * only roman included special character  and between 8-12 character
          * check the screen SC09_1
          */
-        const val RegexPassword = "^[a-zA-Z0-9@`!#\\\$%()*:+;\\[{,¥|\\-=\\]}.^~/?_]{8,12}\$"
+        private const val RegexPassword = "^[a-zA-Z0-9@`!#\\\$%()*:+;\\[{,¥|\\-=\\]}.^~/?_]{8,12}\$"
 
         /**
          * any character with max 20
          */
-        const val RegexSecretAnswer = "\\b\\w{1,20}\\b"
+        private const val RegexSecretAnswer = "\\b\\w{1,20}\\b"
 
         /**
          * at least: 1 digit, 1 lowercase, one uppercase
@@ -192,8 +192,24 @@ class RegexUtils {
 
         fun formatDisplayPhoneNumber(phone: String?): String {
             return phone?.let {
-                val regex = "(\\d{3})(\\d{4})(\\d+)"
+                val regex =
+                    if (phone.length == 10) "(\\d{3})(\\d{3})(\\d+)" else "(\\d{3})(\\d{4})(\\d+)"
                 return it.replace(Regex(regex), "\$1-\$2-\$3")
+            } ?: phone ?: ""
+        }
+
+        /**
+         * @return ex: ***-***-6090
+         */
+        fun formatHideDisplayPhoneNumber(phone: String?): String {
+            return phone?.let {
+                if (phone.length == 10) {
+                    val regex = "(\\d{3})(\\d{3})(\\d+)"
+                    return it.replace(Regex(regex), "***-***-\$3")
+                } else {
+                    val regex = "(\\d{3})(\\d{4})(\\d+)"
+                    return it.replace(Regex(regex), "***-****-\$3")
+                }
             } ?: phone ?: ""
         }
 
@@ -215,6 +231,37 @@ class RegexUtils {
 
         fun isCreditCard(card: String?): Boolean {
             return card?.let { Regex(RegexCreditCard).matches(it) } ?: false
+        }
+
+        fun hidePhone(phone: String): String {
+            try {
+                val result =
+                    phone.replace(Regex("[\\d](?=[\\d]{4})"), "*")
+                println("hidePhone... phone = $phone - result: $result")
+                return result
+            } catch (e: Exception) {
+                println(e.toString())
+            }
+            return phone
+        }
+
+        fun hideEmail(email: String): String {
+            try {
+                return email.replace(Regex("^(\\w{3})[\\w-]+@([\\w.]+\\w)"), "$1***@$2")
+            } catch (e: Exception) {
+                println(e.toString())
+            }
+            return email
+        }
+
+        fun hideCreditCard(card: String): String {
+            try {
+                if (!isCreditCard(card)) return card
+                return card.replace(Regex("(?!(?:\\*\\d){14}\$|(?:\\D*\\d){1,4}\$)\\d"), "*")
+            } catch (e: Exception) {
+                println(e.toString())
+            }
+            return card
         }
 
     }

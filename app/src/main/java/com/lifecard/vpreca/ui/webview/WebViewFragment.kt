@@ -77,6 +77,7 @@ class WebViewFragment : BackPressFragment() {
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
             viewModel.handlePageFinished(view, url)
+            view?.title.let { title -> binding.appbarWebview.setTitle(title) }
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {

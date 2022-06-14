@@ -8,6 +8,7 @@ import android.view.View
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.*
+import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -52,6 +53,8 @@ fun View.viewFindNavController(): NavController {
 }
 
 fun Fragment.setLightStatusBar() = try {
+    view?.let { ViewCompat.getWindowInsetsController(it)?.isAppearanceLightStatusBars = true }
+
     val window = requireActivity().window
 
     @Suppress("DEPRECATION")
@@ -64,10 +67,11 @@ fun Fragment.setLightStatusBar() = try {
         var flags = window.decorView.systemUiVisibility
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//            window.statusBarColor = getColor(requireContext(), R.color.white)
         }
         window.decorView.systemUiVisibility = flags
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         window.statusBarColor = getColor(requireContext(), R.color.white)
     } else {
     }
@@ -87,10 +91,11 @@ fun Fragment.clearLightStatusBar() = try {
         var flags = window.decorView.systemUiVisibility
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             flags = flags xor View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//            window.statusBarColor = getColor(requireContext(), R.color.primary)
         } // use XOR here for remove LIGHT_STATUS_BAR from flags
         window.decorView.systemUiVisibility = flags
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         window.statusBarColor = getColor(requireContext(), R.color.primary)
     } else {
     }

@@ -1,6 +1,7 @@
 package com.lifecard.vpreca.utils
 
 import android.graphics.Color
+import com.lifecard.vpreca.BuildConfig
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
@@ -8,6 +9,8 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 object Converter {
     @JvmStatic
@@ -106,9 +109,24 @@ object Converter {
             return "1"
         } else return "0"
     }
+
     @JvmStatic
     fun convertStringToBoolean(state: String): Boolean {
         return state == "1"
     }
+
+    @JvmStatic
+    fun formatToolbarTitle(title: String, max: Int = 12): String {
+        return try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                title
+            } else {
+                title.substring(0, min(max, title.length))
+            }
+        } catch (e: Exception) {
+            title
+        }
+    }
+
 
 }

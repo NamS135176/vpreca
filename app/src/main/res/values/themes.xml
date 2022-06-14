@@ -22,6 +22,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <!--        <item name="rippleColor">@android:color/transparent</item>-->
         <item name="android:spinnerItemStyle">@style/SpinnerItemTheme</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
@@ -51,6 +52,7 @@
 
     <style name="Theme.VPreca.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="elevation">0dp</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="Theme.VPreca.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -62,6 +64,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="ThemeOverlay.VPreca.FullscreenContainer" parent="">

@@ -19,7 +19,7 @@ fun Fragment.setNavigationResult(result: String, key: String) {
 fun Fragment.showPopupMessage(
     title: String? = null,
     message: String,
-    buttonCancel: Int? = R.string.button_ok
+    buttonCancel: Int? = R.string.button_close
 ): Fragment? = try {
     println("showPopupMessage... title = $title, message = $message")
     val supportFragmentManager = requireActivity().supportFragmentManager

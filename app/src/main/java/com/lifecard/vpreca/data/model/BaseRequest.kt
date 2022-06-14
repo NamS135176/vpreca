@@ -29,11 +29,12 @@ data class BaseHead(
     @SerializedName("processId")
     val processId: String = "",
     @SerializedName("requestDate")
-    val requestDate: String = Date().requestDate(),
+//    val requestDate: String = Date().requestDate(),
+    val requestDate: String = "20220531083300",//TODO remove hard code
     @SerializedName("searchKey")
     val searchKey: String = "",
     @SerializedName("messageDigest")
-    val messageDigest: String = "",
+    val messageDigest: String? = null,
 )
 
 enum class MessageType(val value: String) {
