@@ -3,6 +3,7 @@ package com.lifecard.vpreca.ui.changeinfo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.MemberInfo
 import com.lifecard.vpreca.utils.RegexUtils
 
 data class ChangeInfoInputResultState(
@@ -24,6 +25,8 @@ class ChangeInfoInputViewModel : ViewModel() {
     val formState = MutableLiveData(ChangeInfoInputState())
 
     val validForm = MutableLiveData<Boolean>()
+
+    var originUserData: MemberInfo? = null
 
     private fun checkNicknameValid(): Boolean {
         return if (!RegexUtils.isNicknameValid(formState.value?.nickname)) {
@@ -107,6 +110,9 @@ class ChangeInfoInputViewModel : ViewModel() {
         ) {
             email2Error.value = R.string.rgx_error_email
             false
+        } else if (originUserData?.mailAddress1 == email2) {
+            email2Error.value = R.string.rgx_error_email
+            false
         } else {
             email2Error.value = null
             true
@@ -183,19 +189,19 @@ class ChangeInfoInputViewModel : ViewModel() {
         return errors.isNullOrEmpty()
     }
 
-    fun kanaFirstNameDataChanged(text: String) {
+    fun kanaFirstNameDataChanged(text: String?) {
         formState.value = formState.value?.copy(kanaFirstName = text)
     }
 
-    fun kanaLastNameDataChanged(text: String) {
+    fun kanaLastNameDataChanged(text: String?) {
         formState.value = formState.value?.copy(kanaLastName = text)
     }
 
-    fun hiraFirstNameDataChanged(text: String) {
+    fun hiraFirstNameDataChanged(text: String?) {
         formState.value = formState.value?.copy(hiraFirstName = text)
     }
 
-    fun hiraLastNameDataChanged(text: String) {
+    fun hiraLastNameDataChanged(text: String?) {
         formState.value = formState.value?.copy(hiraLastName = text)
     }
 

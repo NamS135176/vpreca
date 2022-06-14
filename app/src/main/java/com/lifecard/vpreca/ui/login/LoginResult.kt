@@ -11,5 +11,6 @@ data class LoginResult(
     val errorText: String? = null,
     val error: ErrorMessageException? = null,
     val networkTrouble: Boolean? = false,
-    val internalError: String? = null
+    val internalError: String? = null,
+    val smsVerification: Boolean? = false
 )

@@ -20,19 +20,25 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.ChangeInfoMemberData
-import com.lifecard.vpreca.data.model.PhoneData
+import com.lifecard.vpreca.data.UserManager
+import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.databinding.FragmentChangeInfoInputBinding
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.closeKeyBoard
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ChangeInfoInputFragment : Fragment() {
 
     companion object {
         fun newInstance() = ChangeInfoInputFragment()
     }
+
+    @Inject
+    lateinit var userManager: UserManager
 
     private lateinit var viewModel: ChangeInfoInputViewModel
     private var _binding: FragmentChangeInfoInputBinding? = null
@@ -46,15 +52,6 @@ class ChangeInfoInputFragment : Fragment() {
         _binding = FragmentChangeInfoInputBinding.inflate(inflater, container, false)
 
         binding.constraintChangeInfo.setOnClickListener(View.OnClickListener { closeKeyBoard() })
-
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_change_info_data)
-                }
-            })
-
 
         val spinnerCity = binding.spinnerCity
         val spinnerSecret = binding.spinnerSecret
@@ -87,14 +84,18 @@ class ChangeInfoInputFragment : Fragment() {
         var question = args.userData?.secretQuestion
         val res = resources
 
+        viewModel.originUserData = userManager.memberInfo!!
+
         val listCity = res.getStringArray(R.array.cities)
         val listQuestion = res.getStringArray(R.array.secret_question)
         idEdt.setText(args.userData?.loginId)
         nicknameEdt.setText(args.userData?.memberRoman)
-        kanaFirstName.setText(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(0))
-        kanaLastName.setText(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(1))
-        hiraFirstName.setText(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(0))
-        hiraLastName.setText(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(1))
+
+        kanaFirstName.setText(args.userData?.getFirstKanaName())
+        kanaLastName.setText(args.userData?.getLastKanaName())
+        hiraFirstName.setText(args.userData?.getFirstMemberName())
+        hiraLastName.setText(args.userData?.getLastMemberName())
+
         spinnerCity.selectItemByIndex(listCity.indexOf(args.userData?.addressPrefecture))
         email1Edt.setText(args.userData?.mailAddress1)
         email1ConfirmEdt.setText(args.userData?.mailAddress1)
@@ -110,20 +111,13 @@ class ChangeInfoInputFragment : Fragment() {
             Converter.convertStringToBoolean(args.userData?.mail1RecievFlg!!)
         toggleMagazineSecond.isChecked =
             Converter.convertStringToBoolean(args.userData?.mail2RecievFlg!!)
+
         viewModel.loginIdDataChanged(args.userData?.loginId!!)
         viewModel.nicknameDataChanged(args.userData?.memberRoman!!)
-        viewModel.kanaFirstNameDataChanged(
-            args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(0)!!
-        )
-        viewModel.kanaLastNameDataChanged(
-            args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(1)!!
-        )
-        viewModel.hiraFirstNameDataChanged(
-            args.userData?.memberName?.split(" ")?.toTypedArray()?.get(0)!!
-        )
-        viewModel.hiraLastNameDataChanged(
-            args.userData?.memberName?.split(" ")?.toTypedArray()?.get(1)!!
-        )
+        viewModel.kanaFirstNameDataChanged(args.userData?.getFirstKanaName())
+        viewModel.kanaLastNameDataChanged(args.userData?.getLastKanaName())
+        viewModel.hiraFirstNameDataChanged(args.userData?.getFirstMemberName())
+        viewModel.hiraLastNameDataChanged(args.userData?.getLastMemberName())
         viewModel.cityDataChanged(args.userData?.addressPrefecture!!)
         viewModel.email1DataChanged(args.userData?.mailAddress1!!)
         viewModel.email1ConfirmDataChanged(args.userData?.mailAddress1!!)
@@ -136,13 +130,8 @@ class ChangeInfoInputFragment : Fragment() {
 
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
-                    // do something on positive button click
-//                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-//                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                    }
-//                    startActivity(intent)
-                    findNavController().navigate(R.id.nav_home)
+                setPositiveButton("はい") { _, _ ->
+                    findNavController().navigate(R.id.action_to_home)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
@@ -257,6 +246,7 @@ class ChangeInfoInputFragment : Fragment() {
                 )
                 val action = ChangeInfoInputFragmentDirections.actionChangeInfoInputToConfirm(data)
                 findNavController().navigate(action)
+                viewModel.formResultState.value = null//for case back from stack
             }
         })
         viewModel.formState.observe(

@@ -11,11 +11,6 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentChangeInfoCompleteBinding
 import com.lifecard.vpreca.databinding.FragmentChangeInfoConfirmDataBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  * Use the [ChangeInfoCompleteFragment.newInstance] factory method to
@@ -25,10 +20,6 @@ class ChangeInfoCompleteFragment : Fragment() {
 
     private var _binding: FragmentChangeInfoCompleteBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,15 +27,17 @@ class ChangeInfoCompleteFragment : Fragment() {
     ): View? {
         _binding = FragmentChangeInfoCompleteBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_to_home)
+                }
+            })
 
         val btnConfirm = binding.btnCompleteForgot
 
-        btnConfirm.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
+        btnConfirm.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_to_home) })
 
         return binding.root
     }
