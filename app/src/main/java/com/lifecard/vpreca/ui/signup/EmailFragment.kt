@@ -48,7 +48,8 @@ class EmailFragment : Fragment() {
                     findNavController().navigate(R.id.nav_login)
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("途中ですがキャンセルしてもよろしいですか")
+                setMessage("入力途中ですがキャンセル\n" +
+                        "してもよろしいですか？")
             }.create().show()
         })
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_signup_phone) })

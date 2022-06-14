@@ -41,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bg_card_white"
-                android:minHeight="88dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -157,8 +156,8 @@
             android:text="@string/issue_card_select_source_cross"
             android:textColor="@color/primary"
             android:textSize="12sp"
-            android:transformPivotX="10dp"
-            android:transformPivotY="10dp"
+            android:transformPivotX="12dp"
+            android:transformPivotY="16dp"
             android:visibility="@{select.isFirst().equals(`0`) ? View.GONE : View.VISIBLE}"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
