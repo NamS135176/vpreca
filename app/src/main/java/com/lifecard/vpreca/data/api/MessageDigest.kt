@@ -11,7 +11,7 @@ import java.security.spec.PKCS8EncodedKeySpec
 
 class MessageDigest {
     private val gson = Gson()
-
+//
     private val privateKeyPem = BuildConfig.privateKeyPem
 
     private val privateKey = privateKeyPem.replace("-----BEGIN RSA PRIVATE KEY-----", "")
@@ -28,7 +28,6 @@ class MessageDigest {
             privateSignature.initSign(kf.generatePrivate(spec))
             privateSignature.update(textToSign.toByteArray(Charsets.UTF_8))
             val signed: ByteArray = privateSignature.sign()
-
             val md = MessageDigest.getInstance("SHA-256")
             val digest: ByteArray = md.digest(signed)
             return Hex.bytesToStringLowercase(digest)
