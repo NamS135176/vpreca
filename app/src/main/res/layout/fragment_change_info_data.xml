@@ -125,7 +125,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="@{user.memberRoman ?? ``}"
+                            android:text="@{user.memberKana ?? ``}"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -156,7 +156,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:text="@{user.addressHouse ?? ``}"
+                            android:text="@{user.addressCity ?? ``}"
                             android:textSize="12sp" />
                     </LinearLayout>
 

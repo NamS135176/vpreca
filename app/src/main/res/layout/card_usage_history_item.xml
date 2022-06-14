@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@{Converter.formatCardDateTimeMonth(item.historyAddDate)}"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/status"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="残高変更"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/description"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@{item.saleShopNameKana != null ? item.saleShopNameKana : item.saleShopNameKanji}"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/amount"
@@ -52,6 +52,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@{Converter.convertCurrency(item.dealTotalAmount)}"
-            android:textSize="12sp" />
+            android:textSize="10sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

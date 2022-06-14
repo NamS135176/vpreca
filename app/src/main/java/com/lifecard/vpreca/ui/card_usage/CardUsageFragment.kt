@@ -94,12 +94,7 @@ class CardUsageFragment : Fragment() {
                 else -> loading.visibility = View.GONE
             }
         })
-        if(args.card.isCardLock()){
-            binding.cardNo.text = Converter.convertPrecaNumber(args.card?.precaNumber)
-        }
-        else{
-            binding.cardNo.text = args.card?.precaNumber
-        }
+        binding.cardNo.text = Converter.convertPrecaNumber(args.card?.precaNumber)
         binding.balance.text = Converter.convertCurrency(args.card?.chargeBalance)
 
 

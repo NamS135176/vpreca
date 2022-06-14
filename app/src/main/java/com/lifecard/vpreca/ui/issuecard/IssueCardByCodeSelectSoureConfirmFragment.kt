@@ -138,6 +138,7 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
                 issueGiftReqResult ?: return@Observer
                 issueGiftReqResult.success?.let {
                     binding.card = it.cardInfo
+                    binding.cardInfo.card = it.cardInfo
                     listCardInfo = listOf(it.cardInfo!!)
                 }
                 issueGiftReqResult.error?.let { error ->

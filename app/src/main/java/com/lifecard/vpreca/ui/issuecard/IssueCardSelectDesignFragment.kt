@@ -75,7 +75,7 @@ class IssueCardSelectDesignFragment : Fragment() {
         val btnBack = binding.appbarGiftThird.btnBack
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val rcView = binding.rvView
-        val bigCard = binding.cardZone.bigCard
+        val bigCard = binding.cardZone.cardInclude
         val btnSubmit = binding.btnSubmitIntroduceFirst
         var designId = "001"
         val loading = binding.loading
@@ -205,44 +205,24 @@ class IssueCardSelectDesignFragment : Fragment() {
                                 }
                                 when (list[position].designId) {
                                     "001" -> {
-                                        bigCard.setBackgroundResource(R.drawable.bg_first)
+                                        bigCard.cardInfo.setBackgroundResource(R.drawable.first)
                                         cardLayout.card = DesignCard(list[position].designId, "0")
                                         designId = "001"
                                     }
                                     "002" -> {
-                                        bigCard.setBackgroundResource(R.drawable.bg_second)
+                                        bigCard.cardInfo.setBackgroundResource(R.drawable.second)
                                         cardLayout.card = DesignCard(list[position].designId, "0")
                                         designId = "002"
                                     }
                                     "003" -> {
-                                        bigCard.setBackgroundResource(R.drawable.bg_third)
+                                        bigCard.cardInfo.setBackgroundResource(R.drawable.third)
                                         cardLayout.card = DesignCard(list[position].designId, "0")
                                         designId = "003"
                                     }
-                                    "004" -> {
-                                        bigCard.setBackgroundResource(R.drawable.bg_fourth)
-                                        cardLayout.card = DesignCard(list[position].designId, "0")
-                                        designId = "004"
-                                    }
-                                    "005" -> {
-                                        bigCard.setBackgroundResource(R.drawable.bg_fifth)
-                                        cardLayout.card = DesignCard(list[position].designId, "0")
-                                        designId = "005"
-                                    }
-                                    "006" -> {
-                                        bigCard.setBackgroundResource(R.drawable.bg_six)
-                                        cardLayout.card = DesignCard(list[position].designId, "0")
-                                        designId = "006"
-                                    }
-                                    "007" -> {
-                                        bigCard.setBackgroundResource(R.drawable.bg_seven)
-                                        cardLayout.card = DesignCard(list[position].designId, "0")
-                                        designId = "007"
-                                    }
                                     else -> {
-                                        bigCard.setBackgroundResource(R.drawable.bg_seven)
-                                        cardLayout.card = DesignCard("007", "0")
-                                        designId = "007"
+                                        bigCard.cardInfo.setBackgroundResource(R.drawable.first)
+                                        cardLayout.card = DesignCard("001", "0")
+                                        designId = "001"
                                     }
                                 }
                                 adapter.notifyDataSetChanged()
