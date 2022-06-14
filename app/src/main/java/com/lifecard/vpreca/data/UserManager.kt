@@ -53,7 +53,7 @@ class UserManager(private val secureStore: SecureStore) {
     }
 
     fun setLoggedIn(loginResponse: LoginResponse) {
-        setLoggedMember(loginResponse.brandPrecaApi.response)
+        setLoggedMember(loginResponse.response)
 
         authToken = AuthToken()
         //save to secure store

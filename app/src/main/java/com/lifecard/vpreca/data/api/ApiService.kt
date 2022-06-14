@@ -6,92 +6,92 @@ import retrofit2.http.*
 interface ApiService {
     @POST("LoginReq")
     suspend fun login(
-        @Body loginRequest: BrandRequest
+        @Body loginRequest: Request
     ): LoginResponse
 
     @POST("MemberSelReq")
     suspend fun getUser(
-        @Body memberSelectRequest: BrandRequest
+        @Body memberSelectRequest: Request
     ): MemberResponse
 
     @POST("CardSelReq")
     suspend fun getCard(
-        @Body cardRequest: BrandRequest
+        @Body cardRequest: Request
     ): CardInfoResponse
 
     @POST("IssueGiftReq")
     suspend fun issueGiftCard(
-        @Body cardRequest: BrandRequest
+        @Body cardRequest: Request
     ): IssueGiftReqResponse
 
     @POST("GiftNumberAuthReq")
     suspend fun getGiftInfo(
-        @Body giftNumberAuthRequest: BrandRequest
+        @Body giftNumberAuthRequest: Request
     ): GiftNumberAuthReqResponse
 
     @POST("FeeSelReq")
     suspend fun getFeeSel(
-        @Body feeSelReqRequest: BrandRequest
+        @Body feeSelReqRequest: Request
     ): FeeSelReqResponse
 
     @POST("IssueSumReq")
     suspend fun issueSumReq(
-        @Body issueSumReqResponse: BrandRequest
+        @Body issueSumReqResponse: Request
     ): IssueSumReqResponse
 
     @POST("CardListSelReq")
     suspend fun getListCards(
-        @Body cardListRequest: BrandRequest
+        @Body cardListRequest: Request
     ): CardResponse
 
     @POST("CardDesignSelReq")
     suspend fun getListDesign(
-        @Body listDesignRequest: BrandRequest
+        @Body listDesignRequest: Request
     ): ListDesignResponse
 
     @POST("MemberUpdReq")
     suspend fun changeInfoMember(
-        @Body changeInfoMemberRequest: BrandRequest
+        @Body changeInfoMemberRequest: Request
     ): ChangeInfoMemberResponse
 
     @POST("SuspendDealSelReq")
     suspend fun getListSuspendDeal(
-        @Body suspendListRequest: BrandRequest
+        @Body suspendListRequest: Request
     ): SuspendDealResponse
 
     @POST("CardDealHisReq")
     suspend fun getCardUsageHistory(
-        @Body cardListRequest: BrandRequest
+        @Body cardListRequest: Request
     ): CardUsageHistoryResponse
 
     @POST("CardUpdReq")
     suspend fun updateCard(
-        @Body updateCardRequest: BrandRequest
+        @Body updateCardRequest: Request
     ): UpdateCardResponse
 
     @POST("PasswordUpdReq")
     suspend fun updatePassword(
-        @Body updatePasswordRequest: BrandRequest
+        @Body updatePasswordRequest: Request
     ): PasswordUpdateResponse
 
     @POST("PasswordResetReq")
     suspend fun resetPassword(
-        @Body resetPasswordRequest: BrandRequest
+        @Body resetPasswordRequest: Request
     ): PasswordResetResponse
 
     @POST("CardRepublishReq")
     suspend fun republishCard(
-        @Body cardRepublishRequest: BrandRequest
+        @Body cardRepublishRequest: Request
     ): UpdateCardResponse
 
     @POST("CardCertifiNoMemReq")
     suspend fun certifiGift(
-        @Body giftCardCertifiRequest: BrandRequest
+        @Body giftCardCertifiRequest: Request
     ): GiftCertifiResponse
 
     @POST("CardRelationRegReq")
     suspend fun cardRelation(
-        @Body cardRelationRequest: BrandRequest
+        @Body cardRelationRequest: Request
     ): CardRelationRegReqResponse
 
     @GET("challenge")

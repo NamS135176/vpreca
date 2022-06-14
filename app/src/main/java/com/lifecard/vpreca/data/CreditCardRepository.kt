@@ -58,7 +58,7 @@ class CreditCardRepository(
                         vcn
                     )
                 )
-                Result.Success(cardResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(cardResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... getCard has error $e")
                 e.printStackTrace()
@@ -156,7 +156,7 @@ class CreditCardRepository(
                         CardRelationRegRequestContentInfo(vcn, vcnExpirationDate, vcnSecurityCode, cardNickname)
                     )
                 )
-                Result.Success(republishCardResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(republishCardResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... cardRelation has error $e")
                 e.printStackTrace()

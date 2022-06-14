@@ -8,6 +8,7 @@ import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.UserRepository
+import com.lifecard.vpreca.data.api.MessageDigest
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
@@ -57,11 +58,14 @@ class LoginViewModel @Inject constructor(
             )
             if (loginResult is Result.Success) {
                 _loginResult.value =
-                    LoginResult(success = loginResult.data.brandPrecaApi.response.memberInfo)
+                    LoginResult(success = loginResult.data.response.memberInfo)
             } else if (loginResult is Result.Error) {
                 handleResultErrorException(loginResult.exception)
             }
             loading.value = false
+
+//            val messageDigest = MessageDigest().sign("{\"brandPrecaApi\":{\"head\":{\"nodeId\":\"\",\"searchKey\":\"\",\"processId\":\"\",\"brandSchemeId\":\"\",\"requestDate\":\"20220531083300\",\"centerId\":\"\",\"messageType\":\"LoginReq\"},\"request\":{\"loginInfo\":{\"loginPassword\":\"aaaaaaaa\",\"loginId\":\"aaaaaa\"}}}}")
+//            println("messageDigest = $messageDigest")
         }
     }
 

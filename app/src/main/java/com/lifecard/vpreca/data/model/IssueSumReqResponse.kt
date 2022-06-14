@@ -3,11 +3,6 @@ package com.lifecard.vpreca.data.model
 import com.google.gson.annotations.SerializedName
 
 data class IssueSumReqResponse(
-    @SerializedName("brandPrecaApi")
-    val brandPrecaApi: IssueSumReqBrandResponse,
-)
-
-data class IssueSumReqBrandResponse(
     @SerializedName("response")
     val response: IssueSumReqResponseContent,
 )

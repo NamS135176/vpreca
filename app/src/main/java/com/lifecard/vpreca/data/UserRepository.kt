@@ -6,10 +6,9 @@ import com.lifecard.vpreca.utils.RequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import java.util.*
 
 class UserRepository(private val apiService: ApiService, private val userManager: UserManager) {
-    suspend fun login(loginRequest: BrandRequest): Result<LoginResponse> {
+    suspend fun login(loginRequest: Request): Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
             try {
                 val loginResponse = apiService.login(loginRequest)
@@ -49,8 +48,8 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     val userResponse = apiService.getUser(
                         RequestHelper.createMemberRequest(loginId, memberNumber)
                     )
-                    userManager.setLoggedMember(userResponse.brandPrecaApi.response)
-                    Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
+                    userManager.setLoggedMember(userResponse.response)
+                    Result.Success(userResponse.response.memberInfo!!)
                 }
             } catch (e: Exception) {
                 println("UserRepository... getUser has error $e")

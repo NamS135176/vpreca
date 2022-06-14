@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 import com.lifecard.vpreca.utils.requestDate
 import java.util.*
 
-data class BrandRequest(
-    @SerializedName("brandPrecaApi")
-    val brandPrecaApi: Request,
-)
+//data class BrandRequest(
+//    @SerializedName("brandPrecaApi")
+//    val brandPrecaApi: Request,
+//)
 
 data class Request(
     @SerializedName("request")
