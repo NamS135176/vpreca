@@ -68,7 +68,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     RequestHelper.createChangeInfoMember(memberInfo)
                 )
 
-                Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
+                Result.Success(userResponse.response.memberInfo!!)
             } catch (e: Exception) {
                 println("UserRepository... change info has error $e")
                 e.printStackTrace()
@@ -95,7 +95,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     )
                 )
 
-                Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
+                Result.Success(userResponse.response.memberInfo!!)
             } catch (e: Exception) {
                 println("UserRepository... change pass has error $e")
                 e.printStackTrace()
@@ -125,7 +125,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     )
                 )
 
-                Result.Success(userResponse.brandPrecaApi.response.resultCode)
+                Result.Success(userResponse.response.resultCode)
             } catch (e: Exception) {
                 println("UserRepository... reset pass has error $e")
                 e.printStackTrace()

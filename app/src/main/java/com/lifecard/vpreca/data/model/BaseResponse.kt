@@ -5,11 +5,13 @@ import com.lifecard.vpreca.utils.requestDate
 import java.util.*
 
 data class BaseResponse(
-    @SerializedName("brandPrecaApi")
-    val brandPrecaApi: BaseBrandResponse,
+    @SerializedName("head")
+    val head: BaseHeadResponse,
+    @SerializedName("response")
+    val response: BaseResponseContent,
 ) {
     override fun toString(): String {
-        return "BaseResponse (brandPrecaApi: ${brandPrecaApi})"
+        return "BaseBrandResponse (response: ${response})"
     }
 }
 
@@ -36,17 +38,6 @@ data class BaseHeadResponse(
     val responseDate: String = "",
 
     )
-
-data class BaseBrandResponse(
-    @SerializedName("head")
-    val head: BaseHeadResponse,
-    @SerializedName("response")
-    val response: BaseResponseContent,
-) {
-    override fun toString(): String {
-        return "BaseBrandResponse (response: ${response})"
-    }
-}
 
 data class BaseResponseContent(
     @SerializedName("resultCode")

@@ -25,7 +25,7 @@ class CreditCardRepository(
                     val response =
                         apiService.getListCards(RequestHelper.createCardListRequest(memberNumber = userManager.memberNumber!!))
                     latestCardsMutex.withLock {
-                        latestCards = response.brandPrecaApi.response.cardInfo
+                        latestCards = response.response.cardInfo
                     }
                     latestCardsMutex.withLock { Result.Success(latestCards!!) }
                 } catch (e: Exception) {
@@ -76,7 +76,7 @@ class CreditCardRepository(
                         creditCard
                     )
                 )
-                Result.Success(updateCardResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(updateCardResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... update card has error $e")
                 e.printStackTrace()
@@ -97,7 +97,7 @@ class CreditCardRepository(
                         creditCard.cooperatorNumber
                     )
                 )
-                Result.Success(republishCardResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(republishCardResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... republish card has error $e")
                 e.printStackTrace()
@@ -114,7 +114,7 @@ class CreditCardRepository(
                       cardSchemeId = cardSchemeId
                     )
                 )
-                Result.Success(republishCardResponse.brandPrecaApi.response!!)
+                Result.Success(republishCardResponse.response)
             } catch (e: Exception) {
                 println("CreditCardRepository... republish card has error $e")
                 e.printStackTrace()
@@ -133,12 +133,12 @@ class CreditCardRepository(
                 )
                 val cardResponse = apiService.getCard(
                     RequestHelper.createCardInfoWithouMemberRequest(
-                        republishCardResponse.brandPrecaApi.response.cardSchemeId!!,
-                        republishCardResponse.brandPrecaApi.response.precaNumber!!,
-                        republishCardResponse.brandPrecaApi.response.vcn!!,
+                        republishCardResponse.response.cardSchemeId!!,
+                        republishCardResponse.response.precaNumber!!,
+                        republishCardResponse.response.vcn!!,
                     )
                 )
-                Result.Success(cardResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(cardResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... giftCardInfo has error $e")
                 e.printStackTrace()

@@ -69,9 +69,9 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
                             bodyText,
                             BaseResponse::class.java
                         )
-                        val resultCode = json.brandPrecaApi.response.resultCode
+                        val resultCode = json.response.resultCode
                         if (ApiError.isResultCodeError(resultCode)) {
-                            val messageType = json.brandPrecaApi.head.messageType
+                            val messageType = json.head.messageType
                             throw ApiException.createApiException(
                                 resultCode = resultCode,
                                 messageType = messageType

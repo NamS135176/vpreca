@@ -28,7 +28,7 @@ class ApiServiceFactory {
                         val request =
                             chain.request().newBuilder()
                                 .apply {
-                                    addHeader("Authorization", "Bear $accessToken")
+//                                    addHeader("Authorization", "Bear $accessToken")
                                     addHeader("accesstoken", accessToken)
                                 }
                                 .build()
@@ -45,7 +45,7 @@ class ApiServiceFactory {
                         })
                     }
                 }
-                .addInterceptor(NetworkConnectionInterceptor(appContext))
+//                .addInterceptor(NetworkConnectionInterceptor(appContext))
                 .authenticator(TokenAuthenticator(appContext, secureStore))
                 .build()
             val gson = GsonBuilder()

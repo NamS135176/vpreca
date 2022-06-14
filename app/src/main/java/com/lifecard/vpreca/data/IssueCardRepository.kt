@@ -24,7 +24,7 @@ class IssueCardRepository(
                         giftNumber
                     )
                 )
-                Result.Success(giftNumberAuthResponse.brandPrecaApi.response.giftNumberInfo!!)
+                Result.Success(giftNumberAuthResponse.response.giftNumberInfo!!)
             } catch (e: Exception) {
                 println("IssueCardRepository... giftNumberAuthReq has error $e")
                 e.printStackTrace()
@@ -48,10 +48,10 @@ class IssueCardRepository(
                 )
 
                 val sumUpInfo = SumUpInfoContentInfo(
-                    res.brandPrecaApi.response.feeInfo?.get(0)?.feeAmount!!,
-                    res.brandPrecaApi.response.feeInfo.get(0).feeGetResultType,
-                    res.brandPrecaApi.response.feeInfo.get(0).feeCalculateType,
-                    res.brandPrecaApi.response.feeInfo.get(0).feeInclusiveFlg,
+                    res.response.feeInfo?.get(0)?.feeAmount!!,
+                    res.response.feeInfo.get(0).feeGetResultType,
+                    res.response.feeInfo.get(0).feeCalculateType,
+                    res.response.feeInfo.get(0).feeInclusiveFlg,
                     sumCount
                 )
                 val feeSelReqResponse = apiService.issueSumReq(
@@ -62,7 +62,7 @@ class IssueCardRepository(
                         sumUpSrcCardInfo
                     )
                 )
-                Result.Success(feeSelReqResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(feeSelReqResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("IssueCardRepository... issueSumReq has error $e")
                 e.printStackTrace()
@@ -84,7 +84,7 @@ class IssueCardRepository(
                         giftNumber
                     )
                 )
-                Result.Success(res.brandPrecaApi.response)
+                Result.Success(res.response)
             } catch (e: Exception) {
                 println("IssueCardRepository... issueSumReq has error $e")
                 e.printStackTrace()
@@ -109,7 +109,7 @@ class IssueCardRepository(
                         giftNumber
                     )
                 )
-                Result.Success(res.brandPrecaApi.response)
+                Result.Success(res.response)
             } catch (e: Exception) {
                 println("IssueCardRepository... issueSumReq has error $e")
                 e.printStackTrace()
