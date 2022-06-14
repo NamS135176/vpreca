@@ -20,7 +20,7 @@ class RegexUtils {
          * only half width and underscore
          * check the screen SC08_2
          */
-        private const val RegexLoginID = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_-]{6,10}\$"
+        private const val RegexLoginID = "^[a-zA-Z0-9ぁ-んｧ-ﾝﾞﾟ_-]{6,10}\$"
 
         /**
          * Regex detect text has special character excludes underscore and -
