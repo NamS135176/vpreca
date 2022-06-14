@@ -67,14 +67,14 @@ fun Fragment.setLightStatusBar() = try {
         var flags = window.decorView.systemUiVisibility
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            window.statusBarColor = getColor(requireContext(), R.color.white)
+//            window.statusBarColor = getColor(requireContext(), R.color.white)
         }
         window.decorView.systemUiVisibility = flags
     }
-//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//        window.statusBarColor = getColor(requireContext(), R.color.white)
-//    } else {
-//    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        window.statusBarColor = getColor(requireContext(), R.color.white)
+    } else {
+    }
 
 } catch (e: Exception) {
 }
@@ -91,14 +91,14 @@ fun Fragment.clearLightStatusBar() = try {
         var flags = window.decorView.systemUiVisibility
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             flags = flags xor View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            window.statusBarColor = getColor(requireContext(), R.color.primary)
+//            window.statusBarColor = getColor(requireContext(), R.color.primary)
         } // use XOR here for remove LIGHT_STATUS_BAR from flags
         window.decorView.systemUiVisibility = flags
     }
-//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//        window.statusBarColor = getColor(requireContext(), R.color.primary)
-//    } else {
-//    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        window.statusBarColor = getColor(requireContext(), R.color.primary)
+    } else {
+    }
 
 } catch (e: Exception) {
 }
