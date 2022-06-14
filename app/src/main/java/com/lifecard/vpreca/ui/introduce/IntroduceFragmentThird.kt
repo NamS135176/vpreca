@@ -35,6 +35,7 @@ class IntroduceFragmentThird : Fragment() {
         viewModel = ViewModelProvider(this).get(IntroduceFragmentThirdViewModel::class.java)
         // TODO: Use the ViewModel
         binding.card = args.cardData
+        binding.cardZone.cardInclude.card = args.cardData
         binding.cardZone.card = args.cardData
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
