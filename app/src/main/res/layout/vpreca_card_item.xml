@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -12,81 +13,84 @@
             type="com.lifecard.vpreca.data.model.CreditCard" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="0dp"
         android:paddingRight="12dp"
         android:layout_marginBottom="25dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
             android:id="@+id/card_info"
-            style="@style/MyCardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_card"
-            android:minHeight="110dp"
-            android:paddingHorizontal="9dp"
-            android:paddingVertical="9dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            layout="@layout/test_card_item"/>
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/card_info"-->
+<!--            style="@style/MyCardView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/bg_card"-->
+<!--            android:minHeight="110dp"-->
+<!--            android:paddingHorizontal="9dp"-->
+<!--            android:paddingVertical="9dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
 
-            <ImageView
-                android:id="@+id/card_logo"
-                android:layout_width="0dp"
-                android:layout_height="12dp"
-                android:background="@drawable/home_card_logo"
-                app:layout_constraintDimensionRatio="138:36"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <ImageView-->
+<!--                android:id="@+id/card_logo"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="12dp"-->
+<!--                android:background="@drawable/home_card_logo"-->
+<!--                app:layout_constraintDimensionRatio="138:36"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_no"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:text="@{ModelExtKt.isCardLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@id/card_username"
-                app:layout_constraintStart_toStartOf="parent" />
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/card_no"-->
+<!--                style="@style/Widget.AppCompat.TextView.Bold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="6dp"-->
+<!--                android:text="@{ModelExtKt.isCardLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/card_username"-->
+<!--                app:layout_constraintStart_toStartOf="parent" />-->
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_username"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:paddingEnd="40dp"
-                android:paddingRight="40dp"
-                android:text="@{card.cardNickname}"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/card_username"-->
+<!--                style="@style/Widget.AppCompat.TextView.Bold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:ellipsize="end"-->
+<!--                android:maxLines="1"-->
+<!--                android:paddingEnd="40dp"-->
+<!--                android:paddingRight="40dp"-->
+<!--                android:text="@{card.cardNickname}"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="11sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent" />-->
 
-            <ImageView
-                android:id="@+id/card_type_logo"
-                android:layout_width="0dp"
-                android:layout_height="12dp"
-                android:background="@drawable/card_visa"
-                app:layout_constraintBottom_toBottomOf="@id/card_username"
-                app:layout_constraintDimensionRatio="108:36"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/card_username" />
+<!--            <ImageView-->
+<!--                android:id="@+id/card_type_logo"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="12dp"-->
+<!--                android:background="@drawable/card_visa"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/card_username"-->
+<!--                app:layout_constraintDimensionRatio="108:36"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@id/card_username" />-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="@drawable/bg_disable"
             android:minHeight="110dp"
             android:visibility="@{card.vcnSecurityLockFlg.equals(`1`) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/card_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

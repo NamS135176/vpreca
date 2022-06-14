@@ -36,20 +36,27 @@ class ListVprecaAdapter(private var items: List<CreditCard>) :
     class ViewHolder(var binding: VprecaCardItemBinding, listener : OnItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
             init {
-                binding.cardInfo.setOnClickListener { listener.onItemClick(adapterPosition) }
+                binding.cardInfo.cardInfo.setOnClickListener { listener.onItemClick(adapterPosition) }
             }
 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.card = items[position]
-        if (position % 3 == 0) {
-            holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card_cyan)
-        } else if (position % 3 == 1) {
-            holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card_green)
-        } else {
-            holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card)
+        holder.binding.cardInfo.card = items[position]
+        when{
+            items[position].designId == "001" -> holder.binding.cardInfo.cardInfo.setBackgroundResource(R.drawable.first)
+            items[position].designId == "002" -> holder.binding.cardInfo.cardInfo.setBackgroundResource(R.drawable.second)
+            items[position].designId == "003" -> holder.binding.cardInfo.cardInfo.setBackgroundResource(R.drawable.third)
+            else -> holder.binding.cardInfo.cardInfo.setBackgroundResource(R.drawable.first)
         }
+//        if (position % 3 == 0) {
+//            holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card_cyan)
+//        } else if (position % 3 == 1) {
+//            holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card_green)
+//        } else {
+//            holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card)
+//        }
     }
 
     override fun getItemCount() = items.size

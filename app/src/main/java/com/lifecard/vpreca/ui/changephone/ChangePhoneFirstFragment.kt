@@ -127,14 +127,20 @@ class ChangePhoneFirstFragment : Fragment() {
                     when {
                         cmp < 0 -> {
                             if (date1 == dateData) {
+                                tvDob.setBackgroundResource(R.drawable.input_signup_style)
                                 layout.visibility = View.INVISIBLE
                                 findNavController().navigate(R.id.nav_change_phone_second)
                                 dialog.dismiss()
                             } else {
+                                tvDob.setBackgroundResource(R.drawable.input_signup_selected)
                                 layout.visibility = View.VISIBLE
                             }
                         }
-                        else -> layout.visibility = View.VISIBLE
+                        else -> {
+                            layout.visibility = View.VISIBLE
+                            tvDob.setBackgroundResource(R.drawable.input_signup_selected)
+                        }
+
                     }
 
 

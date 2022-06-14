@@ -18,126 +18,129 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:paddingHorizontal="18dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
             android:id="@+id/card_info"
-            style="@style/MyCardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_bg_primary"
-            android:minHeight="175dp"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            layout="@layout/test_card_item"
+            />
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/card_info"-->
+<!--            style="@style/MyCardView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/round_bg_primary"-->
+<!--            android:minHeight="175dp"-->
+<!--            android:paddingHorizontal="16dp"-->
+<!--            android:paddingVertical="16dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
 
-            <ImageView
-                android:contentDescription="@string/close"
-                android:id="@+id/card_logo"
-                android:layout_width="0dp"
-                android:layout_height="17dp"
-                android:background="@{card.designId.equals(`001`) ? @drawable/logo_card : @drawable/home_card_logo}"
-                app:layout_constraintDimensionRatio="138:36"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <ImageView-->
+<!--                android:contentDescription="@string/close"-->
+<!--                android:id="@+id/card_logo"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="17dp"-->
+<!--                android:background="@{card.designId.equals(`001`) ? @drawable/logo_card : @drawable/home_card_logo}"-->
+<!--                app:layout_constraintDimensionRatio="138:36"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_no"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/card_no"-->
+<!--                style="@style/Widget.AppCompat.TextView.Bold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
 
-                android:text="@{ModelExtKt.isCardLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@id/card_valid_title"
-                app:layout_constraintStart_toStartOf="parent" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_valid_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/card_expire_date"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="9sp"
-                android:gravity="top"
-                android:paddingBottom="10dp"
-                app:layout_constraintBottom_toTopOf="@id/card_username"
-                app:layout_constraintStart_toStartOf="parent" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_valid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+<!--                android:text="@{ModelExtKt.isCardLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"-->
+<!--                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"-->
+<!--                android:textSize="18sp"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/card_valid_title"-->
+<!--                app:layout_constraintStart_toStartOf="parent" />-->
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/card_valid_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/card_expire_date"-->
+<!--                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"-->
+<!--                android:textSize="9sp"-->
+<!--                android:gravity="top"-->
+<!--                android:paddingBottom="10dp"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/card_username"-->
+<!--                app:layout_constraintStart_toStartOf="parent" />-->
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/card_valid"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
 
-                android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="14sp"
-                android:paddingLeft="4dp"
-                android:paddingStart="4dp"
-                android:paddingRight="0dp"
-                android:paddingEnd="0dp"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                app:layout_constraintBottom_toTopOf="@id/card_username"
-                app:layout_constraintStart_toEndOf="@+id/card_valid_title" />
+<!--                android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"-->
+<!--                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"-->
+<!--                android:textSize="14sp"-->
+<!--                android:paddingLeft="4dp"-->
+<!--                android:paddingStart="4dp"-->
+<!--                android:paddingRight="0dp"-->
+<!--                android:paddingEnd="0dp"-->
+<!--                style="@style/Widget.AppCompat.TextView.Bold"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/card_username"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/card_valid_title" />-->
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_cvc_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
-                android:layout_marginLeft="70dp"
-                android:text="@string/sercue_code"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="9sp"
-                android:paddingBottom="10dp"
-                app:layout_constraintBottom_toBottomOf="@id/card_valid_title"
-                app:layout_constraintStart_toEndOf="@id/card_valid_title"
-                app:layout_constraintTop_toTopOf="@id/card_valid_title" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_cvc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/card_cvc_title"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="70dp"-->
+<!--                android:layout_marginLeft="70dp"-->
+<!--                android:text="@string/sercue_code"-->
+<!--                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"-->
+<!--                android:textSize="9sp"-->
+<!--                android:paddingBottom="10dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/card_valid_title"-->
+<!--                app:layout_constraintStart_toEndOf="@id/card_valid_title"-->
+<!--                app:layout_constraintTop_toTopOf="@id/card_valid_title" />-->
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/card_cvc"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
 
-                android:text="@{ModelExtKt.isCardLock(card) ? `***` : card.vcn}"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                android:textSize="14sp"
-                android:paddingLeft="4dp"
-                android:paddingStart="4dp"
-                android:paddingRight="0dp"
-                android:paddingEnd="0dp"
-                app:layout_constraintBottom_toTopOf="@id/card_username"
-                app:layout_constraintStart_toEndOf="@+id/card_cvc_title" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_username"
-                style="@style/Widget.AppCompat.TextView.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{card.cardNickname}"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"
-                android:textSize="18sp"
-                android:paddingLeft="0dp"
-                android:paddingStart="0dp"
-                android:paddingRight="60dp"
-                android:paddingEnd="60dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+<!--                android:text="@{ModelExtKt.isCardLock(card) ? `***` : card.vcn}"-->
+<!--                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"-->
+<!--                style="@style/Widget.AppCompat.TextView.Bold"-->
+<!--                android:textSize="14sp"-->
+<!--                android:paddingLeft="4dp"-->
+<!--                android:paddingStart="4dp"-->
+<!--                android:paddingRight="0dp"-->
+<!--                android:paddingEnd="0dp"-->
+<!--                app:layout_constraintBottom_toTopOf="@id/card_username"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/card_cvc_title" />-->
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/card_username"-->
+<!--                style="@style/Widget.AppCompat.TextView.Bold"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{card.cardNickname}"-->
+<!--                android:maxLines="1"-->
+<!--                android:ellipsize="end"-->
+<!--                android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"-->
+<!--                android:textSize="18sp"-->
+<!--                android:paddingLeft="0dp"-->
+<!--                android:paddingStart="0dp"-->
+<!--                android:paddingRight="60dp"-->
+<!--                android:paddingEnd="60dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent" />-->
 
-            <ImageView
-                android:contentDescription="@string/close"
-                android:id="@+id/card_type_logo"
-                android:layout_width="0dp"
-                android:layout_height="17dp"
-                android:background="@{card.designId.equals(`001`) ? @drawable/visa_gift : @drawable/card_visa}"
-                app:layout_constraintBottom_toBottomOf="@id/card_username"
-                app:layout_constraintDimensionRatio="108:36"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/card_username" />
+<!--            <ImageView-->
+<!--                android:contentDescription="@string/close"-->
+<!--                android:id="@+id/card_type_logo"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="17dp"-->
+<!--                android:background="@{card.designId.equals(`001`) ? @drawable/visa_gift : @drawable/card_visa}"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/card_username"-->
+<!--                app:layout_constraintDimensionRatio="108:36"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@id/card_username" />-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/text_balance_container"
