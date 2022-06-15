@@ -61,13 +61,13 @@ class UserRepository(private val apiService: ApiService, private val userManager
 
     suspend fun changeInfoMember(
         memberInfo: ChangeInfoMemberData
-    ): Result<ChangeInfoMemberData> {
+    ): Result<MemberInfo> {
         return withContext(Dispatchers.IO) {
             try {
                 val userResponse = apiService.changeInfoMember(
                     RequestHelper.createChangeInfoMember(memberInfo)
                 )
-
+                userManager.setLoggedMember(userResponse.response)
                 Result.Success(userResponse.response.memberInfo!!)
             } catch (e: Exception) {
                 println("UserRepository... change info has error $e")
@@ -135,12 +135,12 @@ class UserRepository(private val apiService: ApiService, private val userManager
     }
 
     suspend fun sendSMSRequest(
-      memberNumber: String,
-      telephoneNumber:String,
-      certType:String,
-      operationType:String,
-      certSumFlg:String,
-      operationSumFlg:String
+        memberNumber: String,
+        telephoneNumber: String,
+        certType: String,
+        operationType: String,
+        certSumFlg: String,
+        operationSumFlg: String
     ): Result<SMSAuthCodeSendResponseContent> {
         return withContext(Dispatchers.IO) {
             try {
@@ -166,10 +166,10 @@ class UserRepository(private val apiService: ApiService, private val userManager
 
     suspend fun sendSMSConfirm(
         memberNumber: String,
-        certType:String,
-        operationType:String,
-        certCode:String,
-        extCertDealId:String
+        certType: String,
+        operationType: String,
+        certCode: String,
+        extCertDealId: String
     ): Result<SMSAuthResponseContent> {
         return withContext(Dispatchers.IO) {
             try {

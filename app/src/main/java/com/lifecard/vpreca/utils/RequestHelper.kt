@@ -377,58 +377,54 @@ class RequestHelper {
         }
 
         fun createSMSAuthCodeRequest(
-            memberNumber:String,
-            telephoneNumber:String,
-            certType:String,
-            operationType:String,
-            certSumFlg:String,
-            operationSumFlg:String
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = SMSAuthCodeSendRequest(
-                        memberInfo = SMSAuthCodeMemberInfoContent(
-                            memberNumber = memberNumber,
-                            telephoneNumber = telephoneNumber
-                        ),
-                        certInfo = SMSAuthCodeCertInfoContent(
-                            certType = certType,
-                            operationType = operationType,
-                            certSumFlg = certSumFlg,
-                            operationSumFlg = operationSumFlg
-                        )
+            memberNumber: String,
+            telephoneNumber: String,
+            certType: String,
+            operationType: String,
+            certSumFlg: String,
+            operationSumFlg: String
+        ): Request {
+            return Request(
+                request = SMSAuthCodeSendRequest(
+                    memberInfo = SMSAuthCodeMemberInfoContent(
+                        memberNumber = memberNumber,
+                        telephoneNumber = telephoneNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.CardRelationRegReq.value
+                    certInfo = SMSAuthCodeCertInfoContent(
+                        certType = certType,
+                        operationType = operationType,
+                        certSumFlg = certSumFlg,
+                        operationSumFlg = operationSumFlg
                     )
                 ),
+                head = BaseHead(
+                    messageType = MessageType.CardRelationRegReq.value
+                )
             )
         }
 
         fun createSMSConfirm(
-            memberNumber:String,
-            certType:String,
-            operationType:String,
-            certCode:String,
-            extCertDealId:String
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = SMSAuthRequest(
-                        memberInfo = MemberInfoContent(
-                            memberNumber = memberNumber
-                        ),
-                        certInfo = SMSAuthRequestContentInfo(
-                            certType = certType,
-                            operationType = operationType,
-                            certCode = certCode,
-                            extCertDealId = extCertDealId
-                        )
+            memberNumber: String,
+            certType: String,
+            operationType: String,
+            certCode: String,
+            extCertDealId: String
+        ): Request {
+            return Request(
+                request = SMSAuthRequest(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.CardRelationRegReq.value
+                    certInfo = SMSAuthRequestContentInfo(
+                        certType = certType,
+                        operationType = operationType,
+                        certCode = certCode,
+                        extCertDealId = extCertDealId
                     )
                 ),
+                head = BaseHead(
+                    messageType = MessageType.CardRelationRegReq.value
+                )
             )
         }
     }

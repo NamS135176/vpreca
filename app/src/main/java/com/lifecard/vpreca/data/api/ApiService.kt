@@ -96,12 +96,12 @@ interface ApiService {
 
     @POST("SmsAuthCodeSendReq")
     suspend fun sendSmsRequest(
-        @Body sendSmsRequest: BrandRequest
+        @Body sendSmsRequest: Request
     ): SMSAuthCodeSendResponse
 
     @POST("SmsAuthReq")
     suspend fun confirmSMS(
-        @Body sendSmsRequest: BrandRequest
+        @Body sendSmsRequest: Request
     ): SMSAuthResponse
 
     @GET("challenge")
