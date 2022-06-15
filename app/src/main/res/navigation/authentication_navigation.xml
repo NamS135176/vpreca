@@ -229,6 +229,12 @@
         android:label="fragment_forgot_pass_input"
         tools:layout="@layout/fragment_confirm_phone">
         <action
+            android:id="@+id/action_cfPhone_to_phone"
+            app:destination="@id/nav_signup_phone"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_signup_phone"/>
+        <action
             android:id="@+id/action_cfPhone_to_login"
             app:destination="@id/nav_login"
             app:launchSingleTop="true"
@@ -252,6 +258,12 @@
             app:popUpToInclusive="true"
             app:popUpTo="@id/nav_login"/>
         <action
+            android:id="@+id/action_email_to_phone"
+            app:destination="@id/nav_signup_phone"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_signup_phone"/>
+        <action
             android:id="@+id/action_email_cfemail"
             app:destination="@id/nav_signup_confirm_email" />
     </fragment>
@@ -260,6 +272,12 @@
         android:name="com.lifecard.vpreca.ui.signup.ConfirmEmailFragment"
         android:label="fragment_forgot_pass_input"
         tools:layout="@layout/fragment_confirm_email">
+        <action
+            android:id="@+id/action_cfEmail_to_email"
+            app:destination="@id/nav_signup_email"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_signup_email"/>
         <action
             android:id="@+id/action_cfEmail_to_login"
             app:destination="@id/nav_login"

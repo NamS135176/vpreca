@@ -102,7 +102,7 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
                     IssueCardByCodeSelectSoureConfirmFragmentDirections.actionConfirmToSelectsource(
                         args.designData
                     )
-                findNavController().navigate(action)
+                findNavController().popBackStack()
             }
         })
 
@@ -114,7 +114,7 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
 //            )
             val action =
                 IssueCardByCodeSelectSoureConfirmFragmentDirections.actionConfirmToSelectsource(args.designData)
-            findNavController().navigate(action)
+            findNavController().popBackStack()
         })
 
         btnCancel.setOnClickListener(View.OnClickListener {

@@ -37,11 +37,11 @@ class ChangePhoneConfirm : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_change_phone_input_phone)
+                findNavController().navigate(R.id.action_confirm_to_phone_input)
             }
         })
 
-        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_phone_input_phone) })
+        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_confirm_to_phone_input) })
         btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_phone_complete) })
 
         return binding.root

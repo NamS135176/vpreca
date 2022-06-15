@@ -27,12 +27,12 @@ class IssueCardByCodeCompleteWithCardFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().navigate(R.id.action_with_complete_to_home)
             }
         })
 
         val btnSubmit = binding.btnSubmitPolicy
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
+        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_with_complete_to_home) })
         // Inflate the layout for this fragment
         return binding.root
     }

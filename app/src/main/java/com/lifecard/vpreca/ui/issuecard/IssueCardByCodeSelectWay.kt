@@ -100,7 +100,7 @@ class IssueCardByCodeSelectWay : Fragment() {
                     giftCardConfirmData,
                     args.issuePlusData
                 )
-                findNavController().navigate(action)
+                findNavController().popBackStack()
             }
         })
         btnBack.setOnClickListener(View.OnClickListener {
@@ -109,7 +109,7 @@ class IssueCardByCodeSelectWay : Fragment() {
                 giftCardConfirmData,
                 args.issuePlusData
             )
-            findNavController().navigate(action)
+            findNavController().popBackStack()
         })
 
         btnCancel.setOnClickListener(View.OnClickListener {

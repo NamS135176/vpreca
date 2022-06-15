@@ -126,8 +126,14 @@ class ChangeInfoInputFragment : Fragment() {
         viewModel.questionDataChanged(args.userData?.secretQuestion!!)
         viewModel.answerDataChanged(args.userData?.secretQuestionAnswer!!)
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_info_data) })
-
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            })
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->

@@ -39,11 +39,11 @@ class IssueCardByCodeValueConfirm : Fragment() {
             findNavController().navigate(action)
         })
 
-        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
+        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_issuevalueconfirm_to_main) })
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_issue_card_by_code_input)
+                findNavController().navigate(R.id.action_issuevalueconfirm_to_inputcode)
             }
         })
         // Inflate the layout for this fragment

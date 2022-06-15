@@ -63,7 +63,7 @@ class IssueCardSelectSourceFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_issue_card_by_plus_introduce)
+                    findNavController().navigate(R.id.action_issue_select_source_to_introduce)
                 }
             })
         btnSubmit.setOnClickListener(View.OnClickListener {
@@ -78,7 +78,7 @@ class IssueCardSelectSourceFragment : Fragment() {
             findNavController().navigate(action)
         })
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_plus_introduce) })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_issue_select_source_to_introduce) })
         btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_issue_select_source_to_main) })
 
         viewModel.creditCardResult.observe(

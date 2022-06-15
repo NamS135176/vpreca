@@ -28,7 +28,7 @@ class ChangePhoneCompleteFragment : Fragment() {
                 findNavController().navigate(R.id.nav_home)
             }
         })
-        btnComplete.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
+        btnComplete.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_changephone_com_to_home) })
         return binding.root
     }
 

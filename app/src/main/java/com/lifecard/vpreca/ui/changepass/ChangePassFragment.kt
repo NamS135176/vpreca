@@ -111,7 +111,7 @@ class ChangePassFragment : Fragment() {
         cfNewPassEdt.doAfterTextChanged { text -> viewModel.cfNewPasswordDataChanged(text = text.toString()) }
 
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
         btnSubmit.setOnClickListener(View.OnClickListener {
 //            findNavController().navigate(R.id.nav_change_pass_complete)
             viewModel.submit()

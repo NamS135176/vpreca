@@ -16,154 +16,168 @@
             app:elevation="0dp"
             app:layout_constraintTop_toTopOf="parent"
             app:title="@{@string/introduce_title}" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/desTop"
-            style="@style/Widget.AppCompat.TextView.Bold"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:lineSpacingExtra="6sp"
-            android:paddingTop="12dp"
-            android:text="@string/introduce_des_top"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/appbar_gift_second" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/desBot"
-            style="@style/Widget.AppCompat.TextView.Bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:lineSpacingExtra="6sp"
-            android:text="@string/introduce_des_bot"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@+id/desTop" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/des"
-            style="@style/Widget.AppCompat.TextView.Bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingExtra="6sp"
-            android:paddingHorizontal="29dp"
-            android:paddingTop="34dp"
-            android:paddingBottom="21dp"
-            android:text="@string/introduce_des_second"
-            android:textColor="#fff"
-            android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@+id/desBot" />
-
-        <LinearLayout
-            android:id="@+id/introduct_input_zone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingStart="29dp"
-            android:paddingLeft="29dp"
-            android:paddingEnd="18dp"
-            android:paddingRight="18dp"
-            app:layout_constraintTop_toBottomOf="@+id/des">
-
-            <com.lifecard.vpreca.ui.custom.MyTextInputLayout
-                android:id="@+id/username_layout"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/appbar_gift_second"
+            app:layout_constraintBottom_toTopOf="@id/btnSubmitInput">
+            <LinearLayout
+                android:paddingBottom="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logo">
+                android:layout_height="match_parent"
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_code"
-                    style="@style/TextInputEditTextFilledBox"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/desTop"
+                    style="@style/Widget.AppCompat.TextView.Bold"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:textSize="16sp"
-                    android:hint="@string/introduce_second_input"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:paddingVertical="0dp"
-                    android:textColor="@color/peacock_blue" />
-            </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="6sp"
+                    android:paddingTop="12dp"
+                    android:text="@string/introduce_des_top"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@+id/appbar_gift_second" />
 
-            <ImageView
-                android:id="@+id/button_ocr_detection"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="0.8"
-                android:src="@drawable/ic_baseline_camera_alt_24" />
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/introduce_des_bot_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingExtra="6sp"
-            android:paddingHorizontal="29dp"
-            android:paddingVertical="23dp"
-            android:text="@string/introduce_second_des"
-            android:textColor="#fff"
-            android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@+id/introduct_input_zone" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/introduc_card_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingExtra="6sp"
-            android:paddingHorizontal="29dp"
-            android:paddingVertical="13dp"
-            android:text="@string/introduce_card_title"
-            android:textColor="#fff"
-            android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
-            android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@+id/introduce_des_bot_input" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingHorizontal="29dp"
-            app:layout_constraintTop_toBottomOf="@+id/introduc_card_title">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.35"
-                android:text="0000 0000 0000"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
-
-            <com.lifecard.vpreca.ui.custom.MyTextInputLayout
-                android:id="@+id/gift_vcn_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.65"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/logo">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/gift_vcn_input"
-                    style="@style/TextInputEditTextFilledBox"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/desBot"
+                    style="@style/Widget.AppCompat.TextView.Bold"
                     android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:paddingVertical="0dp"
-                    android:imeOptions="actionNext"
-                    android:inputType="number"
-                    android:insetTop="0dp"
-                    android:maxLength="4"
-                    android:textAlignment="center"
-                    android:insetBottom="0dp"
-                    android:textColor="@color/peacock_blue"
-                    android:textSize="20sp" />
-            </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
-        </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="6sp"
+                    android:text="@string/introduce_des_bot"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    app:layout_constraintTop_toBottomOf="@+id/desTop" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/des"
+                    style="@style/Widget.AppCompat.TextView.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="6sp"
+                    android:paddingHorizontal="29dp"
+                    android:paddingTop="34dp"
+                    android:paddingBottom="21dp"
+                    android:text="@string/introduce_des_second"
+                    android:textColor="#fff"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/desBot" />
+
+                <LinearLayout
+                    android:id="@+id/introduct_input_zone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingStart="29dp"
+                    android:paddingLeft="29dp"
+                    android:paddingEnd="18dp"
+                    android:paddingRight="18dp"
+                    app:layout_constraintTop_toBottomOf="@+id/des">
+
+                    <com.lifecard.vpreca.ui.custom.MyTextInputLayout
+                        android:id="@+id/username_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/logo">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/text_code"
+                            style="@style/TextInputEditTextFilledBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:textSize="16sp"
+                            android:hint="@string/introduce_second_input"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingVertical="0dp"
+                            android:textColor="@color/peacock_blue" />
+                    </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/button_ocr_detection"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="0.8"
+                        android:src="@drawable/ic_baseline_camera_alt_24" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/introduce_des_bot_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="6sp"
+                    android:paddingHorizontal="29dp"
+                    android:paddingVertical="23dp"
+                    android:text="@string/introduce_second_des"
+                    android:textColor="#fff"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/introduct_input_zone" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/introduc_card_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="6sp"
+                    android:paddingHorizontal="29dp"
+                    android:paddingVertical="13dp"
+                    android:text="@string/introduce_card_title"
+                    android:textColor="#fff"
+                    android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@+id/introduce_des_bot_input" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="29dp"
+                    app:layout_constraintTop_toBottomOf="@+id/introduc_card_title">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.35"
+                        android:text="0000 0000 0000"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
+
+                    <com.lifecard.vpreca.ui.custom.MyTextInputLayout
+                        android:id="@+id/gift_vcn_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.65"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/logo">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/gift_vcn_input"
+                            style="@style/TextInputEditTextFilledBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:paddingVertical="0dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:insetTop="0dp"
+                            android:maxLength="4"
+                            android:textAlignment="center"
+                            android:insetBottom="0dp"
+                            android:textColor="@color/peacock_blue"
+                            android:textSize="20sp" />
+                    </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSubmitInput"

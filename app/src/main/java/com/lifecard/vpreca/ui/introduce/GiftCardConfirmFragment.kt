@@ -44,7 +44,7 @@ class GiftCardConfirmFragment : Fragment() {
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (args.giftCardConfirmData?.preRoute == "inputcard") {
-                    findNavController().navigate(R.id.nav_gift_card_input_card)
+                    findNavController().navigate(R.id.action_third_to_inputcard)
                 } else {
                     findNavController().navigate(R.id.nav_gift_card_input)
                 }
@@ -67,7 +67,7 @@ class GiftCardConfirmFragment : Fragment() {
         binding.cardZone.card  = args.cardData
         btnBack.setOnClickListener(View.OnClickListener {
             if (args.giftCardConfirmData?.preRoute == "inputcard") {
-                findNavController().navigate(R.id.nav_gift_card_input_card)
+                findNavController().navigate(R.id.action_third_to_inputcard)
             } else {
                 findNavController().navigate(R.id.nav_gift_card_input)
             }

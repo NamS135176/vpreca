@@ -68,11 +68,11 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_balance_amount_menu)
+                findNavController().popBackStack()
             }
         })
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
 
         viewModel.creditCardResult.observe(
             viewLifecycleOwner,

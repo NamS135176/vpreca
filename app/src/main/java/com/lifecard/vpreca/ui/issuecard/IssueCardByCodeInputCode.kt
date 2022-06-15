@@ -41,8 +41,14 @@ class IssueCardByCodeInputCode : Fragment() {
         val btnCancel = binding.appbarSignup.cancelBtn
         val buttonOcrDetection = binding.buttonOcrDetection
         val loading = binding.loading
-
-        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_inputcode_to_main)
+                }
+            })
+        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_inputcode_to_main) })
         viewModel.validForm.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { signupFormState ->

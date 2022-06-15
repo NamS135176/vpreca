@@ -28,12 +28,12 @@ class BalanceBySourceCompleteFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().navigate(R.id.action_balancesource_to_home)
             }
         })
 
         val btnSubmit = binding.btnSubmitPolicy
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
+        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_balancesource_to_home) })
         return binding.root
     }
 

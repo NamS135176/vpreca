@@ -65,7 +65,7 @@ class IssueCardByCodeSelectSource : Fragment() {
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val action = IssueCardByCodeSelectSourceDirections.actionSelectsourceToSelectway(args.issuePlusData)
-                findNavController().navigate(action)
+                findNavController().popBackStack()
             }
         })
 
@@ -95,7 +95,7 @@ class IssueCardByCodeSelectSource : Fragment() {
         })
         btnBack.setOnClickListener(View.OnClickListener {
             val action = IssueCardByCodeSelectSourceDirections.actionSelectsourceToSelectway(args.issuePlusData)
-            findNavController().navigate(action)
+            findNavController().popBackStack()
         })
 
         btnCancel.setOnClickListener(View.OnClickListener {

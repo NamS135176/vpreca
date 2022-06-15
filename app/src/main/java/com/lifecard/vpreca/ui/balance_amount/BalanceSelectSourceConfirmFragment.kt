@@ -83,24 +83,24 @@ class BalanceSelectSourceConfirmFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val data =
-                    BalanceTotalRemain(args.fragmentBalanceAmountSelectSourceConfirm?.balanceAmount!!)
-                val action =
-                    BalanceSelectSourceConfirmFragmentDirections.actionConfirmToSelectsource(
-                        data
-                    )
-                findNavController().navigate(action)
+//                val data =
+//                    BalanceTotalRemain(args.fragmentBalanceAmountSelectSourceConfirm?.balanceAmount!!)
+//                val action =
+//                    BalanceSelectSourceConfirmFragmentDirections.actionConfirmToSelectsource(
+//                        data
+//                    )
+                findNavController().popBackStack()
             }
         })
 
         btnBack.setOnClickListener(View.OnClickListener {
-            val data =
-                BalanceTotalRemain(args.fragmentBalanceAmountSelectSourceConfirm?.balanceAmount!!)
-            val action =
-                BalanceSelectSourceConfirmFragmentDirections.actionConfirmToSelectsource(
-                    data
-                )
-            findNavController().navigate(action)
+//            val data =
+//                BalanceTotalRemain(args.fragmentBalanceAmountSelectSourceConfirm?.balanceAmount!!)
+//            val action =
+//                BalanceSelectSourceConfirmFragmentDirections.actionConfirmToSelectsource(
+//                    data
+//                )
+            findNavController().popBackStack()
         })
 
         binding.card = args.fragmentBalanceAmountSelectSourceConfirm

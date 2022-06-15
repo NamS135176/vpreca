@@ -39,7 +39,7 @@ class ConfirmSignupDataFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_signup_input)
+                    findNavController().popBackStack()
                 }
             })
 
@@ -56,7 +56,7 @@ class ConfirmSignupDataFragment : Fragment() {
 
         btnBack.setOnClickListener(View.OnClickListener {
 //            findNavController().navigate(R.id.nav_signup_input)
-            findNavController().navigate(R.id.nav_signup_input)
+            findNavController().popBackStack()
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {
