@@ -28,7 +28,7 @@ class GiftCardPolicyFragment : Fragment() {
         _binding = FragmentGiftCardPolicyBinding.inflate(inflater, container, false)
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().navigate(R.id.action_gift_card_policy_to_home)
             }
         })
 
@@ -39,7 +39,7 @@ class GiftCardPolicyFragment : Fragment() {
         checkbox.isChecked = false
         btnSubmit.isEnabled = false
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_home)
+            findNavController().navigate(R.id.action_gift_card_policy_to_home)
         })
 
         checkbox.setOnClickListener(View.OnClickListener {

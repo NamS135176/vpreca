@@ -39,13 +39,13 @@ class GiftCardCompleteFragment : Fragment() {
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().navigate(R.id.action_gift_complete_to_home)
             }
         })
 
         val btnComplete = binding.btnSubmitPolicy
         btnComplete.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_home)
+            findNavController().navigate(R.id.action_gift_complete_to_home)
         })
         return binding.root
     }

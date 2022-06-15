@@ -35,12 +35,12 @@ class ChangePhoneSecondFragment : Fragment() {
         val layout = binding.forgotPassEmailLayout
         val btnBack = binding.appbarForgotPass.btnBack
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_phone_first) })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack()})
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_change_phone_first)
+                findNavController().popBackStack()
             }
         })
 

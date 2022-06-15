@@ -249,6 +249,7 @@ class SignupInputFragment : Fragment() {
                 val action =
                     SignupInputFragmentDirections.actionSignupInputToSignupConfirm(viewModel.formState.value!!)
                 findNavController().navigate(action)
+                viewModel.formResultState.value = null
             }
 
         })

@@ -53,7 +53,13 @@ class ChangeInfoDataFragment : Fragment() {
         _binding = FragmentChangeInfoDataBinding.inflate(inflater, container, false)
         val btnBack = binding.appbarConfirmSignup.btnBack
         btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
-
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            })
         val btnOpenDialog = binding.btnSubmitPolicy
         val cal = Calendar.getInstance()
 

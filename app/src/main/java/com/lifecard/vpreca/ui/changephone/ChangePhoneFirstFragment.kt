@@ -150,13 +150,13 @@ class ChangePhoneFirstFragment : Fragment() {
         )
 
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_home)
+            findNavController().popBackStack()
         })
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_home)
+                    findNavController().popBackStack()
                 }
             })
 

@@ -45,7 +45,7 @@ class IssueCardSelectDesignFragment : Fragment() {
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     when (args.selectDesignData?.preRoute) {
-                        "selectSource" -> findNavController().navigate(R.id.nav_issue_card_select_source)
+                        "selectSource" -> findNavController().navigate(R.id.selectdesign_to_select_card_source)
                         "valueConfirm" -> {
                             MaterialAlertDialogBuilder(requireContext()).apply {
                                 setPositiveButton("はい") { dialog, which ->
@@ -101,7 +101,7 @@ class IssueCardSelectDesignFragment : Fragment() {
         }
         btnBack.setOnClickListener(View.OnClickListener {
             if (args.selectDesignData?.preRoute == "selectSource") {
-                findNavController().navigate(R.id.nav_issue_card_select_source)
+                findNavController().navigate(R.id.selectdesign_to_select_card_source)
             } else if (args.selectDesignData?.preRoute == "valueConfirm") {
                 findNavController().navigate(R.id.nav_balance_value_confirm)
             } else {

@@ -37,6 +37,7 @@ class GiftCardConfirmDetailFragment  : Fragment() {
         _binding = FragmentGiftCardConfirmDetailBinding.inflate(inflater, container, false)
         binding.card = args.cardData
         binding.cardZone.card = args.cardData
+        binding.cardZone.cardInclude.card = args.cardData
         val btnBack = binding.appbarGiftThird.btnBack
         val btnSubmit = binding.btnSubmitInput
         val loading = binding.loading
@@ -45,13 +46,13 @@ class GiftCardConfirmDetailFragment  : Fragment() {
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val action = GiftCardConfirmDetailFragmentDirections.actionGiftcardinputcardToGiftcardconfirm(args.cardData, GiftCardConfirmData("inputcard"))
-                findNavController().navigate(action)
+                findNavController().popBackStack()
             }
         })
 
         btnBack.setOnClickListener(View.OnClickListener {
             val action = GiftCardConfirmDetailFragmentDirections.actionGiftcardinputcardToGiftcardconfirm(args.cardData, GiftCardConfirmData("inputcard"))
-            findNavController().navigate(action)
+            findNavController().popBackStack()
         })
 
         viewModel.giftCardState.observe(

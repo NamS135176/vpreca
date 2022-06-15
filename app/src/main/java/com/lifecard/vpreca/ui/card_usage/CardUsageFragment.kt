@@ -54,7 +54,7 @@ class CardUsageFragment : Fragment() {
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if(args.preRoute?.preRoute == "logged"){
-                    findNavController().navigate(R.id.nav_home)
+                    findNavController().navigate(R.id.action_card_usage_to_home)
                 }
                 else{
                     findNavController().popBackStack()
@@ -63,7 +63,7 @@ class CardUsageFragment : Fragment() {
         })
         btnBack.setOnClickListener(View.OnClickListener {
             if(args.preRoute?.preRoute == "logged"){
-                findNavController().navigate(R.id.nav_home)
+                findNavController().navigate(R.id.action_card_usage_to_home)
             }
             else{
                 findNavController().popBackStack()
@@ -110,6 +110,11 @@ class CardUsageFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        hideToolbar()
+        if(args.preRoute?.preRoute == "logged"){
+            showToolbar()
+        }
+        else{
+           hideToolbar()
+        }
     }
 }

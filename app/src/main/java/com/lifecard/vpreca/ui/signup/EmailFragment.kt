@@ -52,12 +52,12 @@ class EmailFragment : Fragment() {
                         "してもよろしいですか？")
             }.create().show()
         })
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_signup_phone) })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_email_to_phone) })
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_signup_phone)
+                findNavController().navigate(R.id.action_email_to_phone)
             }
         })
 

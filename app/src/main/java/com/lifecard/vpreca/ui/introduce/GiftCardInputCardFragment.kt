@@ -48,12 +48,12 @@ class GiftCardInputCardFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_gift_card_policy)
+                findNavController().navigate(R.id.action_giftcardinputcard_to_policy)
             }
         })
 
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_gift_card_policy)
+            findNavController().navigate(R.id.action_giftcardinputcard_to_policy)
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {

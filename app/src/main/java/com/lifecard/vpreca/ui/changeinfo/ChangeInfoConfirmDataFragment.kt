@@ -55,7 +55,7 @@ class ChangeInfoConfirmDataFragment : BackPressFragment() {
             val action = ChangeInfoConfirmDataFragmentDirections.actionChangeConfirmDataToInput(
                 args.changeInfoData
             )
-            findNavController().navigate(action)
+            findNavController().popBackStack()
         })
 
         btnCancel.setOnClickListener(View.OnClickListener {
