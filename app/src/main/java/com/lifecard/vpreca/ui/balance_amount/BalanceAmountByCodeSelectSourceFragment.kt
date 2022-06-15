@@ -16,6 +16,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountByCodeSelectSourceBinding
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
+import com.lifecard.vpreca.databinding.SelectSourceBalanceItemBinding
 import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
 import com.lifecard.vpreca.ui.issuecard.IssueCardByCodeSelectSourceDirections
 import com.lifecard.vpreca.ui.issuecard.IssueCardSourceAdapter
@@ -100,15 +101,15 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
                             val linearLayoutManager: LinearLayoutManager =
                                 LinearLayoutManager(context)
                             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                            val adapter = IssueCardSourceAdapter(arrPolicy, arrSelected)
+                            val adapter = BalanceSelectSourceAdapter(arrPolicy, arrSelected)
                             rcView.adapter = adapter
                             rcView.layoutManager = linearLayoutManager
 
                             adapter.setOnClickListener(object :
-                                IssueCardSourceAdapter.OnItemClickListener {
+                                BalanceSelectSourceAdapter.OnItemClickListener {
                                 override fun onItemClick(
                                     position: Int,
-                                    binding: SelectSourceCardItemBinding
+                                    binding: SelectSourceBalanceItemBinding
                                 ) {
                                     var lastPost = 0
                                     if (arrSelected[position].isSelected == "0") {
@@ -162,6 +163,7 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
 //                                        dataSelectCard = "0"
                                     }
                                 }
+
                             })
                         }
                     }

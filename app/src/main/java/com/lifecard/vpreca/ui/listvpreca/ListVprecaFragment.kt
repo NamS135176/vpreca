@@ -15,9 +15,12 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentListVprecaBinding
+import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -130,14 +133,20 @@ class ListVprecaFragment : Fragment() {
         return binding.root
     }
 
+    @Subscribe
+    fun handleReloadCard(event:ReloadCard){
+        listVprecaViewModel.getListCard()
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        EventBus.getDefault().register(this)
         hideToolbar()
     }
 
     override fun onDetach() {
         super.onDetach()
+        EventBus.getDefault().unregister(this)
         showToolbar()
     }
 }

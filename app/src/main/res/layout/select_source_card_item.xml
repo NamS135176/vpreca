@@ -46,7 +46,7 @@
                 app:layout_constraintTop_toTopOf="parent">
                 <include
                     android:id="@+id/card_include"
-                    layout="@layout/test_card_item"
+                    layout="@layout/issue_card_item_select_source"
                     />
 <!--                <ImageView-->
 <!--                    android:id="@+id/card_logo"-->

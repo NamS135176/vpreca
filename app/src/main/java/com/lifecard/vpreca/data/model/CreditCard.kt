@@ -2,6 +2,7 @@ package com.lifecard.vpreca.data.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.lifecard.vpreca.R
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
@@ -99,4 +100,15 @@ data class CreditCard(
     override fun hashCode(): Int {
         return super.hashCode()
     }
+}
+
+fun CreditCard?.getBackgroundCard(): Int{
+    var draw = 0
+    when (this?.designId) {
+        "99033" -> draw = R.drawable.first
+        "99455" -> draw = R.drawable.second
+        "99999" -> draw = R.drawable.third
+        else -> draw = R.drawable.first
+    }
+    return draw
 }

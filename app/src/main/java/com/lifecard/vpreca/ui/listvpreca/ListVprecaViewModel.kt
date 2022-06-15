@@ -66,6 +66,37 @@ class ListVprecaViewModel @Inject constructor(
         }
     }
 
+    fun getListCard(){
+        viewModelScope.launch {
+            _loading.value = true
+            val result = creditCardRepository.getLatestCards(true)
+
+            if (result is Result.Success) {
+                _creditCardResult.value = CreditCardResult(success = result.data)
+            } else if (result is Result.Error) {
+                when (result.exception) {
+                    is NoConnectivityException -> _creditCardResult.value =
+                        CreditCardResult(networkTrouble = true)
+                    is ApiException -> _creditCardResult.value = CreditCardResult(
+                        error = ErrorMessageException(
+                            errorMessage = result.exception.errorMessage,
+                            exception = result.exception
+                        )
+                    )
+                    is InternalServerException -> _creditCardResult.value =
+                            //TODO this internalError should be html from server, it will be implement later
+                        CreditCardResult(internalError = "")
+                    else -> _creditCardResult.value =
+                        CreditCardResult( error = ErrorMessageException(
+                            messageResId = R.string.login_failed,
+                            exception = result.exception
+                        ))
+                }
+            }
+            _loading.value = false
+        }
+    }
+
     fun changeSelect(creditCard: CreditCard){
         _creditCardSelect.value = creditCard
     }

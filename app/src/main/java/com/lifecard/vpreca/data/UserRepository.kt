@@ -155,7 +155,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     )
                 )
 
-                Result.Success(userResponse.brandPrecaApi.response)
+                Result.Success(userResponse.response)
             } catch (e: Exception) {
                 println("UserRepository... request sms has error $e")
                 e.printStackTrace()
