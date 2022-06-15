@@ -15,15 +15,13 @@
     <dimen name="my_page_card_arrow_direction_width">10dp</dimen>
     <!--    (175-19)/2-->
     <dimen name="my_page_card_arrow_direction_mt">78dp</dimen>
-    <!--    10 + (54-10)/2-->
-    <dimen name="my_page_card_arrow_direction_ml">32dp</dimen>
-    <!--    margin horizontal check file fragment_home(button_card_no_balance)  -->
-    <!--  18 + 11/20 * 19  = 28.45dp  : 11/20 is ratio of my_page_card_arrow_direction, 19 is  my_page_card_arrow_direction_height -->
-<!--    <dimen name="my_page_button_card_no_balance_mh">28.45dp</dimen>-->
-    <dimen name="my_page_button_card_no_balance_mh">@dimen/home_card_item_page_margin_offset</dimen>
-    <dimen name="home_card_item_page_margin">54dp</dimen>
+    <!--    10 + (34-10)/2-->
+    <dimen name="my_page_card_arrow_direction_ml">22dp</dimen>
+    <dimen name="home_card_item_page_margin">34dp</dimen>
     <dimen name="home_card_item_page_offset">10dp</dimen>
-    <dimen name="home_card_item_page_margin_offset">64dp</dimen>
+    <dimen name="home_card_item_page_margin_offset">44dp</dimen>
+
+    <dimen name="my_page_button_card_no_balance_mh">@dimen/home_card_item_page_margin_offset</dimen>
 
 
     <dimen name="toast_mb">90dp</dimen>

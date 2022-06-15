@@ -68,7 +68,8 @@ class SplashActivity : AppCompatActivity() {
             }
             splashResult.networkTrouble?.let { networkError ->
                 if (networkError) {
-                    showInternetTrouble()
+//                    showInternetTrouble()
+                    navigateToMainScreen()
                 }
             }
         })
