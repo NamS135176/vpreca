@@ -86,8 +86,12 @@ class ChangeInfoInputViewModel : ViewModel() {
     }
 
     private fun checkEmail1Valid(): Boolean {
-        return if (!RegexUtils.isEmailValid(formState.value?.email1)) {
+        val email1 = formState.value?.email1
+        return if (!RegexUtils.isEmailValid(email1)) {
             email1Error.value = R.string.rgx_error_email
+            false
+        } else if (originUserData?.mailAddress2 == email1) {
+            email2Error.value = R.string.rgx_error_email_duplicate
             false
         } else {
             email1Error.value = null
@@ -111,7 +115,7 @@ class ChangeInfoInputViewModel : ViewModel() {
             email2Error.value = R.string.rgx_error_email
             false
         } else if (originUserData?.mailAddress1 == email2) {
-            email2Error.value = R.string.rgx_error_email
+            email2Error.value = R.string.rgx_error_email_duplicate
             false
         } else {
             email2Error.value = null
