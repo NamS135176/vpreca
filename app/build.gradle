@@ -27,7 +27,7 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 debugKeystoreProperties.load(new FileInputStream(debugKeystorePropertiesFile))
 secureProperties.load(new FileInputStream(securePropertiesFile))
 
-def privateKeyPem = privateKeyPemFile.text
+def privateKeyPem = privateKeyPemFile.text.replaceAll("\\n", "")
 
 android {
     compileSdk 32

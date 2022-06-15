@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.BackPressFragment
 import com.lifecard.vpreca.data.model.PhoneData
 import com.lifecard.vpreca.databinding.FragmentChangeInfoConfirmDataBinding
 import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
@@ -23,7 +24,7 @@ import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChangeInfoConfirmDataFragment : Fragment() {
+class ChangeInfoConfirmDataFragment : BackPressFragment() {
 
     companion object {
         fun newInstance() = ChangeInfoConfirmDataFragment()
@@ -38,27 +39,16 @@ class ChangeInfoConfirmDataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentChangeInfoConfirmDataBinding.inflate(inflater, container, false)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    val action = ChangeInfoConfirmDataFragmentDirections.actionChangeConfirmDataToInput(
-                        args.changeInfoData
-                    )
-                    findNavController().navigate(action)
-                }
-            })
+
         val btnCancelConfirm = binding.btnCancelConfirm
         val btnSubmitConfirm = binding.btnSubmitConfirm
         val btnBack = binding.appbarConfirmSignup.btnBack
         val btnCancel = binding.appbarConfirmSignup.cancelBtn
         val loading = binding.loading
-        binding.user = args.changeInfoData
+        args.changeInfoData.let { changeInfoData -> binding.user = changeInfoData }
+
         btnBack.setOnClickListener(View.OnClickListener {
-            val action = ChangeInfoConfirmDataFragmentDirections.actionChangeConfirmDataToInput(
-                args.changeInfoData
-            )
-            findNavController().navigate(action)
+            findNavController().popBackStack()
         })
 
         btnCancelConfirm.setOnClickListener(View.OnClickListener {

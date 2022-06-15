@@ -125,9 +125,11 @@ class LoginFragment : NoToolbarFragment() {
                 loginResult ?: return@Observer
 
                 loginResult.networkTrouble?.let { if (it) showInternetTrouble() }
-                loginResult.error?.messageResId?.let { if(it == 1101302) {
-                    findNavController().navigate(R.id.nav_sms_verify)
-                } }
+                loginResult.smsVerification?.let {
+                    if (it) {
+                        findNavController().navigate(R.id.nav_sms_verify)
+                    }
+                }
                 loginResult.error?.errorMessage?.let { showLoginFailed(it) }
                 loginResult.errorText?.let { errorText ->
                     showAlert(errorText)
@@ -273,6 +275,7 @@ class LoginFragment : NoToolbarFragment() {
 
                 passwordEditText.text = "".toEditable()
             }
+
             override fun onCreate(owner: LifecycleOwner) {
                 super.onCreate(owner)
                 if (PreferenceHelper.isEnableBiometricSetting(requireContext()) && bioManager?.checkDeviceSupportBiometric() == true) {

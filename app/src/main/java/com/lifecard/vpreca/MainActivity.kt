@@ -85,11 +85,18 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             //hide keyboard due issue https://bjm.backlog.com/view/LC_VPC-166 on Aquos SHV45, GalaxyS4
             KeyboardUtils.hideKeyboard(this, binding.root)
-            if(destination.id == R.id.nav_home) {
+            if (destination.id == R.id.nav_home) {
                 toolbar.visibility = View.VISIBLE
             } else {
                 toolbar.visibility = View.GONE
             }
+            //debug backstack
+            println("addOnDestinationChangedListener ... backQueue count = ${navController.backQueue.count()}")
+            for (i in 0 until navController.backQueue.count()) {
+                val destination = navController.backQueue[i].destination
+                println("addOnDestinationChangedListener ...stack[$i]= (label = ${destination.label}, label = ${destination.displayName}, destination = $destination)")
+            }
+
         }
 
         appBarConfiguration = AppBarConfiguration(
