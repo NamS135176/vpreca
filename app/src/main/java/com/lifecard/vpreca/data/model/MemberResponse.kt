@@ -3,11 +3,6 @@ package com.lifecard.vpreca.data.model
 import com.google.gson.annotations.SerializedName
 
 data class MemberResponse(
-    @SerializedName("brandPrecaApi")
-    val brandPrecaApi: MemberBrandResponse,
-)
-
-data class MemberBrandResponse(
     @SerializedName("response")
     val response: MemberResponseContent,
 )

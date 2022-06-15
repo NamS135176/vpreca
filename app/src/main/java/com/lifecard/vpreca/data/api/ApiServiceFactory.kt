@@ -23,15 +23,15 @@ class ApiServiceFactory {
         ): ApiService {
             val client = OkHttpClient.Builder()
                 .addInterceptor(Interceptor { chain ->
-                    userManager.bearAccessToken?.let { token ->
-                        if (chain.request().header("Authorization").isNullOrEmpty()) {
-                            val request =
-                                chain.request().newBuilder()
-                                    .addHeader("Authorization", token).build()
-                            chain.proceed(request)
-                        } else {
-                            chain.proceed(chain.request())
-                        }
+                    userManager.accessToken?.let { accessToken ->
+                        val request =
+                            chain.request().newBuilder()
+                                .apply {
+//                                    addHeader("Authorization", "Bear $accessToken")
+                                    addHeader("accesstoken", accessToken)
+                                }
+                                .build()
+                        chain.proceed(request)
                     } ?: kotlin.run {
                         chain.proceed(chain.request())
                     }

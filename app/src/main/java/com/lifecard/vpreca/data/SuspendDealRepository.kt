@@ -20,7 +20,7 @@ class SuspendDealRepository(
                 val suspendDealResponse = apiService.getListSuspendDeal(
                     RequestHelper.createSuspendDealListRequest(memberNumber = userManager.memberNumber!!)
                 )
-                Result.Success(suspendDealResponse.brandPrecaApi.response.suspendDeal!!)
+                Result.Success(suspendDealResponse.response.suspendDeal!!)
             } catch (e: Exception) {
                 println("SuspendDealRepository... getListSuspendDeal has error $e")
                 e.printStackTrace()

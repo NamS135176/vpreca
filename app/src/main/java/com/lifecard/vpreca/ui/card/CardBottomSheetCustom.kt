@@ -22,6 +22,7 @@ import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
+import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
@@ -33,6 +34,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import showCustomToast
 import kotlin.coroutines.CoroutineContext
 
@@ -89,6 +91,7 @@ class CardBottomSheetCustom(
                                     "再発行しました",
                                     activity = activity
                                 )
+                                EventBus.getDefault().post(ReloadCard())
                             }
                             else if (res is Result.Error) {
                                 when (res.exception) {
@@ -114,7 +117,7 @@ class CardBottomSheetCustom(
              val new = newCard.copyCardInfoLockInverse()
              val res = creditCardRepository.updateCard(convertObject(new))
              if (res is Result.Success) {
-
+                 EventBus.getDefault().post(ReloadCard())
                  val toastMessage = when (new.isCardInfoLock()) {
                      true -> "ロックしました"
                      else -> "ロックを解除しました"

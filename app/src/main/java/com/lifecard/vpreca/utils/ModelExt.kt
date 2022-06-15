@@ -22,6 +22,17 @@ fun CreditCard.copyCardLockInverse(): CreditCard {
     )
 }
 
+fun CreditCard.reverseCardLock(): CreditCard {
+    this.vcnSecurityLockFlg = if (this.isCardLock()) "0" else "1"
+    val newLockStatus = when (this.isCardLock()) {
+        true -> "0"//not lock
+        else -> "1"//lock
+    }
+    return this.copy(
+        vcnSecurityLockFlg = newLockStatus
+    )
+}
+
 fun CardInfo?.isCardInfoLock(): Boolean {
     return "1" == this?.vcnSecurityLockFlg
 }

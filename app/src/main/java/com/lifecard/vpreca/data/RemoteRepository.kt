@@ -26,7 +26,7 @@ class RemoteRepository(
                             creditCard
                         )
                     )
-                Result.Success(cardUsageHistoryResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(cardUsageHistoryResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("RemoteRepository...getCardUsageHistory has error $e")
                 Result.Error(e)
@@ -43,7 +43,7 @@ class RemoteRepository(
                             creditCard
                         )
                     )
-                Result.Success(cardUsageHistoryResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(cardUsageHistoryResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("RemoteRepository...getCardUsageHistory has error $e")
                 Result.Error(e)

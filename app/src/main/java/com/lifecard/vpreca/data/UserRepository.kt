@@ -6,10 +6,9 @@ import com.lifecard.vpreca.utils.RequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import java.util.*
 
 class UserRepository(private val apiService: ApiService, private val userManager: UserManager) {
-    suspend fun login(loginRequest: BrandRequest): Result<LoginResponse> {
+    suspend fun login(loginRequest: Request): Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
             try {
                 val loginResponse = apiService.login(loginRequest)
@@ -49,8 +48,8 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     val userResponse = apiService.getUser(
                         RequestHelper.createMemberRequest(loginId, memberNumber)
                     )
-                    userManager.setLoggedMember(userResponse.brandPrecaApi.response)
-                    Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
+                    userManager.setLoggedMember(userResponse.response)
+                    Result.Success(userResponse.response.memberInfo!!)
                 }
             } catch (e: Exception) {
                 println("UserRepository... getUser has error $e")
@@ -62,14 +61,14 @@ class UserRepository(private val apiService: ApiService, private val userManager
 
     suspend fun changeInfoMember(
         memberInfo: ChangeInfoMemberData
-    ): Result<ChangeInfoMemberData> {
+    ): Result<MemberInfo> {
         return withContext(Dispatchers.IO) {
             try {
                 val userResponse = apiService.changeInfoMember(
                     RequestHelper.createChangeInfoMember(memberInfo)
                 )
-
-                Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
+                userManager.setLoggedMember(userResponse.response)
+                Result.Success(userResponse.response.memberInfo!!)
             } catch (e: Exception) {
                 println("UserRepository... change info has error $e")
                 e.printStackTrace()
@@ -96,7 +95,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     )
                 )
 
-                Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
+                Result.Success(userResponse.response.memberInfo!!)
             } catch (e: Exception) {
                 println("UserRepository... change pass has error $e")
                 e.printStackTrace()
@@ -126,7 +125,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     )
                 )
 
-                Result.Success(userResponse.brandPrecaApi.response.resultCode)
+                Result.Success(userResponse.response.resultCode)
             } catch (e: Exception) {
                 println("UserRepository... reset pass has error $e")
                 e.printStackTrace()
@@ -136,12 +135,12 @@ class UserRepository(private val apiService: ApiService, private val userManager
     }
 
     suspend fun sendSMSRequest(
-      memberNumber: String,
-      telephoneNumber:String,
-      certType:String,
-      operationType:String,
-      certSumFlg:String,
-      operationSumFlg:String
+        memberNumber: String,
+        telephoneNumber: String,
+        certType: String,
+        operationType: String,
+        certSumFlg: String,
+        operationSumFlg: String
     ): Result<SMSAuthCodeSendResponseContent> {
         return withContext(Dispatchers.IO) {
             try {
@@ -167,10 +166,10 @@ class UserRepository(private val apiService: ApiService, private val userManager
 
     suspend fun sendSMSConfirm(
         memberNumber: String,
-        certType:String,
-        operationType:String,
-        certCode:String,
-        extCertDealId:String
+        certType: String,
+        operationType: String,
+        certCode: String,
+        extCertDealId: String
     ): Result<SMSAuthResponseContent> {
         return withContext(Dispatchers.IO) {
             try {
