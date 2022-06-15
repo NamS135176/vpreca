@@ -167,7 +167,7 @@
                             android:paddingVertical="0dp"
                             android:textAlignment="center"
                             android:textColor="@color/peacock_blue"
-                            android:maxLength="4"
+                            android:maxLength="@integer/max_last_4digit_card"
                             android:textSize="20sp" />
                     </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
                 </LinearLayout>

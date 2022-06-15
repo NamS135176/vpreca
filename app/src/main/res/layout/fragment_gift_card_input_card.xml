@@ -157,7 +157,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="number"
                     android:insetTop="0dp"
-                    android:maxLength="4"
+                    android:maxLength="@integer/max_otp_code"
                     android:textAlignment="center"
                     android:insetBottom="0dp"
                     android:textColor="@color/peacock_blue"
