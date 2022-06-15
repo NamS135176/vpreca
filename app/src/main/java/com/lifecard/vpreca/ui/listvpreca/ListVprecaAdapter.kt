@@ -9,6 +9,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CardUsageHistory
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.VprecaCard
+import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.CardUsageHistoryItemBinding
 import com.lifecard.vpreca.databinding.VprecaCardItemBinding
 import com.lifecard.vpreca.ui.custom.OnItemClickListener
@@ -44,12 +45,7 @@ class ListVprecaAdapter(private var items: List<CreditCard>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.card = items[position]
         holder.binding.cardInfo.card = items[position]
-        when{
-            items[position].designId == "001" -> holder.binding.cardInfo.cardInfo.setBackgroundResource(R.drawable.first)
-            items[position].designId == "002" -> holder.binding.cardInfo.cardInfo.setBackgroundResource(R.drawable.second)
-            items[position].designId == "003" -> holder.binding.cardInfo.cardInfo.setBackgroundResource(R.drawable.third)
-            else -> holder.binding.cardInfo.cardInfo.setBackgroundResource(R.drawable.first)
-        }
+        holder.binding.cardInfo.cardInfo.setBackgroundResource(items[position].getBackgroundCard())
 //        if (position % 3 == 0) {
 //            holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card_cyan)
 //        } else if (position % 3 == 1) {

@@ -21,6 +21,7 @@ import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
+import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.exception.ApiException
@@ -55,15 +56,7 @@ class CardBottomSheetCustom(
         val bindingDialog =
             CardDetailLayoutBinding.inflate(inflater, null, false)
         val loading = bindingDialog.loading
-        when (creditCard.designId) {
-            "001" -> bindingDialog.cardZone.cardInfo.cardInfo.setBackgroundResource(R.drawable.first)
-            "002" -> bindingDialog.cardZone.cardInfo.cardInfo.setBackgroundResource(R.drawable.second)
-            "003" -> bindingDialog.cardZone.cardInfo.cardInfo.setBackgroundResource(R.drawable.third)
-            else -> bindingDialog.cardZone.cardInfo.cardInfo.setBackgroundResource(R.drawable.first)
-//            "005" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_fifth)
-//            "006" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_six)
-//            "007" -> bindingDialog.cardZone.cardInfo.setBackgroundResource(R.drawable.bg_seven)
-        }
+        bindingDialog.cardZone.cardInfo.cardInfo.setBackgroundResource(newCard.getBackgroundCard())
         setContentView(bindingDialog.root)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         bindingDialog.card = convertObject(newCard)

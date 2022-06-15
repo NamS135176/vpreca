@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.lifecard.vpreca.utils.Converter" />
+        <import type="com.lifecard.vpreca.utils.ModelExtKt" />
+        <variable
+            name="card"
+            type="com.lifecard.vpreca.data.model.CreditCard" />
+
+        <variable
+            name="select"
+            type="com.lifecard.vpreca.data.model.SelectedData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:layout_marginRight="21dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+
+            android:id="@+id/card_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:background="@{select.isSelected().equals(`0`) ? @drawable/bg_card_outline_white : (select.isFirst().equals(`0`) ? @drawable/bg_card_outline_selectd : @drawable/ic_bg_card_outline_selected_first2)}"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_item"
+                style="@style/MyCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_card_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <include
+                    android:id="@+id/card_include"
+                    layout="@layout/balance_card_item_select_source"
+                    />
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/card_logo"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="8dp"-->
+                <!--                    android:background="@{card.designId.equals(`001`) ? @drawable/logo_card : @drawable/home_card_logo}"-->
+                <!--                    android:contentDescription="@string/card_expire_date"-->
+                <!--                    app:layout_constraintDimensionRatio="138:36"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+
+                <!--                <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                    android:id="@+id/card_no"-->
+                <!--                    style="@style/Widget.AppCompat.TextView.Bold"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginBottom="2dp"-->
+                <!--                    android:text="@{ModelExtKt.isCardLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"-->
+                <!--                    android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"-->
+                <!--                    android:textSize="10sp"-->
+                <!--                    app:layout_constraintBottom_toTopOf="@id/card_expire_title"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+                <!--                <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                    android:id="@+id/card_expire_title"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginBottom="2dp"-->
+                <!--                    android:gravity="top"-->
+                <!--                    android:text="@string/card_expire_date"-->
+                <!--                    android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"-->
+                <!--                    android:textSize="8sp"-->
+                <!--                    app:layout_constraintBottom_toTopOf="@id/card_username"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+                <!--                <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                    android:id="@+id/card_expire"-->
+                <!--                    style="@style/Widget.AppCompat.TextView.Bold"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:paddingStart="4dp"-->
+                <!--                    android:paddingLeft="4dp"-->
+                <!--                    android:paddingEnd="0dp"-->
+                <!--                    android:paddingRight="0dp"-->
+
+                <!--                    android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"-->
+                <!--                    android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"-->
+                <!--                    android:textSize="10sp"-->
+                <!--                    app:layout_constraintBottom_toTopOf="@id/card_username"-->
+                <!--                    app:layout_constraintStart_toEndOf="@+id/card_expire_title" />-->
+
+                <!--                <androidx.appcompat.widget.AppCompatTextView-->
+                <!--                    android:id="@+id/card_username"-->
+                <!--                    style="@style/Widget.AppCompat.TextView.Bold"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:ellipsize="end"-->
+                <!--                    android:maxLines="1"-->
+                <!--                    android:paddingStart="0dp"-->
+                <!--                    android:paddingLeft="0dp"-->
+                <!--                    android:paddingEnd="40dp"-->
+                <!--                    android:paddingRight="40dp"-->
+                <!--                    android:text="@{card.cardNickname}"-->
+                <!--                    android:textColor="@{card.designId.equals(`001`) ? @color/primary : @color/white}"-->
+                <!--                    android:textSize="11sp"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/card_type_logo"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="9dp"-->
+                <!--                    android:background="@{card.designId.equals(`001`) ? @drawable/visa_gift : @drawable/card_visa}"-->
+                <!--                    android:contentDescription="@string/card_expire_date"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="@id/card_username"-->
+                <!--                    app:layout_constraintDimensionRatio="108:36"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="@id/card_username" />-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/Widget.AppCompat.TextView.Bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@{Converter.convertCurrency(card.publishAmount)}"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/Widget.AppCompat.TextView.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="14sp"
+            android:rotation="45"
+            android:text="@string/issue_card_select_source_cross"
+            android:textColor="@color/primary"
+            android:textSize="12sp"
+            android:transformPivotX="12dp"
+            android:transformPivotY="16dp"
+            android:visibility="@{select.isFirst().equals(`0`) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
