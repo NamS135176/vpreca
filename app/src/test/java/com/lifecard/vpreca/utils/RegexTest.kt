@@ -76,7 +76,8 @@ class RegexTest {
     fun isFullWidth_isCorrect() {
         Assert.assertEquals(true, RegexUtils.isFullWidth("アキ・秋・あき・ａｋｉ・ＡＫＩ|ーＺｚ"))
         Assert.assertEquals(true, RegexUtils.isFullWidth("テアィン"))
-        Assert.assertEquals(false, RegexUtils.isFullWidth("abc"))
+        Assert.assertEquals(true, RegexUtils.isFullWidth("ａａａａ"))
+        Assert.assertEquals(false, RegexUtils.isFullWidth("az"))
     }
 
     @Test
@@ -123,10 +124,10 @@ class RegexTest {
     @Test
     fun isNickname_isCorrect() {
         Assert.assertEquals(true, RegexUtils.isNicknameValid("ABC"))
-        Assert.assertEquals(true, RegexUtils.isNicknameValid("ABCABCABCABCABCABC"))
+        Assert.assertEquals(true, RegexUtils.isNicknameValid("ABCABCABCABCABCABCA"))//max 19
 
         Assert.assertEquals(false, RegexUtils.isNicknameValid("ABC123"))
-        Assert.assertEquals(false, RegexUtils.isNicknameValid("ABCABCABCABCABCABCA"))
+        Assert.assertEquals(false, RegexUtils.isNicknameValid("ABCABCABCABCABCABCAB"))//20 chars
         Assert.assertEquals(false, RegexUtils.isNicknameValid("abc"))
         Assert.assertEquals(false, RegexUtils.isNicknameValid("アキ"))
     }
@@ -134,7 +135,7 @@ class RegexTest {
     @Test
     fun hideEmailAddress_isCorrect() {
         Assert.assertEquals("anh***@gmail.com", RegexUtils.hideEmail("anhndt@gmail.com"))
-        Assert.assertEquals("anh***@vn-sis.com", RegexUtils.hideEmail("anhndt@vn-sis.com"))
+        Assert.assertEquals("anh**D*@vn-sis.com", RegexUtils.hideEmail("anhndt@vn-sis.com"))
         Assert.assertEquals("an@vn-sis.com", RegexUtils.hideEmail("an@vn-sis.com"))
         Assert.assertEquals("anh***@vn-sis.com", RegexUtils.hideEmail("anhdt-test123@vn-sis.com"))
     }

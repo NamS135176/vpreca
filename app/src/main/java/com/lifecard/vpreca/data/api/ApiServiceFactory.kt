@@ -19,7 +19,6 @@ class ApiServiceFactory {
     companion object {
         fun createService(
             appContext: Context,
-            secureStore: SecureStore,
             userManager: UserManager
         ): ApiService {
             val client = OkHttpClient.Builder()
@@ -46,7 +45,7 @@ class ApiServiceFactory {
                     }
                 }
                 .addInterceptor(NetworkConnectionInterceptor(appContext))
-                .authenticator(TokenAuthenticator(appContext, secureStore))
+                .authenticator(TokenAuthenticator(appContext, userManager))
                 .build()
             val gson = GsonBuilder()
                 .setDateFormat("yyyyMMddHHmmss")

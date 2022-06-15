@@ -67,6 +67,14 @@ class UserManager(private val secureStore: SecureStore) {
         }
     }
 
+    fun saveToken(accessToken: String, refreshToken: String) {
+        authToken?.let { authToken ->
+            authToken.accessToken = accessToken
+            authToken.refreshToken = refreshToken
+            secureStore.saveAuthToken(authToken)
+        }
+    }
+
     fun clear() {
         this.memberInfo = null
         this.memberSubInfo = null

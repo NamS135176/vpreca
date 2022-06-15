@@ -232,7 +232,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
         binding.navHeader.buttonCloseDrawer.setOnClickListener(OnClickListener { closeDrawer() })
         binding.buttonLogout.setOnClickListener(OnClickListener {
             userManager.clear()
-            secureStore.clearDueLogout()
+            secureStore.clear()
             PreferenceHelper.clearDueLogout(context)
             closeDrawer()
             navigateToLogin()
