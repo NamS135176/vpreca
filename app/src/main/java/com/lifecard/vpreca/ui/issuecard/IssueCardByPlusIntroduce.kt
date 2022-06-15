@@ -30,10 +30,10 @@ class IssueCardByPlusIntroduce : Fragment() {
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_issue_card_main)
+                findNavController().navigate(R.id.action_issue_introduce_to_main)
             }
         })
-        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
+        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_issue_introduce_to_main) })
         btnSubmit.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_issue_card_select_source)
         })

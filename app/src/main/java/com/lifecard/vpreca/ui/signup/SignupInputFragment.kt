@@ -78,7 +78,7 @@ class SignupInputFragment : Fragment() {
                     }
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("はい") { _, _ ->
-                            findNavController().navigate(R.id.nav_login)
+                            findNavController().navigate(R.id.action_signupInput_to_login)
                         }
                         setNegativeButton("いいえ", null)
                         setMessage("途中ですがキャンセルしてもよろしいですか")
@@ -139,7 +139,7 @@ class SignupInputFragment : Fragment() {
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
-                    findNavController().navigate(R.id.nav_login)
+                    findNavController().navigate(R.id.action_signupInput_to_login)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")

@@ -46,12 +46,12 @@ class IntroduceFragmentSecond : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_introduce_first)
+                findNavController().navigate(R.id.action_second_to_first)
             }
         })
 
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_introduce_first)
+            findNavController().navigate(R.id.action_second_to_first)
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {

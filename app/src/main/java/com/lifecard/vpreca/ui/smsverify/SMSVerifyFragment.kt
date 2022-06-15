@@ -48,7 +48,7 @@ class SMSVerifyFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_login)
+                    findNavController().navigate(R.id.action_sms_to_login)
                 }
             })
 
@@ -67,7 +67,7 @@ class SMSVerifyFragment : Fragment() {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
                     // do something on positive button click
-                    findNavController().navigate(R.id.nav_login)
+                    findNavController().navigate(R.id.action_sms_to_login)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")

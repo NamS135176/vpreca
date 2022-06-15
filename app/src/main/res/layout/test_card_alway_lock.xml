@@ -65,28 +65,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.96" />
+                        app:layout_constraintGuide_percent="0.97" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_vertical_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.82" />
+                        app:layout_constraintGuide_percent="0.83" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_vertical_1_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.73" />
+                        app:layout_constraintGuide_percent="0.72" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_vertical_1_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.85" />
+                        app:layout_constraintGuide_percent="0.83" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_vertical_2"
@@ -112,8 +112,8 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textColor="@color/black"
-                        app:autoSizeMaxTextSize="16sp"
-                        app:autoSizeMinTextSize="6sp"
+                        app:autoSizeMaxTextSize="20sp"
+                        app:autoSizeMinTextSize="8sp"
                         app:autoSizeStepGranularity="2dp"
                         app:autoSizeTextType="uniform"
                         app:layout_constraintBottom_toTopOf="@+id/guideline_vertical"
@@ -129,7 +129,7 @@
                         android:gravity="center_vertical"
                         android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"
                         android:textColor="@color/black"
-                        app:autoSizeMaxTextSize="15sp"
+                        app:autoSizeMaxTextSize="19sp"
                         app:autoSizeMinTextSize="5sp"
                         app:autoSizeStepGranularity="2dp"
                         app:autoSizeTextType="uniform"
@@ -148,7 +148,7 @@
                         android:gravity="center_vertical"
                         android:text="***"
                         android:textColor="@color/black"
-                        app:autoSizeMaxTextSize="15sp"
+                        app:autoSizeMaxTextSize="19sp"
                         app:autoSizeMinTextSize="5sp"
                         app:autoSizeStepGranularity="2dp"
                         app:autoSizeTextType="uniform"
@@ -165,7 +165,7 @@
                         android:gravity="center_vertical"
                         android:text="@{Converter.convertPrecaNumber(card.precaNumber)}"
                         android:textColor="@color/black"
-                        app:autoSizeMaxTextSize="26sp"
+                        app:autoSizeMaxTextSize="30sp"
                         app:autoSizeMinTextSize="8sp"
                         app:autoSizeStepGranularity="4dp"
                         app:autoSizeTextType="uniform"

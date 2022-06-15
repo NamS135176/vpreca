@@ -49,13 +49,13 @@ class CompleteSignupFragment : Fragment() {
 //                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 //                }
 //                startActivity(intent)
-                findNavController().navigate(R.id.nav_login)
+                findNavController().navigate(R.id.action_complete_to_login)
             }
         })
 
         val btnComplete = binding.btnComplete
         btnComplete.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_login)
+            findNavController().navigate(R.id.action_complete_to_login)
         })
         return binding.root
     }

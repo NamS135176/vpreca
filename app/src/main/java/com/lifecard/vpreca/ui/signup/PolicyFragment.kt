@@ -51,7 +51,7 @@ class PolicyFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_login)
+                findNavController().navigate(R.id.action_policy_to_login)
             }
         })
 
@@ -72,7 +72,7 @@ class PolicyFragment : Fragment() {
         cancelButton.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { dialog, which ->
-                    findNavController().navigate(R.id.nav_login)
+                    findNavController().navigate(R.id.action_policy_to_login)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")

@@ -14,7 +14,7 @@
     </style>
 
     <style name="MyCardView" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="cardCornerRadius">9dp</item>
+        <item name="cardCornerRadius">10dp</item>
     </style>
 
     <style name="Widget.App.Button.Outlined" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">

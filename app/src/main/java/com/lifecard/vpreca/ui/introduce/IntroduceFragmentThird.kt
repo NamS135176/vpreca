@@ -39,7 +39,7 @@ class IntroduceFragmentThird : Fragment() {
         binding.cardZone.card = args.cardData
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_introduce_second)
+                findNavController().navigate(R.id.action_third_to_second)
             }
         })
 
@@ -55,10 +55,10 @@ class IntroduceFragmentThird : Fragment() {
         })
 
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_introduce_second)
+            findNavController().navigate(R.id.action_third_to_second)
         })
         btnSubmit.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_login)
+            findNavController().navigate(R.id.action_third_to_login)
         })
         return binding.root
     }

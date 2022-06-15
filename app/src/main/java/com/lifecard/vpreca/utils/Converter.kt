@@ -38,7 +38,7 @@ object Converter {
         return date?.let {
             val localDate = LocalDate.fromDateFields(date)
 
-            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("MM/dd")
+            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("MM/YY")
             localDate.toString(fmt)
         } ?: ""
 

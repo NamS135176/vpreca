@@ -50,7 +50,7 @@ class IssueCardSelectDesignFragment : Fragment() {
                             MaterialAlertDialogBuilder(requireContext()).apply {
                                 setPositiveButton("はい") { dialog, which ->
                                     // do something on positive button click
-                                    findNavController().navigate(R.id.nav_issue_card_main)
+                                    findNavController().navigate(R.id.selectdesign_to_main)
                                 }
                                 setNegativeButton("いいえ", null)
                                 setMessage(
@@ -121,7 +121,7 @@ class IssueCardSelectDesignFragment : Fragment() {
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("はい") { dialog, which ->
                             // do something on positive button click
-                            findNavController().navigate(R.id.nav_issue_card_main)
+                            findNavController().navigate(R.id.selectdesign_to_main)
                         }
                         setNegativeButton("いいえ", null)
                         setMessage(
