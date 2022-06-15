@@ -45,7 +45,7 @@ class ApiServiceFactory {
                         })
                     }
                 }
-//                .addInterceptor(NetworkConnectionInterceptor(appContext))
+                .addInterceptor(NetworkConnectionInterceptor(appContext))
                 .authenticator(TokenAuthenticator(appContext, secureStore))
                 .build()
             val gson = GsonBuilder()
