@@ -15,8 +15,12 @@ import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.exception.ApiException
+import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.utils.RegexUtils
 import com.lifecard.vpreca.utils.encodeImage
+import java.io.IOException
+import java.net.UnknownHostException
 
 @HiltViewModel
 class CameraViewModel @Inject constructor(private val googleVisionService: GoogleVisionService) :
@@ -26,6 +30,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
     var loading = MutableLiveData<Boolean?>()
     var error = MutableLiveData<String?>()
     var lockButtonTakePhoto = MutableLiveData<Boolean>(false)
+    var networkTrouble = MutableLiveData<Boolean>()
 
     fun getCodeByGoogleVisionOcr(bitmap: Bitmap) {
         viewModelScope.launch {
@@ -35,7 +40,11 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
             if (ocr is Result.Success) {
                 codeOcr.value = ocr.data
             } else if (ocr is Result.Error) {
-                error.value = ocr.exception.message
+                if (ocr.exception is NoConnectivityException) {
+                    networkTrouble.value = true
+                } else {
+                    error.value = ocr.exception.message
+                }
             }
             loading.value = false
         }
@@ -80,7 +89,12 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                 } else {
                     Result.Error(Exception("Can not detect ocr"))
                 }
-
+            } catch (e: UnknownHostException) {
+                println(e)
+                Result.Error(NoConnectivityException())
+            } catch (e: IOException) {
+                println(e)
+                Result.Error(NoConnectivityException())
             } catch (e: Exception) {
                 println("CameraViewModel...getCodeByGoogleVisionOcr has error $e")
                 Result.Error(Exception("Can not detect ocr"))
@@ -114,7 +128,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         return null
     }
 
-    fun findBestCodeFromTextAnnotation(
+    private fun findBestCodeFromTextAnnotation(
         textAnnotations: List<VisionTextAnnotation>,
         length: Int
     ): String? {
