@@ -22,6 +22,7 @@
             android:lineSpacingExtra="3sp"
             android:text="@string/home_text_info"
             android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/text_balance"
             app:layout_constraintTop_toTopOf="@id/text_balance" />
 
