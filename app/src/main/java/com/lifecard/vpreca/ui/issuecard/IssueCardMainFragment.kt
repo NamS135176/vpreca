@@ -24,7 +24,7 @@ class IssueCardMainFragment : Fragment() {
         _binding = FragmentIssueCardMainBinding.inflate(inflater, container, false)
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().navigate(R.id.action_issue_main_to_home)
             }
         })
         val btnCancel = binding.appbarGiftThird.cancelBtn
@@ -33,7 +33,7 @@ class IssueCardMainFragment : Fragment() {
         val buttonIssueByCode = binding.buttonIssueByCode
 
         btnCancel.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_home)
+            findNavController().navigate(R.id.action_issue_main_to_home)
         })
 
         buttonCreditCard.setOnClickListener(View.OnClickListener {

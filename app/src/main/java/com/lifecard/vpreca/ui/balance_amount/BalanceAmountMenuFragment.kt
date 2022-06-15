@@ -61,7 +61,7 @@ class BalanceAmountMenuFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().navigate(R.id.action_balance_menu_to_home)
             }
         })
         btnBySource.setOnClickListener(View.OnClickListener {
@@ -80,12 +80,12 @@ class BalanceAmountMenuFragment : Fragment() {
             )
         })
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_balance_menu_to_home) })
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_home)
+                    findNavController().navigate(R.id.action_balance_menu_to_home)
                 }
             })
 

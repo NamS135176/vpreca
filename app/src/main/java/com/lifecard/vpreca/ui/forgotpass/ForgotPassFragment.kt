@@ -258,6 +258,6 @@ class ForgotPassFragment : Fragment() {
     }
 
     fun backFunction() {
-        findNavController().navigate(R.id.nav_login)
+        findNavController().navigate(R.id.action_forgot_to_login)
     }
 }

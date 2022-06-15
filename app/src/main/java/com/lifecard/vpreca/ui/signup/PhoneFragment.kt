@@ -49,7 +49,7 @@ class PhoneFragment : Fragment() {
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
-                    findNavController().navigate(R.id.nav_login)
+                    findNavController().navigate(R.id.action_phone_to_login)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("入力途中ですがキャンセル\n" +

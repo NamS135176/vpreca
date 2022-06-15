@@ -79,7 +79,7 @@ class IssueCardSelectSourceFragment : Fragment() {
         })
 
         btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_plus_introduce) })
-        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
+        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_issue_select_source_to_main) })
 
         viewModel.creditCardResult.observe(
             viewLifecycleOwner,

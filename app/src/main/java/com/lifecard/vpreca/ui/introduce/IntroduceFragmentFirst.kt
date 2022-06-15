@@ -31,7 +31,7 @@ class IntroduceFragmentFirst : Fragment() {
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_login)
+                findNavController().navigate(R.id.action_first_login)
             }
         })
 
@@ -41,7 +41,7 @@ class IntroduceFragmentFirst : Fragment() {
         checkbox.isChecked = false
         btnSubmit.isEnabled = false
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_login)
+            findNavController().navigate(R.id.action_first_login)
         })
 
         checkbox.setOnClickListener(View.OnClickListener {

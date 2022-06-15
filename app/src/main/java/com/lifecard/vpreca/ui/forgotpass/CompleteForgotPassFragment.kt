@@ -52,7 +52,7 @@ class CompleteForgotPassFragment : Fragment() {
 //            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 //        }
 //        startActivity(intent)
-        findNavController().navigate(R.id.nav_login)
+        findNavController().navigate(R.id.action_forgot_complete_to_login)
     }
 
 }

@@ -112,7 +112,7 @@ class TermOfUseFragment : Fragment() {
                 appContext = requireContext(),
                 value = true
             )
-            findNavController().navigate(R.id.nav_login)
+            findNavController().navigate(R.id.action_tou_to_login)
         })
         webView.settings.useWideViewPort = true
         webView.settings.loadWithOverviewMode = true

@@ -27,10 +27,10 @@ class IssueCardPlusCompleteFragment : Fragment() {
         val btnComplete = binding.btnSubmitPolicy
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().navigate(R.id.action_plus_complete_to_home)
             }
         })
-        btnComplete.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
+        btnComplete.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_plus_complete_to_home) })
         // Inflate the layout for this fragment
         return binding.root
     }

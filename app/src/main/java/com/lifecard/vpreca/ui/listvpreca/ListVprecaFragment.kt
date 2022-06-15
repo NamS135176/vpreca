@@ -42,11 +42,11 @@ class ListVprecaFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().navigate(R.id.action_list_to_home)
             }
         })
         val btnBack = binding.appbarListVpreca.btnBack
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(com.lifecard.vpreca.R.id.nav_home) })
+        btnBack.setOnClickListener(View.OnClickListener {  findNavController().navigate(R.id.action_list_to_home) })
         val tvTotalAmount = binding.tvTotalAmount
         val listVpreca = binding.listVprecaCard
         val loading = binding.loading
