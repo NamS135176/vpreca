@@ -50,6 +50,15 @@ class UserManager(private val secureStore: SecureStore) {
     fun setLoggedMember(memberResponseContent: MemberResponseContent) {
         memberInfo = memberResponseContent.memberInfo
         memberSubInfo = memberResponseContent.memberSubInfo
+        if (memberInfo != null && authToken != null
+            && (authToken!!.loginId != memberInfo!!.loginId
+                    || authToken!!.memberNumber != memberInfo!!.memberNumber)
+        ) {
+            //update auth token with new value
+            authToken!!.loginId = memberInfo!!.loginId
+            authToken!!.memberNumber = memberInfo!!.memberNumber
+            secureStore.saveAuthToken(authToken!!)
+        }
     }
 
     fun setLoggedIn(loginResponse: LoginResponse) {
