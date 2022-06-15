@@ -109,7 +109,14 @@ class CameraFragment : Fragment() {
                 showAlertErrorOcr()
             }
         })
-
+        viewModel.networkTrouble.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { isError ->
+                if (isError) {
+                    showInternetTrouble()
+                }
+            }
+        )
         viewModel.lockButtonTakePhoto.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { locked ->
