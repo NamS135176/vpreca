@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    10 + (54-10)/2-->
+    <dimen name="my_page_card_arrow_direction_ml">32dp</dimen>
+    <dimen name="home_card_item_page_margin">54dp</dimen>
+    <dimen name="home_card_item_page_offset">10dp</dimen>
+    <dimen name="home_card_item_page_margin_offset">64dp</dimen>
+</resources>

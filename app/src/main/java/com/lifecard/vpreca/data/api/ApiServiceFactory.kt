@@ -19,20 +19,19 @@ class ApiServiceFactory {
     companion object {
         fun createService(
             appContext: Context,
-            secureStore: SecureStore,
             userManager: UserManager
         ): ApiService {
             val client = OkHttpClient.Builder()
                 .addInterceptor(Interceptor { chain ->
-                    userManager.bearAccessToken?.let { token ->
-                        if (chain.request().header("Authorization").isNullOrEmpty()) {
-                            val request =
-                                chain.request().newBuilder()
-                                    .addHeader("Authorization", token).build()
-                            chain.proceed(request)
-                        } else {
-                            chain.proceed(chain.request())
-                        }
+                    userManager.accessToken?.let { accessToken ->
+                        val request =
+                            chain.request().newBuilder()
+                                .apply {
+//                                    addHeader("Authorization", "Bear $accessToken")
+                                    addHeader("accesstoken", accessToken)
+                                }
+                                .build()
+                        chain.proceed(request)
                     } ?: kotlin.run {
                         chain.proceed(chain.request())
                     }
@@ -46,7 +45,7 @@ class ApiServiceFactory {
                     }
                 }
                 .addInterceptor(NetworkConnectionInterceptor(appContext))
-                .authenticator(TokenAuthenticator(appContext, secureStore))
+                .authenticator(TokenAuthenticator(appContext, userManager))
                 .build()
             val gson = GsonBuilder()
                 .setDateFormat("yyyyMMddHHmmss")

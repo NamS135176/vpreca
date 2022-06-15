@@ -21,10 +21,9 @@ class AppModule {
     @Singleton
     fun provideApiService(
         @ApplicationContext appContext: Context,
-        secureStore: SecureStore,
         userManager: UserManager
     ): ApiService {
-        return ApiServiceFactory.createService(appContext, secureStore, userManager)
+        return ApiServiceFactory.createService(appContext, userManager)
     }
 
     @Provides

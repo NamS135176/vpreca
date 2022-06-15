@@ -3,8 +3,8 @@ package com.lifecard.vpreca.data.model
 import com.google.gson.annotations.SerializedName
 
 data class SMSAuthCodeSendResponse(
-    @SerializedName("brandPrecaApi")
-    val brandPrecaApi: SMSAuthCodeSendBrandResponse,
+    @SerializedName("response")
+    val response: SMSAuthCodeSendResponseContent,
 )
 
 data class SMSAuthCodeSendBrandResponse(

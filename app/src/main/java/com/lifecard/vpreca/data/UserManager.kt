@@ -50,10 +50,19 @@ class UserManager(private val secureStore: SecureStore) {
     fun setLoggedMember(memberResponseContent: MemberResponseContent) {
         memberInfo = memberResponseContent.memberInfo
         memberSubInfo = memberResponseContent.memberSubInfo
+        if (memberInfo != null && authToken != null
+            && (authToken!!.loginId != memberInfo!!.loginId
+                    || authToken!!.memberNumber != memberInfo!!.memberNumber)
+        ) {
+            //update auth token with new value
+            authToken!!.loginId = memberInfo!!.loginId
+            authToken!!.memberNumber = memberInfo!!.memberNumber
+            secureStore.saveAuthToken(authToken!!)
+        }
     }
 
     fun setLoggedIn(loginResponse: LoginResponse) {
-        setLoggedMember(loginResponse.brandPrecaApi.response)
+        setLoggedMember(loginResponse.response)
 
         authToken = AuthToken()
         //save to secure store
@@ -63,6 +72,14 @@ class UserManager(private val secureStore: SecureStore) {
             authToken.loginId = memberInfo?.loginId
             authToken.memberNumber = memberInfo?.memberNumber
 
+            secureStore.saveAuthToken(authToken)
+        }
+    }
+
+    fun saveToken(accessToken: String, refreshToken: String) {
+        authToken?.let { authToken ->
+            authToken.accessToken = accessToken
+            authToken.refreshToken = refreshToken
             secureStore.saveAuthToken(authToken)
         }
     }

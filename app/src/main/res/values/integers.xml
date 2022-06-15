@@ -4,8 +4,15 @@
 <!--    <integer name="max_nickname">18</integer>-->
 <!--    <integer name="max_login_id">10</integer>-->
 <!--    <integer name="max_email">256</integer>-->
+<!--    <integer name="max_gift_code">15</integer>-->
+<!--    <integer name="max_otp_code">4</integer>-->
+<!--    <integer name="max_last_4digit_card">256</integer>-->
+
     <integer name="max_pass">256</integer>
     <integer name="max_nickname">256</integer>
     <integer name="max_login_id">256</integer>
     <integer name="max_email">256</integer>
+    <integer name="max_gift_code">256</integer>
+    <integer name="max_otp_code">256</integer>
+    <integer name="max_last_4digit_card">256</integer>
 </resources>

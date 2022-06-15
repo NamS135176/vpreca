@@ -12,7 +12,7 @@ data class ChangeInfoMemberData(
     val loginId: String?,
     @SerializedName("memberRoman")
     val memberRoman: String?,
-    @SerializedName("creditCardExpirationDate")
+    @SerializedName("memberKana")
     val memberKana: String?,
     @SerializedName("memberName")
     val memberName: String?,

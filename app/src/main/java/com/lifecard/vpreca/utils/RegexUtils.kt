@@ -17,7 +17,7 @@ class RegexUtils {
      */
     companion object {
         /**
-         * only half width and underscore
+         * only half width and underscore from range 6-10 chars
          * check the screen SC08_2
          */
         private const val RegexLoginID = "^[a-zA-Z0-9ぁ-んｧ-ﾝﾞﾟ_-]{6,10}\$"
@@ -33,7 +33,7 @@ class RegexUtils {
          * only roman
          * check the screen SC08_2
          */
-        private const val RegexNickname = "^[A-Z]{2,18}\$"
+        private const val RegexNickname = "^[A-Z]{2,19}\$"
 
         /**
          * 10 or 11 number

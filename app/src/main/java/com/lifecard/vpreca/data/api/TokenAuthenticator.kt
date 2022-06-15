@@ -3,8 +3,8 @@ package com.lifecard.vpreca.data.api
 import android.content.Context
 import android.content.Intent
 import com.lifecard.vpreca.MainActivity
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.LoginResponse
-import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.utils.Constant
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
@@ -13,7 +13,7 @@ import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class TokenAuthenticator(private var appContext: Context, private val secureStore: SecureStore) :
+class TokenAuthenticator(private var appContext: Context, private val userManager: UserManager) :
     Authenticator {
     private var blacklistRefreshTokenUrlPath =
         arrayOf(
@@ -40,8 +40,8 @@ class TokenAuthenticator(private var appContext: Context, private val secureStor
                 println("TokenAuthenticator... authenticate urlPath = $urlPath - isBlocked = $isBlocked")
                 if (!isBlocked) {
                     val headerAccessToken: String? = response.request().header("Authorization")
-                    val accessToken = secureStore.getAccessToken()
-                    val refreshToken = secureStore.getRefreshToken()
+                    val accessToken = userManager.accessToken
+                    val refreshToken = userManager.refreshToken
                     if (headerAccessToken != "Bear $accessToken" && !headerAccessToken.isNullOrEmpty()) {
                         //case another api has been update access token, so we just update header and request again
                         return@runBlocking response.request().newBuilder()
@@ -52,8 +52,7 @@ class TokenAuthenticator(private var appContext: Context, private val secureStor
                     if (!accessToken.isNullOrEmpty() && !refreshToken.isNullOrEmpty()) {
                         try {
                             val loginResponse = refreshToken(accessToken, refreshToken)
-                            loginResponse.accessToken?.let { secureStore.saveAccessToken(it) }
-                            loginResponse.refreshToken?.let { secureStore.saveRefreshToken(it) }
+                            userManager.setLoggedIn(loginResponse = loginResponse)
                             return@runBlocking response.request().newBuilder()
                                 .header("Authorization", "Bearer ${loginResponse.accessToken}")
                                 .build()

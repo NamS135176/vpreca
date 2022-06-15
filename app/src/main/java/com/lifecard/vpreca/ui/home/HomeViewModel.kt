@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun loadCard(refresh: Boolean = true) {
+    fun loadCard(refresh: Boolean = true) {
         viewModelScope.launch {
             _loading.value = true
             val result = creditCardRepository.getLatestCards(refresh)
@@ -77,6 +77,22 @@ class HomeViewModel @Inject constructor(
                 result?.success?.let {
                     val newList = ArrayList(it)
                     newList[position] = creditCard.copyCardLockInverse()
+                    _creditCardResult.value = CreditCardResult(success = newList)
+                }
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+    fun updateCard(creditCard: CreditCard, position: Int) {
+        viewModelScope.launch {
+            //need implement later
+            try {
+                val result = _creditCardResult.value
+                result?.success?.let {
+                    val newList = ArrayList(it)
+                    newList[position] = creditCard
                     _creditCardResult.value = CreditCardResult(success = newList)
                 }
             } catch (e: Exception) {

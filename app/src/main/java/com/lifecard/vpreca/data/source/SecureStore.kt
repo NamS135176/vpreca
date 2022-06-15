@@ -98,9 +98,6 @@ class SecureStore(private val appContext: Context) : AuthTokenStore {
     private var bioAuthTokenStore: BioAuthTokenStore? = null
     private var normalAuthToken: NormalAuthTokenStore = NormalAuthTokenStore(appContext)
 
-    private val encryptedSharedPreferences: SharedPreferences =
-        appContext.getSharedPreferences("VPrecaSecureStorePref", Context.MODE_PRIVATE)
-
     fun updateEncryptBioAuthTokenStore(encryptCipher: Cipher) {
         bioAuthTokenStore?.let { it.encryptCipher = encryptCipher }
             ?: kotlin.run {
@@ -113,19 +110,6 @@ class SecureStore(private val appContext: Context) : AuthTokenStore {
             ?: kotlin.run {
                 bioAuthTokenStore = BioAuthTokenStore(appContext, decryptCipher = decryptCipher)
             }
-    }
-
-    private fun saveEncryptText(key: String, textToEncrypt: String) {
-        with(encryptedSharedPreferences.edit()) {
-            val encryptedValue = EncryptionUtils.encrypt(appContext, textToEncrypt)
-            putString(key, encryptedValue)
-            apply()
-        }
-    }
-
-    private fun getEncryptText(key: String): String? {
-        val encryptedValue = encryptedSharedPreferences.getString(key, null)
-        return EncryptionUtils.decrypt(appContext, encryptedValue)
     }
 
     override fun saveAuthToken(authToken: AuthToken) {
@@ -150,51 +134,5 @@ class SecureStore(private val appContext: Context) : AuthTokenStore {
     override fun clear() {
         bioAuthTokenStore?.clear()
         normalAuthToken.clear()
-
-        with(encryptedSharedPreferences.edit()) {
-            clear()
-            commit()
-        }
-    }
-
-    fun saveAccessToken(token: String) {
-        return saveEncryptText(Constant.SECURE_ACCESS_TOKEN, token)
-    }
-
-    fun getAccessToken(): String? {
-        return getEncryptText(Constant.SECURE_ACCESS_TOKEN)
-    }
-
-    fun saveRefreshToken(token: String) {
-        return saveEncryptText(Constant.SECURE_REFRESH_TOKEN, token)
-    }
-
-    fun getRefreshToken(): String? {
-        return getEncryptText(Constant.SECURE_REFRESH_TOKEN)
-    }
-
-    fun saveLoginUserId(userId: String) {
-        return saveEncryptText(Constant.SECURE_USER_ID, userId)
-    }
-
-    fun getLoginUserId(): String? {
-        return getEncryptText(Constant.SECURE_USER_ID)
-    }
-
-    fun saveMemberNumber(userId: String) {
-        return saveEncryptText(Constant.SECURE_MEMBER_NUMBER, userId)
-    }
-
-    fun getMemberNumber(): String? {
-        return getEncryptText(Constant.SECURE_MEMBER_NUMBER)
-    }
-
-    fun clearDueLogout() {
-        val useId = getLoginUserId()
-        with(encryptedSharedPreferences.edit()) {
-            clear()
-            commit()
-        }
-        useId?.let { saveLoginUserId(useId) }
     }
 }

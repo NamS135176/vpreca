@@ -3,11 +3,6 @@ package com.lifecard.vpreca.data.model
 import com.google.gson.annotations.SerializedName
 
 data class SuspendDealResponse(
-    @SerializedName("brandPrecaApi")
-    val brandPrecaApi: SuspendDealBrandResponse,
-)
-
-data class SuspendDealBrandResponse(
     @SerializedName("response")
     val response: SuspendDealResponseContent,
 )
