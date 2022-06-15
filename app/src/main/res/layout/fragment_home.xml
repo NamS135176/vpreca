@@ -23,7 +23,8 @@
             android:text="@string/home_text_info"
             android:textSize="11sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/text_balance"
+            app:layout_constraintTop_toTopOf="@id/text_balance" />
 
         <TextView
             android:id="@+id/text_balance"
@@ -34,9 +35,8 @@
             android:layout_marginRight="@dimen/fragment_horizontal_margin"
             android:text="¥0"
             android:textSize="26sp"
-            app:layout_constraintBottom_toBottomOf="@id/text_info"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_info" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_see_all_card"

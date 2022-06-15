@@ -163,7 +163,7 @@ class HomeFragment : Fragment(), CoroutineScope {
     }
 
     @Subscribe
-    fun handleCloseDrawer(event: ReloadCard) {
+    fun handleReloadCards(event: ReloadCard) {
         homeViewModel.loadCard(true)
     }
 
