@@ -1,5 +1,7 @@
 package com.lifecard.vpreca.utils
 
+import com.google.android.material.textview.MaterialTextView
+import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.SignupInputState
@@ -34,6 +36,29 @@ fun CreditCard.reverseCardLock(): CreditCard {
 fun CardInfo?.isCardInfoLock(): Boolean {
     return "1" == this?.vcnSecurityLockFlg
 }
+
+fun CardInfo?.isCardInfoEnable(): Boolean {
+    val c1 = this?.publishAmount?.toInt()!! >= 1
+
+    val myFormat = "yyyyMMdd" // mention the format you need
+    val sdf = SimpleDateFormat(myFormat, Locale.US)
+    val datenow = sdf.format(Date())
+    val cmp = sdf.parse(this?.vcnExpirationDate).compareTo(sdf.parse(datenow))
+    val c2 = cmp < 0
+    return c1 && c2
+}
+
+fun CreditCard?.isEnable(): Boolean {
+    val c1 = this?.publishAmount?.toInt()!! >= 1
+
+    val myFormat = "yyyyMMdd" // mention the format you need
+    val sdf = SimpleDateFormat(myFormat, Locale.US)
+    val datenow = sdf.format(Date())
+    val cmp = sdf.parse(this?.vcnExpirationDate).compareTo(sdf.parse(datenow))
+    val c2 = cmp < 0
+    return c1 && c2
+}
+
 
 fun CardInfo.copyCardInfoLockInverse(): CardInfo {
     val newLockStatus = when (this.isCardInfoLock()) {

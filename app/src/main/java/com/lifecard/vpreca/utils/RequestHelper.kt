@@ -375,5 +375,61 @@ class RequestHelper {
                 )
             )
         }
+
+        fun createSMSAuthCodeRequest(
+            memberNumber:String,
+            telephoneNumber:String,
+            certType:String,
+            operationType:String,
+            certSumFlg:String,
+            operationSumFlg:String
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = SMSAuthCodeSendRequest(
+                        memberInfo = SMSAuthCodeMemberInfoContent(
+                            memberNumber = memberNumber,
+                            telephoneNumber = telephoneNumber
+                        ),
+                        certInfo = SMSAuthCodeCertInfoContent(
+                            certType = certType,
+                            operationType = operationType,
+                            certSumFlg = certSumFlg,
+                            operationSumFlg = operationSumFlg
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.CardRelationRegReq.value
+                    )
+                ),
+            )
+        }
+
+        fun createSMSConfirm(
+            memberNumber:String,
+            certType:String,
+            operationType:String,
+            certCode:String,
+            extCertDealId:String
+        ): BrandRequest {
+            return BrandRequest(
+                brandPrecaApi = Request(
+                    request = SMSAuthRequest(
+                        memberInfo = MemberInfoContent(
+                            memberNumber = memberNumber
+                        ),
+                        certInfo = SMSAuthRequestContentInfo(
+                            certType = certType,
+                            operationType = operationType,
+                            certCode = certCode,
+                            extCertDealId = extCertDealId
+                        )
+                    ),
+                    head = BaseHead(
+                        messageType = MessageType.CardRelationRegReq.value
+                    )
+                ),
+            )
+        }
     }
 }

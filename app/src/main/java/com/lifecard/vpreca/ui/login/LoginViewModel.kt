@@ -97,15 +97,11 @@ class LoginViewModel @Inject constructor(
                     //TODO this internalError should be html from server, it will be implement later
                 LoginResult(internalError = "")
             is ApiException -> {
-                if(exception.resultCode == "1101302"){
+                if (exception.resultCode == "1101302") {//case require sms verification
                     _loginResult.value = LoginResult(
-                        error = ErrorMessageException(
-                            messageResId = 1101302,
-                            exception = exception,
-                        )
+                        smsVerification = true
                     )
-                }
-                else{
+                } else {
                     _loginResult.value = LoginResult(
                         error = ErrorMessageException(
                             errorMessage = exception.errorMessage,

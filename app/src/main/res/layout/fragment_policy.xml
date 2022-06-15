@@ -54,37 +54,98 @@
                     android:paddingRight="24dp"
                     android:paddingBottom="21dp"
                     app:layout_constraintTop_toBottomOf="@+id/policy_des">
-
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lineSpacingExtra="3sp"
-                        android:text="@string/policy_text1"
-                        android:textSize="12sp" />
+                        android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gift_card_confirm_warning_dot"
+                            android:paddingLeft="3dp"
+                            android:textColor="@color/black"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/policyItemId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/policy_text1"
+                            android:textColor="@color/black"
+                            android:paddingLeft="8dp"
+                            android:scrollbarSize="12dp"
+                            android:lineSpacingExtra="3dp"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:lineSpacingExtra="3sp"
-                        android:text="@string/policy_text2"
-                        android:textSize="12sp" />
+                        android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gift_card_confirm_warning_dot"
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                            android:paddingLeft="3dp"
+                            android:textColor="@color/black"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/policy_text2"
+                            android:textColor="@color/black"
+                            android:paddingLeft="8dp"
+                            android:scrollbarSize="12dp"
+                            android:lineSpacingExtra="3dp"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:lineSpacingExtra="3sp"
-                        android:text="@string/policy_text3"
-                        android:textSize="12sp" />
+                        android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gift_card_confirm_warning_dot"
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                            android:paddingLeft="3dp"
+                            android:textColor="@color/black"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/policy_text3"
+                            android:textColor="@color/black"
+                            android:paddingLeft="8dp"
+                            android:scrollbarSize="12dp"
+                            android:lineSpacingExtra="3dp"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:lineSpacingExtra="3sp"
-                        android:text="@string/policy_text4"
-                        android:textSize="12sp" />
+                        android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gift_card_confirm_warning_dot"
+                            android:paddingLeft="3dp"
+                            android:textColor="@color/black"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/policy_text4"
+                            android:textColor="@color/black"
+                            android:paddingLeft="8dp"
+                            android:scrollbarSize="12dp"
+                            android:lineSpacingExtra="3dp"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <com.google.android.material.button.MaterialButton

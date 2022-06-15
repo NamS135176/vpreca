@@ -22,7 +22,7 @@ object UserConverter {
     }
 
     @JvmStatic
-    fun formatPhone(phone: String): String {
+    fun formatPhone(phone: String?): String {
         return RegexUtils.formatDisplayPhoneNumber(phone)
     }
 

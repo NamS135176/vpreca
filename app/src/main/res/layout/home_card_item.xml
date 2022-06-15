@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent">
             <include
                 android:id="@+id/card_include"
-                layout="@layout/test_card_item"
+                layout="@layout/test_card_alway_lock"
                 />
 <!--            <ImageView-->
 <!--                android:id="@+id/card_logo"-->

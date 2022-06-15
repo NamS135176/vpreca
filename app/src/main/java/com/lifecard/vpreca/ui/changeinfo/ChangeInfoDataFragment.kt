@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.ChangeInfoMemberData
 import com.lifecard.vpreca.data.model.PhoneData
 import com.lifecard.vpreca.data.model.User
@@ -28,6 +29,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChangeInfoDataFragment : Fragment() {
@@ -40,6 +42,9 @@ class ChangeInfoDataFragment : Fragment() {
     private var _binding: FragmentChangeInfoDataBinding? = null
     private val binding get() = _binding!!
 
+    @Inject
+    lateinit var userManager: UserManager
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,20 +52,12 @@ class ChangeInfoDataFragment : Fragment() {
     ): View? {
         _binding = FragmentChangeInfoDataBinding.inflate(inflater, container, false)
         val btnBack = binding.appbarConfirmSignup.btnBack
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_home)
-                }
-            })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
+
         val btnOpenDialog = binding.btnSubmitPolicy
         val cal = Calendar.getInstance()
 
         var dateData = ""
-        var phone = ""
-        val memberNumber = ""
         btnOpenDialog.setOnClickListener(
             View.OnClickListener {
                 val view = View.inflate(requireContext(), R.layout.bod_dialog, null)
@@ -133,30 +130,31 @@ class ChangeInfoDataFragment : Fragment() {
                     val cmp = sdf.parse(date1).compareTo(sdf.parse(datenow))
                     val layout = view.findViewById<MaterialTextView>(R.id.tv_error)
 
-                    when{
+                    when {
                         cmp < 0 -> {
                             if (date1 == dateData) {
                                 layout.visibility = View.INVISIBLE
                                 tvDob.setBackgroundResource(R.drawable.input_signup_style)
-                                val action = ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
-                                    ChangeInfoMemberData(
-                                        memberNumber,
-                                        binding.user?.loginId!!,
-                                        binding.user?.memberRoman!!,
-                                        binding.user?.memberKana!!,
-                                        binding.user?.memberName!!,
-                                        binding.user?.addressPrefecture!!,
-                                        binding.user?.mailAddress1!!,
-                                        binding.user?.mailAddress2!!,
-                                        binding.user?.secretQuestion!!,
-                                        binding.user?.secretQuestionAnswer!!,
-                                        binding.user?.mail1AdMailRecieveFlg!!,
-                                        binding.user?.mail2AdMailRecieveFlg!!,
-                                        binding.user?.mail1RecievFlg!!,
-                                        binding.user?.mail2RecievFlg!!,
-                                        phone,
+                                val action =
+                                    ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
+                                        ChangeInfoMemberData(
+                                            userManager.memberNumber!!,
+                                            binding.user?.loginId!!,
+                                            binding.user?.memberRoman!!,
+                                            binding.user?.memberKana!!,
+                                            binding.user?.memberName!!,
+                                            binding.user?.addressPrefecture!!,
+                                            binding.user?.mailAddress1!!,
+                                            binding.user?.mailAddress2!!,
+                                            binding.user?.secretQuestion!!,
+                                            binding.user?.secretQuestionAnswer!!,
+                                            binding.user?.mail1AdMailRecieveFlg!!,
+                                            binding.user?.mail2AdMailRecieveFlg!!,
+                                            binding.user?.mail1RecievFlg!!,
+                                            binding.user?.mail2RecievFlg!!,
+                                            telephoneNumber1 = userManager.memberInfo?.telephoneNumber1,
+                                        )
                                     )
-                                )
                                 dialog.dismiss()
                                 findNavController().navigate(action)
                             } else {
@@ -170,10 +168,6 @@ class ChangeInfoDataFragment : Fragment() {
                             layout.visibility = View.VISIBLE
                         }
                     }
-
-
-//                    findNavController().navigate(R.id.nav_change_info_input)
-//                    dialog.dismiss()
                 })
 
             }
@@ -192,7 +186,6 @@ class ChangeInfoDataFragment : Fragment() {
                 state.success?.let { memberInfo ->
                     binding.user = memberInfo
                     dateData = memberInfo.birthday!!
-                    phone = memberInfo.telephoneNumber1!!
                     btnOpenDialog.isEnabled = true
                 }
             })

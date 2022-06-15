@@ -133,4 +133,62 @@ class UserRepository(private val apiService: ApiService, private val userManager
             }
         }
     }
+
+    suspend fun sendSMSRequest(
+      memberNumber: String,
+      telephoneNumber:String,
+      certType:String,
+      operationType:String,
+      certSumFlg:String,
+      operationSumFlg:String
+    ): Result<SMSAuthCodeSendResponseContent> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userResponse = apiService.sendSmsRequest(
+                    RequestHelper.createSMSAuthCodeRequest(
+                        memberNumber = memberNumber,
+                        telephoneNumber = telephoneNumber,
+                        certType = certType,
+                        operationType = operationType,
+                        certSumFlg = certSumFlg,
+                        operationSumFlg = operationSumFlg
+                    )
+                )
+
+                Result.Success(userResponse.brandPrecaApi.response)
+            } catch (e: Exception) {
+                println("UserRepository... request sms has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
+
+    suspend fun sendSMSConfirm(
+        memberNumber: String,
+        certType:String,
+        operationType:String,
+        certCode:String,
+        extCertDealId:String
+    ): Result<SMSAuthResponseContent> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userResponse = apiService.confirmSMS(
+                    RequestHelper.createSMSConfirm(
+                        memberNumber = memberNumber,
+                        certType = certType,
+                        operationType = operationType,
+                        certCode = certCode,
+                        extCertDealId = extCertDealId
+                    )
+                )
+
+                Result.Success(userResponse.brandPrecaApi.response)
+            } catch (e: Exception) {
+                println("UserRepository... request sms has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
 }

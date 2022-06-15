@@ -6,7 +6,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
+    <string name="list_vpreca_appbar">Vプリカ一覧</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -540,6 +540,7 @@
     <string name="rgx_error_email_confirm_not_match">@string/rgx_error_not_match</string>
     <string name="rgx_error_not_match">一致していません。</string>
     <string name="rgx_error_secret_answer">全宅20文字以内で入力してください</string>
+    <string name="rgx_error_email_duplicate">既に登録されています。他のメールアドレスを入力してください。</string>
     <!--   End Regex error  -->
     <string name="error_code">番号が正しくありません</string>
     <string name="btn_confirm">確認</string>
@@ -585,10 +586,10 @@
     <string name="hint_dropdown">選択してください</string>
     <string name="button_confirm">登録</string>
     <string name="button_edit">修正</string>
-    <string name="policy_text1">・ 私は、18歳以上です。未成年の場合は親権者の同意を得ています。</string>
-    <string name="policy_text2">・ 私は、暴力団などの反社会的勢力や、反社会的勢力の関係者ではないことを表明します。</string>
-    <string name="policy_text3">・ 私は、個人情報の取扱いに関する同意約款、会員規約に同意します。</string>
-    <string name="policy_text4">・ 私は、アカウント登録情報に不備があった等でライフカードが必要と判断した場合は運転免許証等の本人確認用書類を提出することに同意します。</string>
+    <string name="policy_text1">私は、18歳以上です。未成年の場合は親権者の同意を得ています。</string>
+    <string name="policy_text2">私は、暴力団などの反社会的勢力や、反社会的勢力の関係者ではないことを表明します。</string>
+    <string name="policy_text3">私は、個人情報の取扱いに関する同意約款、会員規約に同意します。</string>
+    <string name="policy_text4">私は、アカウント登録情報に不備があった等でライフカードが必要と判断した場合は運転免許証等の本人確認用書類を提出することに同意します。</string>
 
     <string name="button_next">次へ</string>
 </resources>

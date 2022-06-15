@@ -95,7 +95,7 @@ class CardUsageFragment : Fragment() {
             }
         })
         binding.cardNo.text = Converter.convertPrecaNumber(args.card?.precaNumber)
-        binding.balance.text = Converter.convertCurrency(args.card?.chargeBalance)
+        binding.balance.text = Converter.convertCurrency(args.card?.publishAmount)
 
 
         return binding.root
