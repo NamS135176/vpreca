@@ -142,8 +142,8 @@ class GiftCardInputCardFragment : Fragment() {
                 val textCode = binding.textCode
                 textCode.setText(ocr)
                 showToast(getString(R.string.camera_ocr_success), toastPosition = ToastPosition.Top)
-                println("IntroduceFragmentSecond... get ocr code $ocr")
             }
+            livedata.value = null
         })
     }
 
