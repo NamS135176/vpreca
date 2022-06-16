@@ -168,6 +168,7 @@ class RegexTest {
         Assert.assertEquals(false, RegexUtils.isEmailValid("ﾁﾉﾆ@bc.com"))
         Assert.assertEquals(false, RegexUtils.isEmailValid("ちち@bc.com"))
         Assert.assertEquals(false, RegexUtils.isEmailValid("emailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemaia@example.com"))//257 failure
+        Assert.assertEquals(false, RegexUtils.isEmailValid("a bc@vn.com"))
         Assert.assertEquals(false, RegexUtils.isEmailValid(null))
     }
 

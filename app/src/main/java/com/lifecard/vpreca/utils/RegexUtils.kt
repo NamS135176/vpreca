@@ -42,7 +42,7 @@ class RegexUtils {
         private const val RegexPhoneNumber = "^\\d{10}\$|^\\d{11}\$"
 
         private const val RegexEmail =
-            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+"
+            "^[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+\$"
 
         /**
          * only roman included special character  and between 8-12 character
