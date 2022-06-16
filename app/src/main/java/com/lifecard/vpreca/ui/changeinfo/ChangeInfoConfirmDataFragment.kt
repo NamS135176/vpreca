@@ -66,7 +66,7 @@ class ChangeInfoConfirmDataFragment : BackPressFragment() {
                     findNavController().navigate(R.id.nav_home)
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("途中ですがキャンセルしてもよろしいですか")
+                setMessage("途中ですがキャンセルしてもよろしいですか?")
             }.create().show()
         })
 

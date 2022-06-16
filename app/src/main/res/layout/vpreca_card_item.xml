@@ -83,7 +83,7 @@
 <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
         <include
             android:id="@+id/card_info"
-            layout="@layout/test_card_item"/>
+            layout="@layout/test_card_alway_lock"/>
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
