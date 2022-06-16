@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -74,7 +75,7 @@ class CardBottomSheetCustom(
                 MaterialAlertDialogBuilder(context).apply {
                     setPositiveButton("はい") { _, _ ->
                         launch {
-                            loading.visibility = View.VISIBLE
+                            (activity as Fragment).showLoadingDialog()
                             val res = creditCardRepository.republishCard(convertObject(creditCard))
                             if(res is Result.Success){
                                 card.card = res.data
@@ -96,7 +97,7 @@ class CardBottomSheetCustom(
 
                                 }
                             }
-                            loading.visibility = View.GONE
+                            (activity as Fragment).hideLoadingDialog()
                         }
                     }
                 setNegativeButton("いいえ", null)
@@ -107,7 +108,7 @@ class CardBottomSheetCustom(
 
         btnLock.setOnClickListener(View.OnClickListener {
          launch {
-             loading.visibility = View.VISIBLE
+             (activity as Fragment).showLoadingDialog()
              val new = newCard.copyCardInfoLockInverse()
              val res = creditCardRepository.updateCard(convertObject(new))
              if (res is Result.Success) {
@@ -135,7 +136,7 @@ class CardBottomSheetCustom(
 
                  }
              }
-             loading.visibility = View.GONE
+             (activity as Fragment).hideLoadingDialog()
          }
 
         })

@@ -46,12 +46,12 @@ class IntroduceFragmentSecond : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_second_to_first)
+                findNavController().popBackStack()
             }
         })
 
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.action_second_to_first)
+            findNavController().popBackStack()
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {
@@ -116,8 +116,8 @@ class IntroduceFragmentSecond : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
 

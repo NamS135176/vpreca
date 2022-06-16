@@ -17,9 +17,7 @@ import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeSelectSourceBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeSelectSoureConfirmBinding
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.showInternetTrouble
-import com.lifecard.vpreca.utils.showPopupMessage
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -191,8 +189,8 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
 

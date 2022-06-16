@@ -18,10 +18,7 @@ import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeSelectSourceBindin
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectDesignBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectSourceBinding
 import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.showAlertMessage
-import com.lifecard.vpreca.utils.showInternetTrouble
-import com.lifecard.vpreca.utils.showPopupMessage
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -89,8 +86,8 @@ class IssueCardByCodeSelectSource : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
         btnBack.setOnClickListener(View.OnClickListener {

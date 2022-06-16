@@ -93,7 +93,7 @@ class HomeFragment : Fragment(), CoroutineScope {
                 })
                 buttonLock.setOnClickListener(View.OnClickListener {
                     launch {
-                        binding.loading.visibility = View.VISIBLE
+                        showLoadingDialog()
                         currentCreditCard = currentCreditCard.copyCardLockInverse()
                         val res = creditCardRepository.updateCard(currentCreditCard)
                         if (res is Result.Success) {
@@ -117,7 +117,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
                             }
                         }
-                        binding.loading.visibility = View.GONE
+                        hideLoadingDialog()
                     }
                 })
                 buttonReload.setOnClickListener(View.OnClickListener {
@@ -126,7 +126,7 @@ class HomeFragment : Fragment(), CoroutineScope {
                             setPositiveButton("はい") { _, _ ->
 
                                 launch {
-                                    binding.loading.visibility = View.VISIBLE
+                                    showLoadingDialog()
                                     val res = creditCardRepository.republishCard(currentCreditCard)
                                     if (res is Result.Success) {
                                         binding.listCard.currentCard = res.data
@@ -147,7 +147,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
                                         }
                                     }
-                                    binding.loading.visibility = View.GONE
+                                    hideLoadingDialog()
                                 }
 
 
@@ -345,11 +345,11 @@ class HomeFragment : Fragment(), CoroutineScope {
         homeViewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
                 true -> {
-                    loading.visibility = View.VISIBLE
+                   showLoadingDialog()
 
                 }
                 else -> {
-                    loading.visibility = View.GONE
+                   hideLoadingDialog()
 
                 }
             }

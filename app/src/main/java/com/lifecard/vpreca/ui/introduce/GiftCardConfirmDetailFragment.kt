@@ -14,7 +14,9 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentGiftCardCompleteBinding
 import com.lifecard.vpreca.databinding.FragmentGiftCardConfirmDetailBinding
+import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -73,8 +75,8 @@ class GiftCardConfirmDetailFragment  : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
 

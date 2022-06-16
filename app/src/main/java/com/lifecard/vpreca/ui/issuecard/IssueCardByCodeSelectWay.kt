@@ -16,9 +16,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeInputCodeBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeSelectWayBinding
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.showInternetTrouble
-import com.lifecard.vpreca.utils.showPopupMessage
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -87,8 +85,8 @@ class IssueCardByCodeSelectWay : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
 

@@ -19,7 +19,9 @@ import com.lifecard.vpreca.data.model.PhoneData
 import com.lifecard.vpreca.databinding.FragmentChangeInfoConfirmDataBinding
 import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
+import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -92,8 +94,8 @@ class ChangeInfoConfirmDataFragment : BackPressFragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
 

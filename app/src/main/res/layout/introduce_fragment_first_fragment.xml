@@ -175,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="45dp"
                     android:layout_marginBottom="24dp"
-                    android:enabled="true"
+                    android:enabled="false"
                     android:paddingVertical="12dp"
                     android:text="@string/introduce_btn"
                     android:textColor="@color/primary"
