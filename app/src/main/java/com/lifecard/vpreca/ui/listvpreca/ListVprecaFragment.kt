@@ -53,6 +53,7 @@ class ListVprecaFragment : Fragment() {
         val tvTotalAmount = binding.tvTotalAmount
         val listVpreca = binding.listVprecaCard
         val loading = binding.loading
+
         listVprecaViewModel.creditCardResult.observe(
             viewLifecycleOwner,
             Observer { creditCardResult ->
@@ -126,8 +127,14 @@ class ListVprecaFragment : Fragment() {
 
         listVprecaViewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> {
+                    loading.visibility = View.VISIBLE
+                    listVpreca.isClickable = false
+                }
+                else -> {
+                    loading.visibility = View.GONE
+                    listVpreca.isClickable = true
+                }
             }
         })
         return binding.root
