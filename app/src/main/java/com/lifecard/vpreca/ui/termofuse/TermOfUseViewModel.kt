@@ -9,11 +9,4 @@ import com.lifecard.vpreca.utils.RegexUtils
 
 class TermOfUseViewModel : ViewModel() {
 
-    val validForm = MutableLiveData<Boolean>()
-
-    fun phoneDataChanged(text: Boolean) {
-        validForm.value = text
-    }
-
-
 }

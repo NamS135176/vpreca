@@ -57,18 +57,12 @@ class PhoneFragment : Fragment() {
             }.create().show()
         })
         btnBack.setOnClickListener(View.OnClickListener {
-            val action = PhoneFragmentDirections.actionToPolicy(
-                GiftCardConfirmData("1")
-            )
             findNavController().popBackStack()
         })
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val action = PhoneFragmentDirections.actionToPolicy(
-                    GiftCardConfirmData("1")
-                )
                 findNavController().popBackStack()
             }
         })

@@ -14,6 +14,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewClientCompat
@@ -116,13 +117,7 @@ class WebViewFragment : Fragment() {
         }
 
         buttonCancel.setOnClickListener(View.OnClickListener {
-            val navController = fragmentFindNavController()
-            if (navController.previousBackStackEntry?.destination?.id == R.id.nav_policy) {
-                val action = WebViewFragmentDirections.actionToPolicy(args.checkState)
-                navController.navigate(action)
-            } else {
-                navController.popBackStack()
-            }
+            findNavController().popBackStack()
         })
 
         binding.buttonPrev.setOnClickListener(View.OnClickListener { webView.goBack() })

@@ -38,7 +38,6 @@ class ForgotPassFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentForgotPassBinding.inflate(inflater, container, false)
-//        viewModel = ViewModelProvider(this).get(ForgotPassViewModel::class.java)
 
         val container = binding.container
         val spinnerQuestion = binding.spinnerQuestion
@@ -60,7 +59,7 @@ class ForgotPassFragment : Fragment() {
         spinnerQuestion.lifecycleOwner = viewLifecycleOwner
 
         val cal = Calendar.getInstance()
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 backFunction()
             }
@@ -259,6 +258,7 @@ class ForgotPassFragment : Fragment() {
     }
 
     fun backFunction() {
-        findNavController().navigate(R.id.action_forgot_to_login)
+//        findNavController().navigate(R.id.action_forgot_to_login)
+        findNavController().popBackStack()
     }
 }
