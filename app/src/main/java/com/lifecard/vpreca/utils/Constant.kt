@@ -14,6 +14,9 @@ class Constant {
         const val FEE_TYPE_BALANCE = "31"
         const val FEE_TYPE_ISSUE = "34"
 
+        const val CARD_SCHEME_ID = "74101"
+        const val CARD_NAME = "LIFECARD"
+
         //dev
 //        const val API_BASE_URL = "https://by4h7iozy5.execute-api.ap-southeast-1.amazonaws.com/dev/"
         //staging

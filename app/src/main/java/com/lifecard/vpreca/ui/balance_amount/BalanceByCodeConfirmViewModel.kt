@@ -14,6 +14,7 @@ import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
+import com.lifecard.vpreca.utils.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -37,7 +38,7 @@ class BalanceByCodeConfirmViewModel @Inject constructor(
             _loading.value = true
 
             val res =
-                issueCardRepository.issueGiftReqWithouCard(designId, giftNumber)
+                issueCardRepository.issueGiftReqWithCard(designId, giftNumber, Constant.CARD_SCHEME_ID, "", Constant.CARD_NAME)
             if (res is Result.Success) {
                 _issueGiftReqResult.value = IssueGiftResult(success = res.data)
             } else if (res is Result.Error) {
