@@ -25,10 +25,15 @@ class ChangePhoneCompleteFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_changephone_com_to_home)
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
             }
         })
-        btnComplete.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_changephone_com_to_home) })
+        btnComplete.setOnClickListener(View.OnClickListener {
+            findNavController().popBackStack(
+                R.id.nav_home,
+                inclusive = false
+            )
+        })
         return binding.root
     }
 

@@ -41,7 +41,6 @@ class IssueCardSelectDesignFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentIssueCardSelectDesignBinding.inflate(inflater, container, false)
-//        viewModel = ViewModelProvider(this).get(IssueCardSelectDesignViewModel::class.java)
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -118,7 +117,7 @@ class IssueCardSelectDesignFragment : Fragment() {
 
         btnCancel.setOnClickListener(View.OnClickListener {
             when (args.selectDesignData?.preRoute) {
-                "selectSource" -> findNavController().navigate(R.id.nav_issue_card_main)
+                "selectSource" -> findNavController().navigate(R.id.selectdesign_to_main)
                 "valueConfirm" -> {
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("はい") { dialog, which ->

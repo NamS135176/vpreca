@@ -43,7 +43,7 @@ class ChangePhoneConfirmPhoneFragment : Fragment() {
         btnCancel.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
-                    findNavController().navigate(R.id.action_changephone_confirm_phone_to_home)
+                    findNavController().popBackStack(R.id.nav_home, inclusive = false)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
@@ -56,7 +56,7 @@ class ChangePhoneConfirmPhoneFragment : Fragment() {
             override fun handleOnBackPressed() {
                 MaterialAlertDialogBuilder(requireContext()).apply {
                     setPositiveButton("はい") { _, _ ->
-                        findNavController().navigate(R.id.action_changephone_confirm_phone_to_home)
+                        findNavController().popBackStack(R.id.nav_home, inclusive = false)
                     }
                     setNegativeButton("いいえ", null)
                     setMessage("途中ですがキャンセルしてもよろしいですか")

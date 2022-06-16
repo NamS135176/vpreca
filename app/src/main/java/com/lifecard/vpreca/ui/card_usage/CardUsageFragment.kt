@@ -51,7 +51,7 @@ class CardUsageFragment : Fragment() {
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (args.preRoute?.preRoute == "logged") {
-                    findNavController().navigate(R.id.action_card_usage_to_home)
+                    findNavController().popBackStack(R.id.nav_home, inclusive = false)
                 } else {
                     findNavController().popBackStack()
                 }
@@ -59,7 +59,7 @@ class CardUsageFragment : Fragment() {
         })
         btnBack.setOnClickListener(View.OnClickListener {
             if (args.preRoute?.preRoute == "logged") {
-                findNavController().navigate(R.id.action_card_usage_to_home)
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
             } else {
                 findNavController().popBackStack()
             }

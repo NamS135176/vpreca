@@ -189,7 +189,6 @@ class HomeFragment : Fragment(), CoroutineScope {
         val textBalance = binding.textBalance
         val btnIssueCard = binding.buttonAddNewCard
         val btnBalance = binding.buttonCardNoBalance
-        val loading = binding.loading
 
         btnBalance.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
 
@@ -209,7 +208,6 @@ class HomeFragment : Fragment(), CoroutineScope {
                 findNavController().navigate(action)
             }
         })
-
 
         buttonSlideLeft.setOnClickListener(View.OnClickListener {
             viewPager.setCurrentItem(max(viewPager.currentItem - 1, 0), true)

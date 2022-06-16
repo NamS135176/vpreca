@@ -12,6 +12,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
 import com.lifecard.vpreca.utils.WebDirectScreen
+import com.lifecard.vpreca.utils.fragmentFindNavController
 import com.lifecard.vpreca.utils.mainGraphActionNavigateHome
 
 class IssueCardMainFragment : Fragment() {
@@ -28,8 +29,15 @@ class IssueCardMainFragment : Fragment() {
         val buttonNewCard = binding.buttonNewCard
         val buttonIssueByCode = binding.buttonIssueByCode
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
+            }
+        })
+
         btnCancel.setOnClickListener(View.OnClickListener {
-            findNavController().popBackStack()
+            findNavController().popBackStack(R.id.nav_home, inclusive = false)
         })
 
         buttonCreditCard.setOnClickListener(View.OnClickListener {

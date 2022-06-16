@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.BackPressFragment
 import com.lifecard.vpreca.data.model.BalanceTotalRemain
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
@@ -22,7 +23,7 @@ import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BalanceAmountMenuFragment : Fragment() {
+class BalanceAmountMenuFragment : BackPressFragment() {
 
     companion object {
         fun newInstance() = BalanceAmountMenuFragment()
