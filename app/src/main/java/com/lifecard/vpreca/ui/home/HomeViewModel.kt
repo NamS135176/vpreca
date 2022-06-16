@@ -29,8 +29,8 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
     private val _creditCardResult = MutableLiveData<CreditCardResult>()
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
-    private val _cardInfoResult = MutableLiveData<CardInfoResult>()
-    val cardInfoResult: LiveData<CardInfoResult> = _cardInfoResult
+    private val _cardInfoResult = MutableLiveData<CardInfoResult?>()
+    val cardInfoResult: LiveData<CardInfoResult?> = _cardInfoResult
     val creditCardSelect = MutableLiveData<CreditCard>()
     private val _suspendDealResult = MutableLiveData<SuspendDealResult>()
     val suspendDealResult: LiveData<SuspendDealResult> = _suspendDealResult
@@ -44,6 +44,10 @@ class HomeViewModel @Inject constructor(
             loadCard(false)
             loadCard(true)
         }
+    }
+
+    fun clearCardInfoResult() {
+        _cardInfoResult.value = null
     }
 
     fun loadCard(refresh: Boolean = true) {

@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingHorizontal="34dp"
+                android:background="@color/white"
                 android:paddingVertical="46dp">
 
                 <include

@@ -45,19 +45,11 @@ class GiftCardInputCardFragment : Fragment() {
         val vcnInput = binding.giftVcnInput
         val loading = binding.loading
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
-            OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_giftcardinputcard_to_policy)
-            }
-        })
-
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.action_giftcardinputcard_to_policy)
+            findNavController().popBackStack()
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {
-//            findNavController().navigate(R.id.nav_introduce_third)
             viewModel.submit()
         })
         buttonOcrDetection.setOnClickListener(View.OnClickListener {

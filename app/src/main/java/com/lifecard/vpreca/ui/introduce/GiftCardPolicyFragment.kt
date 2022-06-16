@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,27 +24,18 @@ class GiftCardPolicyFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentGiftCardPolicyBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_gift_card_policy_to_home)
-            }
-        })
 
         val btnBack = binding.appbarGift.btnBack
         val checkbox = binding.cbIntroduceFirst
         val btnSubmit = binding.btnSubmitIntroduceFirst
-
-        checkbox.isChecked = false
-        btnSubmit.isEnabled = false
         btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.action_gift_card_policy_to_home)
+            findNavController().popBackStack()
         })
-
-        checkbox.setOnClickListener(View.OnClickListener {
-            btnSubmit.isEnabled = checkbox.isChecked
+        checkbox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+            btnSubmit.isEnabled = isChecked
         })
 
         btnSubmit.setOnClickListener(View.OnClickListener {
@@ -51,14 +43,4 @@ class GiftCardPolicyFragment : Fragment() {
         })
         return binding.root
     }
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        hideToolbar()
-//    }
-//
-//    override fun onDetach() {
-//        super.onDetach()
-//        showToolbar()
-//    }
-
 }

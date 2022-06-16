@@ -299,10 +299,9 @@ class HomeFragment : Fragment(), CoroutineScope {
                         cardInfoResult.success,
                         creditCardRepository
                     ).show()
-
+                    homeViewModel.clearCardInfoResult()
                 }
                 cardInfoResult.error?.let { error ->
-
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
                     error.message?.let { showPopupMessage(message = it) }
                 }
@@ -357,15 +356,6 @@ class HomeFragment : Fragment(), CoroutineScope {
         })
         setLightStatusBar()
         return root
-    }
-
-    fun dp2px(resource: Resources, dp: Int): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp.toFloat(),
-            resource.displayMetrics
-        )
-            .toInt()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
