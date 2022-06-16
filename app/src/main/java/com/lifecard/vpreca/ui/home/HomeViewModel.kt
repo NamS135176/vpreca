@@ -38,6 +38,7 @@ class HomeViewModel @Inject constructor(
     val loading: LiveData<Boolean> = _loading
 
     init {
+        println("HomeViewModel... init")
         if (creditCardRepository.latestCardEmpty()) {
             loadCard(true)
         } else {

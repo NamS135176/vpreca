@@ -15,9 +15,6 @@ import com.lifecard.vpreca.databinding.FragmentBalanceBySourceCompleteBinding
 class BalanceBySourceCompleteFragment : Fragment() {
     private var _binding: FragmentBalanceBySourceCompleteBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +22,7 @@ class BalanceBySourceCompleteFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentBalanceBySourceCompleteBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.action_balancesource_to_home)

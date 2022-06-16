@@ -38,7 +38,6 @@ class BalanceAmountMenuFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBalanceAmountMenuBinding.inflate(inflater, container, false)
-        val loading = binding.loading
         val view = binding.view
         val btnBack = binding.appbarGiftThird.btnBack
         val btnToWeb = binding.buttonToWeb
@@ -55,12 +54,6 @@ class BalanceAmountMenuFragment : Fragment() {
             findNavController().navigate(action)
         })
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
-            OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_balance_menu_to_home)
-            }
-        })
         btnBySource.setOnClickListener(View.OnClickListener {
             val data = BalanceTotalRemain(totalRemain.toString())
             val action =
@@ -77,14 +70,7 @@ class BalanceAmountMenuFragment : Fragment() {
             )
         })
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_balance_menu_to_home) })
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.action_balance_menu_to_home)
-                }
-            })
+        btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
 
         viewModel.suspendDealResult.observe(
             viewLifecycleOwner,
