@@ -173,6 +173,6 @@
     </style>
 
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_first_selected</item>
+        <item name="android:background">@drawable/bg_popup</item>
     </style>
 </resources>
