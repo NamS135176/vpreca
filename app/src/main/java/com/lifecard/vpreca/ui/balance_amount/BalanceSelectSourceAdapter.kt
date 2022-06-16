@@ -7,8 +7,6 @@ import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.SelectedData
 import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.SelectSourceBalanceItemBinding
-import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
-import com.lifecard.vpreca.ui.issuecard.IssueCardSourceAdapter
 
 class BalanceSelectSourceAdapter(
     private var items: List<CreditCard>,
@@ -28,13 +26,17 @@ class BalanceSelectSourceAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BalanceSelectSourceAdapter.ViewHolder {
+    ): ViewHolder {
         val binding =
-            SelectSourceBalanceItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return BalanceSelectSourceAdapter.ViewHolder(binding, mListener)
+            SelectSourceBalanceItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        return ViewHolder(binding, mListener)
     }
 
-    class ViewHolder(var binding: SelectSourceBalanceItemBinding, listener : BalanceSelectSourceAdapter.OnItemClickListener) :
+    class ViewHolder(var binding: SelectSourceBalanceItemBinding, listener: OnItemClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.cardInfo.setOnClickListener { listener.onItemClick(adapterPosition, binding) }

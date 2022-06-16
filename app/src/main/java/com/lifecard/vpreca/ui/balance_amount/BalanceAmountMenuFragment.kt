@@ -5,19 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.BackPressFragment
 import com.lifecard.vpreca.data.model.BalanceTotalRemain
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
-import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
-import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
-import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment
-import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,32 +40,32 @@ class BalanceAmountMenuFragment : BackPressFragment() {
         val btnByCode = binding.btnBalanceByCode
         val tvTotal = binding.tvTotalAmount
         var totalRemain = 0
-        btnByCode.setOnClickListener(View.OnClickListener {
+        btnByCode.setOnClickListener {
             val data = BalanceTotalRemain(totalRemain.toString())
             val action =
                 BalanceAmountMenuFragmentDirections.actionMenuToInputcode(
                     data
                 )
             findNavController().navigate(action)
-        })
+        }
 
-        btnBySource.setOnClickListener(View.OnClickListener {
+        btnBySource.setOnClickListener {
             val data = BalanceTotalRemain(totalRemain.toString())
             val action =
                 BalanceAmountMenuFragmentDirections.actionMenuToSelectsource(
                     data
                 )
             findNavController().navigate(action)
-        })
+        }
 
-        btnToWeb.setOnClickListener(View.OnClickListener {
+        btnToWeb.setOnClickListener {
             findNavController().navigate(
                 R.id.nav_web_direct,
                 WebDirectFragmentArgs(screenId = WebDirectScreen.SCREEN_BALANCE_AMOUNT).toBundle()
             )
-        })
+        }
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
+        btnBack.setOnClickListener { findNavController().popBackStack() }
 
         viewModel.suspendDealResult.observe(
             viewLifecycleOwner,
@@ -102,7 +96,7 @@ class BalanceAmountMenuFragment : BackPressFragment() {
                 }
             })
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
+        viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> {
                     showLoadingDialog()
@@ -113,7 +107,7 @@ class BalanceAmountMenuFragment : BackPressFragment() {
                     view.visibility = View.VISIBLE
                 }
             }
-        })
+        }
 
         return binding.root
     }
