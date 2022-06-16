@@ -15,6 +15,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -230,6 +231,30 @@ class ChangeInfoInputFragment : Fragment() {
                     null
                 }
             })
+        viewModel.furiganaNameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error ->
+            when(error) {
+                true -> {
+                    binding.hiraFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
+                    binding.hiraLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
+                }
+                else -> {
+                    binding.hiraFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.hiraLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                }
+            }
+        })
+        viewModel.kanaNameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error ->
+            when(error) {
+                true -> {
+                    binding.kanaFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
+                    binding.kanaLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
+                }
+                else -> {
+                    binding.kanaFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.kanaLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                }
+            }
+        })
 
         viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.success?.let {
