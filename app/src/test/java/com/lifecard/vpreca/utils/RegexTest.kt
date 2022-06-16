@@ -170,4 +170,18 @@ class RegexTest {
         Assert.assertEquals(false, RegexUtils.isEmailValid("emailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemaia@example.com"))//257 failure
         Assert.assertEquals(false, RegexUtils.isEmailValid(null))
     }
+
+    @Test
+    fun isKanaNameFullWidth_isCorrect() {
+        Assert.assertEquals(true, RegexUtils.isKanaNameFullWidth("ヤマダ　アキ"))
+        Assert.assertEquals(true, RegexUtils.isKanaNameFullWidth("ヤヤマダ　アキヤマダヤマダヤマダヤマダ"))//max19 chars
+        Assert.assertEquals(false, RegexUtils.isKanaNameFullWidth("ヤヤヤマダ　アキヤマダヤマダヤマダヤマダ"))//20 chars failure
+    }
+
+    @Test
+    fun isNameFullWidth_isCorrect() {
+        Assert.assertEquals(true, RegexUtils.isNameFullWidth("山田　秋"))
+        Assert.assertEquals(true, RegexUtils.isNameFullWidth("山田山田　秋秋秋秋秋秋秋秋秋秋秋秋秋秋"))//max19 chars
+        Assert.assertEquals(false, RegexUtils.isNameFullWidth("山田山田　秋秋秋秋秋秋秋秋秋秋秋秋秋秋秋"))//20 chars failure
+    }
 }

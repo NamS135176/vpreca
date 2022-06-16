@@ -74,12 +74,12 @@ class RegexUtils {
         /**
          * Name katakana full width with space
          */
-        private const val RegexKanaNameFullWidth = "^([ァ-ン\\s]{1,19})\$"
+        private const val RegexKanaNameFullWidth = "^([ァ-ン\\s　]{1,19})\$"
 
         /**
          * Check name full width with space
          */
-        private const val RegexNameFullWidth = "^[Ａ-ｚ０-９ぁ-んァ-ン一-龥・|ー\\s]{1,19}\$"
+        private const val RegexNameFullWidth = "^[Ａ-ｚ０-９ぁ-んァ-ン一-龥・|ー\\s　]{1,19}\$"
         private const val RegexGiftNumber = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_]{15}\$"
 
         /**

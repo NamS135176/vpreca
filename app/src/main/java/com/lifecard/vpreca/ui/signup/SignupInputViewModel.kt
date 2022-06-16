@@ -179,7 +179,7 @@ class SignupInputViewModel : ViewModel() {
         val hiraLastName = formState.value?.hiraLastName
 
         if (kanaFirstName.isNullOrEmpty() || kanaLastName.isNullOrEmpty()
-            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName $kanaLastName")
+            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName　$kanaLastName")
         ) {
             kanaNameError.value = true
             errors[0] = R.string.rgx_error_name_kana_full_width
@@ -188,7 +188,7 @@ class SignupInputViewModel : ViewModel() {
         }
 
         if (hiraFirstName.isNullOrEmpty() || hiraLastName.isNullOrEmpty()
-            || !RegexUtils.isNameFullWidth("$hiraFirstName $hiraLastName")
+            || !RegexUtils.isNameFullWidth("$hiraFirstName　$hiraLastName")
         ) {
             furiganaNameError.value = true
             errors[1] = R.string.rgx_error_name_full_width
