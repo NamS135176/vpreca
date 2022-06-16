@@ -41,8 +41,8 @@ class RegexUtils {
          */
         private const val RegexPhoneNumber = "^\\d{10}\$|^\\d{11}\$"
 
-        //        const val RegexEmail = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,10}\$"//from internet
-        const val RegexEmail = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,64}"//same with ios
+        private const val RegexEmail =
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+"
 
         /**
          * only roman included special character  and between 8-12 character
@@ -74,12 +74,12 @@ class RegexUtils {
         /**
          * Name katakana full width with space
          */
-        private const val RegexKanaNameFullWidth = "^([ァ-ン\\s]{1,19})\$"
+        private const val RegexKanaNameFullWidth = "^([ァ-ン\\s　]{1,19})\$"
 
         /**
          * Check name full width with space
          */
-        private const val RegexNameFullWidth = "^[Ａ-ｚ０-９ぁ-んァ-ン一-龥・|ー\\s]{1,19}\$"
+        private const val RegexNameFullWidth = "^[Ａ-ｚ０-９ぁ-んァ-ン一-龥・|ー\\s　]{1,19}\$"
         private const val RegexGiftNumber = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_]{15}\$"
 
         /**
@@ -121,8 +121,11 @@ class RegexUtils {
 
         fun isEmailValid(email: String?): Boolean {
             return email?.let {
-                email.length in 0..256 && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+                email.length in 0..256 && Regex(RegexEmail).matches(email)
             } ?: false
+//            return email?.let {
+//                email.length in 0..256 && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+//            } ?: false
         }
 
         fun isPasswordValid(password: String?): Boolean {

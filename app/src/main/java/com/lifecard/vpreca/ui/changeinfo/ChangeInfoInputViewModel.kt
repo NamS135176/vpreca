@@ -21,6 +21,8 @@ class ChangeInfoInputViewModel : ViewModel() {
     val email2Error = MutableLiveData<Int?>()
     val email2ConfirmError = MutableLiveData<Int?>()
     val nameError = MutableLiveData<Array<Number?>?>()
+    val kanaNameError = MutableLiveData<Boolean>()
+    val furiganaNameError = MutableLiveData<Boolean>()
     val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
     val formState = MutableLiveData(ChangeInfoInputState())
 
@@ -90,8 +92,8 @@ class ChangeInfoInputViewModel : ViewModel() {
         return if (!RegexUtils.isEmailValid(email1)) {
             email1Error.value = R.string.rgx_error_email
             false
-        } else if (originUserData?.mailAddress2 == email1) {
-            email2Error.value = R.string.rgx_error_email_duplicate
+        } else if (email1 == originUserData?.mailAddress2) {
+            email1Error.value = R.string.rgx_error_email_duplicate
             false
         } else {
             email1Error.value = null
@@ -114,7 +116,7 @@ class ChangeInfoInputViewModel : ViewModel() {
         ) {
             email2Error.value = R.string.rgx_error_email
             false
-        } else if (originUserData?.mailAddress1 == email2) {
+        } else if (email2 == originUserData?.mailAddress1) {
             email2Error.value = R.string.rgx_error_email_duplicate
             false
         } else {
@@ -179,14 +181,20 @@ class ChangeInfoInputViewModel : ViewModel() {
         val hiraLastName = formState.value?.hiraLastName
 
         if (kanaFirstName.isNullOrEmpty() || kanaLastName.isNullOrEmpty()
-            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName $kanaLastName")
+            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName　$kanaLastName")
         ) {
             errors[0] = R.string.rgx_error_name_kana_full_width
+            kanaNameError.value = true
+        } else {
+            kanaNameError.value = false
         }
         if (hiraFirstName.isNullOrEmpty() || hiraLastName.isNullOrEmpty()
-            || !RegexUtils.isNameFullWidth("$hiraFirstName $hiraLastName")
+            || !RegexUtils.isNameFullWidth("$hiraFirstName　$hiraLastName")
         ) {
+            furiganaNameError.value = true
             errors[1] = R.string.rgx_error_name_full_width
+        } else {
+            furiganaNameError.value = false
         }
         errors = errors.filterNotNull().toTypedArray()
         nameError.value = if (errors.isNullOrEmpty()) null else errors

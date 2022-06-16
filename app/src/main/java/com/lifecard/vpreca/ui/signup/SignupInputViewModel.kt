@@ -23,6 +23,8 @@ class SignupInputViewModel : ViewModel() {
     val passwordError = MutableLiveData<Int?>()
     val cfPasswordError = MutableLiveData<Int?>()
     val nameError = MutableLiveData<Array<Number?>?>()
+    val kanaNameError = MutableLiveData<Boolean>()
+    val furiganaNameError = MutableLiveData<Boolean>()
     val validForm = MutableLiveData<Boolean>()
     val formState = MutableLiveData(SignupInputState())
     val formResultState = MutableLiveData<SignupInputResultState>()
@@ -177,15 +179,23 @@ class SignupInputViewModel : ViewModel() {
         val hiraLastName = formState.value?.hiraLastName
 
         if (kanaFirstName.isNullOrEmpty() || kanaLastName.isNullOrEmpty()
-            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName $kanaLastName")
+            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName　$kanaLastName")
         ) {
+            kanaNameError.value = true
             errors[0] = R.string.rgx_error_name_kana_full_width
+        } else {
+            kanaNameError.value = false
         }
+
         if (hiraFirstName.isNullOrEmpty() || hiraLastName.isNullOrEmpty()
-            || !RegexUtils.isNameFullWidth("$hiraFirstName $hiraLastName")
+            || !RegexUtils.isNameFullWidth("$hiraFirstName　$hiraLastName")
         ) {
+            furiganaNameError.value = true
             errors[1] = R.string.rgx_error_name_full_width
+        } else {
+            furiganaNameError.value = false
         }
+
         errors = errors.filterNotNull().toTypedArray()
         nameError.value = if (errors.isNullOrEmpty()) null else errors
         return errors.isNullOrEmpty()
