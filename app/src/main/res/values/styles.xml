@@ -165,4 +165,14 @@
         <item name="backgroundInsetEnd">0dp</item>
         <item name="backgroundInsetBottom">0dp</item>
     </style>
+
+    <style name="AppBottomSheetDialogTheme">
+        <item name="android:windowBackground">@drawable/bg_disable</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_first_selected</item>
+    </style>
 </resources>
