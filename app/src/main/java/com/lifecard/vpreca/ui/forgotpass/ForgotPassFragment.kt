@@ -6,13 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.AdapterView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
@@ -36,11 +33,10 @@ class ForgotPassFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentForgotPassBinding.inflate(inflater, container, false)
-//        viewModel = ViewModelProvider(this).get(ForgotPassViewModel::class.java)
 
-        val container = binding.container
+        val containerDiv = binding.container
         val spinnerQuestion = binding.spinnerQuestion
         val tvDatePicker = binding.dobInputLayoutForgot
         val emailEdt = binding.forgotPassEmailInput
@@ -55,28 +51,27 @@ class ForgotPassFragment : Fragment() {
         val answerLayout = binding.forgotPassSecretAnswerLayout
         val answerEdt = binding.forgotPassSecretAnswerInput
         var question = ""
-        val loading = binding.loading
-        container.setOnClickListener { closeKeyBoard() }
+        containerDiv.setOnClickListener { closeKeyBoard() }
         spinnerQuestion.lifecycleOwner = viewLifecycleOwner
 
         val cal = Calendar.getInstance()
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 backFunction()
             }
         })
-        cancelBtn.setOnClickListener(View.OnClickListener {
+        cancelBtn.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
+                setPositiveButton("はい") { _, _ ->
                     // do something on positive button click
                     backFunction()
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
             }.create().show()
-        })
+        }
 
-        btnBack.setOnClickListener(View.OnClickListener { backFunction() })
+        btnBack.setOnClickListener { backFunction() }
 
 
         fun updateDateInView() {
@@ -104,15 +99,15 @@ class ForgotPassFragment : Fragment() {
             ).apply {
                 datePicker
                 setButton(
-                    DatePickerDialog.BUTTON_POSITIVE, getString(R.string.button_ok),
-                    DialogInterface.OnClickListener { _, _ ->
-                        dateSetListener.onDateSet(
-                            datePicker,
-                            datePicker.year,
-                            datePicker.month,
-                            datePicker.dayOfMonth
-                        )
-                    })
+                    DatePickerDialog.BUTTON_POSITIVE, getString(R.string.button_ok)
+                ) { _, _ ->
+                    dateSetListener.onDateSet(
+                        datePicker,
+                        datePicker.year,
+                        datePicker.month,
+                        datePicker.dayOfMonth
+                    )
+                }
                 setButton(
                     DatePickerDialog.BUTTON_NEGATIVE, getString(R.string.button_cancel),
                     null as DialogInterface.OnClickListener?
@@ -127,58 +122,58 @@ class ForgotPassFragment : Fragment() {
         }
 
         viewModel.validForm.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { isValid ->
-                btnSubmit.isEnabled = isValid
-            })
+            viewLifecycleOwner
+        ) { isValid ->
+            btnSubmit.isEnabled = isValid
+        }
 
         viewModel.emailError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                emailLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            emailLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
 
         viewModel.phoneError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                phoneLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            phoneLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
 
-        viewModel.dateError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+        viewModel.dateError.observe(viewLifecycleOwner) { error: Int? ->
             dateLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
-        })
+        }
 
         viewModel.questionError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                questionLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            questionLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
 
         viewModel.answerError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                answerLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            answerLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
 
         viewModel.resetPassState.observe(
             viewLifecycleOwner,
@@ -196,14 +191,14 @@ class ForgotPassFragment : Fragment() {
                 }
             })
 
-        viewModel.loading.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> showLoadingDialog()
                 else -> hideLoadingDialog()
             }
-        })
+        }
 
-        viewModel.forgotPassState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.forgotPassState.observe(viewLifecycleOwner) {
             it?.success?.let {
                 val myFormat = "yyyyMMdd" // mention the format you need
                 val sdf = SimpleDateFormat(myFormat, Locale.JAPAN)
@@ -215,11 +210,10 @@ class ForgotPassFragment : Fragment() {
                     question,
                     answerEdt.text.toString()
                 )
-//                println(question)
             }
-        })
+        }
 
-        spinnerQuestion.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
+        spinnerQuestion.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let {
                 checkValidForm()
                 question = it
@@ -227,12 +221,12 @@ class ForgotPassFragment : Fragment() {
         })
         spinnerQuestion.setOnSpinnerOutsideTouchListener { _, _ -> spinnerQuestion.dismiss() }
 
-        tvDatePicker.doAfterTextChanged { _ -> checkValidForm() }
-        emailEdt.doAfterTextChanged { _ -> checkValidForm() }
-        phoneEdt.doAfterTextChanged { _ -> checkValidForm() }
-        answerEdt.doAfterTextChanged { _ -> checkValidForm() }
+        tvDatePicker.doAfterTextChanged { checkValidForm() }
+        emailEdt.doAfterTextChanged {checkValidForm() }
+        phoneEdt.doAfterTextChanged {checkValidForm() }
+        answerEdt.doAfterTextChanged {checkValidForm() }
 
-        btnSubmit.setOnClickListener(View.OnClickListener { submit() })
+        btnSubmit.setOnClickListener { submit() }
 
         return binding.root
     }

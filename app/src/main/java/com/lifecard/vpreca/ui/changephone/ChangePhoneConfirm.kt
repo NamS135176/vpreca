@@ -1,6 +1,5 @@
 package com.lifecard.vpreca.ui.changephone
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentChangePhoneConfirmBinding
-import com.lifecard.vpreca.databinding.FragmentChangePhoneConfirmPhoneBinding
 import com.lifecard.vpreca.utils.UserConverter
 
 class ChangePhoneConfirm : Fragment() {
@@ -20,29 +18,27 @@ class ChangePhoneConfirm : Fragment() {
         fun newInstance() = ChangePhoneConfirm()
     }
 
-    private lateinit var viewModel: ChangePhoneConfirmViewModel
     private var _binding: FragmentChangePhoneConfirmBinding? = null
     private val binding get() = _binding!!
     private val args:ChangePhoneConfirmArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        viewModel = ViewModelProvider(this).get(ChangePhoneConfirmViewModel::class.java)
+    ): View {
         _binding = FragmentChangePhoneConfirmBinding.inflate(inflater, container, false)
         val tvPhone = binding.tvConfirmID
         val btnCancel = binding.btnCancelConfirm
         val btnSubmit = binding.btnSubmitConfirm
         tvPhone.text = UserConverter.formatPhone(args.cardData?.preRoute!!)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.action_confirm_to_phone_input)
             }
         })
 
-        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_confirm_to_phone_input) })
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_phone_complete) })
+        btnCancel.setOnClickListener { findNavController().navigate(R.id.action_confirm_to_phone_input) }
+        btnSubmit.setOnClickListener { findNavController().navigate(R.id.nav_change_phone_complete) }
 
         return binding.root
     }

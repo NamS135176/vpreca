@@ -1,6 +1,5 @@
 package com.lifecard.vpreca.ui.card_usage
 
-import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,7 +24,7 @@ class CardUsageViewModel @Inject constructor(private val remoteRepository: Remot
     fun getCardUsageHistory(creditCard: CreditCard) {
         viewModelScope.launch {
             _loading.value = true
-            var result = remoteRepository.getCardUsageHistory(creditCard)
+            val result = remoteRepository.getCardUsageHistory(creditCard)
             _cardUsageHistoryResult.value = result
             _loading.value = false
         }
@@ -34,7 +33,7 @@ class CardUsageViewModel @Inject constructor(private val remoteRepository: Remot
     fun getCardUsageHistoryWithoutMember(creditCard: CreditCard) {
         viewModelScope.launch {
             _loading.value = true
-            var result = remoteRepository.getCardUsageHistoryWithoutMember(creditCard)
+            val result = remoteRepository.getCardUsageHistoryWithoutMember(creditCard)
             _cardUsageHistoryResult.value = result
             _loading.value = false
         }

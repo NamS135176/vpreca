@@ -10,11 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentGiftCardCompleteBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GiftCardCompleteFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GiftCardCompleteFragment : Fragment() {
     // TODO: Rename and change types of parameters
 
@@ -30,14 +25,14 @@ class GiftCardCompleteFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_gift_complete_to_home)
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
             }
         })
 
         val btnComplete = binding.btnSubmitPolicy
-        btnComplete.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.action_gift_complete_to_home)
-        })
+        btnComplete.setOnClickListener {
+            findNavController().popBackStack(R.id.nav_home, inclusive = false)
+        }
         return binding.root
     }
 

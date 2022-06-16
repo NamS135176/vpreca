@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
@@ -15,7 +14,6 @@ import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentGiftCardConfirmBinding
-import com.lifecard.vpreca.utils.navigateToLogin
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -30,17 +28,15 @@ class GiftCardConfirmFragment : Fragment() {
     lateinit var userManager: UserManager
 
     private val args: GiftCardConfirmFragmentArgs by navArgs()
-    private lateinit var viewModel: GiftCardConfirmViewModel
     private var _binding: FragmentGiftCardConfirmBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        viewModel = ViewModelProvider(this).get(GiftCardConfirmViewModel::class.java)
+    ): View {
         _binding = FragmentGiftCardConfirmBinding.inflate(inflater, container, false)
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (args.giftCardConfirmData?.preRoute == "inputcard") {
@@ -55,23 +51,25 @@ class GiftCardConfirmFragment : Fragment() {
         val btnSubmit = binding.btnSubmitInput
         val btnUsage = binding.btnMid
 
-        btnUsage.setOnClickListener(View.OnClickListener {
-//            println("sjkdfhksjdhfksdf")
+        btnUsage.setOnClickListener {
             val data = GiftCardConfirmData("logged")
-            val action = GiftCardConfirmFragmentDirections.actionThirdToUsage(convertObject(args.cardData!!), data)
+            val action = GiftCardConfirmFragmentDirections.actionThirdToUsage(
+                convertObject(args.cardData!!),
+                data
+            )
             findNavController().navigate(action)
-        })
+        }
 
         binding.card = args.cardData
         binding.cardZone.cardInclude.card = args.cardData
         binding.cardZone.card  = args.cardData
-        btnBack.setOnClickListener(View.OnClickListener {
+        btnBack.setOnClickListener {
             if (args.giftCardConfirmData?.preRoute == "inputcard") {
                 findNavController().navigate(R.id.action_third_to_inputcard)
             } else {
                 findNavController().navigate(R.id.nav_gift_card_input)
             }
-        })
+        }
         //check if user has logged in
 
 //        if (!userManager.isLoggedIn) {
@@ -86,15 +84,15 @@ class GiftCardConfirmFragment : Fragment() {
 //            })
 //        }
 
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             val action = GiftCardConfirmFragmentDirections.actionToConfirmDetail(args.cardData)
             findNavController().navigate(action)
-        })
+        }
         return binding.root
     }
 
-    fun convertObject(cardInfo: CardInfo): CreditCard {
-        val obj = CreditCard(
+    private fun convertObject(cardInfo: CardInfo): CreditCard {
+        return CreditCard(
             cardInfo.activateStatus,
             cardInfo.activateDate,
             cardInfo.autoChargeAmount,
@@ -140,6 +138,5 @@ class GiftCardConfirmFragment : Fragment() {
             cardInfo.vcnExpirationDate,
             cardInfo.vcnSecurityLockFlg
         )
-        return obj
     }
 }

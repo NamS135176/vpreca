@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
 import com.lifecard.vpreca.ui.signup.EmailState
-import com.lifecard.vpreca.utils.RegexUtils
 
 class ChangePhoneSecondViewModel : ViewModel() {
     val emailError = MutableLiveData<Int?>()

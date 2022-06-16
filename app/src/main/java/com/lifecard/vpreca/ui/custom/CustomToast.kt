@@ -1,4 +1,4 @@
-
+package com.lifecard.vpreca.ui.custom
 import android.app.Activity
 import android.view.Gravity
 import android.widget.TextView

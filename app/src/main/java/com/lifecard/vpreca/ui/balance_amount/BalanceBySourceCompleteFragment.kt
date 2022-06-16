@@ -24,7 +24,7 @@ class BalanceBySourceCompleteFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_balancesource_to_home)
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
             }
         })
 

@@ -27,12 +27,17 @@ class IssueCardByCodeCompleteWithoutCardFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_without_complete_to_home)
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
             }
         })
 
         val btnSubmit = binding.btnSubmitPolicy
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_without_complete_to_home) })
+        btnSubmit.setOnClickListener(View.OnClickListener {
+            findNavController().popBackStack(
+                R.id.nav_home,
+                inclusive = false
+            )
+        })
         return binding.root
     }
 

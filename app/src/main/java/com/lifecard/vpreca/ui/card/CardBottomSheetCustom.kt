@@ -29,7 +29,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
-import showCustomToast
+import com.lifecard.vpreca.ui.custom.showCustomToast
 import kotlin.coroutines.CoroutineContext
 
 class CardBottomSheetCustom(
