@@ -45,7 +45,7 @@ class SignupInputViewModel : ViewModel() {
 
     private fun checkLoginIdValid(): Boolean {
         return if (!RegexUtils.isLoginIdValid(formState.value?.loginId)) {
-            loginIdError.value = R.string.invalid_password
+            loginIdError.value = R.string.rgx_error_login_id
             false
         } else {
             loginIdError.value = null
