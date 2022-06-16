@@ -42,9 +42,24 @@ data class ChangeInfoMemberData(
     }
 }
 
+fun safeSplitName(name: String?): List<String>? {
+    return name?.let {
+        try {
+            var list = it.split("　")
+            if (list.count() <= 1) {
+                list = it.split(" ")
+            }
+            return list
+        } catch (e: Exception) {
+        }
+        null
+    }
+}
+
 fun ChangeInfoMemberData.getFirstKanaName(): String? {
     return try {
-        memberKana?.split(" ")?.get(0)
+        val splitName = safeSplitName(memberKana)
+        return splitName?.get(0)
     } catch (e: Exception) {
         println(e)
         memberKana
@@ -53,7 +68,8 @@ fun ChangeInfoMemberData.getFirstKanaName(): String? {
 
 fun ChangeInfoMemberData.getLastKanaName(): String? {
     return try {
-        memberKana?.split(" ")?.get(1)
+        val splitName = safeSplitName(memberKana)
+        return splitName?.get(1)
     } catch (e: Exception) {
         println(e)
         ""
@@ -62,7 +78,8 @@ fun ChangeInfoMemberData.getLastKanaName(): String? {
 
 fun ChangeInfoMemberData.getFirstMemberName(): String? {
     return try {
-        memberName?.split(" ")?.get(0)
+        val splitName = safeSplitName(memberName)
+        return splitName?.get(0)
     } catch (e: Exception) {
         println(e)
         memberName
@@ -71,7 +88,8 @@ fun ChangeInfoMemberData.getFirstMemberName(): String? {
 
 fun ChangeInfoMemberData.getLastMemberName(): String? {
     return try {
-        memberName?.split(" ")?.get(1)
+        val splitName = safeSplitName(memberName)
+        return splitName?.get(1)
     } catch (e: Exception) {
         println(e)
         ""

@@ -28,18 +28,7 @@ class RegexTest {
     }
 
     @Test
-    fun loginId_isInCorrect() {
-        val loginIdErrors = listOf(
-            "",
-            "ＡＡＡ",
-            "ＡＡＡＡＡＡ",
-            "12345",
-            "12345678901",
-            "12 345678",
-            "12344\uD83D\uDE00333",
-            "abc%^!#$@%@",
-            "マチヤタナヤ"
-        )
+    fun loginId_isCorrect() {
         Assert.assertEquals(false, RegexUtils.isLoginIdValid(""))
         Assert.assertEquals(false, RegexUtils.isLoginIdValid("ＡＡＡ"))
         Assert.assertEquals(false, RegexUtils.isLoginIdValid("ＡＡＡＡＡＡ"))
@@ -51,6 +40,7 @@ class RegexTest {
         Assert.assertEquals(false, RegexUtils.isLoginIdValid("マチヤタナヤ"))
 
         Assert.assertEquals(true, RegexUtils.isLoginIdValid("-23_202020"))
+        Assert.assertEquals(true, RegexUtils.isLoginIdValid("anhndt"))
     }
 
     @Test
