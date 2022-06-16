@@ -87,7 +87,7 @@ class SignupInputViewModel : ViewModel() {
 
     private fun checkCfPasswordValid(): Boolean {
         return if (!isCfPasswordValid(formState.value?.password, formState.value?.cfPassword)) {
-            cfPasswordError.value = R.string.rgx_error_cf_password
+            cfPasswordError.value = R.string.rgx_error_not_match
             false
         } else {
             cfPasswordError.value = null
@@ -222,7 +222,8 @@ class SignupInputViewModel : ViewModel() {
     }
 
     private fun isCfPasswordValid(password: String?, cfPassword: String?): Boolean {
-        return RegexUtils.isPasswordValid(cfPassword) && cfPassword == password
+        //only compare cfPass and pass
+        return cfPassword == password
     }
 
     fun submit() {
