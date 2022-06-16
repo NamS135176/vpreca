@@ -121,8 +121,8 @@ class GiftCardInputCardFragment : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
 

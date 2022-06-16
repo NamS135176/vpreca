@@ -128,12 +128,10 @@ class ListVprecaFragment : Fragment() {
         listVprecaViewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
                 true -> {
-                    loading.visibility = View.VISIBLE
-                    listVpreca.isClickable = false
+                    showLoadingDialog()
                 }
                 else -> {
-                    loading.visibility = View.GONE
-                    listVpreca.isClickable = true
+                   hideLoadingDialog()
                 }
             }
         })

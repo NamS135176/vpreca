@@ -108,14 +108,7 @@ class WebViewFragment : BackPressFragment() {
 
         buttonCancel.setOnClickListener(View.OnClickListener {
             val navController = fragmentFindNavController()
-            if(navController.previousBackStackEntry?.destination?.id == R.id.nav_policy){
-
-                val action = WebViewFragmentDirections.actionToPolicy(args.checkState)
-                navController.navigate(action)
-            }
-            else{
-                navController.popBackStack()
-            }
+            navController.popBackStack()
         })
 
         binding.buttonPrev.setOnClickListener(View.OnClickListener { webView.goBack() })

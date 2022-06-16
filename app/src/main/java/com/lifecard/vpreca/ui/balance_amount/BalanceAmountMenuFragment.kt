@@ -18,10 +18,7 @@ import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.WebDirectScreen
-import com.lifecard.vpreca.utils.showInternetTrouble
-import com.lifecard.vpreca.utils.showPopupMessage
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -121,11 +118,11 @@ class BalanceAmountMenuFragment : Fragment() {
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
                 true -> {
-                    loading.visibility = View.VISIBLE
+                    showLoadingDialog()
                     view.visibility = View.GONE
                 }
                 else -> {
-                    loading.visibility = View.GONE
+                    hideLoadingDialog()
                     view.visibility = View.VISIBLE
                 }
             }

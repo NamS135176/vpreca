@@ -38,15 +38,21 @@ class IntroduceFragmentFirst : Fragment() {
         val btnBack = binding.appbarGift.btnBack
         val checkbox = binding.cbIntroduceFirst
         val btnSubmit = binding.btnSubmitIntroduceFirst
-        checkbox.isChecked = false
+//        checkbox.isChecked = false
         btnSubmit.isEnabled = false
         btnBack.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.action_first_login)
         })
 
-        checkbox.setOnClickListener(View.OnClickListener {
-            btnSubmit.isEnabled = checkbox.isChecked
-        })
+//        checkbox.setOnClickListener(View.OnClickListener {
+//            btnSubmit.isEnabled = checkbox.isChecked
+//        })
+
+        checkbox.setOnCheckedChangeListener { compoundButton, b ->
+            run {
+                btnSubmit.isEnabled = b
+            }
+        }
 
         btnSubmit.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_introduce_second)

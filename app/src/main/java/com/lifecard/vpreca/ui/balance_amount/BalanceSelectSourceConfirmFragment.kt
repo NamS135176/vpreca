@@ -18,7 +18,9 @@ import com.lifecard.vpreca.databinding.FragmentBalanceSelectSourceConfirmBinding
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 import com.lifecard.vpreca.ui.issuecard.IssueCardByCodeSelectSoureConfirmFragmentArgs
 import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
+import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,8 +77,8 @@ class BalanceSelectSourceConfirmFragment : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
 

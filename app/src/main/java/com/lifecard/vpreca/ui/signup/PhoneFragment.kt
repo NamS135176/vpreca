@@ -60,7 +60,7 @@ class PhoneFragment : Fragment() {
             val action = PhoneFragmentDirections.actionToPolicy(
                 GiftCardConfirmData("1")
             )
-            findNavController().navigate(action)
+            findNavController().popBackStack()
         })
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
@@ -69,7 +69,7 @@ class PhoneFragment : Fragment() {
                 val action = PhoneFragmentDirections.actionToPolicy(
                     GiftCardConfirmData("1")
                 )
-                findNavController().navigate(action)
+                findNavController().popBackStack()
             }
         })
 

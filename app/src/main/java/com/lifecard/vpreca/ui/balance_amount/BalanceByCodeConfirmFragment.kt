@@ -17,7 +17,9 @@ import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentBalanceByCodeConfirmBinding
 import com.lifecard.vpreca.ui.issuecard.IssueCardSelectDesignFragmentArgs
+import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -78,8 +80,8 @@ class BalanceByCodeConfirmFragment : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
 

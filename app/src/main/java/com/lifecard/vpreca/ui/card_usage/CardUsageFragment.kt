@@ -22,10 +22,7 @@ import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentCardUsageBinding
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.ui.login.LoginViewModel
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.hideToolbar
-import com.lifecard.vpreca.utils.isCardLock
-import com.lifecard.vpreca.utils.showToolbar
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -90,8 +87,8 @@ class CardUsageFragment : Fragment() {
         })
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
         binding.cardNo.text = Converter.convertPrecaNumber(args.card?.precaNumber)

@@ -55,15 +55,15 @@ class PolicyFragment : Fragment() {
             }
         })
 
-        val data = findNavController().previousBackStackEntry?.destination?.id
-        if (data == R.id.nav_signup_phone) {
-            cbPolicy.isChecked = true
-            btnSubmitPolicy.isEnabled = true
-        }
-        if(data == R.id.nav_webview){
-            cbPolicy.isChecked = Converter.convertStringToBoolean(args.checkData?.preRoute!!)
-            btnSubmitPolicy.isEnabled = Converter.convertStringToBoolean(args.checkData?.preRoute!!)
-        }
+//        val data = findNavController().previousBackStackEntry?.destination?.id
+//        if (data == R.id.nav_signup_phone) {
+//            cbPolicy.isChecked = true
+//            btnSubmitPolicy.isEnabled = true
+//        }
+//        if(data == R.id.nav_webview){
+//            cbPolicy.isChecked = Converter.convertStringToBoolean(args.checkData?.preRoute!!)
+//            btnSubmitPolicy.isEnabled = Converter.convertStringToBoolean(args.checkData?.preRoute!!)
+//        }
 
 //        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
 ////
@@ -82,7 +82,11 @@ class PolicyFragment : Fragment() {
         cbPolicy.setOnClickListener(View.OnClickListener {
             btnSubmitPolicy.isEnabled = cbPolicy.isChecked
         })
-
+        cbPolicy.setOnCheckedChangeListener { compoundButton, b ->
+            run {
+                btnSubmitPolicy.isEnabled = b
+            }
+        }
         btnSubmitPolicy.setOnClickListener(View.OnClickListener {
             findNavController().navigate(R.id.nav_signup_phone)
         })
