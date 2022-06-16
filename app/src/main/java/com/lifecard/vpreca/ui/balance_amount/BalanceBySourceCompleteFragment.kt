@@ -8,24 +8,20 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.databinding.FragmentBalanceBySourceCompleteBinding
 
 
 class BalanceBySourceCompleteFragment : Fragment() {
     private var _binding: FragmentBalanceBySourceCompleteBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBalanceBySourceCompleteBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.action_balancesource_to_home)
@@ -33,7 +29,7 @@ class BalanceBySourceCompleteFragment : Fragment() {
         })
 
         val btnSubmit = binding.btnSubmitPolicy
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_balancesource_to_home) })
+        btnSubmit.setOnClickListener { findNavController().navigate(R.id.action_balancesource_to_home) }
         return binding.root
     }
 

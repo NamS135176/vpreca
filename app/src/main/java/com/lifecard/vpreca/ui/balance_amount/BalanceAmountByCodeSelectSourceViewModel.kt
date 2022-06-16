@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
-import com.lifecard.vpreca.data.SuspendDealRepository
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
@@ -20,12 +19,12 @@ import javax.inject.Inject
 @HiltViewModel
 class BalanceAmountByCodeSelectSourceViewModel @Inject constructor(
     private val creditCardRepository: CreditCardRepository,
-    private val suspendDealRepository: SuspendDealRepository
 ) : ViewModel() {
     private val _creditCardResult = MutableLiveData<CreditCardResult>()
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
+
     init {
         viewModelScope.launch {
             _loading.value = true

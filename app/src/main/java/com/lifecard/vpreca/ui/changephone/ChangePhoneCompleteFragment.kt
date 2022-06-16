@@ -22,10 +22,10 @@ class ChangePhoneCompleteFragment : Fragment() {
     ): View? {
         _binding = FragmentChangePhoneCompleteBinding.inflate(inflater, container, false)
         val btnComplete = binding.btnSubmitPolicy
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().navigate(R.id.action_changephone_com_to_home)
             }
         })
         btnComplete.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_changephone_com_to_home) })

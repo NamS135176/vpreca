@@ -48,7 +48,7 @@ class ChangePhoneInputPhoneFragment : Fragment() {
         })
 
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 MaterialAlertDialogBuilder(requireContext()).apply {
@@ -94,11 +94,4 @@ class ChangePhoneInputPhoneFragment : Fragment() {
         })
         return binding.root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
-
 }

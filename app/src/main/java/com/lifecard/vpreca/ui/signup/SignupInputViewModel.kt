@@ -249,8 +249,6 @@ class SignupInputViewModel : ViewModel() {
 
     fun checkValidForm(): Boolean {
         val isValid = formState.value?.let { form ->
-            val kataName = "${form.kanaFirstName ?: ""}${form.kanaLastName ?: ""}"
-            val hiraName = "${form.hiraFirstName ?: ""}${form.hiraLastName ?: ""}"
             val fields = arrayOf(
                 form.nickname,
                 form.loginId,
@@ -262,8 +260,10 @@ class SignupInputViewModel : ViewModel() {
                 form.answer,
                 form.password,
                 form.cfPassword,
-                kataName,
-                hiraName,
+                form.kanaFirstName,
+                form.kanaLastName,
+                form.hiraFirstName,
+                form.hiraLastName
             )
             val valid = !fields.any { it.isNullOrEmpty() }
             valid

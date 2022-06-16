@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -173,6 +174,7 @@ class HomeFragment : Fragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        println("HomeFragment... onCreateView")
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -299,10 +301,9 @@ class HomeFragment : Fragment(), CoroutineScope {
                         cardInfoResult.success,
                         creditCardRepository
                     ).show()
-
+                    homeViewModel.clearCardInfoResult()
                 }
                 cardInfoResult.error?.let { error ->
-
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
                     error.message?.let { showPopupMessage(message = it) }
                 }
@@ -346,11 +347,11 @@ class HomeFragment : Fragment(), CoroutineScope {
         homeViewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
                 true -> {
-                   showLoadingDialog()
+                    showLoadingDialog()
 
                 }
                 else -> {
-                   hideLoadingDialog()
+                    hideLoadingDialog()
 
                 }
             }
@@ -359,17 +360,9 @@ class HomeFragment : Fragment(), CoroutineScope {
         return root
     }
 
-    fun dp2px(resource: Resources, dp: Int): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp.toFloat(),
-            resource.displayMetrics
-        )
-            .toInt()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        println("HomeFragment... onViewCreated")
         unlockDrawer()
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
@@ -382,6 +375,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        println("HomeFragment... onDestroyView")
         binding.listCard.cardList.unregisterOnPageChangeCallback(pageChangeCallback)
         _binding = null
         clearLightStatusBar()
@@ -393,6 +387,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        println("HomeFragment... onAttach")
         lifecycleObserver = object : DefaultLifecycleObserver {
             override fun onCreate(owner: LifecycleOwner) {
                 super.onCreate(owner)
@@ -406,7 +401,18 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     override fun onDetach() {
         super.onDetach()
+        println("HomeFragment... onDetach")
         EventBus.getDefault().unregister(this)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        println("HomeFragment... onSaveInstanceState")
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        println("HomeFragment... onSaveInstanceState")
     }
 
     private inner class CardSlidePagerAdapter(

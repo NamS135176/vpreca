@@ -34,45 +34,41 @@ class CardUsageFragment : Fragment() {
 
     private val viewModel: CardUsageViewModel by viewModels()
     private var _binding: FragmentCardUsageBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val args:CardUsageFragmentArgs by  navArgs()
+    private val args: CardUsageFragmentArgs by navArgs()
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCardUsageBinding.inflate(inflater, container, false)
         val listCardUsageHistory = binding.listCardUsageHistory
-        val loading = binding.loading
         val btnBack = binding.appbarCardUsage.btnBack
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if(args.preRoute?.preRoute == "logged"){
+                if (args.preRoute?.preRoute == "logged") {
                     findNavController().navigate(R.id.action_card_usage_to_home)
-                }
-                else{
+                } else {
                     findNavController().popBackStack()
                 }
             }
         })
         btnBack.setOnClickListener(View.OnClickListener {
-            if(args.preRoute?.preRoute == "logged"){
+            if (args.preRoute?.preRoute == "logged") {
                 findNavController().navigate(R.id.action_card_usage_to_home)
-            }
-            else{
+            } else {
                 findNavController().popBackStack()
             }
         })
-        if(args.preRoute?.preRoute == "logged"){
+        if (args.preRoute?.preRoute == "logged") {
             viewModel.getCardUsageHistory(args.card!!)
-        }
-        else{
+        } else {
             viewModel.getCardUsageHistoryWithoutMember(args.card!!)
         }
-
 
         viewModel.cardUsageHistoryResult.observe(viewLifecycleOwner, Observer {
             if (it is Result.Success) {
@@ -104,14 +100,12 @@ class CardUsageFragment : Fragment() {
     }
 
 
-
     override fun onDetach() {
         super.onDetach()
-        if(args.preRoute?.preRoute == "logged"){
+        if (args.preRoute?.preRoute == "logged") {
             showToolbar()
-        }
-        else{
-           hideToolbar()
+        } else {
+            hideToolbar()
         }
     }
 }

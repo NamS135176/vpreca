@@ -33,7 +33,7 @@ class UserManager(private val secureStore: SecureStore) {
     var authToken: AuthToken? = null
 
     val isLoggedIn: Boolean
-        get() = memberInfo != null
+        get() = authToken != null
     val canCallApi: Boolean
         get() = accessToken != null
 

@@ -31,7 +31,7 @@ class ChangePhoneConfirmPhoneFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         viewModel = ViewModelProvider(this).get(ChangePhoneConfirmPhoneViewModel::class.java)
         _binding = FragmentChangePhoneConfirmPhoneBinding.inflate(inflater, container, false)
         val inputPhoneConfirm = binding.forgotPassEmailInput
@@ -51,7 +51,7 @@ class ChangePhoneConfirmPhoneFragment : Fragment() {
         })
 
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 MaterialAlertDialogBuilder(requireContext()).apply {

@@ -267,8 +267,6 @@ class ChangeInfoInputViewModel : ViewModel() {
 
     fun checkValidForm(): Boolean {
         val isValid = formState.value?.let { form ->
-            val kataName = "${form.kanaFirstName ?: ""}${form.kanaLastName ?: ""}"
-            val hiraName = "${form.hiraFirstName ?: ""}${form.hiraLastName ?: ""}"
             val fields = arrayOf(
                 form.nickname,
                 form.loginId,
@@ -277,8 +275,10 @@ class ChangeInfoInputViewModel : ViewModel() {
                 form.answer,
                 form.email1,
                 form.email1Confirm,
-                kataName,
-                hiraName,
+                form.kanaFirstName,
+                form.kanaLastName,
+                form.hiraFirstName,
+                form.hiraLastName
             )
             !fields.any { it.isNullOrEmpty() }
         } ?: false
