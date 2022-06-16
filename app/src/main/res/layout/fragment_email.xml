@@ -136,7 +136,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/input_signup_style"
                                 android:hint="@string/email_hint"
-                                android:inputType="textEmailAddress"
+                                android:inputType="textEmailAddress|textNoSuggestions"
                                 android:minHeight="@dimen/min_height_input"
                                 android:paddingHorizontal="@dimen/fragment_horizontal_margin"
                                 android:textColor="@color/black"

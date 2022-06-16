@@ -207,9 +207,12 @@ class ForgotPassFragment : Fragment() {
 
         viewModel.forgotPassState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             it?.success?.let {
+                val myFormat = "yyyyMMdd" // mention the format you need
+                val sdf = SimpleDateFormat(myFormat, Locale.JAPAN)
+                val date = sdf.format(cal.time)
                 viewModel.resetPassData(
                     emailEdt.text.toString(),
-                    tvDatePicker.text.toString(),
+                    date,
                     phoneEdt.text.toString(),
                     question,
                     answerEdt.text.toString()

@@ -44,12 +44,13 @@ class CardBottomSheetCustom(
     private val creditCard: CardInfo,
     private val creditCardRepository: CreditCardRepository
 //    private val card: CreditCard
-) : BottomSheetDialog(activity), CoroutineScope {
+) : BottomSheetDialog(activity, R.style.AppBottomSheetDialogTheme), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         var newCard = creditCard.copy()
         val inflater = LayoutInflater.from(context)
 
