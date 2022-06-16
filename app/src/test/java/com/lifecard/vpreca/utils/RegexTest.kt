@@ -158,4 +158,16 @@ class RegexTest {
         Assert.assertEquals("***-***-4567", RegexUtils.formatHideDisplayPhoneNumber("0901234567"))
 //        Assert.assertEquals("***-***-4567", RegexUtils.formatHideDisplayPhoneNumber("090-123-4567"))
     }
+
+    @Test
+    fun emailValid_isCorrect() {
+        Assert.assertEquals(true, RegexUtils.isEmailValid("email@example.com"))
+        Assert.assertEquals(true, RegexUtils.isEmailValid("email@123.123.123.123"))
+        Assert.assertEquals(true, RegexUtils.isEmailValid("emailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemai@example.com"))//256 chars max
+
+        Assert.assertEquals(false, RegexUtils.isEmailValid("ﾁﾉﾆ@bc.com"))
+        Assert.assertEquals(false, RegexUtils.isEmailValid("ちち@bc.com"))
+        Assert.assertEquals(false, RegexUtils.isEmailValid("emailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemaia@example.com"))//257 failure
+        Assert.assertEquals(false, RegexUtils.isEmailValid(null))
+    }
 }
