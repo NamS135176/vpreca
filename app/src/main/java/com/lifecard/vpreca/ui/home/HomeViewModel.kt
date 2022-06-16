@@ -9,14 +9,12 @@ import com.lifecard.vpreca.data.CreditCardRepository
 import kotlinx.coroutines.launch
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.SuspendDealRepository
-import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.balance_amount.SuspendDealResult
 import com.lifecard.vpreca.ui.listvpreca.CardInfoResult
-import com.lifecard.vpreca.utils.copyCardLockInverse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.lang.Exception
 import javax.inject.Inject
@@ -24,14 +22,12 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val creditCardRepository: CreditCardRepository,
-    private val userRepository: UserRepository,
     private val suspendDealRepository: SuspendDealRepository
 ) : ViewModel() {
     private val _creditCardResult = MutableLiveData<CreditCardResult>()
     val creditCardResult: LiveData<CreditCardResult> = _creditCardResult
     private val _cardInfoResult = MutableLiveData<CardInfoResult?>()
     val cardInfoResult: LiveData<CardInfoResult?> = _cardInfoResult
-    val creditCardSelect = MutableLiveData<CreditCard>()
     private val _suspendDealResult = MutableLiveData<SuspendDealResult>()
     val suspendDealResult: LiveData<SuspendDealResult> = _suspendDealResult
     private val _loading = MutableLiveData<Boolean>()
@@ -74,21 +70,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun inverseLockStatus(creditCard: CreditCard, position: Int) {
-        viewModelScope.launch {
-            //need implement later
-            try {
-                val result = _creditCardResult.value
-                result?.success?.let {
-                    val newList = ArrayList(it)
-                    newList[position] = creditCard.copyCardLockInverse()
-                    _creditCardResult.value = CreditCardResult(success = newList)
-                }
-            } catch (e: Exception) {
 
-            }
-        }
-    }
 
     fun updateCard(creditCard: CreditCard, position: Int) {
         viewModelScope.launch {
@@ -122,10 +104,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
-    fun changeSelect(creditCard: CreditCard) {
-        creditCardSelect.value = creditCard
-    }
 
     fun creditCardSelectDataChanged(creditCard: CreditCard) {
         viewModelScope.launch {

@@ -1,22 +1,14 @@
 package com.lifecard.vpreca.ui.changeinfo
 
-import android.content.Context
-import android.content.res.Resources
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -28,7 +20,6 @@ import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.closeKeyBoard
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -41,18 +32,17 @@ class ChangeInfoInputFragment : Fragment() {
     @Inject
     lateinit var userManager: UserManager
 
-    private lateinit var viewModel: ChangeInfoInputViewModel
+    private val viewModel: ChangeInfoInputViewModel by viewModels()
     private var _binding: FragmentChangeInfoInputBinding? = null
     private val binding get() = _binding!!
     private val args: ChangeInfoInputFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        viewModel = ViewModelProvider(this).get(ChangeInfoInputViewModel::class.java)
+    ): View {
         _binding = FragmentChangeInfoInputBinding.inflate(inflater, container, false)
 
-        binding.constraintChangeInfo.setOnClickListener(View.OnClickListener { closeKeyBoard() })
+        binding.constraintChangeInfo.setOnClickListener { closeKeyBoard() }
 
         val spinnerCity = binding.spinnerCity
         val spinnerSecret = binding.spinnerSecret
@@ -127,7 +117,7 @@ class ChangeInfoInputFragment : Fragment() {
         viewModel.questionDataChanged(args.userData?.secretQuestion!!)
         viewModel.answerDataChanged(args.userData?.secretQuestionAnswer!!)
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().popBackStack() })
+        btnBack.setOnClickListener { findNavController().popBackStack() }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -135,7 +125,7 @@ class ChangeInfoInputFragment : Fragment() {
                     findNavController().popBackStack()
                 }
             })
-        btnCancel.setOnClickListener(View.OnClickListener {
+        btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
                     findNavController().navigate(R.id.action_to_home)
@@ -143,120 +133,136 @@ class ChangeInfoInputFragment : Fragment() {
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
             }.create().show()
-        })
+        }
 
         spinnerSecret.lifecycleOwner = viewLifecycleOwner
         spinnerCity.lifecycleOwner = viewLifecycleOwner
 
         viewModel.validForm.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { isValid ->
-                btnSubmit.isEnabled = isValid
-            })
+            viewLifecycleOwner
+        ) { isValid ->
+            btnSubmit.isEnabled = isValid
+        }
 
         viewModel.nicknameError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                usernameLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
-        viewModel.idError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+            viewLifecycleOwner
+        ) { error: Int? ->
+            usernameLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
+        viewModel.idError.observe(viewLifecycleOwner) { error: Int? ->
             idLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
-        })
+        }
         viewModel.email1Error.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                email1Layout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            email1Layout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.email2Error.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                email2Layout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            email2Layout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.email1ConfirmError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                email1ConfirmLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            email1ConfirmLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.email2ConfirmError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                email2ConfirmLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            email2ConfirmLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.answerError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                answerLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            answerLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
 
         viewModel.nameError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { errors: Array<Number?>? ->
-                binding.hiraNameInputLayout.error = try {
-                    val errorInt = errors?.filterNotNull()
-                    if (!errorInt.isNullOrEmpty()) {
-                        println("errorInt: $errorInt - text ${errorInt.map { getString(it as Int) }}")
-                        errorInt.joinToString(separator = "\n") { getString(it as Int) }
-                    } else {
-                        null
-                    }
-                } catch (e: Error) {
+            viewLifecycleOwner
+        ) { errors: Array<Number?>? ->
+            binding.hiraNameInputLayout.error = try {
+                val errorInt = errors?.filterNotNull()
+                if (!errorInt.isNullOrEmpty()) {
+                    println("errorInt: $errorInt - text ${errorInt.map { getString(it as Int) }}")
+                    errorInt.joinToString(separator = "\n") { getString(it as Int) }
+                } else {
                     null
                 }
-            })
-        viewModel.furiganaNameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error ->
-            when(error) {
+            } catch (e: Error) {
+                null
+            }
+        }
+        viewModel.furiganaNameError.observe(viewLifecycleOwner) { error ->
+            when (error) {
                 true -> {
-                    binding.hiraFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
-                    binding.hiraLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
+                    binding.hiraFirstName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
+                    binding.hiraLastName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
                 }
                 else -> {
-                    binding.hiraFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
-                    binding.hiraLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.hiraFirstName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.hiraLastName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
                 }
             }
-        })
-        viewModel.kanaNameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error ->
-            when(error) {
+        }
+        viewModel.kanaNameError.observe(viewLifecycleOwner) { error ->
+            when (error) {
                 true -> {
-                    binding.kanaFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
-                    binding.kanaLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
+                    binding.kanaFirstName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
+                    binding.kanaLastName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
                 }
                 else -> {
-                    binding.kanaFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
-                    binding.kanaLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.kanaFirstName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.kanaLastName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
                 }
             }
-        })
+        }
 
-        viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
                 val data = ChangeInfoMemberData(
                     memberNumber = args.userData?.memberNumber!!,
@@ -279,18 +285,18 @@ class ChangeInfoInputFragment : Fragment() {
                 findNavController().navigate(action)
                 viewModel.formResultState.value = null//for case back from stack
             }
-        })
+        }
         viewModel.formState.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { viewModel.checkValidForm() })
+            viewLifecycleOwner
+        ) { viewModel.checkValidForm() }
 
-        spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
+        spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let {
                 viewModel.questionDataChanged(text = it)
                 question = it
             }
         })
-        spinnerCity.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
+        spinnerCity.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let {
                 viewModel.cityDataChanged(text = it)
                 city = it
@@ -314,9 +320,9 @@ class ChangeInfoInputFragment : Fragment() {
         email1ConfirmEdt.doAfterTextChanged { text -> viewModel.email1ConfirmDataChanged(text = text.toString()) }
         email2ConfirmEdt.doAfterTextChanged { text -> viewModel.email2ConfirmDataChanged(text = text.toString()) }
 
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             viewModel.submit()
-        })
+        }
 
         return binding.root
     }

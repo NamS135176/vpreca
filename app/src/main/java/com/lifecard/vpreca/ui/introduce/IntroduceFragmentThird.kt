@@ -13,9 +13,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
-import com.lifecard.vpreca.databinding.IntroduceFragmentSecondFragmentBinding
 import com.lifecard.vpreca.databinding.IntroduceFragmentThirdFragmentBinding
-import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 
 class IntroduceFragmentThird : Fragment() {
 
@@ -30,14 +28,14 @@ class IntroduceFragmentThird : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = IntroduceFragmentThirdFragmentBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(IntroduceFragmentThirdViewModel::class.java)
+        viewModel = ViewModelProvider(this)[IntroduceFragmentThirdViewModel::class.java]
         // TODO: Use the ViewModel
         binding.card = args.cardData
         binding.cardZone.cardInclude.card = args.cardData
         binding.cardZone.card = args.cardData
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.action_third_to_second)
             }
@@ -47,24 +45,26 @@ class IntroduceFragmentThird : Fragment() {
         val btnSubmit = binding.btnSubmitInput
         val btnUsage = binding.btnMid
 
-        btnUsage.setOnClickListener(View.OnClickListener {
-//            println("sjkdfhksjdhfksdf")
+        btnUsage.setOnClickListener {
             val data = GiftCardConfirmData("unlog")
-            val action = IntroduceFragmentThirdDirections.actionThirdToUsage(convertObject(args.cardData!!), data)
+            val action = IntroduceFragmentThirdDirections.actionThirdToUsage(
+                convertObject(args.cardData!!),
+                data
+            )
             findNavController().navigate(action)
-        })
+        }
 
-        btnBack.setOnClickListener(View.OnClickListener {
+        btnBack.setOnClickListener {
             findNavController().navigate(R.id.action_third_to_second)
-        })
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        }
+        btnSubmit.setOnClickListener {
             findNavController().navigate(R.id.action_third_to_login)
-        })
+        }
         return binding.root
     }
 
-    fun convertObject(cardInfo: CardInfo): CreditCard {
-        val obj = CreditCard(
+    private fun convertObject(cardInfo: CardInfo): CreditCard {
+        return CreditCard(
             cardInfo.activateStatus,
             cardInfo.activateDate,
             cardInfo.autoChargeAmount,
@@ -110,7 +110,6 @@ class IntroduceFragmentThird : Fragment() {
             cardInfo.vcnExpirationDate,
             cardInfo.vcnSecurityLockFlg
         )
-        return obj
     }
 
 

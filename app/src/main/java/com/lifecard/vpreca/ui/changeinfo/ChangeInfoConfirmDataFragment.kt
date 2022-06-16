@@ -1,24 +1,18 @@
 package com.lifecard.vpreca.ui.changeinfo
 
-import androidx.lifecycle.ViewModelProvider
+
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.BackPressFragment
-import com.lifecard.vpreca.data.model.PhoneData
 import com.lifecard.vpreca.databinding.FragmentChangeInfoConfirmDataBinding
-import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
-import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showInternetTrouble
 import com.lifecard.vpreca.utils.showLoadingDialog
@@ -39,41 +33,36 @@ class ChangeInfoConfirmDataFragment : BackPressFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentChangeInfoConfirmDataBinding.inflate(inflater, container, false)
 
         val btnCancelConfirm = binding.btnCancelConfirm
         val btnSubmitConfirm = binding.btnSubmitConfirm
         val btnBack = binding.appbarConfirmSignup.btnBack
         val btnCancel = binding.appbarConfirmSignup.cancelBtn
-        val loading = binding.loading
         args.changeInfoData.let { changeInfoData -> binding.user = changeInfoData }
 
-        btnBack.setOnClickListener(View.OnClickListener {
+        btnBack.setOnClickListener {
             findNavController().popBackStack()
-        })
+        }
 
-        btnCancelConfirm.setOnClickListener(View.OnClickListener {
-            val action = ChangeInfoConfirmDataFragmentDirections.actionChangeConfirmDataToInput(
-                args.changeInfoData
-            )
+        btnCancelConfirm.setOnClickListener {
             findNavController().popBackStack()
-        })
+        }
 
-        btnCancel.setOnClickListener(View.OnClickListener {
+        btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
+                setPositiveButton("はい") { _, _ ->
                     findNavController().navigate(R.id.nav_home)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか?")
             }.create().show()
-        })
+        }
 
-        btnSubmitConfirm.setOnClickListener(View.OnClickListener {
-//            findNavController().navigate(R.id.nav_change_info_complete)
-            viewModel.changeInfoData(args.changeInfoData!!)
-        })
+        btnSubmitConfirm.setOnClickListener {
+            viewModel.changeInfoData(args.changeInfoData)
+        }
 
         viewModel.changeInfoState.observe(
             viewLifecycleOwner,
@@ -92,12 +81,12 @@ class ChangeInfoConfirmDataFragment : BackPressFragment() {
 
             })
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
+        viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> showLoadingDialog()
                 else -> hideLoadingDialog()
             }
-        })
+        }
 
         return binding.root
     }

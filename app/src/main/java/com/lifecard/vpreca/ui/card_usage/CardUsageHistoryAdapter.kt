@@ -10,8 +10,7 @@ import com.lifecard.vpreca.databinding.CardUsageHistoryItemBinding
 class CardUsageHistoryAdapter(private var items: List<CardUsageHistory>) :
     RecyclerView.Adapter<CardUsageHistoryAdapter.ViewHolder>() {
     class ViewHolder(var binding: CardUsageHistoryItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
@@ -21,9 +20,8 @@ class CardUsageHistoryAdapter(private var items: List<CardUsageHistory>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.item = items[position]
-        val div = position % 2
-        when {
-            div == 0 -> {
+        when (position % 2) {
+            0 -> {
                 holder.binding.bgItem.setBackgroundColor(Color.parseColor("#f7f7f7"))
             }
             else -> holder.binding.bgItem.setBackgroundColor(Color.parseColor("#ffffff"))

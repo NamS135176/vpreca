@@ -1,8 +1,6 @@
 package com.lifecard.vpreca.ui.forgotpass
 
-import android.util.Patterns
 import androidx.lifecycle.*
-import androidx.lifecycle.Observer
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
@@ -10,8 +8,6 @@ import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.ui.changepass.ChangePassRequestState
-import com.lifecard.vpreca.ui.login.LoginFormState
 import com.lifecard.vpreca.utils.RegexUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -89,7 +85,7 @@ class ForgotPassViewModel @Inject constructor(
 
     private fun isDateValid(date: String?, pattern: String? = "yyyy年MM月dd日"): Boolean {
         return try {
-            date?.let { SimpleDateFormat(pattern, Locale.JAPAN).parse(date).before(Date()) }
+            date?.let { SimpleDateFormat(pattern, Locale.JAPAN).parse(date)?.before(Date()) }
                 ?: false
         } catch (e: Exception) {
             false
