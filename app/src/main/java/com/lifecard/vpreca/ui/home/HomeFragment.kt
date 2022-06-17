@@ -291,7 +291,7 @@ class HomeFragment : Fragment(), CoroutineScope {
                         cardInfoResult.success,
                         creditCardRepository
                     ).show()
-
+                    homeViewModel.clearCardInfoResult()
                 }
                 cardInfoResult.error?.let { error ->
 

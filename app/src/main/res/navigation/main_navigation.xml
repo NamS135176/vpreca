@@ -77,7 +77,7 @@
         android:id="@+id/nav_change_info_complete"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoCompleteFragment"
         android:label="ChangeInfoCompleteFragment"
-        tools:layout="@layout/fragment_change_info_complete"></fragment>
+        tools:layout="@layout/fragment_change_info_complete" />
     <fragment
         android:id="@+id/nav_change_info_input"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputFragment"

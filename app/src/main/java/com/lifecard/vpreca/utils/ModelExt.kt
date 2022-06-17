@@ -71,11 +71,11 @@ fun CardInfo.copyCardInfoLockInverse(): CardInfo {
 }
 
 fun SignupInputState.getKanaName(): String {
-    return "${kanaFirstName ?: ""} ${kanaLastName ?: ""}"
+    return "${kanaFirstName ?: ""}　${kanaLastName ?: ""}"
 }
 
 fun SignupInputState.getFurigana(): String {
-    return "${hiraFirstName ?: ""} ${hiraLastName ?: ""}"
+    return "${hiraFirstName ?: ""}　${hiraLastName ?: ""}"
 }
 
 fun SignupInputState.getDate(): Date? {
