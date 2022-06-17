@@ -28,18 +28,7 @@ class RegexTest {
     }
 
     @Test
-    fun loginId_isInCorrect() {
-        val loginIdErrors = listOf(
-            "",
-            "ＡＡＡ",
-            "ＡＡＡＡＡＡ",
-            "12345",
-            "12345678901",
-            "12 345678",
-            "12344\uD83D\uDE00333",
-            "abc%^!#$@%@",
-            "マチヤタナヤ"
-        )
+    fun loginId_isCorrect() {
         Assert.assertEquals(false, RegexUtils.isLoginIdValid(""))
         Assert.assertEquals(false, RegexUtils.isLoginIdValid("ＡＡＡ"))
         Assert.assertEquals(false, RegexUtils.isLoginIdValid("ＡＡＡＡＡＡ"))
@@ -51,6 +40,7 @@ class RegexTest {
         Assert.assertEquals(false, RegexUtils.isLoginIdValid("マチヤタナヤ"))
 
         Assert.assertEquals(true, RegexUtils.isLoginIdValid("-23_202020"))
+        Assert.assertEquals(true, RegexUtils.isLoginIdValid("anhndt"))
     }
 
     @Test
@@ -168,6 +158,21 @@ class RegexTest {
         Assert.assertEquals(false, RegexUtils.isEmailValid("ﾁﾉﾆ@bc.com"))
         Assert.assertEquals(false, RegexUtils.isEmailValid("ちち@bc.com"))
         Assert.assertEquals(false, RegexUtils.isEmailValid("emailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemaia@example.com"))//257 failure
+        Assert.assertEquals(false, RegexUtils.isEmailValid("a bc@vn.com"))
         Assert.assertEquals(false, RegexUtils.isEmailValid(null))
+    }
+
+    @Test
+    fun isKanaNameFullWidth_isCorrect() {
+        Assert.assertEquals(true, RegexUtils.isKanaNameFullWidth("ヤマダ　アキ"))
+        Assert.assertEquals(true, RegexUtils.isKanaNameFullWidth("ヤヤマダ　アキヤマダヤマダヤマダヤマダ"))//max19 chars
+        Assert.assertEquals(false, RegexUtils.isKanaNameFullWidth("ヤヤヤマダ　アキヤマダヤマダヤマダヤマダ"))//20 chars failure
+    }
+
+    @Test
+    fun isNameFullWidth_isCorrect() {
+        Assert.assertEquals(true, RegexUtils.isNameFullWidth("山田　秋"))
+        Assert.assertEquals(true, RegexUtils.isNameFullWidth("山田山田　秋秋秋秋秋秋秋秋秋秋秋秋秋秋"))//max19 chars
+        Assert.assertEquals(false, RegexUtils.isNameFullWidth("山田山田　秋秋秋秋秋秋秋秋秋秋秋秋秋秋秋"))//20 chars failure
     }
 }

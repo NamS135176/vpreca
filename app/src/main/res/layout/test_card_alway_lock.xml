@@ -16,7 +16,9 @@
             name="card"
             type="com.lifecard.vpreca.data.model.CreditCard" />
     </data>
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <com.google.android.material.card.MaterialCardView
         style="@style/MyCardView"
         android:layout_width="match_parent"
@@ -129,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
-                    android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"
+                    android:text="mm/yy"
                     android:textColor="@color/black"
                     app:autoSizeMaxTextSize="19sp"
                     app:autoSizeMinTextSize="5sp"
@@ -179,4 +181,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

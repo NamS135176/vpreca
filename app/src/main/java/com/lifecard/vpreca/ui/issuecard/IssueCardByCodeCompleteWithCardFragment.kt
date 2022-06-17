@@ -14,26 +14,27 @@ import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeCompleteWithoutCar
 class IssueCardByCodeCompleteWithCardFragment : Fragment() {
     private var _binding: FragmentIssueCardByCodeCompleteWithCardBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentIssueCardByCodeCompleteWithCardBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+    ): View {
+        _binding =
+            FragmentIssueCardByCodeCompleteWithCardBinding.inflate(inflater, container, false)
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_with_complete_to_home)
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
             }
         })
 
         val btnSubmit = binding.btnSubmitPolicy
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_with_complete_to_home) })
-        // Inflate the layout for this fragment
+        btnSubmit.setOnClickListener(View.OnClickListener {
+            findNavController().popBackStack(
+                R.id.nav_home,
+                inclusive = false
+            )
+        })
         return binding.root
     }
 

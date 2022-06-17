@@ -5,16 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.model.ChangeInfoMemberData
-import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.ui.listvpreca.CardInfoResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -45,7 +42,6 @@ class ChangeInfoConfirmDataViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _changeInfoState.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         ChangeInfoState(internalError = "")
                     else -> _changeInfoState.value =
                         ChangeInfoState(

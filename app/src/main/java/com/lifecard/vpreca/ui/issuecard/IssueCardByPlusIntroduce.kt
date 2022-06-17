@@ -18,17 +18,12 @@ class IssueCardByPlusIntroduce : Fragment() {
 
     private var _binding: FragmentIssueCardByPlusIntroduceBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         _binding = FragmentIssueCardByPlusIntroduceBinding.inflate(inflater, container, false)
         val btnSubmit = binding.btnSubmitIntroduceFirst
         val btnCancel = binding.appbarGiftThird.cancelBtn
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.action_issue_introduce_to_main)
             }

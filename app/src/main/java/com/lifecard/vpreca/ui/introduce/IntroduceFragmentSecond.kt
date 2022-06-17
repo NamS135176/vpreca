@@ -8,8 +8,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.IntroduceFragmentSecondFragmentBinding
@@ -30,7 +28,7 @@ class IntroduceFragmentSecond : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = IntroduceFragmentSecondFragmentBinding.inflate(inflater, container, false)
 //        viewModel = ViewModelProvider(this).get(IntroduceFragmentSecondViewModel::class.java)
 
@@ -41,60 +39,58 @@ class IntroduceFragmentSecond : Fragment() {
         val giftCodeEdt = binding.textCode
         val vcnLayout = binding.giftVcnLayout
         val vcnInput = binding.giftVcnInput
-        val loading = binding.loading
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_second_to_first)
+                findNavController().popBackStack()
             }
         })
 
-        btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.action_second_to_first)
-        })
+        btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
-        btnSubmit.setOnClickListener(View.OnClickListener {
-//            findNavController().navigate(R.id.nav_introduce_third)
+        btnSubmit.setOnClickListener {
             viewModel.submit()
-        })
-        buttonOcrDetection.setOnClickListener(View.OnClickListener {
+        }
+        buttonOcrDetection.setOnClickListener {
             val action =
                 IntroduceFragmentSecondDirections.actionToCameraOcr(getString(R.string.camera_ocr_hint_input_gift_card))
             findNavController().navigate(action)
-        })
+        }
 
-        viewModel.formState.observe(viewLifecycleOwner, Observer { viewModel.checkFormValid() })
+        viewModel.formState.observe(viewLifecycleOwner) { viewModel.checkFormValid() }
 
-        viewModel.giftError.observe(viewLifecycleOwner, Observer { error: Int? ->
+        viewModel.giftError.observe(viewLifecycleOwner) { error: Int? ->
             giftCodeLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
-        })
+        }
 
-        viewModel.vcnError.observe(viewLifecycleOwner, Observer { error: Int? ->
+        viewModel.vcnError.observe(viewLifecycleOwner) { error: Int? ->
             vcnLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
-        })
+        }
 
         viewModel.validForm.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { isValid ->
-                btnSubmit.isEnabled = isValid
-            })
+            viewLifecycleOwner
+        ) { isValid ->
+            btnSubmit.isEnabled = isValid
+        }
 
 
-        viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
                 viewModel.getGiftCardInfo(giftCodeEdt.text.toString(), vcnInput.text.toString())
 //                findNavController().navigate(R.id.nav_signup_input)
             }
-        })
+        }
 
         viewModel.giftCardState.observe(
             viewLifecycleOwner,
@@ -114,12 +110,12 @@ class IntroduceFragmentSecond : Fragment() {
                 }
             })
 
-        viewModel.loading.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
-        })
+        }
 
         giftCodeEdt.doAfterTextChanged { text -> viewModel.giftNumberDataChanged(text = text.toString()) }
         vcnInput.doAfterTextChanged { text -> viewModel.vcnDataChanged(text = text.toString()) }
@@ -131,7 +127,7 @@ class IntroduceFragmentSecond : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val livedata = getNavigationResult("ocr_code")
-        livedata?.observe(viewLifecycleOwner, Observer { ocr ->
+        livedata?.observe(viewLifecycleOwner) { ocr ->
             livedata.removeObservers(viewLifecycleOwner)
             if (!ocr.isNullOrEmpty()) {
                 val textCode = binding.textCode
@@ -139,7 +135,8 @@ class IntroduceFragmentSecond : Fragment() {
                 showToast(getString(R.string.camera_ocr_success), toastPosition = ToastPosition.Top)
                 println("IntroduceFragmentSecond... get ocr code $ocr")
             }
-        })
+            livedata.value = null
+        }
     }
 
 

@@ -18,7 +18,9 @@ import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectDesignBinding
 import com.lifecard.vpreca.ui.balance_amount.BalanceAmountMenuFragmentDirections
 import com.lifecard.vpreca.ui.introduce.GiftCardConfirmFragmentArgs
+import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
@@ -39,7 +41,6 @@ class IssueCardSelectDesignFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentIssueCardSelectDesignBinding.inflate(inflater, container, false)
-//        viewModel = ViewModelProvider(this).get(IssueCardSelectDesignViewModel::class.java)
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
@@ -116,7 +117,7 @@ class IssueCardSelectDesignFragment : Fragment() {
 
         btnCancel.setOnClickListener(View.OnClickListener {
             when (args.selectDesignData?.preRoute) {
-                "selectSource" -> findNavController().navigate(R.id.nav_issue_card_main)
+                "selectSource" -> findNavController().navigate(R.id.selectdesign_to_main)
                 "valueConfirm" -> {
                     MaterialAlertDialogBuilder(requireContext()).apply {
                         setPositiveButton("はい") { dialog, which ->
@@ -154,8 +155,8 @@ class IssueCardSelectDesignFragment : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
 

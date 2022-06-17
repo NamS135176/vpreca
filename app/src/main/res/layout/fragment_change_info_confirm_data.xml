@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="com.lifecard.vpreca.utils.UserConverter" />
 
         <variable
@@ -35,11 +36,13 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toTopOf="@id/btn_submit_policy"
                 app:layout_constraintTop_toBottomOf="@+id/appbar_confirm_signup">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:paddingBottom="16dp">
+
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/signup_input_title"
                         style="@style/Widget.AppCompat.TextView.Bold"
@@ -50,6 +53,7 @@
                         android:text="@string/change_info_confirm_title"
                         android:textColor="#0057b5"
                         android:textSize="18sp" />
+
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/cf_signup_des"
                         android:layout_width="match_parent"
@@ -60,64 +64,71 @@
                         android:text="@string/change_info_confirm_des"
                         android:textColor="#353535"
                         android:textSize="12sp" />
+
                     <LinearLayout
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-
                         android:layout_marginHorizontal="31dp"
-                        android:paddingBottom="14dp"
+
                         android:layout_marginTop="26dp"
                         android:background="@drawable/underline_bg"
-                        android:paddingHorizontal="8dp">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+                        android:paddingBottom="14dp">
+
                         <com.google.android.material.textview.MaterialTextView
+                            style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/id_confirm_signup_title"
-                            android:textSize="12sp"
-                            style="@style/Widget.AppCompat.TextView.Bold"
-                            android:lineSpacingExtra="6sp"/>
+                            android:textSize="12sp" />
+
                         <com.google.android.material.textview.MaterialTextView
 
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@{user.loginId}"
-                            android:textSize="12sp"
+                            android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:gravity="end"/>
+                            android:text="@{user.loginId}"
+                            android:textSize="12sp" />
                     </LinearLayout>
+
                     <LinearLayout
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-
                         android:layout_marginHorizontal="31dp"
-                        android:paddingBottom="14dp"
+
                         android:layout_marginTop="26dp"
                         android:background="@drawable/underline_bg"
-                        android:paddingHorizontal="8dp">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+                        android:paddingBottom="14dp">
+
                         <com.google.android.material.textview.MaterialTextView
+                            style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:lineSpacingExtra="6sp"
                             android:text="@string/username_signup_title"
-                            android:textSize="12sp"
-                            style="@style/Widget.AppCompat.TextView.Bold"
-                            android:lineSpacingExtra="6sp"/>
+                            android:textSize="12sp" />
+
                         <com.google.android.material.textview.MaterialTextView
 
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@{user.memberRoman}"
-                            android:textSize="12sp"
+                            android:gravity="end"
                             android:lineSpacingExtra="6sp"
-                            android:gravity="end"/>
+                            android:text="@{user.memberRoman}"
+                            android:textSize="12sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/layour_show_id"
                         android:layout_width="match_parent"
@@ -269,6 +280,7 @@
                             android:text="@{user.mailAddress1}"
                             android:textSize="12sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -297,16 +309,18 @@
                             android:text="@{user.mailAddress2}"
                             android:textSize="12sp" />
                     </LinearLayout>
+
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/Widget.AppCompat.TextView.Bold"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:paddingTop="26dp"
                         android:layout_marginHorizontal="36dp"
                         android:layout_weight="1"
                         android:lineSpacingExtra="6sp"
+                        android:paddingTop="26dp"
                         android:text="@string/change_info_data_setting_title"
                         android:textSize="12sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -334,6 +348,7 @@
                             android:text="@{UserConverter.convertReceiveState(user.mail1AdMailRecieveFlg)}"
                             android:textSize="12sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -366,12 +381,13 @@
                         style="@style/Widget.AppCompat.TextView.Bold"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:paddingTop="26dp"
                         android:layout_marginHorizontal="36dp"
                         android:layout_weight="1"
                         android:lineSpacingExtra="6sp"
+                        android:paddingTop="26dp"
                         android:text="@string/change_info_data_magazine"
                         android:textSize="12sp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -399,6 +415,7 @@
                             android:text="@{UserConverter.convertReceiveState(user.mail1RecievFlg)}"
                             android:textSize="12sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -426,122 +443,113 @@
                             android:text="@{UserConverter.convertReceiveState(user.mail2RecievFlg)}"
                             android:textSize="12sp" />
                     </LinearLayout>
+
                     <com.google.android.material.textview.MaterialTextView
 
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:text="@string/secret_confirm_signup_title"
-                        android:textSize="12sp"
                         style="@style/Widget.AppCompat.TextView.Bold"
+                        android:layout_width="match_parent"
 
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
+                        android:lineSpacingExtra="6sp"
+
                         android:paddingHorizontal="39dp"
-                        android:lineSpacingExtra="6sp"/>
+                        android:text="@string/secret_confirm_signup_title"
+                        android:textSize="12sp" />
+
                     <LinearLayout
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-
                         android:layout_marginHorizontal="31dp"
-                        android:paddingBottom="14dp"
+
                         android:layout_marginTop="7dp"
                         android:background="@drawable/underline_bg"
-                        android:paddingHorizontal="8dp">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+                        android:paddingBottom="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvConfirmSecret"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:lineSpacingExtra="6sp"
                             android:text="@{user.secretQuestion}"
-                            android:textSize="12sp"
-                            android:lineSpacingExtra="6sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
+
                     <com.google.android.material.textview.MaterialTextView
 
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:text="@string/secret_answer_confirm_signup_title"
-                        android:textSize="12sp"
                         style="@style/Widget.AppCompat.TextView.Bold"
+                        android:layout_width="match_parent"
 
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
+                        android:lineSpacingExtra="6sp"
+
                         android:paddingHorizontal="39dp"
-                        android:lineSpacingExtra="6sp"/>
+                        android:text="@string/secret_answer_confirm_signup_title"
+                        android:textSize="12sp" />
+
                     <LinearLayout
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-
                         android:layout_marginHorizontal="31dp"
-                        android:paddingBottom="14dp"
+
                         android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
-                        android:paddingHorizontal="8dp">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+                        android:paddingBottom="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvConfirmSecretAnswer"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:lineSpacingExtra="6sp"
                             android:text="@{user.secretQuestionAnswer}"
-                            android:textSize="12sp"
-                            android:lineSpacingExtra="6sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
+
             <LinearLayout
                 android:id="@+id/btn_submit_policy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="32dp"
                 android:layout_marginHorizontal="22dp"
-                >
+                android:layout_marginTop="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent">
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnCancelConfirm"
+                    style="@style/AppTheme.RoundedCornerMaterialButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="9dp"
                     android:layout_marginEnd="9dp"
+                    android:layout_marginRight="9dp"
+                    android:layout_weight="1"
                     android:paddingVertical="12dp"
-                    android:textSize="18sp"
+                    android:text="@string/button_edit"
                     android:textColor="@color/primary"
-                    style="@style/AppTheme.RoundedCornerMaterialButton"
-                    android:text="@string/button_edit"/>
+                    android:textSize="18sp" />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSubmitConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="18sp"
-                    android:layout_marginLeft="9dp"
                     android:layout_marginStart="9dp"
+                    android:layout_marginLeft="9dp"
+                    android:layout_weight="1"
                     android:paddingVertical="18dp"
                     android:text="@string/change_pass_btn_submit"
-                    app:cornerRadius="30dp"
-                    />
+                    android:textSize="18sp"
+                    app:cornerRadius="30dp" />
             </LinearLayout>
-            <ProgressBar
-                android:id="@+id/loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="64dp"
-                android:visibility="gone"
-                android:indeterminateDrawable="@drawable/loading"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

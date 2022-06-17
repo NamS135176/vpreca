@@ -12,6 +12,8 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
 import com.lifecard.vpreca.utils.WebDirectScreen
+import com.lifecard.vpreca.utils.fragmentFindNavController
+import com.lifecard.vpreca.utils.mainGraphActionNavigateHome
 
 class IssueCardMainFragment : Fragment() {
     private var _binding: FragmentIssueCardMainBinding? = null
@@ -22,18 +24,20 @@ class IssueCardMainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentIssueCardMainBinding.inflate(inflater, container, false)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_issue_main_to_home)
-            }
-        })
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val buttonCreditCard = binding.buttonCreditCard
         val buttonNewCard = binding.buttonNewCard
         val buttonIssueByCode = binding.buttonIssueByCode
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
+            }
+        })
+
         btnCancel.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.action_issue_main_to_home)
+            findNavController().popBackStack(R.id.nav_home, inclusive = false)
         })
 
         buttonCreditCard.setOnClickListener(View.OnClickListener {

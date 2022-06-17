@@ -1,6 +1,5 @@
 package com.lifecard.vpreca.ui.introduce
 
-import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.exception.ErrorMessageException
 

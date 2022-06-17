@@ -9,7 +9,6 @@ import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
-import com.lifecard.vpreca.ui.issuecard.IssueCardByCodeInputState
 import com.lifecard.vpreca.utils.RegexUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

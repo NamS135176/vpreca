@@ -9,7 +9,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentChangePhoneCompleteBinding
-import com.lifecard.vpreca.databinding.FragmentChangePhoneConfirmBinding
 
 
 class ChangePhoneCompleteFragment : Fragment() {
@@ -19,16 +18,21 @@ class ChangePhoneCompleteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentChangePhoneCompleteBinding.inflate(inflater, container, false)
         val btnComplete = binding.btnSubmitPolicy
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
             }
         })
-        btnComplete.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_changephone_com_to_home) })
+        btnComplete.setOnClickListener {
+            findNavController().popBackStack(
+                R.id.nav_home,
+                inclusive = false
+            )
+        }
         return binding.root
     }
 

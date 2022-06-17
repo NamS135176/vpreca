@@ -47,7 +47,7 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
             _loading.value = true
 
             val res =
-                issueCardRepository.issueGiftReqWithouCard(designId, giftNumber)
+                issueCardRepository.issueGiftReqWithCard(designId, giftNumber,Constant.CARD_SCHEME_ID,"",Constant.CARD_NAME)
             if (res is Result.Success) {
                 _issueGiftReqResult.value = IssueGiftResult(success = res.data)
             } else if (res is Result.Error) {

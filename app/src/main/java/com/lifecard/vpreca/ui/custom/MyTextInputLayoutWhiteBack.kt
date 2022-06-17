@@ -21,7 +21,7 @@ class MyTextInputLayoutWhiteBack @JvmOverloads constructor(
 
     var error: String? = null
         set(value) {
-            if (field == value) return;//do nothing
+            if (field == value) return//do nothing
             field = value
             errorText.text = value
             if (value?.isNotEmpty() == true) {

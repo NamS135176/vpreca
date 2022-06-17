@@ -19,11 +19,6 @@
         <action
             android:id="@+id/action_term_of_use_to_web"
             app:destination="@id/nav_webview" />
-        <argument
-            android:name="check_state"
-            android:defaultValue="@null"
-            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"
-            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -72,11 +67,6 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/nav_login"
             app:popUpToInclusive="true" />
-        <argument
-            android:name="check_data"
-            android:defaultValue="@null"
-            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"
-            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/nav_signup_input"

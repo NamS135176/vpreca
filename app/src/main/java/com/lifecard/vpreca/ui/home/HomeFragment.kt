@@ -2,9 +2,7 @@ package com.lifecard.vpreca.ui.home
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Resources
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +24,6 @@ import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
-import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.NoConnectivityException
@@ -73,27 +70,32 @@ class HomeFragment : Fragment(), CoroutineScope {
             binding.listCard.cardList.adapter?.let {
                 val adapter = it as CardSlidePagerAdapter
                 val itemCount = adapter.itemCount
-                if (itemCount == 1) {
-                    buttonSlideLeft.visibility = View.INVISIBLE
-                    buttonSlideRight.visibility = View.INVISIBLE
-                } else if (position < 1) {
-                    buttonSlideLeft.visibility = View.INVISIBLE
-                    buttonSlideRight.visibility = View.VISIBLE
-                } else if (position >= itemCount - 1) {
-                    buttonSlideLeft.visibility = View.VISIBLE
-                    buttonSlideRight.visibility = View.INVISIBLE
-                } else {
-                    buttonSlideLeft.visibility = View.VISIBLE
-                    buttonSlideRight.visibility = View.VISIBLE
+                when {
+                    itemCount == 1 -> {
+                        buttonSlideLeft.visibility = View.INVISIBLE
+                        buttonSlideRight.visibility = View.INVISIBLE
+                    }
+                    position < 1 -> {
+                        buttonSlideLeft.visibility = View.INVISIBLE
+                        buttonSlideRight.visibility = View.VISIBLE
+                    }
+                    position >= itemCount - 1 -> {
+                        buttonSlideLeft.visibility = View.VISIBLE
+                        buttonSlideRight.visibility = View.INVISIBLE
+                    }
+                    else -> {
+                        buttonSlideLeft.visibility = View.VISIBLE
+                        buttonSlideRight.visibility = View.VISIBLE
+                    }
                 }
                 var currentCreditCard = adapter.getItem(position)
                 binding.listCard.currentCard = currentCreditCard
-                buttonInfo.setOnClickListener(View.OnClickListener {
+                buttonInfo.setOnClickListener {
                     homeViewModel.creditCardSelectDataChanged(currentCreditCard)
-                })
-                buttonLock.setOnClickListener(View.OnClickListener {
+                }
+                buttonLock.setOnClickListener {
                     launch {
-                        binding.loading.visibility = View.VISIBLE
+                        showLoadingDialog()
                         currentCreditCard = currentCreditCard.copyCardLockInverse()
                         val res = creditCardRepository.updateCard(currentCreditCard)
                         if (res is Result.Success) {
@@ -117,16 +119,16 @@ class HomeFragment : Fragment(), CoroutineScope {
 
                             }
                         }
-                        binding.loading.visibility = View.GONE
+                        hideLoadingDialog()
                     }
-                })
-                buttonReload.setOnClickListener(View.OnClickListener {
+                }
+                buttonReload.setOnClickListener {
                     if (!adapter.getItem(position).isCardLock()) {
                         MaterialAlertDialogBuilder(requireContext()).apply {
                             setPositiveButton("はい") { _, _ ->
 
                                 launch {
-                                    binding.loading.visibility = View.VISIBLE
+                                    showLoadingDialog()
                                     val res = creditCardRepository.republishCard(currentCreditCard)
                                     if (res is Result.Success) {
                                         binding.listCard.currentCard = res.data
@@ -147,7 +149,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
                                         }
                                     }
-                                    binding.loading.visibility = View.GONE
+                                    hideLoadingDialog()
                                 }
 
 
@@ -157,13 +159,13 @@ class HomeFragment : Fragment(), CoroutineScope {
                         }.create().show()
                     }
 
-                })
+                }
             }
         }
     }
 
     @Subscribe
-    fun handleReloadCards(event: ReloadCard) {
+    fun handleReloadCards(reload: ReloadCard) {
         homeViewModel.loadCard(true)
     }
 
@@ -173,6 +175,7 @@ class HomeFragment : Fragment(), CoroutineScope {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        println("HomeFragment... onCreateView")
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -187,18 +190,16 @@ class HomeFragment : Fragment(), CoroutineScope {
         val textBalance = binding.textBalance
         val btnIssueCard = binding.buttonAddNewCard
         val btnBalance = binding.buttonCardNoBalance
-        val loading = binding.loading
 
-        btnBalance.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
+        btnBalance.setOnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) }
 
-        btnIssueCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
+        btnIssueCard.setOnClickListener { findNavController().navigate(R.id.nav_issue_card_main) }
 
-        buttonSeeAllCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_list_vpreca) })
+        buttonSeeAllCard.setOnClickListener { findNavController().navigate(R.id.nav_list_vpreca) }
 
         binding.textLastLoginDate.text = SimpleDateFormat("yyyy M/d").format(Date())
 
-        binding.listCard.buttonUsage.setOnClickListener(View.OnClickListener {
-//            findNavController().navigate(R.id.action_to_card_usage)
+        binding.listCard.buttonUsage.setOnClickListener {
             val card = pagerAdapter?.getItem(viewPager.currentItem)
             card?.let {
                 val data = GiftCardConfirmData("logged")
@@ -206,21 +207,19 @@ class HomeFragment : Fragment(), CoroutineScope {
                     HomeFragmentDirections.actionToCardUsage(it, data)
                 findNavController().navigate(action)
             }
-        })
+        }
 
-
-        buttonSlideLeft.setOnClickListener(View.OnClickListener {
+        buttonSlideLeft.setOnClickListener {
             viewPager.setCurrentItem(max(viewPager.currentItem - 1, 0), true)
-        })
-        buttonSlideRight.setOnClickListener(View.OnClickListener {
+        }
+        buttonSlideRight.setOnClickListener {
             viewPager.adapter?.let {
                 viewPager.setCurrentItem(
                     min(viewPager.currentItem + 1, it.itemCount - 1),
                     true
                 )
             }
-
-        })
+        }
 
         homeViewModel.creditCardResult.observe(viewLifecycleOwner, Observer { creditCardResult ->
             creditCardResult ?: return@Observer
@@ -263,7 +262,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
                         viewPager.registerOnPageChangeCallback(pageChangeCallback)
 
-                        TabLayoutMediator(tabDots, viewPager) { tab, position ->
+                        TabLayoutMediator(tabDots, viewPager) { _, _ ->
 
                         }.attach()
 
@@ -299,10 +298,9 @@ class HomeFragment : Fragment(), CoroutineScope {
                         cardInfoResult.success,
                         creditCardRepository
                     ).show()
-
+                    homeViewModel.clearCardInfoResult()
                 }
                 cardInfoResult.error?.let { error ->
-
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
                     error.message?.let { showPopupMessage(message = it) }
                 }
@@ -339,37 +337,29 @@ class HomeFragment : Fragment(), CoroutineScope {
                 }
                 suspendDealResult.networkTrouble?.let {
                     if (it) {
-//                        showInternetTrouble()
+                        showInternetTrouble()
                     }
                 }
             })
-        homeViewModel.loading.observe(viewLifecycleOwner, Observer {
+        homeViewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> {
-                    loading.visibility = View.VISIBLE
+                    showLoadingDialog()
 
                 }
                 else -> {
-                    loading.visibility = View.GONE
+                    hideLoadingDialog()
 
                 }
             }
-        })
+        }
         setLightStatusBar()
         return root
     }
 
-    fun dp2px(resource: Resources, dp: Int): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp.toFloat(),
-            resource.displayMetrics
-        )
-            .toInt()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        println("HomeFragment... onViewCreated")
         unlockDrawer()
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
@@ -382,6 +372,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        println("HomeFragment... onDestroyView")
         binding.listCard.cardList.unregisterOnPageChangeCallback(pageChangeCallback)
         _binding = null
         clearLightStatusBar()
@@ -393,6 +384,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        println("HomeFragment... onAttach")
         lifecycleObserver = object : DefaultLifecycleObserver {
             override fun onCreate(owner: LifecycleOwner) {
                 super.onCreate(owner)
@@ -406,7 +398,18 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     override fun onDetach() {
         super.onDetach()
+        println("HomeFragment... onDetach")
         EventBus.getDefault().unregister(this)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        println("HomeFragment... onSaveInstanceState")
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        println("HomeFragment... onSaveInstanceState")
     }
 
     private inner class CardSlidePagerAdapter(

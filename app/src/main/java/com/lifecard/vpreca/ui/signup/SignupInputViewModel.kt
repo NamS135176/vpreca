@@ -45,7 +45,7 @@ class SignupInputViewModel : ViewModel() {
 
     private fun checkLoginIdValid(): Boolean {
         return if (!RegexUtils.isLoginIdValid(formState.value?.loginId)) {
-            loginIdError.value = R.string.invalid_password
+            loginIdError.value = R.string.rgx_error_login_id
             false
         } else {
             loginIdError.value = null
@@ -87,7 +87,7 @@ class SignupInputViewModel : ViewModel() {
 
     private fun checkCfPasswordValid(): Boolean {
         return if (!isCfPasswordValid(formState.value?.password, formState.value?.cfPassword)) {
-            cfPasswordError.value = R.string.rgx_error_cf_password
+            cfPasswordError.value = R.string.rgx_error_not_match
             false
         } else {
             cfPasswordError.value = null
@@ -179,7 +179,7 @@ class SignupInputViewModel : ViewModel() {
         val hiraLastName = formState.value?.hiraLastName
 
         if (kanaFirstName.isNullOrEmpty() || kanaLastName.isNullOrEmpty()
-            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName $kanaLastName")
+            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName　$kanaLastName")
         ) {
             kanaNameError.value = true
             errors[0] = R.string.rgx_error_name_kana_full_width
@@ -188,7 +188,7 @@ class SignupInputViewModel : ViewModel() {
         }
 
         if (hiraFirstName.isNullOrEmpty() || hiraLastName.isNullOrEmpty()
-            || !RegexUtils.isNameFullWidth("$hiraFirstName $hiraLastName")
+            || !RegexUtils.isNameFullWidth("$hiraFirstName　$hiraLastName")
         ) {
             furiganaNameError.value = true
             errors[1] = R.string.rgx_error_name_full_width
@@ -222,7 +222,8 @@ class SignupInputViewModel : ViewModel() {
     }
 
     private fun isCfPasswordValid(password: String?, cfPassword: String?): Boolean {
-        return RegexUtils.isPasswordValid(cfPassword) && cfPassword == password
+        //only compare cfPass and pass
+        return cfPassword == password
     }
 
     fun submit() {
@@ -249,8 +250,6 @@ class SignupInputViewModel : ViewModel() {
 
     fun checkValidForm(): Boolean {
         val isValid = formState.value?.let { form ->
-            val kataName = "${form.kanaFirstName ?: ""}${form.kanaLastName ?: ""}"
-            val hiraName = "${form.hiraFirstName ?: ""}${form.hiraLastName ?: ""}"
             val fields = arrayOf(
                 form.nickname,
                 form.loginId,
@@ -262,8 +261,10 @@ class SignupInputViewModel : ViewModel() {
                 form.answer,
                 form.password,
                 form.cfPassword,
-                kataName,
-                hiraName,
+                form.kanaFirstName,
+                form.kanaLastName,
+                form.hiraFirstName,
+                form.hiraLastName
             )
             val valid = !fields.any { it.isNullOrEmpty() }
             valid

@@ -96,8 +96,7 @@ class LoginFragment : NoToolbarFragment() {
         })
 
         signUpButton.setOnClickListener(View.OnClickListener {
-            val action = LoginFragmentDirections.actionToPolicy(GiftCardConfirmData("0"))
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.action_to_policy)
         })
 
         loginViewModel.validForm.observe(viewLifecycleOwner, Observer { isValid ->
@@ -303,5 +302,6 @@ class LoginFragment : NoToolbarFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        loginViewModel.clearLoginResultError()
     }
 }

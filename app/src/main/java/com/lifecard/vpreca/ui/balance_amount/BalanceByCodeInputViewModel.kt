@@ -2,15 +2,12 @@ package com.lifecard.vpreca.ui.balance_amount
 
 import androidx.lifecycle.*
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.IssueCardRepository
 import com.lifecard.vpreca.data.Result
-import com.lifecard.vpreca.data.SuspendDealRepository
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.ui.home.CreditCardResult
 import com.lifecard.vpreca.ui.issuecard.IssueCardByCodeInputState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,16 +15,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BalanceByCodeInputViewModel @Inject constructor(
-    private val creditCardRepository: CreditCardRepository,
     private val issueCardRepository: IssueCardRepository
-)  : ViewModel() {
+) : ViewModel() {
     val giftCodeError = MutableLiveData<Int?>()
 
     private val _giftInfoResult = MutableLiveData<GiftInfoResult>()
     val giftInfoResult: LiveData<GiftInfoResult> = _giftInfoResult
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
-    fun getGiftData(giftNumber:String){
+    fun getGiftData(giftNumber: String) {
         viewModelScope.launch {
             _loading.value = true
             val result = issueCardRepository.giftNumberAuthReq(giftNumber)
@@ -65,8 +61,7 @@ class BalanceByCodeInputViewModel @Inject constructor(
     fun giftCodeDataChanged(text: String) {
         if (!isGiftCodeValid(text)) {
             giftCodeError.value = R.string.empty
-        }
-        else{
+        } else {
             giftCodeError.value = null
         }
     }

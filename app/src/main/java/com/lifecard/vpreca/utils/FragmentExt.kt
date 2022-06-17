@@ -4,8 +4,14 @@ import android.content.Context
 import android.content.res.Resources
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.PopUpToBuilder
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.AlertDialogFragment
 
@@ -76,4 +82,23 @@ fun Fragment.closeKeyBoard() {
     } catch (e: Exception) {
 
     }
+}
+
+fun Fragment.mainGraphActionNavigateHome() = try {
+    val navController = findNavController()
+    val count = navController.backQueue.count()
+    val previous = if (count > 1) navController.backQueue[count - 2] else null
+
+    if (previous?.destination?.id == R.id.nav_home) {
+        navController.popBackStack()
+    } else {
+        navController.navigate(R.id.nav_home, null, navOptions {
+            popUpTo(R.id.nav_home) {
+                inclusive = true
+                saveState = true
+            }
+        })
+    }
+} catch (e: Exception) {
+
 }

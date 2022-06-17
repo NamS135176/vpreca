@@ -96,8 +96,8 @@ class IssueCardByCodeInputCode : Fragment() {
 
         viewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
 
@@ -124,6 +124,7 @@ class IssueCardByCodeInputCode : Fragment() {
                 showToast(getString(R.string.camera_ocr_success), toastPosition = ToastPosition.Top)
                 println("GiftCardPolicyFragment... get ocr code $ocr")
             }
+            livedata.value = null
         })
     }
 

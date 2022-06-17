@@ -1,6 +1,5 @@
 package com.lifecard.vpreca.ui.changeinfo
 
-import com.lifecard.vpreca.data.model.ChangeInfoMemberData
 import com.lifecard.vpreca.data.model.MemberInfo
 import com.lifecard.vpreca.exception.ErrorMessageException
 

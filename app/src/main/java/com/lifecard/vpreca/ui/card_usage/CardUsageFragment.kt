@@ -1,9 +1,7 @@
 package com.lifecard.vpreca.ui.card_usage
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,15 +15,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.Result
-import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentCardUsageBinding
-import com.lifecard.vpreca.databinding.FragmentLoginBinding
-import com.lifecard.vpreca.ui.login.LoginViewModel
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.hideToolbar
-import com.lifecard.vpreca.utils.isCardLock
-import com.lifecard.vpreca.utils.showToolbar
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,47 +28,43 @@ class CardUsageFragment : Fragment() {
 
     private val viewModel: CardUsageViewModel by viewModels()
     private var _binding: FragmentCardUsageBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val args:CardUsageFragmentArgs by  navArgs()
+    private val args: CardUsageFragmentArgs by navArgs()
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCardUsageBinding.inflate(inflater, container, false)
         val listCardUsageHistory = binding.listCardUsageHistory
-        val loading = binding.loading
         val btnBack = binding.appbarCardUsage.btnBack
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if(args.preRoute?.preRoute == "logged"){
-                    findNavController().navigate(R.id.action_card_usage_to_home)
-                }
-                else{
+                if (args.preRoute?.preRoute == "logged") {
+                    findNavController().popBackStack(R.id.nav_home, inclusive = false)
+                } else {
                     findNavController().popBackStack()
                 }
             }
         })
-        btnBack.setOnClickListener(View.OnClickListener {
-            if(args.preRoute?.preRoute == "logged"){
-                findNavController().navigate(R.id.action_card_usage_to_home)
-            }
-            else{
+        btnBack.setOnClickListener {
+            if (args.preRoute?.preRoute == "logged") {
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
+            } else {
                 findNavController().popBackStack()
             }
-        })
-        if(args.preRoute?.preRoute == "logged"){
-            viewModel.getCardUsageHistory(args.card!!)
         }
-        else{
+        if (args.preRoute?.preRoute == "logged") {
+            viewModel.getCardUsageHistory(args.card!!)
+        } else {
             viewModel.getCardUsageHistoryWithoutMember(args.card!!)
         }
 
-
-        viewModel.cardUsageHistoryResult.observe(viewLifecycleOwner, Observer {
+        viewModel.cardUsageHistoryResult.observe(viewLifecycleOwner) {
             if (it is Result.Success) {
                 //display list
                 listCardUsageHistory.adapter = CardUsageHistoryAdapter(it.data)
@@ -87,13 +74,13 @@ class CardUsageFragment : Fragment() {
                 )
                 listCardUsageHistory.addItemDecoration(dividerItemDecoration)
             }
-        })
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
+        }
+        viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
-        })
+        }
         binding.cardNo.text = Converter.convertPrecaNumber(args.card?.precaNumber)
         binding.balance.text = Converter.convertCurrency(args.card?.publishAmount)
 
@@ -107,14 +94,12 @@ class CardUsageFragment : Fragment() {
     }
 
 
-
     override fun onDetach() {
         super.onDetach()
-        if(args.preRoute?.preRoute == "logged"){
+        if (args.preRoute?.preRoute == "logged") {
             showToolbar()
-        }
-        else{
-           hideToolbar()
+        } else {
+            hideToolbar()
         }
     }
 }

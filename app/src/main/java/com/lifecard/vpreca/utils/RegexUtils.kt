@@ -20,7 +20,7 @@ class RegexUtils {
          * only half width and underscore from range 6-10 chars
          * check the screen SC08_2
          */
-        private const val RegexLoginID = "^[a-zA-Z0-9ぁ-んｧ-ﾝﾞﾟ_-]{6,10}\$"
+        private const val RegexLoginID = "^[a-zA-Z0-9_-]{6,10}\$"
 
         /**
          * Regex detect text has special character excludes underscore and -
@@ -42,7 +42,7 @@ class RegexUtils {
         private const val RegexPhoneNumber = "^\\d{10}\$|^\\d{11}\$"
 
         private const val RegexEmail =
-            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+"
+            "^[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+\$"
 
         /**
          * only roman included special character  and between 8-12 character
@@ -74,12 +74,12 @@ class RegexUtils {
         /**
          * Name katakana full width with space
          */
-        private const val RegexKanaNameFullWidth = "^([ァ-ン\\s]{1,19})\$"
+        private const val RegexKanaNameFullWidth = "^([ァ-ン\\s　]{1,19})\$"
 
         /**
          * Check name full width with space
          */
-        private const val RegexNameFullWidth = "^[Ａ-ｚ０-９ぁ-んァ-ン一-龥・|ー\\s]{1,19}\$"
+        private const val RegexNameFullWidth = "^[Ａ-ｚ０-９ぁ-んァ-ン一-龥・|ー\\s　]{1,19}\$"
         private const val RegexGiftNumber = "^[a-zA-Z0-9ぁ-んァ-ンｧ-ﾝﾞﾟ_]{15}\$"
 
         /**

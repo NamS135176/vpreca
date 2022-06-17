@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
-import com.lifecard.vpreca.data.model.MemberInfo
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
