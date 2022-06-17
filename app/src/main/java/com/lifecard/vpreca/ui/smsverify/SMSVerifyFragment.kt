@@ -60,7 +60,7 @@ class SMSVerifyFragment : Fragment() {
                     findNavController().navigate(R.id.action_sms_to_login)
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("途中ですがキャンセルしてもよろしいですか")
+                setMessage("途中ですがキャンセルしてもよろしいですか?")
             }.create().show()
         }
 

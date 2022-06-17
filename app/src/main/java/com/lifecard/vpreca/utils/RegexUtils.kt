@@ -20,7 +20,7 @@ class RegexUtils {
          * only half width and underscore from range 6-10 chars
          * check the screen SC08_2
          */
-        private const val RegexLoginID = "^[a-zA-Z0-9ぁ-んｧ-ﾝﾞﾟ_-]{6,10}\$"
+        private const val RegexLoginID = "^[a-zA-Z0-9_-]{6,10}\$"
 
         /**
          * Regex detect text has special character excludes underscore and -
@@ -42,7 +42,7 @@ class RegexUtils {
         private const val RegexPhoneNumber = "^\\d{10}\$|^\\d{11}\$"
 
         private const val RegexEmail =
-            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+"
+            "^[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+\$"
 
         /**
          * only roman included special character  and between 8-12 character

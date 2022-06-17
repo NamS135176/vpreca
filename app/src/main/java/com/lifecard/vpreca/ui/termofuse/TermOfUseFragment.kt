@@ -76,7 +76,9 @@ class TermOfUseFragment : Fragment() {
         val webView = binding.webview
         val loadingProgressBar = binding.loading
 
-        cbTermOfUse.setOnCheckedChangeListener { _, b -> btnSubmit.isEnabled = b }
+        cbTermOfUse.setOnCheckedChangeListener { _, isChecked ->
+            btnSubmit.isEnabled = isChecked
+        }
 
         btnSubmit.setOnClickListener {
             PreferenceHelper.setAcceptTermOfUseFirstTime(

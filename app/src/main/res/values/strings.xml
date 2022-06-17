@@ -524,9 +524,9 @@
     <!--   End FaceID setting  -->
 
     <!--   Regex error  -->
-    <string name="rgx_error_nickname">記号・スペースを含まない半角英大文字2~18文字で入力してください。</string>
+    <string name="rgx_error_nickname">スペースを含まない半角英大文字2~18文字で入力してください。</string>
     <string name="rgx_error_datetime">正しい生年月日を入力してください。</string>
-    <string name='rgx_error_phone_number'>正しい電話番号を入力してください。</string>
+    <string name='rgx_error_phone_number'>正しい電話番号を入力してください</string>
     <string name='rgx_error_gender'>正しい性別を入力してください</string>
     <string name="rgx_error_password">半角英数字8〜12文字で入力してください。</string>
     <string name="rgx_error_confirm_password">@string/rgx_error_not_match</string>

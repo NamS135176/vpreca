@@ -29,7 +29,12 @@ class BalanceBySourceCompleteFragment : Fragment() {
         })
 
         val btnSubmit = binding.btnSubmitPolicy
-        btnSubmit.setOnClickListener { findNavController().navigate(R.id.action_balancesource_to_home) }
+        btnSubmit.setOnClickListener(View.OnClickListener {
+            findNavController().popBackStack(
+                R.id.nav_home,
+                inclusive = false
+            )
+        })
         return binding.root
     }
 

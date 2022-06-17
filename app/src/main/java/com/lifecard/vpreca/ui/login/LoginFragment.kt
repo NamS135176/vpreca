@@ -24,7 +24,6 @@ import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
 import com.lifecard.vpreca.data.UserManager
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.*
@@ -95,8 +94,7 @@ class LoginFragment : NoToolbarFragment() {
         }
 
         signUpButton.setOnClickListener {
-            val action = LoginFragmentDirections.actionToPolicy(GiftCardConfirmData("0"))
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.action_to_policy)
         }
 
         loginViewModel.validForm.observe(viewLifecycleOwner) { isValid ->

@@ -79,7 +79,7 @@ class SignupInputFragment : Fragment() {
                             findNavController().navigate(R.id.action_signupInput_to_login)
                         }
                         setNegativeButton("いいえ", null)
-                        setMessage("途中ですがキャンセルしてもよろしいですか")
+                        setMessage("途中ですがキャンセルしてもよろしいですか?")
                     }.create().show()
                 }
             })
@@ -140,7 +140,7 @@ class SignupInputFragment : Fragment() {
                     findNavController().navigate(R.id.action_signupInput_to_login)
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("途中ですがキャンセルしてもよろしいですか")
+                setMessage("途中ですがキャンセルしてもよろしいですか?")
             }.create().show()
         }
 

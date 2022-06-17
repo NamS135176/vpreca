@@ -48,7 +48,7 @@ class ConfirmSignupDataFragment : Fragment() {
                     findNavController().navigate(R.id.action_cfSignup_to_login)
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("途中ですがキャンセルしてもよろしいですか")
+                setMessage("途中ですがキャンセルしてもよろしいですか?")
             }.create().show()
         }
 

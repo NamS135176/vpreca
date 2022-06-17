@@ -18,7 +18,7 @@ import com.lifecard.vpreca.databinding.FragmentPhoneBinding
 class PhoneFragment : Fragment() {
 
     private val phoneViewModel: PhoneViewModel by viewModels()
-    private var _binding:FragmentPhoneBinding? = null
+    private var _binding: FragmentPhoneBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -43,9 +43,7 @@ class PhoneFragment : Fragment() {
                 )
             }.create().show()
         }
-        btnBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        btnBack.setOnClickListener { findNavController().popBackStack() }
 
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
@@ -88,7 +86,6 @@ class PhoneFragment : Fragment() {
         }
         return binding.root
     }
-
 
 
 }

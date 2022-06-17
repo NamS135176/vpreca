@@ -67,7 +67,7 @@ class ForgotPassFragment : Fragment() {
                     backFunction()
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("途中ですがキャンセルしてもよろしいですか")
+                setMessage("途中ですがキャンセルしてもよろしいですか?")
             }.create().show()
         }
 
@@ -253,6 +253,8 @@ class ForgotPassFragment : Fragment() {
     }
 
     fun backFunction() {
-        findNavController().navigate(R.id.action_forgot_to_login)
+        findNavController().popBackStack(R.id.nav_login,
+        inclusive = true,
+        )
     }
 }

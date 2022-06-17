@@ -131,7 +131,7 @@ class ChangeInfoInputFragment : Fragment() {
                     findNavController().navigate(R.id.action_to_home)
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("途中ですがキャンセルしてもよろしいですか")
+                setMessage("途中ですがキャンセルしてもよろしいですか?")
             }.create().show()
         }
 
