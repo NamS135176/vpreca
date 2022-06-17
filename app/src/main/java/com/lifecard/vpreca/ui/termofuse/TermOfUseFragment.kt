@@ -25,7 +25,6 @@ class TermOfUseFragment : Fragment() {
 
     private var _binding: TermOfUseFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: TermOfUseViewModel
     private val loading = MutableLiveData<Boolean>(false)
 
     private var webViewClient = object : WebViewClient() {
