@@ -64,16 +64,22 @@ class CardUsageFragment : Fragment() {
             viewModel.getCardUsageHistoryWithoutMember(args.card!!)
         }
 
-        viewModel.cardUsageHistoryResult.observe(viewLifecycleOwner) {
-            if (it is Result.Success) {
+        viewModel.cardUsageHistoryResult.observe(viewLifecycleOwner) { result ->
+            result.data?.let { data ->
                 //display list
-                listCardUsageHistory.adapter = CardUsageHistoryAdapter(it.data)
+                listCardUsageHistory.adapter = CardUsageHistoryAdapter(data)
                 val dividerItemDecoration = DividerItemDecoration(
                     context,
                     LinearLayoutCompat.VERTICAL
                 )
                 listCardUsageHistory.addItemDecoration(dividerItemDecoration)
             }
+            result.networkTrouble?.let { isError ->
+                if (isError) {
+                    showInternetTrouble()
+                }
+            }
+            result.errorText?.let { showPopupMessage(message = it) }
         }
         viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
