@@ -20,9 +20,14 @@
     <dimen name="home_card_item_page_margin">34dp</dimen>
     <dimen name="home_card_item_page_offset">10dp</dimen>
     <dimen name="home_card_item_page_margin_offset">44dp</dimen>
-
+    <dimen name="home_card_button_container_mt">4dp</dimen>
+    <dimen name="home_card_button_size">48dp</dimen>
+    <dimen name="home_card_balance_mt">12dp</dimen>
+    <dimen name="home_card_button_submit_mt">16dp</dimen>
+    <dimen name="home_card_button_no_balance_mt">16dp</dimen>
+    <dimen name="home_card_card_container_mt">16dp</dimen>
+    <dimen name="home_card_tab_indicator_height">30dp</dimen>
     <dimen name="my_page_button_card_no_balance_mh">@dimen/home_card_item_page_margin_offset</dimen>
-
 
     <dimen name="toast_mb">90dp</dimen>
     <dimen name="toast_mt">42dp</dimen>

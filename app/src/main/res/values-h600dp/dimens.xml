@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="home_card_button_container_mt">16dp</dimen>
+    <dimen name="home_card_button_size">48dp</dimen>
+    <dimen name="home_card_balance_mt">19dp</dimen>
+    <dimen name="home_card_button_submit_mt">60dp</dimen>
+    <dimen name="home_card_button_no_balance_mt">24dp</dimen>
+    <dimen name="home_card_card_container_mt">26dp</dimen>
+    <dimen name="home_card_tab_indicator_height">42dp</dimen>
+</resources>
