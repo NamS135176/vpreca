@@ -38,12 +38,6 @@
         android:label="ListVprecaFragment"
         tools:layout="@layout/fragment_list_vpreca">
         <action
-            android:id="@+id/action_list_to_home"
-            app:destination="@id/nav_home"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/nav_home"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_to_card_usage"
             app:destination="@id/nav_card_usage" />
     </fragment>
@@ -57,12 +51,12 @@
         android:name="com.lifecard.vpreca.ui.changepass.ChangePassCompleteFragment"
         android:label="ChangePassCompleteFragment"
         tools:layout="@layout/fragment_change_pass_complete">
-        <action
-            android:id="@+id/action_change_pass_com_to_home"
-            app:destination="@id/nav_home"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/nav_home"
-            app:popUpToInclusive="true" />
+        <!--        <action-->
+        <!--            android:id="@+id/action_change_pass_com_to_home"-->
+        <!--            app:destination="@id/nav_home"-->
+        <!--            app:launchSingleTop="true"-->
+        <!--            app:popUpTo="@id/nav_home"-->
+        <!--            app:popUpToInclusive="true" />-->
     </fragment>
     <fragment
         android:id="@+id/nav_change_info_data"
@@ -91,12 +85,12 @@
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoCompleteFragment"
         android:label="ChangeInfoCompleteFragment"
         tools:layout="@layout/fragment_change_info_complete">
-        <action
-            android:id="@+id/action_to_home"
-            app:destination="@id/nav_home"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/nav_home"
-            app:popUpToInclusive="true" />
+        <!--        <action-->
+        <!--            android:id="@+id/action_to_home"-->
+        <!--            app:destination="@id/nav_home"-->
+        <!--            app:launchSingleTop="true"-->
+        <!--            app:popUpTo="@id/nav_home"-->
+        <!--            app:popUpToInclusive="true" />-->
     </fragment>
     <fragment
         android:id="@+id/nav_change_info_input"
@@ -106,12 +100,12 @@
         <action
             android:id="@+id/action_change_info_input_to_confirm"
             app:destination="@id/nav_change_info_confirm" />
-        <action
-            android:id="@+id/action_to_home"
-            app:destination="@id/nav_home"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/nav_home"
-            app:popUpToInclusive="true" />
+        <!--        <action-->
+        <!--            android:id="@+id/action_to_home"-->
+        <!--            app:destination="@id/nav_home"-->
+        <!--            app:launchSingleTop="true"-->
+        <!--            app:popUpTo="@id/nav_home"-->
+        <!--            app:popUpToInclusive="true" />-->
         <argument
             android:name="user_data"
             android:defaultValue="@null"
@@ -122,14 +116,7 @@
         android:id="@+id/nav_gift_card_policy"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardPolicyFragment"
         android:label="GiftCardPolicyFragment"
-        tools:layout="@layout/fragment_gift_card_policy">
-        <action
-            android:id="@+id/action_gift_card_policy_to_home"
-            app:destination="@id/nav_home"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/nav_home"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_gift_card_policy"></fragment>
     <fragment
         android:id="@+id/nav_issue_card_main"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardMainFragment"
@@ -562,12 +549,6 @@
             app:argType="com.lifecard.vpreca.data.model.CardInfo"
             app:nullable="true" />
     </fragment>
-    <!--    <fragment-->
-    <!--        android:id="@+id/nav_login"-->
-    <!--        android:name="com.lifecard.vpreca.ui.login.LoginFragment"-->
-    <!--        android:label="Login"-->
-    <!--        tools:layout="@layout/fragment_login" />-->
-
     <fragment
         android:id="@+id/nav_card_usage"
         android:name="com.lifecard.vpreca.ui.card_usage.CardUsageFragment"

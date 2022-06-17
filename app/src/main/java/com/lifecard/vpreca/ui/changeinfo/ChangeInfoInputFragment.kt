@@ -118,17 +118,10 @@ class ChangeInfoInputFragment : Fragment() {
         viewModel.answerDataChanged(args.userData?.secretQuestionAnswer!!)
 
         btnBack.setOnClickListener { findNavController().popBackStack() }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().popBackStack()
-                }
-            })
         btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
-                    findNavController().navigate(R.id.action_to_home)
+                    findNavController().popBackStack(R.id.nav_home, inclusive = false)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
