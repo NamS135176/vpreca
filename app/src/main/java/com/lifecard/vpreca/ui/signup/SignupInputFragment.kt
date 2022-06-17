@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.PowerSpinnerAdapter
 import com.lifecard.vpreca.databinding.SignupInputFragmentBinding
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import java.text.SimpleDateFormat
@@ -294,12 +295,30 @@ class SignupInputFragment : Fragment() {
         }
         btnDatePicker.addTextChangedListener(afterTextChangedListener)
 
+        val listGender = requireContext().resources.getStringArray(R.array.genders).toList()
+        val spinnerGenderAdapter = PowerSpinnerAdapter(spinnerGender)
+        spinnerGenderAdapter.setItems(listGender)
+        spinnerGender.setSpinnerAdapter(spinnerGenderAdapter)
+
         spinnerGender.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let { viewModel.genderDataChanged(text = it) }
         })
+
+        val listCity = requireContext().resources.getStringArray(R.array.cities).toList()
+        val spinnerCityAdapter = PowerSpinnerAdapter(spinnerCity)
+        spinnerCityAdapter.setItems(listCity)
+        spinnerCity.setSpinnerAdapter(spinnerCityAdapter)
+
         spinnerCity.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let { viewModel.cityDataChanged(text = it) }
         })
+
+        val listQuestion =
+            requireContext().resources.getStringArray(R.array.secret_question).toList()
+        val spinnerSecretAdapter = PowerSpinnerAdapter(spinnerSecret)
+        spinnerSecretAdapter.setItems(listQuestion)
+        spinnerSecret.setSpinnerAdapter(spinnerSecretAdapter)
+
         spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let { viewModel.questionDataChanged(text = it) }
         })
