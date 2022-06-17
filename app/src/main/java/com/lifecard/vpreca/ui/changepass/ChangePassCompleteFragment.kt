@@ -20,7 +20,7 @@ class ChangePassCompleteFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentChangePassCompleteBinding.inflate(inflater, container, false)
         val btnSubmit = binding.btnSubmitPolicy
-        btnSubmit.setOnClickListener { findNavController().navigate(R.id.action_change_pass_com_to_home) }
+        btnSubmit.setOnClickListener { findNavController().popBackStack(R.id.nav_home, inclusive = false) }
         return binding.root
     }
 

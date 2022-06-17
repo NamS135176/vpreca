@@ -112,6 +112,9 @@ class LoginViewModel @Inject constructor(
                 )
         }
     }
+    fun clearLoginResultError() {
+        _loginResult.value = LoginResult()
+    }
 
     fun handleAuthenticationError(
         errorCode: Int,

@@ -297,5 +297,6 @@ class LoginFragment : NoToolbarFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        loginViewModel.clearLoginResultError()
     }
 }

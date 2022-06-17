@@ -41,26 +41,24 @@ class PolicyFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_policy_to_login)
+                findNavController().popBackStack(R.id.nav_login,inclusive = false)
             }
         })
 
         cancelButton.setOnClickListener(View.OnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
-                    findNavController().navigate(R.id.action_policy_to_login)
+                setPositiveButton("はい") { _, _ ->
+                    findNavController().popBackStack(R.id.nav_login,inclusive = false)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか?")
             }.create().show()
         })
 
-        cbPolicy.setOnClickListener(View.OnClickListener {
-            btnSubmitPolicy.isEnabled = cbPolicy.isChecked
-        })
-        cbPolicy.setOnCheckedChangeListener { compoundButton, b ->
+        btnSubmitPolicy.isEnabled = false
+        cbPolicy.setOnCheckedChangeListener { _, isChecked ->
             run {
-                btnSubmitPolicy.isEnabled = b
+                btnSubmitPolicy.isEnabled = isChecked
             }
         }
         btnSubmitPolicy.setOnClickListener(View.OnClickListener {
@@ -72,25 +70,13 @@ class PolicyFragment : Fragment() {
                 R.id.nav_webview,
                 WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/rule03.html")
             )
-//            val action = PolicyFragmentDirections.actionSignupInputToSignupConfirm(
-//                "https://vpc.lifecard.co.jp/rule/rule03.html",
-//                GiftCardConfirmData(Converter.convertBooleanToString(cbPolicy.isChecked))
-//            )
-//            findNavController().navigate(action)
         })
         buttonTermOfUse.setOnClickListener(View.OnClickListener {
             findNavController().navigate(
                 R.id.nav_webview,
                 WebViewFragment.createBundle("https://vpc.lifecard.co.jp/rule/index.html")
             )
-//            val action = PolicyFragmentDirections.actionSignupInputToSignupConfirm(
-//                "https://vpc.lifecard.co.jp/rule/index.html",
-//                GiftCardConfirmData(Converter.convertBooleanToString(cbPolicy.isChecked))
-//            )
-//            findNavController().navigate(action)
         })
         return binding.root
-//        return inflater.inflate(R.layout.fragment_policy, container, false)
-
     }
 }

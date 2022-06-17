@@ -25,13 +25,13 @@ class ChangeInfoCompleteFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.action_to_home)
+                    findNavController().popBackStack(R.id.nav_home, inclusive = false)
                 }
             })
 
         val btnConfirm = binding.btnCompleteForgot
 
-        btnConfirm.setOnClickListener { findNavController().navigate(R.id.action_to_home) }
+        btnConfirm.setOnClickListener { findNavController().popBackStack(R.id.nav_home, inclusive = false) }
 
         return binding.root
     }
