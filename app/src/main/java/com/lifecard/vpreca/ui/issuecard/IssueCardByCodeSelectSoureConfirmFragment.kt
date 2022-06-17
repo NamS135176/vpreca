@@ -1,21 +1,19 @@
 package com.lifecard.vpreca.ui.issuecard
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.BalanceGiftData
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
-import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeSelectSourceBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeSelectSoureConfirmBinding
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,21 +29,18 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
     private var _binding: FragmentIssueCardByCodeSelectSoureConfirmBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: IssueCardByCodeSelectSoureConfirmViewModel
+    private val viewModel: IssueCardByCodeSelectSoureConfirmViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        viewModel =
-            ViewModelProvider(this).get(IssueCardByCodeSelectSoureConfirmViewModel::class.java)
+    ): View {
         _binding =
             FragmentIssueCardByCodeSelectSoureConfirmBinding.inflate(inflater, container, false)
 //        binding.card = args.fragmentIssueCardByCodeSelectSoureConfirmData
         val btnBack = binding.appbarGiftThird.btnBack
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val btnSubmit = binding.btnSubmitInput
-        val loading = binding.loading
         val tvGiftAmount = binding.tvBigGiftValue
         val tvGift = binding.tvGiftValue
         val tvTotal = binding.tvSelectAmount
@@ -71,7 +66,7 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
         tvGift.text = Converter.convertCurrency(sum)
         tvTotal.text = Converter.convertCurrency((sum + args.designData?.giftAmount?.toInt()!!))
 
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             val sumUpSrcCardInfo = ArrayList<CardInfoRequestContentInfo>()
             args.selectSourceData?.listCard?.forEachIndexed { index, creditCard ->
                 if (args.selectSourceData?.listSelectCard?.get(index)?.isSelected == "1"
@@ -85,39 +80,28 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
                 }
             }
             viewModel.creditCardSelectDataChanged(
-                listCardInfo[0].cardSchemeId!!,
+                listCardInfo[0].cardSchemeId,
                 listCardInfo[0].designId,
-                listCardInfo[0].cardNickname!!,
-                listCardInfo[0].vcnName!!,
+                listCardInfo[0].cardNickname,
+                listCardInfo[0].vcnName,
                 sumUpSrcCardInfo
             )
-        })
+        }
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val action =
-                    IssueCardByCodeSelectSoureConfirmFragmentDirections.actionConfirmToSelectsource(
-                        args.designData
-                    )
                 findNavController().popBackStack()
             }
         })
 
-        btnBack.setOnClickListener(View.OnClickListener {
-//            val data = BalanceGiftData(
-//                args.fragmentIssueCardByCodeSelectSoureConfirmData?.designId!!,
-//                args.fragmentIssueCardByCodeSelectSoureConfirmData?.giftAmount!!,
-//                args.fragmentIssueCardByCodeSelectSoureConfirmData?.giftNumber!!
-//            )
-            val action =
-                IssueCardByCodeSelectSoureConfirmFragmentDirections.actionConfirmToSelectsource(args.designData)
+        btnBack.setOnClickListener {
             findNavController().popBackStack()
-        })
+        }
 
-        btnCancel.setOnClickListener(View.OnClickListener {
+        btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
+                setPositiveButton("はい") { _, _ ->
                     // do something on positive button click
                     findNavController().navigate(R.id.nav_issue_card_by_code_complete_without_card)
                 }
@@ -128,7 +112,7 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
                             "よろしいですか？"
                 )
             }.create().show()
-        })
+        }
 
         viewModel.issueGiftReqResult.observe(
             viewLifecycleOwner,
@@ -187,12 +171,12 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
                 }
             })
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
+        viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> showLoadingDialog()
                 else -> hideLoadingDialog()
             }
-        })
+        }
 
         return binding.root
     }

@@ -1,6 +1,5 @@
 package com.lifecard.vpreca.ui.signup
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentConfirmSignupDataBinding
 
@@ -29,7 +27,7 @@ class ConfirmSignupDataFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentConfirmSignupDataBinding.inflate(inflater, container, false)
         args.signupData?.let { data -> binding.data = data }
         val btnCancelSubmit = binding.appbarConfirmSignup.cancelBtn
@@ -43,25 +41,24 @@ class ConfirmSignupDataFragment : Fragment() {
                 }
             })
 
-        btnCancelSubmit.setOnClickListener(View.OnClickListener {
+        btnCancelSubmit.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
+                setPositiveButton("はい") { _, _ ->
                     // do something on positive button click
                     findNavController().navigate(R.id.action_cfSignup_to_login)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
             }.create().show()
-        })
+        }
 
-        btnBack.setOnClickListener(View.OnClickListener {
-//            findNavController().navigate(R.id.nav_signup_input)
+        btnBack.setOnClickListener {
             findNavController().popBackStack()
-        })
+        }
 
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             findNavController().navigate(R.id.nav_complete)
-        })
+        }
 
         return binding.root
     }

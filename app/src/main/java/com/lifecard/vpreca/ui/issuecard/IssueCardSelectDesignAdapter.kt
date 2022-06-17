@@ -1,16 +1,11 @@
 package com.lifecard.vpreca.ui.issuecard
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.databinding.CardDesignItemBinding
-import com.lifecard.vpreca.databinding.CardUsageHistoryItemBinding
-import com.lifecard.vpreca.databinding.VprecaCardItemBinding
-import com.lifecard.vpreca.ui.custom.OnItemClickListener
 
 class IssueCardSelectDesignAdapter(
     private var items: List<DesignCard>

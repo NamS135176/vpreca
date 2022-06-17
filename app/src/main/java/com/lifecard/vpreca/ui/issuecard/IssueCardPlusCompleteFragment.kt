@@ -9,7 +9,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentIssueCardPlusCompleteBinding
-import com.lifecard.vpreca.databinding.FragmentIssueCardSelectDesignBinding
 
 
 class IssueCardPlusCompleteFragment : Fragment() {
@@ -29,9 +28,9 @@ class IssueCardPlusCompleteFragment : Fragment() {
                     findNavController().popBackStack(R.id.nav_home, inclusive = false)
                 }
             })
-        btnComplete.setOnClickListener(View.OnClickListener {
+        btnComplete.setOnClickListener {
             findNavController().popBackStack(R.id.nav_home, inclusive = false)
-        })
+        }
         return binding.root
     }
 

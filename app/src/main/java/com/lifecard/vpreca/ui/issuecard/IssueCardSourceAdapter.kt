@@ -3,12 +3,10 @@ package com.lifecard.vpreca.ui.issuecard
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.SelectedData
 import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
-import com.lifecard.vpreca.databinding.VprecaCardItemBinding
 
 class IssueCardSourceAdapter(private var items: List<CreditCard>,private var selected:List<SelectedData>) :
     RecyclerView.Adapter<IssueCardSourceAdapter.ViewHolder>() {

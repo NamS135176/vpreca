@@ -24,6 +24,8 @@ import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
+import com.lifecard.vpreca.eventbus.CloseDrawerEvent
+import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
@@ -164,7 +166,7 @@ class HomeFragment : Fragment(), CoroutineScope {
     }
 
     @Subscribe
-    fun handleReloadCards() {
+    fun handleReloadCards(event: ReloadCard) {
         homeViewModel.loadCard(true)
     }
 

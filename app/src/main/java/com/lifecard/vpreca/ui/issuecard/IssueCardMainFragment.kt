@@ -7,13 +7,10 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
 import com.lifecard.vpreca.utils.WebDirectScreen
-import com.lifecard.vpreca.utils.fragmentFindNavController
-import com.lifecard.vpreca.utils.mainGraphActionNavigateHome
 
 class IssueCardMainFragment : Fragment() {
     private var _binding: FragmentIssueCardMainBinding? = null
@@ -21,7 +18,7 @@ class IssueCardMainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentIssueCardMainBinding.inflate(inflater, container, false)
         val btnCancel = binding.appbarGiftThird.cancelBtn
@@ -36,22 +33,22 @@ class IssueCardMainFragment : Fragment() {
             }
         })
 
-        btnCancel.setOnClickListener(View.OnClickListener {
+        btnCancel.setOnClickListener {
             findNavController().popBackStack(R.id.nav_home, inclusive = false)
-        })
+        }
 
-        buttonCreditCard.setOnClickListener(View.OnClickListener {
+        buttonCreditCard.setOnClickListener {
             findNavController().navigate(
                 R.id.nav_web_direct,
                 WebDirectFragmentArgs(screenId = WebDirectScreen.SCREEN_ISSUE_CARD_WITH_CREDIT_CARD).toBundle()
             )
-        })
+        }
 
-        buttonNewCard.setOnClickListener(View.OnClickListener {
+        buttonNewCard.setOnClickListener {
             findNavController().navigate(R.id.nav_issue_card_by_plus_introduce)
-        })
+        }
 
-        buttonIssueByCode.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_input) })
+        buttonIssueByCode.setOnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_input) }
 
         return binding.root
     }

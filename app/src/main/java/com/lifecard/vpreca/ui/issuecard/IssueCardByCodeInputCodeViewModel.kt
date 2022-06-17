@@ -2,7 +2,6 @@ package com.lifecard.vpreca.ui.issuecard
 
 import androidx.lifecycle.*
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.IssueCardRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.exception.ApiException
@@ -10,13 +9,11 @@ import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.balance_amount.GiftInfoResult
-import com.lifecard.vpreca.ui.signup.SignUpFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class IssueCardByCodeInputCodeViewModel @Inject constructor(
-    private val creditCardRepository: CreditCardRepository,
     private val issueCardRepository: IssueCardRepository
 )  : ViewModel() {
     val giftCodeError = MutableLiveData<Int?>()

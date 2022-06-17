@@ -2,7 +2,6 @@ package com.lifecard.vpreca.ui.signup
 
 import android.app.DatePickerDialog
 import android.content.DialogInterface
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,6 +12,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
@@ -27,18 +27,15 @@ class SignupInputFragment : Fragment() {
         fun newInstance() = SignupInputFragment()
     }
 
-    private lateinit var viewModel: SignupInputViewModel
+    private val viewModel: SignupInputViewModel by viewModels()
     private var _binding: SignupInputFragmentBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = SignupInputFragmentBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(SignupInputViewModel::class.java)
 
-
-        val container = binding.container
         val scrollView = binding.scrollView
         val spinnerGender = binding.spinnerGender
         val spinnerCity = binding.spinnerCity
@@ -89,18 +86,18 @@ class SignupInputFragment : Fragment() {
 
 
 
-        scrollView.setOnClickListener(View.OnClickListener { dismissAllSpinner() })
+        scrollView.setOnClickListener { dismissAllSpinner() }
 
         val cal = Calendar.getInstance()
 
         fun updateDateInView() {
             val myFormat = "yyyy年MM月dd日" // mention the format you need
             val sdf = SimpleDateFormat(myFormat, Locale.US)
-            btnDatePicker!!.text = sdf.format(cal.getTime())
+            btnDatePicker.text = sdf.format(cal.time)
         }
 
         val dateSetListener =
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 cal.set(Calendar.YEAR, year)
                 cal.set(Calendar.MONTH, monthOfYear)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -120,15 +117,15 @@ class SignupInputFragment : Fragment() {
                 .apply {
                     datePicker
                     setButton(
-                        DatePickerDialog.BUTTON_POSITIVE, getString(R.string.button_ok),
-                        DialogInterface.OnClickListener { _, _ ->
-                            dateSetListener.onDateSet(
-                                datePicker,
-                                datePicker.year,
-                                datePicker.month,
-                                datePicker.dayOfMonth
-                            )
-                        })
+                        DatePickerDialog.BUTTON_POSITIVE, getString(R.string.button_ok)
+                    ) { _, _ ->
+                        dateSetListener.onDateSet(
+                            datePicker,
+                            datePicker.year,
+                            datePicker.month,
+                            datePicker.dayOfMonth
+                        )
+                    }
                     setButton(
                         DatePickerDialog.BUTTON_NEGATIVE, getString(R.string.button_cancel),
                         null as DialogInterface.OnClickListener?
@@ -137,7 +134,7 @@ class SignupInputFragment : Fragment() {
         }
 
 
-        btnCancel.setOnClickListener(View.OnClickListener {
+        btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
                     findNavController().navigate(R.id.action_signupInput_to_login)
@@ -145,7 +142,7 @@ class SignupInputFragment : Fragment() {
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか")
             }.create().show()
-        })
+        }
 
         val afterTextChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -161,115 +158,131 @@ class SignupInputFragment : Fragment() {
             }
         }
 
-        viewModel.formState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.formState.observe(viewLifecycleOwner) {
             viewModel.checkValidForm()
-        })
+        }
 
         viewModel.validForm.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { isValid ->
-                btnSubmit.isEnabled = isValid
-            })
+            viewLifecycleOwner
+        ) { isValid ->
+            btnSubmit.isEnabled = isValid
+        }
 
         viewModel.usernameError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                usernameLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            usernameLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.loginIdError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                idLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            idLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.phoneError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                phoneLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            phoneLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
 
         viewModel.answerError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                answerLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            answerLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.passwordError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                passwordLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            passwordLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.cfPasswordError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                cfPasswordLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            cfPasswordLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
 
 
         viewModel.nameError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { errors: Array<Number?>? ->
-                binding.hiraNameInputLayout.error = try {
-                    val errorInt = errors?.filterNotNull()
-                    if (!errorInt.isNullOrEmpty()) {
-                        println("errorInt: $errorInt - text ${errorInt.map { getString(it as Int) }}")
-                        errorInt.joinToString(separator = "\n") { getString(it as Int) }
-                    } else {
-                        null
-                    }
-                } catch (e: Error) {
+            viewLifecycleOwner
+        ) { errors: Array<Number?>? ->
+            binding.hiraNameInputLayout.error = try {
+                val errorInt = errors?.filterNotNull()
+                if (!errorInt.isNullOrEmpty()) {
+                    println("errorInt: $errorInt - text ${errorInt.map { getString(it as Int) }}")
+                    errorInt.joinToString(separator = "\n") { getString(it as Int) }
+                } else {
                     null
                 }
-            })
+            } catch (e: Error) {
+                null
+            }
+        }
 
-        viewModel.furiganaNameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error ->
-            when(error) {
+        viewModel.furiganaNameError.observe(viewLifecycleOwner) { error ->
+            when (error) {
                 true -> {
-                    binding.hiraFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
-                    binding.hiraLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
+                    binding.hiraFirstName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
+                    binding.hiraLastName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
                 }
                 else -> {
-                    binding.hiraFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
-                    binding.hiraLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.hiraFirstName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.hiraLastName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
                 }
             }
-        })
-        viewModel.kanaNameError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error ->
-            when(error) {
+        }
+        viewModel.kanaNameError.observe(viewLifecycleOwner) { error ->
+            when (error) {
                 true -> {
-                    binding.kanaFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
-                    binding.kanaLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_selected)
+                    binding.kanaFirstName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
+                    binding.kanaLastName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
                 }
                 else -> {
-                    binding.kanaFirstName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
-                    binding.kanaLastName.background = ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.kanaFirstName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.kanaLastName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
                 }
             }
-        })
+        }
 
-        viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
 //                findNavController().navigate(R.id.nav_complete)
                 val action =
@@ -278,16 +291,16 @@ class SignupInputFragment : Fragment() {
                 viewModel.formResultState.value = null
             }
 
-        })
+        }
         btnDatePicker.addTextChangedListener(afterTextChangedListener)
 
-        spinnerGender.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
+        spinnerGender.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let { viewModel.genderDataChanged(text = it) }
         })
-        spinnerCity.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
+        spinnerCity.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let { viewModel.cityDataChanged(text = it) }
         })
-        spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
+        spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let { viewModel.questionDataChanged(text = it) }
         })
 
@@ -308,9 +321,9 @@ class SignupInputFragment : Fragment() {
         hiraFirstName.doAfterTextChanged { text -> viewModel.hiraFirstNameDataChanged(text = text.toString()) }
         hiraLastName.doAfterTextChanged { text -> viewModel.hiraLastNameDataChanged(text = text.toString()) }
 
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             viewModel.submit()
-        })
+        }
 
 
         return binding.root
