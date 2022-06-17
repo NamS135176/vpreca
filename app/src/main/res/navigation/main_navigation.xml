@@ -36,11 +36,7 @@
         android:id="@+id/nav_list_vpreca"
         android:name="com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment"
         android:label="ListVprecaFragment"
-        tools:layout="@layout/fragment_list_vpreca">
-        <action
-            android:id="@+id/action_to_card_usage"
-            app:destination="@id/nav_card_usage" />
-    </fragment>
+        tools:layout="@layout/fragment_list_vpreca" />
     <fragment
         android:id="@+id/nav_change_pass"
         android:name="com.lifecard.vpreca.ui.changepass.ChangePassFragment"
@@ -470,7 +466,7 @@
         android:id="@+id/nav_gift_card_complete"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardCompleteFragment"
         android:label="GiftCardCompleteFragment"
-        tools:layout="@layout/fragment_gift_card_complete"></fragment>
+        tools:layout="@layout/fragment_gift_card_complete" />
     <fragment
         android:id="@+id/nav_gift_card_confirm_detail"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardConfirmDetailFragment"
@@ -497,11 +493,11 @@
             android:defaultValue="@null"
             app:argType="com.lifecard.vpreca.data.model.CreditCard"
             app:nullable="true" />
-        <argument
-            android:name="pre_route"
-            android:defaultValue="@null"
-            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"
-            app:nullable="true" />
+<!--        <argument-->
+<!--            android:name="pre_route"-->
+<!--            android:defaultValue="@null"-->
+<!--            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"-->
+<!--            app:nullable="true" />-->
     </fragment>
 
     <fragment

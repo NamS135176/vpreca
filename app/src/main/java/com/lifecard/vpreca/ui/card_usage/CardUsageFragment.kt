@@ -15,24 +15,29 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.databinding.FragmentCardUsageBinding
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CardUsageFragment : Fragment() {
-
     companion object {
         fun newInstance() = CardUsageFragment()
     }
+
+    @Inject
+    lateinit var userManager: UserManager
 
     private val viewModel: CardUsageViewModel by viewModels()
     private var _binding: FragmentCardUsageBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val args: CardUsageFragmentArgs by navArgs()
     private val binding get() = _binding!!
+
+    private val args: CardUsageFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,21 +49,13 @@ class CardUsageFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (args.preRoute?.preRoute == "logged") {
-                    findNavController().popBackStack(R.id.nav_home, inclusive = false)
-                } else {
-                    findNavController().popBackStack()
-                }
+                findNavController().popBackStack()
             }
         })
         btnBack.setOnClickListener {
-            if (args.preRoute?.preRoute == "logged") {
-                findNavController().popBackStack(R.id.nav_home, inclusive = false)
-            } else {
-                findNavController().popBackStack()
-            }
+            findNavController().popBackStack()
         }
-        if (args.preRoute?.preRoute == "logged") {
+        if (userManager.isLoggedIn) {
             viewModel.getCardUsageHistory(args.card!!)
         } else {
             viewModel.getCardUsageHistoryWithoutMember(args.card!!)
@@ -92,20 +89,5 @@ class CardUsageFragment : Fragment() {
 
 
         return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        hideToolbar()
-    }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        if (args.preRoute?.preRoute == "logged") {
-            showToolbar()
-        } else {
-            hideToolbar()
-        }
     }
 }

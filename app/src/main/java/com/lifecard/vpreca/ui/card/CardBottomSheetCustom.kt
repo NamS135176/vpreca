@@ -23,7 +23,7 @@ import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragmentDirections
+import com.lifecard.vpreca.ui.card_usage.CardUsageFragmentArgs
 import com.lifecard.vpreca.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -145,15 +145,12 @@ class CardBottomSheetCustom(
 
         btnUsage.setOnClickListener {
             dismiss()
-            val data = GiftCardConfirmData("logged")
-            val action =
-                ListVprecaFragmentDirections.actionToCardUsage(
-                    convertObject(newCard),
-                    data
-                )
             val navController =
                 Navigation.findNavController(activity, R.id.nav_host_fragment_content_main)
-            navController.navigate(action)
+            navController.navigate(
+                R.id.nav_card_usage,
+                CardUsageFragmentArgs(card = convertObject(newCard)).toBundle()
+            )
         }
 
         btnCopy.setOnClickListener {

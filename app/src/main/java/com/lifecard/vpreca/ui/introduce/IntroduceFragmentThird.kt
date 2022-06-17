@@ -24,7 +24,7 @@ class IntroduceFragmentThird : Fragment() {
     private lateinit var viewModel: IntroduceFragmentThirdViewModel
     private var _binding: IntroduceFragmentThirdFragmentBinding? = null
     private val binding get() = _binding!!
-    private val args:IntroduceFragmentThirdArgs by navArgs()
+    private val args: IntroduceFragmentThirdArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,7 +35,7 @@ class IntroduceFragmentThird : Fragment() {
         binding.card = args.cardData
         binding.cardZone.cardInclude.card = args.cardData
         binding.cardZone.card = args.cardData
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.action_third_to_second)
             }
@@ -46,10 +46,8 @@ class IntroduceFragmentThird : Fragment() {
         val btnUsage = binding.btnMid
 
         btnUsage.setOnClickListener {
-            val data = GiftCardConfirmData("unlog")
             val action = IntroduceFragmentThirdDirections.actionThirdToUsage(
                 convertObject(args.cardData!!),
-                data
             )
             findNavController().navigate(action)
         }

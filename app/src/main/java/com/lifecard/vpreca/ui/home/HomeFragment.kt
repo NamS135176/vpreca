@@ -193,9 +193,8 @@ class HomeFragment : Fragment(), CoroutineScope {
 //            findNavController().navigate(R.id.action_to_card_usage)
             val card = pagerAdapter?.getItem(viewPager.currentItem)
             card?.let {
-                val data = GiftCardConfirmData("logged")
                 val action =
-                    HomeFragmentDirections.actionToCardUsage(it, data)
+                    HomeFragmentDirections.actionToCardUsage(it)
                 findNavController().navigate(action)
             }
         })

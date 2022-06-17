@@ -14,6 +14,7 @@ import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentGiftCardConfirmBinding
+import com.lifecard.vpreca.utils.hideToolbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -52,17 +53,15 @@ class GiftCardConfirmFragment : Fragment() {
         val btnUsage = binding.btnMid
 
         btnUsage.setOnClickListener {
-            val data = GiftCardConfirmData("logged")
             val action = GiftCardConfirmFragmentDirections.actionThirdToUsage(
                 convertObject(args.cardData!!),
-                data
             )
             findNavController().navigate(action)
         }
 
         binding.card = args.cardData
         binding.cardZone.cardInclude.card = args.cardData
-        binding.cardZone.card  = args.cardData
+        binding.cardZone.card = args.cardData
         btnBack.setOnClickListener {
             if (args.giftCardConfirmData?.preRoute == "inputcard") {
                 findNavController().navigate(R.id.action_third_to_inputcard)
@@ -70,25 +69,16 @@ class GiftCardConfirmFragment : Fragment() {
                 findNavController().navigate(R.id.nav_gift_card_input)
             }
         }
-        //check if user has logged in
-
-//        if (!userManager.isLoggedIn) {
-//            btnSubmit.text = getString(R.string.action_sign_in)
-//            btnSubmit.setOnClickListener(View.OnClickListener {
-//                navigateToLogin()
-//            })
-//        } else {
-//            btnSubmit.setOnClickListener(View.OnClickListener {
-//                //check if
-//                findNavController().navigate(R.id.nav_gift_card_complete)
-//            })
-//        }
-
         btnSubmit.setOnClickListener {
             val action = GiftCardConfirmFragmentDirections.actionToConfirmDetail(args.cardData)
             findNavController().navigate(action)
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        hideToolbar()
     }
 
     private fun convertObject(cardInfo: CardInfo): CreditCard {

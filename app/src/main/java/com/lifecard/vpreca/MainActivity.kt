@@ -91,12 +91,13 @@ class MainActivity : AppCompatActivity() {
                 toolbar.visibility = View.GONE
             }
             //debug backstack
-            println("addOnDestinationChangedListener ... backQueue count = ${navController.backQueue.count()}")
-            for (i in 0 until navController.backQueue.count()) {
-                val destination = navController.backQueue[i].destination
-                println("addOnDestinationChangedListener ...stack[$i]= (id = ${destination.id}, label = ${destination.label}, displayName = ${destination.displayName}, navigatorName = ${destination.navigatorName}, destination = $destination)")
+            if (BuildConfig.DEBUG) {
+                println("addOnDestinationChangedListener ... backQueue count = ${navController.backQueue.count()}")
+                for (i in 0 until navController.backQueue.count()) {
+                    val destination = navController.backQueue[i].destination
+                    println("addOnDestinationChangedListener ...stack[$i]= (id = ${destination.id}, label = ${destination.label}, displayName = ${destination.displayName}, navigatorName = ${destination.navigatorName}, destination = $destination)")
+                }
             }
-
         }
 
         appBarConfiguration = AppBarConfiguration(
