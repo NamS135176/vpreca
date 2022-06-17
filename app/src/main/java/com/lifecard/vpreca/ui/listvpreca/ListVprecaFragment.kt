@@ -40,9 +40,9 @@ class ListVprecaFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentListVprecaBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().popBackStack(R.id.nav_home, inclusive = false)
@@ -52,7 +52,6 @@ class ListVprecaFragment : Fragment() {
         btnBack.setOnClickListener(View.OnClickListener {  findNavController().popBackStack(R.id.nav_home, inclusive = false) })
         val tvTotalAmount = binding.tvTotalAmount
         val listVpreca = binding.listVprecaCard
-        val loading = binding.loading
 
         listVprecaViewModel.creditCardResult.observe(
             viewLifecycleOwner,
@@ -125,16 +124,16 @@ class ListVprecaFragment : Fragment() {
 
             })
 
-        listVprecaViewModel.loading.observe(viewLifecycleOwner, Observer {
+        listVprecaViewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> {
                     showLoadingDialog()
                 }
                 else -> {
-                   hideLoadingDialog()
+                    hideLoadingDialog()
                 }
             }
-        })
+        }
         return binding.root
     }
 

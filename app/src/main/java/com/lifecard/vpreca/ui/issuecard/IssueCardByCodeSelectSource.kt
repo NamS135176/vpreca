@@ -15,8 +15,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeSelectSourceBinding
-import com.lifecard.vpreca.databinding.FragmentIssueCardSelectDesignBinding
-import com.lifecard.vpreca.databinding.FragmentIssueCardSelectSourceBinding
 import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,8 +34,8 @@ class IssueCardByCodeSelectSource : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        viewModel = ViewModelProvider(this).get(IssueCardByCodeSelectSourceViewModel::class.java)
+    ): View {
+        viewModel = ViewModelProvider(this)[IssueCardByCodeSelectSourceViewModel::class.java]
         _binding = FragmentIssueCardByCodeSelectSourceBinding.inflate(inflater, container, false)
 
         val rcView = binding.rvSelectSource
@@ -45,23 +43,13 @@ class IssueCardByCodeSelectSource : Fragment() {
         val btnBack = binding.appbarGiftThird.btnBack
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val tvTotal = binding.tvTotalAmount
-        val loading = binding.loading
         val fakeGiftValue = args.issuePlusData?.giftAmount
-        val tvError = binding.desBottom
         tvTotal.text = Converter.convertCurrency(fakeGiftValue)
-        var dataSelectCard = "0"
-        var number = ""
-        var expireDate = Date()
-        var pin = ""
-        var name = ""
-        var cardSchemeId = ""
-        var vcnName = ""
         var arrSelected: List<SelectedData> = emptyList()
         var arrPolicy: List<CreditCard> = emptyList()
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val action = IssueCardByCodeSelectSourceDirections.actionSelectsourceToSelectway(args.issuePlusData)
                 findNavController().popBackStack()
             }
         })
@@ -84,22 +72,24 @@ class IssueCardByCodeSelectSource : Fragment() {
                 }
             })
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
+        viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> showLoadingDialog()
                 else -> hideLoadingDialog()
             }
-        })
-        btnBack.setOnClickListener(View.OnClickListener {
-            val action = IssueCardByCodeSelectSourceDirections.actionSelectsourceToSelectway(args.issuePlusData)
+        }
+        btnBack.setOnClickListener {
             findNavController().popBackStack()
-        })
+        }
 
-        btnCancel.setOnClickListener(View.OnClickListener {
+        btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
+                setPositiveButton("はい") { _, _ ->
                     // do something on positive button click
-                    viewModel.issueGiftCardWithoutCard(args.issuePlusData?.balanceAmount!!, args.issuePlusData?.giftNumber!!)
+                    viewModel.issueGiftCardWithoutCard(
+                        args.issuePlusData?.balanceAmount!!,
+                        args.issuePlusData?.giftNumber!!
+                    )
                 }
                 setNegativeButton("いいえ", null)
                 setMessage(
@@ -108,7 +98,7 @@ class IssueCardByCodeSelectSource : Fragment() {
                             "よろしいですか？"
                 )
             }.create().show()
-        })
+        }
 
         viewModel.creditCardResult.observe(
             viewLifecycleOwner,
@@ -176,7 +166,7 @@ class IssueCardByCodeSelectSource : Fragment() {
 
                             arrPolicy = creditCardResult.success
 
-                            arrSelected = arrPolicy.mapIndexed { index, creditCard ->
+                            arrSelected = arrPolicy.mapIndexed { _, creditCard ->
                                 SelectedData(
                                     "0",
                                     creditCard.publishAmount,
@@ -184,7 +174,7 @@ class IssueCardByCodeSelectSource : Fragment() {
                                 )
                             }
 
-                            val linearLayoutManager: LinearLayoutManager =
+                            val linearLayoutManager =
                                 LinearLayoutManager(context)
                             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                             val adapter = IssueCardSourceAdapter(arrPolicy, arrSelected)
@@ -200,8 +190,8 @@ class IssueCardByCodeSelectSource : Fragment() {
 //                                    tvError.visibility = View.INVISIBLE
                                     btnSubmit.isEnabled = true
                                     var count = 0
-                                    for (it in arrSelected) {
-                                        if (it.isSelected == "1") {
+                                    for (item in arrSelected) {
+                                        if (item.isSelected == "1") {
                                             count++
                                         }
                                     }
@@ -282,26 +272,21 @@ class IssueCardByCodeSelectSource : Fragment() {
                     }
                 }
             })
-        btnSubmit.setOnClickListener(View.OnClickListener {
-            val dataTotal = dataSelectCard.toInt() + fakeGiftValue?.toInt()!!
-//            val data = IssueByCodeSelectSourceConfirmData(
-//                fakeGiftValue.toString(),
-//                dataTotal.toString(),
-//                expireDate,
-//                pin,
-//                name,
-//                number,
-//                args.issuePlusData?.giftNumber!!,
-//                vcnName,
-//                cardSchemeId,
-//                args.issuePlusData?.balanceAmount!!
-//            )
+
+        viewModel.loading.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
+            }
+        }
+
+        btnSubmit.setOnClickListener {
             val action = IssueCardByCodeSelectSourceDirections.actionSelectsourceToConfirm(
-              IssueSelectSourceData(arrPolicy, arrSelected),
+                IssueSelectSourceData(arrPolicy, arrSelected),
                 args.issuePlusData
             )
             findNavController().navigate(action)
-        })
+        }
         return binding.root
     }
 

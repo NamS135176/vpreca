@@ -1,40 +1,33 @@
 package com.lifecard.vpreca.ui.login
 
-import android.hardware.biometrics.BiometricPrompt
-import android.util.Base64
 import androidx.lifecycle.*
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.RemoteRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.UserRepository
-import com.lifecard.vpreca.data.api.MessageDigest
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.ui.splash.SplashState
 import com.lifecard.vpreca.utils.BiometricHelper
 import com.lifecard.vpreca.utils.RegexUtils
 import com.lifecard.vpreca.utils.RequestHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.security.Signature
 import javax.crypto.Cipher
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginRepository: UserRepository,
-    private val remoteRepository: RemoteRepository,
     private val secureStore: SecureStore,
     private val userManager: UserManager
 ) :
     ViewModel() {
     val usernameError = MutableLiveData<Int?>()
     val passwordError = MutableLiveData<Int?>()
-    val validForm = MutableLiveData<Boolean>(false)
+    val validForm = MutableLiveData(false)
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult

@@ -9,7 +9,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeCompleteWithCardBinding
-import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeCompleteWithoutCardBinding
 
 class IssueCardByCodeCompleteWithCardFragment : Fragment() {
     private var _binding: FragmentIssueCardByCodeCompleteWithCardBinding? = null
@@ -29,12 +28,12 @@ class IssueCardByCodeCompleteWithCardFragment : Fragment() {
         })
 
         val btnSubmit = binding.btnSubmitPolicy
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             findNavController().popBackStack(
                 R.id.nav_home,
                 inclusive = false
             )
-        })
+        }
         return binding.root
     }
 

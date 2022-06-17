@@ -88,6 +88,7 @@
     <string name="confirm_email_des_right">sample@sample.jp</string>
     <string name="confirm_email_hint">認証コード</string>
     <string name="confirm_email_des_input">認証コードが届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
+    <string name="ten_man_warning">"合算金額は10万円以内です。"</string>
 
     <!--    Term of use Screen-->
     <string name='title_term_of_use'>アプリ利用規約</string>

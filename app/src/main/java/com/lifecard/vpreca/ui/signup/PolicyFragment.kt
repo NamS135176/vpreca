@@ -51,7 +51,7 @@ class PolicyFragment : Fragment() {
                     findNavController().popBackStack(R.id.nav_login,inclusive = false)
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("途中ですがキャンセルしてもよろしいですか")
+                setMessage("途中ですがキャンセルしてもよろしいですか?")
             }.create().show()
         })
 

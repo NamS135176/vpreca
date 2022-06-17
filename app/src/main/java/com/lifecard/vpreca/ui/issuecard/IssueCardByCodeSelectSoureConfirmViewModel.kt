@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.IssueCardRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
@@ -16,7 +15,6 @@ import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.balance_amount.FeeInfoResult
 import com.lifecard.vpreca.ui.balance_amount.IssueGiftResult
-import com.lifecard.vpreca.ui.home.CreditCardResult
 import com.lifecard.vpreca.utils.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,7 +22,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
-    private val creditCardRepository: CreditCardRepository,
     private val issueCardRepository: IssueCardRepository
 ) : ViewModel() {
     private val _issueGiftReqResult = MutableLiveData<IssueGiftResult>()

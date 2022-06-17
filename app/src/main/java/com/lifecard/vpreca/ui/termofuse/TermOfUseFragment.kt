@@ -1,7 +1,5 @@
 package com.lifecard.vpreca.ui.termofuse
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
@@ -11,18 +9,12 @@ import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.CompoundButton
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.TermOfUseFragmentBinding
-import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.PreferenceHelper
 
 class TermOfUseFragment : Fragment() {
@@ -33,7 +25,6 @@ class TermOfUseFragment : Fragment() {
 
     private var _binding: TermOfUseFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: TermOfUseViewModel
     private val loading = MutableLiveData<Boolean>(false)
 
     private var webViewClient = object : WebViewClient() {
@@ -79,24 +70,24 @@ class TermOfUseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = TermOfUseFragmentBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(TermOfUseViewModel::class.java)
+
 
         val btnSubmit = binding.btnSubmitTermOfUse
         val cbTermOfUse = binding.cbTermOfUse
         val webView = binding.webview
         val loadingProgressBar = binding.loading
 
-        cbTermOfUse.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
+        cbTermOfUse.setOnCheckedChangeListener { _, isChecked ->
             btnSubmit.isEnabled = isChecked
-        })
+        }
 
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             PreferenceHelper.setAcceptTermOfUseFirstTime(
                 appContext = requireContext(),
                 value = true
             )
             findNavController().navigate(R.id.action_tou_to_login)
-        })
+        }
         webView.settings.useWideViewPort = true
         webView.settings.loadWithOverviewMode = true
         webView.settings.builtInZoomControls = false
@@ -104,12 +95,12 @@ class TermOfUseFragment : Fragment() {
         webView.webViewClient = webViewClient
         webView.loadUrl("file:///android_asset/term_of_use.html")
 
-        loading.observe(viewLifecycleOwner, Observer {
+        loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> loadingProgressBar.visibility = View.VISIBLE
                 false -> loadingProgressBar.visibility = View.GONE
             }
-        })
+        }
         return binding.root
     }
 

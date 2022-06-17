@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.IssueCardRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.exception.ApiException
@@ -19,7 +18,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class IssueCardByCodeSelectWayViewModel  @Inject constructor(
-    private val creditCardRepository: CreditCardRepository,
     private val issueCardRepository: IssueCardRepository
 ) : ViewModel() {
     private val _issueGiftReqResult = MutableLiveData<IssueGiftResult>()

@@ -1,36 +1,22 @@
 package com.lifecard.vpreca.ui.issuecard
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.data.model.IssueSelectSourceData
 import com.lifecard.vpreca.data.model.SelectedData
-import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectSourceBinding
-import com.lifecard.vpreca.databinding.FragmentListVprecaBinding
 import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
-import com.lifecard.vpreca.ui.introduce.GiftCardInputCardFragmentDirections
-import com.lifecard.vpreca.ui.listvpreca.GridDecoration
-import com.lifecard.vpreca.ui.listvpreca.ListVprecaAdapter
-import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragmentDirections
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,16 +27,15 @@ class IssueCardSelectSourceFragment : Fragment() {
         fun newInstance() = IssueCardSelectSourceFragment()
     }
 
-    private lateinit var viewModel: IssueCardSelectSourceViewModel
+    private val viewModel: IssueCardSelectSourceViewModel by viewModels()
     private var _binding: FragmentIssueCardSelectSourceBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentIssueCardSelectSourceBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(IssueCardSelectSourceViewModel::class.java)
         val tvTotal = binding.tvTotalAmount
         val rcView = binding.rvSelectSource
         val btnCancel = binding.appbarGiftThird.cancelBtn
@@ -66,7 +51,7 @@ class IssueCardSelectSourceFragment : Fragment() {
                     findNavController().navigate(R.id.action_issue_select_source_to_introduce)
                 }
             })
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             val giftCardConfirmData = GiftCardConfirmData("selectSource")
             val issueSelectSourceData = IssueSelectSourceData(arrPolicy, arrSelected)
             val action = IssueCardSelectSourceFragmentDirections.actionSelectsourceToSelectdesign(
@@ -76,10 +61,10 @@ class IssueCardSelectSourceFragment : Fragment() {
                 issueSelectSourceData
             )
             findNavController().navigate(action)
-        })
+        }
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_issue_select_source_to_introduce) })
-        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.action_issue_select_source_to_main) })
+        btnBack.setOnClickListener { findNavController().navigate(R.id.action_issue_select_source_to_introduce) }
+        btnCancel.setOnClickListener { findNavController().navigate(R.id.action_issue_select_source_to_main) }
 
         viewModel.creditCardResult.observe(
             viewLifecycleOwner,
@@ -94,7 +79,7 @@ class IssueCardSelectSourceFragment : Fragment() {
                         else -> {
                             arrPolicy = creditCardResult.success
 
-                            arrSelected = arrPolicy.mapIndexed { index, creditCard ->
+                            arrSelected = arrPolicy.mapIndexed { _, creditCard ->
                                 SelectedData(
                                     "0",
                                     creditCard.publishAmount,
@@ -102,13 +87,13 @@ class IssueCardSelectSourceFragment : Fragment() {
                                 )
                             }
 
-                            val linearLayoutManager: LinearLayoutManager =
+                            val linearLayoutManager =
                                 LinearLayoutManager(context)
                             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
                             val adapter = IssueCardSourceAdapter(arrPolicy, arrSelected)
                             rcView.layoutManager = linearLayoutManager
                             rcView.adapter = adapter
-                            val list: MutableList<Int> = ArrayList<Int>()
+                            val list: MutableList<Int> = ArrayList()
                             adapter.setOnClickListener(object :
                                 IssueCardSourceAdapter.OnItemClickListener {
                                 override fun onItemClick(
@@ -118,8 +103,8 @@ class IssueCardSelectSourceFragment : Fragment() {
                                     tvError.visibility = View.INVISIBLE
 
                                     var count = 0
-                                    for (it in arrSelected) {
-                                        if (it.isSelected == "1") {
+                                    for (item in arrSelected) {
+                                        if (item.isSelected == "1") {
                                             count++
                                         }
                                     }
@@ -181,8 +166,8 @@ class IssueCardSelectSourceFragment : Fragment() {
                                                 showAlertMessage("最大5枚を選択してください")
                                             }
                                             else if(sum > (100000 - arrSelected[position].amount.toInt())){
-                                                tvError.text = "合算金額は10万円以内です。"
-                                                showAlertMessage("合算金額は10万円以内です")
+                                                tvError.setText(R.string.ten_man_warning)
+                                                showAlertMessage("合算金額は10万円以内です。")
                                             }
                                         }
                                     } else {
@@ -247,7 +232,12 @@ class IssueCardSelectSourceFragment : Fragment() {
                     }
                 }
             })
-
+        viewModel.loading.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
+            }
+        }
         return binding.root
     }
 

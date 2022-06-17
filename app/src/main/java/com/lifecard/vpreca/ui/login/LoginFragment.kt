@@ -1,7 +1,6 @@
 package com.lifecard.vpreca.ui.login
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,7 +24,6 @@ import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
 import com.lifecard.vpreca.data.UserManager
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.*
@@ -65,7 +63,7 @@ class LoginFragment : NoToolbarFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val usernameLayout = binding.usernameLayout
@@ -80,44 +78,44 @@ class LoginFragment : NoToolbarFragment() {
         val btnForgotPass = binding.buttonForgotPassword
         val buttonLoginLandlinePhone = binding.buttonLoginLandlinePhone
 
-        buttonLoginLandlinePhone.setOnClickListener(View.OnClickListener {
+        buttonLoginLandlinePhone.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton(R.string.button_ok, DialogInterface.OnClickListener { _, _ ->
+                setPositiveButton(R.string.button_ok) { _, _ ->
                     openBrowser("https://vpcevssl.lifecard.co.jp/LW01/LW0102OP01BL.do")
-                })
+                }
                     .setNegativeButton(R.string.button_cancel, null)
                 setMessage(getString(R.string.alert_landline_phone))
             }.create().show()
-        })
+        }
 
 
-        btnForgotPass.setOnClickListener(View.OnClickListener {
+        btnForgotPass.setOnClickListener {
             findNavController().navigate(R.id.nav_forgot_input)
-        })
+        }
 
-        signUpButton.setOnClickListener(View.OnClickListener {
+        signUpButton.setOnClickListener {
             findNavController().navigate(R.id.action_to_policy)
-        })
+        }
 
-        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { isValid ->
+        loginViewModel.validForm.observe(viewLifecycleOwner) { isValid ->
             loginButton.isEnabled = isValid
             loginButton.alpha = if (isValid) 1.0f else 0.65f
-        })
-        loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
+        }
+        loginViewModel.usernameError.observe(viewLifecycleOwner) { error: Int? ->
             usernameLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
 
-        })
-        loginViewModel.passwordError.observe(viewLifecycleOwner, Observer { error: Int? ->
+        }
+        loginViewModel.passwordError.observe(viewLifecycleOwner) { error: Int? ->
             passwordLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
-        })
+        }
 
         loginViewModel.loginResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
@@ -138,7 +136,7 @@ class LoginFragment : NoToolbarFragment() {
                 }
             })
 
-        loginViewModel.loading.observe(viewLifecycleOwner, Observer {
+        loginViewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> {
                     loadingProgressBar.visibility = View.VISIBLE
@@ -151,7 +149,7 @@ class LoginFragment : NoToolbarFragment() {
                     buttonBioLogin.isEnabled = true
                 }
             }
-        })
+        }
 
         usernameEditText.doAfterTextChanged {
             loginViewModel.checkValidForm(
@@ -198,13 +196,13 @@ class LoginFragment : NoToolbarFragment() {
             true -> buttonBioLogin.visibility = View.VISIBLE
             else -> buttonBioLogin.visibility = View.GONE
         }
-        buttonBioLogin.setOnClickListener(View.OnClickListener {
+        buttonBioLogin.setOnClickListener {
             showBiometricDialog()
-        })
+        }
 
-        logoGift.setOnClickListener(View.OnClickListener {
+        logoGift.setOnClickListener {
             findNavController().navigate(R.id.nav_introduce_first)
-        })
+        }
 
 //        if (PreferenceHelper.isEnableBiometricSetting(requireContext()) && bioManager?.checkDeviceSupportBiometric() == true) {
 //            showBiometricDialog()
@@ -237,9 +235,6 @@ class LoginFragment : NoToolbarFragment() {
                     }
                 }
 
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                }
             })
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
