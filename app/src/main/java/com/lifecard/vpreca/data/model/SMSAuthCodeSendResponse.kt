@@ -20,7 +20,7 @@ data class SMSAuthCodeSendResponseContent(
     @SerializedName("extCertSetMst")
     val extCertSetMst: ExtCertSetMst?,
     @SerializedName("MemberCertReqHis")
-    val MemberCertReqHis: MemberCertReqHis?,
+    val memberCertReqHis: MemberCertReqHis?,
     @SerializedName("certResInfo")
     val certResInfo: CertResInfo?,
 )

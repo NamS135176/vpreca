@@ -30,7 +30,6 @@ class IntroduceFragmentThird : Fragment() {
     ): View {
         _binding = IntroduceFragmentThirdFragmentBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[IntroduceFragmentThirdViewModel::class.java]
-        // TODO: Use the ViewModel
         binding.card = args.cardData
         binding.cardZone.cardInclude.card = args.cardData
         binding.cardZone.card = args.cardData

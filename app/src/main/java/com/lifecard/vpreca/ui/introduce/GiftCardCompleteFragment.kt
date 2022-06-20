@@ -11,8 +11,6 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentGiftCardCompleteBinding
 
 class GiftCardCompleteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-
     private var _binding: FragmentGiftCardCompleteBinding? = null
     private val binding get() = _binding!!
 
