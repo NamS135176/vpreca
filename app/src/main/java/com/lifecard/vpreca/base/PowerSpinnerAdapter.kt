@@ -2,6 +2,7 @@ package com.lifecard.vpreca.base
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.util.rangeTo
 import androidx.recyclerview.widget.RecyclerView
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.PowerSpinnerItemBinding
@@ -63,6 +64,10 @@ class PowerSpinnerAdapter(
         this.spinnerItems.addAll(itemList)
         this.index = NO_SELECTED_INDEX
         notifyDataSetChanged()
+    }
+
+    fun getSelectedItem(): Int? {
+        return if (index in 0 until itemCount) index else null
     }
 
     override fun getItemCount(): Int = spinnerItems.size
