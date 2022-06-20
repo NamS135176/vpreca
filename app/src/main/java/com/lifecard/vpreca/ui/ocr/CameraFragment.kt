@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -18,6 +19,7 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -25,8 +27,13 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentCameraBinding
+import com.lifecard.vpreca.databinding.LayoutCameraViewOldBinding
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoConfirmDataFragmentArgs
 import com.lifecard.vpreca.utils.*
+import com.otaliastudios.cameraview.BitmapCallback
+import com.otaliastudios.cameraview.CameraListener
+import com.otaliastudios.cameraview.CameraView
+import com.otaliastudios.cameraview.PictureResult
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -57,13 +64,14 @@ class CameraFragment : Fragment() {
     private var imageCapture: ImageCapture? = null
     private var _cameraProvider: ProcessCameraProvider? = null
     private val cameraProvider get() = _cameraProvider!!
+    private var cameraViewOld: CameraView? = null
 
     private val args: CameraFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCameraBinding.inflate(inflater, container, false)
 
         val textCaptionHint = binding.textCaption
@@ -73,13 +81,11 @@ class CameraFragment : Fragment() {
             findNavController().popBackStack()
         })
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (allPermissionsGranted()) {
+            startCamera()
+        } else {
             // Request camera permissions
-            if (allPermissionsGranted()) {
-                startCamera()
-            } else {
-                requestMultiplePermissions.launch(REQUIRED_PERMISSIONS)
-            }
+            requestMultiplePermissions.launch(REQUIRED_PERMISSIONS)
         }
 
         binding.buttonTakePhoto.setOnClickListener(View.OnClickListener {
@@ -129,6 +135,21 @@ class CameraFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        cameraViewOld?.destroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cameraViewOld?.close()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cameraViewOld?.open()
+    }
+
     private fun showAlertErrorOcr() {
         MaterialAlertDialogBuilder(requireContext()).apply {
             setPositiveButton(
@@ -138,7 +159,7 @@ class CameraFragment : Fragment() {
         }.create().show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    //    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private val requestMultiplePermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             permissions.entries.forEach {
@@ -155,8 +176,27 @@ class CameraFragment : Fragment() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun startCamera() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startCameraX()
+        } else {
+            startCameraBellow21()
+        }
+    }
+
+    private fun takePhoto() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            takePhotoX()
+        } else {
+            takePhotoBellow21()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun startCameraX() {
+        binding.cameraContainer.visibility = View.GONE
+        binding.cameraPreview.visibility = View.VISIBLE
+
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
             // Used to bind the lifecycle of cameras to the lifecycle owner
@@ -191,7 +231,7 @@ class CameraFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun takePhoto() {
+    private fun takePhotoX() {
         viewModel.startTakePhoto()
 
         // Get a stable reference of the modifiable image capture use case
@@ -229,14 +269,16 @@ class CameraFragment : Fragment() {
 
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val msg = "Photo capture succeeded: ${output.savedUri}"
+                    println("Photo capture succeeded: ${output.savedUri}")
                     output.savedUri?.let { imageUri ->
                         val imageStream =
                             requireActivity().contentResolver.openInputStream(imageUri)
                         val selectedImage = BitmapFactory.decodeStream(imageStream)
+                        imageStream?.close()
                         viewModel.getCodeByGoogleVisionOcr(selectedImage)
+                        val deleted = requireContext().contentResolver.delete(imageUri, null, null)
+                        println("Photo capture delete status: $deleted")
                     }
-                    println(msg)
 
                     _cameraProvider?.let { cameraProvider ->
                         {
@@ -246,6 +288,44 @@ class CameraFragment : Fragment() {
                 }
             }
         )
+    }
+
+    private fun startCameraBellow21() {
+        binding.cameraContainer.visibility = View.VISIBLE
+        binding.cameraPreview.visibility = View.GONE
+
+        val cameraOldBinding =
+            LayoutCameraViewOldBinding.inflate(LayoutInflater.from(requireContext()))
+        cameraViewOld = cameraOldBinding.camera
+        cameraViewOld?.setLifecycleOwner(viewLifecycleOwner)
+
+
+        binding.cameraContainer.addView(
+            cameraViewOld,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        )
+
+        cameraViewOld?.open()
+        cameraViewOld?.addCameraListener(object : CameraListener() {
+            override fun onPictureTaken(result: PictureResult) {
+                println("onPictureTaken... $result")
+                result.toBitmap(1024, 1024, BitmapCallback { bitmap ->
+                    bitmap?.let { viewModel.getCodeByGoogleVisionOcr(it) }
+                        ?: kotlin.run {
+                            //show alert
+                            showAlertErrorOcr()
+                        }
+                })
+            }
+        })
+    }
+
+    private fun takePhotoBellow21() {
+        cameraViewOld?.takePicture();
+
     }
 
 }

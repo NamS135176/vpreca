@@ -62,7 +62,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         return withContext(Dispatchers.IO) {
             try {
                 val error = Result.Error(Exception("Can not detect ocr"))
-                val scaleBitmap = bitmap.getScaledDownBitmap(400, isNecessaryToKeepOrig = true)
+                val scaleBitmap = bitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = true)
                     ?: return@withContext error
                 val imageBase64 = scaleBitmap.encodeImage() ?: return@withContext error
                 val gcpApiKey = BuildConfig.GoogleApiKey
