@@ -95,7 +95,6 @@ class GiftCardInputCardViewModel  @Inject constructor(
                         )
                     )
                     is InternalServerException -> _giftCardState.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         GiftCardInfoRequestState(internalError = "")
                     else -> _giftCardState.value =
                         GiftCardInfoRequestState(

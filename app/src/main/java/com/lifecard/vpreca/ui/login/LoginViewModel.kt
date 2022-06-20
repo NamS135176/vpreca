@@ -90,7 +90,6 @@ class LoginViewModel @Inject constructor(
             is NoConnectivityException -> _loginResult.value =
                 LoginResult(networkTrouble = true)
             is InternalServerException -> _loginResult.value =
-                    //TODO this internalError should be html from server, it will be implement later
                 LoginResult(internalError = "")
             is ApiException -> {
                 if (exception.resultCode == "1101302") {//case require sms verification

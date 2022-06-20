@@ -42,7 +42,6 @@ class BalanceAmountMenuViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _suspendDealResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         SuspendDealResult(internalError = "")
 
                     else -> _suspendDealResult.value =

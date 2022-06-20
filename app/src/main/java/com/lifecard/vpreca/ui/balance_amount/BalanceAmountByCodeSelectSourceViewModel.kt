@@ -42,7 +42,6 @@ class BalanceAmountByCodeSelectSourceViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _creditCardResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         CreditCardResult(internalError = "")
                     else -> _creditCardResult.value =
                         CreditCardResult(error = ErrorMessageException(R.string.get_list_card_failure))

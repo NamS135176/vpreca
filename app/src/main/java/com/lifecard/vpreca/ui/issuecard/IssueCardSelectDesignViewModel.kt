@@ -51,7 +51,6 @@ class IssueCardSelectDesignViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _listDesignResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         ListDesignState(internalError = "")
                     else -> _listDesignResult.value =
                         ListDesignState( error = ErrorMessageException(
@@ -89,7 +88,6 @@ class IssueCardSelectDesignViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _feeInfoResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         FeeInfoResult(internalError = "")
                     else -> _feeInfoResult.value =
                         FeeInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))

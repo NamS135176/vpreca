@@ -47,7 +47,6 @@ class IssueCardByCodeSelectWayViewModel  @Inject constructor(
                         )
                     )
                     is InternalServerException -> _issueGiftReqResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         IssueGiftResult(internalError = "")
                     else -> _issueGiftReqResult.value =
                         IssueGiftResult(error = ErrorMessageException(R.string.get_list_card_failure))
