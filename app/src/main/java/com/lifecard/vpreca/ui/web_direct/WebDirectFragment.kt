@@ -10,11 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.databinding.FragmentWebDirectBinding
 import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.Constant
 import dagger.hilt.android.AndroidEntryPoint
 import java.net.URLEncoder
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class WebDirectFragment : Fragment() {
@@ -26,6 +28,8 @@ class WebDirectFragment : Fragment() {
         }
     }
 
+    @Inject
+    lateinit var userManager: UserManager
     private val viewModel: WebDirectViewModel by viewModels()
     private var _binding: FragmentWebDirectBinding? = null
 
@@ -51,7 +55,7 @@ class WebDirectFragment : Fragment() {
             otp?.let { otpString ->
                 //child fragment
 
-                val memberNumber = "002"//TODO need change this
+                val memberNumber = userManager.memberNumber
                 val webUrl = String.format(Constant.WEB_DIRECT_BASE_URL, screenId)
                 val childFragMan = childFragmentManager
                 val childFragTrans = childFragMan.beginTransaction()
