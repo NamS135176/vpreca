@@ -322,11 +322,6 @@
             android:defaultValue="@null"
             app:argType="com.lifecard.vpreca.data.model.CreditCard"
             app:nullable="true" />
-<!--        <argument-->
-<!--            android:name="pre_route"-->
-<!--            android:defaultValue="@null"-->
-<!--            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"-->
-<!--            app:nullable="true" />-->
     </fragment>
     <fragment
         android:id="@+id/nav_camera_ocr"

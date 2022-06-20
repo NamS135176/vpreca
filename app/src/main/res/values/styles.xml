@@ -118,7 +118,6 @@
 
     <style name="MySpinner" parent="Widget.AppCompat.Spinner.DropDown">
         <item name="android:background">@drawable/spinner_bg</item>
-        <!--        <item name="android:dropDownSelector">@drawable/my_spinner_selector</item>-->
         <item name="android:spinnerMode">dropdown</item>
         <item name="android:popupBackground">#f1f1f1</item>
     </style>
@@ -138,7 +137,6 @@
         <item name="android:fontFamily">@font/hiragino_sans_w6</item>
         <item name="fontFamily">@font/hiragino_sans_w6
         </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
-        <!--        <item name="rippleColor">@android:color/transparent</item>-->
     </style>
 
     <style name="DialogTheme" parent="android:Theme.Holo.Dialog">
@@ -159,7 +157,6 @@
     </style>
 
     <style name="ThemeOverlay.MaterialAlertDialog.MaterialComponents" parent="@style/MaterialAlertDialog.MaterialComponents">
-        <!--        <item name="android:layout">@layout/dialog_progress_bar</item>-->
         <item name="backgroundInsetStart">0dp</item>
         <item name="backgroundInsetTop">0dp</item>
         <item name="backgroundInsetEnd">0dp</item>

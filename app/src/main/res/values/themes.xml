@@ -20,7 +20,7 @@
         <item name="android:dropDownSpinnerStyle">@style/MySpinner</item>
         <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <!--        <item name="rippleColor">@android:color/transparent</item>-->
+
         <item name="android:spinnerItemStyle">@style/SpinnerItemTheme</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:isLightTheme" tools:targetApi="q">true</item>
