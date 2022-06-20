@@ -4,7 +4,6 @@ import android.util.Base64
 import com.lifecard.vpreca.data.model.AuthToken
 import com.lifecard.vpreca.data.model.toAuthToken
 import com.lifecard.vpreca.data.model.toJSON
-import java.security.GeneralSecurityException
 import javax.crypto.Cipher
 
 fun Cipher.encryptAuthToken(authToken: AuthToken): String? {

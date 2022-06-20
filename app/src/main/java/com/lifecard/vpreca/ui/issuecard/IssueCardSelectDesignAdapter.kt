@@ -4,7 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.*
+import com.lifecard.vpreca.data.model.DesignCard
+import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.CardDesignItemBinding
 
 class IssueCardSelectDesignAdapter(

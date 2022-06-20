@@ -7,16 +7,11 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentPolicyBinding
 import com.lifecard.vpreca.ui.webview.WebViewFragment
-import com.lifecard.vpreca.ui.webview.WebViewFragmentDirections
-import com.lifecard.vpreca.utils.Converter
 
 
 class PolicyFragment : Fragment() {
@@ -79,4 +74,5 @@ class PolicyFragment : Fragment() {
         })
         return binding.root
     }
+
 }

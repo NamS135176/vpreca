@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
-import kotlinx.coroutines.launch
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.SuspendDealRepository
 import com.lifecard.vpreca.data.model.CreditCard
@@ -16,7 +15,7 @@ import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.balance_amount.SuspendDealResult
 import com.lifecard.vpreca.ui.listvpreca.CardInfoResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.lang.Exception
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

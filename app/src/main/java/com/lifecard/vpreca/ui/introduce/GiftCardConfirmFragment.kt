@@ -12,7 +12,6 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentGiftCardConfirmBinding
 import com.lifecard.vpreca.utils.hideToolbar
 import dagger.hilt.android.AndroidEntryPoint

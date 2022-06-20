@@ -6,17 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.RemoteRepository
-import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserManager
-import com.lifecard.vpreca.exception.ErrorMessageException
-import com.lifecard.vpreca.ui.login.LoginResult
 import com.lifecard.vpreca.utils.BiometricHelper
 import com.lifecard.vpreca.utils.PreferenceHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import java.security.Signature
 import javax.inject.Inject
 
 @HiltViewModel

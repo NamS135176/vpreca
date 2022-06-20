@@ -95,7 +95,7 @@ class LoginFragment : NoToolbarFragment() {
         }
 
         signUpButton.setOnClickListener {
-            findNavController().navigate(R.id.action_to_policy)
+            findNavController().navigate(R.id.nav_policy)
         }
 
         loginViewModel.validForm.observe(viewLifecycleOwner) { isValid ->

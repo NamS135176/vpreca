@@ -1,8 +1,6 @@
 package com.lifecard.vpreca.ui.smsverify
 
-import com.lifecard.vpreca.data.model.SMSAuthCodeSendResponseContent
 import com.lifecard.vpreca.data.model.SMSAuthResponseContent
-import com.lifecard.vpreca.data.model.SendSMSResponseContent
 import com.lifecard.vpreca.exception.ErrorMessageException
 
 data class SendSMSConfirmState(

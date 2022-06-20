@@ -1,8 +1,8 @@
 package com.lifecard.vpreca
 
-import android.app.Application
-import android.content.Context
-import android.content.res.Configuration
+import android.os.Build
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.multidex.MultiDexApplication
@@ -10,31 +10,13 @@ import androidx.startup.AppInitializer
 import dagger.hilt.android.HiltAndroidApp
 import net.danlew.android.joda.JodaTimeInitializer
 import org.greenrobot.eventbus.EventBus
-import android.os.StrictMode
-import android.os.StrictMode.VmPolicy
 
 
 @HiltAndroidApp
 class MyApplication : MultiDexApplication() {
     override fun onCreate() {
-        if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads()
-                    .detectDiskWrites()
-                    .detectNetwork() // or .detectAll() for all detectable problems
-                    .penaltyLog()
-                    .build()
-            )
-            StrictMode.setVmPolicy(
-                VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects()
-                    .detectLeakedClosableObjects()
-                    .penaltyLog()
-                    .penaltyDeath()
-                    .build()
-            )
-        }
+        applyStrictMode()
+
         super.onCreate()
         EventBus.builder()
             // have a look at the index class to see which methods are picked up
@@ -48,5 +30,32 @@ class MyApplication : MultiDexApplication() {
         AppCompatDelegate.setApplicationLocales(appLocale)
     }
 
+    private fun applyStrictMode() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .detectDiskWrites()
+                    .detectNetwork()
+                    .detectCustomSlowCalls()
+                    .apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            detectResourceMismatches()
+                        }
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            detectUnbufferedIo()
+                        }
+                    }
+
+                    .penaltyLog()
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                VmPolicy.Builder()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .build()
+            )
+        }
+    }
 
 }

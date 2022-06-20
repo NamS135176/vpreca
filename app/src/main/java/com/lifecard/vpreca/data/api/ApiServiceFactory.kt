@@ -1,13 +1,10 @@
 package com.lifecard.vpreca.data.api
 
 import android.content.Context
-import android.os.Message
 import com.google.gson.GsonBuilder
 import com.lifecard.vpreca.BuildConfig
 import com.lifecard.vpreca.data.UserManager
-import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.utils.Constant
-import com.lifecard.vpreca.utils.bodyToString
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

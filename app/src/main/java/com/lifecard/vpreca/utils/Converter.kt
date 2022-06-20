@@ -1,7 +1,6 @@
 package com.lifecard.vpreca.utils
 
 import android.graphics.Color
-import com.lifecard.vpreca.BuildConfig
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
@@ -9,7 +8,6 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.max
 import kotlin.math.min
 
 object Converter {

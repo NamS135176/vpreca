@@ -1,7 +1,6 @@
 package com.lifecard.vpreca.utils
 
 import android.content.Context
-import android.content.SharedPreferences
 
 class PreferenceHelper {
     companion object {

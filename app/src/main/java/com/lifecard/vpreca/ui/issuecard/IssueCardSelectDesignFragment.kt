@@ -13,7 +13,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.*
+import com.lifecard.vpreca.data.model.BalanceGiftData
+import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
+import com.lifecard.vpreca.data.model.DesignCard
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectDesignBinding
 import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showInternetTrouble

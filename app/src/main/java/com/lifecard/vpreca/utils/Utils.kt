@@ -3,7 +3,6 @@ package com.lifecard.vpreca.utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import java.lang.Exception
 
 class Utils {
     companion object {

@@ -1,13 +1,13 @@
 package com.lifecard.vpreca.ui.changeinfo
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -37,6 +37,8 @@ class ChangeInfoInputFragment : Fragment() {
     private var _binding: FragmentChangeInfoInputBinding? = null
     private val binding get() = _binding!!
     private val args: ChangeInfoInputFragmentArgs by navArgs()
+    private var saveState: Bundle? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,7 +76,6 @@ class ChangeInfoInputFragment : Fragment() {
         val toggleMagazineSecond = binding.toggleMagazineSecond
         var city = args.userData?.addressPrefecture
         var question = args.userData?.secretQuestion
-        val res = resources
 
         viewModel.originUserData = userManager.memberInfo!!
 
@@ -327,6 +328,26 @@ class ChangeInfoInputFragment : Fragment() {
             viewModel.submit()
         }
 
+        saveState?.let { bundle ->
+            spinnerCity.selectItemByIndex(bundle.getInt("city"))
+            spinnerSecret.selectItemByIndex(bundle.getInt("question"))
+        }
+
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        saveData()
+    }
+
+    private fun saveData() {
+        val cityAdapter = binding.spinnerCity.getSpinnerAdapter<PowerSpinnerAdapter>()
+        val secretAdapter = binding.spinnerSecret.getSpinnerAdapter<PowerSpinnerAdapter>()
+
+        saveState = bundleOf(
+            "city" to cityAdapter.index,
+            "question" to secretAdapter.index,
+        )
     }
 }
