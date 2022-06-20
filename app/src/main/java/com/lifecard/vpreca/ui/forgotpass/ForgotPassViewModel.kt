@@ -55,7 +55,7 @@ class ForgotPassViewModel @Inject constructor(
 
     private fun checkPhoneValid(text: String?): Boolean {
         return if (!RegexUtils.isPhoneNumberValid(text)) {
-            phoneError.value = R.string.forgot_pass_error_phone
+            phoneError.value = R.string.rgx_error_phone_number
             false
         } else {
             phoneError.value = null

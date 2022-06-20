@@ -347,6 +347,4 @@ class SignupInputFragment : Fragment() {
 
         return binding.root
     }
-
-
 }

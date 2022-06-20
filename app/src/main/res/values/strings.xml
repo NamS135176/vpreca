@@ -191,7 +191,7 @@
     <string name="forgot_pass_secret_answer_title">秘密の質問の答え</string>
     <string name="forgot_pass_secret_answer_hint">全角20文字以内</string>
     <string name="forgot_pass_btn_submit">メール送信</string>
-    <string name="forgot_pass_error_email">正しいメールアドレスを入力してください</string>
+    <string name="forgot_pass_error_email">正しいメールアドレスを入力してください。</string>
     <string name="forgot_pass_error_dob">@string/rgx_error_birthdate</string>
     <string name='forgot_pass_error_phone'>電話番号の形式が正しくありません。</string>
     <string name="forgot_pass_error_secret_question">選択してください</string>
