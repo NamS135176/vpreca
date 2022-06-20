@@ -4,7 +4,6 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.lifecard.vpreca.R
 import kotlinx.parcelize.Parcelize
-import java.util.*
 
 @Parcelize
 data class DesignCard(

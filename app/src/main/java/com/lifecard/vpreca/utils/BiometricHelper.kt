@@ -2,8 +2,6 @@ package com.lifecard.vpreca.utils
 
 import android.hardware.biometrics.BiometricPrompt
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.exception.ErrorMessageException
-import com.lifecard.vpreca.ui.login.LoginResult
 
 class BiometricHelper {
     companion object {

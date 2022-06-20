@@ -1,24 +1,25 @@
 package com.lifecard.vpreca.ui.issuecard
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.*
+import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.data.model.IssueSelectSourceData
+import com.lifecard.vpreca.data.model.SelectedData
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeSelectSourceBinding
 import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class IssueCardByCodeSelectSource : Fragment() {

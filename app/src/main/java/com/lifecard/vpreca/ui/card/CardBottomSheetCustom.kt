@@ -17,19 +17,18 @@ import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.CardDetailLayoutBinding
 import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.card_usage.CardUsageFragmentArgs
+import com.lifecard.vpreca.ui.custom.showCustomToast
 import com.lifecard.vpreca.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
-import com.lifecard.vpreca.ui.custom.showCustomToast
 import kotlin.coroutines.CoroutineContext
 
 class CardBottomSheetCustom(

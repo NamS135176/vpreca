@@ -9,7 +9,6 @@ import com.lifecard.vpreca.utils.Constant
 import com.lifecard.vpreca.utils.RequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.IOException
 
 class RemoteRepository(
     private val apiService: ApiService,

@@ -1,13 +1,12 @@
 package com.lifecard.vpreca.utils
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.os.Build
 import android.text.Editable
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.*
+import androidx.core.content.ContextCompat.getColor
 import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment

@@ -7,7 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.IssueCardRepository
 import com.lifecard.vpreca.data.Result
-import com.lifecard.vpreca.data.model.*
+import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
+import com.lifecard.vpreca.data.model.CardInfoWithDesignIdContentInfo
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException

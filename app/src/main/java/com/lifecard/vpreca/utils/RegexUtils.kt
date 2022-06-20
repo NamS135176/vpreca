@@ -1,6 +1,5 @@
 package com.lifecard.vpreca.utils
 
-import android.util.Patterns
 import java.util.regex.Pattern
 
 class RegexUtils {

@@ -5,22 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.BuildConfig
+import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.api.GoogleVisionService
 import com.lifecard.vpreca.data.vision.*
+import com.lifecard.vpreca.exception.NoConnectivityException
+import com.lifecard.vpreca.utils.RegexUtils
+import com.lifecard.vpreca.utils.encodeImage
 import com.lifecard.vpreca.utils.getScaledDownBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
-import javax.inject.Inject
-import com.lifecard.vpreca.data.Result
-import com.lifecard.vpreca.exception.ApiException
-import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.utils.RegexUtils
-import com.lifecard.vpreca.utils.encodeImage
 import java.io.IOException
 import java.net.UnknownHostException
+import javax.inject.Inject
 
 @Suppress("kotlin:S1192") // String literals should not be duplicated
 @HiltViewModel

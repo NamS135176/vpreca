@@ -1,17 +1,10 @@
 package com.lifecard.vpreca.utils
 
 import android.content.Context
-import android.content.res.Resources
-import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.PopUpToBuilder
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.AlertDialogFragment
 

@@ -14,17 +14,13 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.lifecard.vpreca.*
+import com.lifecard.vpreca.MainActivity
+import com.lifecard.vpreca.R
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
-import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.source.SecureStore
-import com.lifecard.vpreca.ui.login.LoginResult
-import com.lifecard.vpreca.utils.PreferenceHelper
-import com.lifecard.vpreca.utils.showInternetTrouble
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import javax.crypto.Cipher
 import javax.inject.Inject
 

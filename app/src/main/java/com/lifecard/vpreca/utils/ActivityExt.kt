@@ -2,7 +2,6 @@ package com.lifecard.vpreca.utils
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.AlertDialogFragment
 import com.lifecard.vpreca.base.LoadingDialogFragment

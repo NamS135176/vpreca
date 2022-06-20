@@ -1,7 +1,5 @@
 package com.lifecard.vpreca.utils
 
-import com.google.android.material.textview.MaterialTextView
-import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.SignupInputState

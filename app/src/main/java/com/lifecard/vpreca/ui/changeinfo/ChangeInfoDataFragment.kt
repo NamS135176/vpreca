@@ -3,13 +3,11 @@ package com.lifecard.vpreca.ui.changeinfo
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.DialogInterface
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.RequiresApi
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,7 +18,8 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.ChangeInfoMemberData
 import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
-import com.lifecard.vpreca.utils.*
+import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*

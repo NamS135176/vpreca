@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
-import android.opengl.ETC1.encodeImage
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -12,14 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.camera.core.*
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -28,18 +27,17 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentCameraBinding
 import com.lifecard.vpreca.databinding.LayoutCameraViewOldBinding
-import com.lifecard.vpreca.ui.changeinfo.ChangeInfoConfirmDataFragmentArgs
-import com.lifecard.vpreca.utils.*
+import com.lifecard.vpreca.utils.hideLoadingDialog
+import com.lifecard.vpreca.utils.setNavigationResult
+import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showLoadingDialog
 import com.otaliastudios.cameraview.BitmapCallback
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 @AndroidEntryPoint
 class CameraFragment : Fragment() {

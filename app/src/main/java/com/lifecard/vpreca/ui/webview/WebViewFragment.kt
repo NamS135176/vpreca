@@ -19,9 +19,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewClientCompat
 import androidx.webkit.WebViewFeature
-import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentWebViewBinding
-import com.lifecard.vpreca.utils.fragmentFindNavController
 import com.lifecard.vpreca.utils.hideToolbar
 import com.lifecard.vpreca.utils.showToolbar
 

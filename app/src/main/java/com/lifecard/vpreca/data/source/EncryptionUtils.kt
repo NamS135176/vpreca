@@ -2,13 +2,11 @@ package com.lifecard.vpreca.data.source
 
 import android.content.Context
 import android.os.Build
-import android.security.keystore.KeyProperties
 import java.io.IOException
 import java.security.KeyStore
 import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
 import java.security.cert.CertificateException
-import kotlin.Error
 
 object EncryptionUtils {
     fun encrypt(context: Context, token: String?): String? {

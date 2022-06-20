@@ -1,6 +1,5 @@
 package com.lifecard.vpreca.ui.forgotpass
 
-import com.lifecard.vpreca.data.model.MemberInfo
 import com.lifecard.vpreca.exception.ErrorMessageException
 
 data class ResetPassReqState(

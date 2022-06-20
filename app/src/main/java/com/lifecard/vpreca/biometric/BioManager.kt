@@ -9,8 +9,8 @@ import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
-import com.lifecard.vpreca.data.source.SecurityKey
-import java.security.*
+import java.security.KeyStore
+import java.security.PublicKey
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey

@@ -1,6 +1,5 @@
 package com.lifecard.vpreca.ui.signup
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,18 +7,11 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentPolicyBinding
 import com.lifecard.vpreca.ui.webview.WebViewFragment
-import com.lifecard.vpreca.ui.webview.WebViewFragmentDirections
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.hideToolbar
-import com.lifecard.vpreca.utils.showToolbar
 
 
 class PolicyFragment : Fragment() {
