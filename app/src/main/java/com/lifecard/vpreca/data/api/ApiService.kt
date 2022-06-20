@@ -94,6 +94,11 @@ interface ApiService {
         @Body cardRelationRequest: Request
     ): CardRelationRegReqResponse
 
+    @POST("SendSmsReq")
+    suspend fun sendSMSRequest(
+        @Body sendSMSRequest: Request
+    ): SendSMSResponse
+
     @POST("SmsAuthCodeSendReq")
     suspend fun sendSmsRequest(
         @Body sendSmsRequest: Request

@@ -24,6 +24,7 @@ import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
 import com.lifecard.vpreca.data.UserManager
+import com.lifecard.vpreca.data.model.LoginIdData
 import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.*
@@ -124,7 +125,8 @@ class LoginFragment : NoToolbarFragment() {
                 loginResult.networkTrouble?.let { if (it) showInternetTrouble() }
                 loginResult.smsVerification?.let {
                     if (it) {
-                        findNavController().navigate(R.id.nav_sms_verify)
+                        val action = LoginFragmentDirections.actionToSms(LoginIdData(usernameEditText.text.toString()))
+                        findNavController().navigate(action)
                     }
                 }
                 loginResult.error?.errorMessage?.let { showLoginFailed(it) }

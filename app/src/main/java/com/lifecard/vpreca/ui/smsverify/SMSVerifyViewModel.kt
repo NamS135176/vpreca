@@ -29,23 +29,16 @@ class SMSVerifyViewModel @Inject constructor(
     private val _sendSMSRequestResult = MutableLiveData<SendSMSRequestState>()
     val sendSMSRequestResult: LiveData<SendSMSRequestState> = _sendSMSRequestResult
 
+    private val _sendSMSConfirmResult = MutableLiveData<SendSMSConfirmState>()
+    val sendSMSConfirmResult: LiveData<SendSMSConfirmState> = _sendSMSConfirmResult
+
     fun sendSMSRequest(
-        memberNumber: String,
-        telephoneNumber: String,
-        certType: String,
-        operationType: String,
-        certSumFlg: String,
-        operationSumFlg: String
+       loginId:String
     ) {
         viewModelScope.launch {
             _loading.value = true
             val result = userRepository.sendSMSRequest(
-                memberNumber,
-                telephoneNumber,
-                certType,
-                operationType,
-                certSumFlg,
-                operationSumFlg
+              loginId
             )
 
             if (result is Result.Success) {
@@ -65,6 +58,51 @@ class SMSVerifyViewModel @Inject constructor(
                         SendSMSRequestState(internalError = "")
                     else -> _sendSMSRequestResult.value =
                         SendSMSRequestState(
+                            error = ErrorMessageException(
+                                messageResId = R.string.login_failed,
+                                exception = result.exception
+                            )
+                        )
+                }
+            }
+            _loading.value = false
+        }
+    }
+
+    fun sendSMSConfirm(
+        memberNumber:String,
+        certType:String,
+        operationType:String,
+        certCode:String,
+        extCertDealId:String
+    ) {
+        viewModelScope.launch {
+            _loading.value = true
+            val result = userRepository.sendSMSConfirm(
+                memberNumber = memberNumber,
+                certType = certType,
+                operationType = operationType,
+                certCode = certCode,
+                extCertDealId = extCertDealId
+            )
+
+            if (result is Result.Success) {
+                _sendSMSConfirmResult.value = SendSMSConfirmState(success = result.data)
+            } else if (result is Result.Error) {
+                when (result.exception) {
+                    is NoConnectivityException -> _sendSMSConfirmResult.value =
+                        SendSMSConfirmState(networkTrouble = true)
+                    is ApiException -> _sendSMSConfirmResult.value = SendSMSConfirmState(
+                        error = ErrorMessageException(
+                            errorMessage = result.exception.errorMessage,
+                            exception = result.exception
+                        )
+                    )
+                    is InternalServerException -> _sendSMSConfirmResult.value =
+                            //TODO this internalError should be html from server, it will be implement later
+                        SendSMSConfirmState(internalError = "")
+                    else -> _sendSMSConfirmResult.value =
+                        SendSMSConfirmState(
                             error = ErrorMessageException(
                                 messageResId = R.string.login_failed,
                                 exception = result.exception

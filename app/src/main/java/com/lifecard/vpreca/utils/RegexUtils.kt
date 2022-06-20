@@ -224,6 +224,18 @@ class RegexUtils {
 //            } ?: password ?: ""
         }
 
+        fun hidePassword(password: String?): String {
+            try {
+                val result =
+                    password?.replace(Regex("[\\d]"), "*")
+                println("hidepassword... password = $password - result: $result")
+                return result!!
+            } catch (e: Exception) {
+                println(e.toString())
+            }
+            return password!!
+        }
+
         fun checkLoginIdContainSpecialCharacter(loginId: String?): Boolean {
             return loginId?.let { Regex(RegexSpecialCharacterForLoginID).matches(it) } ?: false
         }

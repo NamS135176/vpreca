@@ -10,11 +10,11 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentSmsVerifyBinding
-import com.lifecard.vpreca.utils.showInternetTrouble
-import com.lifecard.vpreca.utils.showPopupMessage
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +27,7 @@ class SMSVerifyFragment : Fragment() {
     private val viewModel: SMSVerifyViewModel by viewModels()
     private var _binding: FragmentSmsVerifyBinding? = null
     private val binding get() = _binding!!
+    private val args:SMSVerifyFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,13 +47,11 @@ class SMSVerifyFragment : Fragment() {
         val btnSubmit = binding.btnSubmitPolicy
         val codeInput = binding.idCodeVerify
         val codeLayout = binding.codeInputLayout
-
-        val certType = "certType"
+        val tvPhone = binding.phoneNumber
+        var certType = "certType"
         val operationType = "operationType"
-        val certSumFlg = "0"
-        val operationSumFlg = "0"
         var extCertDealId = ""
-        viewModel.sendSMSRequest("001","0123456789", certType, operationType, certSumFlg, operationSumFlg)
+        viewModel.sendSMSRequest(args.loginIdData?.loginId!!)
         btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
@@ -83,7 +82,7 @@ class SMSVerifyFragment : Fragment() {
 
         viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
-//                findNavController().navigate(R.id.nav_signup_email)
+                viewModel.sendSMSConfirm("001",certType, operationType, codeInput.text.toString(), extCertDealId)
             }
         }
 
@@ -92,7 +91,9 @@ class SMSVerifyFragment : Fragment() {
             Observer { listDesignResult ->
                 listDesignResult ?: return@Observer
                 listDesignResult.success?.let {
-                    extCertDealId = listDesignResult.success.certResInfo?.extCertDealId!!
+                    extCertDealId = listDesignResult.success.extCertDealId!!
+                    certType = listDesignResult.success.certType!!
+                    tvPhone.text = UserConverter.formatPhone(listDesignResult.success.ivrTelephoneNumber)
                 }
                 listDesignResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("", getString(it)) }
@@ -104,6 +105,35 @@ class SMSVerifyFragment : Fragment() {
                     }
                 }
             })
+
+        viewModel.sendSMSConfirmResult.observe(
+            viewLifecycleOwner,
+            Observer { listDesignResult ->
+                listDesignResult ?: return@Observer
+                listDesignResult.success?.let {
+                    findNavController().popBackStack(R.id.nav_login, inclusive = false)
+                }
+                listDesignResult.error?.let { error ->
+                    error.messageResId?.let { showPopupMessage("", getString(it)) }
+                    error.errorMessage?.let { showPopupMessage("", it) }
+                }
+                listDesignResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
+                }
+            })
+
+        viewModel.loading.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> {
+                   showLoadingDialog()
+                }
+                else -> {
+                    hideLoadingDialog()
+                }
+            }
+        }
 
         codeInput.doAfterTextChanged { text -> viewModel.cfPhoneDataChanged(text = text.toString()) }
         btnSubmit.setOnClickListener {
