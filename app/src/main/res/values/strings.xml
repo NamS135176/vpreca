@@ -593,4 +593,5 @@
     <string name="policy_text4">私は、アカウント登録情報に不備があった等でライフカードが必要と判断した場合は運転免許証等の本人確認用書類を提出することに同意します。</string>
 
     <string name="button_next">次へ</string>
+    <string name="root_error">根ざしたデバイスはアプリを使用できません。</string>
 </resources>

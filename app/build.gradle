@@ -67,7 +67,7 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -81,7 +81,7 @@ android {
             buildConfigField("String", "privateKeyPem", "\"${privateKeyPem}\"")
         }
 
-        debug {
+        getByName("debug") {
             signingConfig signingConfigs.debug
 
             buildConfigField("String", "SECURE_KEY_FILE_NAME", "\"${secureProperties['keystoreFileName']}\"")
@@ -103,6 +103,23 @@ android {
         viewBinding true
     }
     buildToolsVersion '32.0.0'
+
+    // Specifies one flavor dimension.
+    flavorDimensions += "version"
+    productFlavors {
+        create("Staging") {
+            dimension = "version"
+        }
+        create("QA") {
+            // Assigns this product flavor to the "version" flavor dimension.
+            // If you are using only one dimension, this property is optional,
+            // and the plugin automatically assigns all the module's flavors to
+            // that dimension.
+            dimension = "version"
+            versionNameSuffix = "-qa"
+        }
+    }
+
 }
 
 dependencies {
@@ -164,6 +181,7 @@ dependencies {
     implementation "com.github.skydoves:powerspinner:1.2.2"
 
     implementation("androidx.webkit:webkit:1.4.0")
+    implementation 'com.scottyab:rootbeer-lib:0.1.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

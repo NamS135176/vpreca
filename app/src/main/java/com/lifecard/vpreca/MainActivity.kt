@@ -1,6 +1,7 @@
 package com.lifecard.vpreca
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +17,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.databinding.ActivityMainBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
@@ -23,10 +25,10 @@ import com.lifecard.vpreca.ui.custom.DrawerMenuLayout
 import com.lifecard.vpreca.utils.KeyboardUtils
 import com.lifecard.vpreca.utils.PreferenceHelper
 import com.lifecard.vpreca.utils.lockDrawer
+import com.scottyab.rootbeer.RootBeer
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -52,8 +54,31 @@ class MainActivity : AppCompatActivity() {
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-//        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        if (!BuildConfig.FLAVOR.contentEquals("QA", ignoreCase = true)) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_SECURE,
+                WindowManager.LayoutParams.FLAG_SECURE
+            )
+        }
 
+        val rootBeer = RootBeer(this)
+        val isRooted = rootBeer.isRooted
+        if (isRooted) {
+            //we found indication of root
+            //show alert root
+            MaterialAlertDialogBuilder(this).apply {
+                setPositiveButton(
+                    R.string.button_ok, DialogInterface.OnClickListener { _, _ -> finish() }
+                )
+                setMessage(getString(R.string.root_error))
+            }.create().show()
+        } else {
+            //we didn't find indication of root
+            bindingView()
+        }
+    }
+
+    private fun bindingView() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
