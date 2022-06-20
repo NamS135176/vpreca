@@ -31,7 +31,7 @@ class SignupInputViewModel : ViewModel() {
 
     private fun checkUsernameValid(): Boolean {
         return if (!RegexUtils.isNicknameValid(formState.value?.nickname)) {
-            usernameError.value = R.string.invalid_username
+            usernameError.value = R.string.rgx_error_nickname
             false
         } else {
             usernameError.value = null
@@ -101,7 +101,7 @@ class SignupInputViewModel : ViewModel() {
 
     private fun checkPhoneValid(): Boolean {
         return if (!RegexUtils.isPhoneNumberValid(formState.value?.phone)) {
-            phoneError.value = R.string.forgot_pass_error_phone
+            phoneError.value = R.string.rgx_error_phone_number
             false
         } else {
             phoneError.value = null

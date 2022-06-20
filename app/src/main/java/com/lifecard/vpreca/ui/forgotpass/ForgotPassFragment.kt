@@ -261,7 +261,7 @@ class ForgotPassFragment : Fragment() {
 
     fun backFunction() {
         findNavController().popBackStack(R.id.nav_login,
-        inclusive = true,
+        inclusive = false,
         )
     }
 }

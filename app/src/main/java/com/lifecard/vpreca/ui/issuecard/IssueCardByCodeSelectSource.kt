@@ -72,12 +72,6 @@ class IssueCardByCodeSelectSource : Fragment() {
                 }
             })
 
-        viewModel.loading.observe(viewLifecycleOwner) {
-            when (it) {
-                true -> showLoadingDialog()
-                else -> hideLoadingDialog()
-            }
-        }
         btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
