@@ -1,13 +1,12 @@
 package com.lifecard.vpreca.utils
 
-import java.lang.Exception
-
+@Suppress("kotlin:S1192") // String literals should not be duplicated
 class ApiError {
     companion object {
-        val otherErrorCode = "9999999"
+        const val otherErrorCode = "9999999"
         val otherErrorMessage = "システムエラーです。"
 
-        val commonErrors = mapOf(
+        private val commonErrors = mapOf(
             //common: 外部インタフェース定義書(IFBPAP0101_共通部).pdf
             "9999001" to "メッセージダイジェスト検証エラーです。",
             "9999002" to "センタ識別子不存在エラーです。",
@@ -30,21 +29,21 @@ class ApiError {
             //end common
         )
 
-        val AP1101_loginErrors = mapOf(
+        private val AP1101_loginErrors = mapOf(
             //login: 外部インタフェース定義書(IFBPAP1101_ログイン).pdf
             "1101101" to "そのログインIDの会員情報が存在しません。",
             "1101102" to "アカウントロック中です。",
             "1101103" to "ログインパスワードが正しくありません。",
             //end login
         )
-        val AP1102_memberQueryError = mapOf(
+        private val AP1102_memberQueryError = mapOf(
             //member query: 外部インタフェース定義書(IFBPAP1102_会員情報照会).pdf
             "1101101" to "そのログインIDの会員情報が存在しません。",
             "1101102" to "アカウントロック中です。",
             "1101103" to "ログインパスワードが正しくありません。",
             //end member query
         )
-        val AP1104_cardListQueryError = mapOf(
+        private val AP1104_cardListQueryError = mapOf(
 
             //card list information inquiry: 外部インタフェース定義書(IFBPAP1104_カード一覧情報照会).pdf
             "1104101" to "会員情報が存在しません。",
@@ -54,7 +53,7 @@ class ApiError {
             //end card list information inquiry
         )
 
-        val AP1105_cardDetailQueryError = mapOf(
+        private val AP1105_cardDetailQueryError = mapOf(
             //card detailed information inquiry: 外部インタフェース定義書(IFBPAP1105_カード詳細情報照会) .pdf
             "1105101" to "会員情報が存在しません。",
             "1105102" to "会員情報が有効ではありません。",
@@ -64,14 +63,14 @@ class ApiError {
 
         )
 
-        val AP1106_pendingTransactionInquiryQueryError = mapOf(
+        private val AP1106_pendingTransactionInquiryQueryError = mapOf(
             //Pending Transaction Inquiry: 外部インタフェース定義書(IFBPAP1106_保留中取引照会).pdf
             "1106101" to "会員情報が存在しません。",
             "1106102" to "会員情報が有効ではありません。",
             //end Pending Transaction Inquiry
         )
 
-        val AP1107_reciptNumberAuthenticationError = mapOf(
+        private val AP1107_reciptNumberAuthenticationError = mapOf(
             //receipt number authentication: 外部インタフェース定義書(IFBPAP1107_受取番号認証).pdf
             "1107101" to "会員情報が存在しません。",
             "1107102" to "会員情報が有効ではありません。",
@@ -82,7 +81,7 @@ class ApiError {
             //end receipt number authentication
         )
 
-        val AP1108_memberListError = mapOf(
+        private val AP1108_memberListError = mapOf(
             //member list error: 外部インタフェース定義書(IFBPAP1107_受取番号認証).pdf
             "1108101" to "要求電文で連携された会員が存在しない場合",
             "1108102" to "要求電文で連携された会員が会員情報取得上限件数（プロパティ）を超えた場合",
@@ -90,7 +89,7 @@ class ApiError {
         )
 
 
-        val AP1202_cardUsageHistoryQueryError = mapOf(
+        private val AP1202_cardUsageHistoryQueryError = mapOf(
             //card usage history inquiry: 外部インタフェース定義書(IFBPAP1202_カード利用履歴照会).pdf
             "1202101" to "会員情報が存在しません。",
             "1202102" to "会員情報が有効ではありません。",
@@ -98,13 +97,13 @@ class ApiError {
             "1202104" to "カード情報取得フラグが取得済ではありません。",
             //end receipt number authentication
         )
-        val AP1501_cardDesignError = mapOf(
+        private val AP1501_cardDesignError = mapOf(
             //card design inquiry: 外部インタフェース定義書(IFBPAP1501_カードデザイン照会).pdf
             "1501101" to "カードデザインが存在しません。",
             //end receipt number authentication
         )
 
-        val AP2101_membershipRegistrationError = mapOf(
+        private val AP2101_membershipRegistrationError = mapOf(
             //Membership registration: AP2101_会員登録
             "2101101" to "ブランドスキームID内に同一ログインIDが既に登録されています。",
             "9999901" to "会員番号の払い出しに失敗しました。",
@@ -112,7 +111,7 @@ class ApiError {
             //end Membership registration
         )
 
-        val AP2102_memberInformationChangeError = mapOf(
+        private val AP2102_memberInformationChangeError = mapOf(
             //Member Information change: 外部インタフェース定義書(IFBPAP2102_会員情報変更).pdf
             "2102101" to "会員情報が存在しません。",
             "2102102" to "会員情報が有効ではありません。",
@@ -121,14 +120,14 @@ class ApiError {
             //end Member Information change
         )
 
-        val AP2104_passwordResetError = mapOf(
+        private val AP2104_passwordResetError = mapOf(
             //Password reset: 外部インタフェース定義書(IFBPAP2104_パスワード再設定依頼).pdf
             "2104101" to "会員情報が存在しません、または有効ではありません。",
             "2104102" to "会員のメールアドレス1が登録されていません。",
             //end Password reset
         )
 
-        val AP2105_passwordChangeError = mapOf(
+        private val AP2105_passwordChangeError = mapOf(
             //Password reset: 外部インタフェース定義書(IFBPAP2105_パスワード変更).pdf
             "2105101" to "会員情報が存在しません。",
             "2105102" to "会員情報が有効ではありません。",
@@ -139,7 +138,7 @@ class ApiError {
             //end Password reset
         )
 
-        val AP2113_MobileConfirmSendRequestError = mapOf(
+        private val AP2113_MobileConfirmSendRequestError = mapOf(
             //Mobile confirm send request: 外部インタフェース定義書(IFBPAP2113_携帯番号確認依頼).xls
             "2113101" to "要求電文で連携された携帯番号の確認依頼回数が上限回数を超えている場合",
             "2113102" to "ブランドスキーム外部認証機関設定情報が存在しない場合",
@@ -148,7 +147,7 @@ class ApiError {
             "9999903" to "外部認証設定情報が存在しない場合",
             //end Mobile confirm send request
         )
-        val AP2114_MobileConfirmRequestError = mapOf(
+        private val AP2114_MobileConfirmRequestError = mapOf(
             //Mobile Confirm Req: 外部インタフェース定義書(IFBPAP2114_携帯番号確認).xls
             "2113101" to "要求電文で連携された携帯番号の確認依頼回数が上限回数を超えている場合",
             "2113102" to "ブランドスキーム外部認証機関設定情報が存在しない場合",
@@ -158,7 +157,7 @@ class ApiError {
             //end Mobile Confirm Req
         )
 
-        val AP2115_MailConfirmSendReqError = mapOf(
+        private val AP2115_MailConfirmSendReqError = mapOf(
             //Mail Confirm Send Req: 外部インタフェース定義書(IFBPAP2115_メールアドレス確認依頼).xls
             "2115101" to "要求電文で連携された会員が存在しない場合",
             "2115102" to "要求電文で連携された会員が有効でない場合",
@@ -168,7 +167,7 @@ class ApiError {
             //end Mail Confirm Send Req
         )
 
-        val AP2116_MailConfirmReqError = mapOf(
+        private val AP2116_MailConfirmReqError = mapOf(
             //Mail Confirm Req: 外部インタフェース定義書(IFBPAP2116_メールアドレス確認).xls
             "2116101" to "連絡先確認履歴が存在しない場合",
             "2116102" to "要求電文で連携された確認コードが既に、認証済みの場合",
@@ -179,7 +178,7 @@ class ApiError {
             //end Mail Confirm Req
         )
 
-        val AP2201_cardLinkRegistrationError = mapOf(
+        private val AP2201_cardLinkRegistrationError = mapOf(
             //card link registration: 外部インタフェース定義書(IFBPAP2201_カード紐付け登録).pdf
             "2201101" to "会員情報が存在しません。",
             "2201102" to "会員情報が有効ではありません。",
@@ -198,7 +197,7 @@ class ApiError {
             //end card link registration
         )
 
-        val AP2202_cardInformationChangeError = mapOf(
+        private val AP2202_cardInformationChangeError = mapOf(
             //card information change: 外部インタフェース定義書(IFBPAP2202_カード情報変更).pdf
             "2202101" to "会員情報が存在しません。",
             "2202102" to "会員情報が有効ではありません。",
@@ -216,7 +215,7 @@ class ApiError {
             "2202201" to "カードの利用停止フラグが停止中です。",
             //end card information change
         )
-        val AP2206_cardReissueError = mapOf(
+        private val AP2206_cardReissueError = mapOf(
             //card reissue: AP2206_カード再発行
             "2206101" to "会員情報が存在しません。",
             "2206102" to "会員情報が有効ではありません。",
@@ -233,7 +232,7 @@ class ApiError {
         )
 
 
-        val AP2309_cardIssuanceGiftError = mapOf(
+        private val AP2309_cardIssuanceGiftError = mapOf(
             //Card issuance gift: AP2309_カード発行ギフト
             "2309101" to "会員情報が存在しません。",
             "2309102" to "会員情報が有効ではありません。",
@@ -256,7 +255,7 @@ class ApiError {
             //end card issuance gift
         )
 
-        val AP2311_cardIssuanceBalanceTotalError = mapOf(
+        private val AP2311_cardIssuanceBalanceTotalError = mapOf(
             //Card issuance balance total: AP2311_カード発行残高合算
             "2311101" to "会員情報が存在しません。",
             "2311102" to "会員情報が有効ではありません。",
@@ -280,7 +279,7 @@ class ApiError {
             //end Card issuance balance total
         )
 
-        val AP2321_memberTransactionSettlement = mapOf(
+        private val AP2321_memberTransactionSettlement = mapOf(
             //Member transaction settlement: 外部インタフェース定義書(IFBPAP2321_会員取引精算).pdf
             "2321101" to "会員情報が存在しません。",
             "2321102" to "会員情報が有効ではありません。",
@@ -293,7 +292,7 @@ class ApiError {
             //end Member transaction settlement
         )
 
-        val AP2322_cardIssuanceGiftBalanceTotal = mapOf(
+        private val AP2322_cardIssuanceGiftBalanceTotal = mapOf(
             //card issuance gift(with balance total): 外部インタフェース定義書(IFBPAP2322_カード発行ギフト（残高合算あり）).pdf
             "2322101" to "会員情報が存在しません。",
             "2322102" to "会員情報が有効ではありません。",
@@ -325,7 +324,7 @@ class ApiError {
             //end Member transaction settlement
         )
 
-        val mappingMessageTypeWithError = mapOf(
+        private val mappingMessageTypeWithError = mapOf(
             "LoginReq" to AP1101_loginErrors,
 //            "Logout" to ,//don't check this one
             "MemberSelReq" to AP1102_memberQueryError,

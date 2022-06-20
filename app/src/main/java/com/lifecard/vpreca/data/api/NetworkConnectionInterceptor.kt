@@ -31,7 +31,6 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
             val response = chain.proceed(request)
             val code = response.code()
             if (code == 500) {
-                //TODO need get internal server from response body
                 throw InternalServerException()
             } else if (code > 400) {
                 val messageType = request.body().getMessageType()
@@ -42,46 +41,7 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
                 )
             } else if (code == 200) {
                 //check result code
-                //TODO need implement here
-
-                response.body()?.let { responseBody ->
-                    val source: BufferedSource = responseBody.source()
-                    source.request(Long.MAX_VALUE) // Buffer the entire body.
-
-                    val buffer = source.buffer()
-                    val bodyText = buffer.clone().readString(Charset.forName("UTF-8"))
-
-                    /*
-                    val headers = response.headers()
-                    if ("gzip".equals(headers.get("Content-Encoding"), ignoreCase = true)) {
-                        var gzippedResponseBody: GzipSource? = null
-                        try {
-                            gzippedResponseBody = GzipSource(buffer.clone())
-                            buffer = Buffer()
-                            buffer.writeAll(gzippedResponseBody)
-                        } finally {
-                            gzippedResponseBody?.close()
-                        }
-                    }
-                    */
-                    try {
-                        val json: BaseResponse = gson.fromJson(
-                            bodyText,
-                            BaseResponse::class.java
-                        )
-                        val resultCode = json.response.resultCode
-                        if (ApiError.isResultCodeError(resultCode)) {
-                            val messageType = json.head.messageType
-                            throw ApiException.createApiException(
-                                resultCode = resultCode,
-                                messageType = messageType
-                            )
-                        }
-                    } catch (e: JsonSyntaxException) {
-                    } catch (e: NullPointerException) {
-                    }
-                }
-
+                handleSuccess200(response)
             }
             return response
         } catch (e: UnknownHostException) {
@@ -95,6 +55,46 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
         } catch (e: Throwable) {
             e.printStackTrace()
             throw e
+        }
+    }
+
+    private fun handleSuccess200(response: Response) {
+        response.body()?.let { responseBody ->
+            val source: BufferedSource = responseBody.source()
+            source.request(Long.MAX_VALUE) // Buffer the entire body.
+
+            val buffer = source.buffer()
+            val bodyText = buffer.clone().readString(Charset.forName("UTF-8"))
+
+            /*
+            val headers = response.headers()
+            if ("gzip".equals(headers.get("Content-Encoding"), ignoreCase = true)) {
+                var gzippedResponseBody: GzipSource? = null
+                try {
+                    gzippedResponseBody = GzipSource(buffer.clone())
+                    buffer = Buffer()
+                    buffer.writeAll(gzippedResponseBody)
+                } finally {
+                    gzippedResponseBody?.close()
+                }
+            }
+            */
+            try {
+                val json: BaseResponse = gson.fromJson(
+                    bodyText,
+                    BaseResponse::class.java
+                )
+                val resultCode = json.response.resultCode
+                if (ApiError.isResultCodeError(resultCode)) {
+                    val messageType = json.head.messageType
+                    throw ApiException.createApiException(
+                        resultCode = resultCode,
+                        messageType = messageType
+                    )
+                }
+            } catch (e: JsonSyntaxException) {
+            } catch (e: NullPointerException) {
+            }
         }
     }
 
