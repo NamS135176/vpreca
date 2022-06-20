@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -158,14 +159,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                val newOverride = Configuration(newBase?.resources?.configuration)
-                newOverride.fontScale = 1.0f
-                applyOverrideConfiguration(newOverride)
+        newBase?.let { context ->
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    val newOverride = Configuration(context.resources.configuration)
+                    newOverride.fontScale = 1.0f
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        val displayMetrics = context.resources?.displayMetrics
+                        if (displayMetrics?.densityDpi != DisplayMetrics.DENSITY_DEVICE_STABLE) {
+                            newOverride.densityDpi = DisplayMetrics.DENSITY_DEVICE_STABLE
+                        }
+                    }
+                    applyOverrideConfiguration(newOverride)
+                }
+            } catch (e: Exception) {
+                println(e)
             }
-        } catch (e: Exception) {
         }
+
         super.attachBaseContext(newBase)
     }
 }
