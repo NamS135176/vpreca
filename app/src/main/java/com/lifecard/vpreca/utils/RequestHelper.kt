@@ -427,5 +427,19 @@ class RequestHelper {
                 )
             )
         }
+
+        fun createSendSMSRequest(
+          loginId: String
+        ): Request {
+            return Request(
+                request = SendSMSRequest(
+                  loginId = loginId
+                ),
+                head = BaseHead(
+                    messageType = MessageType.CardRelationRegReq.value
+                )
+            )
+        }
+
     }
 }

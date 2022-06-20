@@ -66,6 +66,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/idInput"
                         style="@style/TextInputEditTextFilledBox"
+                        android:importantForAutofill="no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_signup_style"
@@ -113,6 +114,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/idNickname"
+                        android:importantForAutofill="no"
                         style="@style/TextInputEditTextFilledBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -292,6 +294,7 @@
                         android:id="@+id/email_1_input"
                         style="@style/TextInputEditTextFilledBox"
                         android:layout_width="match_parent"
+                        android:importantForAutofill="no"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/forgot_pass_email_hint"
@@ -325,6 +328,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email_1_confirm_input"
                         style="@style/TextInputEditTextFilledBox"
+                        android:importantForAutofill="no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_signup_style"
@@ -364,6 +368,7 @@
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/forgot_pass_email_hint"
                         android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
                         android:inputType="textEmailAddress|textNoSuggestions"
                         android:maxLength="@integer/max_email"
                         android:paddingHorizontal="17dp"
@@ -398,6 +403,7 @@
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/change_info_email_1_confirm_hint"
                         android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
                         android:inputType="textEmailAddress|textNoSuggestions"
                         android:maxLength="@integer/max_email"
                         android:paddingHorizontal="17dp"

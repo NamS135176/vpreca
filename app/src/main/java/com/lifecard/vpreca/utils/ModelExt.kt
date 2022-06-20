@@ -91,7 +91,7 @@ fun SignupInputState.formatPhoneNumber(): String? {
 }
 
 fun SignupInputState.maskPassword(): String? {
-    return RegexUtils.maskPassword((password))
+    return RegexUtils.hidePassword((password))
 }
 
 private fun getReceiveEmailStatus(flag: String?): String {
