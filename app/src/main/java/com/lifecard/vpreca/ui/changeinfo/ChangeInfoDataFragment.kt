@@ -40,7 +40,6 @@ class ChangeInfoDataFragment : Fragment() {
     @Inject
     lateinit var userManager: UserManager
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -101,7 +100,8 @@ class ChangeInfoDataFragment : Fragment() {
                     cal.get(Calendar.MONTH),
                     cal.get(Calendar.DAY_OF_MONTH)
                 ).apply {
-                    setButton(DatePickerDialog.BUTTON_POSITIVE, getString(R.string.button_ok)
+                    setButton(
+                        DatePickerDialog.BUTTON_POSITIVE, getString(R.string.button_ok)
                     ) { _, _ ->
                         dateSetListener.onDateSet(
                             datePicker,
@@ -130,48 +130,38 @@ class ChangeInfoDataFragment : Fragment() {
                 val cmp = sdf.parse(date1)?.compareTo(sdf.parse(datenow))
                 val layout = view.findViewById<MaterialTextView>(R.id.tv_error)
 
-                if (cmp != null) {
-                    when {
-                        cmp < 0 -> {
-                            if (date1 == dateData) {
-                                layout.visibility = View.INVISIBLE
-                                tvDob.setBackgroundResource(R.drawable.input_signup_style)
-                                val action =
-                                    ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
-                                        ChangeInfoMemberData(
-                                            userManager.memberNumber!!,
-                                            binding.user?.loginId!!,
-                                            binding.user?.memberRoman!!,
-                                            binding.user?.memberKana!!,
-                                            binding.user?.memberName!!,
-                                            binding.user?.addressPrefecture!!,
-                                            binding.user?.mailAddress1!!,
-                                            binding.user?.mailAddress2!!,
-                                            binding.user?.secretQuestion!!,
-                                            binding.user?.secretQuestionAnswer!!,
-                                            binding.user?.mail1AdMailRecieveFlg!!,
-                                            binding.user?.mail2AdMailRecieveFlg!!,
-                                            binding.user?.mail1RecievFlg!!,
-                                            binding.user?.mail2RecievFlg!!,
-                                            telephoneNumber1 = userManager.memberInfo?.telephoneNumber1,
-                                        )
-                                    )
-                                dialog.dismiss()
-                                findNavController().navigate(action)
-                            } else {
-                                tvDob.setBackgroundResource(R.drawable.input_signup_selected)
-                                layout.visibility = View.VISIBLE
-                            }
-
-                        }
-                        else -> {
-                            tvDob.setBackgroundResource(R.drawable.input_signup_selected)
-                            layout.visibility = View.VISIBLE
-                        }
-                    }
+                if (cmp == null) return@setOnClickListener
+                if (cmp < 0 && date1 == dateData) {
+                    layout.visibility = View.INVISIBLE
+                    tvDob.setBackgroundResource(R.drawable.input_signup_style)
+                    val action =
+                        ChangeInfoDataFragmentDirections.actionChangeInfoDataToInput(
+                            ChangeInfoMemberData(
+                                userManager.memberNumber!!,
+                                binding.user?.loginId!!,
+                                binding.user?.memberRoman!!,
+                                binding.user?.memberKana!!,
+                                binding.user?.memberName!!,
+                                binding.user?.addressPrefecture!!,
+                                binding.user?.mailAddress1!!,
+                                binding.user?.mailAddress2!!,
+                                binding.user?.secretQuestion!!,
+                                binding.user?.secretQuestionAnswer!!,
+                                binding.user?.mail1AdMailRecieveFlg!!,
+                                binding.user?.mail2AdMailRecieveFlg!!,
+                                binding.user?.mail1RecievFlg!!,
+                                binding.user?.mail2RecievFlg!!,
+                                telephoneNumber1 = userManager.memberInfo?.telephoneNumber1,
+                            )
+                        )
+                    dialog.dismiss()
+                    findNavController().navigate(action)
+                } else {
+                    //disable case
+                    tvDob.setBackgroundResource(R.drawable.input_signup_selected)
+                    layout.visibility = View.VISIBLE
                 }
             }
-
         }
 
         viewModel.changeInfoDataState.observe(
@@ -180,7 +170,7 @@ class ChangeInfoDataFragment : Fragment() {
 
                 state ?: return@Observer
 
-                state.networkTrouble?.let { if (it) showInternetTrouble() }
+                state.networkTrouble?.let { showInternetTrouble() }
                 state.error?.messageResId?.let { showPopupMessage(message = getString(it)) }
                 state.error?.errorMessage?.let { showPopupMessage(message = it) }
                 state.errorText?.let { errorText -> showPopupMessage(message = errorText) }

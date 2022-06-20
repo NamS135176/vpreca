@@ -22,6 +22,7 @@ import com.lifecard.vpreca.utils.encodeImage
 import java.io.IOException
 import java.net.UnknownHostException
 
+@Suppress("kotlin:S1192") // String literals should not be duplicated
 @HiltViewModel
 class CameraViewModel @Inject constructor(private val googleVisionService: GoogleVisionService) :
     ViewModel() {
