@@ -135,26 +135,15 @@ class UserRepository(private val apiService: ApiService, private val userManager
     }
 
     suspend fun sendSMSRequest(
-        memberNumber: String,
-        telephoneNumber: String,
-        certType: String,
-        operationType: String,
-        certSumFlg: String,
-        operationSumFlg: String
-    ): Result<SMSAuthCodeSendResponseContent> {
+        loginId: String?
+    ): Result<SendSMSResponseContent> {
         return withContext(Dispatchers.IO) {
             try {
-                val userResponse = apiService.sendSmsRequest(
-                    RequestHelper.createSMSAuthCodeRequest(
-                        memberNumber = memberNumber,
-                        telephoneNumber = telephoneNumber,
-                        certType = certType,
-                        operationType = operationType,
-                        certSumFlg = certSumFlg,
-                        operationSumFlg = operationSumFlg
+                val userResponse = apiService.sendSMSRequest(
+                    RequestHelper.createSendSMSRequest(
+                      loginId = loginId!!
                     )
                 )
-
                 Result.Success(userResponse.response)
             } catch (e: Exception) {
                 println("UserRepository... request sms has error $e")
@@ -183,7 +172,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     )
                 )
 
-                Result.Success(userResponse.brandPrecaApi.response)
+                Result.Success(userResponse.response)
             } catch (e: Exception) {
                 println("UserRepository... request sms has error $e")
                 e.printStackTrace()

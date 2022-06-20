@@ -533,7 +533,7 @@
                     android:layout_marginEnd="9dp"
                     android:layout_marginRight="9dp"
                     android:layout_weight="1"
-                    android:paddingVertical="12dp"
+                    android:paddingVertical="8dp"
                     android:text="@string/button_edit"
                     android:textColor="@color/primary"
                     android:textSize="18sp" />
@@ -545,7 +545,7 @@
                     android:layout_marginStart="9dp"
                     android:layout_marginLeft="9dp"
                     android:layout_weight="1"
-                    android:paddingVertical="18dp"
+                    android:paddingVertical="14dp"
                     android:text="@string/change_pass_btn_submit"
                     android:textSize="18sp"
                     app:cornerRadius="30dp" />

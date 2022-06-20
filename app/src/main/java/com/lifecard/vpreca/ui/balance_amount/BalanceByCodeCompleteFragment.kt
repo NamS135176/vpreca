@@ -24,11 +24,11 @@ class BalanceByCodeCompleteFragment : Fragment() {
 
         val btnSubmit = binding.btnSubmitPolicy
 
-        btnSubmit.setOnClickListener { findNavController().navigate(R.id.nav_home) }
+        btnSubmit.setOnClickListener { findNavController().popBackStack(R.id.nav_home, inclusive = false)}
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
             }
         })
 

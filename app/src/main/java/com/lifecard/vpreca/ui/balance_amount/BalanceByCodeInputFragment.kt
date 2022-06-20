@@ -50,11 +50,11 @@ class BalanceByCodeInputFragment : Fragment() {
 
         totalAmount.text = Converter.convertCurrency(fakeBalanceAmount)
 
-        btnBack.setOnClickListener { findNavController().popBackStack() }
+        btnBack.setOnClickListener { findNavController().navigate(R.id.action_inputcode_to_menu)}
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().popBackStack()
+                findNavController().navigate(R.id.action_inputcode_to_menu)
             }
         })
         viewModel.validForm.observe(

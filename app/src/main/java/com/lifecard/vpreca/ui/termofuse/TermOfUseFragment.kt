@@ -25,7 +25,7 @@ class TermOfUseFragment : Fragment() {
 
     private var _binding: TermOfUseFragmentBinding? = null
     private val binding get() = _binding!!
-    private val loading = MutableLiveData<Boolean>(false)
+    private val loading = MutableLiveData(false)
 
     private var webViewClient = object : WebViewClient() {
 
@@ -70,7 +70,6 @@ class TermOfUseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = TermOfUseFragmentBinding.inflate(inflater, container, false)
-
 
         val btnSubmit = binding.btnSubmitTermOfUse
         val cbTermOfUse = binding.cbTermOfUse

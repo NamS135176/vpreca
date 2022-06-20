@@ -153,7 +153,10 @@
             app:destination="@id/nav_balance_by_code_confirm" />
         <action
             android:id="@+id/selectdesign_to_value_confirm"
-            app:destination="@id/nav_balance_value_confirm" />
+            app:destination="@id/nav_balance_value_confirm"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_balance_value_confirm"/>
         <action
             android:id="@+id/selectdesign_to_selectway"
             app:destination="@id/nav_issue_card_by_code_select_way" />
@@ -207,7 +210,12 @@
         <action
             android:id="@+id/action_to_camera_ocr"
             app:destination="@id/nav_camera_ocr" />
-
+        <action
+            android:id="@+id/action_inputcode_to_menu"
+            app:destination="@id/nav_balance_amount_menu"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_balance_amount_menu"
+            app:popUpToInclusive="true" />
         <argument
             android:name="balance_total_remain"
             android:defaultValue="@null"
@@ -224,7 +232,10 @@
             app:destination="@id/nav_issue_card_select_design" />
         <action
             android:id="@+id/action_confirm_to_inputcode"
-            app:destination="@id/nav_balance_by_code_input" />
+            app:destination="@id/nav_balance_by_code_input"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_balance_by_code_input"/>
         <argument
             android:name="balance_gift_data"
             android:defaultValue="@null"
@@ -253,7 +264,10 @@
         tools:layout="@layout/fragment_balance_by_code_confirm">
         <action
             android:id="@+id/action_confirm_to_select_design"
-            app:destination="@id/nav_issue_card_select_design" />
+            app:destination="@id/nav_issue_card_select_design"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_issue_card_select_design"/>
         <argument
             android:name="fragment_balance_amount_select_source_confirm"
             android:defaultValue="@null"
