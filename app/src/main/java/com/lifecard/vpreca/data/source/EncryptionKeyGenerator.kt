@@ -43,17 +43,12 @@ internal object EncryptionKeyGenerator {
                 )
                 return SecurityKey(keyGenerator.generateKey())
             }
-        } catch (e: KeyStoreException) {
-        } catch (e: NoSuchProviderException) {
-        } catch (e: NoSuchAlgorithmException) {
-        } catch (e: InvalidAlgorithmParameterException) {
+        } catch (e: Exception) {
         }
         try {
             val entry = keyStore.getEntry(KEY_ALIAS, null) as KeyStore.SecretKeyEntry
             return SecurityKey(entry.secretKey)
-        } catch (e: KeyStoreException) {
-        } catch (e: NoSuchAlgorithmException) {
-        } catch (e: UnrecoverableEntryException) {
+        } catch (e: Exception) {
         }
         return null
     }
@@ -76,19 +71,14 @@ internal object EncryptionKeyGenerator {
                 kpg.initialize(spec)
                 kpg.generateKeyPair()
             }
-        } catch (e: KeyStoreException) {
-        } catch (e: NoSuchAlgorithmException) {
-        } catch (e: InvalidAlgorithmParameterException) {
-        } catch (e: NoSuchProviderException) {
+        } catch (e: Exception) {
         }
         try {
             val entry = keyStore.getEntry(KEY_ALIAS, null) as KeyStore.PrivateKeyEntry
             return SecurityKey(
                 KeyPair(entry.certificate.publicKey, entry.privateKey)
             )
-        } catch (e: KeyStoreException) {
-        } catch (e: NoSuchAlgorithmException) {
-        } catch (e: UnrecoverableEntryException) {
+        } catch (e: Exception) {
         }
         return null
     }
@@ -107,13 +97,8 @@ internal object EncryptionKeyGenerator {
             // Fetch Secret Key
             val pkEntry = androidCAStore.getEntry(KEY_ALIAS, protParam) as KeyStore.SecretKeyEntry
 
-//      Timber.d("Secret Key Fetched :" + new String(pkEntry.getSecretKey().getEncoded(), "UTF-8"));
             return SecurityKey(pkEntry.secretKey)
-        } catch (e: KeyStoreException) {
-        } catch (e: IOException) {
-        } catch (e: CertificateException) {
-        } catch (e: NoSuchAlgorithmException) {
-        } catch (e: UnrecoverableEntryException) {
+        } catch (e: Exception) {
         }
         return null
     }
@@ -131,9 +116,7 @@ internal object EncryptionKeyGenerator {
         try {
             androidCAStore.load(fis, password)
             return true
-        } catch (e: IOException) {
-        } catch (e: NoSuchAlgorithmException) {
-        } catch (e: CertificateException) {
+        } catch (e: Exception) {
         }
         return false
     }
@@ -159,6 +142,5 @@ internal object EncryptionKeyGenerator {
         } finally {
             fos?.close()
         }
-        //    Timber.d("Secret Key Saved : " + new String(mySecretKey.getEncoded(), "UTF-8"));
     }
 }
