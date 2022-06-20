@@ -169,7 +169,9 @@ class ChangeInfoDataFragment : Fragment() {
 
                 state ?: return@Observer
 
-                state.networkTrouble?.let { showInternetTrouble() }
+                if (state.networkTrouble == true) {
+                    showInternetTrouble()
+                }
                 state.error?.messageResId?.let { showPopupMessage(message = getString(it)) }
                 state.error?.errorMessage?.let { showPopupMessage(message = it) }
                 state.errorText?.let { errorText -> showPopupMessage(message = errorText) }

@@ -32,7 +32,7 @@ class SignupInputFragment : Fragment() {
     private val viewModel: SignupInputViewModel by viewModels()
     private var _binding: SignupInputFragmentBinding? = null
     private val binding get() = _binding!!
-    private var saveState:Bundle? = null
+    private var saveState: Bundle? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -96,7 +96,7 @@ class SignupInputFragment : Fragment() {
 
         fun updateDateInView() {
             val myFormat = "yyyy年MM月dd日" // mention the format you need
-            val sdf = SimpleDateFormat(myFormat, Locale.US)
+            val sdf = SimpleDateFormat(myFormat, Locale.JAPAN)
             btnDatePicker.text = sdf.format(cal.time)
         }
 
@@ -348,8 +348,10 @@ class SignupInputFragment : Fragment() {
         }
 
         saveState?.let { bundle ->
-          val city =  bundle.getInt("city")
-            spinnerCity.selectItemByIndex(city)
+            spinnerCity.selectItemByIndex(bundle.getInt("city"))
+            spinnerGender.selectItemByIndex(bundle.getInt("gender"))
+            spinnerSecret.selectItemByIndex(bundle.getInt("question"))
+            btnDatePicker.text = bundle.getString("birthdate")
         }
 
         return binding.root
@@ -360,12 +362,17 @@ class SignupInputFragment : Fragment() {
         saveData()
     }
 
-    private fun saveData(){
-        val cityAdapter = binding.spinnerCity.getSpinnerAdapter<PowerSpinnerAdapter>() as PowerSpinnerAdapter
-        val genderAdapter = binding.spinnerGender.getSpinnerAdapter<PowerSpinnerAdapter>() as PowerSpinnerAdapter
+    private fun saveData() {
+        val cityAdapter = binding.spinnerCity.getSpinnerAdapter<PowerSpinnerAdapter>()
+        val genderAdapter = binding.spinnerGender.getSpinnerAdapter<PowerSpinnerAdapter>()
+        val secretAdapter = binding.spinnerSecret.getSpinnerAdapter<PowerSpinnerAdapter>()
 
-        val secretAdapter = binding.spinnerSecret.getSpinnerAdapter<PowerSpinnerAdapter>() as PowerSpinnerAdapter
-        saveState = bundleOf("city" to cityAdapter.getSelectedItem(), "gender" to genderAdapter.getSelectedItem(), "question" to  secretAdapter.getSelectedItem(), "date" to binding.dobInputLayout.text.toString())
+        saveState = bundleOf(
+            "city" to cityAdapter.index,
+            "gender" to genderAdapter.index,
+            "question" to secretAdapter.index,
+            "birthdate" to binding.dobInputLayout.text.toString()
+        )
     }
 
 }
