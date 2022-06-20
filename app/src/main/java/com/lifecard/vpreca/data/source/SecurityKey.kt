@@ -52,31 +52,26 @@ internal class SecurityKey {
     private fun getCipher(mode: Int): Cipher {
         val cipher: Cipher
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            cipher = Cipher.getInstance(AES_MODE_FOR_POST_API_23)
+            cipher = Cipher.getInstance(TRANSFORMATIION)
             cipher.init(
                 mode,
                 secretKey,
-                GCMParameterSpec(128, AES_MODE_FOR_POST_API_23.toByteArray(), 0, 12)
+                GCMParameterSpec(128, TRANSFORMATIION.toByteArray(), 0, 12)
             )
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            cipher = Cipher.getInstance(RSA_MODE)
+            cipher = Cipher.getInstance(TRANSFORMATIION)
             cipher.init(
                 mode,
                 if (mode == Cipher.DECRYPT_MODE) keyPair!!.public else keyPair!!.private
             )
         } else {
-            cipher = Cipher.getInstance(AES_MODE_FOR_PRE_API_18)
+            cipher = Cipher.getInstance(TRANSFORMATIION)
             cipher.init(mode, secretKey, IvParameterSpec(ByteArray(cipher.blockSize)))
         }
         return cipher
     }
 
     companion object {
-//        private const val RSA_MODE = "RSA/ECB/PKCS1Padding"
-//        private const val AES_MODE_FOR_POST_API_23 = "AES/GCM/NoPadding"
-//        private const val AES_MODE_FOR_PRE_API_18 = "AES/CBC/PKCS5Padding"
-        private const val RSA_MODE = "AES/GCM/NoPadding"
-        private const val AES_MODE_FOR_POST_API_23 = "AES/GCM/NoPadding"
-        private const val AES_MODE_FOR_PRE_API_18 = "AES/GCM/NoPadding"
+        private const val TRANSFORMATIION = "RSA/ECB/PKCS1Padding"
     }
 }
