@@ -43,7 +43,7 @@
             android:lineSpacingExtra="6sp"
             app:layout_constraintTop_toBottomOf="@+id/gift_card_complete_title"
             />
-        
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_submit_policy"
             android:layout_width="match_parent"
