@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -31,12 +32,14 @@ class SignupInputFragment : Fragment() {
     private val viewModel: SignupInputViewModel by viewModels()
     private var _binding: SignupInputFragmentBinding? = null
     private val binding get() = _binding!!
+    private var saveState:Bundle? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = SignupInputFragmentBinding.inflate(inflater, container, false)
-
+        println(savedInstanceState)
         val scrollView = binding.scrollView
         val spinnerGender = binding.spinnerGender
         val spinnerCity = binding.spinnerCity
@@ -344,7 +347,25 @@ class SignupInputFragment : Fragment() {
             viewModel.submit()
         }
 
+        saveState?.let { bundle ->
+          val city =  bundle.getInt("city")
+            spinnerCity.selectItemByIndex(city)
+        }
 
         return binding.root
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        saveData()
+    }
+
+    private fun saveData(){
+        val cityAdapter = binding.spinnerCity.getSpinnerAdapter<PowerSpinnerAdapter>() as PowerSpinnerAdapter
+        val genderAdapter = binding.spinnerGender.getSpinnerAdapter<PowerSpinnerAdapter>() as PowerSpinnerAdapter
+
+        val secretAdapter = binding.spinnerSecret.getSpinnerAdapter<PowerSpinnerAdapter>() as PowerSpinnerAdapter
+        saveState = bundleOf("city" to cityAdapter.getSelectedItem(), "gender" to genderAdapter.getSelectedItem(), "question" to  secretAdapter.getSelectedItem(), "date" to binding.dobInputLayout.text.toString())
+    }
+
 }
