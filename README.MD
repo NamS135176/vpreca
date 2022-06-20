@@ -25,3 +25,7 @@ keytool -list -v -keystore ./app/keystore/key.jks -alias vpreca
 
 - show all signing report
 ./gradlew signingReport
+
+## Get SHA1 fingerprint for API vision config
+debug key: 
+keytool -list -v -keystore ./app/debugKeystore/debug.keystore -alias androiddebugkey -storepass android -keypass android

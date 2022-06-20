@@ -106,6 +106,7 @@
         <item name="spinner_divider_show">false</item>
         <item name="spinner_divider_size">0dp</item>
         <item name="spinner_item_height">46dp</item>
+        <item name="spinner_popup_max_height">@dimen/spinner_popup_height_cities</item>
         <item name="spinner_popup_animation">normal</item>
         <item name="spinner_popup_background">@color/white</item>
         <item name="spinner_popup_elevation">14dp</item>

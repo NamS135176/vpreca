@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.PowerSpinnerAdapter
 import com.lifecard.vpreca.databinding.FragmentForgotPassBinding
 import com.lifecard.vpreca.utils.*
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
@@ -212,6 +213,12 @@ class ForgotPassFragment : Fragment() {
                 )
             }
         }
+
+        val listQuestion =
+            requireContext().resources.getStringArray(R.array.secret_question).toList()
+        val spinnerSecretAdapter = PowerSpinnerAdapter(spinnerQuestion)
+        spinnerSecretAdapter.setItems(listQuestion)
+        spinnerQuestion.setSpinnerAdapter(spinnerSecretAdapter)
 
         spinnerQuestion.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let {

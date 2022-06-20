@@ -178,5 +178,6 @@
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabBackground">@color/white</item>
+        <item name="tabIndicatorHeight">2dp</item>
     </style>
 </resources>

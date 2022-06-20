@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.PowerSpinnerAdapter
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.databinding.FragmentChangeInfoInputBinding
@@ -77,8 +78,6 @@ class ChangeInfoInputFragment : Fragment() {
 
         viewModel.originUserData = userManager.memberInfo!!
 
-        val listCity = res.getStringArray(R.array.cities)
-        val listQuestion = res.getStringArray(R.array.secret_question)
         idEdt.setText(args.userData?.loginId)
         nicknameEdt.setText(args.userData?.memberRoman)
 
@@ -87,12 +86,11 @@ class ChangeInfoInputFragment : Fragment() {
         hiraFirstName.setText(args.userData?.getFirstMemberName())
         hiraLastName.setText(args.userData?.getLastMemberName())
 
-        spinnerCity.selectItemByIndex(listCity.indexOf(args.userData?.addressPrefecture))
         email1Edt.setText(args.userData?.mailAddress1)
         email1ConfirmEdt.setText(args.userData?.mailAddress1)
         email2Edt.setText(args.userData?.mailAddress2)
         email2ConfirmEdt.setText(args.userData?.mailAddress2)
-        spinnerSecret.selectItemByIndex(listQuestion.indexOf(args.userData?.secretQuestion))
+
         answerEdt.setText(args.userData?.secretQuestionAnswer)
         toggleSettingFirst.isChecked =
             Converter.convertStringToBoolean(args.userData?.mail1AdMailRecieveFlg!!)
@@ -283,12 +281,24 @@ class ChangeInfoInputFragment : Fragment() {
             viewLifecycleOwner
         ) { viewModel.checkValidForm() }
 
+        val listQuestion =
+            requireContext().resources.getStringArray(R.array.secret_question).toList()
+        val spinnerSecretAdapter = PowerSpinnerAdapter(spinnerSecret)
+        spinnerSecretAdapter.setItems(listQuestion)
+        spinnerSecret.setSpinnerAdapter(spinnerSecretAdapter)
+        spinnerSecret.selectItemByIndex(listQuestion.indexOf(args.userData?.secretQuestion))
         spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let {
                 viewModel.questionDataChanged(text = it)
                 question = it
             }
         })
+
+        val listCity = requireContext().resources.getStringArray(R.array.cities).toList()
+        val spinnerCityAdapter = PowerSpinnerAdapter(spinnerCity)
+        spinnerCityAdapter.setItems(listCity)
+        spinnerCity.setSpinnerAdapter(spinnerCityAdapter)
+        spinnerCity.selectItemByIndex(listCity.indexOf(args.userData?.addressPrefecture))
         spinnerCity.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let {
                 viewModel.cityDataChanged(text = it)
