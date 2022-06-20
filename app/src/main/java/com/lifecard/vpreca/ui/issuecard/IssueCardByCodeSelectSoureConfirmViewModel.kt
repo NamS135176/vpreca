@@ -57,7 +57,6 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _issueGiftReqResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         IssueGiftResult(internalError = "")
                     else -> _issueGiftReqResult.value =
                         IssueGiftResult(error = ErrorMessageException(R.string.get_list_card_failure))
@@ -93,7 +92,6 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _feeInfoResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         FeeInfoResult(internalError = "")
                     else -> _feeInfoResult.value =
                         FeeInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))

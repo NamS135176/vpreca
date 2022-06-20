@@ -62,7 +62,6 @@ class CardUsageViewModel @Inject constructor(private val remoteRepository: Remot
             is NoConnectivityException -> _cardUsageHistoryResult.value =
                 CardUsageHistoryState(networkTrouble = true)
             is InternalServerException -> _cardUsageHistoryResult.value =
-                    //TODO this internalError should be html from server, it will be implement later
                 CardUsageHistoryState(internalError = "")
             is ApiException -> {
                 _cardUsageHistoryResult.value =

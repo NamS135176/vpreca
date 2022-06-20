@@ -36,12 +36,12 @@ class SMSVerifyViewModel @Inject constructor(
     val sendSMSConfirmResult: LiveData<SendSMSConfirmState> = _sendSMSConfirmResult
 
     fun sendSMSRequest(
-       loginId:String
+        loginId: String
     ) {
         viewModelScope.launch {
             _loading.value = true
             val result = userRepository.sendSMSRequest(
-              loginId
+                loginId
             )
 
             if (result is Result.Success) {
@@ -57,7 +57,6 @@ class SMSVerifyViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _sendSMSRequestResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         SendSMSRequestState(internalError = "")
                     else -> _sendSMSRequestResult.value =
                         SendSMSRequestState(
@@ -73,11 +72,11 @@ class SMSVerifyViewModel @Inject constructor(
     }
 
     fun sendSMSConfirm(
-        memberNumber:String,
-        certType:String,
-        operationType:String,
-        certCode:String,
-        extCertDealId:String
+        memberNumber: String,
+        certType: String,
+        operationType: String,
+        certCode: String,
+        extCertDealId: String
     ) {
         viewModelScope.launch {
             _loading.value = true
@@ -102,7 +101,6 @@ class SMSVerifyViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _sendSMSConfirmResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         SendSMSConfirmState(internalError = "")
                     else -> _sendSMSConfirmResult.value =
                         SendSMSConfirmState(

@@ -39,7 +39,6 @@ class IssueCardByCodeInputCodeViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _giftInfoResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         GiftInfoResult(internalError = "")
                     else -> _giftInfoResult.value =
                         GiftInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))

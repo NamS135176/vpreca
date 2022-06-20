@@ -37,7 +37,6 @@ class ChangePhoneFirstViewModel @Inject constructor(private val userRepository: 
             is NoConnectivityException -> _changeInfoDataState.value =
                 ChangeInfoDataState(networkTrouble = true)
             is InternalServerException -> _changeInfoDataState.value =
-                    //TODO this internalError should be html from server, it will be implement later
                 ChangeInfoDataState(internalError = "")
             is ApiException -> _changeInfoDataState.value = ChangeInfoDataState(
                 error = ErrorMessageException(

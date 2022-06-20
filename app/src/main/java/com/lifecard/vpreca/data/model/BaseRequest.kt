@@ -1,11 +1,8 @@
 package com.lifecard.vpreca.data.model
 
 import com.google.gson.annotations.SerializedName
-
-//data class BrandRequest(
-//    @SerializedName("brandPrecaApi")
-//    val brandPrecaApi: Request,
-//)
+import com.lifecard.vpreca.utils.requestDate
+import java.util.*
 
 data class Request(
     @SerializedName("request")
@@ -27,8 +24,7 @@ data class BaseHead(
     @SerializedName("processId")
     val processId: String = "",
     @SerializedName("requestDate")
-//    val requestDate: String = Date().requestDate(),
-    val requestDate: String = "20220531083300",//TODO remove hard code
+    val requestDate: String = Date().requestDate(),
     @SerializedName("searchKey")
     val searchKey: String = "",
     @SerializedName("messageDigest")

@@ -149,7 +149,6 @@ class ForgotPassViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _resetPassState.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         ResetPassReqState(internalError = "")
                     else -> _resetPassState.value =
                         ResetPassReqState(
