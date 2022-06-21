@@ -66,19 +66,6 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
             val buffer = source.buffer()
             val bodyText = buffer.clone().readString(Charset.forName("UTF-8"))
 
-            /*
-            val headers = response.headers()
-            if ("gzip".equals(headers.get("Content-Encoding"), ignoreCase = true)) {
-                var gzippedResponseBody: GzipSource? = null
-                try {
-                    gzippedResponseBody = GzipSource(buffer.clone())
-                    buffer = Buffer()
-                    buffer.writeAll(gzippedResponseBody)
-                } finally {
-                    gzippedResponseBody?.close()
-                }
-            }
-            */
             try {
                 val json: BaseResponse = gson.fromJson(
                     bodyText,
@@ -101,13 +88,6 @@ class NetworkConnectionInterceptor(private val context: Context) : Interceptor {
     private val isConnected: Boolean
         get() {
             return true
-            /*
-            val connectivityManager =
-                mContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val netInfo = connectivityManager.activeNetworkInfo
-            return netInfo != null && netInfo.isConnected
-
-             */
         }
 
 }

@@ -15,6 +15,7 @@ fun Request.bodyToString(): String? {
         copy.body()?.writeTo(buffer)
         return buffer.readUtf8()
     } catch (e: Exception) {
+        println(e)
     } finally {
         buffer.close()
     }

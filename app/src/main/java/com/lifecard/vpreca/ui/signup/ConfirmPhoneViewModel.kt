@@ -19,7 +19,6 @@ class ConfirmPhoneViewModel : ViewModel() {
             cfPhoneError.value = null
             true
         }
-//        return true
     }
 
     fun cfPhoneDataChanged(text: String) {

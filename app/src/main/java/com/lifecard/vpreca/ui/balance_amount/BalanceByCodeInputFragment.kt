@@ -57,25 +57,6 @@ class BalanceByCodeInputFragment : Fragment() {
                 findNavController().navigate(R.id.action_inputcode_to_menu)
             }
         })
-        viewModel.validForm.observe(
-            viewLifecycleOwner
-        ) { signupFormState ->
-            if (giftCodeEdt.text.toString() == "") {
-                btnSubmit.isEnabled = false
-            } else {
-                btnSubmit.isEnabled =
-                    signupFormState.giftCodeError == null
-            }
-        }
-
-        viewModel.giftCodeError.observe(viewLifecycleOwner) { error: Int? ->
-            giftCodeLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        }
-        giftCodeEdt.doAfterTextChanged { text -> viewModel.giftCodeDataChanged(text = text.toString()) }
 
         viewModel.giftInfoResult.observe(
             viewLifecycleOwner,
@@ -110,9 +91,34 @@ class BalanceByCodeInputFragment : Fragment() {
                 else -> hideLoadingDialog()
             }
         }
+        viewModel.formState.observe(viewLifecycleOwner) { viewModel.checkFormValid() }
+
+        viewModel.codeError.observe(viewLifecycleOwner) { error: Int? ->
+            giftCodeLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
+
+        viewModel.validForm.observe(
+            viewLifecycleOwner
+        ) { isValid ->
+            btnSubmit.isEnabled = isValid
+        }
 
 
-        btnSubmit.setOnClickListener { viewModel.getGiftData(giftCodeEdt.text.toString()) }
+        viewModel.formResultState.observe(viewLifecycleOwner) {
+            it?.success?.let {
+                viewModel.getGiftData(giftCodeEdt.text.toString())
+            }
+        }
+
+        giftCodeEdt.doAfterTextChanged { text -> viewModel.codeDataChanged(text = text.toString()) }
+
+        btnSubmit.setOnClickListener {
+            viewModel.submit()
+        }
         return binding.root
     }
 

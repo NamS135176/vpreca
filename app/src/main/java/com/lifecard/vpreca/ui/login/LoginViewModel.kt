@@ -59,9 +59,6 @@ class LoginViewModel @Inject constructor(
                 handleResultErrorException(loginResult.exception)
             }
             loading.value = false
-
-//            val messageDigest = MessageDigest().sign("{\"brandPrecaApi\":{\"head\":{\"nodeId\":\"\",\"searchKey\":\"\",\"processId\":\"\",\"brandSchemeId\":\"\",\"requestDate\":\"20220531083300\",\"centerId\":\"\",\"messageType\":\"LoginReq\"},\"request\":{\"loginInfo\":{\"loginPassword\":\"aaaaaaaa\",\"loginId\":\"aaaaaa\"}}}}")
-//            println("messageDigest = $messageDigest")
         }
     }
 
@@ -131,8 +128,6 @@ class LoginViewModel @Inject constructor(
                 )
             )
         } ?: kotlin.run {
-//            _loginResult.value =
-//                LoginResult(errorText = errString.toString())
         }
     }
 

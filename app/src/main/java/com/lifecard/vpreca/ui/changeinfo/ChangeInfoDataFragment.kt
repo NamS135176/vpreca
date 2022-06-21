@@ -63,9 +63,6 @@ class ChangeInfoDataFragment : Fragment() {
             builder.setView(view)
             val dialog = builder.create()
             dialog.show()
-//                val window = dialog.window
-//                window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-//                window?.setGravity(Gravity.CENTER)
 
             val btnCancel = view.findViewById<MaterialButton>(R.id.btn_dialog_cancel)
             val tvDob = view.findViewById<MaterialTextView>(R.id.dob_dialog)

@@ -88,10 +88,6 @@ class RemoteRepository(
             try {
                 //fake
                 val otpResponse = OtpResponse(otp = "123456")
-//                val otpResponse =
-//                    apiService.requestWebDirectOtp(
-//                        "Bear ${userRepository.accessToken!!}"
-//                    )
                 Result.Success(otpResponse)
             } catch (e: Exception) {
                 println("RemoteRepository...registerBiometric has error $e")

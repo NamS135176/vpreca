@@ -79,7 +79,6 @@ class GiftCardInputCardFragment : Fragment() {
         viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
                 viewModel.getGiftCardInfo(giftCodeEdt.text.toString(), vcnInput.text.toString())
-//                findNavController().navigate(R.id.nav_signup_input)
             }
         }
 

@@ -102,159 +102,94 @@ class IssueCardByCodeSelectSource : Fragment() {
                 creditCardResult.success?.let {
                     println("homeViewModel.creditCardResult.observe success: ${creditCardResult.success}")
                     // The pager adapter, which provides the pages to the view pager widget.
-                    when (creditCardResult.success.size) {
-                        0 -> {
-                        }
-                        else -> {
-//                            var arrSelected: List<SelectedData>
-//                            val arrPolicy: List<CreditCard>
-//                            arrPolicy = creditCardResult.success
-//
-//                            arrSelected = arrPolicy.mapIndexed { index, creditCard ->
-//                                SelectedData(
-//                                    "0",
-//                                    creditCard.publishAmount,
-//                                    "0"
-//                                )
-//                            }
-//
-//                            val linearLayoutManager: LinearLayoutManager =
-//                                LinearLayoutManager(context)
-//                            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-//                            val adapter = IssueCardSourceAdapter(arrPolicy, arrSelected)
-//                            rcView.adapter = adapter
-//                            rcView.layoutManager = linearLayoutManager
-//
-//                            adapter.setOnClickListener(object :
-//                                IssueCardSourceAdapter.OnItemClickListener {
-//                                override fun onItemClick(
-//                                    position: Int,
-//                                    binding: SelectSourceCardItemBinding
-//                                ) {
-//                                    if (arrSelected[position].isSelected == "0") {
-//                                        for (i in 0 until arrSelected.size) {
-//                                            if (i == position) {
-//                                                arrSelected[i].isSelected = "1"
-//                                            } else {
-//                                                arrSelected[i].isSelected = "0"
-//                                            }
-//                                        }
-//                                        println(arrSelected)
-//                                        adapter.notifyDataSetChanged()
-//                                        btnSubmit.isEnabled = true
-//                                        dataSelectCard = arrPolicy[position].publishAmount
-//                                        name = arrPolicy[position].cardNickname
-//                                        expireDate = arrPolicy[position].precaExpirationDate
-//                                        pin = arrPolicy[position].vcn
-//                                        number = arrPolicy[position].precaNumber
-//                                        vcnName = arrPolicy[position].vcnName
-//                                        cardSchemeId = arrPolicy[position].cardSchemeId
-//                                    } else {
-//                                        arrSelected[position].isSelected = "0"
-//                                        println(arrSelected)
-//                                        adapter.notifyItemChanged(position)
-//                                        btnSubmit.isEnabled = false
-//                                        dataSelectCard = "0"
-//                                    }
-//                                }
-//                            })
+                    arrPolicy = creditCardResult.success
 
-                            arrPolicy = creditCardResult.success
+                    arrSelected = arrPolicy.mapIndexed { _, creditCard ->
+                        SelectedData(
+                            "0",
+                            creditCard.publishAmount,
+                            "0"
+                        )
+                    }
 
-                            arrSelected = arrPolicy.mapIndexed { _, creditCard ->
-                                SelectedData(
-                                    "0",
-                                    creditCard.publishAmount,
-                                    "0"
-                                )
+                    val linearLayoutManager =
+                        LinearLayoutManager(context)
+                    linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+                    val adapter = IssueCardSourceAdapter(arrPolicy, arrSelected)
+                    rcView.layoutManager = linearLayoutManager
+                    rcView.adapter = adapter
+                    val list: MutableList<Int> = ArrayList()
+                    adapter.setOnClickListener(object :
+                        IssueCardSourceAdapter.OnItemClickListener {
+                        override fun onItemClick(
+                            position: Int,
+                            binding: SelectSourceCardItemBinding
+                        ) {
+                            btnSubmit.isEnabled = true
+                            var count = 0
+                            for (item in arrSelected) {
+                                if (item.isSelected == "1") {
+                                    count++
+                                }
                             }
 
-                            val linearLayoutManager =
-                                LinearLayoutManager(context)
-                            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-                            val adapter = IssueCardSourceAdapter(arrPolicy, arrSelected)
-                            rcView.layoutManager = linearLayoutManager
-                            rcView.adapter = adapter
-                            val list: MutableList<Int> = ArrayList<Int>()
-                            adapter.setOnClickListener(object :
-                                IssueCardSourceAdapter.OnItemClickListener {
-                                override fun onItemClick(
-                                    position: Int,
-                                    binding: SelectSourceCardItemBinding
-                                ) {
-//                                    tvError.visibility = View.INVISIBLE
-                                    btnSubmit.isEnabled = true
-                                    var count = 0
-                                    for (item in arrSelected) {
-                                        if (item.isSelected == "1") {
-                                            count++
-                                        }
-                                    }
-
-                                    val sum: Int = arrSelected.sumOf {
-                                        try {
-                                            if (it.isSelected == "1") {
-                                                it.amount.toInt()
-                                            } else {
-                                                0
-                                            }
-                                        } catch (e: Exception) {
-                                            0
-                                        }
-                                    }
-
-                                    if (arrSelected[position].isSelected == "0") {
-                                        if (count < 4 && sum <= (100000 - arrSelected[position].amount.toInt())) {
-
-                                            list.add(position)
-                                            println(list)
-                                            if (count == 0) {
-                                                arrSelected[position].isSelected = "1"
-                                                arrSelected[position].isFirst = "0"
-                                                binding.select = arrSelected[position]
-
-                                            } else {
-                                                arrSelected[position].isSelected = "1"
-                                                binding.select = arrSelected[position]
-
-                                            }
-                                        }
-                                        else{
-//                                            tvError.visibility = View.VISIBLE
-                                            if(count >= 4 ){
-//                                                tvError.text = "最大4枚を選択してください"
-                                                showAlertMessage("最大4枚を選択してください")
-                                            }
-                                            else if(sum > (100000 - arrSelected[position].amount.toInt())){
-//                                                tvError.text = "合算金額は10万円以内です。"
-                                                showAlertMessage("合算金額は10万円以内です")
-                                            }
-                                        }
+                            val sum: Int = arrSelected.sumOf {
+                                try {
+                                    if (it.isSelected == "1") {
+                                        it.amount.toInt()
                                     } else {
-                                        list.remove(position)
-                                        btnSubmit.isEnabled = list.size != 0
-                                        if (arrSelected[position].isFirst == "0") {
-
-                                            println(list)
-                                            if (list.size > 0) {
-                                                arrSelected[list[0]].isFirst = "0"
-                                                adapter.notifyItemChanged(list[0])
-                                            }
-                                            arrSelected[position].isFirst = "0"
-                                            arrSelected[position].isSelected = "0"
-                                            binding.select = arrSelected[position]
-                                        } else {
-                                            arrSelected[position].isSelected = "0"
-                                            binding.select = arrSelected[position]
-                                        }
+                                        0
                                     }
-
+                                } catch (e: Exception) {
+                                    0
                                 }
+                            }
 
+                            if (arrSelected[position].isSelected == "0") {
+                                if (count < 4 && sum <= (100000 - arrSelected[position].amount.toInt())) {
 
-                            })
+                                    list.add(position)
+                                    println(list)
+                                    if (count == 0) {
+                                        arrSelected[position].isSelected = "1"
+                                        arrSelected[position].isFirst = "0"
+                                        binding.select = arrSelected[position]
+
+                                    } else {
+                                        arrSelected[position].isSelected = "1"
+                                        binding.select = arrSelected[position]
+
+                                    }
+                                }
+                                else{
+                                    if(count >= 4 ){
+                                        showAlertMessage("最大4枚を選択してください")
+                                    }
+                                    else if(sum > (100000 - arrSelected[position].amount.toInt())){
+                                        showAlertMessage("合算金額は10万円以内です")
+                                    }
+                                }
+                            } else {
+                                list.remove(position)
+                                btnSubmit.isEnabled = list.size != 0
+                                if (arrSelected[position].isFirst == "0") {
+
+                                    println(list)
+                                    if (list.size > 0) {
+                                        arrSelected[list[0]].isFirst = "0"
+                                        adapter.notifyItemChanged(list[0])
+                                    }
+                                    arrSelected[position].isFirst = "0"
+                                    arrSelected[position].isSelected = "0"
+                                    binding.select = arrSelected[position]
+                                } else {
+                                    arrSelected[position].isSelected = "0"
+                                    binding.select = arrSelected[position]
+                                }
+                            }
+
                         }
-                    }
+                    })
                 }
                 creditCardResult.error?.let { error ->
 

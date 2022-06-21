@@ -18,7 +18,6 @@ fun Cipher.encryptAuthToken(authToken: AuthToken): String? {
 
 fun Cipher.decryptAuthToken(base64: String): AuthToken? {
     try {
-//        val base64 = "o5LnjJOwPoZzxKAfxZyI5xsF670bQfJjrmB7vIH7ZvajEaYy5qKtit4rjvFlVqk7vMeB7wjMxvrV5rlQViuIWrRl9l53ku4GOnh9AEol32E0gVLWK6lm2uccGNtAEF2rWtQkZ10BmsVtnCFzJNOOdmUSskl0tdqIczFBpuMbJODk9QouDRyoQ9p1Lot2iQ5wEtxAoGsT_jsp1xg004q4coT_4C7cXfjRMoTmkZzOlpEZgHLKKkAne-nHIWRsOh4v0nOKY7WgK8LfhB3j8Mmegd_wADUCm066CEMp59qUYEs2vkMdh3u01oCuYYCns_3oWxDhq8LgQ0_M4QmlV_De0ysSDhaGqI0SrJNksTO9MhbhMyOvJ6zxIf_-ICeK-JXeqsBNecpFfjTTjEZKHIRFexj_VayoMmebm2nOtqHkAfomFKtZYAF9r5_yB-LHqSHvrh5-GsGav322iR815whgvlLw_SOZK6ibyY0Iv_y7FCRZN4LURgcssHjYEzbJgLWKX8SmUIEu-BKtLWS8v9M="
         println("Cipher... decryptAuthToken base64 = $base64")
         val decoded = Base64.decode(base64, Base64.URL_SAFE)
 

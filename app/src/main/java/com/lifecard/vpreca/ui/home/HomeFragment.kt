@@ -186,7 +186,6 @@ class HomeFragment : Fragment(), CoroutineScope {
         binding.textLastLoginDate.text = SimpleDateFormat("yyyy M/d").format(Date())
 
         binding.listCard.buttonUsage.setOnClickListener(View.OnClickListener {
-//            findNavController().navigate(R.id.action_to_card_usage)
             val card = pagerAdapter?.getItem(viewPager.currentItem)
             card?.let {
                 val action =
@@ -326,7 +325,6 @@ class HomeFragment : Fragment(), CoroutineScope {
                 }
                 suspendDealResult.networkTrouble?.let {
                     if (it) {
-//                        showInternetTrouble()
                     }
                 }
             })

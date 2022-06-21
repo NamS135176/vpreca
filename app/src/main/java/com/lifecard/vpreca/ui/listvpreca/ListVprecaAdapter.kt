@@ -39,13 +39,6 @@ class ListVprecaAdapter(private var items: List<CreditCard>) :
         holder.binding.card = items[position]
         holder.binding.cardInfo.card = items[position]
         holder.binding.cardInfo.cardInfo.setBackgroundResource(items[position].getBackgroundCard())
-//        if (position % 3 == 0) {
-//            holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card_cyan)
-//        } else if (position % 3 == 1) {
-//            holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card_green)
-//        } else {
-//            holder.binding.cardInfo.setBackgroundResource(R.drawable.bg_card)
-//        }
     }
 
     override fun getItemCount() = items.size

@@ -12,7 +12,7 @@ class Utils {
                     Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
                 context.startActivity(browserIntent)
             } catch (e: Exception) {
-
+                println(e)
             }
         }
     }

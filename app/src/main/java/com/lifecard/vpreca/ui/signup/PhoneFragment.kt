@@ -75,7 +75,6 @@ class PhoneFragment : Fragment() {
                     GiftCardConfirmData(inputPhone.text.toString())
                 )
                 findNavController().navigate(action)
-//                findNavController().navigate(R.id.nav_signup_confirm_phone)
             }
         }
 

@@ -20,9 +20,6 @@ class TestCardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentTestCardBinding.inflate(inflater, container, false)
-//        val tv = binding.cardUsername
-//        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(tv, 6, 16, 2,
-//            TypedValue.COMPLEX_UNIT_DIP);
         return binding.root
     }
 

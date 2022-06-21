@@ -33,7 +33,6 @@ class IntroduceFragmentFirst : Fragment() {
         val btnBack = binding.appbarGift.btnBack
         val checkbox = binding.cbIntroduceFirst
         val btnSubmit = binding.btnSubmitIntroduceFirst
-//        checkbox.isChecked = false
         btnSubmit.isEnabled = false
         btnBack.setOnClickListener {
             findNavController().navigate(R.id.action_first_login)

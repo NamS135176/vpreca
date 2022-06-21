@@ -33,8 +33,6 @@ class SMSVerifyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSmsVerifyBinding.inflate(inflater, container, false)
-//        viewModel = ViewModelProvider(this).get(SMSVerifyViewModel::class.java)
-
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {

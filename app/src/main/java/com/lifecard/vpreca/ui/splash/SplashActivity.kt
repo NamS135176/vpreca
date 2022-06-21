@@ -55,8 +55,6 @@ class SplashActivity : AppCompatActivity() {
                 navigateToMainScreen()
             }
             splashResult.error?.let { error ->
-//                    error.messageResId?.let { showAlert(getString(it)) }
-//                    error.message?.let { showAlert(it) }
 
                 //dont show error here we will navigate to login screen
                 userManager.clear()
@@ -64,7 +62,6 @@ class SplashActivity : AppCompatActivity() {
             }
             splashResult.networkTrouble?.let { networkError ->
                 if (networkError) {
-//                    showInternetTrouble()
                     navigateToMainScreen()
                 }
             }

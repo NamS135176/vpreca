@@ -24,7 +24,6 @@ class ApiServiceFactory {
                         val request =
                             chain.request().newBuilder()
                                 .apply {
-//                                    addHeader("Authorization", "Bear $accessToken")
                                     addHeader("accesstoken", accessToken)
                                 }
                                 .build()

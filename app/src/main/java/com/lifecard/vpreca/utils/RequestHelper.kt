@@ -376,33 +376,6 @@ class RequestHelper {
             )
         }
 
-        fun createSMSAuthCodeRequest(
-            memberNumber: String,
-            telephoneNumber: String,
-            certType: String,
-            operationType: String,
-            certSumFlg: String,
-            operationSumFlg: String
-        ): Request {
-            return Request(
-                request = SMSAuthCodeSendRequest(
-                    memberInfo = SMSAuthCodeMemberInfoContent(
-                        memberNumber = memberNumber,
-                        telephoneNumber = telephoneNumber
-                    ),
-                    certInfo = SMSAuthCodeCertInfoContent(
-                        certType = certType,
-                        operationType = operationType,
-                        certSumFlg = certSumFlg,
-                        operationSumFlg = operationSumFlg
-                    )
-                ),
-                head = BaseHead(
-                    messageType = MessageType.CardRelationRegReq.value
-                )
-            )
-        }
-
         fun createSMSConfirm(
             memberNumber: String,
             certType: String,

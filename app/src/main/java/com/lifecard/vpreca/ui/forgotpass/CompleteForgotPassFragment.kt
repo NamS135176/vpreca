@@ -33,10 +33,6 @@ class CompleteForgotPassFragment : Fragment() {
     }
 
     fun backFunction(){
-//        val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        }
-//        startActivity(intent)
         findNavController().navigate(R.id.action_forgot_complete_to_login)
     }
 

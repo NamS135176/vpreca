@@ -34,12 +34,11 @@ fun Toast.showCustomToast(
             ToastType.Success -> textView.setBackgroundResource(R.drawable.toast_success_shape)
             ToastType.Error -> textView.setBackgroundResource(R.drawable.toast_error_shape)
             ToastType.Warning -> textView.setBackgroundResource(R.drawable.toast_warning_shape)
-            else -> {}
+            else -> {
+                println("")}
         }
 
         // use the application extension function
-//        val height = activity.window.decorView.height
-//        val yOffset = (0.265 * height).toInt()//0.265 = 110 / 414
         val yOffsetBottom = activity.resources.getDimension(R.dimen.toast_mb).toInt()
         val yOffsetTop = activity.resources.getDimension(R.dimen.toast_mt).toInt()
 
@@ -58,6 +57,7 @@ fun Toast.showCustomToast(
             show()
         }
     } catch (e: Exception) {
+        println(e)
     }
 }
 
@@ -74,6 +74,6 @@ fun Fragment.showToast(
             toastPosition = toastPosition
         )
     } catch (e: Exception) {
-
+        println(e)
     }
 }

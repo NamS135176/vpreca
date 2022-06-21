@@ -9,6 +9,8 @@ import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.balance_amount.GiftInfoResult
+import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
+import com.lifecard.vpreca.ui.signup.ConfirmPhoneState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +18,41 @@ import javax.inject.Inject
 class IssueCardByCodeInputCodeViewModel @Inject constructor(
     private val issueCardRepository: IssueCardRepository
 )  : ViewModel() {
-    val giftCodeError = MutableLiveData<Int?>()
+    val codeError = MutableLiveData<Int?>()
+    val validForm = MutableLiveData<Boolean>()
+    val formState = MutableLiveData(ConfirmPhoneState())
+    val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
+
+    private fun checkCfPhoneValid(): Boolean {
+        return if (formState.value?.confirmCode?.length != 15) {
+            codeError.value = R.string.error_code
+            false
+        } else {
+            codeError.value = null
+            true
+        }
+    }
+
+    fun codeDataChanged(text: String) {
+        formState.value = formState.value?.copy(confirmCode = text)
+    }
+
+    fun submit() {
+        val isCfPhoneValid = checkCfPhoneValid()
+        if(isCfPhoneValid){
+            formResultState.value = ChangeInfoInputResultState(success = true)
+        }
+    }
+
+    fun checkFormValid(): Boolean {
+        return formState.value?.let { form ->
+            val isValid = !arrayOf(form.confirmCode)
+                .any { it.isNullOrEmpty() }
+            validForm.value = isValid
+            return isValid
+        } ?: false
+    }
+
 
     private val _giftInfoResult = MutableLiveData<GiftInfoResult>()
     val giftInfoResult: LiveData<GiftInfoResult> = _giftInfoResult
@@ -49,25 +85,5 @@ class IssueCardByCodeInputCodeViewModel @Inject constructor(
     }
 
 
-    val validForm = MediatorLiveData<IssueCardByCodeInputState>().apply {
-        value = IssueCardByCodeInputState()
-        addSource(giftCodeError) { value ->
-            val previous = this.value
-            this.value = previous?.copy(giftCodeError = value)
-        }
-    }
-
-    fun giftCodeDataChanged(text: String) {
-        if (!isGiftCodeValid(text)) {
-            giftCodeError.value = R.string.empty
-        }
-        else{
-            giftCodeError.value = null
-        }
-    }
-
-    private fun isGiftCodeValid(id: String): Boolean {
-        return id.length == 15
-    }
 
 }
