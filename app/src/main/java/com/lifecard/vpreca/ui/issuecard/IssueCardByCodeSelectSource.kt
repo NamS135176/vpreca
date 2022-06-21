@@ -106,59 +106,6 @@ class IssueCardByCodeSelectSource : Fragment() {
                         0 -> {
                         }
                         else -> {
-//                            var arrSelected: List<SelectedData>
-//                            val arrPolicy: List<CreditCard>
-//                            arrPolicy = creditCardResult.success
-//
-//                            arrSelected = arrPolicy.mapIndexed { index, creditCard ->
-//                                SelectedData(
-//                                    "0",
-//                                    creditCard.publishAmount,
-//                                    "0"
-//                                )
-//                            }
-//
-//                            val linearLayoutManager: LinearLayoutManager =
-//                                LinearLayoutManager(context)
-//                            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-//                            val adapter = IssueCardSourceAdapter(arrPolicy, arrSelected)
-//                            rcView.adapter = adapter
-//                            rcView.layoutManager = linearLayoutManager
-//
-//                            adapter.setOnClickListener(object :
-//                                IssueCardSourceAdapter.OnItemClickListener {
-//                                override fun onItemClick(
-//                                    position: Int,
-//                                    binding: SelectSourceCardItemBinding
-//                                ) {
-//                                    if (arrSelected[position].isSelected == "0") {
-//                                        for (i in 0 until arrSelected.size) {
-//                                            if (i == position) {
-//                                                arrSelected[i].isSelected = "1"
-//                                            } else {
-//                                                arrSelected[i].isSelected = "0"
-//                                            }
-//                                        }
-//                                        println(arrSelected)
-//                                        adapter.notifyDataSetChanged()
-//                                        btnSubmit.isEnabled = true
-//                                        dataSelectCard = arrPolicy[position].publishAmount
-//                                        name = arrPolicy[position].cardNickname
-//                                        expireDate = arrPolicy[position].precaExpirationDate
-//                                        pin = arrPolicy[position].vcn
-//                                        number = arrPolicy[position].precaNumber
-//                                        vcnName = arrPolicy[position].vcnName
-//                                        cardSchemeId = arrPolicy[position].cardSchemeId
-//                                    } else {
-//                                        arrSelected[position].isSelected = "0"
-//                                        println(arrSelected)
-//                                        adapter.notifyItemChanged(position)
-//                                        btnSubmit.isEnabled = false
-//                                        dataSelectCard = "0"
-//                                    }
-//                                }
-//                            })
-
                             arrPolicy = creditCardResult.success
 
                             arrSelected = arrPolicy.mapIndexed { _, creditCard ->
@@ -175,14 +122,13 @@ class IssueCardByCodeSelectSource : Fragment() {
                             val adapter = IssueCardSourceAdapter(arrPolicy, arrSelected)
                             rcView.layoutManager = linearLayoutManager
                             rcView.adapter = adapter
-                            val list: MutableList<Int> = ArrayList<Int>()
+                            val list: MutableList<Int> = ArrayList()
                             adapter.setOnClickListener(object :
                                 IssueCardSourceAdapter.OnItemClickListener {
                                 override fun onItemClick(
                                     position: Int,
                                     binding: SelectSourceCardItemBinding
                                 ) {
-//                                    tvError.visibility = View.INVISIBLE
                                     btnSubmit.isEnabled = true
                                     var count = 0
                                     for (item in arrSelected) {
@@ -220,13 +166,10 @@ class IssueCardByCodeSelectSource : Fragment() {
                                             }
                                         }
                                         else{
-//                                            tvError.visibility = View.VISIBLE
                                             if(count >= 4 ){
-//                                                tvError.text = "最大4枚を選択してください"
                                                 showAlertMessage("最大4枚を選択してください")
                                             }
                                             else if(sum > (100000 - arrSelected[position].amount.toInt())){
-//                                                tvError.text = "合算金額は10万円以内です。"
                                                 showAlertMessage("合算金額は10万円以内です")
                                             }
                                         }

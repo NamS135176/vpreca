@@ -30,7 +30,6 @@ class IssueCardByCodeInputCode : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        viewModel = ViewModelProvider(this).get(IssueCardByCodeInputCodeViewModel::class.java)
         _binding = FragmentIssueCardByCodeInputCodeBinding.inflate(inflater, container, false)
         val giftCodeLayout = binding.issueCardByCodeInputLayout
         val giftCodeEdt = binding.issueCardByCodeInputCode
@@ -97,8 +96,6 @@ class IssueCardByCodeInputCode : Fragment() {
             }
         }
 
-
-//        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_value_confirm) })
         btnSubmit.setOnClickListener { viewModel.getGiftData(giftCodeEdt.text.toString()) }
         buttonOcrDetection.setOnClickListener {
             val action =

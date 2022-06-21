@@ -122,9 +122,6 @@ class RegexUtils {
             return email?.let {
                 email.length in 0..256 && Regex(RegexEmail).matches(email)
             } ?: false
-//            return email?.let {
-//                email.length in 0..256 && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-//            } ?: false
         }
 
         fun isPasswordValid(password: String?): Boolean {
@@ -217,10 +214,6 @@ class RegexUtils {
 
         fun maskPassword(password: String?): String {
             return password ?: ""
-//            return password?.let {
-//                val regex = "(\\d{3})(\\d{3})(\\d+)"
-//                return it.replace(Regex(regex), "\$1-\$2-\$3")
-//            } ?: password ?: ""
         }
 
         fun hidePassword(password: String?): String {

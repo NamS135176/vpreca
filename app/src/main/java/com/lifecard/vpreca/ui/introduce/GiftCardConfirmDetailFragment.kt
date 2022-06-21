@@ -33,7 +33,6 @@ class GiftCardConfirmDetailFragment  : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        viewModel = ViewModelProvider(this).get(GiftCardConfirmDetailViewModel::class.java)
         _binding = FragmentGiftCardConfirmDetailBinding.inflate(inflater, container, false)
         binding.card = args.cardData
         binding.cardZone.card = args.cardData

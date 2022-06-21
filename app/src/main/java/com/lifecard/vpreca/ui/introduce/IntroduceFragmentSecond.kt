@@ -30,7 +30,6 @@ class IntroduceFragmentSecond : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = IntroduceFragmentSecondFragmentBinding.inflate(inflater, container, false)
-//        viewModel = ViewModelProvider(this).get(IntroduceFragmentSecondViewModel::class.java)
 
         val btnSubmit = binding.btnSubmitInput
         val btnBack = binding.appbarGiftSecond.btnBack
@@ -88,7 +87,6 @@ class IntroduceFragmentSecond : Fragment() {
         viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
                 viewModel.getGiftCardInfo(giftCodeEdt.text.toString(), vcnInput.text.toString())
-//                findNavController().navigate(R.id.nav_signup_input)
             }
         }
 

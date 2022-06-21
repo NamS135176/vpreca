@@ -38,8 +38,6 @@ fun Toast.showCustomToast(
         }
 
         // use the application extension function
-//        val height = activity.window.decorView.height
-//        val yOffset = (0.265 * height).toInt()//0.265 = 110 / 414
         val yOffsetBottom = activity.resources.getDimension(R.dimen.toast_mb).toInt()
         val yOffsetTop = activity.resources.getDimension(R.dimen.toast_mt).toInt()
 
