@@ -11,7 +11,8 @@ import java.security.spec.PKCS8EncodedKeySpec
 
 class MessageDigest {
     private val gson = Gson()
-//
+
+    //
     private val privateKeyPem = BuildConfig.privateKeyPem
 
     private val privateKey = privateKeyPem.replace("-----BEGIN RSA PRIVATE KEY-----", "")
