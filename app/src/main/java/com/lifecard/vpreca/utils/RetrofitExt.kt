@@ -1,7 +1,6 @@
 package com.lifecard.vpreca.utils
 
 import okhttp3.Request
-import okhttp3.RequestBody
 import okio.Buffer
 
 fun Request.bodyToString(): String? {
@@ -11,6 +10,7 @@ fun Request.bodyToString(): String? {
         copy.body()?.writeTo(buffer)
         return buffer.readUtf8()
     } catch (e: Exception) {
+        println(e)
     } finally {
         buffer.close()
     }

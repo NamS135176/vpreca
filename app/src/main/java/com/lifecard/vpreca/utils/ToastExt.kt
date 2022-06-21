@@ -34,7 +34,8 @@ fun Toast.showCustomToast(
             ToastType.Success -> textView.setBackgroundResource(R.drawable.toast_success_shape)
             ToastType.Error -> textView.setBackgroundResource(R.drawable.toast_error_shape)
             ToastType.Warning -> textView.setBackgroundResource(R.drawable.toast_warning_shape)
-            else -> {}
+            else -> {
+                println("")}
         }
 
         // use the application extension function
@@ -56,6 +57,7 @@ fun Toast.showCustomToast(
             show()
         }
     } catch (e: Exception) {
+        println(e)
     }
 }
 
@@ -72,6 +74,6 @@ fun Fragment.showToast(
             toastPosition = toastPosition
         )
     } catch (e: Exception) {
-
+        println(e)
     }
 }
