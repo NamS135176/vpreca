@@ -18,10 +18,10 @@ class Constant {
         const val CARD_NAME = "LIFECARD"
 
         //dev
-//        const val API_BASE_URL = "https://by4h7iozy5.execute-api.ap-southeast-1.amazonaws.com/dev/"
+        const val API_BASE_URL = "https://la8rv0gdp9.execute-api.ap-southeast-1.amazonaws.com/dev2/"
         //staging
-        const val API_BASE_URL =
-            "https://xvojcilpig.execute-api.ap-southeast-1.amazonaws.com/staging/"
+//        const val API_BASE_URL =
+//            "https://xvojcilpig.execute-api.ap-southeast-1.amazonaws.com/staging/"
 
         const val GOOGLE_VISION_API = "https://vision.googleapis.com/"
     }

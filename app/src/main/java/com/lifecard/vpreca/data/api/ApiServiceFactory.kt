@@ -17,6 +17,12 @@ class ApiServiceFactory {
             userManager: UserManager
         ): ApiService {
             val client = OkHttpClient.Builder()
+                .addInterceptor(
+                    AppRequestInterceptor(
+                        appContext = appContext,
+                        userManager = userManager
+                    )
+                )
                 .apply {
                     if (BuildConfig.DEBUG) {
                         addInterceptor(HttpLoggingInterceptor().apply {
@@ -24,12 +30,6 @@ class ApiServiceFactory {
                         })
                     }
                 }
-                .addInterceptor(
-                    AppRequestInterceptor(
-                        appContext = appContext,
-                        userManager = userManager
-                    )
-                )
                 .build()
             val gson = GsonBuilder()
                 .setDateFormat("yyyyMMddHHmmss")

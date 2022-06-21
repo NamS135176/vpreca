@@ -12,28 +12,28 @@ class UserManager(private val secureStore: SecureStore) {
     var accessToken: String? = null
         private set
         get() {
-            return authToken?.accessToken
+            return authToken.accessToken
         }
     var refreshToken: String? = null
         private set
         get() {
-            return authToken?.refreshToken
+            return authToken.refreshToken
         }
     var loginId: String? = null
         private set
         get() {
-            return authToken?.loginId ?: memberInfo?.loginId
+            return authToken.loginId ?: memberInfo?.loginId
         }
     var memberNumber: String? = null
         private set
         get() {
-            return authToken?.memberNumber ?: memberInfo?.memberNumber
+            return authToken.memberNumber ?: memberInfo?.memberNumber
         }
 
-    var authToken: AuthToken? = null
+    var authToken: AuthToken = AuthToken()
 
     val isLoggedIn: Boolean
-        get() = authToken != null
+        get() = !authToken.isEmpty()
     val canCallApi: Boolean
         get() = accessToken != null
 
@@ -44,64 +44,43 @@ class UserManager(private val secureStore: SecureStore) {
         }
 
     init {
-        authToken = secureStore.getAuthToken()
+        authToken = secureStore.getAuthToken() ?: AuthToken()
     }
 
     fun setLoggedMember(memberResponseContent: MemberResponseContent) {
         memberInfo = memberResponseContent.memberInfo
         memberSubInfo = memberResponseContent.memberSubInfo
-        if (memberInfo != null && authToken != null
-            && (authToken!!.loginId != memberInfo!!.loginId
-                    || authToken!!.memberNumber != memberInfo!!.memberNumber)
+        if (memberInfo != null
+            && (authToken.loginId != memberInfo!!.loginId
+                    || authToken.memberNumber != memberInfo!!.memberNumber)
         ) {
             //update auth token with new value
-            authToken!!.loginId = memberInfo!!.loginId
-            authToken!!.memberNumber = memberInfo!!.memberNumber
-            secureStore.saveAuthToken(authToken!!)
+            authToken.loginId = memberInfo!!.loginId
+            authToken.memberNumber = memberInfo!!.memberNumber
+            secureStore.saveAuthToken(authToken)
         }
     }
 
     fun setLoggedIn(loginResponse: LoginResponse) {
         setLoggedMember(loginResponse.response)
-
-        authToken = AuthToken()
-        //save to secure store
-        authToken?.let { authToken ->
-            authToken.accessToken = loginResponse.accessToken
-            authToken.refreshToken = loginResponse.refreshToken
-            authToken.loginId = memberInfo?.loginId
-            authToken.memberNumber = memberInfo?.memberNumber
-
-            secureStore.saveAuthToken(authToken)
-        }
+        authToken.loginId = memberInfo?.loginId
+        authToken.memberNumber = memberInfo?.memberNumber
+        secureStore.saveAuthToken(authToken)
     }
 
-    fun saveToken(accessToken: String, refreshToken: String) {
-        authToken?.let { authToken ->
-            authToken.accessToken = accessToken
-            authToken.refreshToken = refreshToken
-            secureStore.saveAuthToken(authToken)
+    fun saveToken(accessToken: String?, refreshToken: String?) {
+        if (accessToken.isNullOrEmpty() || refreshToken.isNullOrEmpty()) {
+            return
         }
-    }
-
-    fun saveAccessToken(c: String) {
-        authToken?.let { authToken ->
-            authToken.accessToken = accessToken
-            secureStore.saveAuthToken(authToken)
-        }
-    }
-
-    fun saveRefreshToken(refreshToken: String) {
-        authToken?.let { authToken ->
-            authToken.refreshToken = refreshToken
-            secureStore.saveAuthToken(authToken)
-        }
+        authToken.accessToken = accessToken
+        authToken.refreshToken = refreshToken
+        secureStore.saveAuthToken(authToken)
     }
 
     fun clear() {
         this.memberInfo = null
         this.memberSubInfo = null
-        this.authToken = null
+        this.authToken.clear()
     }
 
 }
