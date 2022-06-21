@@ -38,7 +38,7 @@ class AppRequestInterceptor(
             val newRequestBuilder = request.newBuilder()
 
             userManager.accessToken?.let { accessToken ->
-                newRequestBuilder.addHeader("accessToken", accessToken)
+                newRequestBuilder.addHeader("accesstoken", accessToken)
             }
 
             //signature json body
@@ -90,9 +90,9 @@ class AppRequestInterceptor(
         checkTokenExpire: Boolean = true
     ): Response {
         return response.body()?.let { responseBody ->
-            response.header("accessToken")
+            response.header("accesstoken")
                 ?.let { accessToken -> userManager.saveAccessToken(accessToken) }
-            response.header("refreshToken")
+            response.header("refreshtoken")
                 ?.let { refreshToken -> userManager.saveRefreshToken(refreshToken) }
 
             val source: BufferedSource = responseBody.source()
@@ -131,8 +131,8 @@ class AppRequestInterceptor(
                     || userManager.refreshToken.isNullOrEmpty()
                 ) {
                     val request = chain.request().newBuilder()
-                        .addHeader("accessToken", userManager.accessToken!!)
-                        .addHeader("refreshToken", userManager.refreshToken!!)
+                        .addHeader("accesstoken", userManager.accessToken!!)
+                        .addHeader("refreshtoken", userManager.refreshToken!!)
                         .build()
                     return@runBlocking handleResponse(
                         chain,
