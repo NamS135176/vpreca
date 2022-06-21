@@ -44,13 +44,6 @@ class WebDirectFragment : Fragment() {
         _binding = FragmentWebDirectBinding.inflate(inflater)
         val screenId = arguments?.getString("screen_id")
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
-//            when (loading) {
-//                true -> showLoadingDialog()
-//                else -> hideLoadingDialog()
-//            }
-        })
-
         viewModel.otp.observe(viewLifecycleOwner, Observer { otp ->
             otp?.let { otpString ->
                 //child fragment

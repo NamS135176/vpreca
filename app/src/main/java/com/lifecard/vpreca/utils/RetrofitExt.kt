@@ -4,6 +4,10 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okio.Buffer
 
+fun RequestBody?.getMessageType(): String {
+    return "unknown"
+}
+
 fun Request.bodyToString(): String? {
     val buffer = Buffer()
     try {
