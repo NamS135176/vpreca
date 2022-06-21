@@ -219,7 +219,7 @@ class RegexUtils {
         fun hidePassword(password: String?): String {
             try {
                 val result =
-                    password?.replace(Regex("[\\d]"), "*")
+                    password?.replace(Regex("[\\w`!@#\$%\\^&*()={}:;<>+'-]"), "*")
                 println("hidepassword... password = $password - result: $result")
                 return result!!
             } catch (e: Exception) {
