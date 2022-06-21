@@ -205,10 +205,6 @@ class LoginFragment : NoToolbarFragment() {
         logoGift.setOnClickListener {
             findNavController().navigate(R.id.nav_introduce_first)
         }
-
-//        if (PreferenceHelper.isEnableBiometricSetting(requireContext()) && bioManager?.checkDeviceSupportBiometric() == true) {
-//            showBiometricDialog()
-//        }
         return binding.root
 
     }
@@ -288,7 +284,6 @@ class LoginFragment : NoToolbarFragment() {
     }
 
     private fun showLoginFailed(errorMessage: String) {
-//        showAlert(errorMessage)
         showPopupMessage(message = errorMessage)
     }
 

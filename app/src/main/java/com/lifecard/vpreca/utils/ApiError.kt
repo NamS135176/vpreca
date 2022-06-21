@@ -366,7 +366,6 @@ class ApiError {
             if (message.isNullOrEmpty()) {
                 message = commonErrors[resultCode]
             }
-            //return default
             if (message.isNullOrEmpty()) {
                 message = otherErrorMessage//other - 9999999
             }

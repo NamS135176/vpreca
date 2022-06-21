@@ -123,7 +123,6 @@ class SMSVerifyViewModel @Inject constructor(
             cfPhoneError.value = null
             true
         }
-//        return true
     }
 
     fun cfPhoneDataChanged(text: String) {

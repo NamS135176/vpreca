@@ -107,7 +107,6 @@ class IssueCardByCodeInputCode : Fragment() {
             viewModel.submit()
         }
 
-//        btnSubmit.setOnClickListener { viewModel.getGiftData(giftCodeEdt.text.toString()) }
         buttonOcrDetection.setOnClickListener {
             val action =
                 IssueCardByCodeInputCodeDirections.actionToCameraOcr(getString(R.string.camera_ocr_hint_input_gift_card))

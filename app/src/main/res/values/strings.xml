@@ -389,7 +389,7 @@
     <string name="issue_card_select_source_total">¥0</string>
     <string name="issue_card_select_source_cross">合算元</string>
     <!--    Issue Card Select Source-->
-
+    <string name="btn_introduce">合算カード選択</string>
     <!--    Issue Card Select Design-->
     <string name="select_design_appbar_title">デザイン選択</string>
     <string name="issue_card_select_design_des">カードデザインを\n選択してください。</string>

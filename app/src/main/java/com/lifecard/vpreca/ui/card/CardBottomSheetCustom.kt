@@ -35,7 +35,6 @@ class CardBottomSheetCustom(
     private val activity: Activity,
     private val creditCard: CardInfo,
     private val creditCardRepository: CreditCardRepository
-//    private val card: CreditCard
 ) : BottomSheetDialog(activity, R.style.AppBottomSheetDialogTheme), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
@@ -116,8 +115,6 @@ class CardBottomSheetCustom(
                         message = toastMessage,
                         activity
                     )
-//            val new = newCard.copyCardLockInverse()
-//            println(new.isCardLock())
                     newCard = new.copy()
                     card.card = convertObject(new)
                     card.cardInfo.card = convertObject(new)

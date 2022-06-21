@@ -156,7 +156,6 @@ class FingerprintFragment : Fragment() {
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     viewModel.setFingerprintSetting(requireContext(), false)
-//                    showAlert(getString(R.string.error_bio_authentication_failure))
                 }
             })
 

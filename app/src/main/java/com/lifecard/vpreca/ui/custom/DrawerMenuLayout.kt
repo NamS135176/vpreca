@@ -39,7 +39,6 @@ class DrawerMenuLayout @JvmOverloads constructor(
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding
-//    var navController: NavController? = null
 
     private var items: ArrayList<NavigationItem> = arrayListOf(
         NavigationItem(
