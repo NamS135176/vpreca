@@ -47,7 +47,7 @@ class RegexUtils {
          * only roman included special character  and between 8-12 character
          * check the screen SC09_1
          */
-        private const val RegexPassword = "^[a-zA-Z0-9@`!#\\\$%()*:+;\\[{,¥|\\-=\\]}.^~/?_]{8,12}\$"
+        private const val RegexPassword = "^[a-zA-Z0-9&@`!#\\\$%()*:+;\\[{,¥|\\-=\\]}.^~/?_]{8,12}\$"
 
         /**
          * any character with max 20

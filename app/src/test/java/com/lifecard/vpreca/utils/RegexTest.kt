@@ -21,10 +21,15 @@ class RegexTest {
     }
 
     @Test
-    fun password_isInCorrect() {
-        val passErrors =
-            listOf("", "ＡＡＡ", "1234567", "1234567890123", "12 345678", "12344\uD83D\uDE00333")
-        passErrors.forEach { pass -> Assert.assertEquals(false, RegexUtils.isPasswordValid(pass)) }
+    fun password_isCorrect() {
+        Assert.assertEquals(false, RegexUtils.isPasswordValid(""))
+        Assert.assertEquals(false, RegexUtils.isPasswordValid("ＡＡＡ"))
+        Assert.assertEquals(false, RegexUtils.isPasswordValid("1234567"))
+        Assert.assertEquals(false, RegexUtils.isPasswordValid("1234567890123"))
+        Assert.assertEquals(false, RegexUtils.isPasswordValid("12 345678"))
+        Assert.assertEquals(false, RegexUtils.isPasswordValid("12344\uD83D\uDE00333"))
+
+        Assert.assertEquals(true, RegexUtils.isPasswordValid("abc123$&"))
     }
 
     @Test
@@ -38,9 +43,6 @@ class RegexTest {
         Assert.assertEquals(false, RegexUtils.isLoginIdValid("12344\uD83D\uDE00333"))
         Assert.assertEquals(false, RegexUtils.isLoginIdValid("abc%^!#\$@%@"))
         Assert.assertEquals(false, RegexUtils.isLoginIdValid("マチヤタナヤ"))
-
-        Assert.assertEquals(true, RegexUtils.isLoginIdValid("-23_202020"))
-        Assert.assertEquals(true, RegexUtils.isLoginIdValid("anhndt"))
     }
 
     @Test
