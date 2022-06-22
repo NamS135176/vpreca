@@ -3,11 +3,6 @@ package com.lifecard.vpreca.utils
 class Constant {
     companion object {
         const val SECURE_AUTH_TOKEN = "vpreca_auth_token"
-        const val SECURE_USER_ID = "vpreca_login_user_id"
-        const val SECURE_MEMBER_NUMBER = "vpreca_login_member_id"
-        const val SECURE_ACCESS_TOKEN = "vpreca_access_token"
-        const val SECURE_REFRESH_TOKEN = "vpreca_refresh_token"
-        const val BIOMETRIC_ALGORITHM = "ecdsa-with-SHA256"
 
         const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
 
@@ -16,7 +11,9 @@ class Constant {
 
         const val CARD_SCHEME_ID = "74101"
         const val CARD_NAME = "LIFECARD"
-
+        
+        //dev
+//        const val API_BASE_URL = "https://la8rv0gdp9.execute-api.ap-southeast-1.amazonaws.com/dev2/"
         //staging
         const val API_BASE_URL =
             "https://xvojcilpig.execute-api.ap-southeast-1.amazonaws.com/staging/"

@@ -34,3 +34,15 @@ fun String.toAuthToken(): AuthToken? {
     }
     return null
 }
+
+fun AuthToken.isEmpty(): Boolean {
+    return accessToken.isNullOrEmpty() || refreshToken.isNullOrEmpty() || memberNumber.isNullOrEmpty()
+            || loginId.isNullOrEmpty()
+}
+
+fun AuthToken.clear() {
+    accessToken = null
+    refreshToken = null
+    memberNumber = null
+    loginId = null
+}

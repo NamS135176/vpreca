@@ -52,26 +52,27 @@ internal class SecurityKey {
     private fun getCipher(mode: Int): Cipher {
         val cipher: Cipher
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            cipher = Cipher.getInstance(TRANSFORMATIION)
+            cipher = Cipher.getInstance(TRANSFORMATION)
             cipher.init(
                 mode,
                 secretKey,
-                GCMParameterSpec(128, TRANSFORMATIION.toByteArray(), 0, 12)
+                GCMParameterSpec(128, TRANSFORMATION.toByteArray(), 0, 12)
             )
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            cipher = Cipher.getInstance(TRANSFORMATIION)
+            cipher = Cipher.getInstance(TRANSFORMATION)
             cipher.init(
                 mode,
                 if (mode == Cipher.DECRYPT_MODE) keyPair!!.public else keyPair!!.private
             )
         } else {
-            cipher = Cipher.getInstance(TRANSFORMATIION)
+            cipher = Cipher.getInstance(TRANSFORMATION)
             cipher.init(mode, secretKey, IvParameterSpec(ByteArray(cipher.blockSize)))
         }
         return cipher
     }
 
     companion object {
-        private const val TRANSFORMATIION = "RSA/ECB/PKCS1Padding"
+        private const val TRANSFORMATION = "AES/GCM/NoPadding"
     }
+
 }

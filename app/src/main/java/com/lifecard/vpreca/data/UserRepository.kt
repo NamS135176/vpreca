@@ -22,20 +22,6 @@ class UserRepository(private val apiService: ApiService, private val userManager
         }
     }
 
-    suspend fun loginWithBiometric(username: String, signed: String): Result<LoginResponse> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val loginResponse = apiService.loginWithBiometric(username, response = signed)
-                userManager.setLoggedIn(loginResponse)
-                Result.Success(loginResponse)
-            } catch (e: Exception) {
-                println("LoginDataSource... login has error $e")
-                e.printStackTrace()
-                Result.Error(e)
-            }
-        }
-    }
-
     suspend fun getUser(
         loginId: String? = userManager.loginId,
         memberNumber: String? = userManager.memberNumber

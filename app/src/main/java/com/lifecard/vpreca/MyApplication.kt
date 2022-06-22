@@ -15,7 +15,7 @@ import org.greenrobot.eventbus.EventBus
 @HiltAndroidApp
 class MyApplication : MultiDexApplication() {
     override fun onCreate() {
-        applyStrictMode()
+//        applyStrictMode()
 
         super.onCreate()
         EventBus.builder()
