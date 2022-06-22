@@ -495,11 +495,10 @@
                         android:text="@string/change_info_input_first_mail_setting"
                         android:textSize="12sp" />
 
-                    <ToggleButton
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/toggle_setting_first"
                         android:layout_width="51dp"
                         android:layout_height="31dp"
-                        android:background="@drawable/toggle_selector"
                         android:checked="false"
                         android:gravity="center_vertical"
                         android:text=""
@@ -526,11 +525,10 @@
                         android:text="@string/change_info_input_second_mail_setting"
                         android:textSize="12sp" />
 
-                    <ToggleButton
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/toggle_setting_second"
                         android:layout_width="51dp"
                         android:layout_height="31dp"
-                        android:background="@drawable/toggle_selector"
                         android:checked="false"
                         android:gravity="center_vertical"
                         android:text=""
@@ -566,11 +564,10 @@
                         android:text="@string/change_info_input_first_mail_setting"
                         android:textSize="12sp" />
 
-                    <ToggleButton
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/toggle_magazine_first"
                         android:layout_width="51dp"
                         android:layout_height="31dp"
-                        android:background="@drawable/toggle_selector"
                         android:checked="false"
                         android:gravity="center_vertical"
                         android:text=""
@@ -596,11 +593,10 @@
                         android:text="@string/change_info_input_second_mail_setting"
                         android:textSize="12sp" />
 
-                    <ToggleButton
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/toggle_magazine_second"
                         android:layout_width="51dp"
                         android:layout_height="31dp"
-                        android:background="@drawable/toggle_selector"
                         android:checked="false"
                         android:gravity="center_vertical"
                         android:text=""

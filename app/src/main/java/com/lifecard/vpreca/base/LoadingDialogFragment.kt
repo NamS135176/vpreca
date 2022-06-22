@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.lifecard.vpreca.databinding.DialogProgressBarBinding
 
 class LoadingDialogFragment : DialogFragment() {
-    companion  object {
+    companion object {
         const val FRAGMENT_TAG = "LoadingFragment";
     }
 
@@ -38,7 +38,7 @@ class LoadingDialogFragment : DialogFragment() {
         dialog?.window?.let { window ->
             window.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.WRAP_CONTENT
             )
             window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val attributes = window.attributes

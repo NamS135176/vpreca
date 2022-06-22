@@ -145,6 +145,14 @@ class RegexTest {
     }
 
     @Test
+    fun hidePassword_isCorrect() {
+        Assert.assertEquals("********", RegexUtils.hidePassword("!@#$%^&*"))
+        Assert.assertEquals("********", RegexUtils.hidePassword("1234QWER"))
+        Assert.assertEquals("********", RegexUtils.hidePassword("?~!@$%^&"))
+        Assert.assertEquals("************", RegexUtils.hidePassword("?~!@$%^&!@#$"))
+    }
+
+    @Test
     fun formatHideDisplayPhoneNumber_isCorrect() {
         Assert.assertEquals("***-****-5678", RegexUtils.formatHideDisplayPhoneNumber("09012345678"))
         Assert.assertEquals("***-***-4567", RegexUtils.formatHideDisplayPhoneNumber("0901234567"))
