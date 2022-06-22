@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.databinding.FragmentCardUsageBinding
 import com.lifecard.vpreca.utils.*
@@ -45,7 +46,12 @@ class CardUsageFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().popBackStack()
+                if(findNavController().previousBackStackEntry?.destination?.id == R.id.nav_list_vpreca){
+                    findNavController().navigate(R.id.to_list)
+                }
+               else{
+                   findNavController().popBackStack()
+                }
             }
         })
         btnBack.setOnClickListener {
