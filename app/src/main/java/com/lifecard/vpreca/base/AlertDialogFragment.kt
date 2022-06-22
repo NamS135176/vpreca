@@ -61,7 +61,7 @@ class AlertDialogFragment : DialogFragment() {
         dialog?.window?.let { window ->
             window.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.WRAP_CONTENT
             )
             window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val attributes = window.attributes

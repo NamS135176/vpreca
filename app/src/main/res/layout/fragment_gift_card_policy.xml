@@ -164,7 +164,6 @@
                     android:paddingVertical="16dp"
                     android:text="@string/confirm_policy"
                     android:textColor="@color/white"
-                    app:buttonTint="@color/white"
                     app:layout_constraintBottom_toBottomOf="@+id/text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
