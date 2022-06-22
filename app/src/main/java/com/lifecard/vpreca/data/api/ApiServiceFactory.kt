@@ -5,12 +5,10 @@ import com.google.gson.GsonBuilder
 import com.lifecard.vpreca.BuildConfig
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.utils.Constant
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 class ApiServiceFactory {
     companion object {
@@ -19,20 +17,12 @@ class ApiServiceFactory {
             userManager: UserManager
         ): ApiService {
             val client = OkHttpClient.Builder()
-                .addInterceptor(Interceptor { chain ->
-                    userManager.accessToken?.let { accessToken ->
-                        val request =
-                            chain.request().newBuilder()
-                                .apply {
-                                    addHeader("accesstoken", accessToken)
-                                }
-                                .build()
-                        chain.proceed(request)
-                    } ?: kotlin.run {
-                        chain.proceed(chain.request())
-                    }
-                })
-                .addInterceptor(MessageDigestInterceptor(MessageDigest()))
+                .addInterceptor(
+                    AppRequestInterceptor(
+                        appContext = appContext,
+                        userManager = userManager
+                    )
+                )
                 .apply {
                     if (BuildConfig.DEBUG) {
                         addInterceptor(HttpLoggingInterceptor().apply {
@@ -40,8 +30,6 @@ class ApiServiceFactory {
                         })
                     }
                 }
-                .addInterceptor(NetworkConnectionInterceptor(appContext))
-                .authenticator(TokenAuthenticator(appContext, userManager))
                 .build()
             val gson = GsonBuilder()
                 .setDateFormat("yyyyMMddHHmmss")

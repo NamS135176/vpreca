@@ -4,7 +4,8 @@ package com.lifecard.vpreca.utils
 class ApiError {
     companion object {
         const val otherErrorCode = "9999999"
-        val otherErrorMessage = "システムエラーです。"
+        const val otherErrorMessage = "システムエラーです。"
+        const val otherMessageType = "unknown"
 
         private val commonErrors = mapOf(
             //common: 外部インタフェース定義書(IFBPAP0101_共通部).pdf
@@ -374,6 +375,15 @@ class ApiError {
 
         fun isResultCodeError(resultCode: String): Boolean {
             return resultCode != "0000000"
+        }
+
+        fun isResultCodeAccessTokenExpire(resultCode: String): Boolean {
+            return resultCode == "9999309"
+        }
+
+        fun isResultCodeRefreshTokenInValid(resultCode: String): Boolean {
+            return resultCode == "9999313" || resultCode == "9999314" || resultCode == "9999315"
+                    || resultCode == "9999312"
         }
     }
 }
