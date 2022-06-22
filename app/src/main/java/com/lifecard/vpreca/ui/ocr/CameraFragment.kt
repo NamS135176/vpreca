@@ -26,6 +26,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentCameraBinding
+import com.lifecard.vpreca.databinding.LayoutCameraPreviewBinding
 import com.lifecard.vpreca.databinding.LayoutCameraViewOldBinding
 import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.setNavigationResult
@@ -192,8 +193,17 @@ class CameraFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun startCameraX() {
-        binding.cameraContainer.visibility = View.GONE
-        binding.cameraPreview.visibility = View.VISIBLE
+        val cameraPreviewBinding =
+            LayoutCameraPreviewBinding.inflate(LayoutInflater.from(requireContext()))
+        val cameraPreview = cameraPreviewBinding.cameraPreview
+
+        binding.cameraContainer.addView(
+            cameraPreview,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        )
 
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
@@ -204,7 +214,7 @@ class CameraFragment : Fragment() {
             val preview = Preview.Builder()
                 .build()
                 .also {
-                    it.setSurfaceProvider(binding.cameraPreview.surfaceProvider)
+                    it.setSurfaceProvider(cameraPreview.surfaceProvider)
                 }
 
             imageCapture = ImageCapture.Builder().build()
@@ -289,9 +299,6 @@ class CameraFragment : Fragment() {
     }
 
     private fun startCameraBellow21() {
-        binding.cameraContainer.visibility = View.VISIBLE
-        binding.cameraPreview.visibility = View.GONE
-
         val cameraOldBinding =
             LayoutCameraViewOldBinding.inflate(LayoutInflater.from(requireContext()))
         cameraViewOld = cameraOldBinding.camera
