@@ -190,7 +190,7 @@
             android:layout_marginHorizontal="45dp"
             android:layout_marginTop="34dp"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/button_introduce_background"
+            app:backgroundTint="@color/button_introduce_background"
             android:enabled="true"
             android:paddingVertical="11dp"
             android:text="@string/balance_select_source_confirm_btn"
