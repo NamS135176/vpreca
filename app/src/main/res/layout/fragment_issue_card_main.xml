@@ -54,7 +54,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingRight="40dp">
+                        android:paddingRight="30dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -76,13 +76,11 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="68dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="5"
-                        android:contentDescription="@string/btn_next_policy"
-                        android:minWidth="57dp"
                         android:minHeight="65dp"
-                        android:src="@drawable/ic_tap" />
+                        android:src="@drawable/svg_tap_icon" />
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
