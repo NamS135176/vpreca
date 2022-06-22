@@ -153,7 +153,6 @@
             android:text="@string/confirm_policy"
             android:textColor="@color/white"
             app:buttonTint="@color/white"
-            android:checked=""
             app:layout_constraintBottom_toTopOf="@+id/btn_submit_introduce_first"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
