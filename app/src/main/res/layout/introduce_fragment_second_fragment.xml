@@ -136,31 +136,30 @@
                     android:textFontWeight="@android:integer/status_bar_notification_info_maxnum"
                     android:textSize="12sp"
                     app:layout_constraintTop_toBottomOf="@+id/introduce_des_bot_input" />
-
-                <LinearLayout
+                <com.lifecard.vpreca.ui.custom.MyTextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/gift_vcn_layout"
                     android:paddingHorizontal="29dp"
-                    app:layout_constraintTop_toBottomOf="@+id/introduc_card_title">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="54dp"
-                        android:gravity="center_vertical"
-                        android:layout_weight="0.35"
-                        android:text="0000 0000 0000"
-                        android:textColor="@color/white"
-                        android:textSize="20dp" />
-
-                    <com.lifecard.vpreca.ui.custom.MyTextInputLayout
+                    app:layout_constraintTop_toBottomOf="@id/logo">
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.65"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:id="@+id/gift_vcn_layout"
-                        app:layout_constraintTop_toBottomOf="@id/logo">
+                        android:gravity="start"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/introduc_card_title">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:gravity="center_vertical"
+                            android:layout_weight="0.35"
+                            android:text="0000 0000 0000"
+                            android:textColor="@color/white"
+                            android:textSize="20dp" />
+
+
 
                         <com.google.android.material.textfield.TextInputEditText
                             style="@style/TextInputEditTextFilledBox"
@@ -169,6 +168,7 @@
                             android:layout_height="54dp"
                             android:imeOptions="actionNext"
                             android:inputType="number"
+                            android:layout_weight="0.65"
                             android:insetTop="0dp"
                             android:insetBottom="0dp"
                             android:paddingVertical="0dp"
@@ -176,8 +176,9 @@
                             android:textColor="@color/peacock_blue"
                             android:maxLength="@integer/max_last_4digit_card"
                             android:textSize="20sp" />
-                    </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
-                </LinearLayout>
+                    </LinearLayout>
+                </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
