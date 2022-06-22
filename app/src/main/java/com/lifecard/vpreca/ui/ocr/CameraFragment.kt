@@ -88,9 +88,7 @@ class CameraFragment : Fragment() {
         }
 
         binding.buttonTakePhoto.setOnClickListener(View.OnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                takePhoto()
-            }
+            takePhoto()
         })
         viewModel.loading.observe(viewLifecycleOwner, androidx.lifecycle.Observer { loading ->
             when (loading) {
@@ -184,6 +182,7 @@ class CameraFragment : Fragment() {
     }
 
     private fun takePhoto() {
+        println("takePhoto")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             takePhotoX()
         } else {
@@ -316,7 +315,6 @@ class CameraFragment : Fragment() {
         cameraViewOld?.open()
         cameraViewOld?.addCameraListener(object : CameraListener() {
             override fun onPictureTaken(result: PictureResult) {
-                println("onPictureTaken... $result")
                 result.toBitmap(1024, 1024, BitmapCallback { bitmap ->
                     bitmap?.let { viewModel.getCodeByGoogleVisionOcr(it) }
                         ?: kotlin.run {
@@ -329,8 +327,7 @@ class CameraFragment : Fragment() {
     }
 
     private fun takePhotoBellow21() {
-        cameraViewOld?.takePicture();
-
+        cameraViewOld?.takePicture()
     }
 
 }
