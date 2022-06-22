@@ -63,6 +63,7 @@ class SignupInputFragment : Fragment() {
         val kanaLastName = binding.kanaLastName
         val hiraFirstName = binding.hiraFirstName
         val hiraLastName = binding.hiraLastName
+        val dateLayout = binding.dateLayout
 
         fun dismissAllSpinner() {
             if (spinnerCity.isShowing) spinnerCity.dismiss()
@@ -200,6 +201,15 @@ class SignupInputFragment : Fragment() {
             }
         }
 
+        viewModel.dateError.observe(
+            viewLifecycleOwner
+        ) { error: Int? ->
+            dateLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.answerError.observe(
             viewLifecycleOwner
         ) { error: Int? ->
