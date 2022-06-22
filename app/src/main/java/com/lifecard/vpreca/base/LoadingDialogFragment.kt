@@ -35,6 +35,7 @@ class LoadingDialogFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
         val dialog = dialog
+        dialog?.setCancelable(false)
         dialog?.window?.let { window ->
             window.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,

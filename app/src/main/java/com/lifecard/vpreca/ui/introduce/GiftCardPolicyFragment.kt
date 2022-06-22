@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
@@ -26,6 +27,12 @@ class GiftCardPolicyFragment : Fragment() {
         btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
+        requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        })
         checkbox.setOnCheckedChangeListener { _, isChecked ->
             btnSubmit.isEnabled = isChecked
         }

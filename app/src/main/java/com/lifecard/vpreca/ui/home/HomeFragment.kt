@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.eventbus.ReloadCard
@@ -46,6 +47,9 @@ import kotlin.math.min
 class HomeFragment : Fragment(), CoroutineScope {
     @Inject
     lateinit var creditCardRepository: CreditCardRepository
+    @Inject
+    lateinit var userManager: UserManager
+
     private var _binding: FragmentHomeBinding? = null
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
@@ -345,6 +349,7 @@ class HomeFragment : Fragment(), CoroutineScope {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                userManager.clear()
                 requireActivity().finish()
             }
         })

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -41,7 +42,12 @@ class GiftCardInputCardFragment : Fragment() {
         btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
-
+        requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        })
         btnSubmit.setOnClickListener {
             viewModel.submit()
         }

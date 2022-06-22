@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.camera.core.CameraSelector
@@ -72,7 +73,12 @@ class CameraFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCameraBinding.inflate(inflater, container, false)
-
+        requireActivity().onBackPressedDispatcher.addCallback(object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack()
+            }
+        })
         val textCaptionHint = binding.textCaption
         args.hint?.let { textCaptionHint.text = it }
 
@@ -92,8 +98,14 @@ class CameraFragment : Fragment() {
         })
         viewModel.loading.observe(viewLifecycleOwner, androidx.lifecycle.Observer { loading ->
             when (loading) {
-                true -> showLoadingDialog()
-                else -> hideLoadingDialog()
+                true -> {
+                    binding.buttonCancel.isEnabled = false
+                    showLoadingDialog()
+                }
+                else -> {
+                    binding.buttonCancel.isEnabled = true
+                    hideLoadingDialog()
+                }
             }
         })
         viewModel.codeOcr.observe(viewLifecycleOwner, androidx.lifecycle.Observer { ocr ->
