@@ -1,6 +1,10 @@
 ## Setup
 
-Download file at https://smart-idea.backlog.jp/file/VPRECAAPP/keystore.properties and https://smart-idea.backlog.jp/file/VPRECAAPP/secure.properties
+Download file at 
+- https://smart-idea.backlog.jp/file/VPRECAAPP/keystore.properties
+- https://smart-idea.backlog.jp/file/VPRECAAPP/secure.properties
+- https://smart-idea.backlog.jp/file/VPRECAAPP/rsa_key/private_key.pem
+
 save those file to root of project to build and run
 
 ## Some cli
