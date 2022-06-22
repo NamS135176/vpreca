@@ -78,6 +78,7 @@ class LoginFragment : NoToolbarFragment() {
         val signUpButton = binding.buttonSignup
         val btnForgotPass = binding.buttonForgotPassword
         val buttonLoginLandlinePhone = binding.buttonLoginLandlinePhone
+        val tvClick = binding.textClickHere
 
         buttonLoginLandlinePhone.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
@@ -203,6 +204,10 @@ class LoginFragment : NoToolbarFragment() {
         }
 
         logoGift.setOnClickListener {
+            findNavController().navigate(R.id.nav_introduce_first)
+        }
+
+        tvClick.setOnClickListener {
             findNavController().navigate(R.id.nav_introduce_first)
         }
         return binding.root

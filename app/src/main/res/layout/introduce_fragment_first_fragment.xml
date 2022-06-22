@@ -161,6 +161,8 @@
                     android:id="@+id/cbIntroduceFirst"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:buttonTint="@color/white"
+                    android:checked="true"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="16dp"
                     android:text="@string/confirm_policy"
