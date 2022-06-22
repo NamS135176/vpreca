@@ -11,7 +11,6 @@ class Constant {
 
         const val CARD_SCHEME_ID = "74101"
         const val CARD_NAME = "LIFECARD"
-        
         //dev
 //        const val API_BASE_URL = "https://la8rv0gdp9.execute-api.ap-southeast-1.amazonaws.com/dev2/"
         //staging

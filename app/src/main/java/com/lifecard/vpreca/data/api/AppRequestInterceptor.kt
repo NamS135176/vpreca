@@ -107,8 +107,13 @@ class AppRequestInterceptor(
                 val resultCode = json.response.resultCode
                 if (ApiError.isResultCodeRefreshTokenInValid(resultCode)) {
                     goToLoginScreen()
-                } else if (ApiError.isResultCodeAccessTokenExpire(resultCode) && checkTokenExpire) {
-                    return@let handleAccessTokenExpired(chain)
+                } else if (ApiError.isResultCodeAccessTokenExpire(resultCode)) {
+                    if (checkTokenExpire) {
+                        return@let handleAccessTokenExpired(chain)
+                    } else {
+                        goToLoginScreen()
+                        return@let null
+                    }
                 } else if (ApiError.isResultCodeError(resultCode)) {
                     val messageType = json.head.messageType
                     throw ApiException.createApiException(
@@ -126,7 +131,7 @@ class AppRequestInterceptor(
     private fun handleAccessTokenExpired(chain: Interceptor.Chain): Response? {
         return runBlocking {
             lock.withLock {
-                if (!userManager.accessToken.isNullOrEmpty()  && !userManager.refreshToken.isNullOrEmpty()
+                if (!userManager.accessToken.isNullOrEmpty() && !userManager.refreshToken.isNullOrEmpty()
                 ) {
                     val request = chain.request().newBuilder()
                         .addHeader("accesstoken", userManager.accessToken!!)
