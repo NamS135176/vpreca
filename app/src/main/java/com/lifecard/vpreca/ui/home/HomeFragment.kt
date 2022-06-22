@@ -345,7 +345,9 @@ class HomeFragment : Fragment(), CoroutineScope {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+
                 requireActivity().finish()
+
             }
         })
     }
