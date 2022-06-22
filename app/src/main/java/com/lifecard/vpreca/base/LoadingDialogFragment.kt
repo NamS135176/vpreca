@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.lifecard.vpreca.databinding.DialogProgressBarBinding
 
 class LoadingDialogFragment : DialogFragment() {
-    companion object {
+    companion  object {
         const val FRAGMENT_TAG = "LoadingFragment";
     }
 

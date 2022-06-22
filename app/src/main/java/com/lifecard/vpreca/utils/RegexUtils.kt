@@ -32,7 +32,7 @@ class RegexUtils {
          * only roman
          * check the screen SC08_2
          */
-        private const val RegexNickname = "^[A-Z]{2,19}\$"
+        private const val RegexNickname = "^[A-Z]{2,18}\$"
 
         /**
          * 10 or 11 number
@@ -125,10 +125,7 @@ class RegexUtils {
         }
 
         fun isPasswordValid(password: String?): Boolean {
-            return password?.let {
-                Pattern.compile(RegexPassword).matcher(password)
-                    .matches()
-            } ?: false
+            return password?.length in 8..12
         }
 
         fun isSecretAnswerValid(answer: String?): Boolean {
