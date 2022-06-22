@@ -317,6 +317,11 @@
         android:name="com.lifecard.vpreca.ui.card_usage.CardUsageFragment"
         android:label="Login"
         tools:layout="@layout/fragment_card_usage">
+        <action
+            android:id="@+id/to_list"
+            app:destination="@id/nav_list_vpreca"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
         <argument
             android:name="card"
             android:defaultValue="@null"

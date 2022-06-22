@@ -147,6 +147,7 @@ class CardBottomSheetCustom(
                 R.id.nav_card_usage,
                 CardUsageFragmentArgs(card = convertObject(newCard)).toBundle()
             )
+
         }
 
         btnCopy.setOnClickListener {
