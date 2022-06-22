@@ -14,7 +14,7 @@ data class SignupInputResultState(
 class SignupInputViewModel : ViewModel() {
     val usernameError = MutableLiveData<Int?>()
     val loginIdError = MutableLiveData<Int?>()
-    private val dateError = MutableLiveData<Int?>()
+    val dateError = MutableLiveData<Int?>()
     val phoneError = MutableLiveData<Int?>()
     private val questionError = MutableLiveData<Int?>()
     private val cityError = MutableLiveData<Int?>()
@@ -59,7 +59,7 @@ class SignupInputViewModel : ViewModel() {
 
     private fun checkDateValid(): Boolean {
         return if (!isDateValid(formState.value?.date)) {
-            dateError.value = R.string.rgx_error_birthdate
+            dateError.value = R.string.rgx_error_datetime
             false
         } else {
             dateError.value = null

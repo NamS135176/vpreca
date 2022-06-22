@@ -94,7 +94,7 @@ interface ApiService {
         @Body cardRelationRequest: Request
     ): CardRelationRegReqResponse
 
-    @POST("SendSmsReq")
+    @POST("SmsIvrAuthCodeSendReq")
     suspend fun sendSMSRequest(
         @Body sendSMSRequest: Request
     ): SendSMSResponse
