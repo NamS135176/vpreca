@@ -215,10 +215,11 @@ class RegexUtils {
 
         fun hidePassword(password: String?): String {
             try {
-                val result =
-                    password?.replace(Regex("[\\w`!@#\$%\\^&*()={}:;<>+'-]"), "*")
-                println("hidepassword... password = $password - result: $result")
-                return result!!
+                var result = ""
+                for(i in 0..(password?.length?.minus(1))!!){
+                    result += "*"
+                }
+                return result
             } catch (e: Exception) {
                 println(e.toString())
             }
