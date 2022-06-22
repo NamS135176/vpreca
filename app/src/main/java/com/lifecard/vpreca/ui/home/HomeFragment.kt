@@ -3,6 +3,7 @@ package com.lifecard.vpreca.ui.home
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -181,9 +182,17 @@ class HomeFragment : Fragment(), CoroutineScope {
         val btnIssueCard = binding.buttonAddNewCard
         val btnBalance = binding.buttonCardNoBalance
 
+        var params = buttonSlideLeft.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(resources.getDimensionPixelOffset(R.dimen.my_page_card_arrow_direction_ml), calculateMarginTopArrowIcon(), 0,0)
+        buttonSlideLeft.layoutParams = params
+
+        var params1 = buttonSlideRight.layoutParams as ViewGroup.MarginLayoutParams
+        params1.setMargins(0, calculateMarginTopArrowIcon(), resources.getDimensionPixelOffset(R.dimen.my_page_card_arrow_direction_ml),0)
+        buttonSlideRight.layoutParams = params1
+
         btnBalance.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
 
-        btnIssueCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
+        btnIssueCard.setOnClickListener(View.OnClickListener { calculateMarginTopArrowIcon()})
 
         buttonSeeAllCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_list_vpreca) })
 
@@ -382,6 +391,20 @@ class HomeFragment : Fragment(), CoroutineScope {
     override fun onDetach() {
         super.onDetach()
         EventBus.getDefault().unregister(this)
+    }
+
+    private fun calculateMarginTopArrowIcon(): Int {
+        val displayMetrics = DisplayMetrics()
+        activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+
+        val width = displayMetrics.widthPixels
+        val marginHorizontal = resources.getDimensionPixelOffset(R.dimen.home_card_item_page_margin_offset)
+        val arrowHeight = resources.getDimensionPixelOffset(R.dimen.my_page_card_arrow_direction_height)
+
+        val creditCardWidth = width - 2 * marginHorizontal
+        val creditCardHeight = creditCardWidth * 270 / 425
+
+        return (creditCardHeight - arrowHeight) / 2
     }
 
     private inner class CardSlidePagerAdapter(
