@@ -113,7 +113,7 @@ interface ApiService {
     ): SMSAuthResponse
 
     @FormUrlEncoded
-    @POST("otp")
+    @POST("OTPGetReq")
     suspend fun requestWebDirectOtp(
         @Header("Authorization") authorization: String
     ): OtpResponse

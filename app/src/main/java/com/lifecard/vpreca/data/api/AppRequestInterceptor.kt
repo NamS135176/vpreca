@@ -126,8 +126,7 @@ class AppRequestInterceptor(
     private fun handleAccessTokenExpired(chain: Interceptor.Chain): Response? {
         return runBlocking {
             lock.withLock {
-                if (userManager.accessToken.isNullOrEmpty()
-                    || userManager.refreshToken.isNullOrEmpty()
+                if (!userManager.accessToken.isNullOrEmpty()  && !userManager.refreshToken.isNullOrEmpty()
                 ) {
                     val request = chain.request().newBuilder()
                         .addHeader("accesstoken", userManager.accessToken!!)
