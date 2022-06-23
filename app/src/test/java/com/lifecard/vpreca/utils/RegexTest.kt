@@ -12,14 +12,13 @@ class RegexTest {
 
     @Test
     fun isPhoneNumberValid_isCorrect() {
-        Assert.assertEquals(false, RegexUtils.isPhoneNumberValid("070000000"))
+        Assert.assertEquals(false, RegexUtils.isPhoneNumberValid("0900000000"))
+        Assert.assertEquals(false, RegexUtils.isPhoneNumberValid("0800000000"))
+        Assert.assertEquals(false, RegexUtils.isPhoneNumberValid("0700000000"))
+
         Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("09000000000"))
         Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("08000000000"))
         Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("07000000000"))
-
-        Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("0900000000"))
-        Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("0800000000"))
-        Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("0700000000"))
     }
 
     @Test

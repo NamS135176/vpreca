@@ -38,7 +38,7 @@ class RegexUtils {
          * 10 or 11 number
          * check the screen SC08_2
          */
-        private const val RegexPhoneNumber = "^\\d{10}\$|^\\d{11}\$"
+        private const val RegexPhoneNumber = "^\\d{11}\$"
 
         private const val RegexEmail =
             "^[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+\$"

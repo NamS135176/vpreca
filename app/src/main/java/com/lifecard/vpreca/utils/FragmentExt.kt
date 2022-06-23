@@ -1,6 +1,7 @@
 package com.lifecard.vpreca.utils
 
 import android.content.Context
+import android.os.Build
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -94,4 +95,12 @@ fun Fragment.mainGraphActionNavigateHome() = try {
     }
 } catch (e: Exception) {
 
+}
+
+fun Fragment.closeApp() {
+    if (Build.VERSION.SDK_INT < 21) {
+        requireActivity().finishAffinity()
+    } else if (Build.VERSION.SDK_INT >= 21) {
+        requireActivity().finishAndRemoveTask();
+    }
 }
