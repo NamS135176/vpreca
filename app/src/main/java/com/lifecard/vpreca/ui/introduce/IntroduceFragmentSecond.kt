@@ -104,6 +104,7 @@ class IntroduceFragmentSecond : Fragment() {
                 changeInfoState.success?.let {
                     val action =
                         IntroduceFragmentSecondDirections.actionSecondToThird(changeInfoState.success)
+                    println(changeInfoState.success)
                     findNavController().navigate(action)
                 }
             })

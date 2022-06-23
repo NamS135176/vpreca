@@ -43,6 +43,21 @@ object Converter {
     }
 
     @JvmStatic
+    fun convertCardValidShortString(date: String?): String {
+        return date?.let {
+            val myFormat = "yyyyMMdd" // mention the format you need
+            val sdf = SimpleDateFormat(myFormat, Locale.US)
+            val data = sdf.parse(date)
+
+            val localDate = LocalDate.fromDateFields(data)
+
+            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("MM/YY")
+            localDate.toString(fmt)
+        } ?: ""
+
+    }
+
+    @JvmStatic
     fun convertColor(text: String): Int {
         return Color.parseColor(text)
     }

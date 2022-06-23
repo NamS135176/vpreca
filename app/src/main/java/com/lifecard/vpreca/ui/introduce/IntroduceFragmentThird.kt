@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.IntroduceFragmentThirdFragmentBinding
 
 class IntroduceFragmentThird : Fragment() {
@@ -33,6 +34,7 @@ class IntroduceFragmentThird : Fragment() {
         binding.card = args.cardData
         binding.cardZone.cardInclude.card = args.cardData
         binding.cardZone.card = args.cardData
+        binding.cardZone.cardInclude.cardInfo.setBackgroundResource(args.cardData.getBackgroundCard())
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.action_third_to_second)
