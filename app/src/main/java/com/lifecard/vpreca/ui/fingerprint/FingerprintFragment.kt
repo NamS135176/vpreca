@@ -111,11 +111,7 @@ class FingerprintFragment : Fragment() {
                 }
             } else {
                 viewModel.setFingerprintSetting(requireContext(), false)
-                userManager.authToken?.let { authToken ->
-                    secureStore.moveAuthTokenToNormalStore(
-                        authToken
-                    )
-                }
+                secureStore.moveAuthTokenToNormalStore(userManager.authToken)
             }
         }
 
@@ -141,13 +137,10 @@ class FingerprintFragment : Fragment() {
                 ) {
                     super.onAuthenticationSucceeded(result)
                     result.cryptoObject?.cipher?.let {
+                        viewModel.setFingerprintSetting(requireContext(), true)//this one must be call before save authToken to secureStore
+
                         secureStore.updateEncryptBioAuthTokenStore(it)
-                        userManager.authToken?.let { authToken ->
-                            secureStore.saveAuthToken(
-                                authToken
-                            )
-                        }
-                        viewModel.setFingerprintSetting(requireContext(), true)
+                        secureStore.saveAuthToken(requireContext(), userManager.authToken)
                         //show toast
                         showToast(getString(R.string.biometric_setting_success))
                     }

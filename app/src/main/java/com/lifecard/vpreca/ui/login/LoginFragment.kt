@@ -25,7 +25,6 @@ import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.LoginIdData
-import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,9 +34,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : NoToolbarFragment() {
-    @Inject
-    lateinit var secureStore: SecureStore
-
     @Inject
     lateinit var userManager: UserManager
 

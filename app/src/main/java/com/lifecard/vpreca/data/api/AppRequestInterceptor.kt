@@ -92,7 +92,7 @@ class AppRequestInterceptor(
         return response.body()?.let { responseBody ->
             val accessToken = response.header("accesstoken")
             val refreshToken = response.header("refreshtoken")
-            userManager.saveToken(accessToken, refreshToken)
+            userManager.saveToken(appContext, accessToken, refreshToken)
 
             val source: BufferedSource = responseBody.source()
             source.request(Long.MAX_VALUE) // Buffer the entire body.
