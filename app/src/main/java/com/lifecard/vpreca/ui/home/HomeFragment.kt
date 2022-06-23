@@ -245,6 +245,8 @@ class HomeFragment : Fragment(), CoroutineScope {
                     0 -> {
                         textNoCard.visibility = View.VISIBLE
                         cardContainer.root.visibility = View.GONE
+                        textBalance.text = "¥0"
+                        buttonSeeAllCard.visibility = View.INVISIBLE
                     }
                     else -> {
                         textNoCard.visibility = View.GONE
@@ -260,6 +262,11 @@ class HomeFragment : Fragment(), CoroutineScope {
                             }
                         }
                         textBalance.text = Converter.convertCurrency(sumBalance)
+                        if(sumBalance > 0){
+                            buttonSeeAllCard.visibility = View.VISIBLE
+                        }else {
+                            buttonSeeAllCard.visibility = View.INVISIBLE
+                        }
                     }
                 }
             }
