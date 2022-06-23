@@ -1,13 +1,12 @@
 package com.lifecard.vpreca.data
 
+import android.content.Context
 import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.data.source.SecureStore
 
 class UserManager(private val secureStore: SecureStore) {
     // in-memory cache of the loggedInUser object
     var memberInfo: MemberInfo? = null
-        private set
-    var memberSubInfo: MemberSubInfo? = null
         private set
     var accessToken: String? = null
         private set
@@ -37,19 +36,12 @@ class UserManager(private val secureStore: SecureStore) {
     val canCallApi: Boolean
         get() = accessToken != null
 
-    val bearAccessToken: String?
-        get() = when (canCallApi) {
-            true -> "Bear $accessToken"
-            else -> null
-        }
-
     init {
         authToken = secureStore.getAuthToken() ?: AuthToken()
     }
 
-    fun setLoggedMember(memberResponseContent: MemberResponseContent) {
+    fun setLoggedMember(appContext: Context, memberResponseContent: MemberResponseContent) {
         memberInfo = memberResponseContent.memberInfo
-        memberSubInfo = memberResponseContent.memberSubInfo
         if (memberInfo != null
             && (authToken.loginId != memberInfo!!.loginId
                     || authToken.memberNumber != memberInfo!!.memberNumber)
@@ -57,30 +49,28 @@ class UserManager(private val secureStore: SecureStore) {
             //update auth token with new value
             authToken.loginId = memberInfo!!.loginId
             authToken.memberNumber = memberInfo!!.memberNumber
-            secureStore.saveAuthToken(authToken)
+            secureStore.saveAuthToken(appContext, authToken)
         }
     }
 
-    fun setLoggedIn(loginResponse: LoginResponse) {
-        setLoggedMember(loginResponse.response)
+    fun setLoggedIn(appContext: Context, loginResponse: LoginResponse) {
+        setLoggedMember(appContext, loginResponse.response)
         authToken.loginId = memberInfo?.loginId
         authToken.memberNumber = memberInfo?.memberNumber
-        secureStore.saveAuthToken(authToken)
+        secureStore.saveAuthToken(appContext, authToken)
     }
 
-    fun saveToken(accessToken: String?, refreshToken: String?) {
+    fun saveToken(context: Context, accessToken: String?, refreshToken: String?) {
         if (accessToken.isNullOrEmpty() || refreshToken.isNullOrEmpty()) {
             return
         }
         authToken.accessToken = accessToken
         authToken.refreshToken = refreshToken
-        secureStore.saveAuthToken(authToken)
+        secureStore.saveAuthToken(context, authToken)
     }
 
     fun clear() {
-        this.memberInfo = null
-        this.memberSubInfo = null
-        this.authToken.clear()
+        memberInfo = null
+        authToken.clear()
     }
-
 }

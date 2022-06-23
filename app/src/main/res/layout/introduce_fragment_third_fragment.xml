@@ -205,7 +205,7 @@
                 app:cornerRadius="24dp"
                 android:textSize="15sp"
                 android:paddingVertical="11dp"
-                android:backgroundTint='@color/button_introduce_background'
+                app:backgroundTint='@color/button_introduce_background'
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

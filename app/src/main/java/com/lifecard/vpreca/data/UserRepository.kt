@@ -1,5 +1,6 @@
 package com.lifecard.vpreca.data
 
+import android.content.Context
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.utils.RequestHelper
@@ -7,12 +8,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class UserRepository(private val apiService: ApiService, private val userManager: UserManager) {
+class UserRepository(private val appContext: Context, private val apiService: ApiService, private val userManager: UserManager) {
     suspend fun login(loginRequest: Request): Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
             try {
                 val loginResponse = apiService.login(loginRequest)
-                userManager.setLoggedIn(loginResponse)
+                userManager.setLoggedIn(appContext, loginResponse)
                 Result.Success(loginResponse)
             } catch (e: Exception) {
                 println("LoginDataSource... login has error $e")
@@ -34,7 +35,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     val userResponse = apiService.getUser(
                         RequestHelper.createMemberRequest(loginId, memberNumber)
                     )
-                    userManager.setLoggedMember(userResponse.response)
+                    userManager.setLoggedMember(appContext, userResponse.response)
                     Result.Success(userResponse.response.memberInfo!!)
                 }
             } catch (e: Exception) {
@@ -53,7 +54,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                 val userResponse = apiService.changeInfoMember(
                     RequestHelper.createChangeInfoMember(memberInfo)
                 )
-                userManager.setLoggedMember(userResponse.response)
+                userManager.setLoggedMember(appContext, userResponse.response)
                 Result.Success(userResponse.response.memberInfo!!)
             } catch (e: Exception) {
                 println("UserRepository... change info has error $e")

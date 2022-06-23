@@ -359,7 +359,7 @@ class HomeFragment : Fragment(), CoroutineScope {
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 userManager.clear()
-                requireActivity().finish()
+                closeApp()
             }
         })
     }

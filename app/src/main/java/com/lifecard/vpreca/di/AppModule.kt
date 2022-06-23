@@ -37,8 +37,12 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(apiService: ApiService, userManager: UserManager): UserRepository {
-        return UserRepository(apiService, userManager)
+    fun provideUserRepository(
+        @ApplicationContext appContext: Context,
+        apiService: ApiService,
+        userManager: UserManager
+    ): UserRepository {
+        return UserRepository(appContext, apiService, userManager)
     }
 
     @Provides

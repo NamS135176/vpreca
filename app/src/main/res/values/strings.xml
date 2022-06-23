@@ -341,7 +341,7 @@
     <string name="drawer_header_menu" translatable="false">メニュー</string>
     <string name="close">@string/button_close</string>
     <string name="cancel">@string/button_cancel</string>
-    <string name="title_webview">カードを買う</string>
+    <string name="title_webview">""</string>
     <string name="card_usage_balance">ご利用可能残高</string>
     <string name="card_usage_number">カード番号</string>
     <string name="text_card_balance">残高</string>
@@ -539,7 +539,7 @@
     <string name="rgx_error_login_id">半角英数6~10文字で入力してください。</string>
     <string name="rgx_error_email_confirm_not_match">@string/rgx_error_not_match</string>
     <string name="rgx_error_not_match">一致していません。</string>
-    <string name="rgx_error_secret_answer">全宅20文字以内で入力してください。</string>
+    <string name="rgx_error_secret_answer">全角20文字以内で入力してください。</string>
     <string name="rgx_error_email_duplicate">既に登録されています。他のメールアドレスを入力してください。</string>
     <!--   End Regex error  -->
     <string name="error_code">番号が正しくありません。</string>

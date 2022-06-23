@@ -6,6 +6,7 @@ import com.lifecard.vpreca.data.model.AuthToken
 import com.lifecard.vpreca.data.model.toAuthToken
 import com.lifecard.vpreca.data.model.toJSON
 import com.lifecard.vpreca.utils.Constant
+import com.lifecard.vpreca.utils.PreferenceHelper
 import com.lifecard.vpreca.utils.decryptAuthToken
 import com.lifecard.vpreca.utils.encryptAuthToken
 import javax.crypto.Cipher
@@ -54,7 +55,7 @@ internal class BioAuthTokenStore(
     override fun clear() {
         with(sharedPreferences.edit()) {
             clear()
-            commit()
+            apply()
         }
     }
 }
@@ -88,12 +89,12 @@ internal class NormalAuthTokenStore(private val appContext: Context) : AuthToken
     override fun clear() {
         with(encryptedSharedPreferences.edit()) {
             clear()
-            commit()
+            apply()
         }
     }
 }
 
-class SecureStore(private val appContext: Context) : AuthTokenStore {
+class SecureStore(private val appContext: Context) {
 
     private var bioAuthTokenStore: BioAuthTokenStore? = null
     private var normalAuthToken: NormalAuthTokenStore = NormalAuthTokenStore(appContext)
@@ -112,15 +113,19 @@ class SecureStore(private val appContext: Context) : AuthTokenStore {
             }
     }
 
-    override fun saveAuthToken(authToken: AuthToken) {
-        bioAuthTokenStore?.let {
-            it.saveAuthToken(authToken)
-            normalAuthToken.clear()//clear normal for safe
+    fun saveAuthToken(context: Context, authToken: AuthToken) {
+        val isEnableBiometricSetting = PreferenceHelper.isEnableBiometricSetting(context)
+        if (isEnableBiometricSetting) {
+            bioAuthTokenStore?.let {
+                it.saveAuthToken(authToken)
+                normalAuthToken.clear()//clear normal for safe
+            }
+        } else {
+            normalAuthToken.saveAuthToken(authToken)
         }
-            ?: normalAuthToken.saveAuthToken(authToken)
     }
 
-    override fun getAuthToken(): AuthToken? {
+    fun getAuthToken(): AuthToken? {
         return bioAuthTokenStore?.getAuthToken() ?: normalAuthToken.getAuthToken()
     }
 
@@ -131,7 +136,7 @@ class SecureStore(private val appContext: Context) : AuthTokenStore {
     }
 
 
-    override fun clear() {
+    fun clear() {
         bioAuthTokenStore?.clear()
         normalAuthToken.clear()
     }
