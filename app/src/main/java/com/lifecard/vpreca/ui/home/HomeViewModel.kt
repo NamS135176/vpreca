@@ -103,7 +103,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     fun creditCardSelectDataChanged(creditCard: CreditCard) {
         viewModelScope.launch {
             _loading.value = true
