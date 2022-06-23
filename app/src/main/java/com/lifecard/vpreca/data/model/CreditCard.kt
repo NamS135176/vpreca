@@ -75,7 +75,7 @@ data class CreditCard(
     @SerializedName("publishAddFree")
     val publishAddFree: String,
     @SerializedName("publishAmount")
-    val publishAmount: String?,
+    val publishAmount: String,
     @SerializedName("publishFee")
     val publishFee: String,
     @SerializedName("publishType")

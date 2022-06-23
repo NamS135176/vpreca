@@ -12,6 +12,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
+import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.FragmentGiftCardConfirmBinding
 import com.lifecard.vpreca.utils.hideToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,6 +62,7 @@ class GiftCardConfirmFragment : Fragment() {
         binding.card = args.cardData
         binding.cardZone.cardInclude.card = args.cardData
         binding.cardZone.card = args.cardData
+        binding.cardZone.cardInclude.cardInfo.setBackgroundResource(args.cardData.getBackgroundCard())
         btnBack.setOnClickListener {
             if (args.giftCardConfirmData?.preRoute == "inputcard") {
                 findNavController().navigate(R.id.action_third_to_inputcard)

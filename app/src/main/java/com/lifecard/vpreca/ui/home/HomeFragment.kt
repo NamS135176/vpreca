@@ -402,7 +402,15 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     private fun calculateMarginTopArrowIcon(): Int {
         val displayMetrics = DisplayMetrics()
-        activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            val display = activity?.display
+            display?.getRealMetrics(displayMetrics)
+        } else {
+            @Suppress("DEPRECATION")
+            val display = activity?.windowManager?.defaultDisplay
+            @Suppress("DEPRECATION")
+            display?.getMetrics(displayMetrics)
+        }
 
         val width = displayMetrics.widthPixels
         val marginHorizontal = resources.getDimensionPixelOffset(R.dimen.home_card_item_page_margin_offset)
