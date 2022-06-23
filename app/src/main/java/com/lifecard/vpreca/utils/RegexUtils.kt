@@ -48,7 +48,7 @@ class RegexUtils {
          * check the screen SC09_1
          */
         private const val RegexPassword =
-            "^[a-zA-Z0-9&@`!#\\\$%()*:+;\\[{,¥|\\-=\\]}.^~/?_]{8,12}\$"
+            "^[a-zA-Z0-9&@`'\"!#\\\$%()*:+;\\[{,¥|\\-=\\]}.^~/?_]{8,12}\$"
 
         /**
          * any character with max 20
@@ -123,7 +123,10 @@ class RegexUtils {
         }
 
         fun isPasswordValid(password: String?): Boolean {
-            return password?.length in 8..12
+            return password?.let {
+                Pattern.compile(RegexPassword).matcher(password)
+                    .matches()
+            } ?: false
         }
 
         fun isSecretAnswerValid(answer: String?): Boolean {
