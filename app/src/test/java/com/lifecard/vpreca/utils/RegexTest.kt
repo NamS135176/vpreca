@@ -31,6 +31,10 @@ class RegexTest {
         Assert.assertEquals(false, RegexUtils.isPasswordValid("12344\uD83D\uDE00333"))
 
         Assert.assertEquals(true, RegexUtils.isPasswordValid("abc123$&"))
+        Assert.assertEquals(true, RegexUtils.isPasswordValid("a&@`!#\$%()*:"))
+        Assert.assertEquals(true, RegexUtils.isPasswordValid("a:+;[{,¥|-=]"))
+        Assert.assertEquals(true, RegexUtils.isPasswordValid("a}.^~/?_"))
+        Assert.assertEquals(true, RegexUtils.isPasswordValid("a&@`'\"bc"))
     }
 
     @Test
