@@ -59,7 +59,7 @@ fun CreditCard?.isEnable(): Boolean {
 
 fun CreditCard?.isAvailable(): Boolean {
     return try {
-        this?.publishAmount?.toInt()!! >= 1
+        this?.publishAmount?.toInt()!! >= 1 && "0" == this?.vcnSecurityLockFlg
     } catch (err: Exception) {
         false
     }
@@ -67,7 +67,7 @@ fun CreditCard?.isAvailable(): Boolean {
 
 fun CardInfo?.isInfoAvailable(): Boolean {
     return try {
-        this?.publishAmount?.toInt()!! >= 1
+        this?.publishAmount?.toInt()!! >= 1 && "0" == this?.vcnSecurityLockFlg
     } catch (err: Exception) {
         false
     }
