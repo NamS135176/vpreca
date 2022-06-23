@@ -25,7 +25,7 @@
     <color name="bg_color_gray">#f7f7f7</color>
     <color name="danger">#e52e2e</color>
     <color name="card_unlock_background">#d0d0d0</color>
-    <color name="text_disable">#edf5e9</color>
+    <color name="text_disable">#dbdbdb</color>
     <color name="spinner_bg">#f1f1f1</color>
     <color name="spinner_selection_bg">#D8D8D8</color>
 </resources>
