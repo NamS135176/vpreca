@@ -93,8 +93,8 @@ class UserRepository(private val appContext: Context, private val apiService: Ap
 
     suspend fun resetPassword(
         email: String,
-        birthday: String,
-        phone: String,
+        birthday: String?,
+        phone: String?,
         secretQuestion: String,
         secretAnswer: String
     ): Result<String> {

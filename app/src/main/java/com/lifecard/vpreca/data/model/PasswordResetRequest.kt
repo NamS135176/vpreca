@@ -11,9 +11,9 @@ data class PasswordResetMemberInfoContent(
     @SerializedName("mailAddress1")
     val mailAddress1: String,
     @SerializedName("birthday")
-    val birthday: String,
+    val birthday: String?,
     @SerializedName("telephoneNumber1")
-    val telephoneNumber1: String,
+    val telephoneNumber1: String?,
     @SerializedName("secretQuestion")
     val secretQuestion: String,
     @SerializedName("secretQuestionAnswer")

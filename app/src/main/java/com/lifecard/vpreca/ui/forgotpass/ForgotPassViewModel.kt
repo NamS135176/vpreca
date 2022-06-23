@@ -46,7 +46,7 @@ class ForgotPassViewModel @Inject constructor(
     }
 
     private fun checkDateValid(text: String?): Boolean {
-        return if (!isDateValid(text)) {
+        return if (!isDateValid(text) && !text.isNullOrEmpty()) {
             dateError.value = R.string.forgot_pass_error_dob
             false
         } else {
@@ -56,7 +56,7 @@ class ForgotPassViewModel @Inject constructor(
     }
 
     private fun checkPhoneValid(text: String?): Boolean {
-        return if (!RegexUtils.isPhoneNumberValid(text)) {
+        return if (!RegexUtils.isPhoneNumberValid(text) && !text.isNullOrEmpty()) {
             phoneError.value = R.string.rgx_error_phone_number
             false
         } else {
@@ -114,9 +114,23 @@ class ForgotPassViewModel @Inject constructor(
         val isValidPhone = checkPhoneValid(phone)
         val isValidQuestion = checkQuestionValid(question)
         val isValidAnswer = checkAnswerValid(answer)
-        if (isValidEmail && isValidDate && isValidPhone && isValidQuestion && isValidAnswer) {
-            forgotPassState.value = ForgotPassState(success = true)
+        println(isValidDate)
+        println(isValidPhone)
+        if (phone.isNullOrEmpty()) {
+            if (isValidEmail && isValidQuestion && isValidAnswer && isValidDate ) {
+                forgotPassState.value = ForgotPassState(success = true)
+            }
+        } else if(date.isNullOrEmpty()) {
+            if (isValidEmail && isValidQuestion && isValidAnswer &&  isValidPhone) {
+                forgotPassState.value = ForgotPassState(success = true)
+            }
         }
+        else{
+            if (isValidEmail && isValidQuestion && isValidAnswer && isValidDate && isValidPhone) {
+                forgotPassState.value = ForgotPassState(success = true)
+            }
+        }
+
     }
 
     fun checkValidForm(
@@ -126,16 +140,23 @@ class ForgotPassViewModel @Inject constructor(
         question: String?,
         answer: String?
     ): Boolean {
-        val isValid = !arrayOf(email, date, phone, question, answer).any { it.isNullOrEmpty() }
+        val isValid = !arrayOf(email, question, answer).any { it.isNullOrEmpty() }
 
-        validForm.value = isValid
+        validForm.value = isValid && (!date.isNullOrEmpty() || !phone.isNullOrEmpty())
         return isValid
     }
 
-    fun resetPassData(email:String, birthday:String, phone:String, secretQuestion:String, secretAnswer:String) {
+    fun resetPassData(
+        email: String,
+        birthday: String?,
+        phone: String?,
+        secretQuestion: String,
+        secretAnswer: String
+    ) {
         viewModelScope.launch {
             _loading.value = true
-            val res = userRepository.resetPassword(email, birthday, phone, secretQuestion, secretAnswer)
+            val res =
+                userRepository.resetPassword(email, birthday, phone, secretQuestion, secretAnswer)
             if (res is Result.Success) {
                 _resetPassState.value = ResetPassReqState(success = res.data)
             } else if (res is Result.Error) {
