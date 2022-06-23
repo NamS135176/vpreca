@@ -47,7 +47,8 @@ class RegexUtils {
          * only roman included special character  and between 8-12 character
          * check the screen SC09_1
          */
-        private const val RegexPassword = "^[a-zA-Z0-9&@`!#\\\$%()*:+;\\[{,¥|\\-=\\]}.^~/?_]{8,12}\$"
+        private const val RegexPassword =
+            "^[a-zA-Z0-9&@`!#\\\$%()*:+;\\[{,¥|\\-=\\]}.^~/?_]{8,12}\$"
 
         /**
          * any character with max 20
@@ -111,10 +112,7 @@ class RegexUtils {
         }
 
         fun isPhoneNumberValid(phoneNumber: String?): Boolean {
-            return phoneNumber?.let {
-                Pattern.compile(RegexPhoneNumber).matcher(phoneNumber)
-                    .matches()
-            } ?: false
+            return phoneNumber?.let { isMobilePhone(it) } ?: false
         }
 
 
@@ -146,8 +144,8 @@ class RegexUtils {
             return Pattern.compile(RegexOcr).matcher(code).matches()
         }
 
-        fun isMobilePhone(phone: String): Boolean {
-            return Regex(RegexMobilePhone).matches(phone)
+        private fun isMobilePhone(phone: String): Boolean {
+            return Regex(RegexMobilePhone).matches(phone) && Regex(RegexPhoneNumber).matches(phone)
         }
 
         fun isKatakanaFullWidth(text: String?): Boolean {
@@ -216,7 +214,7 @@ class RegexUtils {
         fun hidePassword(password: String?): String {
             try {
                 var result = ""
-                for(i in 0..(password?.length?.minus(1))!!){
+                for (i in 0..(password?.length?.minus(1))!!) {
                     result += "*"
                 }
                 return result

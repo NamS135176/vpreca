@@ -11,13 +11,15 @@ class RegexTest {
     }
 
     @Test
-    fun mobilePhone_isCorrect() {
-        val phone1 = "070000000"
-        val phone2 = "09000000000"
-        val phone3 = "09000000000"
-        Assert.assertEquals(true, RegexUtils.isMobilePhone(phone1))
-        Assert.assertEquals(true, RegexUtils.isMobilePhone(phone2))
-        Assert.assertEquals(true, RegexUtils.isMobilePhone(phone3))
+    fun isPhoneNumberValid_isCorrect() {
+        Assert.assertEquals(false, RegexUtils.isPhoneNumberValid("070000000"))
+        Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("09000000000"))
+        Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("08000000000"))
+        Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("07000000000"))
+
+        Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("0900000000"))
+        Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("0800000000"))
+        Assert.assertEquals(true, RegexUtils.isPhoneNumberValid("0700000000"))
     }
 
     @Test
