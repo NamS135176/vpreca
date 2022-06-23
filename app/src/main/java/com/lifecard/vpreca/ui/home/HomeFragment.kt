@@ -120,7 +120,7 @@ class HomeFragment : Fragment(), CoroutineScope {
                     }
                 })
                 buttonReload.setOnClickListener(View.OnClickListener {
-                    if (!adapter.getItem(position).isCardLock()) {
+                    if (!adapter.getItem(position).isCardLock() && adapter.getItem(position).isAvailable() ) {
                         MaterialAlertDialogBuilder(requireContext()).apply {
                             setPositiveButton("はい") { _, _ ->
 
@@ -192,7 +192,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
         btnBalance.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
 
-        btnIssueCard.setOnClickListener(View.OnClickListener { calculateMarginTopArrowIcon()})
+        btnIssueCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main)})
 
         buttonSeeAllCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_list_vpreca) })
 
@@ -268,7 +268,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
                         val sumBalance: Int = creditCardResult.success.sumOf {
                             try {
-                                it.publishAmount.toInt()
+                                it.publishAmount?.toInt()!!
                             } catch (e: Exception) {
                                 0
                             }

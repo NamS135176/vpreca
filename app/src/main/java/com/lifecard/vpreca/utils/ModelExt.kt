@@ -57,6 +57,21 @@ fun CreditCard?.isEnable(): Boolean {
     return c1 && c2
 }
 
+fun CreditCard?.isAvailable(): Boolean {
+    return try {
+        this?.publishAmount?.toInt()!! >= 1
+    } catch (err: Exception) {
+        false
+    }
+}
+
+fun CardInfo?.isInfoAvailable(): Boolean {
+    return try {
+        this?.publishAmount?.toInt()!! >= 1
+    } catch (err: Exception) {
+        false
+    }
+}
 
 fun CardInfo.copyCardInfoLockInverse(): CardInfo {
     val newLockStatus = when (this.isCardInfoLock()) {
