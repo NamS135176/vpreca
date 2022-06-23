@@ -60,7 +60,7 @@ class CardBottomSheetCustom(
         val btnRefresh = bindingDialog.buttonReload
 
         btnRefresh.setOnClickListener {
-            if (!newCard.isCardInfoLock()) {
+            if (!newCard.isCardInfoLock() && newCard.isInfoAvailable()) {
                 MaterialAlertDialogBuilder(context).apply {
                     setPositiveButton("はい") { _, _ ->
                         launch {

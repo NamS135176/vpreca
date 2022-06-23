@@ -83,7 +83,7 @@ class ListVprecaFragment : Fragment() {
 
                             val sumBalance: Int = creditCardResult.success.sumOf {
                                 try {
-                                    it.publishAmount.toInt()
+                                    it.publishAmount?.toInt()!!
                                 } catch (e: Exception) {
                                     0
                                 }

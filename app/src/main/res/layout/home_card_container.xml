@@ -151,7 +151,8 @@
                 android:layout_width="@dimen/home_card_button_size"
                 android:layout_height="@dimen/home_card_button_size"
                 android:elevation="0dp"
-                app:backgroundTint="#53c312"
+                android:background="@{ModelExtKt.isAvailable(currentCard) ? @drawable/ic_reload_enable : @drawable/ic_reload_disable}"
+                app:backgroundTint="@null"
                 app:cornerRadius="24dp"
                 app:icon="@drawable/ic_home_reload"
                 app:iconSize="20dp"
@@ -166,6 +167,7 @@
                 android:layout_marginTop="2dp"
                 android:text="@string/home_button_reload"
                 android:textSize="11sp"
+                android:textColor="@{ModelExtKt.isAvailable(currentCard) ? @color/black : @color/text_disable}"
                 app:layout_constraintEnd_toEndOf="@id/button_reload"
                 app:layout_constraintStart_toStartOf="@id/button_reload"
                 app:layout_constraintTop_toBottomOf="@id/button_reload" />

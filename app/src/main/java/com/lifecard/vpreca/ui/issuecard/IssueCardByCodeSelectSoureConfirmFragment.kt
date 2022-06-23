@@ -59,7 +59,7 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
         args.selectSourceData?.listCard?.forEachIndexed { index, creditCard ->
             run {
                 if (args.selectSourceData?.listSelectCard?.get(index)?.isSelected!! == "1") {
-                    sum += creditCard.publishAmount.toInt()
+                    sum += creditCard.publishAmount?.toInt()!!
                 }
             }
         }

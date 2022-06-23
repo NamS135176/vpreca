@@ -107,7 +107,7 @@ class IssueCardByCodeSelectSource : Fragment() {
                     arrSelected = arrPolicy.mapIndexed { _, creditCard ->
                         SelectedData(
                             "0",
-                            creditCard.publishAmount,
+                            creditCard.publishAmount!!,
                             "0"
                         )
                     }
