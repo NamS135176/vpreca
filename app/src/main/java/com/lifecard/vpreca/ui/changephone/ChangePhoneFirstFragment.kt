@@ -46,7 +46,7 @@ class ChangePhoneFirstFragment : Fragment() {
         var dateData = ""
 
         btnOpenDialog.setOnClickListener {
-            val view = View.inflate(requireContext(), R.layout.bod_dialog, null)
+            val view = View.inflate(requireContext(), R.layout.bod_dialog_phone, null)
             val builder = AlertDialog.Builder(requireContext())
             builder.setView(view)
             val dialog = builder.create()

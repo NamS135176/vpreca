@@ -359,7 +359,9 @@
 
     <!--    Birth of Date Dialog-->
     <string name="bod_dialog_title">会員情報の変更</string>
+    <string name="bod_dialog_title_phone">電話番号の変更</string>
     <string name="bod_dialog_des">ご登録情報を変更する場合は、以下の項目を入力のうえ、「変更」ボタンをタップしてください。</string>
+    <string name="bod_dialog_des_phone">電話番号を変更する場合は、以下の項目を入力のうえ、「変更」ボタンをタップしてください。</string>
     <string name="bod_dialog_input_title">生年月日</string>
     <string name="bod_dialog_cancel_btn">@string/button_cancel</string>
     <string name="bod_dialog_submit_btn">変更</string>
