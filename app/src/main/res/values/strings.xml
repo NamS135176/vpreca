@@ -232,6 +232,7 @@
     <string name="sms_code_expired_title">有効期限切れ</string>
     <string name="sms_code_expired_des_top">SMS認証の有効期限が切れています。</string>
     <string name="sms_code_expired_des_bot">再度お手続きをお願いいたします。</string>
+    <string name="change_phone_expire_des">セキュリティ保護のために一時的にメールコード認証を停止いたします。</string>
     <!--    SMS Verify-->
 
     <!--    Change Pass-->

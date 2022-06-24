@@ -38,6 +38,11 @@
         android:label="ChangePhoneOver"
         tools:layout="@layout/fragment_change_phone_over" />
     <fragment
+        android:id="@+id/nav_expire"
+        android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneExpireFragment"
+        android:label="ChangePhoneExpireFragment"
+        tools:layout="@layout/fragment_change_phone_expire" />
+    <fragment
         android:id="@+id/nav_list_vpreca"
         android:name="com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment"
         android:label="ListVprecaFragment"
