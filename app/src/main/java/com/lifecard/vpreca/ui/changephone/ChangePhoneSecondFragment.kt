@@ -69,7 +69,7 @@ class ChangePhoneSecondFragment : Fragment() {
         btnSubmitEmail.setOnClickListener {
             //TODO: remove hash code
             if(inputEmail.text.toString() == "0000"){
-                findNavController().navigate(R.id.nav_code_over)
+                findNavController().navigate(R.id.nav_expire)
             }
             else{
                 viewModel.submit()

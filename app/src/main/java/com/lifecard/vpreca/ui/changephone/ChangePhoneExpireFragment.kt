@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.databinding.FragmentChangePhoneExpireBinding
+import com.lifecard.vpreca.databinding.FragmentChangePhoneOverBinding
 
 
 class ChangePhoneExpireFragment : Fragment() {
@@ -14,11 +18,22 @@ class ChangePhoneExpireFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
+
+    private var _binding: FragmentChangePhoneExpireBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_change_phone_expire, container, false)
+        _binding = FragmentChangePhoneExpireBinding.inflate(inflater, container, false)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() { findNavController().popBackStack()  }
+        })
+        val btnComplete = binding.btnOvertimes
+        btnComplete.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        return binding.root
     }
 }
