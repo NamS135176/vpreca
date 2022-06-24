@@ -126,7 +126,7 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:gravity="center_vertical"
-                        android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"
+                        android:text="@{Converter.convertCardValidShortString(card.vcnExpirationDate)}"
                         android:textColor="@color/black"
                         app:autoSizeMaxTextSize="19sp"
                         app:autoSizeMinTextSize="5sp"

@@ -77,7 +77,7 @@ class IssueCardSelectSourceFragment : Fragment() {
                         0 -> {
                         }
                         else -> {
-                            arrPolicy = creditCardResult.success
+                            arrPolicy = creditCardResult.success.filter { creditCard -> creditCard.isEnable() }
 
                             arrSelected = arrPolicy.mapIndexed { _, creditCard ->
                                 SelectedData(

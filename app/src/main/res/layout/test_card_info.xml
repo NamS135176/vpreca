@@ -27,7 +27,7 @@
                 style="@style/MyCardView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/second"
+                android:background="@drawable/first"
                 android:paddingHorizontal="0dp"
                 android:paddingVertical="0dp"
                 app:layout_constraintDimensionRatio="@string/card_design_dimens"
