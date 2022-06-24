@@ -122,7 +122,7 @@ class LoginFragment : NoToolbarFragment() {
                 loginResult.networkTrouble?.let { if (it) showInternetTrouble() }
                 loginResult.smsVerification?.let {
                     if (it) {
-                        val action = LoginFragmentDirections.actionToSms(LoginIdData(usernameEditText.text.toString()))
+                        val action = LoginFragmentDirections.actionToSms(LoginIdData(usernameEditText.text.toString(), passwordEditText.text.toString()))
                         findNavController().navigate(action)
                     }
                 }

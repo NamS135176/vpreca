@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingHorizontal="21dp"
-            android:text="生年月日認証エラー"
+            android:text="生年月日認証エラー。"
             android:visibility="invisible"
             android:textAlignment="textEnd"
             android:textColor="@color/error"

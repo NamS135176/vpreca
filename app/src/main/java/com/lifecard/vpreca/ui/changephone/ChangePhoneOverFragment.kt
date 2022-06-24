@@ -1,32 +1,37 @@
-package com.lifecard.vpreca.ui.smsverify
+package com.lifecard.vpreca.ui.changephone
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.databinding.FragmentOvertimesVerifyBinding
+import com.lifecard.vpreca.databinding.FragmentChangePhoneCompleteBinding
+import com.lifecard.vpreca.databinding.FragmentChangePhoneOverBinding
 
-class OvertimesVerifyFragment : Fragment() {
-    private var _binding: FragmentOvertimesVerifyBinding? = null
+class ChangePhoneOverFragment : Fragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+    private var _binding: FragmentChangePhoneOverBinding? = null
     private val binding get() = _binding!!
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentOvertimesVerifyBinding.inflate(inflater, container, false)
+        _binding = FragmentChangePhoneOverBinding.inflate(inflater, container, false)
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() { findNavController().navigate(R.id.action_over_to_login)  }
+            override fun handleOnBackPressed() { findNavController().popBackStack()  }
         })
         val btnComplete = binding.btnOvertimes
         btnComplete.setOnClickListener {
-            findNavController().navigate(R.id.action_over_to_login)
+            findNavController().popBackStack()
         }
+
         return binding.root
     }
 

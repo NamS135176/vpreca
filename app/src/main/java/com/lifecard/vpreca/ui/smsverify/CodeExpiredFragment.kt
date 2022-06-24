@@ -20,12 +20,12 @@ class CodeExpiredFragment : Fragment() {
     ): View {
         _binding = FragmentCodeExpiredBinding.inflate(inflater, container, false)
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() { findNavController().navigate(R.id.nav_login) }
+            override fun handleOnBackPressed() { findNavController().navigate(R.id.action_expire_to_login) }
         })
         // Inflate the layout for this fragment
         val btnComplete = binding.btnCodeExpired
         btnComplete.setOnClickListener {
-            findNavController().navigate(R.id.nav_login)
+            findNavController().navigate(R.id.action_expire_to_login)
         }
         return binding.root
     }

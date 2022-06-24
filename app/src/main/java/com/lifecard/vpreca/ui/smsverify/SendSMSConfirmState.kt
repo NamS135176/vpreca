@@ -7,5 +7,7 @@ data class SendSMSConfirmState(
     val success: SMSAuthResponseContent? = null,
     val error: ErrorMessageException? = null,
     val networkTrouble: Boolean? = false,
-    val internalError: String? = null
+    val internalError: String? = null,
+    val isExpire:Boolean? = false,
+    val isOver:Boolean? = false
 )

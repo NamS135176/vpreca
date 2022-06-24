@@ -21,7 +21,7 @@
                 layout="@layout/toolbar_title_only"
                 app:elevation="0dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:title="@{@string/issue_card_main_title_first}" />
+                app:title="@{@string/change_phone_appbar_title}" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/sms_title"

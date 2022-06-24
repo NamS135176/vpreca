@@ -8,6 +8,9 @@ import kotlinx.parcelize.Parcelize
 data class LoginIdData(
     @SerializedName("loginId")
     val loginId: String,
+    @SerializedName("password")
+    val password: String,
+
 ): Parcelable {
     override fun hashCode(): Int {
         return super.hashCode()

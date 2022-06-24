@@ -13,7 +13,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.LoginIdData
 import com.lifecard.vpreca.databinding.FragmentSmsVerifyBinding
+import com.lifecard.vpreca.ui.login.LoginFragmentDirections
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -104,12 +106,37 @@ class SMSVerifyFragment : Fragment() {
                 }
             })
 
+        viewModel.loginResult.observe(viewLifecycleOwner,
+            Observer { loginResult ->
+                loginResult ?: return@Observer
+
+                loginResult.networkTrouble?.let { if (it) showInternetTrouble() }
+                loginResult.error?.errorMessage?.let {  showPopupMessage(message = it) }
+                loginResult.errorText?.let { errorText ->
+                    showAlertMessage(errorText)
+                }
+                loginResult.success?.let {
+                    navigateToHome()
+                }
+            })
+
         viewModel.sendSMSConfirmResult.observe(
             viewLifecycleOwner,
             Observer { listDesignResult ->
                 listDesignResult ?: return@Observer
                 listDesignResult.success?.let {
-                    findNavController().popBackStack(R.id.nav_login, inclusive = false)
+                   //TODO:Remove hash code
+                    viewModel.login("anhndt","12345678")
+                }
+                listDesignResult.isExpire?.let { it ->
+                    if(it){
+                        findNavController().navigate(R.id.nav_code_expired)
+                    }
+                }
+                listDesignResult.isOver?.let { it ->
+                    if(it){
+                        findNavController().navigate(R.id.nav_sms_overtimes)
+                    }
                 }
                 listDesignResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("", getString(it)) }

@@ -12,7 +12,9 @@ import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
+import com.lifecard.vpreca.ui.login.LoginResult
 import com.lifecard.vpreca.ui.signup.ConfirmPhoneState
+import com.lifecard.vpreca.utils.RequestHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SMSVerifyViewModel @Inject constructor(
     private val userRepository: UserRepository,
+    private val loginRepository: UserRepository
 ) : ViewModel() {
     val cfPhoneError = MutableLiveData<Int?>()
     val validForm = MutableLiveData<Boolean>()
@@ -34,6 +37,9 @@ class SMSVerifyViewModel @Inject constructor(
 
     private val _sendSMSConfirmResult = MutableLiveData<SendSMSConfirmState>()
     val sendSMSConfirmResult: LiveData<SendSMSConfirmState> = _sendSMSConfirmResult
+
+    private val _loginResult = MutableLiveData<LoginResult>()
+    val loginResult: LiveData<LoginResult> = _loginResult
 
     fun sendSMSRequest(
         loginId: String
@@ -94,12 +100,24 @@ class SMSVerifyViewModel @Inject constructor(
                 when (result.exception) {
                     is NoConnectivityException -> _sendSMSConfirmResult.value =
                         SendSMSConfirmState(networkTrouble = true)
-                    is ApiException -> _sendSMSConfirmResult.value = SendSMSConfirmState(
-                        error = ErrorMessageException(
-                            errorMessage = result.exception.errorMessage,
-                            exception = result.exception
-                        )
-                    )
+                    is ApiException -> {
+                        when(result.exception.resultCode){
+                            "2602105" -> {
+                                _sendSMSConfirmResult.value = SendSMSConfirmState(isExpire = true)
+                            }
+                            "2602107" -> {
+                                _sendSMSConfirmResult.value = SendSMSConfirmState(isOver = true)
+                            }
+                            else -> {
+                                _sendSMSConfirmResult.value = SendSMSConfirmState(
+                                    error = ErrorMessageException(
+                                        errorMessage = result.exception.errorMessage,
+                                        exception = result.exception
+                                    )
+                                )
+                            }
+                        }
+                    }
                     is InternalServerException -> _sendSMSConfirmResult.value =
                         SendSMSConfirmState(internalError = "")
                     else -> _sendSMSConfirmResult.value =
@@ -112,6 +130,49 @@ class SMSVerifyViewModel @Inject constructor(
                 }
             }
             _loading.value = false
+        }
+    }
+
+    fun login(username: String, password: String) {
+        viewModelScope.launch {
+            _loading.value = true
+            val loginResult = loginRepository.login(
+                RequestHelper.createLoginRequest(
+                    loginId = username,
+                    loginPassword = password
+                )
+            )
+            if (loginResult is Result.Success) {
+                _loginResult.value =
+                    LoginResult(success = loginResult.data.response.memberInfo)
+            } else if (loginResult is Result.Error) {
+                handleResultErrorException(loginResult.exception)
+            }
+            _loading.value = false
+        }
+    }
+
+    private fun handleResultErrorException(exception: Exception) {
+        when (exception) {
+            is NoConnectivityException -> _loginResult.value =
+                LoginResult(networkTrouble = true)
+            is InternalServerException -> _loginResult.value =
+                LoginResult(internalError = "")
+            is ApiException -> {
+                _loginResult.value = LoginResult(
+                    error = ErrorMessageException(
+                        errorMessage = exception.errorMessage,
+                        exception = exception,
+                    )
+                )
+            }
+            else -> _loginResult.value =
+                LoginResult(
+                    error = ErrorMessageException(
+                        messageResId = R.string.login_failed,
+                        exception = exception
+                    )
+                )
         }
     }
 

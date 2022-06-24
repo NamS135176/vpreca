@@ -90,7 +90,13 @@ class ChangePhoneConfirmPhoneFragment : Fragment() {
         inputPhoneConfirm.doAfterTextChanged { text -> viewModel.cfPhoneDataChanged(text = text.toString()) }
 
         btnSubmitPhoneConfirm.setOnClickListener {
-            viewModel.submit()
+           //TODO: remove hash code
+            if(inputPhoneConfirm.text.toString() == "0000"){
+               findNavController().navigate(R.id.nav_code_over)
+           }
+            else{
+               viewModel.submit()
+           }
         }
 
         return binding.root
