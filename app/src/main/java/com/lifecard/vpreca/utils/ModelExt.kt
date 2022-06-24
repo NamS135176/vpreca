@@ -54,7 +54,7 @@ fun CreditCard?.isEnable(): Boolean {
     val datenow = sdf.format(Date())
     val cmp = sdf.parse(this?.vcnExpirationDate).compareTo(sdf.parse(datenow))
     val c2 = cmp < 0
-    return c1 && c2
+    return c1 && !c2
 }
 
 fun CreditCard?.isAvailable(): Boolean {

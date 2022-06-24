@@ -79,13 +79,13 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
                         }
                         else -> {
                             val arrSelected: List<SelectedData>
-                            val arrPolicy: List<CreditCard>
-                            arrPolicy = creditCardResult.success
+                            val arrPolicy: List<CreditCard> =
+                                creditCardResult.success.filter { creditCard -> creditCard.isEnable() }
 
                             arrSelected = arrPolicy.mapIndexed { _, creditCard ->
                                 SelectedData(
                                     "0",
-                                    creditCard.publishAmount!!,
+                                    creditCard.publishAmount,
                                     "0"
                                 )
                             }
@@ -117,7 +117,7 @@ class BalanceAmountByCodeSelectSourceFragment : Fragment() {
                                         }
                                         println(arrSelected)
 
-                                        select = arrPolicy[position].publishAmount?.toInt()!!
+                                        select = arrPolicy[position].publishAmount.toInt()
                                         remain = fakeBalanceRamain - select
                                         if (remain > 0) {
                                             tvSelect.text = Converter.convertCurrency(select)

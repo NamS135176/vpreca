@@ -102,7 +102,7 @@ class IssueCardByCodeSelectSource : Fragment() {
                 creditCardResult.success?.let {
                     println("homeViewModel.creditCardResult.observe success: ${creditCardResult.success}")
                     // The pager adapter, which provides the pages to the view pager widget.
-                    arrPolicy = creditCardResult.success
+                    arrPolicy = creditCardResult.success.filter { creditCard -> creditCard.isEnable() }
 
                     arrSelected = arrPolicy.mapIndexed { _, creditCard ->
                         SelectedData(
