@@ -86,8 +86,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:layout_gravity="center_vertical"
+                            android:layout_gravity="start"
                             android:textSize="11sp"
+                            android:paddingTop="7sp"
                             android:text="@string/gift_card_confirm_amount_title"/>
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"

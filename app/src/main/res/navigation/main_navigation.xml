@@ -33,6 +33,11 @@
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
+        android:id="@+id/nav_code_over"
+        android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneOverFragment"
+        android:label="ChangePhoneOver"
+        tools:layout="@layout/fragment_change_phone_over" />
+    <fragment
         android:id="@+id/nav_list_vpreca"
         android:name="com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment"
         android:label="ListVprecaFragment"
