@@ -9,6 +9,7 @@ import android.util.DisplayMetrics
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
@@ -49,6 +50,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: DrawerMenuLayout
+
+    var currentToast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -179,5 +182,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         super.attachBaseContext(newBase)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        currentToast?.cancel()
     }
 }

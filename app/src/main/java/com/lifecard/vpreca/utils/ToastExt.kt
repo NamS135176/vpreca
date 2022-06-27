@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
 
 enum class ToastType {
@@ -42,7 +43,6 @@ fun Toast.showCustomToast(
         val yOffsetBottom = activity.resources.getDimension(R.dimen.toast_mb).toInt()
         val yOffsetTop = activity.resources.getDimension(R.dimen.toast_mt).toInt()
 
-        println("showCustomToast...  - yOffset = $yOffset")
         this.apply {
             when (toastPosition) {
                 ToastPosition.Bottom -> setGravity(
@@ -58,6 +58,13 @@ fun Toast.showCustomToast(
         }
     } catch (e: Exception) {
         println(e)
+    }
+    try {
+        val mainActivity = activity as? MainActivity
+        mainActivity?.currentToast?.cancel()
+        mainActivity?.currentToast = this
+    } catch (e: Exception) {
+        //nothing
     }
 }
 

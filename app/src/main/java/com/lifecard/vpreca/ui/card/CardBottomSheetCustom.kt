@@ -1,6 +1,5 @@
 package com.lifecard.vpreca.ui.card
 
-import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -8,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -23,7 +23,6 @@ import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.card_usage.CardUsageFragmentArgs
-import com.lifecard.vpreca.ui.custom.showCustomToast
 import com.lifecard.vpreca.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +31,7 @@ import org.greenrobot.eventbus.EventBus
 import kotlin.coroutines.CoroutineContext
 
 class CardBottomSheetCustom(
-    private val activity: Activity,
+    private val activity: FragmentActivity,
     private val creditCard: CardInfo,
     private val creditCardRepository: CreditCardRepository
 ) : BottomSheetDialog(activity, R.style.AppBottomSheetDialogTheme), CoroutineScope {
