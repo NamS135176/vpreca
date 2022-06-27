@@ -32,7 +32,7 @@ class RegexUtils {
          * only roman
          * check the screen SC08_2
          */
-        private const val RegexNickname = "^[A-Z]{2,19}\$"
+        private const val RegexNickname = "^[A-Z]{2,18}\$"
 
         /**
          * 10 or 11 number
@@ -74,12 +74,12 @@ class RegexUtils {
         /**
          * Name katakana full width with space
          */
-        private const val RegexKanaNameFullWidth = "^([ァ-ン\\s　]{1,19})\$"
+        private const val RegexKanaNameFullWidth = "^([ァ-ン\\s　]{1,20})\$"
 
         /**
          * Check name full width with space
          */
-        private const val RegexNameFullWidth = "^[Ａ-ｚ０-９ぁ-んァ-ン一-龥・|ー\\s　]{1,19}\$"
+        private const val RegexNameFullWidth = "^[Ａ-ｚ０-９ぁ-んァ-ン一-龥・|ー\\s　]{1,20}\$"
         private const val RegexGiftNumber = "^[a-zA-Z0-9]{15}\$"
 
         /**
