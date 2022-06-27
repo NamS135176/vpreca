@@ -55,7 +55,12 @@ class CardUsageFragment : Fragment() {
             }
         })
         btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            if(findNavController().previousBackStackEntry?.destination?.id == R.id.nav_list_vpreca){
+                findNavController().navigate(R.id.to_list)
+            }
+            else{
+                findNavController().popBackStack()
+            }
         }
         if (userManager.isLoggedIn) {
             viewModel.getCardUsageHistory(args.card!!)
