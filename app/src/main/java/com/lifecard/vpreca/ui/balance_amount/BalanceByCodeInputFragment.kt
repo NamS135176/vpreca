@@ -44,6 +44,8 @@ class BalanceByCodeInputFragment : Fragment() {
             val action =
                 BalanceByCodeInputFragmentDirections.actionToCameraOcr(getString(R.string.camera_ocr_hint_missing_balance))
             findNavController().navigate(action)
+            viewModel.formResultState.value = null
+            viewModel._giftInfoResult.value = null
         }
 
         val fakeBalanceAmount = args.balanceTotalRemain?.balanceAmount?.toInt()!!
@@ -58,7 +60,7 @@ class BalanceByCodeInputFragment : Fragment() {
             }
         })
 
-        viewModel.giftInfoResult.observe(
+        viewModel._giftInfoResult.observe(
             viewLifecycleOwner,
             Observer { giftInfoResult ->
                 giftInfoResult ?: return@Observer
