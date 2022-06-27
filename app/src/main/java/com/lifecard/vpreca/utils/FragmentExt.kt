@@ -101,6 +101,9 @@ fun Fragment.closeApp() {
     if (Build.VERSION.SDK_INT < 21) {
         requireActivity().finishAffinity()
     } else if (Build.VERSION.SDK_INT >= 21) {
-        requireActivity().finishAndRemoveTask();
+        requireActivity().finishAndRemoveTask()
     }
+    try {
+        System.exit(0)
+    } catch (e: Exception) {}
 }
