@@ -16,6 +16,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentChangePhoneFirstBinding
+import com.lifecard.vpreca.utils.KeyboardUtils
 import com.lifecard.vpreca.utils.UserConverter
 import com.lifecard.vpreca.utils.showInternetTrouble
 import com.lifecard.vpreca.utils.showPopupMessage
@@ -76,6 +77,7 @@ class ChangePhoneFirstFragment : Fragment() {
 
             tvDob.setOnClickListener {
                 Locale.setDefault(Locale.JAPAN)
+                KeyboardUtils.hideKeyboard(requireContext(), binding.root)
                 DatePickerDialog(
                     requireContext(),
                     dateSetListener,

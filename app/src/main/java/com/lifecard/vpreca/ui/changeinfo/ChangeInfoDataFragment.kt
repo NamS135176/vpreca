@@ -18,6 +18,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.ChangeInfoMemberData
 import com.lifecard.vpreca.databinding.FragmentChangeInfoDataBinding
+import com.lifecard.vpreca.utils.KeyboardUtils
 import com.lifecard.vpreca.utils.showInternetTrouble
 import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,6 +89,7 @@ class ChangeInfoDataFragment : Fragment() {
 
             tvDob.setOnClickListener {
                 Locale.setDefault(Locale.JAPAN)
+                KeyboardUtils.hideKeyboard(requireContext(), binding.root)
                 DatePickerDialog(
                     requireContext(),
                     dateSetListener,
