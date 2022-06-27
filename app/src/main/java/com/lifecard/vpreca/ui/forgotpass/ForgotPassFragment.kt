@@ -55,6 +55,10 @@ class ForgotPassFragment : Fragment() {
         var question = ""
         containerDiv.setOnClickListener { closeKeyBoard() }
         spinnerQuestion.lifecycleOwner = viewLifecycleOwner
+        spinnerQuestion.setOnClickListener {
+            spinnerQuestion.showOrDismiss()
+            closeKeyBoard()
+        }
 
         binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, _, _, _ ->
             dismissAllSpinner()
