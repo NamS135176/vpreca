@@ -30,9 +30,8 @@ class SplashActivity : AppCompatActivity() {
     private val viewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         viewModel.splashState.observe(this, androidx.lifecycle.Observer { splashResult ->
             splashResult.user?.let { _ ->
