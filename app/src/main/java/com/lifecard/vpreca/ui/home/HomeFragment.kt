@@ -384,6 +384,10 @@ class HomeFragment : Fragment(), CoroutineScope {
             forceReloadCard = false
         }
         homeViewModel.loadCardIfEmptyData()
+
+        showInternetTrouble()
+        showInternetTrouble()
+        showInternetTrouble()
     }
 
     override fun onDestroyView() {

@@ -125,7 +125,12 @@ class LoginFragment : NoToolbarFragment() {
                 loginResult.networkTrouble?.let { if (it) showInternetTrouble() }
                 loginResult.smsVerification?.let {
                     if (it) {
-                        val action = LoginFragmentDirections.actionToSms(LoginIdData(usernameEditText.text.toString(), passwordEditText.text.toString()))
+                        val action = LoginFragmentDirections.actionToSms(
+                            LoginIdData(
+                                usernameEditText.text.toString(),
+                                passwordEditText.text.toString()
+                            )
+                        )
                         findNavController().navigate(action)
                     }
                 }
@@ -196,7 +201,10 @@ class LoginFragment : NoToolbarFragment() {
             requireContext()
         )) {
             true -> buttonBioLogin.visibility = View.VISIBLE
-            else -> buttonBioLogin.visibility = View.GONE
+            else -> {
+                buttonBioLogin.visibility = View.GONE
+                PreferenceHelper.setEnableBiometricSetting(requireContext(), false)
+            }
         }
         buttonBioLogin.setOnClickListener {
             showBiometricDialog()
