@@ -71,11 +71,9 @@
                     android:id="@+id/introduct_input_zone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:orientation="horizontal"
-                    android:paddingStart="29dp"
                     android:paddingLeft="29dp"
-                    android:paddingEnd="18dp"
                     android:paddingRight="18dp"
                     app:layout_constraintTop_toBottomOf="@+id/des">
 
@@ -92,7 +90,6 @@
                             style="@style/TextInputEditTextFilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
-                            android:textSize="16sp"
                             android:hint="@string/introduce_second_input"
                             android:imeOptions="actionNext"
                             android:inputType="text"
@@ -102,18 +99,17 @@
                             android:textColor="@color/peacock_blue" />
                     </com.lifecard.vpreca.ui.custom.MyTextInputLayout>
 
-                 <androidx.appcompat.widget.LinearLayoutCompat
-                     android:layout_width="match_parent"
-                     android:layout_height="54dp"
-                     android:layout_weight="0.8"
-                     >
-                     <ImageView
-                         android:id="@+id/button_ocr_detection"
-                         android:layout_width="match_parent"
-                         android:layout_height="40dp"
-                         android:layout_gravity="center_vertical"
-                         android:src="@drawable/ic_baseline_camera_alt_24" />
-                 </androidx.appcompat.widget.LinearLayoutCompat>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_weight="0.8">
+                        <ImageView
+                            android:id="@+id/button_ocr_detection"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/ic_baseline_camera_alt_24" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
