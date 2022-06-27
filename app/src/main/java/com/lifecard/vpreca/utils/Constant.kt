@@ -4,7 +4,8 @@ class Constant {
     companion object {
         const val SECURE_AUTH_TOKEN = "vpreca_auth_token"
 
-        const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
+//        const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
+const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/LW0102OP01BL.do"
 
         const val FEE_TYPE_BALANCE = "31"
         const val FEE_TYPE_ISSUE = "34"

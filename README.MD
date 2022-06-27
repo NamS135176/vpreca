@@ -1,3 +1,19 @@
+## Important for security check
+Web did implement SSL Pinning for 2 api:
+- vpreca api mock server
+- google vision api 
+here is expiration date of those api:
+- vpreca api mock server: 
+    + file: app/src/main/res/xml/network_security_config.xml
+    + file: app/src/main/java/com/lifecard/vpreca/data/api/ApiServiceFactory.kt
+    + expiration: Jan 17 2038
+- Google Vision: 
+    + file: app/src/main/res/xml/network_security_config.xml
+    + file: app/src/main/java/com/lifecard/vpreca/data/api/ApiServiceFactory.kt
+    + expiration: June 22 2036
+
+Before those certificate has been expired, app must be update new certificate and submit to store
+
 ## Setup
 
 Download file at 
