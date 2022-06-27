@@ -90,6 +90,7 @@ class ForgotPassFragment : Fragment() {
                     updateDateInView()
                 }
             Locale.setDefault(Locale.JAPAN)
+            KeyboardUtils.hideKeyboard(requireContext(), binding.root)
             DatePickerDialog(
                 requireContext(),
                 dateSetListener,
