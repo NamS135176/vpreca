@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         val rootBeer = RootBeer(this)
         val isRooted = rootBeer.isRooted
-        if (isRooted) {
+        if (isRooted && !BuildConfig.DEBUG) {
             //we found indication of root
             //show alert root
             MaterialAlertDialogBuilder(this).apply {

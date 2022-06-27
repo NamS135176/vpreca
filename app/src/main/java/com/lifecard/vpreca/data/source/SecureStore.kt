@@ -2,6 +2,7 @@ package com.lifecard.vpreca.data.source
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import com.lifecard.vpreca.data.model.AuthToken
 import com.lifecard.vpreca.data.model.toAuthToken
 import com.lifecard.vpreca.data.model.toJSON
@@ -79,11 +80,34 @@ internal class NormalAuthTokenStore(private val appContext: Context) : AuthToken
     }
 
     override fun saveAuthToken(authToken: AuthToken) {
-        authToken.toJSON()?.let { saveEncryptText(Constant.SECURE_AUTH_TOKEN, it) }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            authToken.toJSON()?.let { saveEncryptText(Constant.SECURE_AUTH_TOKEN, it) }
+        } else {
+            with(encryptedSharedPreferences.edit()) {
+                putString("${Constant.SECURE_AUTH_TOKEN}_accessToken", EncryptionUtils.encrypt(appContext, authToken.accessToken))
+                putString("${Constant.SECURE_AUTH_TOKEN}_refreshToken", EncryptionUtils.encrypt(appContext, authToken.refreshToken))
+                putString("${Constant.SECURE_AUTH_TOKEN}_memberNumber", EncryptionUtils.encrypt(appContext, authToken.memberNumber))
+                putString("${Constant.SECURE_AUTH_TOKEN}_loginId", EncryptionUtils.encrypt(appContext, authToken.loginId))
+                apply()
+            }
+        }
     }
 
     override fun getAuthToken(): AuthToken? {
-        return getEncryptText(Constant.SECURE_AUTH_TOKEN)?.toAuthToken()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return getEncryptText(Constant.SECURE_AUTH_TOKEN)?.toAuthToken()
+        } else {
+            val accessToken = getEncryptText("${Constant.SECURE_AUTH_TOKEN}_accessToken")
+            val refreshToken = getEncryptText("${Constant.SECURE_AUTH_TOKEN}_refreshToken")
+            val memberNumber = getEncryptText("${Constant.SECURE_AUTH_TOKEN}_memberNumber")
+            val loginId = getEncryptText("${Constant.SECURE_AUTH_TOKEN}_loginId")
+            if (!accessToken.isNullOrEmpty() && !refreshToken.isNullOrEmpty()
+                && !memberNumber.isNullOrEmpty() && !loginId.isNullOrEmpty()
+            ) {
+                return AuthToken(accessToken, refreshToken, memberNumber, loginId)
+            }
+            return null
+        }
     }
 
     override fun clear() {
@@ -91,6 +115,7 @@ internal class NormalAuthTokenStore(private val appContext: Context) : AuthToken
             clear()
             apply()
         }
+        EncryptionUtils.clear()
     }
 }
 
