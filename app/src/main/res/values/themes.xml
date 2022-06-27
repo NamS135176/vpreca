@@ -24,6 +24,8 @@
         <item name="android:spinnerItemStyle">@style/SpinnerItemTheme</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:isLightTheme" tools:targetApi="q">true</item>
+
+        <item name="materialAlertDialogTheme">@style/MyMaterialDialog</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">

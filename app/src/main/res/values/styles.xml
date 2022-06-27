@@ -184,4 +184,14 @@
         <item name="tabBackground">@color/white</item>
         <item name="tabIndicatorHeight">2dp</item>
     </style>
+
+    <style name="MyMaterialDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Customize your theme here. -->
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlert.Body.Text</item>
+    </style>
+    <style name="MaterialAlert.Body.Text" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+    </style>
 </resources>
