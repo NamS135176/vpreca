@@ -62,7 +62,7 @@ internal object EncryptionKeyGenerator {
                 //1 Year validity
                 end.add(Calendar.YEAR, 1)
                 val spec = KeyPairGeneratorSpec.Builder(context!!).setAlias(KEY_ALIAS)
-                    .setSubject(X500Principal("CN=" + KEY_ALIAS))
+                    .setSubject(X500Principal("CN=$KEY_ALIAS"))
                     .setSerialNumber(BigInteger.TEN)
                     .setStartDate(start.time)
                     .setEndDate(end.time)

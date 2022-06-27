@@ -386,7 +386,7 @@ class SignupInputFragment : Fragment() {
                         setPositiveButton("はい") { _, _ ->
                             findNavController().navigate(R.id.action_signupInput_to_login)
                         }
-                        setNegativeButton("いいえ", null)
+                        setNegativeButton("いいえ",  null)
                         setMessage("途中ですがキャンセルしてもよろしいですか?")
                     }.create().show()
                 }
