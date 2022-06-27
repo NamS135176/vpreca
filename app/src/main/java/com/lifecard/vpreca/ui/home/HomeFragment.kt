@@ -291,7 +291,6 @@ class HomeFragment : Fragment(), CoroutineScope {
                         cardInfoResult.success,
                         creditCardRepository
                     ).show()
-                    homeViewModel.clearCardInfoResult()
                 }
                 cardInfoResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
@@ -301,7 +300,6 @@ class HomeFragment : Fragment(), CoroutineScope {
                     if (it) {
                         showInternetTrouble()
                     }
-                    homeViewModel.clearCardInfoResult()
                 }
             })
         homeViewModel.suspendDealResult.observe(
@@ -382,12 +380,9 @@ class HomeFragment : Fragment(), CoroutineScope {
         if (forceReloadCard) {
             homeViewModel.loadCard(true)
             forceReloadCard = false
+        } else {
+            homeViewModel.loadCardIfEmptyData()
         }
-        homeViewModel.loadCardIfEmptyData()
-
-        showInternetTrouble()
-        showInternetTrouble()
-        showInternetTrouble()
     }
 
     override fun onDestroyView() {

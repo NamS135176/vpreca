@@ -15,6 +15,7 @@ import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.balance_amount.SuspendDealResult
 import com.lifecard.vpreca.ui.listvpreca.CardInfoResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,7 +34,6 @@ class HomeViewModel @Inject constructor(
     val loading: LiveData<Boolean> = _loading
 
     init {
-        println("HomeViewModel... init")
         if (creditCardRepository.latestCardEmpty()) {
             loadCard(true)
         } else {
@@ -54,8 +54,13 @@ class HomeViewModel @Inject constructor(
                 _creditCardResult.value = CreditCardResult(success = result.data)
             } else if (result is Result.Error) {
                 when (result.exception) {
-                    is NoConnectivityException -> _creditCardResult.value =
-                        CreditCardResult(networkTrouble = true)
+                    is NoConnectivityException -> {
+                        _creditCardResult.value =
+                            CreditCardResult(networkTrouble = true)
+                        delay(200)
+                        _creditCardResult.value =
+                            CreditCardResult()
+                    }
                     is ApiException -> CreditCardResult(
                         error = ErrorMessageException(
                             errorMessage = result.exception.errorMessage
@@ -119,8 +124,13 @@ class HomeViewModel @Inject constructor(
                 _cardInfoResult.value = CardInfoResult(success = res.data)
             } else if (res is Result.Error) {
                 when (res.exception) {
-                    is NoConnectivityException -> _cardInfoResult.value =
-                        CardInfoResult(networkTrouble = true)
+                    is NoConnectivityException -> {
+                        _cardInfoResult.value =
+                            CardInfoResult(networkTrouble = true)
+                        delay(200)
+                        _cardInfoResult.value =
+                            CardInfoResult()
+                    }
                     is ApiException -> CardInfoResult(
                         error = ErrorMessageException(
                             errorMessage = res.exception.message
@@ -143,8 +153,12 @@ class HomeViewModel @Inject constructor(
                 _suspendDealResult.value = SuspendDealResult(success = result.data)
             } else if (result is Result.Error) {
                 when (result.exception) {
-                    is NoConnectivityException -> _suspendDealResult.value =
-                        SuspendDealResult(networkTrouble = true)
+                    is NoConnectivityException -> {
+                        _suspendDealResult.value =
+                            SuspendDealResult(networkTrouble = true)
+                        delay(200)
+                        _suspendDealResult.value = SuspendDealResult()
+                    }
                     is ApiException -> SuspendDealResult(
                         error = ErrorMessageException(
                             errorMessage = result.exception.message

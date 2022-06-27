@@ -51,15 +51,15 @@ class AppRequestInterceptor(
 
             return handleResponse(chain, chain.proceed(newRequestBuilder.build()))
         } catch (e: UnknownHostException) {
-            e.printStackTrace()
+            println(e)
             throw NoConnectivityException()
         } catch (e: ApiException) {
             throw e
         } catch (e: IOException) {
-            e.printStackTrace()
+            println(e)
             throw NoConnectivityException()
         } catch (e: Throwable) {
-            e.printStackTrace()
+            println(e)
             throw e
         }
     }
