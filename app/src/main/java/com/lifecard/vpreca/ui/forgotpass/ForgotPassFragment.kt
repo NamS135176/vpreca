@@ -56,7 +56,7 @@ class ForgotPassFragment : Fragment() {
         spinnerQuestion.lifecycleOwner = viewLifecycleOwner
 
         val cal = Calendar.getInstance()
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 backFunction()
             }
@@ -229,9 +229,9 @@ class ForgotPassFragment : Fragment() {
         spinnerQuestion.setOnSpinnerOutsideTouchListener { _, _ -> spinnerQuestion.dismiss() }
 
         tvDatePicker.doAfterTextChanged { checkValidForm() }
-        emailEdt.doAfterTextChanged {checkValidForm() }
-        phoneEdt.doAfterTextChanged {checkValidForm() }
-        answerEdt.doAfterTextChanged {checkValidForm() }
+        emailEdt.doAfterTextChanged { checkValidForm() }
+        phoneEdt.doAfterTextChanged { checkValidForm() }
+        answerEdt.doAfterTextChanged { checkValidForm() }
 
         btnSubmit.setOnClickListener { submit() }
 
@@ -260,8 +260,18 @@ class ForgotPassFragment : Fragment() {
     }
 
     fun backFunction() {
-        findNavController().popBackStack(R.id.nav_login,
-        inclusive = false,
+        findNavController().popBackStack(
+            R.id.nav_login,
+            inclusive = false,
         )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        dismissAllSpinner()
+    }
+
+    private fun dismissAllSpinner() {
+        binding.spinnerQuestion.dismiss()
     }
 }

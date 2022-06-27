@@ -11,8 +11,13 @@ open class BackPressFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                onBeforeBackPress()
                 fragmentFindNavController().popBackStack()
             }
         })
+    }
+
+    open fun onBeforeBackPress() {
+
     }
 }

@@ -370,6 +370,7 @@ class SignupInputFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         saveData()
+        dismissAllSpinner()
     }
 
     private fun saveData() {
@@ -385,4 +386,9 @@ class SignupInputFragment : Fragment() {
         )
     }
 
+    private fun dismissAllSpinner() {
+        binding.spinnerCity.dismiss()
+        binding.spinnerGender.dismiss()
+        binding.spinnerSecret.dismiss()
+    }
 }

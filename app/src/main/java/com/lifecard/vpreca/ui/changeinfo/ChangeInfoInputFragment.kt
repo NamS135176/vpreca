@@ -1,35 +1,32 @@
 package com.lifecard.vpreca.ui.changeinfo
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.BackPressFragment
 import com.lifecard.vpreca.base.PowerSpinnerAdapter
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.databinding.FragmentChangeInfoInputBinding
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.closeKeyBoard
-import com.lifecard.vpreca.utils.fragmentFindNavController
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ChangeInfoInputFragment : Fragment() {
+class ChangeInfoInputFragment : BackPressFragment() {
 
     companion object {
         fun newInstance() = ChangeInfoInputFragment()
@@ -351,11 +348,6 @@ class ChangeInfoInputFragment : Fragment() {
         dismissAllSpinner()
     }
 
-    private fun dismissAllSpinner() {
-        binding.spinnerCity.dismiss()
-        binding.spinnerSecret.dismiss()
-    }
-
     private fun saveData() {
         val cityAdapter = binding.spinnerCity.getSpinnerAdapter<PowerSpinnerAdapter>()
         val secretAdapter = binding.spinnerSecret.getSpinnerAdapter<PowerSpinnerAdapter>()
@@ -366,14 +358,12 @@ class ChangeInfoInputFragment : Fragment() {
         )
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.addCallback(this, object :
-            OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                dismissAllSpinner()
-                fragmentFindNavController().popBackStack()
-            }
-        })
+    private fun dismissAllSpinner() {
+        binding.spinnerCity.dismiss()
+        binding.spinnerSecret.dismiss()
     }
+
+//    override fun onBeforeBackPress() {
+//        dismissAllSpinner()
+//    }
 }
