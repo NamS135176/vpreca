@@ -51,14 +51,13 @@
             android:textSize="16sp" />
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_error"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_marginTop="9dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:paddingHorizontal="21dp"
             android:text="生年月日認証エラー。"
             android:visibility="invisible"
-            android:textAlignment="textEnd"
+            android:layout_gravity="right"
             android:textColor="@color/error"
             android:textSize="11sp" />
         <LinearLayout
