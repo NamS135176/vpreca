@@ -1,6 +1,7 @@
 package com.lifecard.vpreca.ui.signup
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.widget.NestedScrollView
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -65,33 +67,9 @@ class SignupInputFragment : Fragment() {
         val hiraLastName = binding.hiraLastName
         val dateLayout = binding.dateLayout
 
-        fun dismissAllSpinner() {
-            if (spinnerCity.isShowing) spinnerCity.dismiss()
-            if (spinnerGender.isShowing) spinnerGender.dismiss()
-            if (spinnerSecret.isShowing) spinnerSecret.dismiss()
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (spinnerCity.isShowing || spinnerGender.isShowing || spinnerSecret.isShowing) {
-                        dismissAllSpinner()
-                        return
-                    }
-                    MaterialAlertDialogBuilder(requireContext()).apply {
-                        setPositiveButton("はい") { _, _ ->
-                            findNavController().navigate(R.id.action_signupInput_to_login)
-                        }
-                        setNegativeButton("いいえ", null)
-                        setMessage("途中ですがキャンセルしてもよろしいですか?")
-                    }.create().show()
-                }
-            })
-
-
-
-        scrollView.setOnClickListener { dismissAllSpinner() }
+        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, _, _, _ ->
+            dismissAllSpinner()
+        })
 
         val cal = Calendar.getInstance()
 
@@ -390,5 +368,26 @@ class SignupInputFragment : Fragment() {
         binding.spinnerCity.dismiss()
         binding.spinnerGender.dismiss()
         binding.spinnerSecret.dismiss()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (binding.spinnerCity.isShowing || binding.spinnerGender.isShowing || binding.spinnerSecret.isShowing) {
+                        dismissAllSpinner()
+                        return
+                    }
+                    MaterialAlertDialogBuilder(requireContext()).apply {
+                        setPositiveButton("はい") { _, _ ->
+                            findNavController().navigate(R.id.action_signupInput_to_login)
+                        }
+                        setNegativeButton("いいえ", null)
+                        setMessage("途中ですがキャンセルしてもよろしいですか?")
+                    }.create().show()
+                }
+            })
     }
 }

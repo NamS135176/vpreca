@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.NestedScrollView
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -54,6 +55,10 @@ class ForgotPassFragment : Fragment() {
         var question = ""
         containerDiv.setOnClickListener { closeKeyBoard() }
         spinnerQuestion.lifecycleOwner = viewLifecycleOwner
+
+        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, _, _, _ ->
+            dismissAllSpinner()
+        })
 
         val cal = Calendar.getInstance()
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
