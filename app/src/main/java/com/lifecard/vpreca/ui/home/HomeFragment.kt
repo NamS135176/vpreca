@@ -294,7 +294,6 @@ class HomeFragment : Fragment(), CoroutineScope {
                     homeViewModel.clearCardInfoResult()
                 }
                 cardInfoResult.error?.let { error ->
-
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
                     error.message?.let { showPopupMessage(message = it) }
                 }
@@ -302,6 +301,7 @@ class HomeFragment : Fragment(), CoroutineScope {
                     if (it) {
                         showInternetTrouble()
                     }
+                    homeViewModel.clearCardInfoResult()
                 }
             })
         homeViewModel.suspendDealResult.observe(

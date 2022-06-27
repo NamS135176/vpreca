@@ -32,7 +32,7 @@ class RegexUtils {
          * only roman
          * check the screen SC08_2
          */
-        private const val RegexNickname = "^[A-Z]{2,18}\$"
+        private const val RegexNickname = "^[A-Z]{2,19}\$"
 
         /**
          * 10 or 11 number
