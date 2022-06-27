@@ -95,7 +95,7 @@
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:layout_marginTop="2dp"
-                           android:text="@string/home_button_lock"
+                           android:text="@{ModelExtKt.isCardLock(card) ? @string/home_button_lock : @string/home_button_unlock}"
                            android:textSize="11sp"
                            app:layout_constraintEnd_toEndOf="@id/button_lock"
                            app:layout_constraintStart_toStartOf="@id/button_lock"
