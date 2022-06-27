@@ -375,7 +375,7 @@ class SignupInputFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
+            this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (binding.spinnerCity.isShowing || binding.spinnerGender.isShowing || binding.spinnerSecret.isShowing) {
