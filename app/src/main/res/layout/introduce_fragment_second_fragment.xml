@@ -101,7 +101,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="54dp"
-
                         android:layout_weight="0.8">
                         <ImageView
                             android:id="@+id/button_ocr_detection"

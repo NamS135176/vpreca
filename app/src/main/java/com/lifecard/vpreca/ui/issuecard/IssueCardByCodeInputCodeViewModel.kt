@@ -11,6 +11,7 @@ import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.balance_amount.GiftInfoResult
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
 import com.lifecard.vpreca.ui.signup.ConfirmPhoneState
+import com.lifecard.vpreca.utils.RegexUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class IssueCardByCodeInputCodeViewModel @Inject constructor(
     val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
 
     private fun checkCfPhoneValid(): Boolean {
-        return if (formState.value?.confirmCode?.length != 15) {
+        return if (!RegexUtils.isGiftNumberValid(formState.value?.confirmCode)) {
             codeError.value = R.string.error_code
             false
         } else {
