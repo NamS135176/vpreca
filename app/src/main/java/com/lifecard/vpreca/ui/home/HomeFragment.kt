@@ -383,6 +383,7 @@ class HomeFragment : Fragment(), CoroutineScope {
             homeViewModel.loadCard(true)
             forceReloadCard = false
         }
+        homeViewModel.loadCardIfEmptyData()
     }
 
     override fun onDestroyView() {
