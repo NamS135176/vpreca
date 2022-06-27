@@ -80,6 +80,7 @@ class IssueCardSelectDesignFragment : Fragment() {
         val recyclerIndicator = binding.indicator
 
         val cardLayout = binding.cardZone
+        binding.cardZone.termOfUse.visibility = View.INVISIBLE
         when (args.selectDesignData?.preRoute) {
             "selectSource" -> {
                 btnBack.visibility = View.VISIBLE
@@ -89,7 +90,7 @@ class IssueCardSelectDesignFragment : Fragment() {
             "valueConfirm" -> {
                 btnBack.visibility = View.GONE
                 btnCancel.visibility = View.VISIBLE
-                btnSubmit.text = getString(R.string.issue_card_select_design_btn)
+                btnSubmit.text = getString(R.string.btn_next_policy)
             }
             "balanceByCodeValueConfirm" -> {
                 btnBack.visibility = View.VISIBLE
@@ -166,6 +167,7 @@ class IssueCardSelectDesignFragment : Fragment() {
             Observer { listDesignResult ->
                 listDesignResult ?: return@Observer
                 listDesignResult.success?.let {
+                    binding.cardZone.termOfUse.visibility = View.VISIBLE
                     val list: List<DesignCard>
                     list = ArrayList()
                     cardLayout.card = DesignCard("001", "0")
@@ -244,6 +246,7 @@ class IssueCardSelectDesignFragment : Fragment() {
                 listDesignResult.networkTrouble?.let {
                     if (it) {
                         showInternetTrouble()
+                        binding.cardZone.termOfUse.visibility = View.INVISIBLE
                     }
                 }
             })

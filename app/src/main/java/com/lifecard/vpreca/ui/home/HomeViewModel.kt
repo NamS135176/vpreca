@@ -69,7 +69,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
+    fun loadCardIfEmptyData() {
+        if (creditCardRepository.latestCardEmpty() && _loading.value == false) {
+            loadCard(true)
+        }
+    }
 
     fun updateCard(creditCard: CreditCard, position: Int) {
         viewModelScope.launch {

@@ -46,7 +46,7 @@ class IssueCardByCodeInputCode : Fragment() {
         btnCancel.setOnClickListener { findNavController().navigate(R.id.action_inputcode_to_main) }
 
 
-        viewModel.giftInfoResult.observe(
+        viewModel._giftInfoResult.observe(
             viewLifecycleOwner,
             Observer { giftInfoResult ->
                 giftInfoResult ?: return@Observer
@@ -111,6 +111,8 @@ class IssueCardByCodeInputCode : Fragment() {
             val action =
                 IssueCardByCodeInputCodeDirections.actionToCameraOcr(getString(R.string.camera_ocr_hint_input_gift_card))
             findNavController().navigate(action)
+            viewModel.formResultState.value = null
+            viewModel._giftInfoResult.value = null
         }
         return binding.root
     }
