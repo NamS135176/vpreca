@@ -14,6 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
+import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeSelectSoureConfirmBinding
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +55,7 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
             args.designData?.giftNumber!!
         )
         var sum = 0
-
+        binding.cardInfo.cardInfo.setBackgroundResource(args.designData.getBackgroundCard())
 
         args.selectSourceData?.listCard?.forEachIndexed { index, creditCard ->
             run {

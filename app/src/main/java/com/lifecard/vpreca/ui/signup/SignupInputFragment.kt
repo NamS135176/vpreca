@@ -21,6 +21,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.PowerSpinnerAdapter
 import com.lifecard.vpreca.databinding.SignupInputFragmentBinding
+import com.lifecard.vpreca.utils.KeyboardUtils
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import java.text.SimpleDateFormat
 import java.util.*
@@ -89,6 +90,7 @@ class SignupInputFragment : Fragment() {
 
         btnDatePicker.setOnClickListener {
             Locale.setDefault(Locale.JAPAN)
+            KeyboardUtils.hideKeyboard(requireContext(), binding.root)
             DatePickerDialog(
                 requireContext(),
                 dateSetListener,
