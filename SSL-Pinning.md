@@ -9,4 +9,4 @@ openssl s_client -servername execute-api.ap-southeast-1.amazonaws.com -connect e
 openssl x509 -inform der -in YOUR_ROOT_CA.cer -pubkey -noout | openssl rsa -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
 
 
-cat ca.pem | openssl x509 -inform pem -noout -outform pem -pubkey | openssl pkey -pubin -inform pem -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+openssl s_client -connect vpcevssl.lifecard.co.jp:443 2>/dev/null </dev/null |  sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | openssl x509 -outform DER > vpcevssl.lifecard.co.jp.cer

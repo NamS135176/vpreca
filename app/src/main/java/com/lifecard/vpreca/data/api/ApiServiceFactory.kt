@@ -1,10 +1,12 @@
 package com.lifecard.vpreca.data.api
 
 import android.content.Context
+import android.os.Build
 import com.google.gson.GsonBuilder
 import com.lifecard.vpreca.BuildConfig
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.utils.Constant
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -24,6 +26,16 @@ class ApiServiceFactory {
                     )
                 )
                 .apply {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                        certificatePinner(
+                            CertificatePinner.Builder()
+                                .add(
+                                    "execute-api.ap-southeast-1.amazonaws.com",
+                                    "sha256/++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI="
+                                )
+                                .build()
+                        )
+                    }
                     if (BuildConfig.DEBUG) {
                         addInterceptor(HttpLoggingInterceptor().apply {
                             level = HttpLoggingInterceptor.Level.BODY
@@ -44,7 +56,18 @@ class ApiServiceFactory {
         }
 
         fun createGoogleVisionService(): GoogleVisionService {
+
             val client = OkHttpClient.Builder().apply {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    certificatePinner(
+                        CertificatePinner.Builder()
+                            .add(
+                                "vision.googleapis.com",
+                                "sha256/hxqRlPTu1bMS/0DITB1SSu0vd4u/8l8TjPgfaAp63Gc="
+                            )
+                            .build()
+                    )
+                }
                 if (BuildConfig.DEBUG) {
                     addInterceptor(HttpLoggingInterceptor().apply {
                         level = HttpLoggingInterceptor.Level.BODY
