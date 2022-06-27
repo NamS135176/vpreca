@@ -23,7 +23,6 @@ import com.lifecard.vpreca.utils.showAlertMessage
 import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.concurrent.Executor
 import javax.crypto.Cipher
 import javax.inject.Inject
 
@@ -44,7 +43,6 @@ class FingerprintFragment : Fragment() {
     private var _binding: FragmentFingerprintBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
@@ -120,8 +118,7 @@ class FingerprintFragment : Fragment() {
             viewModel.setFingerprintSetting(requireContext(), false)
         }
 
-        executor = ContextCompat.getMainExecutor(requireContext())
-        biometricPrompt = BiometricPrompt(this, executor,
+        biometricPrompt = BiometricPrompt(this, ContextCompat.getMainExecutor(requireContext()),
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(
                     errorCode: Int,
@@ -144,11 +141,6 @@ class FingerprintFragment : Fragment() {
                         //show toast
                         showToast(getString(R.string.biometric_setting_success))
                     }
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    viewModel.setFingerprintSetting(requireContext(), false)
                 }
             })
 

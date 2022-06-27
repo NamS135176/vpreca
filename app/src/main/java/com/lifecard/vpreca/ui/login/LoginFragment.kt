@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
@@ -28,6 +29,8 @@ import com.lifecard.vpreca.data.model.LoginIdData
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.crypto.Cipher
 import javax.inject.Inject
 
@@ -272,7 +275,11 @@ class LoginFragment : NoToolbarFragment() {
             override fun onCreate(owner: LifecycleOwner) {
                 super.onCreate(owner)
                 if (PreferenceHelper.isEnableBiometricSetting(requireContext()) && bioManager?.checkDeviceSupportBiometric() == true) {
-                    showBiometricDialog()
+                    loginViewModel.viewModelScope.launch {
+                        delay(800)
+                        showBiometricDialog()
+                    }
+//                    showBiometricDialog()
                 }
             }
         }
