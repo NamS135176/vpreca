@@ -22,7 +22,7 @@ class IssueCardByCodeInputCodeViewModel @Inject constructor(
     val codeError = MutableLiveData<Int?>()
     val validForm = MutableLiveData<Boolean>()
     val formState = MutableLiveData(ConfirmPhoneState())
-    val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
+    var formResultState = MutableLiveData<ChangeInfoInputResultState?>()
 
     private fun checkCfPhoneValid(): Boolean {
         return if (!RegexUtils.isGiftNumberValid(formState.value?.confirmCode)) {
@@ -55,8 +55,8 @@ class IssueCardByCodeInputCodeViewModel @Inject constructor(
     }
 
 
-    private val _giftInfoResult = MutableLiveData<GiftInfoResult>()
-    val giftInfoResult: LiveData<GiftInfoResult> = _giftInfoResult
+    var _giftInfoResult = MutableLiveData<GiftInfoResult?>()
+//    val giftInfoResult: LiveData<GiftInfoResult> = _giftInfoResult
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
     fun getGiftData(giftNumber:String){

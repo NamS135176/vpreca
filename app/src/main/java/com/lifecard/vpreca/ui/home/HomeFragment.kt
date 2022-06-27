@@ -262,9 +262,9 @@ class HomeFragment : Fragment(), CoroutineScope {
                             }
                         }
                         textBalance.text = Converter.convertCurrency(sumBalance)
-                        if(sumBalance > 0){
+                        if (sumBalance > 0) {
                             buttonSeeAllCard.visibility = View.VISIBLE
-                        }else {
+                        } else {
                             buttonSeeAllCard.visibility = View.INVISIBLE
                         }
                     }
@@ -290,8 +290,11 @@ class HomeFragment : Fragment(), CoroutineScope {
                         requireActivity(),
                         cardInfoResult.success,
                         creditCardRepository
-                    ).show()
-                    homeViewModel.clearCardInfoResult()
+                    )
+                        .apply {
+                            setOnDismissListener { homeViewModel.clearCardInfoResult() }
+                        }
+                        .show()
                 }
                 cardInfoResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
@@ -301,7 +304,6 @@ class HomeFragment : Fragment(), CoroutineScope {
                     if (it) {
                         showInternetTrouble()
                     }
-                    homeViewModel.clearCardInfoResult()
                 }
             })
         homeViewModel.suspendDealResult.observe(
@@ -382,6 +384,8 @@ class HomeFragment : Fragment(), CoroutineScope {
         if (forceReloadCard) {
             homeViewModel.loadCard(true)
             forceReloadCard = false
+        } else {
+            homeViewModel.loadCardIfEmptyData()
         }
     }
 

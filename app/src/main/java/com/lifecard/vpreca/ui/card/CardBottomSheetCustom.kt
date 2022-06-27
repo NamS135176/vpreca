@@ -42,6 +42,7 @@ class CardBottomSheetCustom(
         super.onCreate(savedInstanceState)
 
         var newCard = creditCard.copy()
+        println(newCard)
         val inflater = LayoutInflater.from(context)
 
         val bindingDialog =
@@ -64,12 +65,13 @@ class CardBottomSheetCustom(
                     setPositiveButton("はい") { _, _ ->
                         launch {
                             (activity as AppCompatActivity).showLoadingDialog()
-                            val res = creditCardRepository.republishCard(convertObject(creditCard))
+                            val res = creditCardRepository.republishCard(convertObject(newCard))
                             if (res is Result.Success) {
+                                println(res)
                                 card.card = res.data
                                 bindingDialog.card = res.data
                                 card.cardInfo.card = res.data
-                                newCard = creditCard.copy()
+
                                 Toast(context).showCustomToast(
                                     "再発行しました",
                                     activity = activity
@@ -103,8 +105,10 @@ class CardBottomSheetCustom(
             launch {
                 (activity as AppCompatActivity).showLoadingDialog()
                 val new = newCard.copyCardInfoLockInverse()
+                println(new)
                 val res = creditCardRepository.updateCard(convertObject(new))
                 if (res is Result.Success) {
+                    println(res)
                     EventBus.getDefault().post(ReloadCard())
                     val toastMessage = when (new.isCardInfoLock()) {
                         true -> "ロックしました"

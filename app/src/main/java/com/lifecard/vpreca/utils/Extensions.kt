@@ -141,7 +141,7 @@ fun Fragment.unlockDrawer() = try {
 }
 
 fun Fragment.showLoadingDialog(): Fragment? = try {
-    val supportFragmentManager = requireActivity().supportFragmentManager
+    val supportFragmentManager = childFragmentManager
     var fragment =
         supportFragmentManager.findFragmentByTag(LoadingDialogFragment.FRAGMENT_TAG)
     if (fragment == null) {
@@ -149,6 +149,7 @@ fun Fragment.showLoadingDialog(): Fragment? = try {
         supportFragmentManager.beginTransaction()
             .add(fragment, LoadingDialogFragment.FRAGMENT_TAG)
             .commitAllowingStateLoss()
+        supportFragmentManager.executePendingTransactions()
     }
 
     fragment
@@ -158,7 +159,7 @@ fun Fragment.showLoadingDialog(): Fragment? = try {
 }
 
 fun Fragment.hideLoadingDialog() = try {
-    val supportFragmentManager = requireActivity().supportFragmentManager
+    val supportFragmentManager = childFragmentManager
     val fragment =
         supportFragmentManager.findFragmentByTag(LoadingDialogFragment.FRAGMENT_TAG)
     fragment?.let {

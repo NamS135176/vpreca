@@ -33,7 +33,7 @@ class AlertDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAlertBinding.inflate(inflater)
 
         val title = arguments?.getString("title")

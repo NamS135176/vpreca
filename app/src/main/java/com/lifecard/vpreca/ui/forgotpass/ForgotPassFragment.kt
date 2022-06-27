@@ -55,6 +55,10 @@ class ForgotPassFragment : Fragment() {
         var question = ""
         containerDiv.setOnClickListener { closeKeyBoard() }
         spinnerQuestion.lifecycleOwner = viewLifecycleOwner
+        spinnerQuestion.setOnClickListener {
+            spinnerQuestion.showOrDismiss()
+            closeKeyBoard()
+        }
 
         binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, _, _, _ ->
             dismissAllSpinner()
@@ -233,7 +237,10 @@ class ForgotPassFragment : Fragment() {
             }
         })
         spinnerQuestion.setOnSpinnerOutsideTouchListener { _, _ -> spinnerQuestion.dismiss() }
-
+        spinnerQuestion.setOnClickListener(View.OnClickListener {
+            spinnerQuestion.showOrDismiss()
+            closeKeyBoard()
+        })
         tvDatePicker.doAfterTextChanged { checkValidForm() }
         emailEdt.doAfterTextChanged { checkValidForm() }
         phoneEdt.doAfterTextChanged { checkValidForm() }

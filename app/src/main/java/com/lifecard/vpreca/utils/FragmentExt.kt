@@ -21,8 +21,7 @@ fun Fragment.showPopupMessage(
     message: String,
     buttonCancel: Int? = R.string.button_close
 ): Fragment? = try {
-    println("showPopupMessage... title = $title, message = $message")
-    val supportFragmentManager = requireActivity().supportFragmentManager
+    val supportFragmentManager = childFragmentManager
     var fragment =
         supportFragmentManager.findFragmentByTag(AlertDialogFragment.FRAGMENT_TAG)
     if (fragment == null) {
@@ -34,6 +33,7 @@ fun Fragment.showPopupMessage(
         supportFragmentManager.beginTransaction()
             .add(fragment, AlertDialogFragment.FRAGMENT_TAG)
             .commitAllowingStateLoss()
+        supportFragmentManager.executePendingTransactions()
     }
 
     fragment

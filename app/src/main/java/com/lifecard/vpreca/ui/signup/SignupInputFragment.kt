@@ -22,6 +22,7 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.PowerSpinnerAdapter
 import com.lifecard.vpreca.databinding.SignupInputFragmentBinding
 import com.lifecard.vpreca.utils.KeyboardUtils
+import com.lifecard.vpreca.utils.closeKeyBoard
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import java.text.SimpleDateFormat
 import java.util.*
@@ -320,6 +321,21 @@ class SignupInputFragment : Fragment() {
         spinnerSecret.setOnSpinnerOutsideTouchListener { _, _ -> spinnerSecret.dismiss() }
         spinnerCity.setOnSpinnerOutsideTouchListener { _, _ -> spinnerCity.dismiss() }
 
+        spinnerGender.setOnClickListener(View.OnClickListener {
+            spinnerGender.showOrDismiss()
+            closeKeyBoard()
+        })
+
+        spinnerSecret.setOnClickListener(View.OnClickListener {
+            spinnerSecret.showOrDismiss()
+            closeKeyBoard()
+        })
+
+        spinnerCity.setOnClickListener(View.OnClickListener {
+            spinnerCity.showOrDismiss()
+            closeKeyBoard()
+        })
+
         idEdt.doAfterTextChanged { text -> viewModel.loginIdDataChanged(text = text.toString()) }
 
         usernameEdit.doAfterTextChanged { text -> viewModel.usernameDataChanged(text = text.toString()) }
@@ -386,7 +402,7 @@ class SignupInputFragment : Fragment() {
                         setPositiveButton("はい") { _, _ ->
                             findNavController().navigate(R.id.action_signupInput_to_login)
                         }
-                        setNegativeButton("いいえ", null)
+                        setNegativeButton("いいえ",  null)
                         setMessage("途中ですがキャンセルしてもよろしいですか?")
                     }.create().show()
                 }
