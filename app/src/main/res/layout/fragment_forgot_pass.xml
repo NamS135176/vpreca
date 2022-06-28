@@ -242,6 +242,7 @@
                         android:layout_marginTop="9dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+                        app:spinner_popup_max_height="@dimen/spinner_popup_height_secret_question_forgot"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/forgot_secret_question_title"
                         app:spinner_item_array="@array/secret_question" />

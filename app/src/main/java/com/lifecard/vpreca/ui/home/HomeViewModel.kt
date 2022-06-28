@@ -54,14 +54,9 @@ class HomeViewModel @Inject constructor(
                 _creditCardResult.value = CreditCardResult(success = result.data)
             } else if (result is Result.Error) {
                 when (result.exception) {
-                    is NoConnectivityException -> {
-                        _creditCardResult.value =
-                            CreditCardResult(networkTrouble = true)
-                        delay(200)
-                        _creditCardResult.value =
-                            CreditCardResult()
-                    }
-                    is ApiException -> CreditCardResult(
+                    is NoConnectivityException -> _creditCardResult.value =
+                        CreditCardResult(networkTrouble = true)
+                    is ApiException -> _creditCardResult.value = CreditCardResult(
                         error = ErrorMessageException(
                             errorMessage = result.exception.errorMessage
                         )
@@ -69,6 +64,9 @@ class HomeViewModel @Inject constructor(
                     else -> _creditCardResult.value =
                         CreditCardResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
+                delay(200)
+                _creditCardResult.value =
+                    CreditCardResult()
             }
             _loading.value = false
         }
@@ -124,14 +122,9 @@ class HomeViewModel @Inject constructor(
                 _cardInfoResult.value = CardInfoResult(success = res.data)
             } else if (res is Result.Error) {
                 when (res.exception) {
-                    is NoConnectivityException -> {
-                        _cardInfoResult.value =
-                            CardInfoResult(networkTrouble = true)
-                        delay(200)
-                        _cardInfoResult.value =
-                            CardInfoResult()
-                    }
-                    is ApiException -> CardInfoResult(
+                    is NoConnectivityException -> _cardInfoResult.value =
+                        CardInfoResult(networkTrouble = true)
+                    is ApiException -> _cardInfoResult.value = CardInfoResult(
                         error = ErrorMessageException(
                             errorMessage = res.exception.message
                         )
@@ -139,6 +132,9 @@ class HomeViewModel @Inject constructor(
                     else -> _cardInfoResult.value =
                         CardInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
+                delay(200)
+                _cardInfoResult.value =
+                    CardInfoResult()
             }
             _loading.value = false
         }
@@ -153,13 +149,9 @@ class HomeViewModel @Inject constructor(
                 _suspendDealResult.value = SuspendDealResult(success = result.data)
             } else if (result is Result.Error) {
                 when (result.exception) {
-                    is NoConnectivityException -> {
-                        _suspendDealResult.value =
-                            SuspendDealResult(networkTrouble = true)
-                        delay(200)
-                        _suspendDealResult.value = SuspendDealResult()
-                    }
-                    is ApiException -> SuspendDealResult(
+                    is NoConnectivityException -> _suspendDealResult.value =
+                        SuspendDealResult(networkTrouble = true)
+                    is ApiException -> _suspendDealResult.value = SuspendDealResult(
                         error = ErrorMessageException(
                             errorMessage = result.exception.message
                         )
@@ -167,6 +159,8 @@ class HomeViewModel @Inject constructor(
                     else -> _suspendDealResult.value =
                         SuspendDealResult(error = ErrorMessageException(R.string.get_list_card_failure))
                 }
+                delay(200)
+                _suspendDealResult.value = SuspendDealResult()
             }
             _loading.value = false
         }

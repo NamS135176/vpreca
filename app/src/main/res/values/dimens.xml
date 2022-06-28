@@ -35,6 +35,6 @@
     <dimen name="framgnet_policy_button_submit_mt">30dp</dimen>
     <dimen name="min_height_input">54dp</dimen>
     <dimen name="spinner_popup_height_cities">370dp</dimen>
-
+    <dimen name="spinner_popup_height_secret_question_forgot">180dp</dimen>
 
 </resources>

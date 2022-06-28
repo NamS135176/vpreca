@@ -262,9 +262,9 @@ class HomeFragment : Fragment(), CoroutineScope {
                             }
                         }
                         textBalance.text = Converter.convertCurrency(sumBalance)
-                        if(sumBalance > 0){
+                        if (sumBalance > 0) {
                             buttonSeeAllCard.visibility = View.VISIBLE
-                        }else {
+                        } else {
                             buttonSeeAllCard.visibility = View.INVISIBLE
                         }
                     }
@@ -290,7 +290,11 @@ class HomeFragment : Fragment(), CoroutineScope {
                         requireActivity(),
                         cardInfoResult.success,
                         creditCardRepository
-                    ).show()
+                    )
+                        .apply {
+                            setOnDismissListener { homeViewModel.clearCardInfoResult() }
+                        }
+                        .show()
                 }
                 cardInfoResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }

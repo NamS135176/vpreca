@@ -7,4 +7,5 @@
     <dimen name="home_card_button_no_balance_mt">24dp</dimen>
     <dimen name="home_card_card_container_mt">26dp</dimen>
     <dimen name="home_card_tab_indicator_height">42dp</dimen>
+    <dimen name="spinner_popup_height_secret_question_forgot">370dp</dimen>
 </resources>

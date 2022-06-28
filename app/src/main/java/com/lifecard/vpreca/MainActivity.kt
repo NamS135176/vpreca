@@ -54,9 +54,8 @@ class MainActivity : AppCompatActivity() {
     var currentToast: Toast? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        super.onCreate(savedInstanceState)
 
         if (!BuildConfig.FLAVOR.contentEquals("QA", ignoreCase = true)) {
             window.setFlags(
