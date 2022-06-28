@@ -47,7 +47,7 @@ class ForgotPassViewModel @Inject constructor(
 
     private fun checkDateValid(text: String?): Boolean {
         return if (!isDateValid(text) && !text.isNullOrEmpty()) {
-            dateError.value = R.string.forgot_pass_error_dob
+            dateError.value = R.string.rgx_error_datetime
             false
         } else {
             dateError.value = null
