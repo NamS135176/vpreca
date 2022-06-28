@@ -70,7 +70,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                     image = VisionImageContent(content = imageBase64),
                     features = listOf(VisionFeature(type = "TEXT_DETECTION")),
                     imageContext = VisionImageContext(
-                        languageHints = "en",
+                        languageHints = "ja",
                         textDetectionParams = VisionTextDetectionParams(
                             enableTextDetectionConfidenceScore = true
                         )
