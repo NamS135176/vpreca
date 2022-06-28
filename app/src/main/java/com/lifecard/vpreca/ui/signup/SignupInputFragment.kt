@@ -322,18 +322,18 @@ class SignupInputFragment : Fragment() {
         spinnerCity.setOnSpinnerOutsideTouchListener { _, _ -> spinnerCity.dismiss() }
 
         spinnerGender.setOnClickListener(View.OnClickListener {
-            spinnerGender.showOrDismiss()
             closeKeyBoard()
+            spinnerGender.showOrDismiss()
         })
 
         spinnerSecret.setOnClickListener(View.OnClickListener {
-            spinnerSecret.showOrDismiss()
             closeKeyBoard()
+            spinnerSecret.showOrDismiss()
         })
 
         spinnerCity.setOnClickListener(View.OnClickListener {
-            spinnerCity.showOrDismiss()
             closeKeyBoard()
+            spinnerCity.showOrDismiss()
         })
 
         idEdt.doAfterTextChanged { text -> viewModel.loginIdDataChanged(text = text.toString()) }

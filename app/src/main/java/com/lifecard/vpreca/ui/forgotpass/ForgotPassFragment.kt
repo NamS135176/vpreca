@@ -238,8 +238,8 @@ class ForgotPassFragment : Fragment() {
         })
         spinnerQuestion.setOnSpinnerOutsideTouchListener { _, _ -> spinnerQuestion.dismiss() }
         spinnerQuestion.setOnClickListener(View.OnClickListener {
-            spinnerQuestion.showOrDismiss()
             closeKeyBoard()
+            spinnerQuestion.showOrDismiss()
         })
         tvDatePicker.doAfterTextChanged { checkValidForm() }
         emailEdt.doAfterTextChanged { checkValidForm() }
