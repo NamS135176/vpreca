@@ -301,8 +301,8 @@ class ChangeInfoInputFragment : BackPressFragment() {
             }
         })
         spinnerSecret.setOnClickListener(View.OnClickListener {
-            spinnerSecret.showOrDismiss()
             closeKeyBoard()
+            spinnerSecret.showOrDismiss()
         })
 
         val listCity = requireContext().resources.getStringArray(R.array.cities).toList()
@@ -317,8 +317,8 @@ class ChangeInfoInputFragment : BackPressFragment() {
             }
         })
         spinnerCity.setOnClickListener(View.OnClickListener {
-            spinnerCity.showOrDismiss()
             closeKeyBoard()
+            spinnerCity.showOrDismiss()
         })
         spinnerSecret.setOnSpinnerOutsideTouchListener { _, _ -> spinnerSecret.dismiss() }
         spinnerCity.setOnSpinnerOutsideTouchListener { _, _ -> spinnerCity.dismiss() }

@@ -28,11 +28,11 @@ class ChangePhoneExpireFragment : Fragment() {
     ): View? {
         _binding = FragmentChangePhoneExpireBinding.inflate(inflater, container, false)
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() { findNavController().popBackStack()  }
+            override fun handleOnBackPressed() { findNavController().popBackStack(R.id.nav_home, inclusive = false)  }
         })
         val btnComplete = binding.btnOvertimes
         btnComplete.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().popBackStack(R.id.nav_home, inclusive = false)
         }
         return binding.root
     }

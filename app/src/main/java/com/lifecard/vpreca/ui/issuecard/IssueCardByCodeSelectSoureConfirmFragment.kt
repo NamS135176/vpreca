@@ -50,10 +50,6 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
 
         tvGiftAmount.text = Converter.convertCurrency(args.designData?.giftAmount)
 
-        viewModel.issueGiftCardWithoutCard(
-            args.designData?.balanceAmount!!,
-            args.designData?.giftNumber!!
-        )
         var sum = 0
         binding.cardInfo.cardInfo.setBackgroundResource(args.designData.getBackgroundCard())
 
@@ -81,11 +77,9 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
                 }
             }
             viewModel.creditCardSelectDataChanged(
-                listCardInfo[0].cardSchemeId,
-                listCardInfo[0].designId,
-                listCardInfo[0].cardNickname,
-                listCardInfo[0].vcnName,
-                sumUpSrcCardInfo
+                sumUpSrcCardInfo,
+                args.designData?.balanceAmount!!,
+                args.designData?.giftNumber!!
             )
         }
 
@@ -103,8 +97,10 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
         btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
-                    // do something on positive button click
-                    findNavController().navigate(R.id.nav_issue_card_by_code_complete_without_card)
+                    viewModel.issueGiftCardWithoutCard(
+                        args.designData?.balanceAmount!!,
+                        args.designData?.giftNumber!!
+                    )
                 }
                 setNegativeButton("いいえ", null)
                 setMessage(
@@ -115,43 +111,6 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
             }.create().show()
         }
 
-        viewModel.issueGiftReqResult.observe(
-            viewLifecycleOwner,
-            Observer { issueGiftReqResult ->
-                issueGiftReqResult ?: return@Observer
-                issueGiftReqResult.success?.let {
-                    binding.card = it.cardInfo
-                    binding.cardInfo.card = it.cardInfo
-                    listCardInfo = listOf(it.cardInfo!!)
-                }
-                issueGiftReqResult.error?.let { error ->
-                    error.messageResId?.let { showPopupMessage("", getString(it)) }
-                    error.errorMessage?.let { showPopupMessage("", it) }
-                }
-                issueGiftReqResult.networkTrouble?.let {
-                    if (it) {
-                        showInternetTrouble()
-                    }
-                }
-            })
-
-        viewModel.issueGiftReqResultWithCard.observe(
-            viewLifecycleOwner,
-            Observer { issueGiftReqResult ->
-                issueGiftReqResult ?: return@Observer
-                issueGiftReqResult.success?.let {
-                    findNavController().navigate(R.id.nav_issue_card_by_code_complete_with_card)
-                }
-                issueGiftReqResult.error?.let { error ->
-                    error.messageResId?.let { showPopupMessage("", getString(it)) }
-                    error.errorMessage?.let { showPopupMessage("", it) }
-                }
-                issueGiftReqResult.networkTrouble?.let {
-                    if (it) {
-                        showInternetTrouble()
-                    }
-                }
-            })
 
         viewModel.feeInfoResult.observe(
             viewLifecycleOwner,
@@ -160,6 +119,25 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
                 feeInfoResult.success?.let {
                     println("homeViewModel.cardInfoResult.observe success: ${feeInfoResult.success}")
                     findNavController().navigate(R.id.nav_issue_card_by_code_complete_with_card)
+                }
+                feeInfoResult.error?.let { error ->
+                    error.messageResId?.let { showPopupMessage("", getString(it)) }
+                    error.errorMessage?.let { showPopupMessage("", it) }
+                }
+                feeInfoResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
+                }
+            })
+
+        viewModel.issueGiftReqResult.observe(
+            viewLifecycleOwner,
+            Observer { feeInfoResult ->
+                feeInfoResult ?: return@Observer
+                feeInfoResult.success?.let {
+                    println("homeViewModel.cardInfoResult.observe success: ${feeInfoResult.success}")
+                    findNavController().navigate(R.id.nav_issue_card_by_code_complete_without_card)
                 }
                 feeInfoResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("", getString(it)) }

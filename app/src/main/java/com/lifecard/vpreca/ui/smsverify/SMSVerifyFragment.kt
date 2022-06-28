@@ -49,7 +49,6 @@ class SMSVerifyFragment : Fragment() {
         val codeLayout = binding.codeInputLayout
         val tvPhone = binding.phoneNumber
         var certType = "certType"
-        val operationType = "operationType"
         var extCertDealId = ""
         viewModel.sendSMSRequest(args.loginIdData?.loginId!!)
         btnCancel.setOnClickListener {
@@ -82,7 +81,7 @@ class SMSVerifyFragment : Fragment() {
 
         viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
-                viewModel.sendSMSConfirm("001",certType, operationType, codeInput.text.toString(), extCertDealId)
+                viewModel.sendSMSConfirm(certType, args.loginIdData?.loginId!!, codeInput.text.toString(), extCertDealId)
             }
         }
 
@@ -126,7 +125,7 @@ class SMSVerifyFragment : Fragment() {
                 listDesignResult ?: return@Observer
                 listDesignResult.success?.let {
                    //TODO:Remove hash code
-                    viewModel.login("anhndt","12345678")
+                    viewModel.login("thunh1","12345678")
                 }
                 listDesignResult.isExpire?.let { it ->
                     if(it){

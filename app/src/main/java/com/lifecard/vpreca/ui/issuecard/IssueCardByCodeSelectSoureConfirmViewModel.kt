@@ -30,9 +30,6 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
     private val _feeInfoResult = MutableLiveData<FeeInfoResult>()
     val feeInfoResult: LiveData<FeeInfoResult> = _feeInfoResult
 
-    private val _issueGiftReqResultWithCard = MutableLiveData<IssueGiftResult>()
-    val issueGiftReqResultWithCard: LiveData<IssueGiftResult> = _issueGiftReqResultWithCard
-
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
@@ -44,7 +41,13 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
             _loading.value = true
 
             val res =
-                issueCardRepository.issueGiftReqWithCard(designId, giftNumber,Constant.CARD_SCHEME_ID,"",Constant.CARD_NAME)
+                issueCardRepository.issueGiftReqWithCard(
+                    designId,
+                    giftNumber,
+                    Constant.CARD_SCHEME_ID,
+                    "",
+                    Constant.CARD_NAME
+                )
             if (res is Result.Success) {
                 _issueGiftReqResult.value = IssueGiftResult(success = res.data)
             } else if (res is Result.Error) {
@@ -68,18 +71,24 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
 
 
     fun creditCardSelectDataChanged(
-        cardSchemeId: String,
+        sumUpSrcCardInfo: ArrayList<CardInfoRequestContentInfo>,
         designId: String,
-        cardNickName: String,
-        vcnName: String,
-        sumUpSrcCardInfo : ArrayList<CardInfoRequestContentInfo>
+        giftNumber: String
     ) {
         viewModelScope.launch {
             _loading.value = true
-            val cardInfo =
-                CardInfoWithDesignIdContentInfo(cardSchemeId, designId, cardNickName, vcnName)
             val res =
-                issueCardRepository.issueSumReq(cardInfo, sumUpSrcCardInfo, cardSchemeId, Constant.FEE_TYPE_ISSUE, "1", sumUpSrcCardInfo.size.toString())
+                issueCardRepository.issueSumReqBalance(
+                    sumUpSrcCardInfo,
+                    Constant.CARD_SCHEME_ID,
+                    Constant.FEE_TYPE_ISSUE,
+                    "1",
+                    sumUpSrcCardInfo.size.toString(),
+                    designId,
+                    giftNumber,
+                    "",
+                    Constant.CARD_NAME
+                )
             if (res is Result.Success) {
                 _feeInfoResult.value = FeeInfoResult(success = res.data)
             } else if (res is Result.Error) {

@@ -401,6 +401,25 @@ class RequestHelper {
             )
         }
 
+        fun createSMSIvrConfirm(
+            certType: String,
+            loginId: String,
+            certCode: String,
+            extCertDealId: String
+        ): Request {
+            return Request(
+                request = SmsIvrAuthRequest(
+                    certType = certType,
+                    loginId = loginId,
+                    certCode = certCode,
+                    extCertDealId = extCertDealId
+                ),
+                head = BaseHead(
+                    messageType = MessageType.CardRelationRegReq.value
+                )
+            )
+        }
+
         fun createSendSMSRequest(
           loginId: String
         ): Request {
