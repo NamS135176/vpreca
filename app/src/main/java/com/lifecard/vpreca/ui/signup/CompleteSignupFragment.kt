@@ -23,13 +23,13 @@ class CompleteSignupFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_complete_to_login)
+                findNavController().popBackStack(R.id.nav_login, inclusive = false)
             }
         })
 
         val btnComplete = binding.btnComplete
         btnComplete.setOnClickListener {
-            findNavController().navigate(R.id.action_complete_to_login)
+            findNavController().popBackStack(R.id.nav_login, inclusive = false)
         }
         return binding.root
     }
