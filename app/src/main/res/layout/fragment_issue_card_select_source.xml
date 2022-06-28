@@ -53,28 +53,27 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_des">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
+                    android:gravity="center_vertical"
                     android:lineSpacingExtra="8sp"
                     android:paddingTop="12dp"
                     android:text="@string/issue_card_select_source_total_title"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
+
                 <com.google.android.material.textview.MaterialTextView
-                    android:textAlignment="textEnd"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:id="@+id/tv_total_amount"
                     style="@style/Widget.AppCompat.TextView.Bold"
-                    android:gravity="center_horizontal"
-                    android:textSize="36sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|end"
+                    android:lineSpacingExtra="2sp"
                     android:text="@string/issue_card_select_source_total"
                     android:textColor="@color/white"
-                    android:lineSpacingExtra="2sp"/>
-
+                    android:textSize="36sp" />
             </LinearLayout>
 
             <com.google.android.material.divider.MaterialDivider
@@ -96,6 +95,7 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@+id/underline" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/error"
                 android:layout_width="match_parent"
@@ -111,13 +111,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_select_source"
                 android:layout_width="match_parent"
-                android:scrollbarThumbVertical="@drawable/scrollbars"
                 android:layout_height="0dp"
                 android:layout_marginLeft="21dp"
-                android:layout_marginRight="11dp"
-                android:scrollbars="vertical"
                 android:layout_marginTop="22dp"
+                android:layout_marginRight="11dp"
                 android:layout_marginBottom="15dp"
+                android:scrollbarThumbVertical="@drawable/scrollbars"
+                android:scrollbars="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/error" />
         </androidx.constraintlayout.widget.ConstraintLayout>
