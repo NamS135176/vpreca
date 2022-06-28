@@ -93,6 +93,7 @@
                             android:imeOptions="actionNext"
                             android:inputType="text"
                             android:insetTop="0dp"
+                            android:textSize="16sp"
                             android:insetBottom="0dp"
                             android:paddingVertical="0dp"
                             android:textColor="@color/peacock_blue" />
