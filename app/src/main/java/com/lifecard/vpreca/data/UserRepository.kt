@@ -167,4 +167,30 @@ class UserRepository(private val appContext: Context, private val apiService: Ap
             }
         }
     }
+
+    suspend fun sendSMSIvrConfirm(
+        certType: String,
+        loginId: String,
+        certCode: String,
+        extCertDealId: String
+    ): Result<SmsIvrAuthReqResponseContent> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userResponse = apiService.confirmSMSIvr(
+                    RequestHelper.createSMSIvrConfirm(
+                        certType = certType,
+                        loginId = loginId,
+                        certCode = certCode,
+                        extCertDealId = extCertDealId
+                    )
+                )
+
+                Result.Success(userResponse.response)
+            } catch (e: Exception) {
+                println("UserRepository... request sms has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
 }

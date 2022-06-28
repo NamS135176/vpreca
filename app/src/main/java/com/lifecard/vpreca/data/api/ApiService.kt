@@ -112,6 +112,11 @@ interface ApiService {
         @Body sendSmsRequest: Request
     ): SMSAuthResponse
 
+    @POST("SmsIvrAuthReq")
+    suspend fun confirmSMSIvr(
+        @Body sendSmsRequest: Request
+    ): SmsIvrAuthReqResponse
+
     @FormUrlEncoded
     @POST("OTPGetReq")
     suspend fun requestWebDirectOtp(

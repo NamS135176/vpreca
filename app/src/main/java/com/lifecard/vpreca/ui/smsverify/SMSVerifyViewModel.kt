@@ -78,18 +78,16 @@ class SMSVerifyViewModel @Inject constructor(
     }
 
     fun sendSMSConfirm(
-        memberNumber: String,
         certType: String,
-        operationType: String,
+        loginId: String,
         certCode: String,
         extCertDealId: String
     ) {
         viewModelScope.launch {
             _loading.value = true
-            val result = userRepository.sendSMSConfirm(
-                memberNumber = memberNumber,
+            val result = userRepository.sendSMSIvrConfirm(
                 certType = certType,
-                operationType = operationType,
+                loginId = loginId,
                 certCode = certCode,
                 extCertDealId = extCertDealId
             )
