@@ -60,6 +60,7 @@ class RegexUtils {
          */
         private const val RegexOcr = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{12,16}\$"
 
+        private const val RegexOcrAbsolute = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{15}\$"
         /**
          * at least: 1 digit, 1 lowercase, one uppercase
          */
@@ -145,6 +146,10 @@ class RegexUtils {
 
         fun isOcrCode(code: String): Boolean {
             return Pattern.compile(RegexOcr).matcher(code).matches()
+        }
+
+        fun isOcrCodeOnly15Char(code: String): Boolean {
+            return Pattern.compile(RegexOcrAbsolute).matcher(code).matches()
         }
 
         private fun isMobilePhone(phone: String): Boolean {

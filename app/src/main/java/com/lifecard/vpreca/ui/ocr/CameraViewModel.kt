@@ -10,6 +10,11 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.Text
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.lifecard.vpreca.BuildConfig
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.api.GoogleVisionService
@@ -19,12 +24,11 @@ import com.lifecard.vpreca.utils.RegexUtils
 import com.lifecard.vpreca.utils.encodeImage
 import com.lifecard.vpreca.utils.getScaledDownBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.IOException
 import java.net.UnknownHostException
 import javax.inject.Inject
+import kotlin.coroutines.resume
 
 @Suppress("kotlin:S1192") // String literals should not be duplicated
 @HiltViewModel
@@ -37,6 +41,12 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
     var lockButtonTakePhoto = MutableLiveData<Boolean>(false)
     var networkTrouble = MutableLiveData<Boolean>()
 
+    private val recognizer: TextRecognizer by lazy {
+        TextRecognition.getClient(
+            TextRecognizerOptions.DEFAULT_OPTIONS
+        )
+    }
+
     fun getCodeByGoogleVisionOcr(
         context: Context,
         imageUri: Uri,
@@ -44,17 +54,29 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         percentHeight: Float = 1f
     ) {
         viewModelScope.launch {
+            awaitAll(
+                async { }
+            )
+        }
+        viewModelScope.launch {
             loading.value = true
+
             var ocr: Result<String>? = null
             cropBitmap(context, imageUri, percentTop, percentHeight)?.let { cropped ->
-                ocr = callApiGetOcr(cropped)
+                ocr = mlKitDetectOcr(cropped)
+                if (ocr == null || ocr is Result.Error) {
+                    ocr = callApiGetOcr(cropped)
+                }
             }
-//            if (ocr == null || ocr is Result.Error) {
-//                val imageStream =
-//                    context.contentResolver.openInputStream(imageUri)
-//                val selectedImage = BitmapFactory.decodeStream(imageStream)
-//                ocr = callApiGetOcr(selectedImage)
-//            }
+            if (ocr == null || ocr is Result.Error) {
+                val imageStream =
+                    context.contentResolver.openInputStream(imageUri)
+                val selectedImage = BitmapFactory.decodeStream(imageStream)
+                ocr = mlKitDetectOcr(selectedImage)
+                if (ocr == null || ocr is Result.Error) {
+                    ocr = callApiGetOcr(selectedImage)
+                }
+            }
 
             if (ocr is Result.Success) {
                 val resultSuccess = (ocr as Result.Success<String>)
@@ -123,6 +145,28 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
 
     fun releaseLockTakePhoto() {
         lockButtonTakePhoto.value = false
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private suspend fun mlKitDetectOcr(bitmap: Bitmap): Result<String> {
+        return suspendCancellableCoroutine { cont ->
+            val image = InputImage.fromBitmap(bitmap, 0)
+            recognizer.process(image)
+                .addOnSuccessListener { visionText ->
+                    val code = findBestCodeFromTextBlocksMLKit(visionText.textBlocks)
+//                    println("recognizer.process... ${visionText.textBlocks}")
+//                    visionText.textBlocks.forEach { println("recognizer.process... block ${it.text}") }
+                    code?.let { cont.resume(Result.Success(it)) } ?: cont.resume(
+                        Result.Error(
+                            Exception("Can not detect ocr")
+                        )
+                    )
+                }
+                .addOnFailureListener { e ->
+                    cont.resume(Result.Error(Exception("Can not detect ocr")))
+                }
+        }
+
     }
 
     private suspend fun callApiGetOcr(bitmap: Bitmap): Result<String> {
@@ -204,6 +248,28 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         try {
             val results = textAnnotations.filter { it.description.length == length }
             if (results.isNotEmpty()) return results[0].description
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun findBestCodeFromTextBlocksMLKit(textBlocks: List<Text.TextBlock>): String? {
+        try {
+            //1. delete all ( + ) + : + spacing on text
+            var texts = textBlocks.map {
+                var text = it.text
+                text = text.trim().replace(Regex("[\\(\\)\\s:]"), "")
+                //remove all not alphabet letter and number
+                text = text.replace(Regex("[^A-z0-9]"), "")
+                text
+            }
+            //2. check the regex and length of text in (12..16)
+            texts = texts.filter { RegexUtils.isOcrCodeOnly15Char(it) }
+            return when (texts.isNotEmpty()) {
+                true -> texts[0]
+                else -> null
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
