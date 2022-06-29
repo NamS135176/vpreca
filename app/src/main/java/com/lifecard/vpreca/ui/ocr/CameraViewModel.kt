@@ -54,11 +54,6 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         percentHeight: Float = 1f
     ) {
         viewModelScope.launch {
-            awaitAll(
-                async { }
-            )
-        }
-        viewModelScope.launch {
             loading.value = true
 
             var ocr: Result<String>? = null
@@ -67,15 +62,15 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                 if (ocr == null || ocr is Result.Error) {
                     ocr = callApiGetOcr(cropped)
                 }
+                cropped.recycle()
             }
             if (ocr == null || ocr is Result.Error) {
-                val imageStream =
-                    context.contentResolver.openInputStream(imageUri)
-                val selectedImage = BitmapFactory.decodeStream(imageStream)
-                ocr = mlKitDetectOcr(selectedImage)
+                val originBitmap = getBitmapFixExif(context, imageUri)
+                ocr = mlKitDetectOcr(originBitmap)
                 if (ocr == null || ocr is Result.Error) {
-                    ocr = callApiGetOcr(selectedImage)
+                    ocr = callApiGetOcr(originBitmap)
                 }
+                originBitmap.recycle()
             }
 
             if (ocr is Result.Success) {
@@ -89,6 +84,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                     error.value = resultError.exception.message
                 }
             }
+            context.contentResolver.delete(imageUri, null, null)
             releaseLockTakePhoto()
             loading.value = false
         }
@@ -276,6 +272,30 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         return null
     }
 
+    private fun getBitmapFixExif(
+        context: Context,
+        imageUri: Uri
+    ): Bitmap {
+        val rotationInDegrees = getRotationInDegrees(context, imageUri)
+        val bitmapStream = context.contentResolver.openInputStream(imageUri)
+        var originBitmap = BitmapFactory.decodeStream(bitmapStream)
+
+        if (rotationInDegrees != 0) {
+            val matrix = Matrix()
+            matrix.preRotate(rotationInDegrees.toFloat())
+            originBitmap = Bitmap.createBitmap(
+                originBitmap,
+                0,
+                0,
+                originBitmap.width,
+                originBitmap.height,
+                matrix,
+                true
+            )
+        }
+        return originBitmap
+    }
+
     private fun cropBitmap(
         context: Context,
         imageUri: Uri,
@@ -283,23 +303,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         percentHeight: Float = 1f
     ): Bitmap? {
         try {
-            val rotationInDegrees = getRotationInDegrees(context, imageUri)
-            val bitmapStream = context.contentResolver.openInputStream(imageUri)
-            var originBitmap = BitmapFactory.decodeStream(bitmapStream)
-
-            if (rotationInDegrees != 0) {
-                val matrix = Matrix()
-                matrix.preRotate(rotationInDegrees.toFloat())
-                originBitmap = Bitmap.createBitmap(
-                    originBitmap,
-                    0,
-                    0,
-                    originBitmap.width,
-                    originBitmap.height,
-                    matrix,
-                    true
-                )
-            }
+            val originBitmap = getBitmapFixExif(context, imageUri)
 
             val bitmapW = originBitmap.width
             val bitmapH = originBitmap.height

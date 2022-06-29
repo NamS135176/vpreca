@@ -294,8 +294,6 @@ class CameraFragment : Fragment() {
                             percents[0],
                             percents[1]
                         )
-
-                        requireContext().contentResolver.delete(imageUri, null, null)
                     }
 
                     _cameraProvider?.let { cameraProvider ->
