@@ -1,6 +1,15 @@
 package com.lifecard.vpreca.ui.ocr
 
+import android.content.ContentValues
+import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
+import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,7 +25,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -31,20 +43,85 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
     var lockButtonTakePhoto = MutableLiveData<Boolean>(false)
     var networkTrouble = MutableLiveData<Boolean>()
 
-    fun getCodeByGoogleVisionOcr(bitmap: Bitmap) {
+    fun getCodeByGoogleVisionOcr(
+        context: Context,
+        imageUri: Uri,
+        percentTop: Float = 0f,
+        percentHeight: Float = 1f
+    ) {
         viewModelScope.launch {
             loading.value = true
-            val ocr = callApiGetOcr(bitmap)
-            releaseLockTakePhoto()
+            var ocr: Result<String>? = null
+            cropBitmap(context, imageUri, percentTop, percentHeight)?.let { cropped ->
+                ocr = callApiGetOcr(cropped)
+            }
+            if (ocr == null || ocr is Result.Error) {
+                val imageStream =
+                    context.contentResolver.openInputStream(imageUri)
+                val selectedImage = BitmapFactory.decodeStream(imageStream)
+                imageStream?.close()
+                ocr = callApiGetOcr(selectedImage)
+            }
+
             if (ocr is Result.Success) {
-                codeOcr.value = ocr.data
+                val resultSuccess = (ocr as Result.Success<String>)
+                codeOcr.value = resultSuccess.data
             } else if (ocr is Result.Error) {
-                if (ocr.exception is NoConnectivityException) {
+                val resultError = ocr as Result.Error
+                if (resultError.exception is NoConnectivityException) {
                     networkTrouble.value = true
                 } else {
-                    error.value = ocr.exception.message
+                    error.value = resultError.exception.message
                 }
             }
+            releaseLockTakePhoto()
+            loading.value = false
+        }
+    }
+
+    fun getCodeByGoogleVisionOcrByBitmap(
+        context: Context,
+        bitmap: Bitmap,
+        percentTop: Float = 0f,
+        percentHeight: Float = 1f
+    ) {
+        viewModelScope.launch {
+            loading.value = true
+
+            val bitmapW = bitmap.width
+            val bitmapH = bitmap.height
+            val y = bitmapH * percentTop
+            val height = bitmapH * percentHeight
+
+            val cropBitmap = Bitmap.createBitmap(
+                bitmap,
+                0,
+                y.toInt(),
+                bitmapW,
+                height.toInt()
+            )
+            saveMediaToStorage(context, cropBitmap)
+
+            var ocr: Result<String>? = null
+            cropBitmap?.let { cropped ->
+                ocr = callApiGetOcr(cropped)
+            }
+            if (ocr == null || ocr is Result.Error) {
+                ocr = callApiGetOcr(bitmap)
+            }
+
+            if (ocr is Result.Success) {
+                val resultSuccess = (ocr as Result.Success<String>)
+                codeOcr.value = resultSuccess.data
+            } else if (ocr is Result.Error) {
+                val resultError = ocr as Result.Error
+                if (resultError.exception is NoConnectivityException) {
+                    networkTrouble.value = true
+                } else {
+                    error.value = resultError.exception.message
+                }
+            }
+            releaseLockTakePhoto()
             loading.value = false
         }
     }
@@ -138,5 +215,135 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
             e.printStackTrace()
         }
         return null
+    }
+
+    suspend fun cropBitmap(
+        context: Context,
+        imageUri: Uri,
+        percentTop: Float = 0f,
+        percentHeight: Float = 1f
+    ): Bitmap? {
+        return withContext(Dispatchers.IO) {              // Dispatchers.IO (main-safety block)
+            val matrix = Matrix()
+            val rotationInDegrees = getRotationInDegrees(context, imageUri)
+            if (rotationInDegrees != 0) {
+                matrix.preRotate(rotationInDegrees.toFloat())
+            }
+
+            val bitmapStream = context.contentResolver.openInputStream(imageUri)
+            val originBitmap = BitmapFactory.decodeStream(bitmapStream)
+            bitmapStream?.close()
+            val bitmapW = originBitmap.height
+            val bitmapH = originBitmap.width
+            val y = bitmapH * percentTop
+            val height = bitmapH * percentHeight
+            val cropBitmap = Bitmap.createBitmap(
+                originBitmap,
+                y.toInt(),
+                0,
+                height.toInt(),
+                bitmapW,
+                matrix,
+                true
+            )
+            saveMediaToStorage(context, cropBitmap)
+
+            cropBitmap
+        }
+    }
+
+    private fun getRotationInDegrees(context: Context, uri: Uri): Int {
+        val exif = getExifInterface(context, uri)
+        val rotation = exif?.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_NORMAL
+        ) ?: ExifInterface.ORIENTATION_NORMAL
+
+        return exifToDegrees(rotation)
+    }
+
+    private fun getExifInterface(context: Context, uri: Uri): ExifInterface? {
+        try {
+            val path = uri.toString()
+            if (path.startsWith("file://")) {
+                return ExifInterface(path)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                if (path.startsWith("content://")) {
+                    val inputStream = context.contentResolver.openInputStream(uri)
+                    return inputStream?.let { ExifInterface(it) }
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    private fun exifToDegrees(exifOrientation: Int): Int {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270
+        }
+        return 0
+    }
+
+    private fun saveMediaToStorage(context: Context, bitmap: Bitmap) {
+        //Generating a file name
+        val filename = "${System.currentTimeMillis()}.jpg"
+
+        //Output stream
+        var fos: OutputStream? = null
+        var imageUri: Uri? = null
+
+        //For devices running android >= Q
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            //getting the contentResolver
+            context.contentResolver?.also { resolver ->
+
+                //Content resolver will process the contentvalues
+                val contentValues = ContentValues().apply {
+
+                    //putting file information in content values
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                }
+
+                //Inserting the contentValues to contentResolver and getting the Uri
+                imageUri =
+                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+                //Opening an outputstream with the Uri that we got
+                fos = imageUri?.let { resolver.openOutputStream(it) }
+
+            }
+        } else {
+            //These for devices running on android < Q
+            //So I don't think an explanation is needed here
+            val imagesDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val image = File(imagesDir, filename)
+            fos = FileOutputStream(image)
+        }
+
+        fos?.use {
+            //Finally writing the bitmap to the output stream that we opened
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        }
+        fos?.close()
+
+
+        //update exif
+//        imageUri?.let {
+//            val imageStream =
+//                requireActivity().contentResolver.openInputStream(it)
+//            val exif = ExifInterface(imageStream!!)
+//            exif.setAttribute(ExifInterface.TAG_ORIENTATION, "0")
+//            exif.saveAttributes()
+//        }
     }
 }
