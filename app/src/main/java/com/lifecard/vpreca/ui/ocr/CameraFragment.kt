@@ -330,7 +330,6 @@ class CameraFragment : Fragment() {
                     bitmap?.let {
                         val percents = getPercentCrop()
                         viewModel.getCodeByGoogleVisionOcrByBitmap(
-                            requireContext(),
                             bitmap,
                             percents[0],
                             percents[1]

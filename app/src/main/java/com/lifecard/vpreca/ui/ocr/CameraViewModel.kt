@@ -49,13 +49,12 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
             cropBitmap(context, imageUri, percentTop, percentHeight)?.let { cropped ->
                 ocr = callApiGetOcr(cropped)
             }
-            if (ocr == null || ocr is Result.Error) {
-                val imageStream =
-                    context.contentResolver.openInputStream(imageUri)
-                val selectedImage = BitmapFactory.decodeStream(imageStream)
-                imageStream?.close()
-                ocr = callApiGetOcr(selectedImage)
-            }
+//            if (ocr == null || ocr is Result.Error) {
+//                val imageStream =
+//                    context.contentResolver.openInputStream(imageUri)
+//                val selectedImage = BitmapFactory.decodeStream(imageStream)
+//                ocr = callApiGetOcr(selectedImage)
+//            }
 
             if (ocr is Result.Success) {
                 val resultSuccess = (ocr as Result.Success<String>)
@@ -74,7 +73,6 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
     }
 
     fun getCodeByGoogleVisionOcrByBitmap(
-        context: Context,
         bitmap: Bitmap,
         percentTop: Float = 0f,
         percentHeight: Float = 1f
@@ -210,51 +208,46 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         return null
     }
 
-    suspend fun cropBitmap(
+    private fun cropBitmap(
         context: Context,
         imageUri: Uri,
         percentTop: Float = 0f,
         percentHeight: Float = 1f
     ): Bitmap? {
-        return withContext(Dispatchers.IO) {              // Dispatchers.IO (main-safety block)
-            try {
-                val rotationInDegrees = getRotationInDegrees(context, imageUri)
-                val bitmapStream = context.contentResolver.openInputStream(imageUri)
-                var originBitmap = BitmapFactory.decodeStream(bitmapStream)
-                bitmapStream?.close()
+        try {
+            val rotationInDegrees = getRotationInDegrees(context, imageUri)
+            val bitmapStream = context.contentResolver.openInputStream(imageUri)
+            var originBitmap = BitmapFactory.decodeStream(bitmapStream)
 
-                if (rotationInDegrees != 0) {
-                    val matrix = Matrix()
-                    matrix.preRotate(rotationInDegrees.toFloat())
-                    originBitmap = Bitmap.createBitmap(
-                        originBitmap,
-                        0,
-                        0,
-                        originBitmap.width,
-                        originBitmap.height,
-                        matrix,
-                        true
-                    )
-                }
-
-                val bitmapW = originBitmap.width
-                val bitmapH = originBitmap.height
-                val y = bitmapH * percentTop
-                val height = bitmapH * percentHeight
-                val cropBitmap = Bitmap.createBitmap(
+            if (rotationInDegrees != 0) {
+                val matrix = Matrix()
+                matrix.preRotate(rotationInDegrees.toFloat())
+                originBitmap = Bitmap.createBitmap(
                     originBitmap,
                     0,
-                    y.toInt(),
-                    bitmapW,
-                    height.toInt(),
+                    0,
+                    originBitmap.width,
+                    originBitmap.height,
+                    matrix,
+                    true
                 )
-
-                return@withContext cropBitmap
-            } catch (e: Exception) {
-                println(e)
-                null
             }
 
+            val bitmapW = originBitmap.width
+            val bitmapH = originBitmap.height
+            val y = bitmapH * percentTop
+            val height = bitmapH * percentHeight
+
+            return Bitmap.createBitmap(
+                originBitmap,
+                0,
+                y.toInt(),
+                bitmapW,
+                height.toInt(),
+            )
+        } catch (e: Exception) {
+            println(e)
+            return null
         }
     }
 
