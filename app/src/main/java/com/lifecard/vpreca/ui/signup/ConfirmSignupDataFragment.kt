@@ -45,7 +45,7 @@ class ConfirmSignupDataFragment : Fragment() {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
                     // do something on positive button click
-                    findNavController().navigate(R.id.action_cfSignup_to_login)
+                    findNavController().popBackStack(R.id.nav_login,inclusive = false)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage("途中ですがキャンセルしてもよろしいですか?")

@@ -64,7 +64,7 @@
                             style="@style/TextInputEditTextFilledBox"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
-                            android:hint="@string/introduce_second_input"
+                            android:hint="@string/issue_card_by_code_input_hint"
                             android:imeOptions="actionNext"
                             android:inputType="text"
                             android:insetTop="0dp"

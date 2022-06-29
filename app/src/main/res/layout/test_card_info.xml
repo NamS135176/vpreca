@@ -108,7 +108,7 @@
                     android:ellipsize="end"
                     android:textColor="@color/black"
                     app:autoSizeMaxTextSize="20sp"
-                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeMinTextSize="6sp"
                     app:autoSizeStepGranularity="2dp"
                     app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toTopOf="@+id/guideline_vertical"

@@ -33,7 +33,7 @@ class CompleteForgotPassFragment : Fragment() {
     }
 
     fun backFunction(){
-        findNavController().navigate(R.id.action_forgot_complete_to_login)
+        findNavController().popBackStack(R.id.nav_login, inclusive = false)
     }
 
 }

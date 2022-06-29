@@ -34,7 +34,7 @@ class PhoneFragment : Fragment() {
         btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
-                    findNavController().navigate(R.id.action_phone_to_login)
+                    findNavController().popBackStack(R.id.nav_login,inclusive = false)
                 }
                 setNegativeButton("いいえ", null)
                 setMessage(

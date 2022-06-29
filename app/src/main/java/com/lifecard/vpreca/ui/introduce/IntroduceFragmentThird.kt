@@ -56,7 +56,7 @@ class IntroduceFragmentThird : Fragment() {
             findNavController().navigate(R.id.action_third_to_second)
         }
         btnSubmit.setOnClickListener {
-            findNavController().navigate(R.id.action_third_to_login)
+            findNavController().popBackStack(R.id.nav_login, inclusive = false)
         }
         return binding.root
     }
