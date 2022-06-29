@@ -8,6 +8,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.AlertDialogFragment
+import kotlin.math.ceil
+import kotlin.system.exitProcess
 
 fun Fragment.getNavigationResult(key: String) =
     findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(key)
@@ -104,6 +106,16 @@ fun Fragment.closeApp() {
         requireActivity().finishAndRemoveTask()
     }
     try {
-        System.exit(0)
-    } catch (e: Exception) {}
+        exitProcess(0)
+    } catch (e: Exception) {
+    }
+}
+
+fun Fragment.getStatusBarHeight(): Int {
+    val resourceId: Int = resources.getIdentifier("status_bar_height", "dimen", "android")
+    return if (resourceId > 0) {
+        resources.getDimensionPixelSize(resourceId)
+    } else {
+        ceil((25 * requireContext().resources.displayMetrics.density).toDouble()).toInt()
+    }
 }

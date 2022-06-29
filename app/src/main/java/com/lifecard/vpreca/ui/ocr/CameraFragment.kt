@@ -3,7 +3,6 @@ package com.lifecard.vpreca.ui.ocr
 import android.Manifest
 import android.content.ContentValues
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,14 +13,12 @@ import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -29,17 +26,16 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentCameraBinding
 import com.lifecard.vpreca.databinding.LayoutCameraPreviewBinding
 import com.lifecard.vpreca.databinding.LayoutCameraViewOldBinding
-import com.lifecard.vpreca.utils.hideLoadingDialog
-import com.lifecard.vpreca.utils.setNavigationResult
-import com.lifecard.vpreca.utils.showInternetTrouble
-import com.lifecard.vpreca.utils.showLoadingDialog
+import com.lifecard.vpreca.utils.*
 import com.otaliastudios.cameraview.BitmapCallback
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 @AndroidEntryPoint
 class CameraFragment : Fragment() {
@@ -194,7 +190,6 @@ class CameraFragment : Fragment() {
     }
 
     private fun takePhoto() {
-        println("takePhoto")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             takePhotoX()
         } else {
@@ -229,6 +224,11 @@ class CameraFragment : Fragment() {
                 }
 
             imageCapture = ImageCapture.Builder().build()
+            val useCaseGroup = UseCaseGroup.Builder()
+                .addUseCase(preview)
+                .addUseCase(imageCapture!!)
+                .setViewPort(cameraPreview.viewPort!!)
+                .build()
 
             // Select back camera as a default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
@@ -239,7 +239,7 @@ class CameraFragment : Fragment() {
 
                 // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
-                    viewLifecycleOwner, cameraSelector, preview, imageCapture
+                    viewLifecycleOwner, cameraSelector, useCaseGroup
                 )
 
             } catch (exc: Exception) {
@@ -288,15 +288,19 @@ class CameraFragment : Fragment() {
 
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults) {
-                    println("Photo capture succeeded: ${output.savedUri}")
                     output.savedUri?.let { imageUri ->
-                        val imageStream =
-                            requireActivity().contentResolver.openInputStream(imageUri)
-                        val selectedImage = BitmapFactory.decodeStream(imageStream)
-                        imageStream?.close()
-                        viewModel.getCodeByGoogleVisionOcr(selectedImage)
-                        val deleted = requireContext().contentResolver.delete(imageUri, null, null)
-                        println("Photo capture delete status: $deleted")
+                        viewModel.viewModelScope.launch {
+                            val percents = getPercentCrop()
+                            viewModel.getCodeByGoogleVisionOcr(
+                                requireContext(),
+                                imageUri,
+                                percents[0],
+                                percents[1]
+                            )
+                        }
+
+//                        val deleted = requireContext().contentResolver.delete(imageUri, null, null)
+//                        println("Photo capture delete status: $deleted")
                     }
 
                     _cameraProvider?.let { cameraProvider ->
@@ -328,7 +332,15 @@ class CameraFragment : Fragment() {
         cameraViewOld?.addCameraListener(object : CameraListener() {
             override fun onPictureTaken(result: PictureResult) {
                 result.toBitmap(1024, 1024, BitmapCallback { bitmap ->
-                    bitmap?.let { viewModel.getCodeByGoogleVisionOcr(it) }
+                    bitmap?.let {
+                        val percents = getPercentCrop()
+                        viewModel.getCodeByGoogleVisionOcrByBitmap(
+                            requireContext(),
+                            bitmap,
+                            percents[0],
+                            percents[1]
+                        )
+                    }
                         ?: kotlin.run {
                             //show alert
                             showAlertErrorOcr()
@@ -340,6 +352,23 @@ class CameraFragment : Fragment() {
 
     private fun takePhotoBellow21() {
         cameraViewOld?.takePicture()
+    }
+
+    private fun getPercentCrop(): FloatArray {
+        val percents = FloatArray(2)
+        //calculate crop image
+        val statusBarHeight = getStatusBarHeight()
+        val offset = Converter.convertDpToPixel(20f, requireContext())
+        val location = IntArray(2)
+        binding.focusLeft.getLocationOnScreen(location)
+        val height = binding.focusLeft.measuredHeight
+        val parentHeight = binding.cameraContainer.measuredHeight
+        val y = location[1] - statusBarHeight - offset
+        val percentTop = y / parentHeight
+        val percentHeight = (height + 2 * offset) / parentHeight
+        percents[0] = percentTop
+        percents[1] = percentHeight
+        return percents
     }
 
 }
