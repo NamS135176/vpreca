@@ -1,14 +1,11 @@
 package com.lifecard.vpreca.ui.ocr
 
-import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,10 +22,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.OutputStream
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -100,7 +94,6 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                 bitmapW,
                 height.toInt()
             )
-            saveMediaToStorage(context, cropBitmap)
 
             var ocr: Result<String>? = null
             cropBitmap?.let { cropped ->
@@ -224,31 +217,44 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         percentHeight: Float = 1f
     ): Bitmap? {
         return withContext(Dispatchers.IO) {              // Dispatchers.IO (main-safety block)
-            val matrix = Matrix()
-            val rotationInDegrees = getRotationInDegrees(context, imageUri)
-            if (rotationInDegrees != 0) {
-                matrix.preRotate(rotationInDegrees.toFloat())
+            try {
+                val rotationInDegrees = getRotationInDegrees(context, imageUri)
+                val bitmapStream = context.contentResolver.openInputStream(imageUri)
+                var originBitmap = BitmapFactory.decodeStream(bitmapStream)
+                bitmapStream?.close()
+
+                if (rotationInDegrees != 0) {
+                    val matrix = Matrix()
+                    matrix.preRotate(rotationInDegrees.toFloat())
+                    originBitmap = Bitmap.createBitmap(
+                        originBitmap,
+                        0,
+                        0,
+                        originBitmap.width,
+                        originBitmap.height,
+                        matrix,
+                        true
+                    )
+                }
+
+                val bitmapW = originBitmap.width
+                val bitmapH = originBitmap.height
+                val y = bitmapH * percentTop
+                val height = bitmapH * percentHeight
+                val cropBitmap = Bitmap.createBitmap(
+                    originBitmap,
+                    0,
+                    y.toInt(),
+                    bitmapW,
+                    height.toInt(),
+                )
+
+                return@withContext cropBitmap
+            } catch (e: Exception) {
+                println(e)
+                null
             }
 
-            val bitmapStream = context.contentResolver.openInputStream(imageUri)
-            val originBitmap = BitmapFactory.decodeStream(bitmapStream)
-            bitmapStream?.close()
-            val bitmapW = originBitmap.height
-            val bitmapH = originBitmap.width
-            val y = bitmapH * percentTop
-            val height = bitmapH * percentHeight
-            val cropBitmap = Bitmap.createBitmap(
-                originBitmap,
-                y.toInt(),
-                0,
-                height.toInt(),
-                bitmapW,
-                matrix,
-                true
-            )
-            saveMediaToStorage(context, cropBitmap)
-
-            cropBitmap
         }
     }
 
@@ -289,61 +295,5 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
             return 270
         }
         return 0
-    }
-
-    private fun saveMediaToStorage(context: Context, bitmap: Bitmap) {
-        //Generating a file name
-        val filename = "${System.currentTimeMillis()}.jpg"
-
-        //Output stream
-        var fos: OutputStream? = null
-        var imageUri: Uri? = null
-
-        //For devices running android >= Q
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            //getting the contentResolver
-            context.contentResolver?.also { resolver ->
-
-                //Content resolver will process the contentvalues
-                val contentValues = ContentValues().apply {
-
-                    //putting file information in content values
-                    put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
-                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
-                }
-
-                //Inserting the contentValues to contentResolver and getting the Uri
-                imageUri =
-                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-
-                //Opening an outputstream with the Uri that we got
-                fos = imageUri?.let { resolver.openOutputStream(it) }
-
-            }
-        } else {
-            //These for devices running on android < Q
-            //So I don't think an explanation is needed here
-            val imagesDir =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-            val image = File(imagesDir, filename)
-            fos = FileOutputStream(image)
-        }
-
-        fos?.use {
-            //Finally writing the bitmap to the output stream that we opened
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-        }
-        fos?.close()
-
-
-        //update exif
-//        imageUri?.let {
-//            val imageStream =
-//                requireActivity().contentResolver.openInputStream(it)
-//            val exif = ExifInterface(imageStream!!)
-//            exif.setAttribute(ExifInterface.TAG_ORIENTATION, "0")
-//            exif.saveAttributes()
-//        }
     }
 }
