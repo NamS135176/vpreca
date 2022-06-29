@@ -158,7 +158,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                 val codeResult = findBestCodeFromData(textAnnotations = textAnnotations)
                 if (!codeResult.isNullOrEmpty()) {
                     println("result of detectOcr: $codeResult")
-                    Result.Success(codeResult!!)
+                    Result.Success(codeResult)
                 } else {
                     Result.Error(Exception("Can not detect ocr"))
                 }
@@ -177,9 +177,11 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
 
     fun findBestCodeFromData(textAnnotations: List<VisionTextAnnotation>): String? {
         try {
-            //1. delete all ( or ) on text
+            //1. delete all ( + ) + : + spacing on text
             textAnnotations.forEach {
-                it.description = it.description.trim().replace(Regex("[\\(\\)]"), "")
+                it.description = it.description.trim().replace(Regex("[\\(\\)\\s:]"), "")
+                //remove all not alphabet letter and number
+                it.description = it.description.replace(Regex("[^A-z0-9]"), "")
             }
             println("findBestCodeFromData... textAnnotations: $textAnnotations")
             //2. check the regex and length of text in (12..16)
