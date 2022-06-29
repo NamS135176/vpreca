@@ -18,7 +18,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -32,7 +31,6 @@ import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -289,18 +287,15 @@ class CameraFragment : Fragment() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults) {
                     output.savedUri?.let { imageUri ->
-                        viewModel.viewModelScope.launch {
-                            val percents = getPercentCrop()
-                            viewModel.getCodeByGoogleVisionOcr(
-                                requireContext(),
-                                imageUri,
-                                percents[0],
-                                percents[1]
-                            )
-                        }
+                        val percents = getPercentCrop()
+                        viewModel.getCodeByGoogleVisionOcr(
+                            requireContext(),
+                            imageUri,
+                            percents[0],
+                            percents[1]
+                        )
 
-//                        val deleted = requireContext().contentResolver.delete(imageUri, null, null)
-//                        println("Photo capture delete status: $deleted")
+                        requireContext().contentResolver.delete(imageUri, null, null)
                     }
 
                     _cameraProvider?.let { cameraProvider ->
