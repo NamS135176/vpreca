@@ -21,3 +21,6 @@ release-apk.sh
 release-qa.sh
 sonar-sis.sh
 *.pem
+
+*.apk
+app/**/release/**

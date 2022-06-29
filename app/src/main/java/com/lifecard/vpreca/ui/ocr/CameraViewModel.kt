@@ -1,14 +1,10 @@
 package com.lifecard.vpreca.ui.ocr
 
-import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,7 +25,6 @@ import com.lifecard.vpreca.utils.getScaledDownBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import java.io.IOException
-import java.io.OutputStream
 import java.net.UnknownHostException
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -62,18 +57,24 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
 
             var ocr: Result<String>? = null
             cropBitmap(context, imageUri, percentTop, percentHeight)?.let { cropped ->
+                /*
                 ocr = mlKitDetectOcr(cropped)
                 if (ocr == null || ocr is Result.Error) {
                     ocr = callApiGetOcr(cropped)
                 }
+                 */
+                ocr = callApiGetOcr(context, cropped)
                 cropped.recycle()
             }
             if (ocr == null || ocr is Result.Error) {
                 val originBitmap = getBitmapFixExif(context, imageUri)
+                /*
                 ocr = mlKitDetectOcr(originBitmap)
                 if (ocr == null || ocr is Result.Error) {
                     ocr = callApiGetOcr(originBitmap)
                 }
+                 */
+                ocr = callApiGetOcr(context, originBitmap, false)
                 originBitmap.recycle()
             }
 
@@ -95,6 +96,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
     }
 
     fun getCodeByGoogleVisionOcrByBitmap(
+        context: Context,
         bitmap: Bitmap,
         percentTop: Float = 0f,
         percentHeight: Float = 1f
@@ -117,10 +119,10 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
 
             var ocr: Result<String>? = null
             cropBitmap?.let { cropped ->
-                ocr = callApiGetOcr(cropped)
+                ocr = callApiGetOcr(context, cropped)
             }
             if (ocr == null || ocr is Result.Error) {
-                ocr = callApiGetOcr(bitmap)
+                ocr = callApiGetOcr(context, bitmap)
             }
 
             if (ocr is Result.Success) {
@@ -169,7 +171,12 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
 
     }
 
-    private suspend fun callApiGetOcr(bitmap: Bitmap): Result<String> {
+    private suspend fun callApiGetOcr(
+        context: Context,
+        bitmap: Bitmap,
+        safeCheckSpecialChar: Boolean = true,
+        defaultResultCode: String? = null
+    ): Result<String> {
         return withContext(Dispatchers.IO) {
             try {
                 val error = Result.Error(Exception("Can not detect ocr"))
@@ -192,11 +199,29 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                 val request = VisionImageRequest(requests = listOf(requestContent))
                 val result = googleVisionService.detectOcr(gcpApiKey, request)
                 val textAnnotations = result.responses[0].textAnnotations
-                println("result of detectOcr textAnnotations = $textAnnotations")
                 val codeResult = findBestCodeFromData(textAnnotations = textAnnotations)
-                if (!codeResult.isNullOrEmpty()) {
+
+                if (codeResult != null) {
                     println("result of detectOcr: $codeResult")
-                    Result.Success(codeResult)
+                    if (safeCheckSpecialChar && codeResult.description.contains(Regex("[0||O]"))) {
+                        //crop image with vertices
+                        val vertices = codeResult.boundingPoly.vertices
+                        val x = vertices[0].x
+                        val y = vertices[0].y
+                        val width = vertices[1].x - x
+                        val height = vertices[2].y - y
+                        val bitmapBoundingText =
+                            Bitmap.createBitmap(scaleBitmap, x, y, width, height)
+                        return@withContext callApiGetOcr(
+                            context,
+                            bitmapBoundingText,
+                            false,
+                            codeResult.description
+                        )
+                    }
+                    Result.Success(codeResult.description)
+                } else if (defaultResultCode != null) {
+                    Result.Success(defaultResultCode)
                 } else {
                     Result.Error(Exception("Can not detect ocr"))
                 }
@@ -213,7 +238,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         }
     }
 
-    fun findBestCodeFromData(textAnnotations: List<VisionTextAnnotation>): String? {
+    fun findBestCodeFromData(textAnnotations: List<VisionTextAnnotation>): VisionTextAnnotation? {
         try {
             //1. delete all ( + ) + : + spacing on text
             textAnnotations.forEach {
@@ -221,10 +246,8 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                 //remove all not alphabet letter and number
                 it.description = it.description.replace(Regex("[^A-z0-9]"), "")
             }
-            println("findBestCodeFromData... textAnnotations: $textAnnotations")
             //2. check the regex and length of text in (12..16)
             val texts = textAnnotations.filter { RegexUtils.isOcrCode(it.description) }
-            println("findBestCodeFromData... texts: $texts")
             val results = listOf(15, 16, 14, 13, 12).mapNotNull {
                 findBestCodeFromTextAnnotation(
                     texts,
@@ -244,10 +267,10 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
     private fun findBestCodeFromTextAnnotation(
         textAnnotations: List<VisionTextAnnotation>,
         length: Int
-    ): String? {
+    ): VisionTextAnnotation? {
         try {
             val results = textAnnotations.filter { it.description.length == length }
-            if (results.isNotEmpty()) return results[0].description
+            if (results.isNotEmpty()) return results[0]
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -363,6 +386,4 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         }
         return 0
     }
-
-
 }
