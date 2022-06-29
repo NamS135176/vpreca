@@ -1,11 +1,14 @@
 package com.lifecard.vpreca.ui.ocr
 
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,6 +29,7 @@ import com.lifecard.vpreca.utils.getScaledDownBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import java.io.IOException
+import java.io.OutputStream
 import java.net.UnknownHostException
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -339,11 +343,9 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
             if (path.startsWith("file://")) {
                 return ExifInterface(path)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                if (path.startsWith("content://")) {
-                    val inputStream = context.contentResolver.openInputStream(uri)
-                    return inputStream?.let { ExifInterface(it) }
-                }
+            if (path.startsWith("content://")) {
+                val inputStream = context.contentResolver.openInputStream(uri)
+                return inputStream?.let { ExifInterface(it) }
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -361,4 +363,6 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         }
         return 0
     }
+
+
 }
