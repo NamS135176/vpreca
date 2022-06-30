@@ -112,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/home_text_no_card"
                 android:textSize="15sp"
+                android:textColor="#959595"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
