@@ -78,6 +78,8 @@ class ConfirmPhoneFragment : Fragment() {
         viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
                 findNavController().navigate(R.id.nav_signup_email)
+                inputPhoneConfirm.setText("")
+                viewModel.formResultState.value = null
             }
         }
 

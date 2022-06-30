@@ -44,12 +44,12 @@ class EmailFragment : Fragment() {
                 )
             }.create().show()
         }
-        btnBack.setOnClickListener { findNavController().navigate(R.id.action_email_to_phone) }
+        btnBack.setOnClickListener { findNavController().popBackStack() }
 
         requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_email_to_phone)
+                findNavController().popBackStack()
             }
         })
 
