@@ -228,7 +228,12 @@ class CameraFragment : Fragment() {
                         it.setSurfaceProvider(cameraPreview.surfaceProvider)
                     }
 
-                imageCapture = ImageCapture.Builder().build()
+                imageCapture = ImageCapture.Builder()
+                    .apply {
+                        view?.display?.rotation?.let { setTargetRotation(it) }
+                    }
+                    .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
+                    .build()
 
                 val useCaseGroup = UseCaseGroup.Builder()
                     .apply {
