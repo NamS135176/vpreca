@@ -130,6 +130,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
     }
 
     fun startTakePhoto() {
+        loading.value = true
         lockButtonTakePhoto.value = true
     }
 

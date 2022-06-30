@@ -1,6 +1,7 @@
 package com.lifecard.vpreca.ui.ocr
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -9,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -201,6 +203,7 @@ class CameraFragment : Fragment() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun startCameraX() {
         val cameraPreviewBinding =
@@ -231,8 +234,13 @@ class CameraFragment : Fragment() {
                 imageCapture = ImageCapture.Builder()
                     .apply {
                         view?.display?.rotation?.let { setTargetRotation(it) }
+                        try {
+                            setMaxResolution(Size(1024, 1024))
+                        } catch (e: Exception) {
+                        }
                     }
                     .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
+                    .setJpegQuality(100)
                     .build()
 
                 val useCaseGroup = UseCaseGroup.Builder()
