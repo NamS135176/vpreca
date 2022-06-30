@@ -217,27 +217,30 @@ class CameraFragment : Fragment() {
 
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
         cameraProviderFuture.addListener({
-            // Used to bind the lifecycle of cameras to the lifecycle owner
-            _cameraProvider = cameraProviderFuture.get()
-
-            // Preview
-            val preview = Preview.Builder()
-                .build()
-                .also {
-                    it.setSurfaceProvider(cameraPreview.surfaceProvider)
-                }
-
-            imageCapture = ImageCapture.Builder().build()
-            val useCaseGroup = UseCaseGroup.Builder()
-                .addUseCase(preview)
-                .addUseCase(imageCapture!!)
-                .setViewPort(cameraPreview.viewPort!!)
-                .build()
-
-            // Select back camera as a default
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
             try {
+                // Used to bind the lifecycle of cameras to the lifecycle owner
+                _cameraProvider = cameraProviderFuture.get()
+
+                // Preview
+                val preview = Preview.Builder()
+                    .build()
+                    .also {
+                        it.setSurfaceProvider(cameraPreview.surfaceProvider)
+                    }
+
+                imageCapture = ImageCapture.Builder().build()
+
+                val useCaseGroup = UseCaseGroup.Builder()
+                    .apply {
+                        addUseCase(preview)
+                        imageCapture?.let { addUseCase(it) }
+                        cameraPreview.viewPort?.let { setViewPort(it) }
+                    }
+                    .build()
+
+                // Select back camera as a default
+                val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
                 // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
 
@@ -245,12 +248,18 @@ class CameraFragment : Fragment() {
                 cameraProvider.bindToLifecycle(
                     viewLifecycleOwner, cameraSelector, useCaseGroup
                 )
-
             } catch (exc: Exception) {
-                exc.printStackTrace()
+                println(exc)
             }
 
         }, ContextCompat.getMainExecutor(requireContext()))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            _cameraProvider?.unbindAll()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -302,11 +311,11 @@ class CameraFragment : Fragment() {
                         )
                     }
 
-                    _cameraProvider?.let { cameraProvider ->
-                        {
-                            cameraProvider.unbindAll()
-                        }
-                    }
+//                    _cameraProvider?.let { cameraProvider ->
+//                        {
+//                            cameraProvider.unbindAll()
+//                        }
+//                    }
                 }
             }
         )

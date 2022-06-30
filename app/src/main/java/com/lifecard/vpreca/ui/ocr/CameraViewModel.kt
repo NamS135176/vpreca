@@ -1,10 +1,14 @@
 package com.lifecard.vpreca.ui.ocr
 
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,10 +22,17 @@ import com.lifecard.vpreca.utils.RegexUtils
 import com.lifecard.vpreca.utils.encodeImage
 import com.lifecard.vpreca.utils.getScaledDownBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.OutputStream
 import java.net.UnknownHostException
 import javax.inject.Inject
+import kotlin.math.max
+import kotlin.math.min
 
 @Suppress("kotlin:S1192") // String literals should not be duplicated
 @HiltViewModel
@@ -45,6 +56,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
 
             var ocr: Result<String>? = null
             cropBitmap(context, imageUri, percentTop, percentHeight)?.let { cropped ->
+                saveMediaToStorage(context, cropped)
                 ocr = callApiGetOcr(context, cropped)
                 cropped.recycle()
             }
@@ -159,13 +171,23 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                     println("result of detectOcr: $codeResult")
                     if (safeCheckSpecialChar && codeResult.description.contains(Regex("[O]"))) {
                         //crop image with vertices
+                        val padding = 15
                         val vertices = codeResult.boundingPoly.vertices
-                        val x = vertices[0].x
-                        val y = vertices[0].y
-                        val width = vertices[1].x - x
-                        val height = vertices[2].y - y
+                        var x = min(vertices[0].x, vertices[1].x)
+                        x = max(x - padding, 0)//for safe never minus
+
+                        var y = min(vertices[0].y, vertices[1].y)
+                        y = max(y - padding, 0)//for safe never minus
+
+                        val targetX = max(vertices[2].x, vertices[1].x) + padding
+                        val targetY = max(vertices[3].y, vertices[2].y) + padding
+
+                        val width = targetX + padding - x
+                        val height = targetY + padding - y
                         val bitmapBoundingText =
                             Bitmap.createBitmap(scaleBitmap, x, y, width, height)
+                        saveMediaToStorage(context, bitmapBoundingText)
+
                         return@withContext callApiGetOcr(
                             context,
                             bitmapBoundingText,
@@ -317,5 +339,51 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
             return 270
         }
         return 0
+    }
+
+    fun saveMediaToStorage(context: Context, bitmap: Bitmap) {
+        //Generating a file name
+        val filename = "${System.currentTimeMillis()}.jpg"
+
+        //Output stream
+        var fos: OutputStream? = null
+        var imageUri: Uri? = null
+
+        //For devices running android >= Q
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            //getting the contentResolver
+            context.contentResolver?.also { resolver ->
+
+                //Content resolver will process the contentvalues
+                val contentValues = ContentValues().apply {
+
+                    //putting file information in content values
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                }
+
+                //Inserting the contentValues to contentResolver and getting the Uri
+                imageUri =
+                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+                //Opening an outputstream with the Uri that we got
+                fos = imageUri?.let { resolver.openOutputStream(it) }
+
+            }
+        } else {
+            //These for devices running on android < Q
+            //So I don't think an explanation is needed here
+            val imagesDir =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            val image = File(imagesDir, filename)
+            fos = FileOutputStream(image)
+        }
+
+        fos?.use {
+            //Finally writing the bitmap to the output stream that we opened
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+        }
+        fos?.close()
     }
 }
