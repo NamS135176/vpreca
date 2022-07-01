@@ -44,6 +44,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
+enum class OcrDetectionService {
+    GoogleVision,
+    AWSTextract
+}
 
 @AndroidEntryPoint
 class CameraFragment : Fragment() {
@@ -62,6 +66,8 @@ class CameraFragment : Fragment() {
             }.toTypedArray()
     }
 
+    private val service = OcrDetectionService.AWSTextract
+
     private var _binding: FragmentCameraBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CameraViewModel by viewModels()
@@ -71,8 +77,6 @@ class CameraFragment : Fragment() {
     private var cameraViewOld: CameraView? = null
     private var camera: Camera? = null
     private lateinit var cameraController: LifecycleCameraController
-
-
     private val args: CameraFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -217,9 +221,7 @@ class CameraFragment : Fragment() {
         cameraController = LifecycleCameraController(requireContext())
         cameraController.bindToLifecycle(viewLifecycleOwner)
         cameraController.isTapToFocusEnabled = true
-        cameraController.imageCaptureMode
         cameraPreview.controller = cameraController
-//        setupFocus(cameraPreview)
 
         binding.cameraContainer.addView(
             cameraPreview,
@@ -246,7 +248,7 @@ class CameraFragment : Fragment() {
                     .apply {
                         view?.display?.rotation?.let { setTargetRotation(it) }
                         try {
-                            setMaxResolution(Size(1024, 16 * 1024 / 9))
+                            setMaxResolution(Size(1024, 1024 * 16 / 9))
                         } catch (e: Exception) {
                         }
                     }
@@ -268,7 +270,6 @@ class CameraFragment : Fragment() {
                 // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
 
-                // Bind use cases to camera
                 camera = cameraProvider.bindToLifecycle(
                     viewLifecycleOwner, cameraSelector, useCaseGroup
                 )
@@ -320,40 +321,6 @@ class CameraFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setupFocus(cameraPreview: PreviewView) {
-        cameraPreview.afterMeasured {
-            cameraPreview.setOnTouchListener { _, event ->
-                return@setOnTouchListener when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        true
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        val factory: MeteringPointFactory = SurfaceOrientedMeteringPointFactory(
-                            cameraPreview.width.toFloat(), cameraPreview.height.toFloat()
-                        )
-                        val autoFocusPoint = factory.createPoint(event.x, event.y)
-                        try {
-                            camera?.cameraControl?.startFocusAndMetering(
-                                FocusMeteringAction.Builder(
-                                    autoFocusPoint,
-                                    FocusMeteringAction.FLAG_AF
-                                ).apply {
-                                    //focus only when the user tap the preview
-                                    disableAutoCancel()
-                                }.build()
-                            )
-                        } catch (e: CameraInfoUnavailableException) {
-                        }
-                        true
-                    }
-                    else -> false // Unhandled event.
-                }
-            }
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -401,21 +368,22 @@ class CameraFragment : Fragment() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults) {
                     output.savedUri?.let { imageUri ->
-                        viewModel.ocrTextractDetect(requireContext(), imageUri)
-//                        val percents = getPercentCrop()
-//                        viewModel.getCodeByGoogleVisionOcr(
-//                            requireContext(),
-//                            imageUri,
-//                            percents[0],
-//                            percents[1]
-//                        )
+                        when (service) {
+                            OcrDetectionService.AWSTextract -> viewModel.ocrTextractDetect(
+                                requireContext(),
+                                imageUri
+                            )
+                            else -> {
+                                val percents = getPercentCrop()
+                                viewModel.getCodeByGoogleVisionOcr(
+                                    requireContext(),
+                                    imageUri,
+                                    percents[0],
+                                    percents[1]
+                                )
+                            }
+                        }
                     }
-
-//                    _cameraProvider?.let { cameraProvider ->
-//                        {
-//                            cameraProvider.unbindAll()
-//                        }
-//                    }
                 }
             }
         )

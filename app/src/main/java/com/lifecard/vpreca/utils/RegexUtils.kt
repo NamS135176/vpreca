@@ -276,5 +276,11 @@ class RegexUtils {
             return card
         }
 
+        fun replaceSpecialCaseOcrCode(code: String): String {
+            //ocr code always ends with a digit
+            var newCode = code.replace(Regex("[O]\$"), "0")
+            newCode = newCode.replace(Regex("[o]\$"), "0")
+            return newCode
+        }
     }
 }

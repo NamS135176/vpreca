@@ -75,7 +75,7 @@ class CameraViewModel @Inject constructor(
 
             if (ocr is Result.Success) {
                 val resultSuccess = (ocr as Result.Success<String>)
-                codeOcr.value = resultSuccess.data
+                codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(resultSuccess.data)
             } else if (ocr is Result.Error) {
                 val resultError = ocr as Result.Error
                 if (resultError.exception is NoConnectivityException) {
@@ -84,7 +84,7 @@ class CameraViewModel @Inject constructor(
                     error.value = resultError.exception.message
                 }
             }
-            context.contentResolver.delete(imageUri, null, null)
+//            context.contentResolver.delete(imageUri, null, null)
             releaseLockTakePhoto()
             loading.value = false
         }
@@ -122,7 +122,7 @@ class CameraViewModel @Inject constructor(
 
             if (ocr is Result.Success) {
                 val resultSuccess = (ocr as Result.Success<String>)
-                codeOcr.value = resultSuccess.data
+                codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(resultSuccess.data)
             } else if (ocr is Result.Error) {
                 val resultError = ocr as Result.Error
                 if (resultError.exception is NoConnectivityException) {
@@ -154,8 +154,9 @@ class CameraViewModel @Inject constructor(
         return withContext(Dispatchers.IO) {
             try {
                 val error = Result.Error(Exception("Can not detect ocr"))
-                val scaleBitmap = bitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = true)
+                val scaleBitmap = bitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = false)
                     ?: return@withContext error
+//                val scaleBitmap = bitmap
                 val imageBase64 = scaleBitmap.encodeImage() ?: return@withContext error
                 val gcpApiKey = BuildConfig.GoogleApiKey
 
@@ -163,7 +164,7 @@ class CameraViewModel @Inject constructor(
                     image = VisionImageContent(content = imageBase64),
                     features = listOf(VisionFeature(type = "TEXT_DETECTION")),
                     imageContext = VisionImageContext(
-                        languageHints = "ja",
+                        languageHints = arrayOf("en-t-i0"),
                         textDetectionParams = VisionTextDetectionParams(
                             enableTextDetectionConfidenceScore = true
                         )
@@ -228,17 +229,16 @@ class CameraViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             val originBitmap = getBitmapFixExif(context, imageUri)
-//            val scaleBitmap =
-//                originBitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = true)
-//                    ?: return@launch
-//            saveMediaToStorage(context, scaleBitmap)
-            val imageBase64 = originBitmap.encodeImage() ?: return@launch
+            val scaleBitmap =
+                originBitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = true)
+                    ?: return@launch
+            val imageBase64 = scaleBitmap.encodeImage() ?: return@launch
             val result = apiOcrTextractDetect(imageBase64)
             if (result is Result.Success) {
                 val response = result.data
                 val ocr = findBestCodeFromTextract(response.result.blocks)
-                ocr?.let { codeOcr.value = it } ?: Result.Error(Exception("Can not detect ocr"))
-
+                ocr?.let { codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(it) }
+                    ?: Result.Error(Exception("Can not detect ocr"))
             } else {
                 Result.Error(Exception("Can not detect ocr"))
             }
@@ -300,7 +300,7 @@ class CameraViewModel @Inject constructor(
         return null
     }
 
-    fun findBestCodeFromTextract(blocks: List<TextractResponseBlock>): String? {
+    private fun findBestCodeFromTextract(blocks: List<TextractResponseBlock>): String? {
         try {
             var filterBlocks = blocks.filter { !it.text.isNullOrEmpty() }
             //1. delete all ( + ) + : + spacing on text
