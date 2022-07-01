@@ -20,6 +20,7 @@ import com.lifecard.vpreca.data.vision.*
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.utils.RegexUtils
 import com.lifecard.vpreca.utils.encodeImage
+import com.lifecard.vpreca.utils.getScaledDownBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -146,9 +147,9 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         return withContext(Dispatchers.IO) {
             try {
                 val error = Result.Error(Exception("Can not detect ocr"))
-//                val scaleBitmap = bitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = false)
-//                    ?: return@withContext error
-                val scaleBitmap = bitmap
+                val scaleBitmap = bitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = false)
+                    ?: return@withContext error
+//                val scaleBitmap = bitmap
                 val imageBase64 = scaleBitmap.encodeImage() ?: return@withContext error
                 val gcpApiKey = BuildConfig.GoogleApiKey
 

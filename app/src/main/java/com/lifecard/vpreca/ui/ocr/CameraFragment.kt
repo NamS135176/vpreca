@@ -17,16 +17,22 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.camera.core.*
+import androidx.camera.core.impl.utils.executor.CameraXExecutors
+import androidx.camera.core.impl.utils.futures.FutureCallback
+import androidx.camera.core.impl.utils.futures.Futures
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.LifecycleCameraController
+import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.common.util.concurrent.ListenableFuture
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentCameraBinding
 import com.lifecard.vpreca.databinding.LayoutCameraPreviewBinding
@@ -264,10 +270,19 @@ class CameraFragment : Fragment() {
                 // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
 
-                // Bind use cases to camera
-                cameraProvider.bindToLifecycle(
+                camera = cameraProvider.bindToLifecycle(
                     viewLifecycleOwner, cameraSelector, useCaseGroup
                 )
+
+                cameraPreview.previewStreamState.observe(viewLifecycleOwner) { value ->
+                    if (value.equals(PreviewView.StreamState.STREAMING)) {
+                        val x = (binding.focusLeft.x + binding.focusLeft.width) / 2
+                        val y = binding.focusLeft.y + binding.focusLeft.height / 2
+
+                        setUpCameraAutoFocus(cameraPreview, x, y)
+                    }
+                }
+
             } catch (exc: Exception) {
                 println(exc)
             }
@@ -340,6 +355,39 @@ class CameraFragment : Fragment() {
             }
         )
     }
+
+    @SuppressLint("RestrictedApi")
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun setUpCameraAutoFocus(previewView: PreviewView, x: Float, y: Float) {
+//        val x: Float = previewView.getX() + previewView.getWidth() / 2f
+//        val y: Float = previewView.getY() + previewView.getHeight() / 2f
+        cameraController.cameraControl?.let { cameraControl ->
+            val pointFactory: MeteringPointFactory = previewView.meteringPointFactory
+            val afPointWidth = 1.0f / 6.0f // 1/6 total area
+            val aePointWidth = afPointWidth * 1.5f
+            val afPoint = pointFactory.createPoint(x, y, afPointWidth)
+            val aePoint = pointFactory.createPoint(x, y, aePointWidth)
+            val future: ListenableFuture<FocusMeteringResult> =
+                cameraControl.startFocusAndMetering(
+                    FocusMeteringAction.Builder(
+                        afPoint,
+                        FocusMeteringAction.FLAG_AF
+                    ).addPoint(
+                        aePoint,
+                        FocusMeteringAction.FLAG_AE
+                    ).build()
+                )
+
+            Futures.addCallback(future, object : FutureCallback<FocusMeteringResult?> {
+                override fun onSuccess(@Nullable result: FocusMeteringResult?) {}
+                override fun onFailure(t: Throwable) {
+                    // Throw the unexpected error.
+                    throw RuntimeException(t)
+                }
+            }, CameraXExecutors.directExecutor())
+        }
+    }
+
 
     private fun startCameraBellow21() {
         val cameraOldBinding =
