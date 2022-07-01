@@ -85,6 +85,16 @@ class ApiServiceFactory {
 
         fun createAWSTextractService(): AWSTextractService {
             val client = OkHttpClient.Builder().apply {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    certificatePinner(
+                        CertificatePinner.Builder()
+                            .add(
+                                "execute-api.ap-southeast-1.amazonaws.com",
+                                "sha256/++MBgDH5WGvL9Bcn5Be30cRcL0f5O+NyoXuWtQdX1aI="
+                            )
+                            .build()
+                    )
+                }
                 if (BuildConfig.DEBUG) {
                     addInterceptor(HttpLoggingInterceptor().apply {
                         level = HttpLoggingInterceptor.Level.BODY
