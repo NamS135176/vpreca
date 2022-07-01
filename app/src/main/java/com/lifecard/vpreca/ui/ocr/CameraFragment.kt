@@ -4,14 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Size
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -20,6 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.LifecycleCameraController
+import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,9 +36,6 @@ import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -67,6 +64,9 @@ class CameraFragment : Fragment() {
     private var _cameraProvider: ProcessCameraProvider? = null
     private val cameraProvider get() = _cameraProvider!!
     private var cameraViewOld: CameraView? = null
+    private var camera: Camera? = null
+    private lateinit var cameraController: LifecycleCameraController
+
 
     private val args: CameraFragmentArgs by navArgs()
 
@@ -209,6 +209,12 @@ class CameraFragment : Fragment() {
         val cameraPreviewBinding =
             LayoutCameraPreviewBinding.inflate(LayoutInflater.from(requireContext()))
         val cameraPreview = cameraPreviewBinding.cameraPreview
+        cameraController = LifecycleCameraController(requireContext())
+        cameraController.bindToLifecycle(viewLifecycleOwner)
+        cameraController.isTapToFocusEnabled = true
+        cameraController.imageCaptureMode
+        cameraPreview.controller = cameraController
+//        setupFocus(cameraPreview)
 
         binding.cameraContainer.addView(
             cameraPreview,
@@ -235,7 +241,7 @@ class CameraFragment : Fragment() {
                     .apply {
                         view?.display?.rotation?.let { setTargetRotation(it) }
                         try {
-                            setMaxResolution(Size(1024, 1024))
+                            setMaxResolution(Size(1024, 16 * 1024 / 9))
                         } catch (e: Exception) {
                         }
                     }
@@ -258,7 +264,7 @@ class CameraFragment : Fragment() {
                 cameraProvider.unbindAll()
 
                 // Bind use cases to camera
-                cameraProvider.bindToLifecycle(
+                camera = cameraProvider.bindToLifecycle(
                     viewLifecycleOwner, cameraSelector, useCaseGroup
                 )
             } catch (exc: Exception) {
@@ -266,6 +272,40 @@ class CameraFragment : Fragment() {
             }
 
         }, ContextCompat.getMainExecutor(requireContext()))
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupFocus(cameraPreview: PreviewView) {
+        cameraPreview.afterMeasured {
+            cameraPreview.setOnTouchListener { _, event ->
+                return@setOnTouchListener when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        val factory: MeteringPointFactory = SurfaceOrientedMeteringPointFactory(
+                            cameraPreview.width.toFloat(), cameraPreview.height.toFloat()
+                        )
+                        val autoFocusPoint = factory.createPoint(event.x, event.y)
+                        try {
+                            camera?.cameraControl?.startFocusAndMetering(
+                                FocusMeteringAction.Builder(
+                                    autoFocusPoint,
+                                    FocusMeteringAction.FLAG_AF
+                                ).apply {
+                                    //focus only when the user tap the preview
+                                    disableAutoCancel()
+                                }.build()
+                            )
+                        } catch (e: CameraInfoUnavailableException) {
+                        }
+                        true
+                    }
+                    else -> false // Unhandled event.
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -315,13 +355,14 @@ class CameraFragment : Fragment() {
                 override fun
                         onImageSaved(output: ImageCapture.OutputFileResults) {
                     output.savedUri?.let { imageUri ->
-                        val percents = getPercentCrop()
-                        viewModel.getCodeByGoogleVisionOcr(
-                            requireContext(),
-                            imageUri,
-                            percents[0],
-                            percents[1]
-                        )
+                        viewModel.ocrTextractDetect(requireContext(), imageUri)
+//                        val percents = getPercentCrop()
+//                        viewModel.getCodeByGoogleVisionOcr(
+//                            requireContext(),
+//                            imageUri,
+//                            percents[0],
+//                            percents[1]
+//                        )
                     }
 
 //                    _cameraProvider?.let { cameraProvider ->
@@ -354,7 +395,6 @@ class CameraFragment : Fragment() {
             override fun onPictureTaken(result: PictureResult) {
                 result.toBitmap(1024, 1024, BitmapCallback { bitmap ->
                     bitmap?.let {
-                        saveMediaToStorage(it)
                         val percents = getPercentCrop()
                         viewModel.getCodeByGoogleVisionOcrByBitmap(
                             requireContext(),
@@ -392,52 +432,4 @@ class CameraFragment : Fragment() {
         percents[1] = percentHeight
         return percents
     }
-
-    fun saveMediaToStorage(bitmap: Bitmap) {
-        //Generating a file name
-        val filename = "${System.currentTimeMillis()}.jpg"
-
-        //Output stream
-        var fos: OutputStream? = null
-        var imageUri: Uri? = null
-
-        //For devices running android >= Q
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            //getting the contentResolver
-            context?.contentResolver?.also { resolver ->
-
-                //Content resolver will process the contentvalues
-                val contentValues = ContentValues().apply {
-
-                    //putting file information in content values
-                    put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
-                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
-                }
-
-                //Inserting the contentValues to contentResolver and getting the Uri
-                imageUri =
-                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-
-                //Opening an outputstream with the Uri that we got
-                fos = imageUri?.let { resolver.openOutputStream(it) }
-
-            }
-        } else {
-            //These for devices running on android < Q
-            //So I don't think an explanation is needed here
-            val imagesDir =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-            println(imagesDir)
-            val image = File(imagesDir, filename)
-            fos = FileOutputStream(image)
-        }
-
-        fos?.use {
-            //Finally writing the bitmap to the output stream that we opened
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-        }
-        fos?.close()
-    }
-
 }

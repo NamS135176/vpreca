@@ -2,6 +2,7 @@ package com.lifecard.vpreca.di
 
 import android.content.Context
 import com.lifecard.vpreca.data.*
+import com.lifecard.vpreca.data.api.AWSTextractService
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.api.ApiServiceFactory
 import com.lifecard.vpreca.data.api.GoogleVisionService
@@ -91,4 +92,8 @@ class AppModule {
         return ApiServiceFactory.createGoogleVisionService()
     }
 
+    @Provides
+    fun provideAWSTextractService(): AWSTextractService {
+        return ApiServiceFactory.createAWSTextractService()
+    }
 }

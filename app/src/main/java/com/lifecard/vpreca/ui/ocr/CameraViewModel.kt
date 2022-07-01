@@ -15,7 +15,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.BuildConfig
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.api.AWSTextractService
 import com.lifecard.vpreca.data.api.GoogleVisionService
+import com.lifecard.vpreca.data.textract.TextractRequest
+import com.lifecard.vpreca.data.textract.TextractResponse
+import com.lifecard.vpreca.data.textract.TextractResponseBlock
 import com.lifecard.vpreca.data.vision.*
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.utils.RegexUtils
@@ -36,7 +40,10 @@ import kotlin.math.min
 
 @Suppress("kotlin:S1192") // String literals should not be duplicated
 @HiltViewModel
-class CameraViewModel @Inject constructor(private val googleVisionService: GoogleVisionService) :
+class CameraViewModel @Inject constructor(
+    private val googleVisionService: GoogleVisionService,
+    private val awsTextractService: AWSTextractService
+) :
     ViewModel() {
 
     var codeOcr = MutableLiveData<String?>()
@@ -215,6 +222,45 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         }
     }
 
+    fun ocrTextractDetect(
+        context: Context,
+        imageUri: Uri
+    ) {
+        viewModelScope.launch {
+            val originBitmap = getBitmapFixExif(context, imageUri)
+//            val scaleBitmap =
+//                originBitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = true)
+//                    ?: return@launch
+//            saveMediaToStorage(context, scaleBitmap)
+            val imageBase64 = originBitmap.encodeImage() ?: return@launch
+            val result = apiOcrTextractDetect(imageBase64)
+            if (result is Result.Success) {
+                val response = result.data
+                val ocr = findBestCodeFromTextract(response.result.blocks)
+                ocr?.let { codeOcr.value = it } ?: Result.Error(Exception("Can not detect ocr"))
+
+            } else {
+                Result.Error(Exception("Can not detect ocr"))
+            }
+//            context.contentResolver.delete(imageUri, null, null)
+            releaseLockTakePhoto()
+            loading.value = false
+        }
+
+    }
+
+    private suspend fun apiOcrTextractDetect(imageBase64: String): Result<TextractResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response =
+                    awsTextractService.ocrTextractDetect(TextractRequest(imageBase64))
+                Result.Success(response)
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+    }
+
     fun findBestCodeFromData(textAnnotations: List<VisionTextAnnotation>): VisionTextAnnotation? {
         try {
             //1. delete all ( + ) + : + spacing on text
@@ -248,6 +294,27 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         try {
             val results = textAnnotations.filter { it.description.length == length }
             if (results.isNotEmpty()) return results[0]
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun findBestCodeFromTextract(blocks: List<TextractResponseBlock>): String? {
+        try {
+            var filterBlocks = blocks.filter { !it.text.isNullOrEmpty() }
+            //1. delete all ( + ) + : + spacing on text
+            filterBlocks.forEach {
+                it.text = it.text?.trim()?.replace(Regex("[\\(\\)\\s:]"), "")
+                //remove all not alphabet letter and number
+                it.text = it.text?.replace(Regex("[^A-z0-9]"), "")
+            }
+            //2. check the regex and length of text in (12..16)
+            val texts = filterBlocks.filter { RegexUtils.isOcrCodeOnly15Char(it.text) }
+            return when (texts.isNotEmpty()) {
+                true -> texts[0].text
+                else -> null
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -56,7 +56,6 @@ class ApiServiceFactory {
         }
 
         fun createGoogleVisionService(): GoogleVisionService {
-
             val client = OkHttpClient.Builder().apply {
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                     certificatePinner(
@@ -82,6 +81,24 @@ class ApiServiceFactory {
                 build()
             }
             return retrofit.create(GoogleVisionService::class.java)
+        }
+
+        fun createAWSTextractService(): AWSTextractService {
+            val client = OkHttpClient.Builder().apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    })
+                }
+            }.build()
+            val gson = GsonBuilder().create()
+            val retrofit = Retrofit.Builder().run {
+                client(client)
+                baseUrl(Constant.API_BASE_URL)
+                addConverterFactory(GsonConverterFactory.create(gson))
+                build()
+            }
+            return retrofit.create(AWSTextractService::class.java)
         }
     }
 }
