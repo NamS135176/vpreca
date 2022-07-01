@@ -20,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.LifecycleCameraController
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -67,6 +68,8 @@ class CameraFragment : Fragment() {
     private var _cameraProvider: ProcessCameraProvider? = null
     private val cameraProvider get() = _cameraProvider!!
     private var cameraViewOld: CameraView? = null
+    private var camera: Camera? = null
+    private lateinit var cameraController: LifecycleCameraController
 
     private val args: CameraFragmentArgs by navArgs()
 
@@ -209,6 +212,10 @@ class CameraFragment : Fragment() {
         val cameraPreviewBinding =
             LayoutCameraPreviewBinding.inflate(LayoutInflater.from(requireContext()))
         val cameraPreview = cameraPreviewBinding.cameraPreview
+        cameraController = LifecycleCameraController(requireContext())
+        cameraController.bindToLifecycle(viewLifecycleOwner)
+        cameraController.isTapToFocusEnabled = true
+        cameraPreview.controller = cameraController
 
         binding.cameraContainer.addView(
             cameraPreview,
@@ -235,7 +242,7 @@ class CameraFragment : Fragment() {
                     .apply {
                         view?.display?.rotation?.let { setTargetRotation(it) }
                         try {
-                            setMaxResolution(Size(1024, 1024))
+                            setMaxResolution(Size(1024, 1024 * 16 / 9))
                         } catch (e: Exception) {
                         }
                     }

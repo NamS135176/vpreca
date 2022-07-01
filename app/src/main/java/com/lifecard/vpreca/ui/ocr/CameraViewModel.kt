@@ -20,7 +20,6 @@ import com.lifecard.vpreca.data.vision.*
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.utils.RegexUtils
 import com.lifecard.vpreca.utils.encodeImage
-import com.lifecard.vpreca.utils.getScaledDownBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -68,7 +67,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
 
             if (ocr is Result.Success) {
                 val resultSuccess = (ocr as Result.Success<String>)
-                codeOcr.value = resultSuccess.data
+                codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(resultSuccess.data)
             } else if (ocr is Result.Error) {
                 val resultError = ocr as Result.Error
                 if (resultError.exception is NoConnectivityException) {
@@ -77,7 +76,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                     error.value = resultError.exception.message
                 }
             }
-            context.contentResolver.delete(imageUri, null, null)
+//            context.contentResolver.delete(imageUri, null, null)
             releaseLockTakePhoto()
             loading.value = false
         }
@@ -115,7 +114,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
 
             if (ocr is Result.Success) {
                 val resultSuccess = (ocr as Result.Success<String>)
-                codeOcr.value = resultSuccess.data
+                codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(resultSuccess.data)
             } else if (ocr is Result.Error) {
                 val resultError = ocr as Result.Error
                 if (resultError.exception is NoConnectivityException) {
@@ -147,8 +146,9 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
         return withContext(Dispatchers.IO) {
             try {
                 val error = Result.Error(Exception("Can not detect ocr"))
-                val scaleBitmap = bitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = true)
-                    ?: return@withContext error
+//                val scaleBitmap = bitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = false)
+//                    ?: return@withContext error
+                val scaleBitmap = bitmap
                 val imageBase64 = scaleBitmap.encodeImage() ?: return@withContext error
                 val gcpApiKey = BuildConfig.GoogleApiKey
 
@@ -156,7 +156,7 @@ class CameraViewModel @Inject constructor(private val googleVisionService: Googl
                     image = VisionImageContent(content = imageBase64),
                     features = listOf(VisionFeature(type = "TEXT_DETECTION")),
                     imageContext = VisionImageContext(
-                        languageHints = "ja",
+                        languageHints = arrayOf("en-t-i0"),
                         textDetectionParams = VisionTextDetectionParams(
                             enableTextDetectionConfidenceScore = true
                         )

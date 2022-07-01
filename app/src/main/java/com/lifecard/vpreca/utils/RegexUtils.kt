@@ -61,6 +61,7 @@ class RegexUtils {
         private const val RegexOcr = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{12,16}\$"
 
         private const val RegexOcrAbsolute = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{15}\$"
+
         /**
          * at least: 1 digit, 1 lowercase, one uppercase
          */
@@ -275,5 +276,11 @@ class RegexUtils {
             return card
         }
 
+        fun replaceSpecialCaseOcrCode(code: String): String {
+            //ocr code always ends with a digit
+            var newCode = code.replace(Regex("[O]\$"), "0")
+            newCode = newCode.replace(Regex("[o]\$"), "0")
+            return newCode
+        }
     }
 }
