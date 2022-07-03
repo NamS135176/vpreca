@@ -309,7 +309,7 @@ class CameraViewModel @Inject constructor(
                 //remove all not alphabet letter and number
                 it.text = it.text?.replace(Regex("[^A-z0-9]"), "")
             }
-            //2. check the regex and length of text in (12..16)
+            //2. check the regex ocr code
             val texts = filterBlocks.filter { RegexUtils.isOcrCodeOnly15Char(it.text) }
             return when (texts.isNotEmpty()) {
                 true -> texts[0].text

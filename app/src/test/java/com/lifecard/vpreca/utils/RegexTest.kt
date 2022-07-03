@@ -190,4 +190,10 @@ class RegexTest {
         Assert.assertEquals(true, RegexUtils.isNameFullWidth("山田山田　秋秋秋秋秋秋秋秋秋秋秋秋秋秋"))//max19 chars
         Assert.assertEquals(false, RegexUtils.isNameFullWidth("山田山田　秋秋秋秋秋秋秋秋秋秋秋秋秋秋秋"))//20 chars failure
     }
+
+    @Test
+    fun isReplaceSpecialCaseOcrCode_isCorrect() {
+        Assert.assertEquals("ZijKLKJcG72YmF0", RegexUtils.replaceSpecialCaseOcrCode("ZijKLKJcG72YmFO"))
+        Assert.assertEquals("ZijKLKJcG72YmF0", RegexUtils.replaceSpecialCaseOcrCode("ZijKLKJcG72YmFC"))
+    }
 }
