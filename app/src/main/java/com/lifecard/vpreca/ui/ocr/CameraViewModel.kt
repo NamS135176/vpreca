@@ -1,14 +1,10 @@
 package com.lifecard.vpreca.ui.ocr
 
-import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,10 +25,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.OutputStream
 import java.net.UnknownHostException
 import javax.inject.Inject
 import kotlin.math.max
@@ -63,7 +56,7 @@ class CameraViewModel @Inject constructor(
 
             var ocr: Result<String>? = null
             cropBitmap(context, imageUri, percentTop, percentHeight)?.let { cropped ->
-                saveMediaToStorage(context, cropped)
+//                saveMediaToStorage(context, cropped)
                 ocr = callApiGetOcr(context, cropped)
                 cropped.recycle()
             }
@@ -84,7 +77,7 @@ class CameraViewModel @Inject constructor(
                     error.value = resultError.exception.message
                 }
             }
-//            context.contentResolver.delete(imageUri, null, null)
+            context.contentResolver.delete(imageUri, null, null)
             releaseLockTakePhoto()
             loading.value = false
         }
@@ -195,7 +188,7 @@ class CameraViewModel @Inject constructor(
                         val height = targetY + padding - y
                         val bitmapBoundingText =
                             Bitmap.createBitmap(scaleBitmap, x, y, width, height)
-                        saveMediaToStorage(context, bitmapBoundingText)
+//                        saveMediaToStorage(context, bitmapBoundingText)
 
                         return@withContext callApiGetOcr(
                             context,
@@ -230,7 +223,7 @@ class CameraViewModel @Inject constructor(
         viewModelScope.launch {
             val originBitmap = getBitmapFixExif(context, imageUri)
             val scaleBitmap =
-                originBitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = true)
+                originBitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = false)
                     ?: return@launch
             val imageBase64 = scaleBitmap.encodeImage() ?: return@launch
             val result = apiOcrTextractDetect(imageBase64)
@@ -238,11 +231,34 @@ class CameraViewModel @Inject constructor(
                 val response = result.data
                 val ocr = findBestCodeFromTextract(response.result.blocks)
                 ocr?.let { codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(it) }
-                    ?: Result.Error(Exception("Can not detect ocr"))
+                    ?: kotlin.run { error.value = "Can not detect ocr" }
             } else {
-                Result.Error(Exception("Can not detect ocr"))
+                error.value = "Can not detect ocr"
             }
-//            context.contentResolver.delete(imageUri, null, null)
+            context.contentResolver.delete(imageUri, null, null)
+            releaseLockTakePhoto()
+            loading.value = false
+        }
+    }
+
+    fun ocrTextractDetectByBitmap(
+        context: Context,
+        originBitmap: Bitmap
+    ) {
+        viewModelScope.launch {
+            val scaleBitmap =
+                originBitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = false)
+                    ?: return@launch
+            val imageBase64 = scaleBitmap.encodeImage() ?: return@launch
+            val result = apiOcrTextractDetect(imageBase64)
+            if (result is Result.Success) {
+                val response = result.data
+                val ocr = findBestCodeFromTextract(response.result.blocks)
+                ocr?.let { codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(it) }
+                    ?: kotlin.run { error.value = "Can not detect ocr" }
+            } else {
+                error.value = "Can not detect ocr"
+            }
             releaseLockTakePhoto()
             loading.value = false
         }
@@ -302,7 +318,7 @@ class CameraViewModel @Inject constructor(
 
     private fun findBestCodeFromTextract(blocks: List<TextractResponseBlock>): String? {
         try {
-            var filterBlocks = blocks.filter { !it.text.isNullOrEmpty() }
+            val filterBlocks = blocks.filter { !it.text.isNullOrEmpty() }
             //1. delete all ( + ) + : + spacing on text
             filterBlocks.forEach {
                 it.text = it.text?.trim()?.replace(Regex("[\\(\\)\\s:]"), "")
@@ -409,6 +425,7 @@ class CameraViewModel @Inject constructor(
         return 0
     }
 
+    /*
     fun saveMediaToStorage(context: Context, bitmap: Bitmap) {
         //Generating a file name
         val filename = "${System.currentTimeMillis()}.jpg"
@@ -454,4 +471,5 @@ class CameraViewModel @Inject constructor(
         }
         fos?.close()
     }
+     */
 }

@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Size
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -292,8 +291,6 @@ class CameraFragment : Fragment() {
     @SuppressLint("RestrictedApi")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun setUpCameraAutoFocus(previewView: PreviewView, x: Float, y: Float) {
-//        val x: Float = previewView.getX() + previewView.getWidth() / 2f
-//        val y: Float = previewView.getY() + previewView.getHeight() / 2f
         cameraController.cameraControl?.let { cameraControl ->
             val pointFactory: MeteringPointFactory = previewView.meteringPointFactory
             val afPointWidth = 1.0f / 6.0f // 1/6 total area
@@ -409,13 +406,21 @@ class CameraFragment : Fragment() {
             override fun onPictureTaken(result: PictureResult) {
                 result.toBitmap(1024, 1024, BitmapCallback { bitmap ->
                     bitmap?.let {
-                        val percents = getPercentCrop()
-                        viewModel.getCodeByGoogleVisionOcrByBitmap(
-                            requireContext(),
-                            bitmap,
-                            percents[0],
-                            percents[1]
-                        )
+                        when (service) {
+                            OcrDetectionService.AWSTextract -> viewModel.ocrTextractDetectByBitmap(
+                                requireContext(),
+                                bitmap
+                            )
+                            else -> {
+                                val percents = getPercentCrop()
+                                viewModel.getCodeByGoogleVisionOcrByBitmap(
+                                    requireContext(),
+                                    bitmap,
+                                    percents[0],
+                                    percents[1]
+                                )
+                            }
+                        }
                     }
                         ?: kotlin.run {
                             //show alert
@@ -427,6 +432,7 @@ class CameraFragment : Fragment() {
     }
 
     private fun takePhotoBellow21() {
+        viewModel.startTakePhoto()
         cameraViewOld?.takePicture()
     }
 
