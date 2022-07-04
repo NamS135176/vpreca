@@ -56,9 +56,10 @@ class RegexUtils {
         private const val RegexSecretAnswer = "\\b\\w{1,20}\\b"
 
         /**
-         * at least: 1 digit, 1 lowercase, one uppercase
+         * only letter up/lowercase and number. Last char only number
          */
-        private const val RegexOcr = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{12,16}\$"
+        private const val RegexOcr = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{15}\$"
+//        private const val RegexOcr = "[A-z0-9]{14}\\d+\$"
 
         private const val RegexOcrAbsolute = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{15}\$"
 
@@ -145,12 +146,8 @@ class RegexUtils {
             } ?: false
         }
 
-        fun isOcrCode(code: String): Boolean {
-            return Pattern.compile(RegexOcr).matcher(code).matches()
-        }
-
-        fun isOcrCodeOnly15Char(code: String?): Boolean {
-            return code?.let { Pattern.compile(RegexOcrAbsolute).matcher(it).matches() } ?: false
+        fun isOcrCode(code: String?): Boolean {
+            return code?.let { Pattern.compile(RegexOcr).matcher(it).matches() } ?: false
         }
 
         private fun isMobilePhone(phone: String): Boolean {

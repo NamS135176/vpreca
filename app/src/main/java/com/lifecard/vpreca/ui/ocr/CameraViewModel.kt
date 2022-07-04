@@ -285,31 +285,12 @@ class CameraViewModel @Inject constructor(
                 //remove all not alphabet letter and number
                 it.description = it.description.replace(Regex("[^A-z0-9]"), "")
             }
-            //2. check the regex and length of text in (12..16)
+            //2. check the regex
             val texts = textAnnotations.filter { RegexUtils.isOcrCode(it.description) }
-            val results = listOf(15, 16, 14, 13, 12).mapNotNull {
-                findBestCodeFromTextAnnotation(
-                    texts,
-                    it
-                )
-            }
-            return when (results.isNotEmpty()) {
-                true -> results[0]
+            return when (texts.isNotEmpty()) {
+                true -> texts[0]
                 else -> null
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    private fun findBestCodeFromTextAnnotation(
-        textAnnotations: List<VisionTextAnnotation>,
-        length: Int
-    ): VisionTextAnnotation? {
-        try {
-            val results = textAnnotations.filter { it.description.length == length }
-            if (results.isNotEmpty()) return results[0]
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -326,7 +307,7 @@ class CameraViewModel @Inject constructor(
                 it.text = it.text?.replace(Regex("[^A-z0-9]"), "")
             }
             //2. check the regex ocr code
-            val texts = filterBlocks.filter { RegexUtils.isOcrCodeOnly15Char(it.text) }
+            val texts = filterBlocks.filter { RegexUtils.isOcrCode(it.text) }
             return when (texts.isNotEmpty()) {
                 true -> texts[0].text
                 else -> null

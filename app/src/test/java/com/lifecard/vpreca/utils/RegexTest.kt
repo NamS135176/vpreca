@@ -6,8 +6,22 @@ import org.junit.Test
 class RegexTest {
     @Test
     fun ocrCode_isCorrect() {
-        val testData = "cdFjSst6Mb7rF29"
-        Assert.assertEquals(true, RegexUtils.isOcrCode(testData))
+        Assert.assertEquals(true, RegexUtils.isOcrCode("cdFjSst6Mb7rF29"))
+        Assert.assertEquals(true, RegexUtils.isOcrCode("3sFsUTWLawxdFD7"))
+        Assert.assertEquals(true, RegexUtils.isOcrCode("cGFREsWyvXYnQb4"))
+        Assert.assertEquals(true, RegexUtils.isOcrCode("6MNiVKrc8B2YXP7"))
+        Assert.assertEquals(true, RegexUtils.isOcrCode("cdFjSst6Mb7rF29"))
+        Assert.assertEquals(true, RegexUtils.isOcrCode("ZijKLKJcG72YmF0"))
+        Assert.assertEquals(true, RegexUtils.isOcrCode("cPFjHstwMXaPCd8"))
+        Assert.assertEquals(true, RegexUtils.isOcrCode("cGFJKsM6MbayCP6"))
+        Assert.assertEquals(true, RegexUtils.isOcrCode("cDFsEsWNMya8CR9"))
+        Assert.assertEquals(true, RegexUtils.isOcrCode("cDFhEsWNMZa8CG7"))
+
+        Assert.assertEquals(false, RegexUtils.isOcrCode("sc6cmXMdpBKtRt"))
+        Assert.assertEquals(false, RegexUtils.isOcrCode("Rq6QhzuydQcJZBa"))
+        Assert.assertEquals(false, RegexUtils.isOcrCode("CF426G5AWBZT9G"))
+        Assert.assertEquals(false, RegexUtils.isOcrCode("omakeOMAKE63bRI"))
+        Assert.assertEquals(false, RegexUtils.isOcrCode("L051わ300S100ふ003WC31"))
     }
 
     @Test
