@@ -174,7 +174,7 @@ class CameraFragment : Fragment() {
             setPositiveButton(
                 R.string.button_retry, null
             )
-            setTitle(R.string.camera_ocr_failure)
+            setMessage(R.string.camera_ocr_failure)
         }.create().show()
     }
 

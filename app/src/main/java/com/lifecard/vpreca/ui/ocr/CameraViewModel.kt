@@ -275,8 +275,14 @@ class CameraViewModel @Inject constructor(
                 val response =
                     awsTextractService.ocrTextractDetect(TextractRequest(imageBase64))
                 Result.Success(response)
+            } catch (e: UnknownHostException) {
+                println(e)
+                Result.Error(NoConnectivityException())
+            } catch (e: IOException) {
+                println(e)
+                Result.Error(NoConnectivityException())
             } catch (e: Exception) {
-                Result.Error(e)
+                Result.Error(Exception("Can not detect ocr"))
             }
         }
     }
