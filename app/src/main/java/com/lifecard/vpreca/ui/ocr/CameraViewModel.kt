@@ -232,8 +232,12 @@ class CameraViewModel @Inject constructor(
                 val ocr = findBestCodeFromTextract(response.result.blocks)
                 ocr?.let { codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(it) }
                     ?: kotlin.run { error.value = "Can not detect ocr" }
-            } else {
-                error.value = "Can not detect ocr"
+            } else if (result is Result.Error) {
+                if (result.exception is NoConnectivityException) {
+                    networkTrouble.value = true
+                } else {
+                    error.value = result.exception.message
+                }
             }
             context.contentResolver.delete(imageUri, null, null)
             releaseLockTakePhoto()
