@@ -55,6 +55,8 @@ class GiftCardInputCardFragment : Fragment() {
             val action =
                 GiftCardInputCardFragmentDirections.actionGiftcardinputcardToCameraOcr(getString(R.string.camera_ocr_hint_input_gift_card))
             findNavController().navigate(action)
+            viewModel.formResultState.value = null
+            viewModel._giftCardState.value = null
         }
 
         viewModel.formState.observe(viewLifecycleOwner) { viewModel.checkFormValid() }
@@ -88,7 +90,7 @@ class GiftCardInputCardFragment : Fragment() {
             }
         }
 
-        viewModel.giftCardState.observe(
+        viewModel._giftCardState.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer { changeInfoState ->
                 changeInfoState ?: return@Observer

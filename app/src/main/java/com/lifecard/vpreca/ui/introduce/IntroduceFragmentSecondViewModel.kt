@@ -27,8 +27,8 @@ class IntroduceFragmentSecondViewModel  @Inject constructor(
     val formState = MutableLiveData(IntroduceSecondState())
     val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
 
-    private val _giftCardState = MutableLiveData<GiftCardInfoRequestState>()
-    val giftCardState: LiveData<GiftCardInfoRequestState> = _giftCardState
+    val _giftCardState = MutableLiveData<GiftCardInfoRequestState?>()
+//    val giftCardState: LiveData<GiftCardInfoRequestState> = _giftCardState
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
