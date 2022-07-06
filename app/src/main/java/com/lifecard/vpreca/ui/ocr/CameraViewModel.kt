@@ -312,6 +312,7 @@ class CameraViewModel @Inject constructor(
             val filterBlocks = blocks.filter { !it.text.isNullOrEmpty() }
             //1. delete all ( + ) + : + spacing on text
             filterBlocks.forEach {
+                it.text = it.text?.replace(Regex("^[^:]*:(.*)\$"), "$1")
                 it.text = it.text?.trim()?.replace(Regex("[\\(\\)\\s:]"), "")
                 //remove all not alphabet letter and number
                 it.text = it.text?.replace(Regex("[^A-z0-9]"), "")
