@@ -68,7 +68,7 @@ class CameraViewModel @Inject constructor(
 
             if (ocr is Result.Success) {
                 val resultSuccess = (ocr as Result.Success<String>)
-                codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(resultSuccess.data)
+                codeOcr.value = resultSuccess.data
             } else if (ocr is Result.Error) {
                 val resultError = ocr as Result.Error
                 if (resultError.exception is NoConnectivityException) {
@@ -115,7 +115,7 @@ class CameraViewModel @Inject constructor(
 
             if (ocr is Result.Success) {
                 val resultSuccess = (ocr as Result.Success<String>)
-                codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(resultSuccess.data)
+                codeOcr.value = resultSuccess.data
             } else if (ocr is Result.Error) {
                 val resultError = ocr as Result.Error
                 if (resultError.exception is NoConnectivityException) {
@@ -230,7 +230,7 @@ class CameraViewModel @Inject constructor(
             if (result is Result.Success) {
                 val response = result.data
                 val ocr = findBestCodeFromTextract(response.result.blocks)
-                ocr?.let { codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(it) }
+                ocr?.let { codeOcr.value = it }
                     ?: kotlin.run { error.value = "Can not detect ocr" }
             } else if (result is Result.Error) {
                 if (result.exception is NoConnectivityException) {
@@ -258,7 +258,7 @@ class CameraViewModel @Inject constructor(
             if (result is Result.Success) {
                 val response = result.data
                 val ocr = findBestCodeFromTextract(response.result.blocks)
-                ocr?.let { codeOcr.value = RegexUtils.replaceSpecialCaseOcrCode(it) }
+                ocr?.let { codeOcr.value = it }
                     ?: kotlin.run { error.value = "Can not detect ocr" }
             } else {
                 error.value = "Can not detect ocr"
@@ -294,6 +294,8 @@ class CameraViewModel @Inject constructor(
                 it.description = it.description.trim().replace(Regex("[\\(\\)\\s:]"), "")
                 //remove all not alphabet letter and number
                 it.description = it.description.replace(Regex("[^A-z0-9]"), "")
+                it.description =
+                    RegexUtils.replaceSpecialCaseOcrCode(it.description) ?: it.description
             }
             //2. check the regex
             val texts = textAnnotations.filter { RegexUtils.isOcrCode(it.description) }
@@ -312,10 +314,10 @@ class CameraViewModel @Inject constructor(
             val filterBlocks = blocks.filter { !it.text.isNullOrEmpty() }
             //1. delete all ( + ) + : + spacing on text
             filterBlocks.forEach {
-                it.text = it.text?.replace(Regex("^[^:]*:(.*)\$"), "$1")
                 it.text = it.text?.trim()?.replace(Regex("[\\(\\)\\s:]"), "")
                 //remove all not alphabet letter and number
                 it.text = it.text?.replace(Regex("[^A-z0-9]"), "")
+                it.text = RegexUtils.replaceSpecialCaseOcrCode(it.text)
             }
             //2. check the regex ocr code
             val texts = filterBlocks.filter { RegexUtils.isOcrCode(it.text) }

@@ -209,5 +209,7 @@ class RegexTest {
     fun isReplaceSpecialCaseOcrCode_isCorrect() {
         Assert.assertEquals("ZijKLKJcG72YmF0", RegexUtils.replaceSpecialCaseOcrCode("ZijKLKJcG72YmFO"))
         Assert.assertEquals("ZijKLKJcG72YmF0", RegexUtils.replaceSpecialCaseOcrCode("ZijKLKJcG72YmFC"))
+        Assert.assertEquals("9GtTenfaFSNWT68", RegexUtils.replaceSpecialCaseOcrCode("-F:9GtTenfaFSNWT68"))
+        Assert.assertEquals("9GtTenfaFSNWT68", RegexUtils.replaceSpecialCaseOcrCode("abc123-F:9GtTenfaFSNWT68"))
     }
 }

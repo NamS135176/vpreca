@@ -270,10 +270,12 @@ class RegexUtils {
             return card
         }
 
-        fun replaceSpecialCaseOcrCode(code: String): String {
+        fun replaceSpecialCaseOcrCode(code: String?): String? {
+            //we have some case that ocr code contain :, so we will remove all character before :
+            var newCode = code?.replace(Regex("^[^:]*:(.*)\$"), "$1")
             //ocr code always ends with a digit
-            var newCode = code.replace(Regex("[O]\$"), "0")
-            newCode = newCode.replace(Regex("[C]\$"), "0")
+            newCode = newCode?.replace(Regex("[O]\$"), "0")
+            newCode = newCode?.replace(Regex("[C]\$"), "0")
             return newCode
         }
     }
