@@ -132,6 +132,8 @@ class LoginFragment : NoToolbarFragment() {
                             )
                         )
                         findNavController().navigate(action)
+                        usernameEditText.setText("")
+                        passwordEditText.setText("")
                     }
                 }
                 loginResult.error?.errorMessage?.let { showLoginFailed(it) }
