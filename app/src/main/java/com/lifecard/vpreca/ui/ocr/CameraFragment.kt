@@ -4,8 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.graphics.*
+import android.media.Image
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Size
 import android.view.LayoutInflater
@@ -17,6 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.camera.core.*
+import androidx.camera.core.Camera
 import androidx.camera.core.impl.utils.executor.CameraXExecutors
 import androidx.camera.core.impl.utils.futures.FutureCallback
 import androidx.camera.core.impl.utils.futures.Futures
@@ -40,6 +45,10 @@ import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -56,8 +65,7 @@ class CameraFragment : Fragment() {
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private val REQUIRED_PERMISSIONS =
             mutableListOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.RECORD_AUDIO
+                Manifest.permission.CAMERA
             ).apply {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -66,7 +74,7 @@ class CameraFragment : Fragment() {
     }
 
     private val service = OcrDetectionService.AWSTextract
-
+    private lateinit var bitmapBuffer: Bitmap
     private var _binding: FragmentCameraBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CameraViewModel by viewModels()
@@ -78,6 +86,7 @@ class CameraFragment : Fragment() {
     private lateinit var cameraController: LifecycleCameraController
     private val args: CameraFragmentArgs by navArgs()
 
+    @androidx.camera.core.ExperimentalGetImage
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -89,6 +98,7 @@ class CameraFragment : Fragment() {
                 findNavController().popBackStack()
             }
         })
+        val imageView = binding.imageView
         val textCaptionHint = binding.textCaption
         args.hint?.let { textCaptionHint.text = it }
 
@@ -202,7 +212,7 @@ class CameraFragment : Fragment() {
             startCameraBellow21()
         }
     }
-
+    @androidx.camera.core.ExperimentalGetImage
     private fun takePhoto() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             takePhotoX()
@@ -325,6 +335,7 @@ class CameraFragment : Fragment() {
         }
     }
 
+    @androidx.camera.core.ExperimentalGetImage
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun takePhotoX() {
         viewModel.startTakePhoto()
@@ -353,37 +364,65 @@ class CameraFragment : Fragment() {
 
         // Set up image capture listener, which is triggered after photo has
         // been taken
-        imageCapture.takePicture(
-            outputOptions,
-            ContextCompat.getMainExecutor(requireContext()),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onError(exc: ImageCaptureException) {
-                    exc.printStackTrace()
-                    viewModel.releaseLockTakePhoto()
-                }
+        imageCapture.takePicture(ContextCompat.getMainExecutor(requireContext()),object :
+            ImageCapture.OnImageCapturedCallback() {
+            override fun onCaptureSuccess(image: ImageProxy) {
+                super.onCaptureSuccess(image)
 
-                override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults) {
-                    output.savedUri?.let { imageUri ->
-                        when (service) {
-                            OcrDetectionService.AWSTextract -> viewModel.ocrTextractDetect(
-                                requireContext(),
-                                imageUri
-                            )
-                            else -> {
-                                val percents = getPercentCrop()
-                                viewModel.getCodeByGoogleVisionOcr(
-                                    requireContext(),
-                                    imageUri,
-                                    percents[0],
-                                    percents[1]
-                                )
-                            }
-                        }
+                val bitmap = convertImageProxyToBitmap(image)
+
+                when (service) {
+                    OcrDetectionService.AWSTextract -> viewModel.ocrTextractDetect(
+                        requireContext(),
+                        bitmap,
+                        image.imageInfo.rotationDegrees
+                    )
+                    else -> {
+                        val percents = getPercentCrop()
+                        viewModel.getCodeByGoogleVisionOcr(
+                            requireContext(),
+                            bitmap,
+                            percents[0],
+                            percents[1],
+                            image.imageInfo.rotationDegrees
+                        )
                     }
                 }
             }
-        )
+        })
+
+
+//        imageCapture.takePicture(
+//            outputOptions,
+//            ContextCompat.getMainExecutor(requireContext()),
+//            object : ImageCapture.OnImageSavedCallback {
+//                override fun onError(exc: ImageCaptureException) {
+//                    exc.printStackTrace()
+//                    viewModel.releaseLockTakePhoto()
+//                }
+//
+//                override fun
+//                        onImageSaved(output: ImageCapture.OutputFileResults) {
+//                    output.savedUri?.let { imageUri ->
+//                        when (service) {
+//                            OcrDetectionService.AWSTextract -> viewModel.ocrTextractDetect(
+//                                requireContext(),
+//                                imageUri
+//                            )
+//                            else -> {
+//                                val percents = getPercentCrop()
+//                                viewModel.getCodeByGoogleVisionOcr(
+//                                    requireContext(),
+//                                    imageUri,
+//                                    percents[0],
+//                                    percents[1]
+//                                )
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        )
     }
 
     private fun startCameraBellow21() {
@@ -452,4 +491,19 @@ class CameraFragment : Fragment() {
         percents[1] = percentHeight
         return percents
     }
+
+    @androidx.camera.core.ExperimentalGetImage
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun convertImageProxyToBitmap(image: ImageProxy) : Bitmap{
+        if(image.format == 35){
+           return image.image?.convertImageProxyToBitmap()!!
+        }
+        else if(image.format == 256){2
+           return image.convertImageProxyToBitmap()
+        }
+        else{
+            return image.image?.convertImageProxyToBitmap()!!
+        }
+    }
+
 }

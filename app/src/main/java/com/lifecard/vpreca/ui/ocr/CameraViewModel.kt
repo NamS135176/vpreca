@@ -47,21 +47,22 @@ class CameraViewModel @Inject constructor(
 
     fun getCodeByGoogleVisionOcr(
         context: Context,
-        imageUri: Uri,
+        bitmap: Bitmap,
         percentTop: Float = 0f,
-        percentHeight: Float = 1f
+        percentHeight: Float = 1f,
+        rotation: Int
     ) {
         viewModelScope.launch {
             loading.value = true
 
             var ocr: Result<String>? = null
-            cropBitmap(context, imageUri, percentTop, percentHeight)?.let { cropped ->
+            cropBitmap(context, bitmap, percentTop, percentHeight, rotation)?.let { cropped ->
 //                saveMediaToStorage(context, cropped)
                 ocr = callApiGetOcr(context, cropped)
                 cropped.recycle()
             }
             if (ocr == null || ocr is Result.Error) {
-                val originBitmap = getBitmapFixExif(context, imageUri)
+                val originBitmap = getBitmapFixExif(context, bitmap,rotation )
                 ocr = callApiGetOcr(context, originBitmap, false)
                 originBitmap.recycle()
             }
@@ -77,7 +78,7 @@ class CameraViewModel @Inject constructor(
                     error.value = resultError.exception.message
                 }
             }
-            context.contentResolver.delete(imageUri, null, null)
+//            context.contentResolver.delete(imageUri, null, null)
             releaseLockTakePhoto()
             loading.value = false
         }
@@ -218,10 +219,11 @@ class CameraViewModel @Inject constructor(
 
     fun ocrTextractDetect(
         context: Context,
-        imageUri: Uri
+        bitmap: Bitmap,
+        rotation : Int
     ) {
         viewModelScope.launch {
-            val originBitmap = getBitmapFixExif(context, imageUri)
+            val originBitmap = getBitmapFixExif(context, bitmap, rotation)
             val scaleBitmap =
                 originBitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = false)
                     ?: return@launch
@@ -239,7 +241,7 @@ class CameraViewModel @Inject constructor(
                     error.value = result.exception.message
                 }
             }
-            context.contentResolver.delete(imageUri, null, null)
+//            context.contentResolver.delete(imageUri, null, null)
             releaseLockTakePhoto()
             loading.value = false
         }
@@ -333,11 +335,12 @@ class CameraViewModel @Inject constructor(
 
     private fun getBitmapFixExif(
         context: Context,
-        imageUri: Uri
+        bitmap: Bitmap,
+        rotationInDegrees: Int
     ): Bitmap {
-        val rotationInDegrees = getRotationInDegrees(context, imageUri)
-        val bitmapStream = context.contentResolver.openInputStream(imageUri)
-        var originBitmap = BitmapFactory.decodeStream(bitmapStream)
+//        val rotationInDegrees = getRotationInDegrees(context, imageUri)
+//        val bitmapStream = context.contentResolver.openInputStream(imageUri)
+        var originBitmap = bitmap
 
         if (rotationInDegrees != 0) {
             val matrix = Matrix()
@@ -357,12 +360,13 @@ class CameraViewModel @Inject constructor(
 
     private fun cropBitmap(
         context: Context,
-        imageUri: Uri,
+        bitmap: Bitmap,
         percentTop: Float = 0f,
-        percentHeight: Float = 1f
+        percentHeight: Float = 1f,
+        rotation: Int
     ): Bitmap? {
         try {
-            val originBitmap = getBitmapFixExif(context, imageUri)
+            val originBitmap = getBitmapFixExif(context, bitmap, rotation)
 
             val bitmapW = originBitmap.width
             val bitmapH = originBitmap.height
