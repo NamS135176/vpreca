@@ -2,11 +2,15 @@ package com.lifecard.vpreca.ui.ocr
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageFormat
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
@@ -170,6 +174,17 @@ class CameraFragment : Fragment() {
             }
             if (allPermissionsGranted()) {
                 startCamera()
+            }
+            else{
+                MaterialAlertDialogBuilder(requireContext()).apply {
+                    setPositiveButton("設定する") { _, _ ->
+                        // do something on positive button click
+                        startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:"+requireActivity().packageName)))
+                    }
+                    setNegativeButton("キャンセル", null)
+                    setTitle("カメラを許可してください")
+                    setMessage("カードのテキストを認識をするためにはカメラ機能を使うことを許可することが必要です。")
+                }.create().show()
             }
         }
 
