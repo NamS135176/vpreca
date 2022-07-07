@@ -45,72 +45,23 @@ class CameraViewModel @Inject constructor(
     var lockButtonTakePhoto = MutableLiveData<Boolean>(false)
     var networkTrouble = MutableLiveData<Boolean>()
 
-    fun getCodeByGoogleVisionOcr(
+    private fun getCodeByGoogleVisionOcr(
         context: Context,
-        imageUri: Uri,
+        bitmap: Bitmap,
         percentTop: Float = 0f,
-        percentHeight: Float = 1f
+        percentHeight: Float = 1f,
+        rotation: Int
     ) {
         viewModelScope.launch {
-//            loading.value = true
-
             var ocr: Result<String>? = null
-            cropBitmap(context, imageUri, percentTop, percentHeight)?.let { cropped ->
-//                saveMediaToStorage(context, cropped)
+            cropBitmap(bitmap, percentTop, percentHeight, rotation)?.let { cropped ->
                 ocr = callApiGetOcr(context, cropped)
                 cropped.recycle()
             }
             if (ocr == null || ocr is Result.Error) {
-                val originBitmap = getBitmapFixExif(context, imageUri)
+                val originBitmap = getBitmapFixExif(bitmap, rotation)
                 ocr = callApiGetOcr(context, originBitmap, false)
                 originBitmap.recycle()
-            }
-
-            if (ocr is Result.Success) {
-                val resultSuccess = (ocr as Result.Success<String>)
-                codeOcr.value = resultSuccess.data
-            } else if (ocr is Result.Error) {
-                val resultError = ocr as Result.Error
-                if (resultError.exception is NoConnectivityException) {
-                    networkTrouble.value = true
-                } else {
-                    error.value = resultError.exception.message
-                }
-            }
-            context.contentResolver.delete(imageUri, null, null)
-            releaseLockTakePhoto()
-            loading.value = false
-        }
-    }
-
-    fun getCodeByGoogleVisionOcrByBitmap(
-        context: Context,
-        bitmap: Bitmap,
-        percentTop: Float = 0f,
-        percentHeight: Float = 1f
-    ) {
-        viewModelScope.launch {
-            loading.value = true
-
-            val bitmapW = bitmap.width
-            val bitmapH = bitmap.height
-            val y = bitmapH * percentTop
-            val height = bitmapH * percentHeight
-
-            val cropBitmap = Bitmap.createBitmap(
-                bitmap,
-                0,
-                y.toInt(),
-                bitmapW,
-                height.toInt()
-            )
-
-            var ocr: Result<String>? = null
-            cropBitmap?.let { cropped ->
-                ocr = callApiGetOcr(context, cropped)
-            }
-            if (ocr == null || ocr is Result.Error) {
-                ocr = callApiGetOcr(context, bitmap)
             }
 
             if (ocr is Result.Success) {
@@ -134,7 +85,7 @@ class CameraViewModel @Inject constructor(
         lockButtonTakePhoto.value = true
     }
 
-    fun releaseLockTakePhoto() {
+    private fun releaseLockTakePhoto() {
         lockButtonTakePhoto.value = false
     }
 
@@ -218,12 +169,13 @@ class CameraViewModel @Inject constructor(
 
     fun ocrTextractDetect(
         context: Context,
-        imageUri: Uri,
+        bitmap: Bitmap,
+        rotation: Int,
         percentTop: Float = 0f,
         percentHeight: Float = 1f
     ) {
         viewModelScope.launch {
-            val originBitmap = getBitmapFixExif(context, imageUri)
+            val originBitmap = getBitmapFixExif(bitmap, rotation)
             val scaleBitmap =
                 originBitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = false)
                     ?: return@launch
@@ -239,46 +191,16 @@ class CameraViewModel @Inject constructor(
                     isTextractSuccess = true
                 }
                     ?: kotlin.run {
-                        getCodeByGoogleVisionOcr(context, imageUri, percentTop, percentHeight)
+                        getCodeByGoogleVisionOcr(context, bitmap, percentTop, percentHeight, rotation)
                     }
             } else if (result is Result.Error) {
-                getCodeByGoogleVisionOcr(context, imageUri, percentTop, percentHeight)
-//                if (result.exception is NoConnectivityException) {
-//                    networkTrouble.value = true
-//                } else {
-//                    error.value = result.exception.message
-//                }
+                getCodeByGoogleVisionOcr(context, bitmap, percentTop, percentHeight, rotation)
             }
             if (isTextractSuccess) {
-                context.contentResolver.delete(imageUri, null, null)
                 releaseLockTakePhoto()
                 loading.value = false
             }
         }
-    }
-
-    fun ocrTextractDetectByBitmap(
-        context: Context,
-        originBitmap: Bitmap
-    ) {
-        viewModelScope.launch {
-            val scaleBitmap =
-                originBitmap.getScaledDownBitmap(1024, isNecessaryToKeepOrig = false)
-                    ?: return@launch
-            val imageBase64 = scaleBitmap.encodeImage() ?: return@launch
-            val result = apiOcrTextractDetect(imageBase64)
-            if (result is Result.Success) {
-                val response = result.data
-                val ocr = findBestCodeFromTextract(response.result.blocks)
-                ocr?.let { codeOcr.value = it }
-                    ?: kotlin.run { error.value = "Can not detect ocr" }
-            } else {
-                error.value = "Can not detect ocr"
-            }
-            releaseLockTakePhoto()
-            loading.value = false
-        }
-
     }
 
     private suspend fun apiOcrTextractDetect(imageBase64: String): Result<TextractResponse> {
@@ -344,12 +266,10 @@ class CameraViewModel @Inject constructor(
     }
 
     private fun getBitmapFixExif(
-        context: Context,
-        imageUri: Uri
+        bitmap: Bitmap,
+        rotationInDegrees: Int
     ): Bitmap {
-        val rotationInDegrees = getRotationInDegrees(context, imageUri)
-        val bitmapStream = context.contentResolver.openInputStream(imageUri)
-        var originBitmap = BitmapFactory.decodeStream(bitmapStream)
+        var originBitmap = bitmap
 
         if (rotationInDegrees != 0) {
             val matrix = Matrix()
@@ -368,13 +288,13 @@ class CameraViewModel @Inject constructor(
     }
 
     private fun cropBitmap(
-        context: Context,
-        imageUri: Uri,
+        bitmap: Bitmap,
         percentTop: Float = 0f,
-        percentHeight: Float = 1f
+        percentHeight: Float = 1f,
+        rotation: Int
     ): Bitmap? {
         try {
-            val originBitmap = getBitmapFixExif(context, imageUri)
+            val originBitmap = getBitmapFixExif(bitmap, rotation)
 
             val bitmapW = originBitmap.width
             val bitmapH = originBitmap.height
@@ -393,89 +313,4 @@ class CameraViewModel @Inject constructor(
             return null
         }
     }
-
-    private fun getRotationInDegrees(context: Context, uri: Uri): Int {
-        val exif = getExifInterface(context, uri)
-        val rotation = exif?.getAttributeInt(
-            ExifInterface.TAG_ORIENTATION,
-            ExifInterface.ORIENTATION_NORMAL
-        ) ?: ExifInterface.ORIENTATION_NORMAL
-
-        return exifToDegrees(rotation)
-    }
-
-    private fun getExifInterface(context: Context, uri: Uri): ExifInterface? {
-        try {
-            val path = uri.toString()
-            if (path.startsWith("file://")) {
-                return ExifInterface(path)
-            }
-            if (path.startsWith("content://")) {
-                val inputStream = context.contentResolver.openInputStream(uri)
-                return inputStream?.let { ExifInterface(it) }
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    private fun exifToDegrees(exifOrientation: Int): Int {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-            return 90
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-            return 180
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-            return 270
-        }
-        return 0
-    }
-
-    /*
-    fun saveMediaToStorage(context: Context, bitmap: Bitmap) {
-        //Generating a file name
-        val filename = "${System.currentTimeMillis()}.jpg"
-
-        //Output stream
-        var fos: OutputStream? = null
-        var imageUri: Uri? = null
-
-        //For devices running android >= Q
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            //getting the contentResolver
-            context.contentResolver?.also { resolver ->
-
-                //Content resolver will process the contentvalues
-                val contentValues = ContentValues().apply {
-
-                    //putting file information in content values
-                    put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
-                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
-                }
-
-                //Inserting the contentValues to contentResolver and getting the Uri
-                imageUri =
-                    resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-
-                //Opening an outputstream with the Uri that we got
-                fos = imageUri?.let { resolver.openOutputStream(it) }
-
-            }
-        } else {
-            //These for devices running on android < Q
-            //So I don't think an explanation is needed here
-            val imagesDir =
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-            val image = File(imagesDir, filename)
-            fos = FileOutputStream(image)
-        }
-
-        fos?.use {
-            //Finally writing the bitmap to the output stream that we opened
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-        }
-        fos?.close()
-    }
-     */
 }

@@ -2,11 +2,10 @@ package com.lifecard.vpreca.ui.ocr
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
@@ -40,32 +39,15 @@ import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.PictureResult
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.*
-
-enum class OcrDetectionService {
-    GoogleVision,
-    AWSTextract
-}
 
 @AndroidEntryPoint
 class CameraFragment : Fragment() {
     companion object {
         fun newInstance() = CameraFragment()
 
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private val REQUIRED_PERMISSIONS =
-            mutableListOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.RECORD_AUDIO
-            ).apply {
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                }
-            }.toTypedArray()
+            mutableListOf(Manifest.permission.CAMERA).toTypedArray()
     }
-
-    private val service = OcrDetectionService.AWSTextract
 
     private var _binding: FragmentCameraBinding? = null
     private val binding get() = _binding!!
@@ -78,6 +60,7 @@ class CameraFragment : Fragment() {
     private lateinit var cameraController: LifecycleCameraController
     private val args: CameraFragmentArgs by navArgs()
 
+    @androidx.camera.core.ExperimentalGetImage
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -89,6 +72,7 @@ class CameraFragment : Fragment() {
                 findNavController().popBackStack()
             }
         })
+        val imageView = binding.imageView
         val textCaptionHint = binding.textCaption
         args.hint?.let { textCaptionHint.text = it }
 
@@ -203,6 +187,7 @@ class CameraFragment : Fragment() {
         }
     }
 
+    @androidx.camera.core.ExperimentalGetImage
     private fun takePhoto() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             takePhotoX()
@@ -325,65 +310,28 @@ class CameraFragment : Fragment() {
         }
     }
 
+    @androidx.camera.core.ExperimentalGetImage
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun takePhotoX() {
         viewModel.startTakePhoto()
 
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
-        // Create time stamped name and MediaStore entry.
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-            .format(System.currentTimeMillis())
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
+        // Set up image capture listener, which is triggered after photo has been taken
+        imageCapture.takePicture(ContextCompat.getMainExecutor(requireContext()), object :
+            ImageCapture.OnImageCapturedCallback() {
+            override fun onCaptureSuccess(image: ImageProxy) {
+                super.onCaptureSuccess(image)
+
+                val bitmap = convertImageProxyToBitmap(image)
+
+                viewModel.ocrTextractDetect(
+                    requireContext(),
+                    bitmap,
+                    image.imageInfo.rotationDegrees
+                )
             }
-        }
-
-        // Create output options object which contains file + metadata
-        val outputOptions = ImageCapture.OutputFileOptions
-            .Builder(
-                requireActivity().contentResolver,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                contentValues
-            )
-            .build()
-
-        // Set up image capture listener, which is triggered after photo has
-        // been taken
-        imageCapture.takePicture(
-            outputOptions,
-            ContextCompat.getMainExecutor(requireContext()),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onError(exc: ImageCaptureException) {
-                    exc.printStackTrace()
-                    viewModel.releaseLockTakePhoto()
-                }
-
-                override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults) {
-                    output.savedUri?.let { imageUri ->
-                        when (service) {
-                            OcrDetectionService.AWSTextract -> viewModel.ocrTextractDetect(
-                                requireContext(),
-                                imageUri
-                            )
-                            else -> {
-                                val percents = getPercentCrop()
-                                viewModel.getCodeByGoogleVisionOcr(
-                                    requireContext(),
-                                    imageUri,
-                                    percents[0],
-                                    percents[1]
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        )
+        })
     }
 
     private fun startCameraBellow21() {
@@ -406,21 +354,11 @@ class CameraFragment : Fragment() {
             override fun onPictureTaken(result: PictureResult) {
                 result.toBitmap(1024, 1024, BitmapCallback { bitmap ->
                     bitmap?.let {
-                        when (service) {
-                            OcrDetectionService.AWSTextract -> viewModel.ocrTextractDetectByBitmap(
-                                requireContext(),
-                                bitmap
-                            )
-                            else -> {
-                                val percents = getPercentCrop()
-                                viewModel.getCodeByGoogleVisionOcrByBitmap(
-                                    requireContext(),
-                                    bitmap,
-                                    percents[0],
-                                    percents[1]
-                                )
-                            }
-                        }
+                        viewModel.ocrTextractDetect(
+                            requireContext(),
+                            bitmap,
+                            0
+                        )
                     }
                         ?: kotlin.run {
                             //show alert
@@ -452,4 +390,17 @@ class CameraFragment : Fragment() {
         percents[1] = percentHeight
         return percents
     }
+
+    @androidx.camera.core.ExperimentalGetImage
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun convertImageProxyToBitmap(image: ImageProxy): Bitmap {
+        if (image.format == 35) {
+            return image.image?.convertImageProxyToBitmap()!!
+        } else if (image.format == 256) {
+            return image.convertImageProxyToBitmap()
+        } else {
+            return image.image?.convertImageProxyToBitmap()!!
+        }
+    }
+
 }
