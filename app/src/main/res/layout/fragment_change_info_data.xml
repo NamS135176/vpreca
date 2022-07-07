@@ -90,9 +90,9 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvConfirmID"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:lines="1"
                             android:text="@{user.memberName ?? ``}"
@@ -123,9 +123,9 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvConfirmPassword"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{user.memberKana ?? ``}"
                             android:textSize="12sp" />
@@ -136,11 +136,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingBottom="14dp"
+                        android:paddingTop="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -155,9 +155,9 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvConfirmUsername"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{user.addressPrefecture ?? ``}"
                             android:textSize="12sp" />
@@ -167,11 +167,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -185,9 +184,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.formatHideDisplayPhoneNumber(user)}"
                             android:textSize="12sp" />
@@ -198,11 +197,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -216,9 +214,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.hideUserEmail1(user)}"
                             android:textSize="12sp" />
@@ -228,11 +226,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -246,9 +243,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.hideUserEmail2(user)}"
                             android:textSize="12sp" />
@@ -286,9 +283,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.receiveEmail1(user)}"
                             android:textSize="12sp" />
@@ -298,11 +295,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
@@ -315,9 +311,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.receiveEmail2(user)}"
                             android:textSize="12sp" />
@@ -355,9 +351,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.receiveAdEmail1(user)}"
                             android:textSize="12sp" />
@@ -367,11 +363,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
@@ -384,9 +379,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.receiveAdEmail2(user)}"
                             android:textSize="12sp" />
