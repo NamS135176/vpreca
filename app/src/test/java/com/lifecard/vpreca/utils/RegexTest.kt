@@ -22,6 +22,8 @@ class RegexTest {
         Assert.assertEquals(false, RegexUtils.isOcrCode("CF426G5AWBZT9G"))
         Assert.assertEquals(false, RegexUtils.isOcrCode("omakeOMAKE63bRI"))
         Assert.assertEquals(false, RegexUtils.isOcrCode("L051わ300S100ふ003WC31"))
+
+        Assert.assertEquals(false, RegexUtils.isOcrCode("F9GtTenfaFSNWT68"))
     }
 
     @Test

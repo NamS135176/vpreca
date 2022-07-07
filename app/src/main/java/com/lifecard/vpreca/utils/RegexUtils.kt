@@ -58,7 +58,7 @@ class RegexUtils {
         /**
          * only letter up/lowercase and number. Last char only number
          */
-        private const val RegexOcr = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{14}\\d+\$"
+        private const val RegexOcr = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-z\\d]{14}\\d{1}\$"
 
         /**
          * at least: 1 digit, 1 lowercase, one uppercase
