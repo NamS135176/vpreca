@@ -80,7 +80,8 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/id_confirm_signup_title"
@@ -112,7 +113,8 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/username_signup_title"
@@ -143,7 +145,8 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_name_title"
@@ -174,7 +177,8 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_furigana_title"
@@ -205,7 +209,8 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_adress_title"
@@ -235,7 +240,8 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_phone_title"
@@ -265,7 +271,8 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_primary_email_title"
@@ -294,7 +301,8 @@
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_secondary_email_title"
@@ -333,7 +341,8 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_primary_email_title"
@@ -361,7 +370,8 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_secondary_email_title"
@@ -400,7 +410,8 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_primary_email_title"
@@ -428,7 +439,8 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
                             android:layout_weight="1"
                             android:lineSpacingExtra="6sp"
                             android:text="@string/change_info_data_secondary_email_title"
