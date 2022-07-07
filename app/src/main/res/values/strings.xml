@@ -557,33 +557,7 @@
     <!--  Camera ocr end -->
 
     <!--    -->
-    <string name="get_user_failure">Can not get user</string>
-
-    <!--  Api error common checkout document https://docs.google.com/spreadsheets/d/1mi2ilMjaSO0OTD3lK8nMbDEl7XtDj977xPBrLGY6GZ4/edit#gid=1285172550-->
-    <string name="error_api_common_9999001">メッセージダイジェスト検証エラーです。</string>
-    <string name="error_api_common_9999002">センタ識別子不存在エラーです。</string>
-    <string name="error_api_common_9999003">未加入ブランドスキームエラーです。</string>
-    <string name="error_api_common_9999004">対象電文権限不足エラーです。</string>
-    <string name="error_api_common_9999005">該当電文処理中エラーです。</string>
-    <string name="error_api_common_9999901">ロック取得エラーです。</string>
-    <string name="error_api_common_9999902">DB障害エラーです。</string>
-    <string name="error_api_common_9999903">マスタ定義エラーです。</string>
-    <string name="error_api_common_9999904">DB論理エラーです。</string>
-    <string name="error_api_common_9999101">外部センタ通信エラー(プリカセンタ決済) です。</string>
-    <string name="error_api_common_9999102">外部センタ通信エラー(プリカセンタAPI) です。</string>
-    <string name="error_api_common_9999103">外部センタ通信エラー(ブランドプリカセンタAPI) です。</string>
-    <string name="error_api_common_9999111">外部センタ通信エラー(BlueGateワンクリ) です。</string>
-    <string name="error_api_common_9999112">外部センタ通信エラー(ブランドGW) です。</string>
-    <string name="error_api_common_9999113">外部センタ通信エラー(HTTP変換GW) です。</string>
-    <string name="error_api_common_9999121">外部センタ通信エラー(VeriTrans) です。</string>
-    <string name="error_api_common_9999122">外部センタ通信エラー(NTTコム) です。</string>
-    <string name="error_api_common_9999999">システムエラーです。</string>
-    <!--  Api error common end -->
-    <!--  Api error login -->
-    <string name="error_api_common_1101101">そのログインIDの会員情報が存在しません。</string>
-    <string name="error_api_common_1101102">アカウントロック中です。</string>
-    <string name="error_api_common_1101103">ログインパスワードが正しくありません。</string>
-    <!--  Api error login end -->
+    <string name="get_user_failure">システムエラーです。</string>
     <string name="button_submit_user_info_data">会員情報変更</string>
     <string name="button_confirm_change_pass" tools:ignore="ExtraTranslation">変更</string>
     <string name="hint_dropdown">選択してください</string>

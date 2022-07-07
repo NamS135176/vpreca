@@ -32,20 +32,18 @@ class ApiError {
 
         private val AP1101_loginErrors = mapOf(
             //login: 外部インタフェース定義書(IFBPAP1101_ログイン).pdf
-            "1101101" to "そのログインIDの会員情報が存在しません。",
+            "1101101" to "ログインIDまたはパスワードが違います。",
             "1101102" to "アカウントロック中です。",
-            "1101103" to "ログインパスワードが正しくありません。",
+            "1101103" to "ログインIDまたはパスワードが違います。",
             //end login
         )
         private val AP1102_memberQueryError = mapOf(
             //member query: 外部インタフェース定義書(IFBPAP1102_会員情報照会).pdf
-            "1101101" to "そのログインIDの会員情報が存在しません。",
-            "1101102" to "アカウントロック中です。",
-            "1101103" to "ログインパスワードが正しくありません。",
+            "1102101" to "会員情報が存在しません。",
+            "1102102" to "会員情報が有効ではありません。"
             //end member query
         )
         private val AP1104_cardListQueryError = mapOf(
-
             //card list information inquiry: 外部インタフェース定義書(IFBPAP1104_カード一覧情報照会).pdf
             "1104101" to "会員情報が存在しません。",
             "1104102" to "会員情報が有効ではありません。",
@@ -61,7 +59,6 @@ class ApiError {
             "1105103" to "カードの情報が取得できません。",
             "1105104" to "会員番号とカードの情報が紐づいていません。",
             //end card detailed information inquiry
-
         )
 
         private val AP1106_pendingTransactionInquiryQueryError = mapOf(
