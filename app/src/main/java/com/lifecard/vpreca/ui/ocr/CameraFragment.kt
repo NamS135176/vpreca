@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.ImageFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Size
@@ -72,7 +73,6 @@ class CameraFragment : Fragment() {
                 findNavController().popBackStack()
             }
         })
-        val imageView = binding.imageView
         val textCaptionHint = binding.textCaption
         args.hint?.let { textCaptionHint.text = it }
 
@@ -325,10 +325,14 @@ class CameraFragment : Fragment() {
 
                 val bitmap = convertImageProxyToBitmap(image)
 
+                val percents = getPercentCrop()
+
                 viewModel.ocrTextractDetect(
                     requireContext(),
                     bitmap,
-                    image.imageInfo.rotationDegrees
+                    image.imageInfo.rotationDegrees,
+                    percents[0],
+                    percents[1]
                 )
             }
         })
@@ -354,10 +358,13 @@ class CameraFragment : Fragment() {
             override fun onPictureTaken(result: PictureResult) {
                 result.toBitmap(1024, 1024, BitmapCallback { bitmap ->
                     bitmap?.let {
+                        val percents = getPercentCrop()
                         viewModel.ocrTextractDetect(
                             requireContext(),
                             bitmap,
-                            0
+                            0,
+                            percents[0],
+                            percents[1]
                         )
                     }
                         ?: kotlin.run {
@@ -394,12 +401,12 @@ class CameraFragment : Fragment() {
     @androidx.camera.core.ExperimentalGetImage
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun convertImageProxyToBitmap(image: ImageProxy): Bitmap {
-        if (image.format == 35) {
-            return image.image?.convertImageProxyToBitmap()!!
-        } else if (image.format == 256) {
-            return image.convertImageProxyToBitmap()
+        return if (image.format == ImageFormat.YUV_420_888) {
+            image.image?.convertImageProxyToBitmap()!!
+        } else if (image.format == ImageFormat.JPEG) {
+            image.convertImageProxyToBitmap()
         } else {
-            return image.image?.convertImageProxyToBitmap()!!
+            image.image?.convertImageProxyToBitmap()!!
         }
     }
 
