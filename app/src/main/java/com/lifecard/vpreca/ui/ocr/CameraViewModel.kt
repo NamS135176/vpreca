@@ -52,7 +52,7 @@ class CameraViewModel @Inject constructor(
         percentHeight: Float = 1f
     ) {
         viewModelScope.launch {
-            loading.value = true
+//            loading.value = true
 
             var ocr: Result<String>? = null
             cropBitmap(context, imageUri, percentTop, percentHeight)?.let { cropped ->
@@ -218,7 +218,9 @@ class CameraViewModel @Inject constructor(
 
     fun ocrTextractDetect(
         context: Context,
-        imageUri: Uri
+        imageUri: Uri,
+        percentTop: Float = 0f,
+        percentHeight: Float = 1f
     ) {
         viewModelScope.launch {
             val originBitmap = getBitmapFixExif(context, imageUri)
@@ -227,21 +229,31 @@ class CameraViewModel @Inject constructor(
                     ?: return@launch
             val imageBase64 = scaleBitmap.encodeImage() ?: return@launch
             val result = apiOcrTextractDetect(imageBase64)
+            var isTextractSuccess = false
+
             if (result is Result.Success) {
                 val response = result.data
                 val ocr = findBestCodeFromTextract(response.result.blocks)
-                ocr?.let { codeOcr.value = it }
-                    ?: kotlin.run { error.value = "Can not detect ocr" }
-            } else if (result is Result.Error) {
-                if (result.exception is NoConnectivityException) {
-                    networkTrouble.value = true
-                } else {
-                    error.value = result.exception.message
+                ocr?.let {
+                    codeOcr.value = it
+                    isTextractSuccess = true
                 }
+                    ?: kotlin.run {
+                        getCodeByGoogleVisionOcr(context, imageUri, percentTop, percentHeight)
+                    }
+            } else if (result is Result.Error) {
+                getCodeByGoogleVisionOcr(context, imageUri, percentTop, percentHeight)
+//                if (result.exception is NoConnectivityException) {
+//                    networkTrouble.value = true
+//                } else {
+//                    error.value = result.exception.message
+//                }
             }
-            context.contentResolver.delete(imageUri, null, null)
-            releaseLockTakePhoto()
-            loading.value = false
+            if (isTextractSuccess) {
+                context.contentResolver.delete(imageUri, null, null)
+                releaseLockTakePhoto()
+                loading.value = false
+            }
         }
     }
 
