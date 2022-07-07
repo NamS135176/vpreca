@@ -90,9 +90,9 @@
                         <com.google.android.material.textview.MaterialTextView
 
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{user.loginId}"
                             android:textSize="12sp" />
@@ -103,12 +103,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-
-                        android:layout_marginTop="26dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -123,9 +121,9 @@
                         <com.google.android.material.textview.MaterialTextView
 
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{user.memberRoman}"
                             android:textSize="12sp" />
@@ -136,11 +134,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="26dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -155,9 +152,9 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvConfirmID"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{user.memberName}"
                             android:textSize="12sp" />
@@ -168,11 +165,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="26dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -187,9 +183,9 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvConfirmPassword"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{user.memberKana}"
                             android:textSize="12sp" />
@@ -200,11 +196,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -219,9 +214,9 @@
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/tvConfirmUsername"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{user.addressPrefecture}"
                             android:textSize="12sp" />
@@ -231,11 +226,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -249,9 +243,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.formatPhone(user.telephoneNumber1)}"
                             android:textSize="12sp" />
@@ -262,11 +256,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -280,9 +273,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{user.mailAddress1}"
                             android:textSize="12sp" />
@@ -292,11 +285,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             style="@style/Widget.AppCompat.TextView.Bold"
@@ -310,9 +302,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{user.mailAddress2}"
                             android:textSize="12sp" />
@@ -350,9 +342,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.convertReceiveState(user.mail1AdMailRecieveFlg)}"
                             android:textSize="12sp" />
@@ -362,11 +354,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
@@ -379,9 +370,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.convertReceiveState(user.mail2AdMailRecieveFlg)}"
                             android:textSize="12sp" />
@@ -419,9 +410,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.convertReceiveState(user.mail1RecievFlg)}"
                             android:textSize="12sp" />
@@ -431,11 +422,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="31dp"
-                        android:layout_marginTop="15dp"
                         android:background="@drawable/underline_bg"
                         android:orientation="horizontal"
                         android:paddingHorizontal="8dp"
-                        android:paddingBottom="14dp">
+                        android:paddingVertical="14dp">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
@@ -448,9 +438,9 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="end"
+                            android:gravity="end|center_vertical"
                             android:lineSpacingExtra="6sp"
                             android:text="@{UserConverter.convertReceiveState(user.mail2RecievFlg)}"
                             android:textSize="12sp" />
