@@ -61,6 +61,7 @@ class CameraViewModel @Inject constructor(
                 originBitmap.recycle()
             }
 
+            bitmap.recycle()
             if (ocr is Result.Success) {
                 val resultSuccess = (ocr as Result.Success<String>)
                 codeOcr.value = resultSuccess.data
@@ -201,6 +202,7 @@ class CameraViewModel @Inject constructor(
                 getCodeByGoogleVisionOcr(context, bitmap, percentTop, percentHeight, rotation)
             }
             if (isTextractSuccess) {
+                bitmap.recycle()
                 releaseLockTakePhoto()
                 loading.value = false
             }

@@ -339,6 +339,8 @@ class CameraFragment : Fragment() {
 
                 val bitmap = convertImageProxyToBitmap(image)
 
+                image.close()
+
                 val percents = getPercentCrop()
 
                 viewModel.ocrTextractDetect(
@@ -352,6 +354,7 @@ class CameraFragment : Fragment() {
 
             override fun onError(exception: ImageCaptureException) {
                 super.onError(exception)
+                println(exception)
                 viewModel.releaseLockTakePhoto(true)
             }
         })
