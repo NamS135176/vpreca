@@ -82,7 +82,8 @@ class CameraViewModel @Inject constructor(
         lockButtonTakePhoto.value = true
     }
 
-    private fun releaseLockTakePhoto() {
+    fun releaseLockTakePhoto(hideLoading: Boolean = false) {
+        if (hideLoading) loading.value = false
         lockButtonTakePhoto.value = false
     }
 
@@ -188,7 +189,13 @@ class CameraViewModel @Inject constructor(
                     isTextractSuccess = true
                 }
                     ?: kotlin.run {
-                        getCodeByGoogleVisionOcr(context, bitmap, percentTop, percentHeight, rotation)
+                        getCodeByGoogleVisionOcr(
+                            context,
+                            bitmap,
+                            percentTop,
+                            percentHeight,
+                            rotation
+                        )
                     }
             } else if (result is Result.Error) {
                 getCodeByGoogleVisionOcr(context, bitmap, percentTop, percentHeight, rotation)
