@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.base.BackPressFragment
 import com.lifecard.vpreca.data.model.BalanceTotalRemain
+import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
 import com.lifecard.vpreca.utils.*
@@ -39,6 +40,8 @@ class BalanceAmountMenuFragment : BackPressFragment() {
         val btnByCode = binding.btnBalanceByCode
         val tvTotal = binding.tvTotalAmount
         var totalRemain = 0
+        val sumUpSrcCardInfo = ArrayList<CardInfoRequestContentInfo>()
+
         btnByCode.setOnClickListener {
             val data = BalanceTotalRemain(totalRemain.toString())
             val action =
@@ -50,6 +53,7 @@ class BalanceAmountMenuFragment : BackPressFragment() {
 
         btnBySource.setOnClickListener {
             val data = BalanceTotalRemain(totalRemain.toString())
+            println(sumUpSrcCardInfo)
             val action =
                 BalanceAmountMenuFragmentDirections.actionMenuToSelectsource(
                     data
@@ -83,6 +87,14 @@ class BalanceAmountMenuFragment : BackPressFragment() {
                     }
                     totalRemain = sumBalance
                     tvTotal.text = Converter.convertCurrency(sumBalance)
+                    for (i in 0..suspendDealResult.success.size - 1) {
+                        val data = CardInfoRequestContentInfo(
+                            suspendDealResult.success[i].cardSchemeId,
+                            suspendDealResult.success[i].precaNumber,
+                            suspendDealResult.success[i].vcn
+                        )
+                        sumUpSrcCardInfo.add(data)
+                    }
                 }
                 suspendDealResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }

@@ -29,6 +29,7 @@ class BalanceByCodeCompleteFragment : Fragment() {
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().popBackStack(R.id.nav_home, inclusive = false)
+
             }
         })
 

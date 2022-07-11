@@ -17,11 +17,13 @@ import com.lifecard.vpreca.data.model.BalanceGiftData
 import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
 import com.lifecard.vpreca.data.model.DesignCard
 import com.lifecard.vpreca.databinding.FragmentIssueCardSelectDesignBinding
+import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showInternetTrouble
 import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.EventBus
 
 @AndroidEntryPoint
 class IssueCardSelectDesignFragment : Fragment() {
@@ -272,19 +274,33 @@ class IssueCardSelectDesignFragment : Fragment() {
                             sumUpSrcCardInfo.add(data)
                         }
                     }
+                    var design = "0"
+                    design =  when(designId){
+                        "001" -> "99033"
+                        "002" -> "99455"
+                        "003" -> "99999"
+                        else -> "99999"
+                    }
                     viewModel.creditCardSelectDataChanged(
                         args.selectSourceData?.listCard?.get(
                             srcIndex
                         )?.cardSchemeId!!,
-                        designId,
+                        design,
                         args.selectSourceData?.listCard?.get(srcIndex)?.cardNickname!!,
                         args.selectSourceData?.listCard?.get(srcIndex)?.vcnName!!,
                         sumUpSrcCardInfo
                     )
                 }
                 "valueConfirm" -> {
+                    var design = "0"
+                    design =  when(designId){
+                        "001" -> "99033"
+                        "002" -> "99455"
+                        "003" -> "99999"
+                        else -> "99999"
+                    }
                     val data = BalanceGiftData(
-                        designId,
+                        design,
                         args.selectDesignGiftData?.giftAmount!!,
                         args.selectDesignGiftData?.giftNumber!!
                     )
@@ -293,7 +309,14 @@ class IssueCardSelectDesignFragment : Fragment() {
                     findNavController().navigate(action)
                 }
                 "balanceByCodeValueConfirm" -> {
-                    val designCard = DesignCard(designId, "0")
+                    var design = "0"
+                    design =  when(designId){
+                        "001" -> "99033"
+                        "002" -> "99455"
+                        "003" -> "99999"
+                        else -> "99999"
+                    }
+                    val designCard = DesignCard(design, "0")
                     val action = IssueCardSelectDesignFragmentDirections.selectdesignToConfirm(
                         args.selectDesignGiftData,
                         designCard

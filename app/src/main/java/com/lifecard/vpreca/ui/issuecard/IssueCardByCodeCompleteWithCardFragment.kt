@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeCompleteWithCardBinding
+import com.lifecard.vpreca.eventbus.ReloadCard
+import org.greenrobot.eventbus.EventBus
 
 class IssueCardByCodeCompleteWithCardFragment : Fragment() {
     private var _binding: FragmentIssueCardByCodeCompleteWithCardBinding? = null
@@ -24,6 +26,7 @@ class IssueCardByCodeCompleteWithCardFragment : Fragment() {
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().popBackStack(R.id.nav_home, inclusive = false)
+                EventBus.getDefault().post(ReloadCard())
             }
         })
 
@@ -33,6 +36,7 @@ class IssueCardByCodeCompleteWithCardFragment : Fragment() {
                 R.id.nav_home,
                 inclusive = false
             )
+            EventBus.getDefault().post(ReloadCard())
         }
         return binding.root
     }

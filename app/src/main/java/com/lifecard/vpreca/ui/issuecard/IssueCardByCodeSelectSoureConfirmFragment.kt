@@ -76,6 +76,7 @@ class IssueCardByCodeSelectSoureConfirmFragment : Fragment() {
                     sumUpSrcCardInfo.add(data)
                 }
             }
+
             viewModel.creditCardSelectDataChanged(
                 sumUpSrcCardInfo,
                 args.designData?.balanceAmount!!,

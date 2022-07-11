@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.IssueCardRepository
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.SuspendDealRepository
 import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
 import com.lifecard.vpreca.data.model.CardInfoWithDesignIdContentInfo
 import com.lifecard.vpreca.exception.ApiException
@@ -20,13 +21,44 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BalanceSelectSourceConfirmViewModel @Inject constructor(
-    private val issueCardRepository: IssueCardRepository
+    private val issueCardRepository: IssueCardRepository,
+    private val suspendDealRepository: SuspendDealRepository
 ) : ViewModel() {
-    private val _feeInfoResult = MutableLiveData<FeeInfoResult>()
-    val feeInfoResult: LiveData<FeeInfoResult> = _feeInfoResult
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
+
+    private val _feeInfoResult = MutableLiveData<FeeInfoResult>()
+    val feeInfoResult: LiveData<FeeInfoResult> = _feeInfoResult
+
+    private val _suspendDealResult = MutableLiveData<SuspendDealResult>()
+    val suspendDealResult: LiveData<SuspendDealResult> = _suspendDealResult
+    init {
+        viewModelScope.launch {
+            _loading.value = true
+            val result = suspendDealRepository.getListSuspendDeal()
+
+            if (result is Result.Success) {
+                _suspendDealResult.value = SuspendDealResult(success = result.data)
+            } else if (result is Result.Error) {
+                when (result.exception) {
+                    is NoConnectivityException -> _suspendDealResult.value =
+                        SuspendDealResult(networkTrouble = true)
+                    is ApiException -> _suspendDealResult.value = SuspendDealResult(
+                        error = ErrorMessageException(
+                            errorMessage = result.exception.errorMessage
+                        )
+                    )
+                    is InternalServerException -> _suspendDealResult.value =
+                        SuspendDealResult(internalError = "")
+
+                    else -> _suspendDealResult.value =
+                        SuspendDealResult(error = ErrorMessageException(R.string.get_list_card_failure))
+                }
+            }
+            _loading.value = false
+        }
+    }
 
     fun creditCardSelectDataChanged(
         cardSchemeId: String,
@@ -34,15 +66,16 @@ class BalanceSelectSourceConfirmViewModel @Inject constructor(
         cardNickName: String,
         vcnName: String,
         precaNumber: String,
-        vcn: String
+        vcn: String,
+        sumUpSrcCardInfo:ArrayList<CardInfoRequestContentInfo>
     ) {
         viewModelScope.launch {
             _loading.value = true
             val cardInfo =
                 CardInfoWithDesignIdContentInfo(cardSchemeId, designId, cardNickName, vcnName)
-            val sumUpSrcCardInfo = ArrayList<CardInfoRequestContentInfo>()
-            val data = CardInfoRequestContentInfo(cardSchemeId, precaNumber, vcn)
-            sumUpSrcCardInfo.add(data)
+//            val sumUpSrcCardInfo = ArrayList<CardInfoRequestContentInfo>()
+//            val data = CardInfoRequestContentInfo(cardSchemeId, precaNumber, vcn)
+//            sumUpSrcCardInfo.add(data)
             val res =
                 issueCardRepository.issueSumReq(
                     cardInfo,
