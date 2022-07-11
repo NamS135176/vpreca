@@ -188,10 +188,23 @@
     <style name="MyMaterialDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <!-- Customize your theme here. -->
         <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlert.Body.Text</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlert.Title.Text</item>
+
     </style>
+
     <style name="MaterialAlert.Body.Text" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:lineSpacingExtra">7sp</item>
+    </style>
+
+    <style name="MaterialAlert.Title.Text" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/hiragino_sans_w6</item>
+        <item name="fontFamily">@font/hiragino_sans_w6
+        </item>
     </style>
 </resources>
