@@ -19,12 +19,12 @@ import javax.inject.Inject
 class BalanceAmountMenuViewModel @Inject constructor(
     private val suspendDealRepository: SuspendDealRepository
 ) : ViewModel() {
-    private val _suspendDealResult = MutableLiveData<SuspendDealResult>()
-    val suspendDealResult: LiveData<SuspendDealResult> = _suspendDealResult
+
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
-
+    private val _suspendDealResult = MutableLiveData<SuspendDealResult>()
+    val suspendDealResult: LiveData<SuspendDealResult> = _suspendDealResult
     init {
         viewModelScope.launch {
             _loading.value = true

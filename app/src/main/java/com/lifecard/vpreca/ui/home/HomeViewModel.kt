@@ -40,6 +40,7 @@ class HomeViewModel @Inject constructor(
             loadCard(false)
             loadCard(true)
         }
+        getListSuspend()
     }
 
     fun clearCardInfoResult() {
@@ -140,7 +141,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    init {
+    fun getListSuspend() {
         viewModelScope.launch {
             _loading.value = true
             val result = suspendDealRepository.getListSuspendDeal()

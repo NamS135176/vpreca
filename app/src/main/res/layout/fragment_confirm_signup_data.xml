@@ -209,7 +209,7 @@
                 android:layout_marginLeft="9dp"
                 android:layout_weight="1"
                 android:paddingVertical="14dp"
-                android:text="@string/change_pass_btn_submit"
+                android:text="@string/gift_card_confirm_detail_btn"
                 android:textSize="18sp"
                 app:cornerRadius="30dp" />
         </LinearLayout>

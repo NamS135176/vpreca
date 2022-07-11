@@ -26,6 +26,7 @@ import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
 import com.lifecard.vpreca.eventbus.ReloadCard
+import com.lifecard.vpreca.eventbus.ReloadSuspendCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
@@ -62,6 +63,7 @@ class HomeFragment : Fragment(), CoroutineScope {
     private val binding get() = _binding!!
     private var latestPage = 0
     private var forceReloadCard: Boolean = false
+    private var forceReloadSuspendCard: Boolean = false
 
     private val pageChangeCallback = object : SimpleOnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -166,6 +168,15 @@ class HomeFragment : Fragment(), CoroutineScope {
             forceReloadCard = true//will reload on method onViewCreated
         } else {
             homeViewModel.loadCard(true)
+        }
+    }
+
+    @Subscribe
+    fun handleReloadSuspendCard(event: ReloadSuspendCard) {
+        if (isRemoving) {
+            forceReloadSuspendCard = true//will reload on method onViewCreated
+        } else {
+            homeViewModel.getListSuspend()
         }
     }
 
@@ -325,6 +336,10 @@ class HomeFragment : Fragment(), CoroutineScope {
                         btnBalance.isEnabled = true
                         btnBalance.visibility = View.VISIBLE
                     }
+                    else{
+                        btnBalance.isEnabled = false
+                        btnBalance.visibility = View.INVISIBLE
+                    }
                 }
                 suspendDealResult.error?.let { error ->
 
@@ -386,6 +401,10 @@ class HomeFragment : Fragment(), CoroutineScope {
             forceReloadCard = false
         } else {
             homeViewModel.loadCardIfEmptyData()
+        }
+        if (forceReloadSuspendCard) {
+            homeViewModel.getListSuspend()
+            forceReloadSuspendCard = false
         }
     }
 
