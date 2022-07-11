@@ -26,7 +26,7 @@ class IssueCardByCodeInputCodeViewModel @Inject constructor(
 
     private fun checkCfPhoneValid(): Boolean {
         return if (!RegexUtils.isGiftNumberValid(formState.value?.confirmCode)) {
-            codeError.value = R.string.error_code
+            codeError.value = R.string.rgx_error_gift_number
             false
         } else {
             codeError.value = null
