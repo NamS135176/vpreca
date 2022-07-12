@@ -207,4 +207,8 @@
         <item name="fontFamily">@font/hiragino_sans_w6
         </item>
     </style>
+
+    <style name="DefaultNumberPickerTheme" parent="AppBottomSheetDialogTheme">
+        <item name="colorControlNormal">@android:color/transparent</item>
+    </style>
 </resources>

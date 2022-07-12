@@ -16,6 +16,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textview.MaterialTextView
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentChangePhoneFirstBinding
+import com.lifecard.vpreca.ui.card.CardBottomSheetDate
 import com.lifecard.vpreca.utils.KeyboardUtils
 import com.lifecard.vpreca.utils.UserConverter
 import com.lifecard.vpreca.utils.showInternetTrouble
@@ -103,6 +104,7 @@ class ChangePhoneFirstFragment : Fragment() {
                     )
                 }
                     .show()
+//                CardBottomSheetDate(requireActivity()).show()
             }
 
             btnCancel.setOnClickListener {

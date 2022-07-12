@@ -78,7 +78,7 @@ class IssueCardSelectDesignFragment : Fragment() {
         val rcView = binding.rvView
         val bigCard = binding.cardZone.cardInclude
         val btnSubmit = binding.btnSubmitIntroduceFirst
-        var designId = "001"
+        var designId = "99999"
         val recyclerIndicator = binding.indicator
 
         val cardLayout = binding.cardZone
@@ -172,7 +172,8 @@ class IssueCardSelectDesignFragment : Fragment() {
                     binding.cardZone.termOfUse.visibility = View.VISIBLE
                     val list: List<DesignCard>
                     list = ArrayList()
-                    cardLayout.card = DesignCard("001", "0")
+                    bigCard.cardInfo.setBackgroundResource(R.drawable.third)
+                    binding.cardZone.card = DesignCard("99033", "0")
                     for (i in 0 until listDesignResult.success.cardDesignInfo?.size!!) {
                         if (i == 0) {
                             list.add(
@@ -210,25 +211,25 @@ class IssueCardSelectDesignFragment : Fragment() {
                                     }
                                 }
                                 when (list[position].designId) {
-                                    "001" -> {
+                                    "99033" -> {
                                         bigCard.cardInfo.setBackgroundResource(R.drawable.first)
                                         cardLayout.card = DesignCard(list[position].designId, "0")
-                                        designId = "001"
+                                        designId = "99033"
                                     }
-                                    "002" -> {
+                                    "99455" -> {
                                         bigCard.cardInfo.setBackgroundResource(R.drawable.second)
                                         cardLayout.card = DesignCard(list[position].designId, "0")
-                                        designId = "002"
+                                        designId = "99455"
                                     }
-                                    "003" -> {
+                                    "99999" -> {
                                         bigCard.cardInfo.setBackgroundResource(R.drawable.third)
                                         cardLayout.card = DesignCard(list[position].designId, "0")
-                                        designId = "003"
+                                        designId = "99999"
                                     }
                                     else -> {
                                         bigCard.cardInfo.setBackgroundResource(R.drawable.first)
-                                        cardLayout.card = DesignCard("001", "0")
-                                        designId = "001"
+                                        cardLayout.card = DesignCard("99033", "0")
+                                        designId = "99033"
                                     }
                                 }
                                 adapter.notifyDataSetChanged()
@@ -274,33 +275,21 @@ class IssueCardSelectDesignFragment : Fragment() {
                             sumUpSrcCardInfo.add(data)
                         }
                     }
-                    var design = "0"
-                    design =  when(designId){
-                        "001" -> "99033"
-                        "002" -> "99455"
-                        "003" -> "99999"
-                        else -> "99999"
-                    }
+
                     viewModel.creditCardSelectDataChanged(
                         args.selectSourceData?.listCard?.get(
                             srcIndex
                         )?.cardSchemeId!!,
-                        design,
+                        designId,
                         args.selectSourceData?.listCard?.get(srcIndex)?.cardNickname!!,
                         args.selectSourceData?.listCard?.get(srcIndex)?.vcnName!!,
                         sumUpSrcCardInfo
                     )
                 }
                 "valueConfirm" -> {
-                    var design = "0"
-                    design =  when(designId){
-                        "001" -> "99033"
-                        "002" -> "99455"
-                        "003" -> "99999"
-                        else -> "99999"
-                    }
+
                     val data = BalanceGiftData(
-                        design,
+                        designId,
                         args.selectDesignGiftData?.giftAmount!!,
                         args.selectDesignGiftData?.giftNumber!!
                     )
@@ -309,14 +298,7 @@ class IssueCardSelectDesignFragment : Fragment() {
                     findNavController().navigate(action)
                 }
                 "balanceByCodeValueConfirm" -> {
-                    var design = "0"
-                    design =  when(designId){
-                        "001" -> "99033"
-                        "002" -> "99455"
-                        "003" -> "99999"
-                        else -> "99999"
-                    }
-                    val designCard = DesignCard(design, "0")
+                    val designCard = DesignCard(designId, "0")
                     val action = IssueCardSelectDesignFragmentDirections.selectdesignToConfirm(
                         args.selectDesignGiftData,
                         designCard

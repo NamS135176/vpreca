@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+      >
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="完了"
+                        android:textColor="@color/primary"
+                        android:textSize="16sp"
+                        android:background="#d9d9d9"
+                        style="@style/Widget.AppCompat.TextView.Bold"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        android:gravity="right"/>
+                    <LinearLayout
+                        android:background="#ccd0d5"
+                        android:paddingHorizontal="70dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <NumberPicker
+                            android:id="@+id/numberYear"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:theme="@style/DefaultNumberPickerTheme" />
+
+                        <NumberPicker
+                            android:id="@+id/numberMonth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:divider="#ebebeb"
+                            android:theme="@style/DefaultNumberPickerTheme" />
+
+                        <NumberPicker
+                            android:id="@+id/numberDay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:theme="@style/DefaultNumberPickerTheme" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+        </androidx.cardview.widget.CardView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="19dp" />
+    </FrameLayout>
+</layout>
