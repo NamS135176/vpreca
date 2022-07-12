@@ -13,10 +13,10 @@ const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/LW0102OP01
         const val CARD_SCHEME_ID = "74101"
         const val CARD_NAME = "LIFECARD"
         //dev
-        const val API_BASE_URL = "https://la8rv0gdp9.execute-api.ap-southeast-1.amazonaws.com/dev2/"
+//        const val API_BASE_URL = "https://la8rv0gdp9.execute-api.ap-southeast-1.amazonaws.com/dev2/"
         //staging
-//        const val API_BASE_URL =
-//            "https://xvojcilpig.execute-api.ap-southeast-1.amazonaws.com/staging/"
+        const val API_BASE_URL =
+            "https://xvojcilpig.execute-api.ap-southeast-1.amazonaws.com/staging/"
 
         const val GOOGLE_VISION_API = "https://vision.googleapis.com/"
     }
