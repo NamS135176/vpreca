@@ -83,13 +83,6 @@ class CameraFragment : Fragment() {
             findNavController().popBackStack()
         })
 
-        if (allPermissionsGranted()) {
-            startCamera()
-        } else {
-            // Request camera permissions
-            requestMultiplePermissions.launch(REQUIRED_PERMISSIONS)
-        }
-
         binding.buttonTakePhoto.setOnClickListener(View.OnClickListener {
             takePhoto()
         })
@@ -138,6 +131,15 @@ class CameraFragment : Fragment() {
                     R.drawable.ic_button_camera_disable
                 ) else ContextCompat.getDrawable(requireContext(), R.drawable.ic_button_camera)
             })
+
+        viewModel.lockTakePhoto()
+
+        if (allPermissionsGranted()) {
+            startCamera()
+        } else {
+            // Request camera permissions
+            requestMultiplePermissions.launch(REQUIRED_PERMISSIONS)
+        }
         return binding.root
     }
 
@@ -194,6 +196,7 @@ class CameraFragment : Fragment() {
     }
 
     private fun startCamera() {
+        viewModel.releaseLockTakePhoto()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startCameraX()
         } else {

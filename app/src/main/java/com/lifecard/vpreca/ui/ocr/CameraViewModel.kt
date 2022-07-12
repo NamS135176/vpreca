@@ -80,9 +80,12 @@ class CameraViewModel @Inject constructor(
 
     fun startTakePhoto() {
         loading.value = true
-        lockButtonTakePhoto.value = true
+        lockTakePhoto()
     }
 
+    fun lockTakePhoto() {
+        lockButtonTakePhoto.value = true
+    }
     fun releaseLockTakePhoto(hideLoading: Boolean = false) {
         if (hideLoading) loading.value = false
         lockButtonTakePhoto.value = false
