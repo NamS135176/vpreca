@@ -22,9 +22,9 @@ data class BalanceGiftData(
 fun BalanceGiftData?.getBackgroundCard(): Int{
     var draw = 0
     when (this?.balanceAmount) {
-        "001" -> draw = R.drawable.first
-        "002" -> draw = R.drawable.second
-        "003" -> draw = R.drawable.third
+        "99033" -> draw = R.drawable.first
+        "99455" -> draw = R.drawable.second
+        "99999" -> draw = R.drawable.third
         else -> draw = R.drawable.first
     }
     return draw
