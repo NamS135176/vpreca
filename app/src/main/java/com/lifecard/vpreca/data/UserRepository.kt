@@ -8,7 +8,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class UserRepository(private val appContext: Context, private val apiService: ApiService, private val userManager: UserManager) {
+class UserRepository(
+    private val appContext: Context,
+    private val apiService: ApiService,
+    private val userManager: UserManager,
+    private val deviceID: DeviceID,
+) {
     suspend fun login(loginRequest: Request): Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
             try {
@@ -33,7 +38,11 @@ class UserRepository(private val appContext: Context, private val apiService: Ap
                     Result.Error(IOException("Can not get user"))
                 } else {
                     val userResponse = apiService.getUser(
-                        RequestHelper.createMemberRequest(loginId, memberNumber)
+                        RequestHelper.createMemberRequest(
+                            loginId,
+                            memberNumber,
+                            deviceId = deviceID.deviceId
+                        )
                     )
                     userManager.setLoggedMember(appContext, userResponse.response)
                     Result.Success(userResponse.response.memberInfo!!)
@@ -52,7 +61,7 @@ class UserRepository(private val appContext: Context, private val apiService: Ap
         return withContext(Dispatchers.IO) {
             try {
                 val userResponse = apiService.changeInfoMember(
-                    RequestHelper.createChangeInfoMember(memberInfo)
+                    RequestHelper.createChangeInfoMember(memberInfo, deviceId = deviceID.deviceId)
                 )
                 userManager.setLoggedMember(appContext, userResponse.response)
                 Result.Success(userResponse.response.memberInfo!!)
@@ -72,7 +81,8 @@ class UserRepository(private val appContext: Context, private val apiService: Ap
             try {
                 val userResponse = apiService.updatePassword(
                     RequestHelper.createChangePassRequest(
-                        PasswordUpdateMemberInfoContent(
+                        deviceId = deviceID.deviceId,
+                        memberInfo = PasswordUpdateMemberInfoContent(
                             userManager.loginId!!,
                             userManager.memberNumber!!,
                             "1",
@@ -102,7 +112,8 @@ class UserRepository(private val appContext: Context, private val apiService: Ap
             try {
                 val userResponse = apiService.resetPassword(
                     RequestHelper.createResetPassRequest(
-                        PasswordResetMemberInfoContent(
+                        deviceId = deviceID.deviceId,
+                        memberInfo = PasswordResetMemberInfoContent(
                             email,
                             birthday,
                             phone,
@@ -128,7 +139,8 @@ class UserRepository(private val appContext: Context, private val apiService: Ap
             try {
                 val userResponse = apiService.sendSMSRequest(
                     RequestHelper.createSendSMSRequest(
-                      loginId = loginId!!
+                        loginId = loginId!!,
+                        deviceId = deviceID.deviceId
                     )
                 )
                 Result.Success(userResponse.response)
@@ -155,7 +167,8 @@ class UserRepository(private val appContext: Context, private val apiService: Ap
                         certType = certType,
                         operationType = operationType,
                         certCode = certCode,
-                        extCertDealId = extCertDealId
+                        extCertDealId = extCertDealId,
+                        deviceId = deviceID.deviceId
                     )
                 )
 
@@ -181,7 +194,8 @@ class UserRepository(private val appContext: Context, private val apiService: Ap
                         certType = certType,
                         loginId = loginId,
                         certCode = certCode,
-                        extCertDealId = extCertDealId
+                        extCertDealId = extCertDealId,
+                        deviceId = deviceID.deviceId
                     )
                 )
 

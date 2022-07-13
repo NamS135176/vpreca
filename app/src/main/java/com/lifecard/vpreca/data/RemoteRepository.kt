@@ -10,7 +10,8 @@ import kotlinx.coroutines.withContext
 
 class RemoteRepository(
     private val apiService: ApiService,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val deviceID: DeviceID,
 ) {
 
     suspend fun getCardUsageHistory(creditCard: CreditCard): Result<List<CardUsageHistory>> {
@@ -20,7 +21,8 @@ class RemoteRepository(
                     apiService.getCardUsageHistory(
                         RequestHelper.createCardUsageHistory(
                             userManager.memberNumber!!,
-                            creditCard
+                            creditCard,
+                            deviceId = deviceID.deviceId
                         )
                     )
                 Result.Success(cardUsageHistoryResponse.response.cardInfo!!)
@@ -37,7 +39,8 @@ class RemoteRepository(
                 val cardUsageHistoryResponse =
                     apiService.getCardUsageHistory(
                         RequestHelper.createCardUsageHistoryWithouMember(
-                            creditCard
+                            creditCard,
+                            deviceId = deviceID.deviceId
                         )
                     )
                 Result.Success(cardUsageHistoryResponse.response.cardInfo!!)

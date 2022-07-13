@@ -4,7 +4,7 @@ import android.content.Context
 
 class PreferenceHelper {
     companion object {
-        const val PREF_NAME = "VPrecaPref"
+        private const val PREF_NAME = "VPrecaPref"
         fun isAcceptTermOfUseFirstTime(appContext: Context): Boolean {
             val sharedPreferences =
                 appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)

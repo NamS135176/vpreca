@@ -5,13 +5,13 @@ import java.io.IOException
 
 class ApiException(
     val resultCode: String,
-    val messageType: String,
+    val messageType: String?,
     val errorMessage: String
 ) : IOException() {
     companion object {
         fun createApiException(
             resultCode: String,
-            messageType: String,
+            messageType: String?,
         ): ApiException {
             return ApiException(
                 resultCode,

@@ -7,6 +7,7 @@ import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.api.ApiServiceFactory
 import com.lifecard.vpreca.data.api.GoogleVisionService
 import com.lifecard.vpreca.data.source.SecureStore
+import com.lifecard.vpreca.utils.DeviceIDHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,9 +32,10 @@ class AppModule {
     @Singleton
     fun provideCreditCardRepository(
         apiService: ApiService,
-        userManager: UserManager
+        userManager: UserManager,
+        deviceID: DeviceID,
     ): CreditCardRepository {
-        return CreditCardRepository(apiService, userManager)
+        return CreditCardRepository(apiService, userManager, deviceID)
     }
 
     @Provides
@@ -41,9 +43,10 @@ class AppModule {
     fun provideUserRepository(
         @ApplicationContext appContext: Context,
         apiService: ApiService,
-        userManager: UserManager
+        userManager: UserManager,
+        deviceID: DeviceID,
     ): UserRepository {
-        return UserRepository(appContext, apiService, userManager)
+        return UserRepository(appContext, apiService, userManager, deviceID)
     }
 
     @Provides
@@ -56,27 +59,30 @@ class AppModule {
     @Singleton
     fun provideRemoteRepository(
         apiService: ApiService,
-        userManager: UserManager
+        userManager: UserManager,
+        deviceID: DeviceID
     ): RemoteRepository {
-        return RemoteRepository(apiService, userManager)
+        return RemoteRepository(apiService, userManager, deviceID)
     }
 
     @Provides
     @Singleton
     fun provideSuspendDealRepository(
         apiService: ApiService,
-        userManager: UserManager
+        userManager: UserManager,
+        deviceID: DeviceID
     ): SuspendDealRepository {
-        return SuspendDealRepository(apiService, userManager)
+        return SuspendDealRepository(apiService, userManager, deviceID)
     }
 
     @Provides
     @Singleton
     fun provideIssueCardRepository(
         apiService: ApiService,
-        userManager: UserManager
+        userManager: UserManager,
+        deviceID: DeviceID
     ): IssueCardRepository {
-        return IssueCardRepository(apiService, userManager)
+        return IssueCardRepository(apiService, userManager, deviceID)
     }
 
     @Provides
@@ -95,5 +101,10 @@ class AppModule {
     @Provides
     fun provideAWSTextractService(): AWSTextractService {
         return ApiServiceFactory.createAWSTextractService()
+    }
+
+    @Provides
+    fun provideDeviceID(@ApplicationContext appContext: Context): DeviceID {
+        return DeviceID(deviceId = DeviceIDHelper.getDeviceId(appContext))
     }
 }

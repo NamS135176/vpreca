@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.DeviceID
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.exception.ApiException
@@ -22,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SMSVerifyViewModel @Inject constructor(
     private val userRepository: UserRepository,
-    private val loginRepository: UserRepository
+    private val loginRepository: UserRepository,
+    private val deviceID: DeviceID,
 ) : ViewModel() {
     val cfPhoneError = MutableLiveData<Int?>()
     val validForm = MutableLiveData<Boolean>()
@@ -136,6 +138,7 @@ class SMSVerifyViewModel @Inject constructor(
             _loading.value = true
             val loginResult = loginRepository.login(
                 RequestHelper.createLoginRequest(
+                    deviceId = deviceID.deviceId,
                     loginId = username,
                     loginPassword = password
                 )

@@ -9,7 +9,8 @@ import kotlinx.coroutines.withContext
 
 class IssueCardRepository(
     private val apiService: ApiService,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val deviceID: DeviceID,
 ) {
     suspend fun giftNumberAuthReq(
         giftNumber: String
@@ -19,7 +20,8 @@ class IssueCardRepository(
                 val giftNumberAuthResponse = apiService.getGiftInfo(
                     RequestHelper.createGiftNumberAuthReqRequest(
                         memberNumber = userManager.memberNumber!!,
-                        giftNumber
+                        giftNumber,
+                        deviceId = deviceID.deviceId
                     )
                 )
                 Result.Success(giftNumberAuthResponse.response.giftNumberInfo!!)
@@ -42,7 +44,10 @@ class IssueCardRepository(
         return withContext(Dispatchers.IO) {
             try {
                 val res = apiService.getFeeSel(
-                    RequestHelper.createFeeSelReqRequest(cardSchemeId, feeType, targetAmount)
+                    RequestHelper.createFeeSelReqRequest(
+                        cardSchemeId, feeType, targetAmount,
+                        deviceId = deviceID.deviceId
+                    )
                 )
 
                 val sumUpInfo = SumUpInfoContentInfo(
@@ -57,7 +62,8 @@ class IssueCardRepository(
                         memberNumber = userManager.memberNumber!!,
                         cardInfo,
                         sumUpInfo,
-                        sumUpSrcCardInfo
+                        sumUpSrcCardInfo,
+                        deviceId = deviceID.deviceId
                     )
                 )
                 Result.Success(feeSelReqResponse.response.cardInfo!!)
@@ -87,12 +93,18 @@ class IssueCardRepository(
                     RequestHelper.createIssueGiftRequestWithCard(
                         memberNumber = userManager.memberNumber!!,
                         CardInfoWithCard(cardSchemeId, designId, cardNickname, vcnName),
-                        giftNumber
+                        giftNumber,
+                        deviceId = deviceID.deviceId
                     )
                 )
 
                 val res = apiService.getFeeSel(
-                    RequestHelper.createFeeSelReqRequest(r.response.cardInfo!!.cardSchemeId, feeType, targetAmount)
+                    RequestHelper.createFeeSelReqRequest(
+                        r.response.cardInfo!!.cardSchemeId,
+                        feeType,
+                        targetAmount,
+                        deviceId = deviceID.deviceId
+                    )
                 )
 
                 val sumUpInfo = SumUpInfoContentInfo(
@@ -112,7 +124,8 @@ class IssueCardRepository(
                             r.response.cardInfo.vcnName
                         ),
                         sumUpInfo,
-                        sumUpSrcCardInfo
+                        sumUpSrcCardInfo,
+                        deviceId = deviceID.deviceId
                     )
                 )
                 Result.Success(feeSelReqResponse.response.cardInfo!!)
@@ -135,7 +148,8 @@ class IssueCardRepository(
                     RequestHelper.createIssueGiftRequestWithoutCard(
                         memberNumber = userManager.memberNumber!!,
                         CardInfoOnlyDesignId(designId),
-                        giftNumber
+                        giftNumber,
+                        deviceId = deviceID.deviceId
                     )
                 )
                 Result.Success(res.response)
@@ -160,7 +174,8 @@ class IssueCardRepository(
                     RequestHelper.createIssueGiftRequestWithCard(
                         memberNumber = userManager.memberNumber!!,
                         CardInfoWithCard(cardSchemeId, designId, cardNickname, vcnName),
-                        giftNumber
+                        giftNumber,
+                        deviceId = deviceID.deviceId
                     )
                 )
                 Result.Success(res.response)

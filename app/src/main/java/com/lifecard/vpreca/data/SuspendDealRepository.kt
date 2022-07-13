@@ -9,13 +9,17 @@ import kotlinx.coroutines.withContext
 
 class SuspendDealRepository(
     private val apiService: ApiService,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val deviceID: DeviceID,
 ) {
     suspend fun getListSuspendDeal(): Result<List<SuspendDeal>> {
         return withContext(Dispatchers.IO) {
             try {
                 val suspendDealResponse = apiService.getListSuspendDeal(
-                    RequestHelper.createSuspendDealListRequest(memberNumber = userManager.memberNumber!!)
+                    RequestHelper.createSuspendDealListRequest(
+                        memberNumber = userManager.memberNumber!!,
+                        deviceId = deviceID.deviceId
+                    )
                 )
                 Result.Success(suspendDealResponse.response.suspendDeal!!)
             } catch (e: Exception) {

@@ -357,7 +357,7 @@ class ApiError {
 //"NoticeSelReq" to  //later
         )
 
-        fun getErrorMessage(messageType: String, resultCode: String): String {
+        fun getErrorMessage(messageType: String?, resultCode: String): String {
             //check on error mappping first
             var message = mappingMessageTypeWithError[messageType]?.get(resultCode)
             //check on common if not found

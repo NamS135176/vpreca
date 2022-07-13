@@ -4,8 +4,7 @@ import com.lifecard.vpreca.data.model.*
 
 class RequestHelper {
     companion object {
-        fun createLoginRequest(loginId: String, loginPassword: String): Request {
-
+        fun createLoginRequest(loginId: String, loginPassword: String, deviceId: String): Request {
             return Request(
                 request = LoginRequestContent(
                     loginInfo = LoginRequestContentInfo(
@@ -14,12 +13,12 @@ class RequestHelper {
                     )
                 ),
                 head = BaseHead(
-                    messageType = MessageType.LoginReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
-        fun createMemberRequest(loginId: String, memberNumber: String): Request {
+        fun createMemberRequest(loginId: String, memberNumber: String, deviceId: String): Request {
             return Request(
                 request = MemberRequestContent(
                     memberInfo = MemberRequestContentInfo(
@@ -28,7 +27,7 @@ class RequestHelper {
                     )
                 ),
                 head = BaseHead(
-                    messageType = MessageType.MemberSelReq.value
+                    appliTermId = deviceId
                 )
             )
         }
@@ -36,7 +35,8 @@ class RequestHelper {
         fun createFeeSelReqRequest(
             cardSchemeId: String,
             feeType: String,
-            targetAmount: String
+            targetAmount: String,
+            deviceId: String
         ): Request {
             return Request(
                 request = FeeSelReqRequest(
@@ -47,12 +47,12 @@ class RequestHelper {
                     )
                 ),
                 head = BaseHead(
-                    messageType = MessageType.FeeSelReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
-        fun createGiftNumberAuthReqRequest(memberNumber: String, giftNumber: String): Request {
+        fun createGiftNumberAuthReqRequest(memberNumber: String, giftNumber: String, deviceId: String): Request {
             return Request(
                 request = GiftNumberAuthReqRequest(
                     memberInfo = MemberInfoContent(
@@ -63,7 +63,7 @@ class RequestHelper {
                     )
                 ),
                 head = BaseHead(
-                    messageType = MessageType.GiftNumberAuthReq.value
+                    appliTermId = deviceId
                 )
             )
         }
@@ -72,7 +72,8 @@ class RequestHelper {
             memberNumber: String,
             cardSchemeId: String,
             precaNumber: String,
-            vcn: String
+            vcn: String,
+            deviceId: String
         ): Request {
             return Request(
                 request = CardInfoRequestContent(
@@ -86,7 +87,7 @@ class RequestHelper {
                     )
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardSelReq.value
+                    appliTermId = deviceId
                 )
             )
         }
@@ -94,7 +95,8 @@ class RequestHelper {
         fun createCardInfoWithouMemberRequest(
             cardSchemeId: String,
             precaNumber: String,
-            vcn: String
+            vcn: String,
+            deviceId: String
         ): Request {
             return Request(
                 request = CardInfoWithouMemberRequestContent(
@@ -105,7 +107,7 @@ class RequestHelper {
                     )
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardSelReq.value
+                    appliTermId = deviceId
                 )
             )
         }
@@ -114,7 +116,8 @@ class RequestHelper {
             memberNumber: String,
             cardInfo: CardInfoWithDesignIdContentInfo,
             sumUpInfo: SumUpInfoContentInfo,
-            sumUpSrcCardInfo: ArrayList<CardInfoRequestContentInfo>
+            sumUpSrcCardInfo: ArrayList<CardInfoRequestContentInfo>,
+            deviceId: String
         ): Request {
             return Request(
                 request = IssueSumReqRequest(
@@ -126,7 +129,7 @@ class RequestHelper {
                     sumUpSrcCardInfo = sumUpSrcCardInfo
                 ),
                 head = BaseHead(
-                    messageType = MessageType.IssueSumReq.value
+                    appliTermId = deviceId
                 )
             )
         }
@@ -134,7 +137,8 @@ class RequestHelper {
         fun createIssueGiftRequestWithoutCard(
             memberNumber: String,
             cardInfo: CardInfoOnlyDesignId,
-            giftNumber: String
+            giftNumber: String,
+            deviceId: String
         ): Request {
             return Request(
                 request = IssueGiftReqWithoutCardRequest(
@@ -145,7 +149,7 @@ class RequestHelper {
                     chargeInfo = GiftNumberRequestContentInfo(giftNumber = giftNumber)
                 ),
                 head = BaseHead(
-                    messageType = MessageType.IssueGiftReq.value
+                    appliTermId = deviceId
                 )
             )
         }
@@ -153,7 +157,8 @@ class RequestHelper {
         fun createIssueGiftRequestWithCard(
             memberNumber: String,
             cardInfo: CardInfoWithCard,
-            giftNumber: String
+            giftNumber: String,
+            deviceId: String
         ): Request {
             return Request(
                 request = IssueGiftReqWithCardRequest(
@@ -164,20 +169,21 @@ class RequestHelper {
                     chargeInfo = GiftNumberRequestContentInfo(giftNumber = giftNumber)
                 ),
                 head = BaseHead(
-                    messageType = MessageType.IssueGiftReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createListDesignRequest(
-            cardSchemeId: String
+            cardSchemeId: String,
+            deviceId: String
         ): Request {
             return Request(
                 request = ListDesignRequest(
                     cardSchemeId = cardSchemeId
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardDesignSelReq.value
+                    appliTermId = deviceId
                 )
             )
         }
@@ -187,7 +193,8 @@ class RequestHelper {
             cardSchemeId: String,
             precaNumber: String,
             vcn: String,
-            cooperatorNumber: String?
+            cooperatorNumber: String?,
+            deviceId: String
         ): Request {
             return Request(
                 request = CardRepublishRequest(
@@ -202,14 +209,15 @@ class RequestHelper {
                     )
                 ),
                 head = BaseHead(
-                    messageType = MessageType.LoginReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createUpdateCardRequest(
             memberNumber: String,
-            creditCard: CreditCard
+            creditCard: CreditCard,
+            deviceId: String
         ): Request {
             return Request(
                 request = UpdateCardRequest(
@@ -234,14 +242,15 @@ class RequestHelper {
                     )
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardUpdReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createCardListRequest(
             memberNumber: String,
-            invalidCardResFlg: String = "0"
+            invalidCardResFlg: String = "0",
+            deviceId: String
         ): Request {
             return Request(
                 request = CardListRequestContent(
@@ -251,13 +260,14 @@ class RequestHelper {
                     invalidCardResFlg = invalidCardResFlg
                 ),
                 head = BaseHead(
-                    messageType = MessageType.MemberSelReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createSuspendDealListRequest(
-            memberNumber: String
+            memberNumber: String,
+            deviceId: String
         ): Request {
             return Request(
                 request = SuspendDealRequest(
@@ -266,14 +276,15 @@ class RequestHelper {
                     )
                 ),
                 head = BaseHead(
-                    messageType = MessageType.SuspendDealSelReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createCardUsageHistory(
             memberNumber: String,
-            creditCard: CreditCard
+            creditCard: CreditCard,
+            deviceId: String
         ): Request {
             return Request(
                 request = CardUsageHistoryRequestContent(
@@ -286,13 +297,14 @@ class RequestHelper {
                     ),
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardDealHisReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createCardUsageHistoryWithouMember(
-            creditCard: CreditCard
+            creditCard: CreditCard,
+            deviceId: String
         ): Request {
             return Request(
                 request = CardUsageHistoryWithouMemberRequestContent(
@@ -302,66 +314,71 @@ class RequestHelper {
                     ),
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardDealHisReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createChangeInfoMember(
-            memberInfo: ChangeInfoMemberData
+            memberInfo: ChangeInfoMemberData,
+            deviceId: String
         ): Request {
             return Request(
                 request = ChangeInfoMemberRequest(
                     memberInfo = memberInfo
                 ),
                 head = BaseHead(
-                    messageType = MessageType.MemberUpdReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createChangePassRequest(
-            memberInfo: PasswordUpdateMemberInfoContent
+            memberInfo: PasswordUpdateMemberInfoContent,
+            deviceId: String
         ): Request {
             return Request(
                 request = PasswordUpdateRequest(
                     memberInfo = memberInfo
                 ),
                 head = BaseHead(
-                    messageType = MessageType.PasswordUpdReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createResetPassRequest(
-            memberInfo: PasswordResetMemberInfoContent
+            memberInfo: PasswordResetMemberInfoContent,
+            deviceId: String
         ): Request {
             return Request(
                 request = PasswordResetRequest(
                     memberInfo = memberInfo
                 ),
                 head = BaseHead(
-                    messageType = MessageType.PasswordResetReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createGiftCertifiRequest(
-            cardInfo: GiftCertifiCardInfoRequestContentInfo
+            cardInfo: GiftCertifiCardInfoRequestContentInfo,
+            deviceId: String
         ): Request {
             return Request(
                 request = GiftCertifiRequest(
                     cardInfo = cardInfo
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardCertifiNoMemReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createCardRelationRequest(
             memberNumber: String,
-            cardInfo: CardRelationRegRequestContentInfo
+            cardInfo: CardRelationRegRequestContentInfo,
+            deviceId: String
         ): Request {
             return Request(
                 request = CardRelationRegReqRequest(
@@ -371,7 +388,7 @@ class RequestHelper {
                     cardInfo = cardInfo
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardRelationRegReq.value
+                    appliTermId = deviceId
                 )
             )
         }
@@ -381,7 +398,8 @@ class RequestHelper {
             certType: String,
             operationType: String,
             certCode: String,
-            extCertDealId: String
+            extCertDealId: String,
+            deviceId: String
         ): Request {
             return Request(
                 request = SMSAuthRequest(
@@ -396,7 +414,7 @@ class RequestHelper {
                     )
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardRelationRegReq.value
+                    appliTermId = deviceId
                 )
             )
         }
@@ -405,7 +423,8 @@ class RequestHelper {
             certType: String,
             loginId: String,
             certCode: String,
-            extCertDealId: String
+            extCertDealId: String,
+            deviceId: String
         ): Request {
             return Request(
                 request = SmsIvrAuthRequest(
@@ -415,20 +434,21 @@ class RequestHelper {
                     extCertDealId = extCertDealId
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardRelationRegReq.value
+                    appliTermId = deviceId
                 )
             )
         }
 
         fun createSendSMSRequest(
-          loginId: String
+          loginId: String,
+          deviceId: String
         ): Request {
             return Request(
                 request = SendSMSRequest(
                   loginId = loginId
                 ),
                 head = BaseHead(
-                    messageType = MessageType.CardRelationRegReq.value
+                    appliTermId = deviceId
                 )
             )
         }

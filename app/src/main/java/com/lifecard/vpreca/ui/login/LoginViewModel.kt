@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.DeviceID
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.UserRepository
@@ -25,7 +26,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginRepository: UserRepository,
     private val secureStore: SecureStore,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val deviceID: DeviceID,
 ) :
     ViewModel() {
     val usernameError = MutableLiveData<Int?>()
@@ -48,6 +50,7 @@ class LoginViewModel @Inject constructor(
             loading.value = true
             val loginResult = loginRepository.login(
                 RequestHelper.createLoginRequest(
+                    deviceId = deviceID.deviceId,
                     loginId = username,
                     loginPassword = password
                 )

@@ -11,6 +11,7 @@ import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.utils.ApiError
+import com.lifecard.vpreca.utils.Utils
 import com.lifecard.vpreca.utils.bodyToString
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
@@ -115,7 +116,7 @@ class AppRequestInterceptor(
                         return@let null
                     }
                 } else if (ApiError.isResultCodeError(resultCode)) {
-                    val messageType = json.head.messageType
+                    val messageType = Utils.getMessageTypeFromUrl(response.request().url().uri())
                     throw ApiException.createApiException(
                         resultCode = resultCode,
                         messageType = messageType
