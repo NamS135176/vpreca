@@ -11,14 +11,23 @@ class DeviceIDHelper {
                 appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
             var deviceId = sharedPreferences.getString("device_id", null)
             if (deviceId.isNullOrEmpty()) {
-                deviceId = UUID.randomUUID().toString()
-                deviceId.replace("-", "")
+                deviceId = generateDeviceID()
+
                 with(sharedPreferences.edit()) {
                     putString("device_id", deviceId)
                     apply()
                 }
             }
 
+            return deviceId
+        }
+
+        fun generateDeviceID(): String {
+            var deviceId = UUID.randomUUID().toString()
+            deviceId = deviceId.replace("-", "")
+            if (deviceId.length > 32) {
+                deviceId = deviceId.substring(0, 32)
+            }
             return deviceId
         }
     }
