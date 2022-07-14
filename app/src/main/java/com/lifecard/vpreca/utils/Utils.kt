@@ -23,7 +23,7 @@ class Utils {
             return randomString(6)
         }
 
-        private fun randomString(stringLength: Int): String {
+        fun randomString(stringLength: Int): String {
             val list = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray()
             var randomS = ""
             for (i in 1..stringLength) {

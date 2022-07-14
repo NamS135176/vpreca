@@ -19,26 +19,30 @@ class MessageDigest {
         .replace("-----END RSA PRIVATE KEY-----", "")
         .replace(Regex("[\\n]"), "")
 
+    fun sign(data: Any): String? {
+        return sign(gson.toJson(data))
+    }
+
+
     fun sign(textToSign: String): String? {
         try {
+            val md = MessageDigest.getInstance("SHA-256")
+            val digest: ByteArray = md.digest(textToSign.toByteArray(Charsets.UTF_8))
+
             val keyBytes: ByteArray = Base64.decode(privateKey, Base64.DEFAULT)
             val spec = PKCS8EncodedKeySpec(keyBytes)
             val kf = KeyFactory.getInstance("RSA")
 
             val privateSignature = Signature.getInstance("SHA256withRSA")
             privateSignature.initSign(kf.generatePrivate(spec))
-            privateSignature.update(textToSign.toByteArray(Charsets.UTF_8))
+            privateSignature.update(digest)
             val signed: ByteArray = privateSignature.sign()
-            val md = MessageDigest.getInstance("SHA-256")
-            val digest: ByteArray = md.digest(signed)
-            return Hex.bytesToStringLowercase(digest)
+
+            val result = Hex.bytesToStringLowercase(signed)
+            return result
         } catch (e: Exception) {
             println(e)
             return null
         }
-    }
-
-    fun sign(data: Any): String? {
-        return sign(gson.toJson(data))
     }
 }
