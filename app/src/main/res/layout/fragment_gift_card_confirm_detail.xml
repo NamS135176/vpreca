@@ -72,9 +72,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:layout_gravity="center_vertical"
+                            android:layout_gravity="start"
                             android:layout_weight="1"
                             android:textSize="11sp"
+                            android:paddingTop="13sp"
                             android:text="@string/gift_card_confirm_detail_price_title"/>
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_weight="1"
@@ -108,20 +109,6 @@
                 android:paddingVertical="11dp"
                 app:backgroundTint='@color/button_introduce_background'
                 />
-            <ProgressBar
-                android:id="@+id/loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="64dp"
-                android:visibility="gone"
-                android:indeterminateDrawable="@drawable/loading"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

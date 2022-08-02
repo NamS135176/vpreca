@@ -1,13 +1,9 @@
 package com.lifecard.vpreca.data.model
 
 import com.google.gson.annotations.SerializedName
+import com.lifecard.vpreca.utils.Utils
 import com.lifecard.vpreca.utils.requestDate
 import java.util.*
-
-data class BrandRequest(
-    @SerializedName("brandPrecaApi")
-    val brandPrecaApi: Request,
-)
 
 data class Request(
     @SerializedName("request")
@@ -18,22 +14,12 @@ data class Request(
 
 
 data class BaseHead(
-    @SerializedName("messageType")
-    val messageType: String,
-    @SerializedName("centerId")
-    val centerId: String = "",
-    @SerializedName("nodeId")
-    val nodeId: String = "",
-    @SerializedName("brandSchemeId")
-    val brandSchemeId: String = "",
+    @SerializedName("appliTermId")
+    val appliTermId: String,
     @SerializedName("processId")
-    val processId: String = "",
+    val processId: String = Utils.randomProcessId(),
     @SerializedName("requestDate")
     val requestDate: String = Date().requestDate(),
-    @SerializedName("searchKey")
-    val searchKey: String = "",
-    @SerializedName("messageDigest")
-    val messageDigest: String = "",
 )
 
 enum class MessageType(val value: String) {

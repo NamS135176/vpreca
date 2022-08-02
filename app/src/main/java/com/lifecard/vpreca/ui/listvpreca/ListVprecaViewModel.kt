@@ -1,8 +1,5 @@
 package com.lifecard.vpreca.ui.listvpreca
 
-import android.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +13,6 @@ import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.home.CreditCardResult
-import com.lifecard.vpreca.ui.login.LoginResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -53,7 +49,36 @@ class ListVprecaViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _creditCardResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
+                        CreditCardResult(internalError = "")
+                    else -> _creditCardResult.value =
+                        CreditCardResult( error = ErrorMessageException(
+                            messageResId = R.string.login_failed,
+                            exception = result.exception
+                        ))
+                }
+            }
+            _loading.value = false
+        }
+    }
+
+    fun getListCard(){
+        viewModelScope.launch {
+            _loading.value = true
+            val result = creditCardRepository.getLatestCards(true)
+
+            if (result is Result.Success) {
+                _creditCardResult.value = CreditCardResult(success = result.data)
+            } else if (result is Result.Error) {
+                when (result.exception) {
+                    is NoConnectivityException -> _creditCardResult.value =
+                        CreditCardResult(networkTrouble = true)
+                    is ApiException -> _creditCardResult.value = CreditCardResult(
+                        error = ErrorMessageException(
+                            errorMessage = result.exception.errorMessage,
+                            exception = result.exception
+                        )
+                    )
+                    is InternalServerException -> _creditCardResult.value =
                         CreditCardResult(internalError = "")
                     else -> _creditCardResult.value =
                         CreditCardResult( error = ErrorMessageException(
@@ -87,7 +112,6 @@ class ListVprecaViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _cardInfoResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         CardInfoResult(internalError = "")
                     else -> _cardInfoResult.value =
                         CardInfoResult( error = ErrorMessageException(

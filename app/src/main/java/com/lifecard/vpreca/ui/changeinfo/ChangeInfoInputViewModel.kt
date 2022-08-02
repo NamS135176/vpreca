@@ -3,6 +3,7 @@ package com.lifecard.vpreca.ui.changeinfo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.data.model.MemberInfo
 import com.lifecard.vpreca.utils.RegexUtils
 
 data class ChangeInfoInputResultState(
@@ -20,10 +21,14 @@ class ChangeInfoInputViewModel : ViewModel() {
     val email2Error = MutableLiveData<Int?>()
     val email2ConfirmError = MutableLiveData<Int?>()
     val nameError = MutableLiveData<Array<Number?>?>()
+    val kanaNameError = MutableLiveData<Boolean>()
+    val furiganaNameError = MutableLiveData<Boolean>()
     val formResultState = MutableLiveData<ChangeInfoInputResultState?>()
     val formState = MutableLiveData(ChangeInfoInputState())
 
     val validForm = MutableLiveData<Boolean>()
+
+    var originUserData: MemberInfo? = null
 
     private fun checkNicknameValid(): Boolean {
         return if (!RegexUtils.isNicknameValid(formState.value?.nickname)) {
@@ -83,8 +88,12 @@ class ChangeInfoInputViewModel : ViewModel() {
     }
 
     private fun checkEmail1Valid(): Boolean {
-        return if (!RegexUtils.isEmailValid(formState.value?.email1)) {
+        val email1 = formState.value?.email1
+        return if (!RegexUtils.isEmailValid(email1)) {
             email1Error.value = R.string.rgx_error_email
+            false
+        } else if (email1 == originUserData?.mailAddress2) {
+            email1Error.value = R.string.rgx_error_email_duplicate
             false
         } else {
             email1Error.value = null
@@ -106,6 +115,9 @@ class ChangeInfoInputViewModel : ViewModel() {
             )
         ) {
             email2Error.value = R.string.rgx_error_email
+            false
+        } else if (email2 == originUserData?.mailAddress1) {
+            email2Error.value = R.string.rgx_error_email_duplicate
             false
         } else {
             email2Error.value = null
@@ -169,33 +181,39 @@ class ChangeInfoInputViewModel : ViewModel() {
         val hiraLastName = formState.value?.hiraLastName
 
         if (kanaFirstName.isNullOrEmpty() || kanaLastName.isNullOrEmpty()
-            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName $kanaLastName")
+            || !RegexUtils.isKanaNameFullWidth("$kanaFirstName　$kanaLastName")
         ) {
             errors[0] = R.string.rgx_error_name_kana_full_width
+            kanaNameError.value = true
+        } else {
+            kanaNameError.value = false
         }
         if (hiraFirstName.isNullOrEmpty() || hiraLastName.isNullOrEmpty()
-            || !RegexUtils.isNameFullWidth("$hiraFirstName $hiraLastName")
+            || !RegexUtils.isNameFullWidth("$hiraFirstName　$hiraLastName")
         ) {
+            furiganaNameError.value = true
             errors[1] = R.string.rgx_error_name_full_width
+        } else {
+            furiganaNameError.value = false
         }
         errors = errors.filterNotNull().toTypedArray()
         nameError.value = if (errors.isNullOrEmpty()) null else errors
         return errors.isNullOrEmpty()
     }
 
-    fun kanaFirstNameDataChanged(text: String) {
+    fun kanaFirstNameDataChanged(text: String?) {
         formState.value = formState.value?.copy(kanaFirstName = text)
     }
 
-    fun kanaLastNameDataChanged(text: String) {
+    fun kanaLastNameDataChanged(text: String?) {
         formState.value = formState.value?.copy(kanaLastName = text)
     }
 
-    fun hiraFirstNameDataChanged(text: String) {
+    fun hiraFirstNameDataChanged(text: String?) {
         formState.value = formState.value?.copy(hiraFirstName = text)
     }
 
-    fun hiraLastNameDataChanged(text: String) {
+    fun hiraLastNameDataChanged(text: String?) {
         formState.value = formState.value?.copy(hiraLastName = text)
     }
 
@@ -249,8 +267,6 @@ class ChangeInfoInputViewModel : ViewModel() {
 
     fun checkValidForm(): Boolean {
         val isValid = formState.value?.let { form ->
-            val kataName = "${form.kanaFirstName ?: ""}${form.kanaLastName ?: ""}"
-            val hiraName = "${form.hiraFirstName ?: ""}${form.hiraLastName ?: ""}"
             val fields = arrayOf(
                 form.nickname,
                 form.loginId,
@@ -259,8 +275,10 @@ class ChangeInfoInputViewModel : ViewModel() {
                 form.answer,
                 form.email1,
                 form.email1Confirm,
-                kataName,
-                hiraName,
+                form.kanaFirstName,
+                form.kanaLastName,
+                form.hiraFirstName,
+                form.hiraLastName
             )
             !fields.any { it.isNullOrEmpty() }
         } ?: false

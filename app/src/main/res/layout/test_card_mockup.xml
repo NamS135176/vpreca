@@ -51,49 +51,49 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.08" />
+                        app:layout_constraintGuide_percent="0.06" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.96" />
+                        app:layout_constraintGuide_percent="0.97" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_vertical_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.82" />
+                        app:layout_constraintGuide_percent="0.83" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_vertical_1_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.73" />
+                        app:layout_constraintGuide_percent="0.72" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_vertical_1_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.85" />
+                        app:layout_constraintGuide_percent="0.83" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_vertical_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.67" />
+                        app:layout_constraintGuide_percent="0.70" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_vertical_2_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.53" />
+                        app:layout_constraintGuide_percent="0.50" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/card_username"
@@ -105,7 +105,7 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textColor="@color/black"
-                        app:autoSizeMaxTextSize="16sp"
+                        app:autoSizeMaxTextSize="20sp"
                         app:autoSizeMinTextSize="6sp"
                         app:autoSizeStepGranularity="2dp"
                         app:autoSizeTextType="uniform"
@@ -122,7 +122,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/expire_holder"
                         android:textColor="@color/black"
-                        app:autoSizeMaxTextSize="15sp"
+                        app:autoSizeMaxTextSize="19sp"
                         app:autoSizeMinTextSize="5sp"
                         app:autoSizeStepGranularity="2dp"
                         app:autoSizeTextType="uniform"
@@ -141,7 +141,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/pin_holder"
                         android:textColor="@color/black"
-                        app:autoSizeMaxTextSize="15sp"
+                        app:autoSizeMaxTextSize="19sp"
                         app:autoSizeMinTextSize="5sp"
                         app:autoSizeStepGranularity="2dp"
                         app:autoSizeTextType="uniform"
@@ -158,7 +158,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/vpreca_holder"
                         android:textColor="@color/black"
-                        app:autoSizeMaxTextSize="26sp"
+                        app:autoSizeMaxTextSize="30sp"
                         app:autoSizeMinTextSize="8sp"
                         app:autoSizeStepGranularity="4dp"
                         app:autoSizeTextType="uniform"

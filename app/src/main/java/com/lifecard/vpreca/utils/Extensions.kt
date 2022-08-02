@@ -1,13 +1,13 @@
 package com.lifecard.vpreca.utils
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.os.Build
 import android.text.Editable
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.*
+import androidx.core.content.ContextCompat.getColor
+import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -23,12 +23,6 @@ import com.lifecard.vpreca.ui.custom.DrawerMenuLayout
 
 fun Fragment.fragmentFindNavController(): NavController {
     var navController: NavController = findNavController()
-//    try {
-//        if (navController == null) {
-//            navController = requireActivity().findNavController(R.id.nav_host_fragment_content_main)
-//        }
-//    } catch (e: Exception) {
-//    }
 
     return navController
 }
@@ -52,6 +46,8 @@ fun View.viewFindNavController(): NavController {
 }
 
 fun Fragment.setLightStatusBar() = try {
+    view?.let { ViewCompat.getWindowInsetsController(it)?.isAppearanceLightStatusBars = true }
+
     val window = requireActivity().window
 
     @Suppress("DEPRECATION")
@@ -67,7 +63,7 @@ fun Fragment.setLightStatusBar() = try {
         }
         window.decorView.systemUiVisibility = flags
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         window.statusBarColor = getColor(requireContext(), R.color.white)
     } else {
     }
@@ -90,7 +86,7 @@ fun Fragment.clearLightStatusBar() = try {
         } // use XOR here for remove LIGHT_STATUS_BAR from flags
         window.decorView.systemUiVisibility = flags
     }
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         window.statusBarColor = getColor(requireContext(), R.color.primary)
     } else {
     }
@@ -145,7 +141,7 @@ fun Fragment.unlockDrawer() = try {
 }
 
 fun Fragment.showLoadingDialog(): Fragment? = try {
-    val supportFragmentManager = requireActivity().supportFragmentManager
+    val supportFragmentManager = childFragmentManager
     var fragment =
         supportFragmentManager.findFragmentByTag(LoadingDialogFragment.FRAGMENT_TAG)
     if (fragment == null) {
@@ -153,6 +149,7 @@ fun Fragment.showLoadingDialog(): Fragment? = try {
         supportFragmentManager.beginTransaction()
             .add(fragment, LoadingDialogFragment.FRAGMENT_TAG)
             .commitAllowingStateLoss()
+        supportFragmentManager.executePendingTransactions()
     }
 
     fragment
@@ -162,7 +159,7 @@ fun Fragment.showLoadingDialog(): Fragment? = try {
 }
 
 fun Fragment.hideLoadingDialog() = try {
-    val supportFragmentManager = requireActivity().supportFragmentManager
+    val supportFragmentManager = childFragmentManager
     val fragment =
         supportFragmentManager.findFragmentByTag(LoadingDialogFragment.FRAGMENT_TAG)
     fragment?.let {

@@ -1,43 +1,8 @@
 package com.lifecard.vpreca.data.model
 
 import com.google.gson.annotations.SerializedName
-import com.lifecard.vpreca.utils.requestDate
-import java.util.*
 
 data class BaseResponse(
-    @SerializedName("brandPrecaApi")
-    val brandPrecaApi: BaseBrandResponse,
-) {
-    override fun toString(): String {
-        return "BaseResponse (brandPrecaApi: ${brandPrecaApi})"
-    }
-}
-
-data class BaseHeadResponse(
-    @SerializedName("messageType")
-    val messageType: String,
-    @SerializedName("centerId")
-    val centerId: String = "",
-    @SerializedName("nodeId")
-    val nodeId: String = "",
-    @SerializedName("brandSchemeId")
-    val brandSchemeId: String = "",
-    @SerializedName("processId")
-    val processId: String = "",
-    @SerializedName("requestDate")
-    val requestDate: String = Date().requestDate(),
-    @SerializedName("searchKey")
-    val searchKey: String = "",
-    @SerializedName("messageDigest")
-    val messageDigest: String = "",
-    @SerializedName("requestReceiveDate")
-    val requestReceiveDate: String = "",
-    @SerializedName("responseDate")
-    val responseDate: String = "",
-
-    )
-
-data class BaseBrandResponse(
     @SerializedName("head")
     val head: BaseHeadResponse,
     @SerializedName("response")
@@ -47,6 +12,15 @@ data class BaseBrandResponse(
         return "BaseBrandResponse (response: ${response})"
     }
 }
+
+data class BaseHeadResponse(
+    @SerializedName("appliTermId")
+    val appliTermId: String = "",
+    @SerializedName("processId")
+    val processId: String = "",
+    @SerializedName("responseDate")
+    val responseDate: String = "",
+)
 
 data class BaseResponseContent(
     @SerializedName("resultCode")

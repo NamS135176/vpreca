@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
-import com.lifecard.vpreca.utils.RegexUtils
 
 class ConfirmPhoneViewModel : ViewModel() {
     val cfPhoneError = MutableLiveData<Int?>()
@@ -20,7 +19,6 @@ class ConfirmPhoneViewModel : ViewModel() {
             cfPhoneError.value = null
             true
         }
-//        return true
     }
 
     fun cfPhoneDataChanged(text: String) {

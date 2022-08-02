@@ -1,33 +1,24 @@
 package com.lifecard.vpreca.data
 
+import android.content.Context
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.utils.RequestHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import java.util.*
 
-class UserRepository(private val apiService: ApiService, private val userManager: UserManager) {
-    suspend fun login(loginRequest: BrandRequest): Result<LoginResponse> {
+class UserRepository(
+    private val appContext: Context,
+    private val apiService: ApiService,
+    private val userManager: UserManager,
+    private val deviceID: DeviceID,
+) {
+    suspend fun login(loginRequest: Request): Result<LoginResponse> {
         return withContext(Dispatchers.IO) {
             try {
                 val loginResponse = apiService.login(loginRequest)
-                userManager.setLoggedIn(loginResponse)
-                Result.Success(loginResponse)
-            } catch (e: Exception) {
-                println("LoginDataSource... login has error $e")
-                e.printStackTrace()
-                Result.Error(e)
-            }
-        }
-    }
-
-    suspend fun loginWithBiometric(username: String, signed: String): Result<LoginResponse> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val loginResponse = apiService.loginWithBiometric(username, response = signed)
-                userManager.setLoggedIn(loginResponse)
+                userManager.setLoggedIn(appContext, loginResponse)
                 Result.Success(loginResponse)
             } catch (e: Exception) {
                 println("LoginDataSource... login has error $e")
@@ -47,10 +38,14 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     Result.Error(IOException("Can not get user"))
                 } else {
                     val userResponse = apiService.getUser(
-                        RequestHelper.createMemberRequest(loginId, memberNumber)
+                        RequestHelper.createMemberRequest(
+                            loginId,
+                            memberNumber,
+                            deviceId = deviceID.deviceId
+                        )
                     )
-                    userManager.setLoggedMember(userResponse.brandPrecaApi.response)
-                    Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
+                    userManager.setLoggedMember(appContext, userResponse.response)
+                    Result.Success(userResponse.response.memberInfo!!)
                 }
             } catch (e: Exception) {
                 println("UserRepository... getUser has error $e")
@@ -62,14 +57,14 @@ class UserRepository(private val apiService: ApiService, private val userManager
 
     suspend fun changeInfoMember(
         memberInfo: ChangeInfoMemberData
-    ): Result<ChangeInfoMemberData> {
+    ): Result<MemberInfo> {
         return withContext(Dispatchers.IO) {
             try {
                 val userResponse = apiService.changeInfoMember(
-                    RequestHelper.createChangeInfoMember(memberInfo)
+                    RequestHelper.createChangeInfoMember(memberInfo, deviceId = deviceID.deviceId)
                 )
-
-                Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
+                userManager.setLoggedMember(appContext, userResponse.response)
+                Result.Success(userResponse.response.memberInfo!!)
             } catch (e: Exception) {
                 println("UserRepository... change info has error $e")
                 e.printStackTrace()
@@ -86,7 +81,8 @@ class UserRepository(private val apiService: ApiService, private val userManager
             try {
                 val userResponse = apiService.updatePassword(
                     RequestHelper.createChangePassRequest(
-                        PasswordUpdateMemberInfoContent(
+                        deviceId = deviceID.deviceId,
+                        memberInfo = PasswordUpdateMemberInfoContent(
                             userManager.loginId!!,
                             userManager.memberNumber!!,
                             "1",
@@ -96,7 +92,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     )
                 )
 
-                Result.Success(userResponse.brandPrecaApi.response.memberInfo!!)
+                Result.Success(userResponse.response.memberInfo!!)
             } catch (e: Exception) {
                 println("UserRepository... change pass has error $e")
                 e.printStackTrace()
@@ -107,8 +103,8 @@ class UserRepository(private val apiService: ApiService, private val userManager
 
     suspend fun resetPassword(
         email: String,
-        birthday: String,
-        phone: String,
+        birthday: String?,
+        phone: String?,
         secretQuestion: String,
         secretAnswer: String
     ): Result<String> {
@@ -116,7 +112,8 @@ class UserRepository(private val apiService: ApiService, private val userManager
             try {
                 val userResponse = apiService.resetPassword(
                     RequestHelper.createResetPassRequest(
-                        PasswordResetMemberInfoContent(
+                        deviceId = deviceID.deviceId,
+                        memberInfo = PasswordResetMemberInfoContent(
                             email,
                             birthday,
                             phone,
@@ -126,7 +123,7 @@ class UserRepository(private val apiService: ApiService, private val userManager
                     )
                 )
 
-                Result.Success(userResponse.brandPrecaApi.response.resultCode)
+                Result.Success(userResponse.response.resultCode)
             } catch (e: Exception) {
                 println("UserRepository... reset pass has error $e")
                 e.printStackTrace()
@@ -136,27 +133,17 @@ class UserRepository(private val apiService: ApiService, private val userManager
     }
 
     suspend fun sendSMSRequest(
-      memberNumber: String,
-      telephoneNumber:String,
-      certType:String,
-      operationType:String,
-      certSumFlg:String,
-      operationSumFlg:String
-    ): Result<SMSAuthCodeSendResponseContent> {
+        loginId: String?
+    ): Result<SendSMSResponseContent> {
         return withContext(Dispatchers.IO) {
             try {
-                val userResponse = apiService.sendSmsRequest(
-                    RequestHelper.createSMSAuthCodeRequest(
-                        memberNumber = memberNumber,
-                        telephoneNumber = telephoneNumber,
-                        certType = certType,
-                        operationType = operationType,
-                        certSumFlg = certSumFlg,
-                        operationSumFlg = operationSumFlg
+                val userResponse = apiService.sendSMSRequest(
+                    RequestHelper.createSendSMSRequest(
+                        loginId = loginId!!,
+                        deviceId = deviceID.deviceId
                     )
                 )
-
-                Result.Success(userResponse.brandPrecaApi.response)
+                Result.Success(userResponse.response)
             } catch (e: Exception) {
                 println("UserRepository... request sms has error $e")
                 e.printStackTrace()
@@ -167,10 +154,10 @@ class UserRepository(private val apiService: ApiService, private val userManager
 
     suspend fun sendSMSConfirm(
         memberNumber: String,
-        certType:String,
-        operationType:String,
-        certCode:String,
-        extCertDealId:String
+        certType: String,
+        operationType: String,
+        certCode: String,
+        extCertDealId: String
     ): Result<SMSAuthResponseContent> {
         return withContext(Dispatchers.IO) {
             try {
@@ -180,11 +167,39 @@ class UserRepository(private val apiService: ApiService, private val userManager
                         certType = certType,
                         operationType = operationType,
                         certCode = certCode,
-                        extCertDealId = extCertDealId
+                        extCertDealId = extCertDealId,
+                        deviceId = deviceID.deviceId
                     )
                 )
 
-                Result.Success(userResponse.brandPrecaApi.response)
+                Result.Success(userResponse.response)
+            } catch (e: Exception) {
+                println("UserRepository... request sms has error $e")
+                e.printStackTrace()
+                Result.Error(e)
+            }
+        }
+    }
+
+    suspend fun sendSMSIvrConfirm(
+        certType: String,
+        loginId: String,
+        certCode: String,
+        extCertDealId: String
+    ): Result<SmsIvrAuthReqResponseContent> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val userResponse = apiService.confirmSMSIvr(
+                    RequestHelper.createSMSIvrConfirm(
+                        certType = certType,
+                        loginId = loginId,
+                        certCode = certCode,
+                        extCertDealId = extCertDealId,
+                        deviceId = deviceID.deviceId
+                    )
+                )
+
+                Result.Success(userResponse.response)
             } catch (e: Exception) {
                 println("UserRepository... request sms has error $e")
                 e.printStackTrace()

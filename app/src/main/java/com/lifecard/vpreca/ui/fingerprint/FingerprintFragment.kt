@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
@@ -24,7 +23,6 @@ import com.lifecard.vpreca.utils.showAlertMessage
 import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.concurrent.Executor
 import javax.crypto.Cipher
 import javax.inject.Inject
 
@@ -45,7 +43,6 @@ class FingerprintFragment : Fragment() {
     private var _binding: FragmentFingerprintBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
@@ -112,20 +109,16 @@ class FingerprintFragment : Fragment() {
                 }
             } else {
                 viewModel.setFingerprintSetting(requireContext(), false)
-                userManager.authToken?.let { authToken ->
-                    secureStore.moveAuthTokenToNormalStore(
-                        authToken
-                    )
-                }
+                secureStore.moveAuthTokenToNormalStore(userManager.authToken)
             }
         }
 
         if (!viewModel.checkSupportFingerprint(requireContext())) {
             fingerprint.isEnabled = false
+            viewModel.setFingerprintSetting(requireContext(), false)
         }
 
-        executor = ContextCompat.getMainExecutor(requireContext())
-        biometricPrompt = BiometricPrompt(this, executor,
+        biometricPrompt = BiometricPrompt(this, ContextCompat.getMainExecutor(requireContext()),
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(
                     errorCode: Int,
@@ -141,22 +134,13 @@ class FingerprintFragment : Fragment() {
                 ) {
                     super.onAuthenticationSucceeded(result)
                     result.cryptoObject?.cipher?.let {
+                        viewModel.setFingerprintSetting(requireContext(), true)//this one must be call before save authToken to secureStore
+
                         secureStore.updateEncryptBioAuthTokenStore(it)
-                        userManager.authToken?.let { authToken ->
-                            secureStore.saveAuthToken(
-                                authToken
-                            )
-                        }
-                        viewModel.setFingerprintSetting(requireContext(), true)
+                        secureStore.saveAuthToken(requireContext(), userManager.authToken)
                         //show toast
                         showToast(getString(R.string.biometric_setting_success))
                     }
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    viewModel.setFingerprintSetting(requireContext(), false)
-//                    showAlert(getString(R.string.error_bio_authentication_failure))
                 }
             })
 

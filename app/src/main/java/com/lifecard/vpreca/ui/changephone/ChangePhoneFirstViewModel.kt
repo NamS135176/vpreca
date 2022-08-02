@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
-import com.lifecard.vpreca.data.model.MemberInfo
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
@@ -38,7 +37,6 @@ class ChangePhoneFirstViewModel @Inject constructor(private val userRepository: 
             is NoConnectivityException -> _changeInfoDataState.value =
                 ChangeInfoDataState(networkTrouble = true)
             is InternalServerException -> _changeInfoDataState.value =
-                    //TODO this internalError should be html from server, it will be implement later
                 ChangeInfoDataState(internalError = "")
             is ApiException -> _changeInfoDataState.value = ChangeInfoDataState(
                 error = ErrorMessageException(

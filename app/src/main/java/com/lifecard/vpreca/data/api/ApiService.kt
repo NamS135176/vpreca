@@ -1,132 +1,124 @@
 package com.lifecard.vpreca.data.api
 
 import com.lifecard.vpreca.data.model.*
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Header
+import retrofit2.http.POST
 
 interface ApiService {
     @POST("LoginReq")
     suspend fun login(
-        @Body loginRequest: BrandRequest
+        @Body loginRequest: Request
     ): LoginResponse
 
     @POST("MemberSelReq")
     suspend fun getUser(
-        @Body memberSelectRequest: BrandRequest
+        @Body memberSelectRequest: Request
     ): MemberResponse
 
     @POST("CardSelReq")
     suspend fun getCard(
-        @Body cardRequest: BrandRequest
+        @Body cardRequest: Request
     ): CardInfoResponse
 
     @POST("IssueGiftReq")
     suspend fun issueGiftCard(
-        @Body cardRequest: BrandRequest
+        @Body cardRequest: Request
     ): IssueGiftReqResponse
 
     @POST("GiftNumberAuthReq")
     suspend fun getGiftInfo(
-        @Body giftNumberAuthRequest: BrandRequest
+        @Body giftNumberAuthRequest: Request
     ): GiftNumberAuthReqResponse
 
     @POST("FeeSelReq")
     suspend fun getFeeSel(
-        @Body feeSelReqRequest: BrandRequest
+        @Body feeSelReqRequest: Request
     ): FeeSelReqResponse
 
     @POST("IssueSumReq")
     suspend fun issueSumReq(
-        @Body issueSumReqResponse: BrandRequest
+        @Body issueSumReqResponse: Request
     ): IssueSumReqResponse
 
     @POST("CardListSelReq")
     suspend fun getListCards(
-        @Body cardListRequest: BrandRequest
+        @Body cardListRequest: Request
     ): CardResponse
 
     @POST("CardDesignSelReq")
     suspend fun getListDesign(
-        @Body listDesignRequest: BrandRequest
+        @Body listDesignRequest: Request
     ): ListDesignResponse
 
     @POST("MemberUpdReq")
     suspend fun changeInfoMember(
-        @Body changeInfoMemberRequest: BrandRequest
+        @Body changeInfoMemberRequest: Request
     ): ChangeInfoMemberResponse
 
     @POST("SuspendDealSelReq")
     suspend fun getListSuspendDeal(
-        @Body suspendListRequest: BrandRequest
+        @Body suspendListRequest: Request
     ): SuspendDealResponse
 
     @POST("CardDealHisReq")
     suspend fun getCardUsageHistory(
-        @Body cardListRequest: BrandRequest
+        @Body cardListRequest: Request
     ): CardUsageHistoryResponse
 
     @POST("CardUpdReq")
     suspend fun updateCard(
-        @Body updateCardRequest: BrandRequest
+        @Body updateCardRequest: Request
     ): UpdateCardResponse
 
     @POST("PasswordUpdReq")
     suspend fun updatePassword(
-        @Body updatePasswordRequest: BrandRequest
+        @Body updatePasswordRequest: Request
     ): PasswordUpdateResponse
 
     @POST("PasswordResetReq")
     suspend fun resetPassword(
-        @Body resetPasswordRequest: BrandRequest
+        @Body resetPasswordRequest: Request
     ): PasswordResetResponse
 
     @POST("CardRepublishReq")
     suspend fun republishCard(
-        @Body cardRepublishRequest: BrandRequest
+        @Body cardRepublishRequest: Request
     ): UpdateCardResponse
 
     @POST("CardCertifiNoMemReq")
     suspend fun certifiGift(
-        @Body giftCardCertifiRequest: BrandRequest
+        @Body giftCardCertifiRequest: Request
     ): GiftCertifiResponse
 
     @POST("CardRelationRegReq")
     suspend fun cardRelation(
-        @Body cardRelationRequest: BrandRequest
+        @Body cardRelationRequest: Request
     ): CardRelationRegReqResponse
+
+    @POST("SmsIvrAuthCodeSendReq")
+    suspend fun sendSMSRequest(
+        @Body sendSMSRequest: Request
+    ): SendSMSResponse
 
     @POST("SmsAuthCodeSendReq")
     suspend fun sendSmsRequest(
-        @Body sendSmsRequest: BrandRequest
+        @Body sendSmsRequest: Request
     ): SMSAuthCodeSendResponse
 
     @POST("SmsAuthReq")
     suspend fun confirmSMS(
-        @Body sendSmsRequest: BrandRequest
+        @Body sendSmsRequest: Request
     ): SMSAuthResponse
 
-    @GET("challenge")
-    suspend fun getBioChallenge(@Query("loginId") memberNumber: String): BioChallenge
+    @POST("SmsIvrAuthReq")
+    suspend fun confirmSMSIvr(
+        @Body sendSmsRequest: Request
+    ): SmsIvrAuthReqResponse
 
     @FormUrlEncoded
-    @POST("biometric")
-    suspend fun registerBiometric(
-        @Header("Authorization") authorization: String,
-        @Field("loginId") memberNumber: String,
-        @Field("bioKey") bioKey: String,
-        @Field("platform") platform: String,
-        @Field("os_version") osVersion: String,
-        @Field("algorithm") algorithm: String
-    ): BioChallenge
-
-    @FormUrlEncoded
-    @POST("biometric-authentication")
-    suspend fun loginWithBiometric(
-        @Field("loginId") memberNumber: String,
-        @Field("response") response: String
-    ): LoginResponse
-
-    @FormUrlEncoded
-    @POST("otp")
+    @POST("OTPGetReq")
     suspend fun requestWebDirectOtp(
         @Header("Authorization") authorization: String
     ): OtpResponse

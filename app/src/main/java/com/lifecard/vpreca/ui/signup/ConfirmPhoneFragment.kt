@@ -1,19 +1,13 @@
 package com.lifecard.vpreca.ui.signup
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -26,21 +20,13 @@ class ConfirmPhoneFragment : Fragment() {
 
     private var _binding:FragmentConfirmPhoneBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: ConfirmPhoneViewModel
+    private val viewModel: ConfirmPhoneViewModel by viewModels()
     private val args:ConfirmPhoneFragmentArgs by navArgs()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        viewModel = ViewModelProvider(this).get(ConfirmPhoneViewModel::class.java)
+    ): View {
         _binding = FragmentConfirmPhoneBinding.inflate(inflater, container, false)
         val inputPhoneConfirm = binding.forgotPassEmailInput
         val btnSubmitPhoneConfirm = binding.btnSubmitPolicy
@@ -51,53 +37,57 @@ class ConfirmPhoneFragment : Fragment() {
 
         phone.text = UserConverter.formatPhone(args.cardData?.preRoute!!)
 
-        btnCancel.setOnClickListener(View.OnClickListener {
+        btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
-                    findNavController().navigate(R.id.nav_login)
+                    findNavController().popBackStack(R.id.nav_login, inclusive = false)
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("入力途中ですがキャンセル\n" +
-                        "してもよろしいですか？")
+                setMessage(
+                    "入力途中ですがキャンセル\n" +
+                            "してもよろしいですか？"
+                )
             }.create().show()
-        })
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_signup_phone) })
+        }
+        btnBack.setOnClickListener { findNavController().navigate(R.id.action_cfPhone_to_phone) }
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_signup_phone)
+                findNavController().navigate(R.id.action_cfPhone_to_phone)
             }
         })
 
-        viewModel.formState.observe(viewLifecycleOwner, Observer { viewModel.checkFormValid() })
+        viewModel.formState.observe(viewLifecycleOwner) { viewModel.checkFormValid() }
 
-        viewModel.cfPhoneError.observe(viewLifecycleOwner, Observer { error: Int? ->
+        viewModel.cfPhoneError.observe(viewLifecycleOwner) { error: Int? ->
             layout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
-        })
+        }
 
         viewModel.validForm.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { isValid ->
-                btnSubmitPhoneConfirm.isEnabled = isValid
-            })
+            viewLifecycleOwner
+        ) { isValid ->
+            btnSubmitPhoneConfirm.isEnabled = isValid
+        }
 
 
-        viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
                 findNavController().navigate(R.id.nav_signup_email)
+                inputPhoneConfirm.setText("")
+                viewModel.formResultState.value = null
             }
-        })
+        }
 
         inputPhoneConfirm.doAfterTextChanged { text -> viewModel.cfPhoneDataChanged(text = text.toString()) }
 
-        btnSubmitPhoneConfirm.setOnClickListener(View.OnClickListener {
+        btnSubmitPhoneConfirm.setOnClickListener {
             viewModel.submit()
-        })
+        }
 
         return binding.root
     }

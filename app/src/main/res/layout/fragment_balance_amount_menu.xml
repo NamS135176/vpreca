@@ -173,13 +173,12 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:contentDescription="@string/issue_card_plus_complete_title"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="68dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="4"
                         android:minHeight="65dp"
-                        android:src="@drawable/ic_tap"/>
+                        android:src="@drawable/svg_tap_icon" />
                 </LinearLayout>
                 <com.google.android.material.button.MaterialButton
                     android:layout_marginTop="15dp"

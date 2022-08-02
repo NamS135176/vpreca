@@ -1,7 +1,5 @@
 package com.lifecard.vpreca.utils
 
-import com.google.android.material.textview.MaterialTextView
-import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.SignupInputState
@@ -13,6 +11,17 @@ fun CreditCard?.isCardLock(): Boolean {
 }
 
 fun CreditCard.copyCardLockInverse(): CreditCard {
+    val newLockStatus = when (this.isCardLock()) {
+        true -> "0"//not lock
+        else -> "1"//lock
+    }
+    return this.copy(
+        vcnSecurityLockFlg = newLockStatus
+    )
+}
+
+fun CreditCard.reverseCardLock(): CreditCard {
+    this.vcnSecurityLockFlg = if (this.isCardLock()) "0" else "1"
     val newLockStatus = when (this.isCardLock()) {
         true -> "0"//not lock
         else -> "1"//lock
@@ -34,7 +43,7 @@ fun CardInfo?.isCardInfoEnable(): Boolean {
     val datenow = sdf.format(Date())
     val cmp = sdf.parse(this?.vcnExpirationDate).compareTo(sdf.parse(datenow))
     val c2 = cmp < 0
-    return c1 && c2
+    return c1 && !c2
 }
 
 fun CreditCard?.isEnable(): Boolean {
@@ -45,9 +54,24 @@ fun CreditCard?.isEnable(): Boolean {
     val datenow = sdf.format(Date())
     val cmp = sdf.parse(this?.vcnExpirationDate).compareTo(sdf.parse(datenow))
     val c2 = cmp < 0
-    return c1 && c2
+    return c1 && !c2
 }
 
+fun CreditCard?.isAvailable(): Boolean {
+    return try {
+        this?.publishAmount?.toInt()!! >= 1 && "0" == this?.vcnSecurityLockFlg
+    } catch (err: Exception) {
+        false
+    }
+}
+
+fun CardInfo?.isInfoAvailable(): Boolean {
+    return try {
+        this?.publishAmount?.toInt()!! >= 1 && "0" == this?.vcnSecurityLockFlg
+    } catch (err: Exception) {
+        false
+    }
+}
 
 fun CardInfo.copyCardInfoLockInverse(): CardInfo {
     val newLockStatus = when (this.isCardInfoLock()) {
@@ -60,11 +84,11 @@ fun CardInfo.copyCardInfoLockInverse(): CardInfo {
 }
 
 fun SignupInputState.getKanaName(): String {
-    return "${kanaFirstName ?: ""} ${kanaLastName ?: ""}"
+    return "${kanaFirstName ?: ""}　${kanaLastName ?: ""}"
 }
 
 fun SignupInputState.getFurigana(): String {
-    return "${hiraFirstName ?: ""} ${hiraLastName ?: ""}"
+    return "${hiraFirstName ?: ""}　${hiraLastName ?: ""}"
 }
 
 fun SignupInputState.getDate(): Date? {
@@ -80,7 +104,7 @@ fun SignupInputState.formatPhoneNumber(): String? {
 }
 
 fun SignupInputState.maskPassword(): String? {
-    return RegexUtils.maskPassword((password))
+    return RegexUtils.hidePassword((password))
 }
 
 private fun getReceiveEmailStatus(flag: String?): String {

@@ -38,6 +38,7 @@
         </FrameLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
@@ -241,6 +242,7 @@
                         android:layout_marginTop="9dp"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+                        app:spinner_popup_max_height="@dimen/spinner_popup_height_secret_question_forgot"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/forgot_secret_question_title"
                         app:spinner_item_array="@array/secret_question" />
@@ -284,20 +286,5 @@
                 </com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="64dp"
-            android:indeterminateDrawable="@drawable/loading"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

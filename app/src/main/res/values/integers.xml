@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="max_pass">12</integer>
-    <integer name="max_nickname">18</integer>
-    <integer name="max_login_id">10</integer>
-    <integer name="max_email">256</integer>
+    <integer name="max_pass">300</integer>
+    <integer name="max_nickname">300</integer>
+    <integer name="max_login_id">300</integer>
+    <integer name="max_email">300</integer>
+    <integer name="max_gift_code">300</integer>
+    <integer name="max_otp_code">300</integer>
+    <integer name="max_last_4digit_card">300</integer>
 </resources>

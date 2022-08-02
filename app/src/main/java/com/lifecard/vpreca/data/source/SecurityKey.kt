@@ -28,7 +28,7 @@ internal class SecurityKey {
             val encrypted = cipher.doFinal(token.toByteArray())
             return Base64.encodeToString(encrypted, Base64.URL_SAFE)
         } catch (e: GeneralSecurityException) {
-            print("SecurityKey... encrypt has exception ${e}")
+            println("SecurityKey... encrypt has exception ${e}")
         }
         //Unable to encrypt Token
         return null
@@ -59,24 +59,24 @@ internal class SecurityKey {
                 GCMParameterSpec(128, AES_MODE_FOR_POST_API_23.toByteArray(), 0, 12)
             )
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            cipher = Cipher.getInstance(RSA_MODE)
+            cipher = Cipher.getInstance(AES_MODE_FOR_PRE_API_18)
             cipher.init(
                 mode,
                 if (mode == Cipher.DECRYPT_MODE) keyPair!!.public else keyPair!!.private
             )
         } else {
-            cipher = Cipher.getInstance(AES_MODE_FOR_PRE_API_18)
+            cipher = Cipher.getInstance(RSA_MODE)
             cipher.init(mode, secretKey, IvParameterSpec(ByteArray(cipher.blockSize)))
         }
         return cipher
     }
 
     companion object {
-//        private const val RSA_MODE = "RSA/ECB/PKCS1Padding"
-//        private const val AES_MODE_FOR_POST_API_23 = "AES/GCM/NoPadding"
+//        private const val TRANSFORMATION = "AES/GCM/NoPadding"
+        private const val RSA_MODE = "RSA/ECB/PKCS1Padding"
 //        private const val AES_MODE_FOR_PRE_API_18 = "AES/CBC/PKCS5Padding"
-        private const val RSA_MODE = "AES/GCM/NoPadding"
+        private const val AES_MODE_FOR_PRE_API_18 = "RSA/ECB/PKCS1Padding"
         private const val AES_MODE_FOR_POST_API_23 = "AES/GCM/NoPadding"
-        private const val AES_MODE_FOR_PRE_API_18 = "AES/GCM/NoPadding"
     }
+
 }

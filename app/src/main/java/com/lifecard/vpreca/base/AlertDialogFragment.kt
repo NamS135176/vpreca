@@ -17,7 +17,7 @@ class AlertDialogFragment : DialogFragment() {
         fun newInstance(
             title: String? = null,
             message: String,
-            buttonCancel: Int? = R.string.button_ok
+            buttonCancel: Int? = R.string.button_close
         ): AlertDialogFragment {
             val f = AlertDialogFragment()
             f.arguments =
@@ -33,7 +33,7 @@ class AlertDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAlertBinding.inflate(inflater)
 
         val title = arguments?.getString("title")
@@ -61,7 +61,7 @@ class AlertDialogFragment : DialogFragment() {
         dialog?.window?.let { window ->
             window.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.WRAP_CONTENT
             )
             window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val attributes = window.attributes

@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View.OnClickListener
-import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.BuildConfig
@@ -14,7 +13,6 @@ import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.databinding.LayoutDrawerContentBinding
 import com.lifecard.vpreca.eventbus.CloseDrawerEvent
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
-import com.lifecard.vpreca.ui.webview.WebViewFragment
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
@@ -41,7 +39,6 @@ class DrawerMenuLayout @JvmOverloads constructor(
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding
-//    var navController: NavController? = null
 
     private var items: ArrayList<NavigationItem> = arrayListOf(
         NavigationItem(
@@ -232,7 +229,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
         binding.navHeader.buttonCloseDrawer.setOnClickListener(OnClickListener { closeDrawer() })
         binding.buttonLogout.setOnClickListener(OnClickListener {
             userManager.clear()
-            secureStore.clearDueLogout()
+            secureStore.clear()
             PreferenceHelper.clearDueLogout(context)
             closeDrawer()
             navigateToLogin()

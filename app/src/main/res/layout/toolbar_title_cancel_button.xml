@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="com.lifecard.vpreca.utils.Converter" />
+
         <variable
             name="title"
             type="java.lang.String" />
@@ -10,7 +12,8 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/primary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,10 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@{title, default=`Title`}"
-                android:textColor="@color/white" />
+                android:text="@{Converter.formatToolbarTitle(title, 12)}" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonCancel"

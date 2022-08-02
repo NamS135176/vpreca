@@ -1,21 +1,18 @@
 package com.lifecard.vpreca.ui.issuecard
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.BalanceGiftData
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeInputCodeBinding
-import com.lifecard.vpreca.databinding.FragmentIssueCardByPlusIntroduceBinding
-import com.lifecard.vpreca.ui.balance_amount.BalanceByCodeInputFragmentDirections
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,38 +29,24 @@ class IssueCardByCodeInputCode : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-//        viewModel = ViewModelProvider(this).get(IssueCardByCodeInputCodeViewModel::class.java)
+    ): View {
         _binding = FragmentIssueCardByCodeInputCodeBinding.inflate(inflater, container, false)
         val giftCodeLayout = binding.issueCardByCodeInputLayout
         val giftCodeEdt = binding.issueCardByCodeInputCode
         val btnSubmit = binding.btnSubmitPolicy
         val btnCancel = binding.appbarSignup.cancelBtn
         val buttonOcrDetection = binding.buttonOcrDetection
-        val loading = binding.loading
-
-        btnCancel.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_main) })
-        viewModel.validForm.observe(
+        requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
-            androidx.lifecycle.Observer { signupFormState ->
-                if (giftCodeEdt.text.toString() == "") {
-                    btnSubmit.isEnabled = false
-                } else {
-                    btnSubmit.isEnabled =
-                        signupFormState.giftCodeError == null
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_inputcode_to_main)
                 }
             })
+        btnCancel.setOnClickListener { findNavController().navigate(R.id.action_inputcode_to_main) }
 
-        viewModel.giftCodeError.observe(viewLifecycleOwner, Observer { error: Int? ->
-            giftCodeLayout.error = try {
-                error?.let { getString(error) }
-            } catch (e: Error) {
-                null
-            }
-        })
-        giftCodeEdt.doAfterTextChanged { text -> viewModel.giftCodeDataChanged(text = text.toString()) }
 
-        viewModel.giftInfoResult.observe(
+        viewModel._giftInfoResult.observe(
             viewLifecycleOwner,
             Observer { giftInfoResult ->
                 giftInfoResult ?: return@Observer
@@ -88,21 +71,49 @@ class IssueCardByCodeInputCode : Fragment() {
                 }
             })
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
+        viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
-        })
+        }
+
+        viewModel.formState.observe(viewLifecycleOwner) { viewModel.checkFormValid() }
+
+        viewModel.codeError.observe(viewLifecycleOwner) { error: Int? ->
+            giftCodeLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
+
+        viewModel.validForm.observe(
+            viewLifecycleOwner
+        ) { isValid ->
+            btnSubmit.isEnabled = isValid
+        }
 
 
-//        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_value_confirm) })
-        btnSubmit.setOnClickListener(View.OnClickListener { viewModel.getGiftData(giftCodeEdt.text.toString()) })
-        buttonOcrDetection.setOnClickListener(View.OnClickListener {
+        viewModel.formResultState.observe(viewLifecycleOwner) {
+            it?.success?.let {
+                viewModel.getGiftData(giftCodeEdt.text.toString())
+            }
+        }
+
+        giftCodeEdt.doAfterTextChanged { text -> viewModel.codeDataChanged(text = text.toString()) }
+
+        btnSubmit.setOnClickListener {
+            viewModel.submit()
+        }
+
+        buttonOcrDetection.setOnClickListener {
             val action =
                 IssueCardByCodeInputCodeDirections.actionToCameraOcr(getString(R.string.camera_ocr_hint_input_gift_card))
             findNavController().navigate(action)
-        })
+            viewModel.formResultState.value = null
+            viewModel._giftInfoResult.value = null
+        }
         return binding.root
     }
 
@@ -110,7 +121,7 @@ class IssueCardByCodeInputCode : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val livedata = getNavigationResult("ocr_code")
-        livedata?.observe(viewLifecycleOwner, Observer { ocr ->
+        livedata?.observe(viewLifecycleOwner) { ocr ->
             livedata.removeObservers(viewLifecycleOwner)
             if (!ocr.isNullOrEmpty()) {
                 val textCode = binding.issueCardByCodeInputCode
@@ -118,7 +129,8 @@ class IssueCardByCodeInputCode : Fragment() {
                 showToast(getString(R.string.camera_ocr_success), toastPosition = ToastPosition.Top)
                 println("GiftCardPolicyFragment... get ocr code $ocr")
             }
-        })
+            livedata.value = null
+        }
     }
 
 }

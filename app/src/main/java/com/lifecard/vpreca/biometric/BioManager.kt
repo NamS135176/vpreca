@@ -9,8 +9,8 @@ import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
-import com.lifecard.vpreca.data.source.SecurityKey
-import java.security.*
+import java.security.KeyStore
+import java.security.PublicKey
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -167,22 +167,11 @@ class BioManagerImpl constructor(private val context: Context) : BioManager {
             KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
         )
         paramsBuilder.apply {
-            //old for private key
-//            setDigests(KeyProperties.DIGEST_SHA256)
-//            setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
-//            setUserAuthenticationRequired(true)
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                setInvalidatedByBiometricEnrollment(true)
-//            }
-
             //new for secret key
             setBlockModes(KeyProperties.BLOCK_MODE_GCM)
             setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
             setRandomizedEncryptionRequired(false)
             setUserAuthenticationRequired(true)
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                setInvalidatedByBiometricEnrollment(true)
-//            }
         }
 
         val keyGenParams = paramsBuilder.build()

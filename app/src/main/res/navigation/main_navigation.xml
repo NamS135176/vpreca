@@ -22,39 +22,34 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.lifecard.vpreca.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
+        android:id="@+id/nav_code_over"
+        android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneOverFragment"
+        android:label="ChangePhoneOver"
+        tools:layout="@layout/fragment_change_phone_over" />
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.lifecard.vpreca.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_expire"
+        android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneExpireFragment"
+        android:label="ChangePhoneExpireFragment"
+        tools:layout="@layout/fragment_change_phone_expire" />
     <fragment
         android:id="@+id/nav_list_vpreca"
         android:name="com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_list_vpreca">
-        <action
-            android:id="@+id/action_to_card_usage"
-            app:destination="@id/nav_card_usage" />
-    </fragment>
+        android:label="ListVprecaFragment"
+        tools:layout="@layout/fragment_list_vpreca" />
     <fragment
         android:id="@+id/nav_change_pass"
         android:name="com.lifecard.vpreca.ui.changepass.ChangePassFragment"
-        android:label="Login"
+        android:label="ChangePassFragment"
         tools:layout="@layout/fragment_change_pass" />
     <fragment
         android:id="@+id/nav_change_pass_complete"
         android:name="com.lifecard.vpreca.ui.changepass.ChangePassCompleteFragment"
-        android:label="Login"
+        android:label="ChangePassCompleteFragment"
         tools:layout="@layout/fragment_change_pass_complete" />
     <fragment
         android:id="@+id/nav_change_info_data"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoDataFragment"
-        android:label="Login"
+        android:label="ChangeInfoDataFragment"
         tools:layout="@layout/fragment_change_info_data">
         <action
             android:id="@+id/action_change_info_data_to_input"
@@ -63,26 +58,25 @@
     <fragment
         android:id="@+id/nav_change_info_confirm"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoConfirmDataFragment"
-        android:label="Login"
+        android:label="ChangeInfoConfirmDataFragment"
         tools:layout="@layout/fragment_change_info_confirm_data">
         <action
             android:id="@+id/action_change_confirm_data_to_input"
             app:destination="@id/nav_change_info_input" />
         <argument
             android:name="change_info_data"
-            android:defaultValue="@null"
             app:argType="com.lifecard.vpreca.data.model.ChangeInfoMemberData"
-            app:nullable="true" />
+            app:nullable="false" />
     </fragment>
     <fragment
         android:id="@+id/nav_change_info_complete"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoCompleteFragment"
-        android:label="Login"
+        android:label="ChangeInfoCompleteFragment"
         tools:layout="@layout/fragment_change_info_complete" />
     <fragment
         android:id="@+id/nav_change_info_input"
         android:name="com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputFragment"
-        android:label="Login"
+        android:label="ChangeInfoInputFragment"
         tools:layout="@layout/fragment_change_info_input">
         <action
             android:id="@+id/action_change_info_input_to_confirm"
@@ -96,23 +90,49 @@
     <fragment
         android:id="@+id/nav_gift_card_policy"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardPolicyFragment"
-        android:label="Login"
+        android:label="GiftCardPolicyFragment"
         tools:layout="@layout/fragment_gift_card_policy" />
     <fragment
         android:id="@+id/nav_issue_card_main"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardMainFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_issue_card_main" />
+        android:label="IssueCardMainFragment"
+        tools:layout="@layout/fragment_issue_card_main" >
+        <action
+            android:id="@+id/action_issue_main_to_home"
+            app:destination="@id/nav_home"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_issue_card_by_plus_introduce"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByPlusIntroduce"
-        android:label="Login"
-        tools:layout="@layout/fragment_issue_card_by_plus_introduce" />
+        android:label="IssueCardByPlusIntroduce"
+        tools:layout="@layout/fragment_issue_card_by_plus_introduce">
+        <action
+            android:id="@+id/action_issue_introduce_to_main"
+            app:destination="@id/nav_issue_card_main"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_issue_card_main"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_issue_card_select_source"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardSelectSourceFragment"
-        android:label="Login"
+        android:label="IssueCardSelectSourceFragment"
         tools:layout="@layout/fragment_issue_card_select_source">
+        <action
+            android:id="@+id/action_issue_select_source_to_main"
+            app:destination="@id/nav_issue_card_main"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_issue_card_main"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_issue_select_source_to_introduce"
+            app:destination="@id/nav_issue_card_by_plus_introduce"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_issue_card_by_plus_introduce"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_selectsource_to_selectdesign"
             app:destination="@id/nav_issue_card_select_design" />
@@ -120,14 +140,29 @@
     <fragment
         android:id="@+id/nav_issue_card_select_design"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardSelectDesignFragment"
-        android:label="Login"
+        android:label="IssueCardSelectDesignFragment"
         tools:layout="@layout/fragment_issue_card_select_design">
+        <action
+            android:id="@+id/selectdesign_to_select_card_source"
+            app:destination="@id/nav_issue_card_select_source"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_issue_card_select_source"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/selectdesign_to_main"
+            app:destination="@id/nav_issue_card_main"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_issue_card_main"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/selectdesign_to_confirm"
             app:destination="@id/nav_balance_by_code_confirm" />
         <action
             android:id="@+id/selectdesign_to_value_confirm"
-            app:destination="@id/nav_balance_value_confirm" />
+            app:destination="@id/nav_balance_value_confirm"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_balance_value_confirm"/>
         <action
             android:id="@+id/selectdesign_to_selectway"
             app:destination="@id/nav_issue_card_by_code_select_way" />
@@ -155,12 +190,12 @@
     <fragment
         android:id="@+id/nav_issue_card_complete"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardPlusCompleteFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_issue_card_plus_complete" />
+        android:label="IssueCardPlusCompleteFragment"
+        tools:layout="@layout/fragment_issue_card_plus_complete"></fragment>
     <fragment
         android:id="@+id/nav_balance_amount_menu"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceAmountMenuFragment"
-        android:label="Login"
+        android:label="BalanceAmountMenuFragment"
         tools:layout="@layout/fragment_balance_amount_menu">
         <action
             android:id="@+id/action_menu_to_selectsource"
@@ -172,7 +207,7 @@
     <fragment
         android:id="@+id/nav_balance_by_code_input"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeInputFragment"
-        android:label="Login"
+        android:label="BalanceByCodeInputFragment"
         tools:layout="@layout/fragment_balance_by_code_input">
         <action
             android:id="@+id/action_input_to_value_confirm"
@@ -181,7 +216,12 @@
         <action
             android:id="@+id/action_to_camera_ocr"
             app:destination="@id/nav_camera_ocr" />
-
+        <action
+            android:id="@+id/action_inputcode_to_menu"
+            app:destination="@id/nav_balance_amount_menu"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_balance_amount_menu"
+            app:popUpToInclusive="true" />
         <argument
             android:name="balance_total_remain"
             android:defaultValue="@null"
@@ -191,14 +231,17 @@
     <fragment
         android:id="@+id/nav_balance_value_confirm"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeConfirmValue"
-        android:label="Login"
+        android:label="BalanceByCodeConfirmValue"
         tools:layout="@layout/fragment_balance_by_code_confirm_value">
         <action
             android:id="@+id/action_confirm_to_select_design"
             app:destination="@id/nav_issue_card_select_design" />
         <action
             android:id="@+id/action_confirm_to_inputcode"
-            app:destination="@id/nav_balance_by_code_input" />
+            app:destination="@id/nav_balance_by_code_input"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_balance_by_code_input"/>
         <argument
             android:name="balance_gift_data"
             android:defaultValue="@null"
@@ -208,26 +251,29 @@
     <fragment
         android:id="@+id/nav_balance_by_source_complete"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceBySourceCompleteFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_balance_by_source_complete" />
+        android:label="BalanceBySourceCompleteFragment"
+        tools:layout="@layout/fragment_balance_by_source_complete"></fragment>
     <fragment
         android:id="@+id/nav_balance_by_code_complete"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeCompleteFragment"
-        android:label="Login"
+        android:label="BalanceByCodeCompleteFragment"
         tools:layout="@layout/fragment_balance_by_code_complete" />
     <fragment
         android:id="@+id/nav_test"
         android:name="com.lifecard.vpreca.ui.testcard.TestCardFragment"
-        android:label="Login"
+        android:label="TestCardFragment"
         tools:layout="@layout/fragment_test_card" />
     <fragment
         android:id="@+id/nav_balance_by_code_confirm"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceByCodeConfirmFragment"
-        android:label="Login"
+        android:label="BalanceByCodeConfirmFragment"
         tools:layout="@layout/fragment_balance_by_code_confirm">
         <action
             android:id="@+id/action_confirm_to_select_design"
-            app:destination="@id/nav_issue_card_select_design" />
+            app:destination="@id/nav_issue_card_select_design"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/nav_issue_card_select_design"/>
         <argument
             android:name="fragment_balance_amount_select_source_confirm"
             android:defaultValue="@null"
@@ -242,7 +288,7 @@
     <fragment
         android:id="@+id/nav_balance_amount_select_source"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceAmountByCodeSelectSourceFragment"
-        android:label="Login"
+        android:label="BalanceAmountByCodeSelectSourceFragment"
         tools:layout="@layout/fragment_balance_amount_by_code_select_source">
         <action
             android:id="@+id/action_selectsource_to_confirm"
@@ -256,7 +302,7 @@
     <fragment
         android:id="@+id/nav_balance_amount_select_source_confirm"
         android:name="com.lifecard.vpreca.ui.balance_amount.BalanceSelectSourceConfirmFragment"
-        android:label="Login"
+        android:label="BalanceSelectSourceConfirmFragment"
         tools:layout="@layout/fragment_balance_select_source_confirm">
         <action
             android:id="@+id/action_confirm_to_selectsource"
@@ -270,8 +316,14 @@
     <fragment
         android:id="@+id/nav_issue_card_by_code_input"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeInputCode"
-        android:label="Login"
+        android:label="IssueCardByCodeInputCode"
         tools:layout="@layout/fragment_issue_card_by_code_input_code">
+        <action
+            android:id="@+id/action_inputcode_to_main"
+            app:destination="@id/nav_issue_card_main"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_issue_card_main"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_inputcode_to_confirm_value"
             app:destination="@id/nav_issue_card_by_code_value_confirm" />
@@ -282,17 +334,17 @@
     <fragment
         android:id="@+id/nav_issue_card_by_code_complete_without_card"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeCompleteWithoutCardFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_issue_card_by_code_complete_without_card" />
+        android:label="IssueCardByCodeCompleteWithoutCardFragment"
+        tools:layout="@layout/fragment_issue_card_by_code_complete_without_card"></fragment>
     <fragment
         android:id="@+id/nav_issue_card_by_code_complete_with_card"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeCompleteWithCardFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_issue_card_by_code_complete_with_card" />
+        android:label="IssueCardByCodeCompleteWithCardFragment"
+        tools:layout="@layout/fragment_issue_card_by_code_complete_with_card"></fragment>
     <fragment
         android:id="@+id/nav_issue_card_by_code_select_source"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeSelectSource"
-        android:label="Login"
+        android:label="IssueCardByCodeSelectSource"
         tools:layout="@layout/fragment_issue_card_by_code_select_source">
         <action
             android:id="@+id/action_selectsource_to_confirm"
@@ -309,7 +361,7 @@
     <fragment
         android:id="@+id/nav_issue_card_by_code_select_source_confirm"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeSelectSoureConfirmFragment"
-        android:label="Login"
+        android:label="IssueCardByCodeSelectSoureConfirmFragment"
         tools:layout="@layout/fragment_issue_card_by_code_select_soure_confirm">
         <action
             android:id="@+id/action_confirm_to_selectsource"
@@ -328,8 +380,14 @@
     <fragment
         android:id="@+id/nav_issue_card_by_code_select_way"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeSelectWay"
-        android:label="Login"
+        android:label="IssueCardByCodeSelectWay"
         tools:layout="@layout/fragment_issue_card_by_code_select_way">
+        <action
+            android:id="@+id/action_selectway_to_complete"
+            app:destination="@id/nav_issue_card_by_code_complete_without_card"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_issue_card_by_code_complete_without_card"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_selectway_to_selectdesign"
             app:destination="@id/nav_issue_card_select_design" />
@@ -345,8 +403,21 @@
     <fragment
         android:id="@+id/nav_issue_card_by_code_value_confirm"
         android:name="com.lifecard.vpreca.ui.issuecard.IssueCardByCodeValueConfirm"
-        android:label="Login"
+        android:label="IssueCardByCodeValueConfirm"
         tools:layout="@layout/fragment_issue_card_by_code_value_confirm">
+        <action
+            android:id="@+id/action_issuevalueconfirm_to_main"
+            app:destination="@id/nav_issue_card_main"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_issue_card_main"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_issuevalueconfirm_to_inputcode"
+            app:destination="@id/nav_issue_card_by_code_input"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_issue_card_by_code_input"
+            app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_valueconfirm_to_selectdesign"
             app:destination="@id/nav_issue_card_select_design" />
@@ -359,8 +430,14 @@
     <fragment
         android:id="@+id/nav_gift_card_input_card"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardInputCardFragment"
-        android:label="Login"
+        android:label="GiftCardInputCardFragment"
         tools:layout="@layout/fragment_gift_card_input_card">
+        <action
+            android:id="@+id/action_giftcardinputcard_to_policy"
+            app:destination="@id/nav_gift_card_policy"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_gift_card_policy"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_giftcardinputcard_to_giftcardconfirm"
             app:destination="@id/nav_gift_card_confirm" />
@@ -371,7 +448,7 @@
     <fragment
         android:id="@+id/nav_gift_card_input"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardInputFragment"
-        android:label="Login"
+        android:label="GiftCardInputFragment"
         tools:layout="@layout/fragment_gift_card_input">
         <action
             android:id="@+id/action_giftcardinput_to_giftcardconfirm"
@@ -380,8 +457,14 @@
     <fragment
         android:id="@+id/nav_gift_card_confirm"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardConfirmFragment"
-        android:label="Login"
+        android:label="GiftCardConfirmFragment"
         tools:layout="@layout/fragment_gift_card_confirm">
+        <action
+            android:id="@+id/action_third_to_inputcard"
+            app:destination="@id/nav_gift_card_input_card"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_gift_card_input_card"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_third_to_usage"
             app:destination="@id/nav_card_usage" />
@@ -402,42 +485,38 @@
     <fragment
         android:id="@+id/nav_gift_card_complete"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardCompleteFragment"
-        android:label="Login"
+        android:label="GiftCardCompleteFragment"
         tools:layout="@layout/fragment_gift_card_complete" />
     <fragment
         android:id="@+id/nav_gift_card_confirm_detail"
         android:name="com.lifecard.vpreca.ui.introduce.GiftCardConfirmDetailFragment"
-        android:label="Login"
+        android:label="GiftCardConfirmDetailFragment"
         tools:layout="@layout/fragment_gift_card_confirm_detail">
         <action
             android:id="@+id/action_giftcardinputcard_to_giftcardconfirm"
-            app:destination="@id/nav_gift_card_confirm" />
+            app:destination="@id/nav_gift_card_confirm"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
         <argument
             android:name="card_data"
             android:defaultValue="@null"
             app:argType="com.lifecard.vpreca.data.model.CardInfo"
             app:nullable="true" />
     </fragment>
-    <!--    <fragment-->
-    <!--        android:id="@+id/nav_login"-->
-    <!--        android:name="com.lifecard.vpreca.ui.login.LoginFragment"-->
-    <!--        android:label="Login"-->
-    <!--        tools:layout="@layout/fragment_login" />-->
-
     <fragment
         android:id="@+id/nav_card_usage"
         android:name="com.lifecard.vpreca.ui.card_usage.CardUsageFragment"
-        android:label="Login"
+        android:label="CardUsageFragment"
         tools:layout="@layout/fragment_card_usage">
+        <action
+            android:id="@+id/to_list"
+            app:destination="@id/nav_list_vpreca"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
         <argument
             android:name="card"
             android:defaultValue="@null"
             app:argType="com.lifecard.vpreca.data.model.CreditCard"
-            app:nullable="true" />
-        <argument
-            android:name="pre_route"
-            android:defaultValue="@null"
-            app:argType="com.lifecard.vpreca.data.model.GiftCardConfirmData"
             app:nullable="true" />
     </fragment>
 
@@ -446,7 +525,7 @@
         android:name="com.lifecard.vpreca.ui.webview.WebViewFragment"
         style="@style/Theme.VPreca.Fullscreen"
         android:fitsSystemWindows="true"
-        android:label="Login"
+        android:label="WebViewFragment"
         tools:layout="@layout/fragment_web_view">
         <argument
             android:name="web_url"
@@ -462,17 +541,17 @@
     <fragment
         android:id="@+id/nav_change_phone_first"
         android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneFirstFragment"
-        android:label="@string/title_fingerprint_setting"
-        tools:layout="@layout/fragment_change_phone_first"/>
+        android:label="ChangePhoneFirstFragment"
+        tools:layout="@layout/fragment_change_phone_first" />
     <fragment
         android:id="@+id/nav_change_phone_second"
         android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneSecondFragment"
-        android:label="@string/title_fingerprint_setting"
-        tools:layout="@layout/fragment_change_phone_second"/>
+        android:label="ChangePhoneSecondFragment"
+        tools:layout="@layout/fragment_change_phone_second" />
     <fragment
         android:id="@+id/nav_change_phone_input_phone"
         android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneInputPhoneFragment"
-        android:label="@string/title_fingerprint_setting"
+        android:label="ChangePhoneInputPhoneFragment"
         tools:layout="@layout/fragment_change_phone_input_phone">
         <action
             android:id="@+id/action_to_confirm"
@@ -481,7 +560,7 @@
     <fragment
         android:id="@+id/nav_change_phone_confirm_phone"
         android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneConfirmPhoneFragment"
-        android:label="@string/title_fingerprint_setting"
+        android:label="ChangePhoneConfirmPhoneFragment"
         tools:layout="@layout/fragment_change_phone_confirm_phone">
         <action
             android:id="@+id/action_to_confirm"
@@ -495,8 +574,14 @@
     <fragment
         android:id="@+id/nav_change_phone_confirm"
         android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneConfirm"
-        android:label="@string/title_fingerprint_setting"
+        android:label="ChangePhoneConfirm"
         tools:layout="@layout/fragment_change_phone_confirm">
+        <action
+            android:id="@+id/action_confirm_to_phone_input"
+            app:destination="@id/nav_change_phone_input_phone"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_change_phone_input_phone"
+            app:popUpToInclusive="true" />
         <argument
             android:name="card_data"
             android:defaultValue="@null"
@@ -506,17 +591,17 @@
     <fragment
         android:id="@+id/nav_change_phone_complete"
         android:name="com.lifecard.vpreca.ui.changephone.ChangePhoneCompleteFragment"
-        android:label="@string/title_fingerprint_setting"
-        tools:layout="@layout/fragment_change_phone_complete"/>
+        android:label="ChangePhoneCompleteFragment"
+        tools:layout="@layout/fragment_change_phone_complete"></fragment>
     <fragment
         android:id="@+id/nav_fingerprint_setting"
         android:name="com.lifecard.vpreca.ui.fingerprint.FingerprintFragment"
-        android:label="@string/title_fingerprint_setting" />
+        android:label="FingerprintFragment" />
 
     <fragment
         android:id="@+id/nav_web_direct"
         android:name="com.lifecard.vpreca.ui.web_direct.WebDirectFragment"
-        android:label="">
+        android:label="WebDirectFragment">
         <argument
             android:name="screen_id"
             android:defaultValue="@null"
@@ -526,7 +611,7 @@
     <fragment
         android:id="@+id/nav_camera_ocr"
         android:name="com.lifecard.vpreca.ui.ocr.CameraFragment"
-        android:label="Camera"
+        android:label="CameraFragment"
         tools:layout="@layout/fragment_camera">
         <argument
             android:name="hint"

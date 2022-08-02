@@ -1,8 +1,9 @@
 package com.lifecard.vpreca.ui.forgotpass
 
-import android.util.Patterns
-import androidx.lifecycle.*
-import androidx.lifecycle.Observer
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
@@ -10,12 +11,9 @@ import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.ui.changepass.ChangePassRequestState
-import com.lifecard.vpreca.ui.login.LoginFormState
 import com.lifecard.vpreca.utils.RegexUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -48,8 +46,8 @@ class ForgotPassViewModel @Inject constructor(
     }
 
     private fun checkDateValid(text: String?): Boolean {
-        return if (!isDateValid(text)) {
-            dateError.value = R.string.forgot_pass_error_dob
+        return if (!isDateValid(text) && !text.isNullOrEmpty()) {
+            dateError.value = R.string.rgx_error_datetime
             false
         } else {
             dateError.value = null
@@ -58,8 +56,8 @@ class ForgotPassViewModel @Inject constructor(
     }
 
     private fun checkPhoneValid(text: String?): Boolean {
-        return if (!RegexUtils.isPhoneNumberValid(text)) {
-            phoneError.value = R.string.forgot_pass_error_phone
+        return if (!RegexUtils.isPhoneNumberValid(text) && !text.isNullOrEmpty()) {
+            phoneError.value = R.string.rgx_error_phone_number
             false
         } else {
             phoneError.value = null
@@ -89,7 +87,7 @@ class ForgotPassViewModel @Inject constructor(
 
     private fun isDateValid(date: String?, pattern: String? = "yyyy年MM月dd日"): Boolean {
         return try {
-            date?.let { SimpleDateFormat(pattern, Locale.JAPAN).parse(date).before(Date()) }
+            date?.let { SimpleDateFormat(pattern, Locale.JAPAN).parse(date)?.before(Date()) }
                 ?: false
         } catch (e: Exception) {
             false
@@ -116,9 +114,23 @@ class ForgotPassViewModel @Inject constructor(
         val isValidPhone = checkPhoneValid(phone)
         val isValidQuestion = checkQuestionValid(question)
         val isValidAnswer = checkAnswerValid(answer)
-        if (isValidEmail && isValidDate && isValidPhone && isValidQuestion && isValidAnswer) {
-            forgotPassState.value = ForgotPassState(success = true)
+        println(isValidDate)
+        println(isValidPhone)
+        if (phone.isNullOrEmpty()) {
+            if (isValidEmail && isValidQuestion && isValidAnswer && isValidDate ) {
+                forgotPassState.value = ForgotPassState(success = true)
+            }
+        } else if(date.isNullOrEmpty()) {
+            if (isValidEmail && isValidQuestion && isValidAnswer &&  isValidPhone) {
+                forgotPassState.value = ForgotPassState(success = true)
+            }
         }
+        else{
+            if (isValidEmail && isValidQuestion && isValidAnswer && isValidDate && isValidPhone) {
+                forgotPassState.value = ForgotPassState(success = true)
+            }
+        }
+
     }
 
     fun checkValidForm(
@@ -128,16 +140,23 @@ class ForgotPassViewModel @Inject constructor(
         question: String?,
         answer: String?
     ): Boolean {
-        val isValid = !arrayOf(email, date, phone, question, answer).any { it.isNullOrEmpty() }
+        val isValid = !arrayOf(email, question, answer).any { it.isNullOrEmpty() }
 
-        validForm.value = isValid
+        validForm.value = isValid && (!date.isNullOrEmpty() || !phone.isNullOrEmpty())
         return isValid
     }
 
-    fun resetPassData(email:String, birthday:String, phone:String, secretQuestion:String, secretAnswer:String) {
+    fun resetPassData(
+        email: String,
+        birthday: String?,
+        phone: String?,
+        secretQuestion: String,
+        secretAnswer: String
+    ) {
         viewModelScope.launch {
             _loading.value = true
-            val res = userRepository.resetPassword(email, birthday, phone, secretQuestion, secretAnswer)
+            val res =
+                userRepository.resetPassword(email, birthday, phone, secretQuestion, secretAnswer)
             if (res is Result.Success) {
                 _resetPassState.value = ResetPassReqState(success = res.data)
             } else if (res is Result.Error) {
@@ -151,7 +170,6 @@ class ForgotPassViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _resetPassState.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         ResetPassReqState(internalError = "")
                     else -> _resetPassState.value =
                         ResetPassReqState(

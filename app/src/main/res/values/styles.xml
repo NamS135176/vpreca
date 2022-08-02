@@ -14,7 +14,7 @@
     </style>
 
     <style name="MyCardView" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="cardCornerRadius">9dp</item>
+        <item name="cardCornerRadius">8dp</item>
     </style>
 
     <style name="Widget.App.Button.Outlined" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
@@ -83,8 +83,10 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
-    <style name="Widget.Theme.VPreca.ActionBar.Title" parent="TextAppearance.AppCompat">
-        <item name="android:gravity">center_horizontal</item>
+    <style name="Widget.Theme.VPreca.ActionBar.Title" parent="Base.Widget.Theme.VPreca.ActionBar.Title"></style>
+
+    <style name="Base.Widget.Theme.VPreca.ActionBar.Title" parent="TextAppearance.AppCompat">
+        <item name="android:gravity">center</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
@@ -94,6 +96,9 @@
         <item name="android:fontFamily">@font/hiragino_sans_w6</item>
         <item name="fontFamily">@font/hiragino_sans_w6
         </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
+        <item name="android:textAlignment" tools:targetApi="jelly_bean_mr1">center</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lineSpacingExtra">0sp</item>
     </style>
 
     <style name="Widget.AppCompat.TextView.Bold" parent="Widget.AppCompat.TextView">
@@ -113,13 +118,11 @@
 
     <style name="MySpinner" parent="Widget.AppCompat.Spinner.DropDown">
         <item name="android:background">@drawable/spinner_bg</item>
-        <!--        <item name="android:dropDownSelector">@drawable/my_spinner_selector</item>-->
         <item name="android:spinnerMode">dropdown</item>
         <item name="android:popupBackground">#f1f1f1</item>
     </style>
 
-    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/checkbox_selector</item>
+    <style name="Widget.App.CheckBox.Base" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="android:minHeight">36dp</item>
         <item name="android:paddingStart">@dimen/fragment_horizontal_margin</item>
         <item name="android:paddingLeft">@dimen/fragment_horizontal_margin</item>
@@ -128,12 +131,19 @@
         <item name="useMaterialThemeColors">false</item>
     </style>
 
+    <style name="Widget.App.CheckBox" parent="Widget.App.CheckBox.Base">
+        <item name="buttonTint">@color/white</item>
+    </style>
+
+    <style name="Widget.App.CheckBox.Dark" parent="Widget.App.CheckBox.Base">
+        <item name="buttonTint">@color/primary</item>
+    </style>
+
     <style name="Widget.App.MaterialComponents.Button.TextButton.Bold" parent="@style/Widget.MaterialComponents.Button.TextButton">
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/hiragino_sans_w6</item>
         <item name="fontFamily">@font/hiragino_sans_w6
         </item> <!-- target android sdk versions < 26 and > 14 if theme other than AppCompat -->
-        <!--        <item name="rippleColor">@android:color/transparent</item>-->
     </style>
 
     <style name="DialogTheme" parent="android:Theme.Holo.Dialog">
@@ -154,10 +164,51 @@
     </style>
 
     <style name="ThemeOverlay.MaterialAlertDialog.MaterialComponents" parent="@style/MaterialAlertDialog.MaterialComponents">
-        <!--        <item name="android:layout">@layout/dialog_progress_bar</item>-->
         <item name="backgroundInsetStart">0dp</item>
         <item name="backgroundInsetTop">0dp</item>
         <item name="backgroundInsetEnd">0dp</item>
         <item name="backgroundInsetBottom">0dp</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme">
+        <item name="android:windowBackground">@drawable/bg_disable</item>
+        <item name="android:windowAnimationStyle">@style/Animation.Design.BottomSheetDialog</item>
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_popup</item>
+    </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">@color/white</item>
+        <item name="tabIndicatorHeight">2dp</item>
+    </style>
+
+    <style name="MyMaterialDialog" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Customize your theme here. -->
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlert.Body.Text</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlert.Title.Text</item>
+
+    </style>
+
+    <style name="MaterialAlert.Body.Text" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+    </style>
+
+    <style name="MaterialAlert.Title.Text" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/hiragino_sans_w6</item>
+        <item name="fontFamily">@font/hiragino_sans_w6
+        </item>
+    </style>
+
+    <style name="DefaultNumberPickerTheme" parent="AppBottomSheetDialogTheme">
+        <item name="colorControlNormal">@android:color/transparent</item>
     </style>
 </resources>

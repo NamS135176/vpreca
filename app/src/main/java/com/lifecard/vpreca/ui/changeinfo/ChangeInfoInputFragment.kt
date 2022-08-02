@@ -1,60 +1,53 @@
 package com.lifecard.vpreca.ui.changeinfo
 
-import android.content.Context
-import android.content.res.Resources
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.core.widget.NestedScrollView
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.ChangeInfoMemberData
-import com.lifecard.vpreca.data.model.PhoneData
+import com.lifecard.vpreca.base.BackPressFragment
+import com.lifecard.vpreca.base.PowerSpinnerAdapter
+import com.lifecard.vpreca.data.UserManager
+import com.lifecard.vpreca.data.model.*
 import com.lifecard.vpreca.databinding.FragmentChangeInfoInputBinding
 import com.lifecard.vpreca.utils.Converter
 import com.lifecard.vpreca.utils.closeKeyBoard
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
-import java.util.*
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class ChangeInfoInputFragment : Fragment() {
+
+@AndroidEntryPoint
+class ChangeInfoInputFragment : BackPressFragment() {
 
     companion object {
         fun newInstance() = ChangeInfoInputFragment()
     }
 
-    private lateinit var viewModel: ChangeInfoInputViewModel
+    @Inject
+    lateinit var userManager: UserManager
+
+    private val viewModel: ChangeInfoInputViewModel by viewModels()
     private var _binding: FragmentChangeInfoInputBinding? = null
     private val binding get() = _binding!!
     private val args: ChangeInfoInputFragmentArgs by navArgs()
+    private var saveState: Bundle? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        viewModel = ViewModelProvider(this).get(ChangeInfoInputViewModel::class.java)
+    ): View {
         _binding = FragmentChangeInfoInputBinding.inflate(inflater, container, false)
 
-        binding.constraintChangeInfo.setOnClickListener(View.OnClickListener { closeKeyBoard() })
-
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_change_info_data)
-                }
-            })
-
+        binding.constraintChangeInfo.setOnClickListener { closeKeyBoard() }
 
         val spinnerCity = binding.spinnerCity
         val spinnerSecret = binding.spinnerSecret
@@ -85,22 +78,22 @@ class ChangeInfoInputFragment : Fragment() {
         val toggleMagazineSecond = binding.toggleMagazineSecond
         var city = args.userData?.addressPrefecture
         var question = args.userData?.secretQuestion
-        val res = resources
 
-        val listCity = res.getStringArray(R.array.cities)
-        val listQuestion = res.getStringArray(R.array.secret_question)
+        viewModel.originUserData = userManager.memberInfo!!
+
         idEdt.setText(args.userData?.loginId)
         nicknameEdt.setText(args.userData?.memberRoman)
-        kanaFirstName.setText(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(0))
-        kanaLastName.setText(args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(1))
-        hiraFirstName.setText(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(0))
-        hiraLastName.setText(args.userData?.memberName?.split(" ")?.toTypedArray()?.get(1))
-        spinnerCity.selectItemByIndex(listCity.indexOf(args.userData?.addressPrefecture))
+
+        kanaFirstName.setText(args.userData?.getFirstKanaName())
+        kanaLastName.setText(args.userData?.getLastKanaName())
+        hiraFirstName.setText(args.userData?.getFirstMemberName())
+        hiraLastName.setText(args.userData?.getLastMemberName())
+
         email1Edt.setText(args.userData?.mailAddress1)
         email1ConfirmEdt.setText(args.userData?.mailAddress1)
         email2Edt.setText(args.userData?.mailAddress2)
         email2ConfirmEdt.setText(args.userData?.mailAddress2)
-        spinnerSecret.selectItemByIndex(listQuestion.indexOf(args.userData?.secretQuestion))
+
         answerEdt.setText(args.userData?.secretQuestionAnswer)
         toggleSettingFirst.isChecked =
             Converter.convertStringToBoolean(args.userData?.mail1AdMailRecieveFlg!!)
@@ -110,20 +103,13 @@ class ChangeInfoInputFragment : Fragment() {
             Converter.convertStringToBoolean(args.userData?.mail1RecievFlg!!)
         toggleMagazineSecond.isChecked =
             Converter.convertStringToBoolean(args.userData?.mail2RecievFlg!!)
+
         viewModel.loginIdDataChanged(args.userData?.loginId!!)
         viewModel.nicknameDataChanged(args.userData?.memberRoman!!)
-        viewModel.kanaFirstNameDataChanged(
-            args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(0)!!
-        )
-        viewModel.kanaLastNameDataChanged(
-            args.userData?.memberKana?.split(" ")?.toTypedArray()?.get(1)!!
-        )
-        viewModel.hiraFirstNameDataChanged(
-            args.userData?.memberName?.split(" ")?.toTypedArray()?.get(0)!!
-        )
-        viewModel.hiraLastNameDataChanged(
-            args.userData?.memberName?.split(" ")?.toTypedArray()?.get(1)!!
-        )
+        viewModel.kanaFirstNameDataChanged(args.userData?.getFirstKanaName())
+        viewModel.kanaLastNameDataChanged(args.userData?.getLastKanaName())
+        viewModel.hiraFirstNameDataChanged(args.userData?.getFirstMemberName())
+        viewModel.hiraLastNameDataChanged(args.userData?.getLastMemberName())
         viewModel.cityDataChanged(args.userData?.addressPrefecture!!)
         viewModel.email1DataChanged(args.userData?.mailAddress1!!)
         viewModel.email1ConfirmDataChanged(args.userData?.mailAddress1!!)
@@ -132,118 +118,156 @@ class ChangeInfoInputFragment : Fragment() {
         viewModel.questionDataChanged(args.userData?.secretQuestion!!)
         viewModel.answerDataChanged(args.userData?.secretQuestionAnswer!!)
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_change_info_data) })
-
-        btnCancel.setOnClickListener(View.OnClickListener {
+        btnBack.setOnClickListener { findNavController().popBackStack() }
+        btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton("はい") { dialog, which ->
-                    // do something on positive button click
-//                    val intent = Intent(requireContext(), LoginActivity::class.java).apply {
-//                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                    }
-//                    startActivity(intent)
-                    findNavController().navigate(R.id.nav_home)
+                setPositiveButton("はい") { _, _ ->
+                    findNavController().popBackStack(R.id.nav_home, inclusive = false)
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("途中ですがキャンセルしてもよろしいですか")
+                setMessage("途中ですがキャンセルしてもよろしいですか?")
             }.create().show()
-        })
+        }
 
         spinnerSecret.lifecycleOwner = viewLifecycleOwner
         spinnerCity.lifecycleOwner = viewLifecycleOwner
 
+        binding.scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, _, _, _ ->
+            dismissAllSpinner()
+        })
+
         viewModel.validForm.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { isValid ->
-                btnSubmit.isEnabled = isValid
-            })
+            viewLifecycleOwner
+        ) { isValid ->
+            btnSubmit.isEnabled = isValid
+        }
 
         viewModel.nicknameError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                usernameLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
-        viewModel.idError.observe(viewLifecycleOwner, androidx.lifecycle.Observer { error: Int? ->
+            viewLifecycleOwner
+        ) { error: Int? ->
+            usernameLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
+        viewModel.idError.observe(viewLifecycleOwner) { error: Int? ->
             idLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
-        })
+        }
         viewModel.email1Error.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                email1Layout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            email1Layout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.email2Error.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                email2Layout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            email2Layout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.email1ConfirmError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                email1ConfirmLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            email1ConfirmLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.email2ConfirmError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                email2ConfirmLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            email2ConfirmLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
         viewModel.answerError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { error: Int? ->
-                answerLayout.error = try {
-                    error?.let { getString(error) }
-                } catch (e: Error) {
-                    null
-                }
-            })
+            viewLifecycleOwner
+        ) { error: Int? ->
+            answerLayout.error = try {
+                error?.let { getString(error) }
+            } catch (e: Error) {
+                null
+            }
+        }
 
         viewModel.nameError.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { errors: Array<Number?>? ->
-                binding.hiraNameInputLayout.error = try {
-                    val errorInt = errors?.filterNotNull()
-                    if (!errorInt.isNullOrEmpty()) {
-                        println("errorInt: $errorInt - text ${errorInt.map { getString(it as Int) }}")
-                        errorInt.joinToString(separator = "\n") { getString(it as Int) }
-                    } else {
-                        null
-                    }
-                } catch (e: Error) {
+            viewLifecycleOwner
+        ) { errors: Array<Number?>? ->
+            binding.hiraNameInputLayout.error = try {
+                val errorInt = errors?.filterNotNull()
+                if (!errorInt.isNullOrEmpty()) {
+                    println("errorInt: $errorInt - text ${errorInt.map { getString(it as Int) }}")
+                    errorInt.joinToString(separator = "\n") { getString(it as Int) }
+                } else {
                     null
                 }
-            })
+            } catch (e: Error) {
+                null
+            }
+        }
+        viewModel.furiganaNameError.observe(viewLifecycleOwner) { error ->
+            when (error) {
+                true -> {
+                    binding.hiraFirstName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
+                    binding.hiraLastName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
+                }
+                else -> {
+                    binding.hiraFirstName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.hiraLastName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                }
+            }
+        }
+        viewModel.kanaNameError.observe(viewLifecycleOwner) { error ->
+            when (error) {
+                true -> {
+                    binding.kanaFirstName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
+                    binding.kanaLastName.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.input_signup_selected
+                    )
+                }
+                else -> {
+                    binding.kanaFirstName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                    binding.kanaLastName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.input_signup_style)
+                }
+            }
+        }
 
-        viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
                 val data = ChangeInfoMemberData(
                     memberNumber = args.userData?.memberNumber!!,
                     loginId = idEdt.text.toString(),
                     memberRoman = nicknameEdt.text.toString(),
-                    memberKana = kanaFirstName.text.toString() + " " + kanaLastName.text.toString(),
-                    memberName = hiraFirstName.text.toString() + " " + hiraLastName.text.toString(),
+                    memberKana = kanaFirstName.text.toString() + "　" + kanaLastName.text.toString(),
+                    memberName = hiraFirstName.text.toString() + "　" + hiraLastName.text.toString(),
                     addressPrefecture = city,
                     mailAddress1 = email1Edt.text.toString(),
                     mailAddress2 = email2Edt.text.toString(),
@@ -257,25 +281,45 @@ class ChangeInfoInputFragment : Fragment() {
                 )
                 val action = ChangeInfoInputFragmentDirections.actionChangeInfoInputToConfirm(data)
                 findNavController().navigate(action)
+                viewModel.formResultState.value = null//for case back from stack
             }
-        })
+        }
         viewModel.formState.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { viewModel.checkValidForm() })
+            viewLifecycleOwner
+        ) { viewModel.checkValidForm() }
 
-        spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
+        val listQuestion =
+            requireContext().resources.getStringArray(R.array.secret_question).toList()
+        val spinnerSecretAdapter = PowerSpinnerAdapter(spinnerSecret)
+        spinnerSecretAdapter.setItems(listQuestion)
+        spinnerSecret.setSpinnerAdapter(spinnerSecretAdapter)
+        spinnerSecret.selectItemByIndex(listQuestion.indexOf(args.userData?.secretQuestion))
+        spinnerSecret.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let {
                 viewModel.questionDataChanged(text = it)
                 question = it
             }
         })
-        spinnerCity.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { oldIndex, oldItem, newIndex, newItem ->
+        spinnerSecret.setOnClickListener(View.OnClickListener {
+            closeKeyBoard()
+            spinnerSecret.showOrDismiss()
+        })
+
+        val listCity = requireContext().resources.getStringArray(R.array.cities).toList()
+        val spinnerCityAdapter = PowerSpinnerAdapter(spinnerCity)
+        spinnerCityAdapter.setItems(listCity)
+        spinnerCity.setSpinnerAdapter(spinnerCityAdapter)
+        spinnerCity.selectItemByIndex(listCity.indexOf(args.userData?.addressPrefecture))
+        spinnerCity.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String?> { _, _, _, newItem ->
             newItem?.let {
                 viewModel.cityDataChanged(text = it)
                 city = it
             }
         })
-
+        spinnerCity.setOnClickListener(View.OnClickListener {
+            closeKeyBoard()
+            spinnerCity.showOrDismiss()
+        })
         spinnerSecret.setOnSpinnerOutsideTouchListener { _, _ -> spinnerSecret.dismiss() }
         spinnerCity.setOnSpinnerOutsideTouchListener { _, _ -> spinnerCity.dismiss() }
 
@@ -293,10 +337,40 @@ class ChangeInfoInputFragment : Fragment() {
         email1ConfirmEdt.doAfterTextChanged { text -> viewModel.email1ConfirmDataChanged(text = text.toString()) }
         email2ConfirmEdt.doAfterTextChanged { text -> viewModel.email2ConfirmDataChanged(text = text.toString()) }
 
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             viewModel.submit()
-        })
+        }
+
+        saveState?.let { bundle ->
+            spinnerCity.selectItemByIndex(bundle.getInt("city"))
+            spinnerSecret.selectItemByIndex(bundle.getInt("question"))
+        }
 
         return binding.root
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        saveData()
+        dismissAllSpinner()
+    }
+
+    private fun saveData() {
+        val cityAdapter = binding.spinnerCity.getSpinnerAdapter<PowerSpinnerAdapter>()
+        val secretAdapter = binding.spinnerSecret.getSpinnerAdapter<PowerSpinnerAdapter>()
+
+        saveState = bundleOf(
+            "city" to cityAdapter.index,
+            "question" to secretAdapter.index,
+        )
+    }
+
+    private fun dismissAllSpinner() {
+        binding.spinnerCity.dismiss()
+        binding.spinnerSecret.dismiss()
+    }
+
+//    override fun onBeforeBackPress() {
+//        dismissAllSpinner()
+//    }
 }

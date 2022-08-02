@@ -1,14 +1,12 @@
 package com.lifecard.vpreca.utils
 
 import android.view.Gravity
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.lifecard.vpreca.MainActivity
 import com.lifecard.vpreca.R
-import java.lang.Exception
 
 enum class ToastType {
     Success, Warning, Error
@@ -37,16 +35,14 @@ fun Toast.showCustomToast(
             ToastType.Success -> textView.setBackgroundResource(R.drawable.toast_success_shape)
             ToastType.Error -> textView.setBackgroundResource(R.drawable.toast_error_shape)
             ToastType.Warning -> textView.setBackgroundResource(R.drawable.toast_warning_shape)
-            else -> {}
+            else -> {
+                println("")}
         }
 
         // use the application extension function
-//        val height = activity.window.decorView.height
-//        val yOffset = (0.265 * height).toInt()//0.265 = 110 / 414
         val yOffsetBottom = activity.resources.getDimension(R.dimen.toast_mb).toInt()
         val yOffsetTop = activity.resources.getDimension(R.dimen.toast_mt).toInt()
 
-        println("showCustomToast...  - yOffset = $yOffset")
         this.apply {
             when (toastPosition) {
                 ToastPosition.Bottom -> setGravity(
@@ -61,6 +57,14 @@ fun Toast.showCustomToast(
             show()
         }
     } catch (e: Exception) {
+        println(e)
+    }
+    try {
+        val mainActivity = activity as? MainActivity
+        mainActivity?.currentToast?.cancel()
+        mainActivity?.currentToast = this
+    } catch (e: Exception) {
+        //nothing
     }
 }
 
@@ -77,6 +81,6 @@ fun Fragment.showToast(
             toastPosition = toastPosition
         )
     } catch (e: Exception) {
-
+        println(e)
     }
 }

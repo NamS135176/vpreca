@@ -71,3 +71,11 @@
 -keep class com.lifecard.vpreca.data.model.**
 
 ##---------------End: proguard configuration for App  ----------
+
+##---------------Begin: EventBus  ----------
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+##---------------End: EventBus  ----------

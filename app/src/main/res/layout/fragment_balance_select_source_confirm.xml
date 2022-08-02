@@ -190,7 +190,7 @@
             android:layout_marginHorizontal="45dp"
             android:layout_marginTop="34dp"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/button_introduce_background"
+            app:backgroundTint="@color/button_introduce_background"
             android:enabled="true"
             android:paddingVertical="11dp"
             android:text="@string/balance_select_source_confirm_btn"
@@ -199,20 +199,6 @@
             app:cornerRadius="25dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="64dp"
-            android:indeterminateDrawable="@drawable/loading"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

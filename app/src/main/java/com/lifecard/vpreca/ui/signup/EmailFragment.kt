@@ -1,40 +1,30 @@
 package com.lifecard.vpreca.ui.signup
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.GiftCardConfirmData
-import com.lifecard.vpreca.databinding.FragmentConfirmPhoneBinding
 import com.lifecard.vpreca.databinding.FragmentEmailBinding
 
 class EmailFragment : Fragment() {
 
     private var _binding:FragmentEmailBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel:EmailViewModel
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val viewModel:EmailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        viewModel = ViewModelProvider(this).get(EmailViewModel::class.java)
         _binding = FragmentEmailBinding.inflate(inflater, container, false)
         val inputEmail = binding.forgotPassEmailInput
         val btnSubmitEmail = binding.btnSubmitPolicy
@@ -42,56 +32,58 @@ class EmailFragment : Fragment() {
         val btnBack = binding.appbarForgotPass.btnBack
         val btnCancel = binding.appbarForgotPass.cancelBtn
 
-        btnCancel.setOnClickListener(View.OnClickListener {
+        btnCancel.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
                 setPositiveButton("はい") { _, _ ->
-                    findNavController().navigate(R.id.nav_login)
+                    findNavController().popBackStack(R.id.nav_login,inclusive = false)
                 }
                 setNegativeButton("いいえ", null)
-                setMessage("入力途中ですがキャンセル\n" +
-                        "してもよろしいですか？")
+                setMessage(
+                    "入力途中ですがキャンセル\n" +
+                            "してもよろしいですか？"
+                )
             }.create().show()
-        })
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_signup_phone) })
+        }
+        btnBack.setOnClickListener { findNavController().popBackStack() }
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_signup_phone)
+                findNavController().popBackStack()
             }
         })
 
-        viewModel.formState.observe(viewLifecycleOwner, Observer { viewModel.checkFormValid() })
+        viewModel.formState.observe(viewLifecycleOwner) { viewModel.checkFormValid() }
 
-        viewModel.emailError.observe(viewLifecycleOwner, Observer { error: Int? ->
+        viewModel.emailError.observe(viewLifecycleOwner) { error: Int? ->
             layout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
-        })
+        }
 
         viewModel.validForm.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { isValid ->
-                btnSubmitEmail.isEnabled = isValid
-            })
+            viewLifecycleOwner
+        ) { isValid ->
+            btnSubmitEmail.isEnabled = isValid
+        }
 
 
-        viewModel.formResultState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.formResultState.observe(viewLifecycleOwner) {
             it?.success?.let {
                 val action = EmailFragmentDirections.actionEmailCfemail(
                     GiftCardConfirmData(inputEmail.text.toString())
                 )
                 findNavController().navigate(action)
             }
-        })
+        }
 
         inputEmail.doAfterTextChanged { text -> viewModel.emailDataChanged(text = text.toString()) }
 
-        btnSubmitEmail.setOnClickListener(View.OnClickListener {
+        btnSubmitEmail.setOnClickListener {
             viewModel.submit()
-        })
+        }
         return binding.root
     }
 

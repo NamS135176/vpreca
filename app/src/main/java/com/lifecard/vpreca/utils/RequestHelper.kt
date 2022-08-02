@@ -4,72 +4,66 @@ import com.lifecard.vpreca.data.model.*
 
 class RequestHelper {
     companion object {
-        fun createLoginRequest(loginId: String, loginPassword: String): BrandRequest {
-
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = LoginRequestContent(
-                        loginInfo = LoginRequestContentInfo(
-                            loginId = loginId,
-                            loginPassword = loginPassword
-                        )
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.LoginReq.value
+        fun createLoginRequest(loginId: String, loginPassword: String, deviceId: String): Request {
+            return Request(
+                request = LoginRequestContent(
+                    loginInfo = LoginRequestContentInfo(
+                        loginId = loginId,
+                        loginPassword = loginPassword
                     )
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
-        fun createMemberRequest(loginId: String, memberNumber: String): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = MemberRequestContent(
-                        memberInfo = MemberRequestContentInfo(
-                            loginId = loginId,
-                            memberNumber = memberNumber
-                        )
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.MemberSelReq.value
+        fun createMemberRequest(loginId: String, memberNumber: String, deviceId: String): Request {
+            return Request(
+                request = MemberRequestContent(
+                    memberInfo = MemberRequestContentInfo(
+                        loginId = loginId,
+                        memberNumber = memberNumber
                     )
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
-        fun createFeeSelReqRequest(cardSchemeId: String,feeType: String, targetAmount: String): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = FeeSelReqRequest(
-                        feeInfo = FeeSelReqRequestContentInfo(
-                            cardSchemeId = cardSchemeId,
-                            feeType = feeType,
-                            targetAmount = targetAmount
-                        )
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.FeeSelReq.value
+        fun createFeeSelReqRequest(
+            cardSchemeId: String,
+            feeType: String,
+            targetAmount: String,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = FeeSelReqRequest(
+                    feeInfo = FeeSelReqRequestContentInfo(
+                        cardSchemeId = cardSchemeId,
+                        feeType = feeType,
+                        targetAmount = targetAmount
                     )
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
-        fun createGiftNumberAuthReqRequest(memberNumber: String, giftNumber:String): BrandRequest {
-            return BrandRequest(
-                return BrandRequest(
-                    brandPrecaApi = Request(
-                        request = GiftNumberAuthReqRequest(
-                            memberInfo = MemberInfoContent(
-                                memberNumber = memberNumber
-                            ),
-                            giftNumberInfo = GiftNumberRequestContentInfo(
-                                giftNumber = giftNumber
-                            )
-                        ),
-                        head = BaseHead(
-                            messageType = MessageType.GiftNumberAuthReq.value
-                        )
+        fun createGiftNumberAuthReqRequest(memberNumber: String, giftNumber: String, deviceId: String): Request {
+            return Request(
+                request = GiftNumberAuthReqRequest(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
                     ),
+                    giftNumberInfo = GiftNumberRequestContentInfo(
+                        giftNumber = giftNumber
+                    )
+                ),
+                head = BaseHead(
+                    appliTermId = deviceId
                 )
             )
         }
@@ -78,45 +72,43 @@ class RequestHelper {
             memberNumber: String,
             cardSchemeId: String,
             precaNumber: String,
-            vcn: String
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = CardInfoRequestContent(
-                        memberInfo = MemberInfoContent(
-                            memberNumber = memberNumber
-                        ),
-                        cardInfo = CardInfoRequestContentInfo(
-                            cardSchemeId = cardSchemeId,
-                            precaNumber = precaNumber,
-                            vcn = vcn
-                        )
+            vcn: String,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = CardInfoRequestContent(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.CardSelReq.value
+                    cardInfo = CardInfoRequestContentInfo(
+                        cardSchemeId = cardSchemeId,
+                        precaNumber = precaNumber,
+                        vcn = vcn
                     )
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createCardInfoWithouMemberRequest(
             cardSchemeId: String,
             precaNumber: String,
-            vcn: String
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = CardInfoWithouMemberRequestContent(
-                        cardInfo = CardInfoRequestContentInfo(
-                            cardSchemeId = cardSchemeId,
-                            precaNumber = precaNumber,
-                            vcn = vcn
-                        )
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.CardSelReq.value
+            vcn: String,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = CardInfoWithouMemberRequestContent(
+                    cardInfo = CardInfoRequestContentInfo(
+                        cardSchemeId = cardSchemeId,
+                        precaNumber = precaNumber,
+                        vcn = vcn
                     )
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
@@ -124,79 +116,75 @@ class RequestHelper {
             memberNumber: String,
             cardInfo: CardInfoWithDesignIdContentInfo,
             sumUpInfo: SumUpInfoContentInfo,
-            sumUpSrcCardInfo: ArrayList<CardInfoRequestContentInfo>
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = IssueSumReqRequest(
-                        memberInfo = MemberInfoContent(
-                            memberNumber = memberNumber
-                        ),
-                        cardInfo = cardInfo,
-                        sumUpInfo = sumUpInfo,
-                        sumUpSrcCardInfo = sumUpSrcCardInfo
+            sumUpSrcCardInfo: ArrayList<CardInfoRequestContentInfo>,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = IssueSumReqRequest(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.IssueSumReq.value
-                    )
+                    cardInfo = cardInfo,
+                    sumUpInfo = sumUpInfo,
+                    sumUpSrcCardInfo = sumUpSrcCardInfo
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createIssueGiftRequestWithoutCard(
             memberNumber: String,
             cardInfo: CardInfoOnlyDesignId,
-            giftNumber: String
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = IssueGiftReqWithoutCardRequest(
-                        memberInfo = MemberInfoContent(
-                            memberNumber = memberNumber
-                        ),
-                        cardInfo = cardInfo,
-                        chargeInfo = GiftNumberRequestContentInfo(giftNumber = giftNumber)
+            giftNumber: String,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = IssueGiftReqWithoutCardRequest(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.IssueGiftReq.value
-                    )
+                    cardInfo = cardInfo,
+                    chargeInfo = GiftNumberRequestContentInfo(giftNumber = giftNumber)
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createIssueGiftRequestWithCard(
             memberNumber: String,
             cardInfo: CardInfoWithCard,
-            giftNumber: String
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = IssueGiftReqWithCardRequest(
-                        memberInfo = MemberInfoContent(
-                            memberNumber = memberNumber
-                        ),
-                        cardInfo = cardInfo,
-                        chargeInfo = GiftNumberRequestContentInfo(giftNumber = giftNumber)
+            giftNumber: String,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = IssueGiftReqWithCardRequest(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.IssueGiftReq.value
-                    )
+                    cardInfo = cardInfo,
+                    chargeInfo = GiftNumberRequestContentInfo(giftNumber = giftNumber)
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createListDesignRequest(
-           cardSchemeId: String
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = ListDesignRequest(
-                        cardSchemeId = cardSchemeId
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.CardDesignSelReq.value
-                    )
+            cardSchemeId: String,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = ListDesignRequest(
+                    cardSchemeId = cardSchemeId
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
@@ -205,272 +193,265 @@ class RequestHelper {
             cardSchemeId: String,
             precaNumber: String,
             vcn: String,
-            cooperatorNumber:String?
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = CardRepublishRequest(
-                        memberInfo = MemberInfoContent(
-                            memberNumber = memberNumber
-                        ),
-                        cardInfo = CardRepublishRequestContentInfo(
-                            cardSchemeId = cardSchemeId,
-                            precaNumber = precaNumber,
-                            vcn = vcn,
-                            cooperatorNumber = cooperatorNumber
-                        )
+            cooperatorNumber: String?,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = CardRepublishRequest(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.LoginReq.value
+                    cardInfo = CardRepublishRequestContentInfo(
+                        cardSchemeId = cardSchemeId,
+                        precaNumber = precaNumber,
+                        vcn = vcn,
+                        cooperatorNumber = cooperatorNumber
                     )
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createUpdateCardRequest(
             memberNumber: String,
-            creditCard: CreditCard
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = UpdateCardRequest(
-                        memberInfo = MemberInfoContent(
-                            memberNumber = memberNumber
-                        ),
-                        cardInfo = CardInfoRequestContentInfo(
-                            cardSchemeId = creditCard.cardSchemeId,
-                            precaNumber = creditCard.precaNumber,
-                            vcn = creditCard.vcn
-                        ),
-                        changeInfo = UpdateCardRequestContentInfo(
-                            nickName = NickNameContent(cardNickname = creditCard.cardNickname),
-                            autoCharge = AutoChargeContent(
-                                autoChargeFlg = creditCard.autoChargeFlg,
-                                autoChargeThereshold = creditCard.autoChargeThereshold,
-                                autoChargeAmount = creditCard.autoChargeAmount
-                            )
-                        ),
-                        securityLock = SecurityLockContent(
-                            vcnSecurityLockFlg = creditCard.vcnSecurityLockFlg
+            creditCard: CreditCard,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = UpdateCardRequest(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
+                    ),
+                    cardInfo = CardInfoRequestContentInfo(
+                        cardSchemeId = creditCard.cardSchemeId,
+                        precaNumber = creditCard.precaNumber,
+                        vcn = creditCard.vcn
+                    ),
+                    changeInfo = UpdateCardRequestContentInfo(
+                        nickName = NickNameContent(cardNickname = creditCard.cardNickname),
+                        autoCharge = AutoChargeContent(
+                            autoChargeFlg = creditCard.autoChargeFlg,
+                            autoChargeThereshold = creditCard.autoChargeThereshold,
+                            autoChargeAmount = creditCard.autoChargeAmount
                         )
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.CardUpdReq.value
+                    securityLock = SecurityLockContent(
+                        vcnSecurityLockFlg = creditCard.vcnSecurityLockFlg
                     )
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createCardListRequest(
             memberNumber: String,
-            invalidCardResFlg: String = "0"
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = CardListRequestContent(
-                        memberInfo = CardListRequestMemberInfo(
-                            memberNumber = memberNumber
-                        ),
-                        invalidCardResFlg = invalidCardResFlg
+            invalidCardResFlg: String = "0",
+            deviceId: String
+        ): Request {
+            return Request(
+                request = CardListRequestContent(
+                    memberInfo = CardListRequestMemberInfo(
+                        memberNumber = memberNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.MemberSelReq.value
-                    )
+                    invalidCardResFlg = invalidCardResFlg
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createSuspendDealListRequest(
-            memberNumber: String
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = SuspendDealRequest(
-                        memberInfo = MemberInfoContent(
-                            memberNumber = memberNumber
-                        )
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.SuspendDealSelReq.value
+            memberNumber: String,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = SuspendDealRequest(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
                     )
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createCardUsageHistory(
             memberNumber: String,
-            creditCard: CreditCard
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = CardUsageHistoryRequestContent(
-                        memberInfo = CardUsageMemberInfoRequest(
-                            memberNumber = memberNumber
-                        ),
-                        cardInfo = CardUsageCardInfoRequest(
-                            cardSchemeId = creditCard.cardSchemeId,
-                            precaNumber = creditCard.precaNumber,
-                        ),
+            creditCard: CreditCard,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = CardUsageHistoryRequestContent(
+                    memberInfo = CardUsageMemberInfoRequest(
+                        memberNumber = memberNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.CardDealHisReq.value
-                    )
+                    cardInfo = CardUsageCardInfoRequest(
+                        cardSchemeId = creditCard.cardSchemeId,
+                        precaNumber = creditCard.precaNumber,
+                    ),
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createCardUsageHistoryWithouMember(
-            creditCard: CreditCard
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = CardUsageHistoryWithouMemberRequestContent(
-                        cardInfo = CardUsageCardInfoRequest(
-                            cardSchemeId = creditCard.cardSchemeId,
-                            precaNumber = creditCard.precaNumber,
-                        ),
+            creditCard: CreditCard,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = CardUsageHistoryWithouMemberRequestContent(
+                    cardInfo = CardUsageCardInfoRequest(
+                        cardSchemeId = creditCard.cardSchemeId,
+                        precaNumber = creditCard.precaNumber,
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.CardDealHisReq.value
-                    )
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createChangeInfoMember(
-            memberInfo:ChangeInfoMemberData
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = ChangeInfoMemberRequest(
-                        memberInfo = memberInfo
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.MemberUpdReq.value
-                    )
+            memberInfo: ChangeInfoMemberData,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = ChangeInfoMemberRequest(
+                    memberInfo = memberInfo
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createChangePassRequest(
-            memberInfo:PasswordUpdateMemberInfoContent
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = PasswordUpdateRequest(
-                        memberInfo = memberInfo
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.PasswordUpdReq.value
-                    )
+            memberInfo: PasswordUpdateMemberInfoContent,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = PasswordUpdateRequest(
+                    memberInfo = memberInfo
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
+
         fun createResetPassRequest(
-            memberInfo:PasswordResetMemberInfoContent
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = PasswordResetRequest(
-                        memberInfo = memberInfo
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.PasswordResetReq.value
-                    )
+            memberInfo: PasswordResetMemberInfoContent,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = PasswordResetRequest(
+                    memberInfo = memberInfo
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createGiftCertifiRequest(
-            cardInfo:GiftCertifiCardInfoRequestContentInfo
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = GiftCertifiRequest(
-                        cardInfo = cardInfo
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.CardCertifiNoMemReq.value
-                    )
+            cardInfo: GiftCertifiCardInfoRequestContentInfo,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = GiftCertifiRequest(
+                    cardInfo = cardInfo
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createCardRelationRequest(
-            memberNumber:String,
-            cardInfo:CardRelationRegRequestContentInfo
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = CardRelationRegReqRequest(
-                        memberInfo = MemberInfoContent(
-                            memberNumber = memberNumber
-                        ),
-                        cardInfo = cardInfo
+            memberNumber: String,
+            cardInfo: CardRelationRegRequestContentInfo,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = CardRelationRegReqRequest(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.CardRelationRegReq.value
-                    )
+                    cardInfo = cardInfo
                 ),
-            )
-        }
-
-        fun createSMSAuthCodeRequest(
-            memberNumber:String,
-            telephoneNumber:String,
-            certType:String,
-            operationType:String,
-            certSumFlg:String,
-            operationSumFlg:String
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = SMSAuthCodeSendRequest(
-                        memberInfo = SMSAuthCodeMemberInfoContent(
-                            memberNumber = memberNumber,
-                            telephoneNumber = telephoneNumber
-                        ),
-                        certInfo = SMSAuthCodeCertInfoContent(
-                            certType = certType,
-                            operationType = operationType,
-                            certSumFlg = certSumFlg,
-                            operationSumFlg = operationSumFlg
-                        )
-                    ),
-                    head = BaseHead(
-                        messageType = MessageType.CardRelationRegReq.value
-                    )
-                ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
 
         fun createSMSConfirm(
-            memberNumber:String,
-            certType:String,
-            operationType:String,
-            certCode:String,
-            extCertDealId:String
-        ): BrandRequest {
-            return BrandRequest(
-                brandPrecaApi = Request(
-                    request = SMSAuthRequest(
-                        memberInfo = MemberInfoContent(
-                            memberNumber = memberNumber
-                        ),
-                        certInfo = SMSAuthRequestContentInfo(
-                            certType = certType,
-                            operationType = operationType,
-                            certCode = certCode,
-                            extCertDealId = extCertDealId
-                        )
+            memberNumber: String,
+            certType: String,
+            operationType: String,
+            certCode: String,
+            extCertDealId: String,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = SMSAuthRequest(
+                    memberInfo = MemberInfoContent(
+                        memberNumber = memberNumber
                     ),
-                    head = BaseHead(
-                        messageType = MessageType.CardRelationRegReq.value
+                    certInfo = SMSAuthRequestContentInfo(
+                        certType = certType,
+                        operationType = operationType,
+                        certCode = certCode,
+                        extCertDealId = extCertDealId
                     )
                 ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
             )
         }
+
+        fun createSMSIvrConfirm(
+            certType: String,
+            loginId: String,
+            certCode: String,
+            extCertDealId: String,
+            deviceId: String
+        ): Request {
+            return Request(
+                request = SmsIvrAuthRequest(
+                    certType = certType,
+                    loginId = loginId,
+                    certCode = certCode,
+                    extCertDealId = extCertDealId
+                ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
+            )
+        }
+
+        fun createSendSMSRequest(
+          loginId: String,
+          deviceId: String
+        ): Request {
+            return Request(
+                request = SendSMSRequest(
+                  loginId = loginId
+                ),
+                head = BaseHead(
+                    appliTermId = deviceId
+                )
+            )
+        }
+
     }
-
-
 }

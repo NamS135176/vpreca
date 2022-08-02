@@ -1,26 +1,23 @@
 package com.lifecard.vpreca.ui.balance_amount
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.BalanceTotalRemain
-import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
+import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
 import com.lifecard.vpreca.databinding.FragmentBalanceSelectSourceConfirmBinding
-import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
-import com.lifecard.vpreca.ui.issuecard.IssueCardByCodeSelectSoureConfirmFragmentArgs
-import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
-import com.lifecard.vpreca.utils.showInternetTrouble
-import com.lifecard.vpreca.utils.showPopupMessage
+import com.lifecard.vpreca.eventbus.ReloadCard
+import com.lifecard.vpreca.eventbus.ReloadSuspendCard
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.EventBus
 
 @AndroidEntryPoint
 class BalanceSelectSourceConfirmFragment : Fragment() {
@@ -36,23 +33,23 @@ class BalanceSelectSourceConfirmFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentBalanceSelectSourceConfirmBinding.inflate(inflater, container, false)
         val btnBack = binding.appbarSignup.btnBack
         val btnSubmit = binding.btnSubmitPolicy
-        val loading = binding.loading
-//        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_by_source_complete) })
+        val sumUpSrcCardInfo = ArrayList<CardInfoRequestContentInfo>()
 
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             viewModel.creditCardSelectDataChanged(
                 args.fragmentBalanceAmountSelectSourceConfirm?.cardSchemeId!!,
                 args.fragmentBalanceAmountSelectSourceConfirm?.designId!!,
                 args.fragmentBalanceAmountSelectSourceConfirm?.cardNickname!!,
                 args.fragmentBalanceAmountSelectSourceConfirm?.vcn!!,
                 args.fragmentBalanceAmountSelectSourceConfirm?.precaNumber!!,
-                args.fragmentBalanceAmountSelectSourceConfirm?.vcn!!
+                args.fragmentBalanceAmountSelectSourceConfirm?.vcn!!,
+                sumUpSrcCardInfo
             )
-        })
+        }
 
         viewModel.feeInfoResult.observe(
             viewLifecycleOwner,
@@ -61,10 +58,12 @@ class BalanceSelectSourceConfirmFragment : Fragment() {
                 feeInfoResult.success?.let {
                     println("homeViewModel.cardInfoResult.observe success: ${feeInfoResult.success}")
                     findNavController().navigate(R.id.nav_balance_by_source_complete)
+                    EventBus.getDefault().post(ReloadCard())
+                    EventBus.getDefault().post(ReloadSuspendCard())
                 }
                 feeInfoResult.error?.let { error ->
-                    error.messageResId?.let { showPopupMessage("",getString(it)) }
-                    error.errorMessage?.let { showPopupMessage("",it) }
+                    error.messageResId?.let { showPopupMessage("", getString(it)) }
+                    error.errorMessage?.let { showPopupMessage("", it) }
                 }
                 feeInfoResult.networkTrouble?.let {
                     if (it) {
@@ -73,35 +72,49 @@ class BalanceSelectSourceConfirmFragment : Fragment() {
                 }
             })
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
-            }
-        })
+        viewModel.suspendDealResult.observe(
+            viewLifecycleOwner,
+            Observer { suspendDealResult ->
+                suspendDealResult ?: return@Observer
+                suspendDealResult.success?.let {
+                    println("BalanceAmountViewModel.suspendDealResult.observe success: ${suspendDealResult.success}")
+                    for (i in 0..suspendDealResult.success.size - 1) {
+                        val data = CardInfoRequestContentInfo(
+                            suspendDealResult.success[i].cardSchemeId,
+                            suspendDealResult.success[i].precaNumber,
+                            suspendDealResult.success[i].vcn
+                        )
+                        sumUpSrcCardInfo.add(data)
+                    }
+                }
+                suspendDealResult.error?.let { error ->
+                    error.messageResId?.let { showPopupMessage(message = getString(it)) }
+                    error.errorMessage?.let { showPopupMessage(message = it) }
+                }
+                suspendDealResult.networkTrouble?.let {
+                    if (it) {
+                        showInternetTrouble()
+                    }
+                }
+            })
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        viewModel.loading.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val data =
-                    BalanceTotalRemain(args.fragmentBalanceAmountSelectSourceConfirm?.balanceAmount!!)
-                val action =
-                    BalanceSelectSourceConfirmFragmentDirections.actionConfirmToSelectsource(
-                        data
-                    )
-                findNavController().navigate(action)
+                findNavController().popBackStack()
             }
         })
 
-        btnBack.setOnClickListener(View.OnClickListener {
-            val data =
-                BalanceTotalRemain(args.fragmentBalanceAmountSelectSourceConfirm?.balanceAmount!!)
-            val action =
-                BalanceSelectSourceConfirmFragmentDirections.actionConfirmToSelectsource(
-                    data
-                )
-            findNavController().navigate(action)
-        })
+        btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.card = args.fragmentBalanceAmountSelectSourceConfirm
         return binding.root

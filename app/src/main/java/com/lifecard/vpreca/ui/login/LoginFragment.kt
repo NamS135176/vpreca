@@ -1,7 +1,6 @@
 package com.lifecard.vpreca.ui.login
 
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
@@ -25,20 +25,18 @@ import com.lifecard.vpreca.base.NoToolbarFragment
 import com.lifecard.vpreca.biometric.BioManager
 import com.lifecard.vpreca.biometric.BioManagerImpl
 import com.lifecard.vpreca.data.UserManager
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
-import com.lifecard.vpreca.data.source.SecureStore
+import com.lifecard.vpreca.data.model.LoginIdData
 import com.lifecard.vpreca.databinding.FragmentLoginBinding
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.crypto.Cipher
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class LoginFragment : NoToolbarFragment() {
-    @Inject
-    lateinit var secureStore: SecureStore
-
     @Inject
     lateinit var userManager: UserManager
 
@@ -65,7 +63,7 @@ class LoginFragment : NoToolbarFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val usernameLayout = binding.usernameLayout
@@ -79,55 +77,65 @@ class LoginFragment : NoToolbarFragment() {
         val signUpButton = binding.buttonSignup
         val btnForgotPass = binding.buttonForgotPassword
         val buttonLoginLandlinePhone = binding.buttonLoginLandlinePhone
+        val tvClick = binding.textClickHere
 
-        buttonLoginLandlinePhone.setOnClickListener(View.OnClickListener {
+        buttonLoginLandlinePhone.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext()).apply {
-                setPositiveButton(R.string.button_ok, DialogInterface.OnClickListener { _, _ ->
+                setPositiveButton(R.string.button_ok) { _, _ ->
                     openBrowser("https://vpcevssl.lifecard.co.jp/LW01/LW0102OP01BL.do")
-                })
+                }
                     .setNegativeButton(R.string.button_cancel, null)
                 setMessage(getString(R.string.alert_landline_phone))
             }.create().show()
-        })
+        }
 
 
-        btnForgotPass.setOnClickListener(View.OnClickListener {
+        btnForgotPass.setOnClickListener {
             findNavController().navigate(R.id.nav_forgot_input)
-        })
+        }
 
-        signUpButton.setOnClickListener(View.OnClickListener {
-            val action = LoginFragmentDirections.actionToPolicy(GiftCardConfirmData("0"))
-            findNavController().navigate(action)
-        })
+        signUpButton.setOnClickListener {
+            findNavController().navigate(R.id.nav_policy)
+        }
 
-        loginViewModel.validForm.observe(viewLifecycleOwner, Observer { isValid ->
+        loginViewModel.validForm.observe(viewLifecycleOwner) { isValid ->
             loginButton.isEnabled = isValid
             loginButton.alpha = if (isValid) 1.0f else 0.65f
-        })
-        loginViewModel.usernameError.observe(viewLifecycleOwner, Observer { error: Int? ->
+        }
+        loginViewModel.usernameError.observe(viewLifecycleOwner) { error: Int? ->
             usernameLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
 
-        })
-        loginViewModel.passwordError.observe(viewLifecycleOwner, Observer { error: Int? ->
+        }
+        loginViewModel.passwordError.observe(viewLifecycleOwner) { error: Int? ->
             passwordLayout.error = try {
                 error?.let { getString(error) }
             } catch (e: Error) {
                 null
             }
-        })
+        }
 
         loginViewModel.loginResult.observe(viewLifecycleOwner,
             Observer { loginResult ->
                 loginResult ?: return@Observer
 
                 loginResult.networkTrouble?.let { if (it) showInternetTrouble() }
-                loginResult.error?.messageResId?.let { if(it == 1101302) {
-                    findNavController().navigate(R.id.nav_sms_verify)
-                } }
+                loginResult.smsVerification?.let {
+                    if (it) {
+                        val action = LoginFragmentDirections.actionToSms(
+                            LoginIdData(
+                                usernameEditText.text.toString(),
+                                passwordEditText.text.toString()
+                            )
+                        )
+                        findNavController().navigate(action)
+                        usernameEditText.setText("")
+                        passwordEditText.setText("")
+                    }
+                }
                 loginResult.error?.errorMessage?.let { showLoginFailed(it) }
                 loginResult.errorText?.let { errorText ->
                     showAlert(errorText)
@@ -137,7 +145,7 @@ class LoginFragment : NoToolbarFragment() {
                 }
             })
 
-        loginViewModel.loading.observe(viewLifecycleOwner, Observer {
+        loginViewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> {
                     loadingProgressBar.visibility = View.VISIBLE
@@ -150,7 +158,7 @@ class LoginFragment : NoToolbarFragment() {
                     buttonBioLogin.isEnabled = true
                 }
             }
-        })
+        }
 
         usernameEditText.doAfterTextChanged {
             loginViewModel.checkValidForm(
@@ -195,19 +203,22 @@ class LoginFragment : NoToolbarFragment() {
             requireContext()
         )) {
             true -> buttonBioLogin.visibility = View.VISIBLE
-            else -> buttonBioLogin.visibility = View.GONE
+            else -> {
+                buttonBioLogin.visibility = View.GONE
+                PreferenceHelper.setEnableBiometricSetting(requireContext(), false)
+            }
         }
-        buttonBioLogin.setOnClickListener(View.OnClickListener {
+        buttonBioLogin.setOnClickListener {
             showBiometricDialog()
-        })
+        }
 
-        logoGift.setOnClickListener(View.OnClickListener {
+        logoGift.setOnClickListener {
             findNavController().navigate(R.id.nav_introduce_first)
-        })
+        }
 
-//        if (PreferenceHelper.isEnableBiometricSetting(requireContext()) && bioManager?.checkDeviceSupportBiometric() == true) {
-//            showBiometricDialog()
-//        }
+        tvClick.setOnClickListener {
+            findNavController().navigate(R.id.nav_introduce_first)
+        }
         return binding.root
 
     }
@@ -236,9 +247,6 @@ class LoginFragment : NoToolbarFragment() {
                     }
                 }
 
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                }
             })
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
@@ -273,10 +281,15 @@ class LoginFragment : NoToolbarFragment() {
 
                 passwordEditText.text = "".toEditable()
             }
+
             override fun onCreate(owner: LifecycleOwner) {
                 super.onCreate(owner)
                 if (PreferenceHelper.isEnableBiometricSetting(requireContext()) && bioManager?.checkDeviceSupportBiometric() == true) {
-                    showBiometricDialog()
+                    loginViewModel.viewModelScope.launch {
+                        delay(800)
+                        showBiometricDialog()
+                    }
+//                    showBiometricDialog()
                 }
             }
         }
@@ -289,7 +302,6 @@ class LoginFragment : NoToolbarFragment() {
     }
 
     private fun showLoginFailed(errorMessage: String) {
-//        showAlert(errorMessage)
         showPopupMessage(message = errorMessage)
     }
 
@@ -300,5 +312,6 @@ class LoginFragment : NoToolbarFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        loginViewModel.clearLoginResultError()
     }
 }

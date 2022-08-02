@@ -1,17 +1,17 @@
 package com.lifecard.vpreca.ui.changepass
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
-import com.lifecard.vpreca.data.model.ChangeInfoMemberData
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
-import com.lifecard.vpreca.ui.changeinfo.ChangeInfoState
-import com.lifecard.vpreca.ui.forgotpass.ForgotPassState
 import com.lifecard.vpreca.utils.RegexUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -116,7 +116,6 @@ class ChangePassViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _changePassState.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         ChangePassRequestState(internalError = "")
                     else -> _changePassState.value =
                         ChangePassRequestState(

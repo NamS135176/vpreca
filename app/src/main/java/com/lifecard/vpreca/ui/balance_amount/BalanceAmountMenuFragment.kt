@@ -1,31 +1,23 @@
 package com.lifecard.vpreca.ui.balance_amount
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.BackPressFragment
 import com.lifecard.vpreca.data.model.BalanceTotalRemain
+import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
 import com.lifecard.vpreca.databinding.FragmentBalanceAmountMenuBinding
-import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
-import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
-import com.lifecard.vpreca.ui.listvpreca.ListVprecaFragment
-import com.lifecard.vpreca.ui.listvpreca.ListVprecaViewModel
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
-import com.lifecard.vpreca.utils.Converter
-import com.lifecard.vpreca.utils.WebDirectScreen
-import com.lifecard.vpreca.utils.showInternetTrouble
-import com.lifecard.vpreca.utils.showPopupMessage
+import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BalanceAmountMenuFragment : Fragment() {
+class BalanceAmountMenuFragment : BackPressFragment() {
 
     companion object {
         fun newInstance() = BalanceAmountMenuFragment()
@@ -41,7 +33,6 @@ class BalanceAmountMenuFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBalanceAmountMenuBinding.inflate(inflater, container, false)
-        val loading = binding.loading
         val view = binding.view
         val btnBack = binding.appbarGiftThird.btnBack
         val btnToWeb = binding.buttonToWeb
@@ -49,45 +40,35 @@ class BalanceAmountMenuFragment : Fragment() {
         val btnByCode = binding.btnBalanceByCode
         val tvTotal = binding.tvTotalAmount
         var totalRemain = 0
-        btnByCode.setOnClickListener(View.OnClickListener {
+        val sumUpSrcCardInfo = ArrayList<CardInfoRequestContentInfo>()
+
+        btnByCode.setOnClickListener {
             val data = BalanceTotalRemain(totalRemain.toString())
             val action =
                 BalanceAmountMenuFragmentDirections.actionMenuToInputcode(
                     data
                 )
             findNavController().navigate(action)
-        })
+        }
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
-            OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
-            }
-        })
-        btnBySource.setOnClickListener(View.OnClickListener {
+        btnBySource.setOnClickListener {
             val data = BalanceTotalRemain(totalRemain.toString())
+            println(sumUpSrcCardInfo)
             val action =
                 BalanceAmountMenuFragmentDirections.actionMenuToSelectsource(
                     data
                 )
             findNavController().navigate(action)
-        })
+        }
 
-        btnToWeb.setOnClickListener(View.OnClickListener {
+        btnToWeb.setOnClickListener {
             findNavController().navigate(
                 R.id.nav_web_direct,
                 WebDirectFragmentArgs(screenId = WebDirectScreen.SCREEN_BALANCE_AMOUNT).toBundle()
             )
-        })
+        }
 
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().navigate(R.id.nav_home)
-                }
-            })
+        btnBack.setOnClickListener { findNavController().popBackStack() }
 
         viewModel.suspendDealResult.observe(
             viewLifecycleOwner,
@@ -106,6 +87,14 @@ class BalanceAmountMenuFragment : Fragment() {
                     }
                     totalRemain = sumBalance
                     tvTotal.text = Converter.convertCurrency(sumBalance)
+                    for (i in 0..suspendDealResult.success.size - 1) {
+                        val data = CardInfoRequestContentInfo(
+                            suspendDealResult.success[i].cardSchemeId,
+                            suspendDealResult.success[i].precaNumber,
+                            suspendDealResult.success[i].vcn
+                        )
+                        sumUpSrcCardInfo.add(data)
+                    }
                 }
                 suspendDealResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
@@ -118,18 +107,18 @@ class BalanceAmountMenuFragment : Fragment() {
                 }
             })
 
-        viewModel.loading.observe(viewLifecycleOwner, Observer {
+        viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
                 true -> {
-                    loading.visibility = View.VISIBLE
+                    showLoadingDialog()
                     view.visibility = View.GONE
                 }
                 else -> {
-                    loading.visibility = View.GONE
+                    hideLoadingDialog()
                     view.visibility = View.VISIBLE
                 }
             }
-        })
+        }
 
         return binding.root
     }

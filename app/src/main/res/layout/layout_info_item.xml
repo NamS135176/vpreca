@@ -18,13 +18,15 @@
         android:layout_height="wrap_content"
         android:background="@drawable/underline_bg"
         android:orientation="horizontal"
-        android:paddingHorizontal="32dp"
+        android:paddingHorizontal="10dp"
+        android:layout_marginHorizontal="22dp"
         android:paddingVertical="14dp">
 
         <com.google.android.material.textview.MaterialTextView
             style="@style/Widget.AppCompat.TextView.Bold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:layout_weight="1"
             android:lineSpacingExtra="6dp"
             android:text="@{title, default=`Title`}"

@@ -80,8 +80,9 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/change_pass_old_pass_hint"
+                        android:importantForAutofill="no"
                         android:imeOptions="actionNext"
-                        android:inputType="textPassword"
+                        android:inputType="textPassword|textNoSuggestions"
                         android:maxLength="@integer/max_pass"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
@@ -117,7 +118,8 @@
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/change_pass_new_pass_hint"
                         android:imeOptions="actionNext"
-                        android:inputType="textPassword"
+                        android:importantForAutofill="no"
+                        android:inputType="textPassword|textNoSuggestions"
                         android:maxLength="@integer/max_pass"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
@@ -143,7 +145,8 @@
                         android:hint="@string/change_pass_cf_new_pass_hint"
                         android:maxLength="@integer/max_pass"
                         android:imeOptions="actionNext"
-                        android:inputType="textPassword"
+                        android:importantForAutofill="no"
+                        android:inputType="textPassword|textNoSuggestions"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp"
@@ -266,21 +269,6 @@
             android:textSize="18sp"
             app:cornerRadius="25dp"
             app:layout_constraintBottom_toBottomOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="64dp"
-            android:indeterminateDrawable="@drawable/loading"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

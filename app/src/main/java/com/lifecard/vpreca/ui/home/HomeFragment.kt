@@ -2,9 +2,8 @@ package com.lifecard.vpreca.ui.home
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Resources
 import android.os.Bundle
-import android.util.TypedValue
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,9 +22,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.Result
+import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentHomeBinding
+import com.lifecard.vpreca.eventbus.ReloadCard
+import com.lifecard.vpreca.eventbus.ReloadSuspendCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
@@ -34,11 +35,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
-import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
@@ -47,6 +49,10 @@ import kotlin.math.min
 class HomeFragment : Fragment(), CoroutineScope {
     @Inject
     lateinit var creditCardRepository: CreditCardRepository
+
+    @Inject
+    lateinit var userManager: UserManager
+
     private var _binding: FragmentHomeBinding? = null
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
@@ -56,6 +62,8 @@ class HomeFragment : Fragment(), CoroutineScope {
     // onDestroyView.
     private val binding get() = _binding!!
     private var latestPage = 0
+    private var forceReloadCard: Boolean = false
+    private var forceReloadSuspendCard: Boolean = false
 
     private val pageChangeCallback = object : SimpleOnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -90,12 +98,12 @@ class HomeFragment : Fragment(), CoroutineScope {
                 })
                 buttonLock.setOnClickListener(View.OnClickListener {
                     launch {
-                        binding.loading.visibility = View.VISIBLE
+                        currentCreditCard = currentCreditCard.copyCardLockInverse()
                         val res = creditCardRepository.updateCard(currentCreditCard)
                         if (res is Result.Success) {
-                            homeViewModel.inverseLockStatus(currentCreditCard, position)
+                            homeViewModel.updateCard(currentCreditCard, position)
                             val toastMessage = when (currentCreditCard.isCardLock()) {
-                                false -> "ロックしました"
+                                true -> "ロックしました"
                                 else -> "ロックを解除しました"
                             }
                             Toast(context).showCustomToast(
@@ -113,16 +121,16 @@ class HomeFragment : Fragment(), CoroutineScope {
 
                             }
                         }
-                        binding.loading.visibility = View.GONE
                     }
                 })
                 buttonReload.setOnClickListener(View.OnClickListener {
-                    if (!adapter.getItem(position).isCardLock()) {
+                    if (!adapter.getItem(position).isCardLock() && adapter.getItem(position)
+                            .isAvailable()
+                    ) {
                         MaterialAlertDialogBuilder(requireContext()).apply {
                             setPositiveButton("はい") { _, _ ->
 
                                 launch {
-                                    binding.loading.visibility = View.VISIBLE
                                     val res = creditCardRepository.republishCard(currentCreditCard)
                                     if (res is Result.Success) {
                                         binding.listCard.currentCard = res.data
@@ -140,13 +148,9 @@ class HomeFragment : Fragment(), CoroutineScope {
                                                 "",
                                                 getString(R.string.get_list_card_failure)
                                             )
-
                                         }
                                     }
-                                    binding.loading.visibility = View.GONE
                                 }
-
-
                             }
                             setNegativeButton("いいえ", null)
                             setMessage("カードを再発行しますよろしいですか？")
@@ -155,6 +159,24 @@ class HomeFragment : Fragment(), CoroutineScope {
 
                 })
             }
+        }
+    }
+
+    @Subscribe
+    fun handleReloadCard(event: ReloadCard) {
+        if (isRemoving) {
+            forceReloadCard = true//will reload on method onViewCreated
+        } else {
+            homeViewModel.loadCard(true)
+        }
+    }
+
+    @Subscribe
+    fun handleReloadSuspendCard(event: ReloadSuspendCard) {
+        if (isRemoving) {
+            forceReloadSuspendCard = true//will reload on method onViewCreated
+        } else {
+            homeViewModel.getListSuspend()
         }
     }
 
@@ -170,15 +192,30 @@ class HomeFragment : Fragment(), CoroutineScope {
         val textNoCard = binding.textNoCard
         val cardContainer = binding.listCard
         val viewPager = cardContainer.cardList
-        val tabDots = cardContainer.tabDots
-        var pagerAdapter: CardSlidePagerAdapter? = null
         val buttonSlideLeft = binding.listCard.buttonSlideLeft
         val buttonSlideRight = binding.listCard.buttonSlideRight
         val buttonSeeAllCard = binding.buttonSeeAllCard
         val textBalance = binding.textBalance
         val btnIssueCard = binding.buttonAddNewCard
         val btnBalance = binding.buttonCardNoBalance
-        val loading = binding.loading
+
+        val params = buttonSlideLeft.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(
+            resources.getDimensionPixelOffset(R.dimen.my_page_card_arrow_direction_ml),
+            calculateMarginTopArrowIcon(),
+            0,
+            0
+        )
+        buttonSlideLeft.layoutParams = params
+
+        val params1 = buttonSlideRight.layoutParams as ViewGroup.MarginLayoutParams
+        params1.setMargins(
+            0,
+            calculateMarginTopArrowIcon(),
+            resources.getDimensionPixelOffset(R.dimen.my_page_card_arrow_direction_ml),
+            0
+        )
+        buttonSlideRight.layoutParams = params1
 
         btnBalance.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_balance_amount_menu) })
 
@@ -189,14 +226,11 @@ class HomeFragment : Fragment(), CoroutineScope {
         binding.textLastLoginDate.text = SimpleDateFormat("yyyy M/d").format(Date())
 
         binding.listCard.buttonUsage.setOnClickListener(View.OnClickListener {
-//            findNavController().navigate(R.id.action_to_card_usage)
-            val card = pagerAdapter?.getItem(viewPager.currentItem)
-            card?.let {
-                val data = GiftCardConfirmData("logged")
-                val action =
-                    HomeFragmentDirections.actionToCardUsage(it, data)
-                findNavController().navigate(action)
-            }
+            val pagerAdapter = viewPager.adapter as CardSlidePagerAdapter
+            val card = pagerAdapter.getItem(viewPager.currentItem)
+            val action =
+                HomeFragmentDirections.actionToCardUsage(card)
+            findNavController().navigate(action)
         })
 
 
@@ -222,51 +256,28 @@ class HomeFragment : Fragment(), CoroutineScope {
                     0 -> {
                         textNoCard.visibility = View.VISIBLE
                         cardContainer.root.visibility = View.GONE
+                        textBalance.text = "¥0"
+                        buttonSeeAllCard.visibility = View.INVISIBLE
                     }
                     else -> {
                         textNoCard.visibility = View.GONE
                         cardContainer.root.visibility = View.VISIBLE
-                        pagerAdapter =
-                            CardSlidePagerAdapter(
-                                requireActivity(),
-                                ArrayList(creditCardResult.success)
-                            )
-                        viewPager.adapter = pagerAdapter
 
-                        viewPager.offscreenPageLimit = 3
-
-                        val pageMargin =
-                            resources.getDimensionPixelOffset(R.dimen.home_card_item_page_margin)
-                        val pageOffset =
-                            resources.getDimensionPixelOffset(R.dimen.home_card_item_page_offset)
-                        println("pageMargin = $pageMargin - pageOffset = $pageOffset")
-                        viewPager.setPageTransformer { page, position ->
-                            val myOffset: Float = position * -(2 * pageOffset + pageMargin)
-                            if (position < -1) {
-                                page.translationX = -myOffset
-                            }
-                            else {
-                                page.translationX = myOffset
-                            }
-                        }
-                        if (latestPage > 0 && latestPage < pagerAdapter!!.itemCount) {
-                            viewPager.setCurrentItem(latestPage, false)
-                        }
-
-                        viewPager.registerOnPageChangeCallback(pageChangeCallback)
-
-                        TabLayoutMediator(tabDots, viewPager) { tab, position ->
-
-                        }.attach()
+                        setupViewPager(creditCardResult.success)
 
                         val sumBalance: Int = creditCardResult.success.sumOf {
                             try {
-                                it.publishAmount.toInt()
+                                it.publishAmount?.toInt()!!
                             } catch (e: Exception) {
                                 0
                             }
                         }
                         textBalance.text = Converter.convertCurrency(sumBalance)
+                        if (sumBalance > 0) {
+                            buttonSeeAllCard.visibility = View.VISIBLE
+                        } else {
+                            buttonSeeAllCard.visibility = View.INVISIBLE
+                        }
                     }
                 }
             }
@@ -290,11 +301,13 @@ class HomeFragment : Fragment(), CoroutineScope {
                         requireActivity(),
                         cardInfoResult.success,
                         creditCardRepository
-                    ).show()
-
+                    )
+                        .apply {
+                            setOnDismissListener { homeViewModel.clearCardInfoResult() }
+                        }
+                        .show()
                 }
                 cardInfoResult.error?.let { error ->
-
                     error.messageResId?.let { showPopupMessage(message = getString(it)) }
                     error.message?.let { showPopupMessage(message = it) }
                 }
@@ -323,6 +336,10 @@ class HomeFragment : Fragment(), CoroutineScope {
                         btnBalance.isEnabled = true
                         btnBalance.visibility = View.VISIBLE
                     }
+                    else{
+                        btnBalance.isEnabled = false
+                        btnBalance.visibility = View.INVISIBLE
+                    }
                 }
                 suspendDealResult.error?.let { error ->
 
@@ -331,50 +348,70 @@ class HomeFragment : Fragment(), CoroutineScope {
                 }
                 suspendDealResult.networkTrouble?.let {
                     if (it) {
-//                        showInternetTrouble()
+                        showInternetTrouble()
                     }
                 }
             })
         homeViewModel.loading.observe(viewLifecycleOwner, Observer {
             when (it) {
-                true -> {
-                    loading.visibility = View.VISIBLE
-
-                }
-                else -> {
-                    loading.visibility = View.GONE
-
-                }
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
         })
         setLightStatusBar()
         return root
     }
 
-    fun dp2px(resource: Resources, dp: Int): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp.toFloat(),
-            resource.displayMetrics
-        )
-            .toInt()
+    private fun setupViewPager(listCard: List<CreditCard>) {
+        val tabDots = binding.listCard.tabDots
+        val viewPager = binding.listCard.cardList
+        val pagerAdapter =
+            CardSlidePagerAdapter(requireActivity(), listCard)
+        viewPager.adapter = pagerAdapter
+
+        viewPager.offscreenPageLimit = 3
+
+
+        val pageMargin =
+            resources.getDimensionPixelOffset(R.dimen.home_card_item_page_margin)
+        val pageOffset =
+            resources.getDimensionPixelOffset(R.dimen.home_card_item_page_offset)
+        println("pageMargin = $pageMargin - pageOffset = $pageOffset")
+        viewPager.setPageTransformer { page, position ->
+            val myOffset: Float = position * -(2 * pageOffset + pageMargin)
+            if (position < -1) {
+                page.translationX = -myOffset
+            } else {
+                page.translationX = myOffset
+            }
+        }
+        if (latestPage > 0 && latestPage < pagerAdapter!!.itemCount) {
+            viewPager.setCurrentItem(latestPage, false)
+        }
+
+        viewPager.registerOnPageChangeCallback(pageChangeCallback)
+
+        TabLayoutMediator(tabDots, viewPager) { _, _ -> }.attach()
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        unlockDrawer()
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
-            OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                requireActivity().finish()
-            }
-        })
+        if (forceReloadCard) {
+            homeViewModel.loadCard(true)
+            forceReloadCard = false
+        } else {
+            homeViewModel.loadCardIfEmptyData()
+        }
+        if (forceReloadSuspendCard) {
+            homeViewModel.getListSuspend()
+            forceReloadSuspendCard = false
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.listCard.cardList.unregisterOnPageChangeCallback(pageChangeCallback)
-        _binding = null
+        val viewPager = binding.listCard.cardList
+        viewPager.unregisterOnPageChangeCallback(pageChangeCallback)
         clearLightStatusBar()
 
         lockDrawer()
@@ -384,6 +421,8 @@ class HomeFragment : Fragment(), CoroutineScope {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        unlockDrawer()
+
         lifecycleObserver = object : DefaultLifecycleObserver {
             override fun onCreate(owner: LifecycleOwner) {
                 super.onCreate(owner)
@@ -392,11 +431,49 @@ class HomeFragment : Fragment(), CoroutineScope {
             }
         }
         requireActivity().lifecycle.addObserver(lifecycleObserver)
+        EventBus.getDefault().register(this)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+//                userManager.clear()
+                closeApp()
+            }
+        })
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        EventBus.getDefault().unregister(this)
+    }
+
+    private fun calculateMarginTopArrowIcon(): Int {
+        val displayMetrics = DisplayMetrics()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            val display = activity?.display
+            display?.getRealMetrics(displayMetrics)
+        } else {
+            @Suppress("DEPRECATION")
+            val display = activity?.windowManager?.defaultDisplay
+            @Suppress("DEPRECATION")
+            display?.getMetrics(displayMetrics)
+        }
+
+        val width = displayMetrics.widthPixels
+        val marginHorizontal =
+            resources.getDimensionPixelOffset(R.dimen.home_card_item_page_margin_offset)
+        val arrowHeight =
+            resources.getDimensionPixelOffset(R.dimen.my_page_card_arrow_direction_height)
+
+        val creditCardWidth = width - 2 * marginHorizontal
+        val creditCardHeight = creditCardWidth * 270 / 425
+
+        return (creditCardHeight - arrowHeight) / 2
     }
 
     private inner class CardSlidePagerAdapter(
         fa: FragmentActivity,
-        val listCard: MutableList<CreditCard>
+        val listCard: List<CreditCard>
     ) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = listCard.size
 
@@ -404,15 +481,6 @@ class HomeFragment : Fragment(), CoroutineScope {
 
         fun getItem(position: Int): CreditCard {
             return listCard[position]
-        }
-
-        fun updateCardAtIndex(card: CreditCard, index: Int) {
-            try {
-                listCard[index] = card
-                notifyItemChanged(index)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
         }
     }
 }

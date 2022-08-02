@@ -66,6 +66,7 @@
                         android:textColor="@color/white"
                         app:strokeColor="@color/white"
                         android:lineSpacingExtra="10sp"
+                        android:visibility="@{ModelExtKt.isCardInfoEnable(card) ? View.VISIBLE : View.INVISIBLE}"
                         android:paddingHorizontal="16dp"
                         app:cornerRadius="24dp"
                         android:textSize="16sp"
@@ -80,8 +81,7 @@
                         android:id="@+id/ammount_zone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:layout_marginTop="18dp">
+                        android:gravity="center_horizontal">
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

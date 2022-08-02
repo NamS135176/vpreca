@@ -1,41 +1,45 @@
 package com.lifecard.vpreca.ui.issuecard
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
 import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeCompleteWithoutCardBinding
-import com.lifecard.vpreca.databinding.FragmentIssueCardByCodeSelectWayBinding
+import com.lifecard.vpreca.eventbus.ReloadCard
+import org.greenrobot.eventbus.EventBus
 
 
 class IssueCardByCodeCompleteWithoutCardFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     private var _binding: FragmentIssueCardByCodeCompleteWithoutCardBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentIssueCardByCodeCompleteWithoutCardBinding.inflate(inflater, container, false)
+    ): View {
+        _binding =
+            FragmentIssueCardByCodeCompleteWithoutCardBinding.inflate(inflater, container, false)
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
+                EventBus.getDefault().post(ReloadCard())
             }
         })
 
         val btnSubmit = binding.btnSubmitPolicy
-        btnSubmit.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_home) })
-        // Inflate the layout for this fragment
+        btnSubmit.setOnClickListener {
+            findNavController().popBackStack(
+                R.id.nav_home,
+                inclusive = false
+            )
+            EventBus.getDefault().post(ReloadCard())
+        }
         return binding.root
     }
 

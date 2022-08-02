@@ -1,12 +1,9 @@
 package com.lifecard.vpreca.ui.signup
 
-import android.util.Patterns
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.ui.changeinfo.ChangeInfoInputResultState
-import com.lifecard.vpreca.ui.changepass.ChangePassState
 import com.lifecard.vpreca.utils.RegexUtils
 
 class PhoneViewModel : ViewModel() {

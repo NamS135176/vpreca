@@ -1,10 +1,11 @@
 package com.lifecard.vpreca.ui.login
 
-import android.hardware.biometrics.BiometricPrompt
-import android.util.Base64
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.RemoteRepository
+import com.lifecard.vpreca.data.DeviceID
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.UserRepository
@@ -13,27 +14,25 @@ import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.ui.splash.SplashState
 import com.lifecard.vpreca.utils.BiometricHelper
 import com.lifecard.vpreca.utils.RegexUtils
 import com.lifecard.vpreca.utils.RequestHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.security.Signature
 import javax.crypto.Cipher
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginRepository: UserRepository,
-    private val remoteRepository: RemoteRepository,
     private val secureStore: SecureStore,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val deviceID: DeviceID,
 ) :
     ViewModel() {
     val usernameError = MutableLiveData<Int?>()
     val passwordError = MutableLiveData<Int?>()
-    val validForm = MutableLiveData<Boolean>(false)
+    val validForm = MutableLiveData(false)
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
@@ -51,13 +50,14 @@ class LoginViewModel @Inject constructor(
             loading.value = true
             val loginResult = loginRepository.login(
                 RequestHelper.createLoginRequest(
+                    deviceId = deviceID.deviceId,
                     loginId = username,
                     loginPassword = password
                 )
             )
             if (loginResult is Result.Success) {
                 _loginResult.value =
-                    LoginResult(success = loginResult.data.brandPrecaApi.response.memberInfo)
+                    LoginResult(success = loginResult.data.response.memberInfo)
             } else if (loginResult is Result.Error) {
                 handleResultErrorException(loginResult.exception)
             }
@@ -90,18 +90,13 @@ class LoginViewModel @Inject constructor(
             is NoConnectivityException -> _loginResult.value =
                 LoginResult(networkTrouble = true)
             is InternalServerException -> _loginResult.value =
-                    //TODO this internalError should be html from server, it will be implement later
                 LoginResult(internalError = "")
             is ApiException -> {
-                if(exception.resultCode == "1101302"){
+                if (exception.resultCode == "1101302") {//case require sms verification
                     _loginResult.value = LoginResult(
-                        error = ErrorMessageException(
-                            messageResId = 1101302,
-                            exception = exception,
-                        )
+                        smsVerification = true
                     )
-                }
-                else{
+                } else {
                     _loginResult.value = LoginResult(
                         error = ErrorMessageException(
                             errorMessage = exception.errorMessage,
@@ -119,6 +114,9 @@ class LoginViewModel @Inject constructor(
                 )
         }
     }
+    fun clearLoginResultError() {
+        _loginResult.value = LoginResult()
+    }
 
     fun handleAuthenticationError(
         errorCode: Int,
@@ -133,8 +131,6 @@ class LoginViewModel @Inject constructor(
                 )
             )
         } ?: kotlin.run {
-//            _loginResult.value =
-//                LoginResult(errorText = errString.toString())
         }
     }
 

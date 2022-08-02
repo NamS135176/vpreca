@@ -18,3 +18,9 @@ keystore.properties
 secure.properties
 deploygate-submit.sh
 release-apk.sh
+release-qa.sh
+sonar-sis.sh
+*.pem
+
+*.apk
+app/**/release/**

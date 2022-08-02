@@ -20,6 +20,7 @@
 
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/btn_submit_policy"
@@ -66,6 +67,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/idInput"
                         style="@style/TextInputEditTextFilledBox"
+                        android:importantForAutofill="no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_signup_style"
@@ -113,13 +115,14 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/idNickname"
+                        android:importantForAutofill="no"
                         style="@style/TextInputEditTextFilledBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/hint_username"
                         android:imeOptions="actionNext"
-                        android:inputType="textCapCharacters"
+                        android:inputType="textCapCharacters|textNoSuggestions"
                         android:maxLength="@integer/max_nickname"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
@@ -173,7 +176,7 @@
                             android:background="@drawable/input_signup_style"
                             android:hint="@string/hint_first_name"
                             android:imeOptions="actionNext"
-                            android:inputType="textNoSuggestions"
+                            android:inputType="text"
                             android:paddingHorizontal="17dp"
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
@@ -191,7 +194,7 @@
                             android:background="@drawable/input_signup_style"
                             android:hint="@string/hint_second_name"
                             android:imeOptions="actionNext"
-                            android:inputType="textNoSuggestions"
+                            android:inputType="text"
                             android:paddingHorizontal="17dp"
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
@@ -222,7 +225,7 @@
                             android:background="@drawable/input_signup_style"
                             android:hint="@string/hint_third_name"
                             android:imeOptions="actionNext"
-                            android:inputType="textNoSuggestions"
+                            android:inputType="text"
                             android:paddingHorizontal="17dp"
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
@@ -240,7 +243,7 @@
                             android:background="@drawable/input_signup_style"
                             android:hint="@string/hint_last_name"
                             android:imeOptions="actionNext"
-                            android:inputType="textNoSuggestions"
+                            android:inputType="text"
                             android:paddingHorizontal="17dp"
                             android:paddingTop="16dp"
                             android:paddingBottom="16dp"
@@ -292,11 +295,12 @@
                         android:id="@+id/email_1_input"
                         style="@style/TextInputEditTextFilledBox"
                         android:layout_width="match_parent"
+                        android:importantForAutofill="no"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/forgot_pass_email_hint"
                         android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"
+                        android:inputType="textEmailAddress|textNoSuggestions"
                         android:maxLength="@integer/max_email"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
@@ -325,12 +329,13 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/email_1_confirm_input"
                         style="@style/TextInputEditTextFilledBox"
+                        android:importantForAutofill="no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/change_info_email_1_confirm_hint"
                         android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"
+                        android:inputType="textEmailAddress|textNoSuggestions"
                         android:maxLength="@integer/max_email"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
@@ -364,7 +369,8 @@
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/forgot_pass_email_hint"
                         android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"
+                        android:importantForAutofill="no"
+                        android:inputType="textEmailAddress|textNoSuggestions"
                         android:maxLength="@integer/max_email"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
@@ -398,7 +404,8 @@
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/change_info_email_1_confirm_hint"
                         android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"
+                        android:importantForAutofill="no"
+                        android:inputType="textEmailAddress|textNoSuggestions"
                         android:maxLength="@integer/max_email"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
@@ -453,7 +460,7 @@
                         android:background="@drawable/input_signup_style"
                         android:hint="@string/hint_answer"
                         android:imeOptions="actionNext"
-                        android:inputType="textNoSuggestions"
+                        android:inputType="text"
                         android:paddingHorizontal="17dp"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp"
@@ -489,11 +496,10 @@
                         android:text="@string/change_info_input_first_mail_setting"
                         android:textSize="12sp" />
 
-                    <ToggleButton
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/toggle_setting_first"
                         android:layout_width="51dp"
                         android:layout_height="31dp"
-                        android:background="@drawable/toggle_selector"
                         android:checked="false"
                         android:gravity="center_vertical"
                         android:text=""
@@ -520,11 +526,10 @@
                         android:text="@string/change_info_input_second_mail_setting"
                         android:textSize="12sp" />
 
-                    <ToggleButton
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/toggle_setting_second"
                         android:layout_width="51dp"
                         android:layout_height="31dp"
-                        android:background="@drawable/toggle_selector"
                         android:checked="false"
                         android:gravity="center_vertical"
                         android:text=""
@@ -560,11 +565,10 @@
                         android:text="@string/change_info_input_first_mail_setting"
                         android:textSize="12sp" />
 
-                    <ToggleButton
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/toggle_magazine_first"
                         android:layout_width="51dp"
                         android:layout_height="31dp"
-                        android:background="@drawable/toggle_selector"
                         android:checked="false"
                         android:gravity="center_vertical"
                         android:text=""
@@ -590,11 +594,10 @@
                         android:text="@string/change_info_input_second_mail_setting"
                         android:textSize="12sp" />
 
-                    <ToggleButton
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/toggle_magazine_second"
                         android:layout_width="51dp"
                         android:layout_height="31dp"
-                        android:background="@drawable/toggle_selector"
                         android:checked="false"
                         android:gravity="center_vertical"
                         android:text=""

@@ -12,7 +12,7 @@ data class ChangeInfoMemberData(
     val loginId: String?,
     @SerializedName("memberRoman")
     val memberRoman: String?,
-    @SerializedName("creditCardExpirationDate")
+    @SerializedName("memberKana")
     val memberKana: String?,
     @SerializedName("memberName")
     val memberName: String?,
@@ -39,5 +39,59 @@ data class ChangeInfoMemberData(
 ) : Parcelable {
     override fun hashCode(): Int {
         return super.hashCode()
+    }
+}
+
+fun safeSplitName(name: String?): List<String>? {
+    return name?.let {
+        try {
+            var list = it.split("　")
+            if (list.count() <= 1) {
+                list = it.split(" ")
+            }
+            return list
+        } catch (e: Exception) {
+        }
+        null
+    }
+}
+
+fun ChangeInfoMemberData.getFirstKanaName(): String? {
+    return try {
+        val splitName = safeSplitName(memberKana)
+        return splitName?.get(0)
+    } catch (e: Exception) {
+        println(e)
+        memberKana
+    }
+}
+
+fun ChangeInfoMemberData.getLastKanaName(): String? {
+    return try {
+        val splitName = safeSplitName(memberKana)
+        return splitName?.get(1)
+    } catch (e: Exception) {
+        println(e)
+        ""
+    }
+}
+
+fun ChangeInfoMemberData.getFirstMemberName(): String? {
+    return try {
+        val splitName = safeSplitName(memberName)
+        return splitName?.get(0)
+    } catch (e: Exception) {
+        println(e)
+        memberName
+    }
+}
+
+fun ChangeInfoMemberData.getLastMemberName(): String? {
+    return try {
+        val splitName = safeSplitName(memberName)
+        return splitName?.get(1)
+    } catch (e: Exception) {
+        println(e)
+        ""
     }
 }

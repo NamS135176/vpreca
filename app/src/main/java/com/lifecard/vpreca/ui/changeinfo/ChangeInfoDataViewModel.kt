@@ -4,17 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserRepository
-import com.lifecard.vpreca.data.model.ChangeInfoMemberData
 import com.lifecard.vpreca.data.model.MemberInfo
-import com.lifecard.vpreca.data.model.User
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.ui.login.LoginResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,7 +45,6 @@ class ChangeInfoDataViewModel @Inject constructor(private val userRepository: Us
             is NoConnectivityException -> _changeInfoDataState.value =
                 ChangeInfoDataState(networkTrouble = true)
             is InternalServerException -> _changeInfoDataState.value =
-                    //TODO this internalError should be html from server, it will be implement later
                 ChangeInfoDataState(internalError = "")
             is ApiException -> _changeInfoDataState.value = ChangeInfoDataState(
                 error = ErrorMessageException(

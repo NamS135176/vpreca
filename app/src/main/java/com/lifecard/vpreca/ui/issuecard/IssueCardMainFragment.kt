@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.FragmentIssueCardMainBinding
 import com.lifecard.vpreca.ui.web_direct.WebDirectFragmentArgs
@@ -19,35 +18,37 @@ class IssueCardMainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentIssueCardMainBinding.inflate(inflater, container, false)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
-            }
-        })
         val btnCancel = binding.appbarGiftThird.cancelBtn
         val buttonCreditCard = binding.buttonCreditCard
         val buttonNewCard = binding.buttonNewCard
         val buttonIssueByCode = binding.buttonIssueByCode
 
-        btnCancel.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_home)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object :
+            OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
+            }
         })
 
-        buttonCreditCard.setOnClickListener(View.OnClickListener {
+        btnCancel.setOnClickListener {
+            findNavController().popBackStack(R.id.nav_home, inclusive = false)
+        }
+
+        buttonCreditCard.setOnClickListener {
             findNavController().navigate(
                 R.id.nav_web_direct,
                 WebDirectFragmentArgs(screenId = WebDirectScreen.SCREEN_ISSUE_CARD_WITH_CREDIT_CARD).toBundle()
             )
-        })
+        }
 
-        buttonNewCard.setOnClickListener(View.OnClickListener {
+        buttonNewCard.setOnClickListener {
             findNavController().navigate(R.id.nav_issue_card_by_plus_introduce)
-        })
+        }
 
-        buttonIssueByCode.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_input) })
+        buttonIssueByCode.setOnClickListener { findNavController().navigate(R.id.nav_issue_card_by_code_input) }
 
         return binding.root
     }

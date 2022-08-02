@@ -1,21 +1,19 @@
 package com.lifecard.vpreca.ui.introduce
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CardInfo
 import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
-import com.lifecard.vpreca.databinding.IntroduceFragmentSecondFragmentBinding
+import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.IntroduceFragmentThirdFragmentBinding
-import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 
 class IntroduceFragmentThird : Fragment() {
 
@@ -26,20 +24,20 @@ class IntroduceFragmentThird : Fragment() {
     private lateinit var viewModel: IntroduceFragmentThirdViewModel
     private var _binding: IntroduceFragmentThirdFragmentBinding? = null
     private val binding get() = _binding!!
-    private val args:IntroduceFragmentThirdArgs by navArgs()
+    private val args: IntroduceFragmentThirdArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = IntroduceFragmentThirdFragmentBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(IntroduceFragmentThirdViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel = ViewModelProvider(this)[IntroduceFragmentThirdViewModel::class.java]
         binding.card = args.cardData
         binding.cardZone.cardInclude.card = args.cardData
         binding.cardZone.card = args.cardData
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        binding.cardZone.cardInclude.cardInfo.setBackgroundResource(args.cardData.getBackgroundCard())
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_introduce_second)
+                findNavController().navigate(R.id.action_third_to_second)
             }
         })
 
@@ -47,24 +45,24 @@ class IntroduceFragmentThird : Fragment() {
         val btnSubmit = binding.btnSubmitInput
         val btnUsage = binding.btnMid
 
-        btnUsage.setOnClickListener(View.OnClickListener {
-//            println("sjkdfhksjdhfksdf")
-            val data = GiftCardConfirmData("unlog")
-            val action = IntroduceFragmentThirdDirections.actionThirdToUsage(convertObject(args.cardData!!), data)
+        btnUsage.setOnClickListener {
+            val action = IntroduceFragmentThirdDirections.actionThirdToUsage(
+                convertObject(args.cardData!!),
+            )
             findNavController().navigate(action)
-        })
+        }
 
-        btnBack.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_introduce_second)
-        })
-        btnSubmit.setOnClickListener(View.OnClickListener {
-            findNavController().navigate(R.id.nav_login)
-        })
+        btnBack.setOnClickListener {
+            findNavController().navigate(R.id.action_third_to_second)
+        }
+        btnSubmit.setOnClickListener {
+            findNavController().popBackStack(R.id.nav_login, inclusive = false)
+        }
         return binding.root
     }
 
-    fun convertObject(cardInfo: CardInfo): CreditCard {
-        val obj = CreditCard(
+    private fun convertObject(cardInfo: CardInfo): CreditCard {
+        return CreditCard(
             cardInfo.activateStatus,
             cardInfo.activateDate,
             cardInfo.autoChargeAmount,
@@ -110,7 +108,6 @@ class IntroduceFragmentThird : Fragment() {
             cardInfo.vcnExpirationDate,
             cardInfo.vcnSecurityLockFlg
         )
-        return obj
     }
 
 

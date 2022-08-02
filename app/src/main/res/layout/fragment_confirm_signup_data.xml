@@ -39,6 +39,7 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingBottom="25dp">
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/signup_input_title"
                     style="@style/Widget.AppCompat.TextView.Bold"
@@ -48,8 +49,8 @@
                     android:paddingTop="32dp"
                     android:text="@string/confirm_signup_title"
                     android:textColor="#0057b5"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/cf_signup_des"
                     android:layout_width="match_parent"
@@ -60,6 +61,7 @@
                     android:text="@string/confirm_signup_des"
                     android:textColor="#353535"
                     android:textSize="12sp" />
+
                 <include
                     android:id="@+id/loginId"
                     layout="@layout/layout_info_item"
@@ -87,14 +89,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    app:content="@{ModelExtKt.getKanaName(data)}"
+                    android:layout_marginHorizontal="22dp"
+                    app:content="@{ModelExtKt.getFurigana(data)}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:title="@{@string/change_info_data_name_title}" />
 
                 <include
                     android:id="@+id/nameFurigana"
                     layout="@layout/layout_info_item"
-                    app:content="@{ModelExtKt.getFurigana(data)}"
+                    app:content="@{ModelExtKt.getKanaName(data)}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:title="@{@string/change_info_data_furigana_title}" />
 
@@ -143,8 +146,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="32dp"
+                    android:background="@drawable/underline_bg"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginHorizontal="22dp"
                     android:text="@{data.question, default=``}"
+                    android:paddingVertical="14dp"
                     android:textSize="12sp" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -164,13 +170,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="6sp"
-                    android:paddingHorizontal="32dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginHorizontal="22dp"
+                    android:paddingVertical="14dp"
+                    android:background="@drawable/underline_bg"
                     android:text="@{data.answer, default=``}"
                     android:textSize="12sp" />
-
-
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
         <LinearLayout
             android:id="@+id/btn_submit_policy"
             android:layout_width="match_parent"
@@ -188,10 +196,10 @@
                 android:layout_marginEnd="9dp"
                 android:layout_marginRight="9dp"
                 android:layout_weight="1"
-                android:paddingVertical="12dp"
+                android:paddingVertical="8dp"
                 android:text="@string/button_edit"
-                android:textSize="18sp"
-                android:textColor="@color/primary" />
+                android:textColor="@color/primary"
+                android:textSize="18sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSubmitConfirm"
@@ -200,9 +208,9 @@
                 android:layout_marginStart="9dp"
                 android:layout_marginLeft="9dp"
                 android:layout_weight="1"
-                android:paddingVertical="18dp"
+                android:paddingVertical="14dp"
+                android:text="@string/gift_card_confirm_detail_btn"
                 android:textSize="18sp"
-                android:text="@string/change_pass_btn_submit"
                 app:cornerRadius="30dp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

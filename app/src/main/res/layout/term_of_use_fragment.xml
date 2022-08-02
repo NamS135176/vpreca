@@ -56,6 +56,7 @@
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/cbTermOfUse"
+            style="@style/Widget.App.CheckBox.Dark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="35dp"
@@ -73,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="22dp"
             android:layout_marginBottom="26dp"
-            android:enabled="true"
+            android:enabled="false"
             android:paddingVertical="11dp"
             android:text="@string/confirm_term_of_use_btn"
             android:textColor="@color/white"

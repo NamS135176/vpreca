@@ -10,13 +10,11 @@ import com.lifecard.vpreca.data.IssueCardRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
 import com.lifecard.vpreca.data.model.CardInfoWithDesignIdContentInfo
-import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.exception.ApiException
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.balance_amount.FeeInfoResult
-import com.lifecard.vpreca.ui.home.CreditCardResult
 import com.lifecard.vpreca.utils.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -53,7 +51,6 @@ class IssueCardSelectDesignViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _listDesignResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         ListDesignState(internalError = "")
                     else -> _listDesignResult.value =
                         ListDesignState( error = ErrorMessageException(
@@ -71,8 +68,6 @@ class IssueCardSelectDesignViewModel @Inject constructor(
         designId: String,
         cardNickName: String,
         vcnName: String,
-        precaNumber: String,
-        vcn: String,
         sumUpSrcCardInfo : ArrayList<CardInfoRequestContentInfo>
     ) {
         viewModelScope.launch {
@@ -93,7 +88,6 @@ class IssueCardSelectDesignViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _feeInfoResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         FeeInfoResult(internalError = "")
                     else -> _feeInfoResult.value =
                         FeeInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))

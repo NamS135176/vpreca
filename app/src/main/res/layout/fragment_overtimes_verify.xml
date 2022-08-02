@@ -67,7 +67,7 @@
                 android:layout_weight="1"
                 android:layout_marginHorizontal="22dp"
                 android:paddingVertical="18dp"
-                android:text="@string/btn_complete"
+                android:text="@string/action_sign_in"
                 app:cornerRadius="30dp"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"

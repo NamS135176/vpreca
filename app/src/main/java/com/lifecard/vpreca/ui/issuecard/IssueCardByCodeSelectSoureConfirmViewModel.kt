@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.IssueCardRepository
 import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.model.CardInfoRequestContentInfo
@@ -16,7 +15,6 @@ import com.lifecard.vpreca.exception.InternalServerException
 import com.lifecard.vpreca.exception.NoConnectivityException
 import com.lifecard.vpreca.ui.balance_amount.FeeInfoResult
 import com.lifecard.vpreca.ui.balance_amount.IssueGiftResult
-import com.lifecard.vpreca.ui.home.CreditCardResult
 import com.lifecard.vpreca.utils.Constant
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,7 +22,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
-    private val creditCardRepository: CreditCardRepository,
     private val issueCardRepository: IssueCardRepository
 ) : ViewModel() {
     private val _issueGiftReqResult = MutableLiveData<IssueGiftResult>()
@@ -32,9 +29,6 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
 
     private val _feeInfoResult = MutableLiveData<FeeInfoResult>()
     val feeInfoResult: LiveData<FeeInfoResult> = _feeInfoResult
-
-    private val _issueGiftReqResultWithCard = MutableLiveData<IssueGiftResult>()
-    val issueGiftReqResultWithCard: LiveData<IssueGiftResult> = _issueGiftReqResultWithCard
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
@@ -47,7 +41,13 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
             _loading.value = true
 
             val res =
-                issueCardRepository.issueGiftReqWithouCard(designId, giftNumber)
+                issueCardRepository.issueGiftReqWithCard(
+                    designId,
+                    giftNumber,
+                    Constant.CARD_SCHEME_ID,
+                    "",
+                    Constant.CARD_NAME
+                )
             if (res is Result.Success) {
                 _issueGiftReqResult.value = IssueGiftResult(success = res.data)
             } else if (res is Result.Error) {
@@ -60,7 +60,6 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _issueGiftReqResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         IssueGiftResult(internalError = "")
                     else -> _issueGiftReqResult.value =
                         IssueGiftResult(error = ErrorMessageException(R.string.get_list_card_failure))
@@ -72,18 +71,24 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
 
 
     fun creditCardSelectDataChanged(
-        cardSchemeId: String,
+        sumUpSrcCardInfo: ArrayList<CardInfoRequestContentInfo>,
         designId: String,
-        cardNickName: String,
-        vcnName: String,
-        sumUpSrcCardInfo : ArrayList<CardInfoRequestContentInfo>
+        giftNumber: String
     ) {
         viewModelScope.launch {
             _loading.value = true
-            val cardInfo =
-                CardInfoWithDesignIdContentInfo(cardSchemeId, designId, cardNickName, vcnName)
             val res =
-                issueCardRepository.issueSumReq(cardInfo, sumUpSrcCardInfo, cardSchemeId, Constant.FEE_TYPE_ISSUE, "1", sumUpSrcCardInfo.size.toString())
+                issueCardRepository.issueSumReqBalance(
+                    sumUpSrcCardInfo,
+                    Constant.CARD_SCHEME_ID,
+                    Constant.FEE_TYPE_ISSUE,
+                    "1",
+                    sumUpSrcCardInfo.size.toString(),
+                    designId,
+                    giftNumber,
+                    "",
+                    Constant.CARD_NAME
+                )
             if (res is Result.Success) {
                 _feeInfoResult.value = FeeInfoResult(success = res.data)
             } else if (res is Result.Error) {
@@ -96,7 +101,6 @@ class IssueCardByCodeSelectSoureConfirmViewModel @Inject constructor(
                         )
                     )
                     is InternalServerException -> _feeInfoResult.value =
-                            //TODO this internalError should be html from server, it will be implement later
                         FeeInfoResult(internalError = "")
                     else -> _feeInfoResult.value =
                         FeeInfoResult(error = ErrorMessageException(R.string.get_list_card_failure))

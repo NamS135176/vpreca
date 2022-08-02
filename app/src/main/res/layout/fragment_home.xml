@@ -22,8 +22,9 @@
             android:lineSpacingExtra="3sp"
             android:text="@string/home_text_info"
             android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/text_balance"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/text_balance" />
 
         <TextView
             android:id="@+id/text_balance"
@@ -34,9 +35,8 @@
             android:layout_marginRight="@dimen/fragment_horizontal_margin"
             android:text="¥0"
             android:textSize="26sp"
-            app:layout_constraintBottom_toBottomOf="@id/text_info"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/text_info" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_see_all_card"
@@ -48,6 +48,7 @@
             android:minHeight="0dp"
             android:paddingVertical="0dp"
             android:text="@string/home_button_see_all_card"
+            android:visibility="invisible"
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="@id/text_balance"
             app:layout_constraintTop_toBottomOf="@id/text_balance"
@@ -80,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginHorizontal="@dimen/my_page_button_card_no_balance_mh"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/home_card_button_no_balance_mt"
             android:enabled="false"
             android:insetTop="0dp"
             android:insetBottom="0dp"
@@ -99,7 +100,7 @@
             android:id="@+id/card_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="@dimen/home_card_card_container_mt"
             android:minHeight="160dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -110,11 +111,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_text_no_card"
-                android:textSize="11sp"
+                android:textSize="15sp"
+                android:textColor="#959595"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <include
                 android:id="@+id/list_card"
@@ -128,7 +131,7 @@
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_marginHorizontal="@dimen/home_card_item_page_margin_offset"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="@dimen/home_card_button_submit_mt"
             android:background="@drawable/button_outlined"
             android:paddingHorizontal="40dp"
             android:text="@string/home_button_add_new_card"
@@ -143,20 +146,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_container" />
-
-        <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="64dp"
-            android:indeterminateDrawable="@drawable/loading"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

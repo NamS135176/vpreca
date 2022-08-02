@@ -8,13 +8,10 @@ import com.lifecard.vpreca.data.Result
 import com.lifecard.vpreca.data.UserManager
 import com.lifecard.vpreca.data.UserRepository
 import com.lifecard.vpreca.data.model.MemberInfo
-import com.lifecard.vpreca.data.source.SecureStore
 import com.lifecard.vpreca.exception.ErrorMessageException
 import com.lifecard.vpreca.exception.NoConnectivityException
-import com.lifecard.vpreca.ui.login.LoginResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.crypto.Cipher
 import javax.inject.Inject
 
 data class SplashState(

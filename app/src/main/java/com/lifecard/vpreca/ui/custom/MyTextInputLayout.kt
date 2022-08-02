@@ -55,6 +55,4 @@ class MyTextInputLayout @JvmOverloads constructor(
         errorText.visibility = View.GONE
         addView(errorText)
     }
-
-
 }

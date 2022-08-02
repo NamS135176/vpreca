@@ -15,9 +15,12 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.CreditCardRepository
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.databinding.FragmentListVprecaBinding
+import com.lifecard.vpreca.eventbus.ReloadCard
 import com.lifecard.vpreca.ui.card.CardBottomSheetCustom
 import com.lifecard.vpreca.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -37,19 +40,19 @@ class ListVprecaFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentListVprecaBinding.inflate(inflater, container, false)
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.nav_home)
+                findNavController().popBackStack(R.id.nav_home, inclusive = false)
             }
         })
         val btnBack = binding.appbarListVpreca.btnBack
-        btnBack.setOnClickListener(View.OnClickListener { findNavController().navigate(com.lifecard.vpreca.R.id.nav_home) })
+        btnBack.setOnClickListener(View.OnClickListener {  findNavController().popBackStack(R.id.nav_home, inclusive = false) })
         val tvTotalAmount = binding.tvTotalAmount
         val listVpreca = binding.listVprecaCard
-        val loading = binding.loading
+
         listVprecaViewModel.creditCardResult.observe(
             viewLifecycleOwner,
             Observer { creditCardResult ->
@@ -80,7 +83,7 @@ class ListVprecaFragment : Fragment() {
 
                             val sumBalance: Int = creditCardResult.success.sumOf {
                                 try {
-                                    it.publishAmount.toInt()
+                                    it.publishAmount?.toInt()!!
                                 } catch (e: Exception) {
                                     0
                                 }
@@ -121,23 +124,33 @@ class ListVprecaFragment : Fragment() {
 
             })
 
-        listVprecaViewModel.loading.observe(viewLifecycleOwner, Observer {
+        listVprecaViewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> {
+                    showLoadingDialog()
+                }
+                else -> {
+                    hideLoadingDialog()
+                }
             }
-        })
+        }
         return binding.root
     }
 
+    @Subscribe
+    fun handleReloadCard(event:ReloadCard){
+        listVprecaViewModel.getListCard()
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        EventBus.getDefault().register(this)
         hideToolbar()
     }
 
     override fun onDetach() {
         super.onDetach()
+        EventBus.getDefault().unregister(this)
         showToolbar()
     }
 }

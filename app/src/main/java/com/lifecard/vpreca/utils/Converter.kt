@@ -1,6 +1,8 @@
 package com.lifecard.vpreca.utils
 
+import android.content.Context
 import android.graphics.Color
+import android.util.DisplayMetrics
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
@@ -8,6 +10,8 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.min
+
 
 object Converter {
     @JvmStatic
@@ -35,7 +39,22 @@ object Converter {
         return date?.let {
             val localDate = LocalDate.fromDateFields(date)
 
-            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("MM/dd")
+            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("MM/YY")
+            localDate.toString(fmt)
+        } ?: ""
+
+    }
+
+    @JvmStatic
+    fun convertCardValidShortString(date: String?): String {
+        return date?.let {
+            val myFormat = "yyyyMMdd" // mention the format you need
+            val sdf = SimpleDateFormat(myFormat, Locale.US)
+            val data = sdf.parse(date)
+
+            val localDate = LocalDate.fromDateFields(data)
+
+            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("MM/YY")
             localDate.toString(fmt)
         } ?: ""
 
@@ -106,9 +125,47 @@ object Converter {
             return "1"
         } else return "0"
     }
+
     @JvmStatic
     fun convertStringToBoolean(state: String): Boolean {
         return state == "1"
+    }
+
+    @JvmStatic
+    fun formatToolbarTitle(title: String, max: Int = 12): String {
+        return try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                title
+            } else {
+                title.substring(0, min(max, title.length))
+            }
+        } catch (e: Exception) {
+            title
+        }
+    }
+
+    /**
+     * This method converts dp unit to equivalent pixels, depending on device density.
+     *
+     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent px equivalent to dp depending on device density
+     */
+    @JvmStatic
+    fun convertDpToPixel(dp: Float, context: Context): Float {
+        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    }
+
+    /**
+     * This method converts device specific pixels to density independent pixels.
+     *
+     * @param px A value in px (pixels) unit. Which we need to convert into db
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent dp equivalent to px value
+     */
+    @JvmStatic
+    fun convertPixelsToDp(px: Float, context: Context): Float {
+        return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 
 }

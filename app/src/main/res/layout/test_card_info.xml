@@ -27,14 +27,13 @@
                 style="@style/MyCardView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/second"
+                android:background="@drawable/first"
                 android:paddingHorizontal="0dp"
                 android:paddingVertical="0dp"
                 app:layout_constraintDimensionRatio="@string/card_design_dimens"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline"
                     android:layout_width="wrap_content"
@@ -54,49 +53,49 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.08" />
+                    app:layout_constraintGuide_percent="0.06" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.96" />
+                    app:layout_constraintGuide_percent="0.97" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_vertical_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.82" />
+                    app:layout_constraintGuide_percent="0.83" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_vertical_1_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.73" />
+                    app:layout_constraintGuide_percent="0.72" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_vertical_1_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.85" />
+                    app:layout_constraintGuide_percent="0.83" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_vertical_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.67" />
+                    app:layout_constraintGuide_percent="0.70" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_vertical_2_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.53" />
+                    app:layout_constraintGuide_percent="0.50" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/card_username"
@@ -108,7 +107,7 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:textColor="@color/black"
-                    app:autoSizeMaxTextSize="16sp"
+                    app:autoSizeMaxTextSize="20sp"
                     app:autoSizeMinTextSize="6sp"
                     app:autoSizeStepGranularity="2dp"
                     app:autoSizeTextType="uniform"
@@ -123,9 +122,9 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
-                    android:text="@{Converter.convertCardValidShort(card.precaExpirationDate)}"
+                    android:text="@{Converter.convertCardValidShortString(card.vcnExpirationDate)}"
                     android:textColor="@color/black"
-                    app:autoSizeMaxTextSize="15sp"
+                    app:autoSizeMaxTextSize="19sp"
                     app:autoSizeMinTextSize="5sp"
                     app:autoSizeStepGranularity="2dp"
                     app:autoSizeTextType="uniform"
@@ -144,7 +143,7 @@
                     android:gravity="center_vertical"
                     android:text="@{ModelExtKt.isCardInfoLock(card) ? `***` : card.vcn}"
                     android:textColor="@color/black"
-                    app:autoSizeMaxTextSize="15sp"
+                    app:autoSizeMaxTextSize="19sp"
                     app:autoSizeMinTextSize="5sp"
                     app:autoSizeStepGranularity="2dp"
                     app:autoSizeTextType="uniform"
@@ -161,7 +160,7 @@
                     android:gravity="center_vertical"
                     android:text="@{ModelExtKt.isCardInfoLock(card) ? Converter.convertPrecaNumber(card.precaNumber) : card.precaNumber}"
                     android:textColor="@color/black"
-                    app:autoSizeMaxTextSize="26sp"
+                    app:autoSizeMaxTextSize="30sp"
                     app:autoSizeMinTextSize="8sp"
                     app:autoSizeStepGranularity="4dp"
                     app:autoSizeTextType="uniform"

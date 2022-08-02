@@ -3,20 +3,19 @@ package com.lifecard.vpreca.utils
 class Constant {
     companion object {
         const val SECURE_AUTH_TOKEN = "vpreca_auth_token"
-        const val SECURE_USER_ID = "vpreca_login_user_id"
-        const val SECURE_MEMBER_NUMBER = "vpreca_login_member_id"
-        const val SECURE_ACCESS_TOKEN = "vpreca_access_token"
-        const val SECURE_REFRESH_TOKEN = "vpreca_refresh_token"
-        const val BIOMETRIC_ALGORITHM = "ecdsa-with-SHA256"
 
-        const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
-        const val API_BASE_URL = "https://by4h7iozy5.execute-api.ap-southeast-1.amazonaws.com/dev/"
+//        const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/%s.do"
+const val WEB_DIRECT_BASE_URL = "https://vpcevssl.lifecard.co.jp/LW01/LW0102OP01BL.do"
+
         const val FEE_TYPE_BALANCE = "31"
         const val FEE_TYPE_ISSUE = "34"
-        //staging
-//        const val API_BASE_URL =
-//            "https://btpslgn3o5.execute-api.ap-southeast-1.amazonaws.com/staging/"
 
+        const val CARD_SCHEME_ID = "74101"
+        const val CARD_NAME = "LIFECARD"
+        //dev
+//        const val API_BASE_URL = "https://la8rv0gdp9.execute-api.ap-southeast-1.amazonaws.com/dev2/"
+        //staging
+        const val API_BASE_URL = "https://xvojcilpig.execute-api.ap-southeast-1.amazonaws.com/staging/"
 
         const val GOOGLE_VISION_API = "https://vision.googleapis.com/"
     }

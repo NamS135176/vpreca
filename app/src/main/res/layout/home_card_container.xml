@@ -29,9 +29,6 @@
             android:id="@+id/button_slide_left"
             android:layout_width="@dimen/my_page_card_arrow_direction_width"
             android:layout_height="@dimen/my_page_card_arrow_direction_height"
-            android:layout_marginStart="@dimen/my_page_card_arrow_direction_ml"
-            android:layout_marginLeft="@dimen/my_page_card_arrow_direction_ml"
-            android:layout_marginTop="@dimen/my_page_card_arrow_direction_mt"
             android:background="@drawable/ic_card_arrow_left"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,15 +49,18 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_dots"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MyCustomTabLayout"
+            android:layout_width="90dp"
+            android:layout_height="@dimen/home_card_tab_indicator_height"
+            android:padding="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_list"
             app:tabBackground="@drawable/tab_dot_selector"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp"
-            app:tabMaxWidth="18dp" />
+            app:tabMaxWidth="18dp"
+            app:tabMode="scrollable"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -72,8 +72,8 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_info"
                 style="@style/Widget.App.Button.IconOnly"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/home_card_button_size"
+                android:layout_height="@dimen/home_card_button_size"
                 app:backgroundTint="#0fc6d6"
                 app:cornerRadius="24dp"
                 app:icon="@drawable/ic_home_info"
@@ -95,8 +95,8 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_usage"
                 style="@style/Widget.App.Button.IconOnly"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/home_card_button_size"
+                android:layout_height="@dimen/home_card_button_size"
                 android:elevation="0dp"
                 app:backgroundTint="#ff9900"
                 app:cornerRadius="24dp"
@@ -122,8 +122,8 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_lock"
                 style="@style/Widget.App.Button.IconOnly"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/home_card_button_size"
+                android:layout_height="@dimen/home_card_button_size"
                 android:background="@{ModelExtKt.isCardLock(currentCard) ? @drawable/ic_home_locked_status_background : @drawable/ic_home_unlock_status_background}"
                 android:elevation="0dp"
                 app:backgroundTint="@null"
@@ -149,10 +149,11 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_reload"
                 style="@style/Widget.App.Button.IconOnly"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/home_card_button_size"
+                android:layout_height="@dimen/home_card_button_size"
                 android:elevation="0dp"
-                app:backgroundTint="#53c312"
+                android:background="@{ModelExtKt.isAvailable(currentCard) ? @drawable/ic_reload_enable : @drawable/ic_reload_disable}"
+                app:backgroundTint="@null"
                 app:cornerRadius="24dp"
                 app:icon="@drawable/ic_home_reload"
                 app:iconSize="20dp"
@@ -167,6 +168,7 @@
                 android:layout_marginTop="2dp"
                 android:text="@string/home_button_reload"
                 android:textSize="11sp"
+                android:textColor="@{ModelExtKt.isAvailable(currentCard) ? @color/black : @color/text_disable}"
                 app:layout_constraintEnd_toEndOf="@id/button_reload"
                 app:layout_constraintStart_toStartOf="@id/button_reload"
                 app:layout_constraintTop_toBottomOf="@id/button_reload" />

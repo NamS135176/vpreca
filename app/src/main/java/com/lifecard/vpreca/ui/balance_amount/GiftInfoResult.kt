@@ -1,7 +1,5 @@
 package com.lifecard.vpreca.ui.balance_amount
 
-import com.lifecard.vpreca.data.model.CreditCard
-import com.lifecard.vpreca.data.model.FeeInfo
 import com.lifecard.vpreca.data.model.GiftInfo
 import com.lifecard.vpreca.exception.ErrorMessageException
 

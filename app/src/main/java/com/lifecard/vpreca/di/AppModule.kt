@@ -2,10 +2,12 @@ package com.lifecard.vpreca.di
 
 import android.content.Context
 import com.lifecard.vpreca.data.*
+import com.lifecard.vpreca.data.api.AWSTextractService
 import com.lifecard.vpreca.data.api.ApiService
 import com.lifecard.vpreca.data.api.ApiServiceFactory
 import com.lifecard.vpreca.data.api.GoogleVisionService
 import com.lifecard.vpreca.data.source.SecureStore
+import com.lifecard.vpreca.utils.DeviceIDHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,25 +23,30 @@ class AppModule {
     @Singleton
     fun provideApiService(
         @ApplicationContext appContext: Context,
-        secureStore: SecureStore,
         userManager: UserManager
     ): ApiService {
-        return ApiServiceFactory.createService(appContext, secureStore, userManager)
+        return ApiServiceFactory.createService(appContext, userManager)
     }
 
     @Provides
     @Singleton
     fun provideCreditCardRepository(
         apiService: ApiService,
-        userManager: UserManager
+        userManager: UserManager,
+        deviceID: DeviceID,
     ): CreditCardRepository {
-        return CreditCardRepository(apiService, userManager)
+        return CreditCardRepository(apiService, userManager, deviceID)
     }
 
     @Provides
     @Singleton
-    fun provideUserRepository(apiService: ApiService, userManager: UserManager): UserRepository {
-        return UserRepository(apiService, userManager)
+    fun provideUserRepository(
+        @ApplicationContext appContext: Context,
+        apiService: ApiService,
+        userManager: UserManager,
+        deviceID: DeviceID,
+    ): UserRepository {
+        return UserRepository(appContext, apiService, userManager, deviceID)
     }
 
     @Provides
@@ -52,27 +59,30 @@ class AppModule {
     @Singleton
     fun provideRemoteRepository(
         apiService: ApiService,
-        userManager: UserManager
+        userManager: UserManager,
+        deviceID: DeviceID
     ): RemoteRepository {
-        return RemoteRepository(apiService, userManager)
+        return RemoteRepository(apiService, userManager, deviceID)
     }
 
     @Provides
     @Singleton
     fun provideSuspendDealRepository(
         apiService: ApiService,
-        userManager: UserManager
+        userManager: UserManager,
+        deviceID: DeviceID
     ): SuspendDealRepository {
-        return SuspendDealRepository(apiService, userManager)
+        return SuspendDealRepository(apiService, userManager, deviceID)
     }
 
     @Provides
     @Singleton
     fun provideIssueCardRepository(
         apiService: ApiService,
-        userManager: UserManager
+        userManager: UserManager,
+        deviceID: DeviceID
     ): IssueCardRepository {
-        return IssueCardRepository(apiService, userManager)
+        return IssueCardRepository(apiService, userManager, deviceID)
     }
 
     @Provides
@@ -88,4 +98,13 @@ class AppModule {
         return ApiServiceFactory.createGoogleVisionService()
     }
 
+    @Provides
+    fun provideAWSTextractService(): AWSTextractService {
+        return ApiServiceFactory.createAWSTextractService()
+    }
+
+    @Provides
+    fun provideDeviceID(@ApplicationContext appContext: Context): DeviceID {
+        return DeviceID(deviceId = DeviceIDHelper.getDeviceId(appContext))
+    }
 }

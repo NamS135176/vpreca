@@ -3,11 +3,10 @@ package com.lifecard.vpreca.ui.issuecard
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.lifecard.vpreca.R
 import com.lifecard.vpreca.data.model.CreditCard
 import com.lifecard.vpreca.data.model.SelectedData
+import com.lifecard.vpreca.data.model.getBackgroundCard
 import com.lifecard.vpreca.databinding.SelectSourceCardItemBinding
-import com.lifecard.vpreca.databinding.VprecaCardItemBinding
 
 class IssueCardSourceAdapter(private var items: List<CreditCard>,private var selected:List<SelectedData>) :
     RecyclerView.Adapter<IssueCardSourceAdapter.ViewHolder>() {
@@ -41,12 +40,7 @@ class IssueCardSourceAdapter(private var items: List<CreditCard>,private var sel
         holder.binding.card = items[position]
         holder.binding.cardInclude.card = items[position]
         holder.binding.select = selected[position]
-        when (items[position].designId) {
-            "001" -> holder.binding.cardInclude.cardInfo.setBackgroundResource(R.drawable.first)
-            "002" -> holder.binding.cardInclude.cardInfo.setBackgroundResource(R.drawable.second)
-            "003" -> holder.binding.cardInclude.cardInfo.setBackgroundResource(R.drawable.third)
-            else -> holder.binding.cardInclude.cardInfo.setBackgroundResource(R.drawable.first)
-        }
+        holder.binding.cardInclude.cardInfo.setBackgroundResource(items[position].getBackgroundCard())
     }
 
     override fun getItemCount() = items.size

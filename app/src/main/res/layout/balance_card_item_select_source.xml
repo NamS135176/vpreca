@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.lifecard.vpreca.utils.Converter" />
+        <import type="com.lifecard.vpreca.utils.RegexUtils" />
+        <import type="com.lifecard.vpreca.utils.ModelExtKt" />
+        <variable
+            name="card"
+            type="com.lifecard.vpreca.data.model.CreditCard" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/MyCardView">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_introduce_checkbox"
+                android:paddingHorizontal="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/card_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/second"
+                    android:paddingHorizontal="0dp"
+                    android:paddingVertical="0dp"
+                    app:layout_constraintDimensionRatio="@string/card_design_dimens"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.14" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.48" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.06" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.97" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_vertical_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.83" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_vertical_1_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.72" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_vertical_1_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.83" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_vertical_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.70" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_vertical_2_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.50" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/card_username"
+                        style="@style/Widget.AppCompat.TextView.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center_vertical"
+                        android:text="@{card.cardNickname}"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/black"
+                        app:autoSizeMaxTextSize="20sp"
+                        app:autoSizeMinTextSize="6sp"
+                        app:autoSizeStepGranularity="2dp"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline_vertical"
+                        app:layout_constraintDimensionRatio="235:36"
+                        app:layout_constraintStart_toStartOf="@+id/guideline"
+                        app:layout_constraintTop_toTopOf="@+id/guideline_vertical_1_2" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_date"
+                        style="@style/Widget.AppCompat.TextView.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center_vertical"
+                        android:text="mm/yy"
+                        android:textColor="@color/black"
+                        app:autoSizeMaxTextSize="19sp"
+                        app:autoSizeMinTextSize="5sp"
+                        app:autoSizeStepGranularity="2dp"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline_vertical_1"
+                        app:layout_constraintDimensionRatio="80:20"
+                        app:layout_constraintStart_toStartOf="@+id/guideline"
+                        app:layout_constraintTop_toTopOf="@+id/guideline_vertical_1_1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_vcn"
+                        style="@style/Widget.AppCompat.TextView.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="4dp"
+                        android:gravity="center_vertical"
+                        android:text="***"
+                        android:textColor="@color/black"
+                        app:autoSizeMaxTextSize="19sp"
+                        app:autoSizeMinTextSize="5sp"
+                        app:autoSizeStepGranularity="2dp"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline_vertical_1"
+                        app:layout_constraintDimensionRatio="60:22"
+                        app:layout_constraintStart_toStartOf="@+id/guideline_2"
+                        app:layout_constraintTop_toTopOf="@+id/guideline_vertical_1_1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_preca"
+                        style="@style/Widget.AppCompat.TextView.Bold"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center_vertical"
+                        android:text="@{Converter.convertPrecaNumber(card.precaNumber)}"
+                        android:textColor="@color/black"
+                        app:autoSizeMaxTextSize="30sp"
+                        app:autoSizeMinTextSize="8sp"
+                        app:autoSizeStepGranularity="4dp"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline_vertical_2"
+                        app:layout_constraintDimensionRatio="240:30"
+                        app:layout_constraintStart_toStartOf="@+id/guideline_3"
+                        app:layout_constraintTop_toTopOf="@+id/guideline_vertical_2_1"
+                        app:layout_constraintVertical_bias="0.615" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

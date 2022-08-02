@@ -18,7 +18,7 @@ class CameraViewModelTest {
             helper.convertJsonToModel(jsonString, VisionImageResponses::class.java)
         Assert.assertNotNull(googleVisionResponse)
 
-        val viewModel = CameraViewModel(ApiServiceFactory.createGoogleVisionService())
+        val viewModel = CameraViewModel(ApiServiceFactory.createGoogleVisionService(), ApiServiceFactory.createAWSTextractService())
         val ocr = viewModel.findBestCodeFromData(googleVisionResponse.responses[0].textAnnotations)
         println("ocr... $ocr")
         Assert.assertEquals("cdFjSst6Mb7rF29", ocr)

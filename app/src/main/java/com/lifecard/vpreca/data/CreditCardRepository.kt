@@ -7,11 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import java.io.IOException
 
 class CreditCardRepository(
     private val apiService: ApiService,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val deviceID: DeviceID,
 ) {
     // Mutex to make writes to cached values thread-safe.
     private val latestCardsMutex = Mutex()
@@ -23,9 +23,14 @@ class CreditCardRepository(
             if (refresh || latestCards?.isEmpty()!!) {
                 try {
                     val response =
-                        apiService.getListCards(RequestHelper.createCardListRequest(memberNumber = userManager.memberNumber!!))
+                        apiService.getListCards(
+                            RequestHelper.createCardListRequest(
+                                memberNumber = userManager.memberNumber!!,
+                                deviceId = deviceID.deviceId
+                            )
+                        )
                     latestCardsMutex.withLock {
-                        latestCards = response.brandPrecaApi.response.cardInfo
+                        latestCards = response.response.cardInfo
                     }
                     latestCardsMutex.withLock { Result.Success(latestCards!!) }
                 } catch (e: Exception) {
@@ -55,10 +60,11 @@ class CreditCardRepository(
                         memberNumber = userManager.memberNumber!!,
                         cardSchemeId,
                         precaNumber,
-                        vcn
+                        vcn,
+                        deviceId = deviceID.deviceId
                     )
                 )
-                Result.Success(cardResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(cardResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... getCard has error $e")
                 e.printStackTrace()
@@ -73,10 +79,11 @@ class CreditCardRepository(
                 val updateCardResponse = apiService.updateCard(
                     RequestHelper.createUpdateCardRequest(
                         memberNumber = userManager.memberNumber!!,
-                        creditCard
+                        creditCard,
+                        deviceId = deviceID.deviceId
                     )
                 )
-                Result.Success(updateCardResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(updateCardResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... update card has error $e")
                 e.printStackTrace()
@@ -94,10 +101,11 @@ class CreditCardRepository(
                         creditCard.cardSchemeId,
                         creditCard.precaNumber,
                         creditCard.vcn,
-                        creditCard.cooperatorNumber
+                        creditCard.cooperatorNumber,
+                        deviceId = deviceID.deviceId
                     )
                 )
-                Result.Success(republishCardResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(republishCardResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... republish card has error $e")
                 e.printStackTrace()
@@ -111,10 +119,11 @@ class CreditCardRepository(
             try {
                 val republishCardResponse = apiService.getListDesign(
                     RequestHelper.createListDesignRequest(
-                      cardSchemeId = cardSchemeId
+                        cardSchemeId = cardSchemeId,
+                        deviceId = deviceID.deviceId
                     )
                 )
-                Result.Success(republishCardResponse.brandPrecaApi.response!!)
+                Result.Success(republishCardResponse.response)
             } catch (e: Exception) {
                 println("CreditCardRepository... republish card has error $e")
                 e.printStackTrace()
@@ -123,22 +132,24 @@ class CreditCardRepository(
         }
     }
 
-    suspend fun giftCardInfo(confirmationNumber: String, vcnFourDigits:String): Result<CardInfo> {
+    suspend fun giftCardInfo(confirmationNumber: String, vcnFourDigits: String): Result<CardInfo> {
         return withContext(Dispatchers.IO) {
             try {
                 val republishCardResponse = apiService.certifiGift(
                     RequestHelper.createGiftCertifiRequest(
-                       GiftCertifiCardInfoRequestContentInfo(confirmationNumber, vcnFourDigits)
+                        GiftCertifiCardInfoRequestContentInfo(confirmationNumber, vcnFourDigits),
+                        deviceId = deviceID.deviceId
                     )
                 )
                 val cardResponse = apiService.getCard(
                     RequestHelper.createCardInfoWithouMemberRequest(
-                        republishCardResponse.brandPrecaApi.response.cardSchemeId!!,
-                        republishCardResponse.brandPrecaApi.response.precaNumber!!,
-                        republishCardResponse.brandPrecaApi.response.vcn!!,
+                        republishCardResponse.response.cardSchemeId!!,
+                        republishCardResponse.response.precaNumber!!,
+                        republishCardResponse.response.vcn!!,
+                        deviceId = deviceID.deviceId
                     )
                 )
-                Result.Success(cardResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(cardResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... giftCardInfo has error $e")
                 e.printStackTrace()
@@ -147,16 +158,27 @@ class CreditCardRepository(
         }
     }
 
-    suspend fun cardRelation(vcn: String, vcnExpirationDate:String, vcnSecurityCode:String,cardNickname:String): Result<CreditCard> {
+    suspend fun cardRelation(
+        vcn: String,
+        vcnExpirationDate: String,
+        vcnSecurityCode: String,
+        cardNickname: String
+    ): Result<CreditCard> {
         return withContext(Dispatchers.IO) {
             try {
                 val republishCardResponse = apiService.cardRelation(
                     RequestHelper.createCardRelationRequest(
                         memberNumber = userManager.memberNumber!!,
-                        CardRelationRegRequestContentInfo(vcn, vcnExpirationDate, vcnSecurityCode, cardNickname)
+                        deviceId = deviceID.deviceId,
+                        cardInfo = CardRelationRegRequestContentInfo(
+                            vcn,
+                            vcnExpirationDate,
+                            vcnSecurityCode,
+                            cardNickname
+                        )
                     )
                 )
-                Result.Success(republishCardResponse.brandPrecaApi.response.cardInfo!!)
+                Result.Success(republishCardResponse.response.cardInfo!!)
             } catch (e: Exception) {
                 println("CreditCardRepository... cardRelation has error $e")
                 e.printStackTrace()

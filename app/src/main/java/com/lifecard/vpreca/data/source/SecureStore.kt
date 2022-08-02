@@ -2,10 +2,12 @@ package com.lifecard.vpreca.data.source
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import com.lifecard.vpreca.data.model.AuthToken
 import com.lifecard.vpreca.data.model.toAuthToken
 import com.lifecard.vpreca.data.model.toJSON
 import com.lifecard.vpreca.utils.Constant
+import com.lifecard.vpreca.utils.PreferenceHelper
 import com.lifecard.vpreca.utils.decryptAuthToken
 import com.lifecard.vpreca.utils.encryptAuthToken
 import javax.crypto.Cipher
@@ -54,7 +56,7 @@ internal class BioAuthTokenStore(
     override fun clear() {
         with(sharedPreferences.edit()) {
             clear()
-            commit()
+            apply()
         }
     }
 }
@@ -78,28 +80,49 @@ internal class NormalAuthTokenStore(private val appContext: Context) : AuthToken
     }
 
     override fun saveAuthToken(authToken: AuthToken) {
-        authToken.toJSON()?.let { saveEncryptText(Constant.SECURE_AUTH_TOKEN, it) }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            authToken.toJSON()?.let { saveEncryptText(Constant.SECURE_AUTH_TOKEN, it) }
+        } else {
+            with(encryptedSharedPreferences.edit()) {
+                putString("${Constant.SECURE_AUTH_TOKEN}_accessToken", EncryptionUtils.encrypt(appContext, authToken.accessToken))
+                putString("${Constant.SECURE_AUTH_TOKEN}_refreshToken", EncryptionUtils.encrypt(appContext, authToken.refreshToken))
+                putString("${Constant.SECURE_AUTH_TOKEN}_memberNumber", EncryptionUtils.encrypt(appContext, authToken.memberNumber))
+                putString("${Constant.SECURE_AUTH_TOKEN}_loginId", EncryptionUtils.encrypt(appContext, authToken.loginId))
+                apply()
+            }
+        }
     }
 
     override fun getAuthToken(): AuthToken? {
-        return getEncryptText(Constant.SECURE_AUTH_TOKEN)?.toAuthToken()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return getEncryptText(Constant.SECURE_AUTH_TOKEN)?.toAuthToken()
+        } else {
+            val accessToken = getEncryptText("${Constant.SECURE_AUTH_TOKEN}_accessToken")
+            val refreshToken = getEncryptText("${Constant.SECURE_AUTH_TOKEN}_refreshToken")
+            val memberNumber = getEncryptText("${Constant.SECURE_AUTH_TOKEN}_memberNumber")
+            val loginId = getEncryptText("${Constant.SECURE_AUTH_TOKEN}_loginId")
+            if (!accessToken.isNullOrEmpty() && !refreshToken.isNullOrEmpty()
+                && !memberNumber.isNullOrEmpty() && !loginId.isNullOrEmpty()
+            ) {
+                return AuthToken(accessToken, refreshToken, memberNumber, loginId)
+            }
+            return null
+        }
     }
 
     override fun clear() {
         with(encryptedSharedPreferences.edit()) {
             clear()
-            commit()
+            apply()
         }
+        EncryptionUtils.clear()
     }
 }
 
-class SecureStore(private val appContext: Context) : AuthTokenStore {
+class SecureStore(private val appContext: Context) {
 
     private var bioAuthTokenStore: BioAuthTokenStore? = null
     private var normalAuthToken: NormalAuthTokenStore = NormalAuthTokenStore(appContext)
-
-    private val encryptedSharedPreferences: SharedPreferences =
-        appContext.getSharedPreferences("VPrecaSecureStorePref", Context.MODE_PRIVATE)
 
     fun updateEncryptBioAuthTokenStore(encryptCipher: Cipher) {
         bioAuthTokenStore?.let { it.encryptCipher = encryptCipher }
@@ -115,28 +138,19 @@ class SecureStore(private val appContext: Context) : AuthTokenStore {
             }
     }
 
-    private fun saveEncryptText(key: String, textToEncrypt: String) {
-        with(encryptedSharedPreferences.edit()) {
-            val encryptedValue = EncryptionUtils.encrypt(appContext, textToEncrypt)
-            putString(key, encryptedValue)
-            apply()
+    fun saveAuthToken(context: Context, authToken: AuthToken) {
+        val isEnableBiometricSetting = PreferenceHelper.isEnableBiometricSetting(context)
+        if (isEnableBiometricSetting) {
+            bioAuthTokenStore?.let {
+                it.saveAuthToken(authToken)
+                normalAuthToken.clear()//clear normal for safe
+            }
+        } else {
+            normalAuthToken.saveAuthToken(authToken)
         }
     }
 
-    private fun getEncryptText(key: String): String? {
-        val encryptedValue = encryptedSharedPreferences.getString(key, null)
-        return EncryptionUtils.decrypt(appContext, encryptedValue)
-    }
-
-    override fun saveAuthToken(authToken: AuthToken) {
-        bioAuthTokenStore?.let {
-            it.saveAuthToken(authToken)
-            normalAuthToken.clear()//clear normal for safe
-        }
-            ?: normalAuthToken.saveAuthToken(authToken)
-    }
-
-    override fun getAuthToken(): AuthToken? {
+    fun getAuthToken(): AuthToken? {
         return bioAuthTokenStore?.getAuthToken() ?: normalAuthToken.getAuthToken()
     }
 
@@ -147,54 +161,8 @@ class SecureStore(private val appContext: Context) : AuthTokenStore {
     }
 
 
-    override fun clear() {
+    fun clear() {
         bioAuthTokenStore?.clear()
         normalAuthToken.clear()
-
-        with(encryptedSharedPreferences.edit()) {
-            clear()
-            commit()
-        }
-    }
-
-    fun saveAccessToken(token: String) {
-        return saveEncryptText(Constant.SECURE_ACCESS_TOKEN, token)
-    }
-
-    fun getAccessToken(): String? {
-        return getEncryptText(Constant.SECURE_ACCESS_TOKEN)
-    }
-
-    fun saveRefreshToken(token: String) {
-        return saveEncryptText(Constant.SECURE_REFRESH_TOKEN, token)
-    }
-
-    fun getRefreshToken(): String? {
-        return getEncryptText(Constant.SECURE_REFRESH_TOKEN)
-    }
-
-    fun saveLoginUserId(userId: String) {
-        return saveEncryptText(Constant.SECURE_USER_ID, userId)
-    }
-
-    fun getLoginUserId(): String? {
-        return getEncryptText(Constant.SECURE_USER_ID)
-    }
-
-    fun saveMemberNumber(userId: String) {
-        return saveEncryptText(Constant.SECURE_MEMBER_NUMBER, userId)
-    }
-
-    fun getMemberNumber(): String? {
-        return getEncryptText(Constant.SECURE_MEMBER_NUMBER)
-    }
-
-    fun clearDueLogout() {
-        val useId = getLoginUserId()
-        with(encryptedSharedPreferences.edit()) {
-            clear()
-            commit()
-        }
-        useId?.let { saveLoginUserId(useId) }
     }
 }

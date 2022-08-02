@@ -1,20 +1,20 @@
 package com.lifecard.vpreca.ui.introduce
 
-import androidx.lifecycle.ViewModelProvider
+
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.lifecard.vpreca.R
-import com.lifecard.vpreca.data.model.GiftCardConfirmData
-import com.lifecard.vpreca.databinding.FragmentGiftCardCompleteBinding
 import com.lifecard.vpreca.databinding.FragmentGiftCardConfirmDetailBinding
+import com.lifecard.vpreca.utils.hideLoadingDialog
 import com.lifecard.vpreca.utils.showInternetTrouble
+import com.lifecard.vpreca.utils.showLoadingDialog
 import com.lifecard.vpreca.utils.showPopupMessage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,27 +32,24 @@ class GiftCardConfirmDetailFragment  : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-//        viewModel = ViewModelProvider(this).get(GiftCardConfirmDetailViewModel::class.java)
+    ): View {
         _binding = FragmentGiftCardConfirmDetailBinding.inflate(inflater, container, false)
         binding.card = args.cardData
         binding.cardZone.card = args.cardData
+        binding.cardZone.cardInclude.card = args.cardData
         val btnBack = binding.appbarGiftThird.btnBack
         val btnSubmit = binding.btnSubmitInput
-        val loading = binding.loading
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(object :
+        requireActivity().onBackPressedDispatcher.addCallback(object :
             OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val action = GiftCardConfirmDetailFragmentDirections.actionGiftcardinputcardToGiftcardconfirm(args.cardData, GiftCardConfirmData("inputcard"))
-                findNavController().navigate(action)
+                findNavController().popBackStack()
             }
         })
 
-        btnBack.setOnClickListener(View.OnClickListener {
-            val action = GiftCardConfirmDetailFragmentDirections.actionGiftcardinputcardToGiftcardconfirm(args.cardData, GiftCardConfirmData("inputcard"))
-            findNavController().navigate(action)
-        })
+        btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         viewModel.giftCardState.observe(
             viewLifecycleOwner,
@@ -70,16 +67,16 @@ class GiftCardConfirmDetailFragment  : Fragment() {
                 }
             })
 
-        viewModel.loading.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.loading.observe(viewLifecycleOwner) {
             when (it) {
-                true -> loading.visibility = View.VISIBLE
-                else -> loading.visibility = View.GONE
+                true -> showLoadingDialog()
+                else -> hideLoadingDialog()
             }
-        })
+        }
 
-        btnSubmit.setOnClickListener(View.OnClickListener {
+        btnSubmit.setOnClickListener {
             viewModel.giftCardRelation(args.cardData!!)
-        })
+        }
         return binding.root
     }
 

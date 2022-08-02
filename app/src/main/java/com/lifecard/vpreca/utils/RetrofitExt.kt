@@ -1,10 +1,18 @@
 package com.lifecard.vpreca.utils
 
+import okhttp3.Request
 import okhttp3.RequestBody
+import okio.Buffer
 
-fun RequestBody?.getMessageType(): String {
+fun Request.bodyToString(): String? {
+    val buffer = Buffer()
     try {
-        //TODO need implement
-    } catch (e: Exception) {}
-    return "unknown"
+        val copy = this.newBuilder().build()
+        copy.body()?.writeTo(buffer)
+        return buffer.readUtf8()
+    } catch (e: Exception) {
+    } finally {
+        buffer.close()
+    }
+    return null
 }
