@@ -17,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lifecard.vpreca.R
+import com.lifecard.vpreca.base.LoadingCameraDialogFragment
 import com.lifecard.vpreca.base.LoadingDialogFragment
 import com.lifecard.vpreca.ui.custom.DrawerMenuLayout
 
@@ -162,6 +163,35 @@ fun Fragment.hideLoadingDialog() = try {
     val supportFragmentManager = childFragmentManager
     val fragment =
         supportFragmentManager.findFragmentByTag(LoadingDialogFragment.FRAGMENT_TAG)
+    fragment?.let {
+        supportFragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss()
+    }
+} catch (e: Exception) {
+    print(e)
+}
+
+fun Fragment.showLoadingCameraDialog(): Fragment? = try {
+    val supportFragmentManager = childFragmentManager
+    var fragment =
+        supportFragmentManager.findFragmentByTag(LoadingCameraDialogFragment.FRAGMENT_TAG)
+    if (fragment == null) {
+        fragment = LoadingCameraDialogFragment()
+        supportFragmentManager.beginTransaction()
+            .add(fragment, LoadingCameraDialogFragment.FRAGMENT_TAG)
+            .commitAllowingStateLoss()
+        supportFragmentManager.executePendingTransactions()
+    }
+
+    fragment
+} catch (e: Exception) {
+    print(e)
+    null
+}
+
+fun Fragment.hideLoadingCameraDialog() = try {
+    val supportFragmentManager = childFragmentManager
+    val fragment =
+        supportFragmentManager.findFragmentByTag(LoadingCameraDialogFragment.FRAGMENT_TAG)
     fragment?.let {
         supportFragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss()
     }

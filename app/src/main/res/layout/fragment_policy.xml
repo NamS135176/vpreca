@@ -35,6 +35,7 @@
                     android:lineSpacingExtra="6sp"
                     android:paddingHorizontal="28dp"
                     android:paddingTop="29dp"
+                    android:visibility="gone"
                     android:text="@string/policy_des"
                     android:textSize="12sp"
                     app:layout_constraintTop_toTopOf="parent" />

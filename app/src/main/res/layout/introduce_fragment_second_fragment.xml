@@ -38,6 +38,7 @@
                     android:text="@string/introduce_des_top"
                     android:textColor="#fff"
                     android:textSize="18sp"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/appbar_gift_second" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -47,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:lineSpacingExtra="6sp"
+                    android:visibility="gone"
                     android:text="@string/introduce_des_bot"
                     android:textColor="#fff"
                     android:textSize="18sp"
@@ -155,9 +157,9 @@
                             android:layout_height="54dp"
                             android:gravity="center_vertical"
                             android:layout_weight="0.35"
-                            android:text="0000 0000 0000"
+                            android:text="＊＊＊＊ - ＊＊＊＊ - ＊＊＊＊ -"
                             android:textColor="@color/white"
-                            android:textSize="20dp" />
+                            android:textSize="13dp" />
 
                         <com.google.android.material.textfield.TextInputEditText
                             style="@style/TextInputEditTextFilledBox"

@@ -81,6 +81,7 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="3sp"
             android:paddingStart="20dp"
+            android:visibility="gone"
             android:paddingLeft="20dp"
             android:paddingTop="19dp"
             android:paddingEnd="22dp"

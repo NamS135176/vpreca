@@ -1,0 +1,124 @@
+package com.lifecard.vpreca.ui.aboutapp
+
+import android.graphics.Bitmap
+import android.os.Build
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
+import com.lifecard.vpreca.R
+import com.lifecard.vpreca.databinding.FragmentAboutAppBinding
+import com.lifecard.vpreca.databinding.TermOfUseFragmentBinding
+import com.lifecard.vpreca.ui.termofuse.TermOfUseFragment
+import com.lifecard.vpreca.ui.termofuse.TermOfUseFragmentDirections
+import com.lifecard.vpreca.utils.PreferenceHelper
+
+class AboutAppFragment : Fragment() {
+
+    companion object {
+        fun newInstance() = AboutAppFragment()
+    }
+
+    private var _binding: FragmentAboutAppBinding? = null
+    private val binding get() = _binding!!
+    private val loading = MutableLiveData(false)
+
+    private var webViewClient = object : WebViewClient() {
+
+        private fun handleOpenUrl(url: String) {
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+                //open webview fragment
+                findNavController().navigate(AboutAppFragmentDirections.actionAboutAppToWeb(url))
+            }
+        }
+
+        override fun shouldOverrideUrlLoading(
+            view: WebView?,
+            request: WebResourceRequest?
+        ): Boolean {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) return true//only support from 24 and above
+            request?.url?.let {
+                handleOpenUrl(it.toString())
+            }
+            return true
+        }
+
+        @Deprecated("Deprecated in Java")
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) return false//only support from 23 and bellow
+            url?.let { handleOpenUrl(it) }
+            return true
+        }
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
+            loading.value = true
+        }
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+            loading.value = true
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAboutAppBinding.inflate(inflater, container, false)
+
+        val btnSubmit = binding.btnSubmitTermOfUse
+        val cbTermOfUse = binding.cbTermOfUse
+        val webView = binding.webview
+        val loadingProgressBar = binding.loading
+        val btnBack = binding.appbar.btnBack
+        btnBack.setOnClickListener(View.OnClickListener {
+            findNavController().popBackStack()
+        })
+        cbTermOfUse.setOnCheckedChangeListener { _, isChecked ->
+            btnSubmit.isEnabled = isChecked
+        }
+
+        btnSubmit.setOnClickListener {
+//            PreferenceHelper.setAcceptTermOfUseFirstTime(
+//                appContext = requireContext(),
+//                value = true
+//            )
+//            findNavController().navigate(R.id.action_tou_to_login)
+        }
+        webView.settings.useWideViewPort = true
+        webView.settings.loadWithOverviewMode = true
+        webView.settings.builtInZoomControls = false
+        webView.settings.javaScriptEnabled = false
+        webView.webViewClient = webViewClient
+        webView.loadUrl("file:///android_asset/term_of_use.html")
+
+        loading.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> loadingProgressBar.visibility = View.VISIBLE
+                false -> loadingProgressBar.visibility = View.GONE
+            }
+        }
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        requireActivity().onBackPressedDispatcher.addCallback(
+//            viewLifecycleOwner,
+//            object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    requireActivity().finish()
+//                }
+//            })
+    }
+
+
+}

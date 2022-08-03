@@ -48,17 +48,18 @@
                     android:lineSpacingExtra="8sp"
                     android:paddingTop="12dp"
                     android:text="@string/balance_amount_by_code_select_title"/>
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_total_amount"
+                    style="@style/Widget.AppCompat.TextView.Bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:lineSpacingExtra="0sp"
-                    android:textColor="#ff837b"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:textSize="36sp"
-                    style="@style/Widget.AppCompat.TextView.Bold"
-                    android:text="@string/issue_card_select_source_total"/>
+                    android:lineSpacingExtra="0sp"
+                    android:text="@string/issue_card_select_source_total"
+                    android:textColor="#ff837b"
+                    android:textSize="36sp" />
             </LinearLayout>
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/underline"

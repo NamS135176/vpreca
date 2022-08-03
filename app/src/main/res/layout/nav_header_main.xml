@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/drawer_header_menu"
+        android:visibility="invisible"
         android:textSize="16sp"
         android:textStyle="normal" />
 

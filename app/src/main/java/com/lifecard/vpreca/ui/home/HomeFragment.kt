@@ -223,7 +223,7 @@ class HomeFragment : Fragment(), CoroutineScope {
 
         buttonSeeAllCard.setOnClickListener(View.OnClickListener { findNavController().navigate(R.id.nav_list_vpreca) })
 
-        binding.textLastLoginDate.text = SimpleDateFormat("yyyy M/d").format(Date())
+        binding.textLastLoginDate.text = SimpleDateFormat("yyyy/M/d").format(Date())
 
         binding.listCard.buttonUsage.setOnClickListener(View.OnClickListener {
             val pagerAdapter = viewPager.adapter as CardSlidePagerAdapter

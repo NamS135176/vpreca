@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/term_of_use"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.aboutapp.AboutAppFragment">
+
+        <include
+            android:id="@+id/appbar"
+            layout="@layout/toolbar_with_back_btn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{@string/title_term_of_use}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="29dp"
+            android:layout_marginTop="29dp"
+            android:visibility="gone"
+            android:lineSpacingExtra="6sp"
+            android:text="@string/des_term_of_use"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/appbar" />
+
+        <FrameLayout
+            android:id="@+id/webview_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:background="@drawable/border_term_of_use"
+            android:padding="2dp"
+            app:layout_constraintBottom_toTopOf="@id/cbTermOfUse"
+            app:layout_constraintTop_toBottomOf="@+id/text_caption">
+
+            <WebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/webview_container"
+            app:layout_constraintEnd_toEndOf="@id/webview_container"
+            app:layout_constraintStart_toStartOf="@id/webview_container"
+            app:layout_constraintTop_toTopOf="@id/webview_container" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cbTermOfUse"
+            style="@style/Widget.App.CheckBox.Dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35dp"
+            android:gravity="center"
+            android:text="@string/confirm_term_of_use"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/btn_submit_term_of_use"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_submit_term_of_use"
+            style="@style/Widget.AppCompat.TextView.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="22dp"
+            android:layout_marginBottom="26dp"
+            android:enabled="false"
+            android:visibility="gone"
+            android:paddingVertical="11dp"
+            android:text="@string/confirm_term_of_use_btn"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:cornerRadius="27dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

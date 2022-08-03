@@ -50,6 +50,7 @@
                     android:layout_marginTop="32dp"
                     android:gravity="center"
                     android:lineSpacingExtra="10sp"
+                    android:visibility="gone"
                     android:text="@string/balance_select_source_confirm_title"
                     android:textColor="@color/white"
                     android:textSize="16sp" />

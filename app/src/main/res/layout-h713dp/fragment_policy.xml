@@ -28,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="6sp"
                 android:paddingHorizontal="28dp"
+                android:visibility="gone"
                 android:paddingTop="29dp"
                 android:text="@string/policy_des"
                 android:textSize="12sp"

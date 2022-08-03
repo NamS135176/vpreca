@@ -13,7 +13,7 @@
     <string name="home_text_info">すべてのVプリカ\n残高合計</string>
     <string name="home_text_last_login">前回のログイン</string>
     <string name="home_text_no_card">まだVプリカは発行されていません。</string>
-    <string name="home_button_add_new_card">カードを発行する</string>
+    <string name="home_button_add_new_card">プリカ新規発行</string>
     <string name="home_button_usage">利用明細</string>
     <string name="home_button_info">カード情報</string>
     <string name="home_button_lock">ロック解除</string>
@@ -28,8 +28,8 @@
     <string name="action_sign_in_fingerprint">生体認証でログイン</string>
     <string name="action_sign_in_biometric">生体認証でログイン</string>
     <string name="action_sign_in_short">ログイン</string>
-    <string name="action_forgot_password">ログインID・パスワードを忘れた場合はこちら</string>
-    <string name="action_signup">アカウント新規開設はこちら</string>
+    <string name="action_forgot_password">ログインID・パスワードを忘れた場合</string>
+    <string name="action_signup">アカウント開設はこちら</string>
     <string name="login_or">または</string>
     <string name="click_here">はこちら</string>
     <string name="welcome">"Welcome!"</string>
@@ -61,7 +61,7 @@
     <string name="title_next_phone">@string/button_cancel</string>
     <string name="btn_next_phone">@string/button_next</string>
     <string name="phone_title">電話番号登録</string>
-    <string name="phone_des_top">Vプリカアカウントを作成するにはSMS（ショートメールサービス）による認証が必要です。</string>
+    <string name="phone_des_top">Vプリカアカウントを作成するにはSMSによる認証が必要です。</string>
     <string name="phone_des_bot">以下にSMSを受信できる090/080/070ではじまる電話番号をハイフンを入れずに入力、「電話番号認証」をタップしてください。</string>
     <string name="phone_hint">電話番号</string>
     <string name="des_phone_input">電話番号は、ご連絡先として登録いたします。</string>
@@ -72,7 +72,7 @@
     <string name="confirm_phone_des_left">送信先電話番号</string>
     <string name="confirm_phone_des_right">080-0000-0000</string>
     <string name="confirm_phone_hint">認証コード</string>
-    <string name="confirm_phone_des_input">認証手続きの有効時間は10分です。\n認証番号の入力を複数回間違えると、同日中の入力が行えなくなります。\n\n認証番号が届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
+    <string name="confirm_phone_des_input">認証手続きの有効時間は10分です。\n認証コードの入力を複数回間違えると、同日中の入力が行えなくなります。\n\n認証コードが届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>
 
     <!--    Email Screen-->
     <string name="email_title">メールアドレス登録</string>
@@ -99,7 +99,7 @@
     <!--    Introduce Screen-->
     <string name='introduce_title'>Vプリカギフト</string>
     <string name='introduce_des_top'>Vプリカギフトの </string>
-    <string name='introduce_des_bot'>カード情報を確認します</string>
+    <string name='introduce_des_bot'>買った方、貰った方はこちらで\nカード番号が確認できます。</string>
     <string name='introduce_des'>以下の内容をよくお読みのうえ、チェックボックスにチェックを して、「次へ」ボタンを押してください</string>
     <string name='introduce_first_line'>私は、暴力団などの反社会的勢力や、反社会的勢力の関 係者ではないことを表明します。</string>
     <string name='introduce_second_line'>私は、Vプリカギフト利用規約に同意します。</string>
@@ -109,7 +109,7 @@
 
     <string name='introduce_des_second'>認証コード(半角英数字15文字)</string>
     <string name='introduce_second_input'>半角英数字15文字</string>
-    <string name='introduce_second_des'>スペースや半角・全角・大文字・小文字の文字の種類を厳密に判 定しています。文字列が合致していても文字の種類が異なります と、入力エラーとなります。</string>
+    <string name='introduce_second_des'>入力エラーの際は、お手数ですが直接認証コードをご入力ください。</string>
     <string name='introduce_card_title'>カード番号入力(下4桁)</string>
 
     <string name='introduce_third_des'>ギフトカードの内容を確認してください。</string>
@@ -210,7 +210,7 @@
     <!--    Complete Forgot Pass-->
     <string name="complete_forgot_title">メール送信完了</string>
     <string name="complete_forgot_des_top">ご登録いただいているメールアドレスにログインパスワードの再設定用URLを送信いたしました</string>
-    <string name="complete_forgot_des_bot">送信させていただいたURLよりログインパスワード星設定画面へ進み、ログインパスワードの再設定をお願いします。</string>
+    <string name="complete_forgot_des_bot">送信させていただいたURLよりログインパスワードの設定画面へ進み、ログインパスワードの再設定をお願いします。</string>
     <!--    Complete Forgot Pass-->
 
     <!--    SMS Verify-->
@@ -316,13 +316,13 @@
     <string name="change_phone_first_des">現在ご登録いただいている電話番号</string>
     <string name="change_phone_first_title">電話番号確認</string>
     <string name="change_phone_appbar_title">電話番号変更</string>
-    <string name="change_phone_second_title">メールコード送信完了</string>
+    <string name="change_phone_second_title">認証コード送信完了</string>
     <string name="change_phone_des_top">現在ご登録いただいているメールアドレスに、電話番号変更のためのメールコードを送信しました。</string>
     <string name="change_phone_des_bot">メールに記載しているメールコードを入力してください</string>
     <string name="change_phone_second_hint">メールコード</string>
     <string name="change_phone_second_des_bot">メールを再送信</string>
     <string name="change_phone_second_btn">送信</string>
-    <string name="change_phone_input_phone_des">電話番号の変更にはSMS（ショートメールサービス）による認証が必要です。</string>
+    <string name="change_phone_input_phone_des">電話番号の変更にはSMSによる認証が必要です。</string>
     <!--    Change info data-->
     <string name="change_info_input_appbar_title">会員情報</string>
     <string name="change_info_input_title">会員情報変更</string>
@@ -371,11 +371,11 @@
     <!--    Issue Card Main-->
     <string name="issue_card_main_appbar_title">カードを発行する</string>
     <string name="issue_card_main_title_first">コード入力をして発行</string>
-    <string name="issue_card_main_des_first">コンビニなど手続きをして発行したコード番号を入力して発行します。</string>
-    <string name="issue_card_main_title_second">カードを買う</string>
-    <string name="issue_card_main_des_second">クレジットカードや銀行振込で今すぐ購入して発行します。</string>
-    <string name="issue_card_main_title_third">合算をして発行</string>
-    <string name="issue_card_main_des_third">すでにある複数のカードを合算して新しいカードを発行します。</string>
+    <string name="issue_card_main_des_first">コンビニなどで購入した発行コードから発行します。</string>
+    <string name="issue_card_main_title_second">Vプリカを購入する</string>
+    <string name="issue_card_main_des_second">クレジットカードやインターネットバンキングで購入できます。</string>
+    <string name="issue_card_main_title_third">Vプリカを合算する</string>
+    <string name="issue_card_main_des_third">複数のＶプリカを合算して\n新しいカードを発行します。</string>
     <!--    Issue Card Main-->
 
     <!--    Issue Card by plus Introduce-->
@@ -402,8 +402,8 @@
 
     <!--    Issue Card Plus Complete-->
     <string name="issue_card_plus_complete_appbar_title">残高合算完了</string>
-    <string name="issue_card_plus_complete_title">残高合算が完了しました</string>
-    <string name="issue_card_plus_complete_des">ホーム画面でカードが発行されていることを確認してください。\n\nなお、ご登録いただいいるメールアドレスに確認メールを送信いたしました。</string>
+    <string name="issue_card_plus_complete_title">新しいVプリカが発行されました</string>
+    <string name="issue_card_plus_complete_des">ホーム画面でVプリカが発行されていることを確認してください。\n\nご登録のメールアドレスに確認メールを送信いたしました。</string>
     <!--    Issue Card Plus Complete-->
 
     <!--    Issue card by code value confirm title-->
@@ -426,29 +426,29 @@
     <!--    Issue Card By Code Complete without card-->
 
     <!--    Balance amounte select source-->
-    <string name="balance_amount_by_code_select_appbar_title">残高不足解消</string>
-    <string name="balance_amount_by_code_select_title">不足残高合計</string>
-    <string name="balance_amount_by_code_select_title_left">充当金額</string>
-    <string name="balance_amount_by_code_select_title_right">充当後不足残高</string>
-    <string name="balance_amount_by_code_select_des">充当するカードを選択してください</string>
+    <string name="balance_amount_by_code_select_appbar_title">残高不足のカードへ入金</string>
+    <string name="balance_amount_by_code_select_title">残高不足の合計</string>
+    <string name="balance_amount_by_code_select_title_left">入金金額</string>
+    <string name="balance_amount_by_code_select_title_right">入金後の残高不足</string>
+    <string name="balance_amount_by_code_select_des">入金するカードを選択してください</string>
     <!--    Balance amount select-->
 
     <!--    Balance by source confirm-->
-    <string name="balance_select_source_confirm_appbar_title">残高不足解消</string>
+    <string name="balance_select_source_confirm_appbar_title">残高不足のカードへ入金</string>
     <string name="balance_select_source_confirm_title">残高不足充当の確認</string>
     <string name="balance_select_source_confirm_des">残高不足充当の内容をご確認ください</string>
     <string name="balance_select_source_confirm_btn">充当</string>
     <!--    Balance by source confirm-->
 
     <!--    Balance by code complete-->
-    <string name="balance_by_source_complete_appbar_title">残高不足解消</string>
-    <string name="balance_by_source_complete_title">残高不足充当完了</string>
-    <string name="balance_by_source_complete_des">残高不足充当が完了しました。\n\n残高不足が解消していない場合は、引き続きお手続きをお願いします。</string>
+    <string name="balance_by_source_complete_appbar_title">残高不足のカードへ入金</string>
+    <string name="balance_by_source_complete_title">残高不足のカードへ\n入金が完了いたしました</string>
+    <string name="balance_by_source_complete_des">残高不足が解消していない場合は、引き続きお手続きをお願いします。</string>
     <!--    Balance by code complete-->
 
     <!--    Issue Card By Code Complete with card-->
     <string name="issue_card_by_code_complete_with_card_appbar_title">残高加算内容完了</string>
-    <string name="issue_card_by_code_complete_with_card_title">Vプリカの発行が完了いたしました。</string>
+    <string name="issue_card_by_code_complete_with_card_title">残高不足のカードへ\n入金が完了いたしました。</string>
     <string name="issue_card_by_code_complete_with_card_des">ホーム画面でカードが発行されていることを確認してください。\n\nなお、ご登録いただいいるメールアドレスに確認メールを送信いたしました。</string>
     <!--    Issue Card By Code Complete without card-->
 
@@ -457,10 +457,10 @@
     <!--    Balance by code confirm-->
 
     <!--    Balance by code input-->
-    <string name="balance_by_code_input_appbar_title">残高不足解消</string>
+    <string name="balance_by_code_input_appbar_title">残高不足のカードへ入金</string>
     <string name="balance_by_code_input_title">コード入力</string>
-    <string name="balance_by_code_input_des_top">コンビニエンスストアなどで購入した発行コードで残高不足に充当できます。\n\n発行コードを入力していただくか、カメラを使用してQRコードをスキャンしてください。</string>
-    <string name="balance_by_code_input_des_bot">スペースや半角・全角・大文字・小文字の文字の種類を厳密に判定しています。文字列が合致していても文字の種類が異なりますと、入力エラーとなります。</string>
+    <string name="balance_by_code_input_des_top">コンビニなどで購入した発行コードから入金できます。\n\n発行コードを入力していただくか、カメラを使用して発行コードをスキャンしてください</string>
+    <string name="balance_by_code_input_des_bot">入力エラーの際は、お手数ですが直接認証コードをご入力ください。</string>
     <!--    Balance by code input-->
 
     <!--    Issue Card By Code Select Soure-->
@@ -472,13 +472,13 @@
     <!--    Issue Card By Code Select Soure-->
 
     <!--    Balanced Amount Menu-->
-    <string name="balance_amount_menu_layout_title">不足残高合計</string>
-    <string name="balance_amount_menu_appbar_layout">残高不足解消</string>
-    <string name="balance_amount_menu_title_first">既存カードから\n充当する</string>
+    <string name="balance_amount_menu_layout_title">残高不足の合計</string>
+    <string name="balance_amount_menu_appbar_layout">残高不足のカードへ入金</string>
+    <string name="balance_amount_menu_title_first">すでにお持ちのカードから入金する</string>
     <string name="balance_amount_menu_des_first">すでにお持ちのカードを\n残高不足のカードに充当します。</string>
-    <string name="balance_amount_menu_title_second">コードを入力して\n充当する</string>
+    <string name="balance_amount_menu_title_second">発行コードから\n入金する</string>
     <string name="balance_amount_menu_des_second">発行コードやギフトキーを入力し残高不足のカードに充当します。</string>
-    <string name="balance_amount_menu_title_third">Vプリカを新規購入して充当する</string>
+    <string name="balance_amount_menu_title_third">新しいVプリカを購入して入金する</string>
     <string name="balance_amount_menu_des_third">新規カードを購入し、\n残高不足のカードに充当します。</string>
     <!--    Balanced Amount Menu-->
 
@@ -488,7 +488,7 @@
     <string name="four_row">利用金額</string>
 
     <!--    Balance by code value confirm-->
-    <string name="balance_by_code_confirm_value_appbar_title">残高不足解消</string>
+    <string name="balance_by_code_confirm_value_appbar_title">残高不足のカードへ入金</string>
     <string name="balance_by_code_confirm_value_title">確認完了</string>
     <!--    Balance by code Input-->
 
@@ -502,10 +502,10 @@
     <!--    Issue Card by code-->
     <string name="issue_card_by_code_appbar_title">コード入力をして発行</string>
     <string name="issue_card_by_code_des_top">コンビニエンスストアなどで購入した発行コードでVプリカを発行できます。発行コードを入力していただくか、カメラを使用してQRコードをスキャンしてください。</string>
-    <string name="issue_card_by_code_des_bot">スペースや半角・全角・大文字・小文字の文字の種類を厳密に判定しています。文字列が合致していても文字の種類が異なりますと、入力エラーとなります。</string>
+    <string name="issue_card_by_code_des_bot">入力エラーの際は、お手数ですが直接認証コードをご入力ください。</string>
     <string name="issue_card_by_code_input_hint">半角英数字15桁</string>
-    <string name="issue_card_by_code_confirm_value_title_confirm">発行時残高</string>
-    <string name="issue_card_by_code_complete_des">ホーム画面でカードが発行されていることを確認してください。\n尚、ご登録いただいいるメールアドレスに確認メールを送信いたしました、</string>
+    <string name="issue_card_by_code_confirm_value_title_confirm">購入券種(金額)</string>
+    <string name="issue_card_by_code_complete_des">ホーム画面でカードが発行されていることを確認してください。\n尚、ご登録のメールアドレスに確認メールを送信いたしました、</string>
     <!--    Issue Card by code-->
 
     <!--    Error  -->

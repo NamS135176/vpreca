@@ -11,13 +11,18 @@
         android:paddingBottom="35dp"
         tools:context=".ui.signup/SignupFragment">
 
+<!--        <include-->
+<!--            android:id="@+id/appbar_signup"-->
+<!--            layout="@layout/toolbar_title_only"-->
+<!--            app:elevation="0dp"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:title="@{@string/issue_card_by_code_complete_w_card_appbar_title}" />-->
         <include
             android:id="@+id/appbar_signup"
             layout="@layout/toolbar_title_only"
             app:elevation="0dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@{@string/issue_card_by_code_complete_w_card_appbar_title}" />
-
+            app:title="" />
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/gift_card_complete_title"
             style="@style/Widget.AppCompat.TextView.Bold"

@@ -90,18 +90,21 @@ class CameraFragment : Fragment() {
             when (loading) {
                 true -> {
                     binding.buttonCancel.isEnabled = false
-                    showLoadingDialog()
+                    showLoadingCameraDialog()
                 }
                 else -> {
                     binding.buttonCancel.isEnabled = true
-                    hideLoadingDialog()
+                    hideLoadingCameraDialog()
                 }
             }
         })
         viewModel.codeOcr.observe(viewLifecycleOwner, androidx.lifecycle.Observer { ocr ->
             //show toast
             when (ocr.isNullOrEmpty()) {
-                true -> showAlertErrorOcr()
+                true -> {
+//                    showAlertErrorOcr()
+                    findNavController().popBackStack()
+                }
                 else -> {
                     setNavigationResult(ocr, "ocr_code")
                     findNavController().popBackStack()
@@ -111,7 +114,8 @@ class CameraFragment : Fragment() {
         viewModel.error.observe(viewLifecycleOwner, androidx.lifecycle.Observer { message ->
             //show alert error
             if (!message.isNullOrEmpty()) {
-                showAlertErrorOcr()
+//                showAlertErrorOcr()
+                findNavController().popBackStack()
             }
         })
         viewModel.networkTrouble.observe(
@@ -395,7 +399,8 @@ class CameraFragment : Fragment() {
                         ?: kotlin.run {
                             viewModel.releaseLockTakePhoto(true)
                             //show alert
-                            showAlertErrorOcr()
+                            findNavController().popBackStack()
+//                            showAlertErrorOcr()
                         }
                 })
             }

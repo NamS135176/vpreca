@@ -52,9 +52,17 @@ class DrawerMenuAdapter(
         if (holder.itemViewType == 0) {//group
             holder.headerBinding?.text?.text = items[position].title
         } else {
+            println("sdhfkjsdhfskdfh")
+////            holder?.regularItemBinding?.item = items[position]
             holder.regularItemBinding?.text?.text = items[position].title
+////            holder.regularItemBinding?.c
             holder.regularItemBinding?.root?.setOnClickListener(View.OnClickListener {
                 onItemClickListener.onClick(position)
+//                val isInvisible: Boolean = items[position].show
+//                holder.regularItemBinding?.tvTest?.visibility = if(isInvisible) View.VISIBLE else View.GONE
+//
+//                items[position].show = !items[position].show
+//                notifyItemChanged(position)
             })
         }
     }

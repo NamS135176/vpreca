@@ -1,28 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
-    android:paddingVertical="12dp">
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text"
-        style="@style/Widget.AppCompat.TextView.Bold"
-        android:layout_width="0dp"
+    >
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="item"
+            type="com.lifecard.vpreca.ui.custom.NavigationItem" />
+    </data>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:gravity="center_vertical"
-        android:textAlignment="center"
-        android:textColor="@color/peacock_blue"
-        android:lineSpacingExtra="7sp"
-        android:textSize="14sp"
-        tools:ignore="RtlCompat" />
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+        android:paddingVertical="12dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_menu_arrow" />
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text"
+                style="@style/Widget.AppCompat.TextView.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="7sp"
+                android:textAlignment="center"
+                android:textColor="@color/peacock_blue"
+                android:textSize="14sp"
+                tools:ignore="RtlCompat" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_menu_arrow" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTest"
+            android:visibility="gone"
+            android:text="sfjsdfk" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

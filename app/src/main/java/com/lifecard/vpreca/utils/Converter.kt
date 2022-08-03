@@ -19,7 +19,7 @@ object Converter {
         return date?.let {
             val localDate = LocalDate.fromDateFields(date)
 
-            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("yyyyM月d日")
+            val fmt: DateTimeFormatter = DateTimeFormat.forPattern("yyyy年M月d日")
             localDate.toString(fmt)
         } ?: ""
     }
