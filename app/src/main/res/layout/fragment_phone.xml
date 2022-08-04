@@ -116,6 +116,7 @@
                             android:text="@string/phone_des_bot"
                             android:textSize="12sp"
                             android:lineSpacingExtra="6sp"
+                            android:visibility="gone"
                             android:layout_marginTop="21dp"
                             />
                         <com.lifecard.vpreca.ui.custom.MyTextInputLayoutWhiteBack
