@@ -6,13 +6,18 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/fragment_horizontal_margin"
-    android:paddingVertical="12dp">
-
+>
+    <View
+        android:layout_height="2px"
+        android:layout_width="match_parent"
+        android:background="#ddd"
+        />
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/fragment_horizontal_margin"
+        android:paddingVertical="12dp"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView

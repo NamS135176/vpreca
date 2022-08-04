@@ -12,7 +12,9 @@ import com.lifecard.vpreca.R
 import com.lifecard.vpreca.databinding.*
 import com.lifecard.vpreca.ui.issuecard.IssueCardSourceAdapter
 import com.lifecard.vpreca.utils.Converter
+import com.lifecard.vpreca.utils.Utils
 import com.lifecard.vpreca.utils.showAlertMessage
+import com.lifecard.vpreca.utils.viewFindNavController
 
 class DrawerMenuAdapter(
     private var items: ArrayList<NavigationItem>,
@@ -71,6 +73,10 @@ class DrawerMenuAdapter(
         return items[position].type
     }
 
+    private fun showWebViewActivity(webUrl: String) {
+        Utils.openBrowser(context, webUrl)
+    }
+
     override fun onBindViewHolder(holder: NavigationItemViewHolder, position: Int) {
         if (holder.itemViewType == 0) {//group
             holder.headerBinding?.text?.text = items[position].title
@@ -118,16 +124,30 @@ class DrawerMenuAdapter(
             holder.menuItemBinding?.tvTest?.adapter = adapter
             adapter.setOnClickListener(object : ListMenuAdapter.OnItemClickListener {
                 override fun onItemClick(position: Int, binding: MenuItemTestBinding) {
-
+                    when(items[position]){
+                        context.getString(R.string.menu_news) -> showWebViewActivity("https://vpc.lifecard.co.jp/news/index.html")//menu_news
+                        context.getString(R.string.menu_faq) -> showWebViewActivity("https://vpreca.dga.jp/")//menu_faq
+                        context.getString(R.string.menu_attention) -> showWebViewActivity("https://vpc.lifecard.co.jp/attention/index.html")//menu_attention
+                        context.getString(R.string.menu_inquiry) -> showWebViewActivity("https://vpc.lifecard.co.jp/contact/index.html")//menu_inquiry
+                        context.getString(R.string.menu_company) -> showWebViewActivity("https://www.lifecard.co.jp/company/")//menu_company
+                        context.getString(R.string.menu_business_info) -> showWebViewActivity("https://www.lifecard.co.jp/company/business/")//menu_business_info
+                        context.getString(R.string.menu_compliance) -> showWebViewActivity("https://www.lifecard.co.jp/efforts/compliance/")//menu_compliance
+                        context.getString(R.string.menu_privacy_policy) -> showWebViewActivity("https://www.lifecard.co.jp/privacy_policy/")//menu_privacy_policy
+                        context.getString(R.string.menu_link) -> showWebViewActivity("https://vpc.lifecard.co.jp/links/index.html")//menu_link
+                        context.getString(R.string.menu_laws) -> showWebViewActivity("https://www.lifecard.co.jp/efforts/privacy_policy/")//menu_laws
+                        context.getString(R.string.menu_settlement) -> showWebViewActivity("https://vpc.lifecard.co.jp/settlement/index.html")//menu_settlement
+                        context.getString(R.string.menu_rule) -> showWebViewActivity("https://vpc.lifecard.co.jp/rule/index.html")//menu_rule
+                        context.getString(R.string.menu_aboutapp) -> holder.menuItemBinding?.root?.viewFindNavController()?.navigate(R.id.nav_aboutapp)
+                    }
                 }
             })
 
             if (this.items[position].show) {
                 holder.menuItemBinding?.tvTest?.visibility = View.VISIBLE
-                holder.menuItemBinding?.imgArrow?.setImageResource(R.drawable.ic_arrow_toggle)
+                holder.menuItemBinding?.imgArrow?.setImageResource(R.drawable.ic_arrow_up_fill_blue)
             } else {
                 holder.menuItemBinding?.tvTest?.visibility = View.GONE
-                holder.menuItemBinding?.imgArrow?.setImageResource(R.drawable.ic_menu_arrow)
+                holder.menuItemBinding?.imgArrow?.setImageResource(R.drawable.ic_arrow_down_fill_blue)
             }
 
             holder.menuItemBinding?.root?.setOnClickListener(View.OnClickListener {

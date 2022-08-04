@@ -241,7 +241,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
 //                22 -> showWebViewActivity("https://www.lifecard.co.jp/efforts/privacy_policy/")//menu_laws
 //                23 -> showWebViewActivity("https://vpc.lifecard.co.jp/settlement/index.html")//menu_settlement
 //                24 -> showWebViewActivity("https://vpc.lifecard.co.jp/rule/index.html")//menu_rule
-//                25 -> viewFindNavController().navigate(R.id.nav_aboutapp)
+                25 -> viewFindNavController().navigate(R.id.nav_aboutapp)
             }
         }
     }
