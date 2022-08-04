@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{Converter.convertCurrency(card.publishAmount)}"
-                android:textColor="@color/white"
+                android:textColor="@{ModelExtKt.isBalance(card) ? @color/error : @color/white}"
                 android:textSize="18sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

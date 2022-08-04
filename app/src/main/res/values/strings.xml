@@ -217,7 +217,7 @@
     <string name="appbar_sms_title">自動ログイン認証</string>
     <string name='sms_verify_title'>認証番号入力</string>
     <string name="sms_verify_des_top">自動ログインの有効期限が切れました。</string>
-    <string name='sms_verify_des_bot'>SMSで認証番号を送信いたしました。受け取った認証番号を入力し、「次へ」ボタンをタップしてください。</string>
+    <string name='sms_verify_des_bot'>SMSで認証番号を送信いたしました。受け取った認証番号を入力し、「ログイン」ボタンをタップしてください。</string>
     <string name='sms_verify_code_title'>送信先電話番号</string>
     <string name="sms_verify_phone_example">080-0000-0000</string>
     <string name='sms_verify_code_hint'>認証番号</string>

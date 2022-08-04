@@ -31,8 +31,16 @@ fun CreditCard.reverseCardLock(): CreditCard {
     )
 }
 
+fun CreditCard.isBalance(): Boolean {
+    return this?.publishAmount.toInt() < 0
+}
+
 fun CardInfo?.isCardInfoLock(): Boolean {
     return "1" == this?.vcnSecurityLockFlg
+}
+
+fun CardInfo.isBalanceInfo(): Boolean {
+    return this?.publishAmount.toInt() < 0
 }
 
 fun CardInfo?.isCardInfoEnable(): Boolean {

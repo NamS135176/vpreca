@@ -9,6 +9,7 @@ import android.graphics.ImageFormat
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
 import android.util.Size
 import android.view.LayoutInflater
@@ -102,8 +103,16 @@ class CameraFragment : Fragment() {
             //show toast
             when (ocr.isNullOrEmpty()) {
                 true -> {
-//                    showAlertErrorOcr()
-                    findNavController().popBackStack()
+                    val builder =   MaterialAlertDialogBuilder(requireContext()).apply {
+                        setMessage(R.string.camera_ocr_failure)
+                    }.create()
+                    builder.setCancelable(false)
+                    builder.show()
+                    Handler().postDelayed({
+                        builder.dismiss()
+                        findNavController().popBackStack()
+                    }, 3000)
+//                    findNavController().popBackStack()
                 }
                 else -> {
                     setNavigationResult(ocr, "ocr_code")
@@ -114,8 +123,16 @@ class CameraFragment : Fragment() {
         viewModel.error.observe(viewLifecycleOwner, androidx.lifecycle.Observer { message ->
             //show alert error
             if (!message.isNullOrEmpty()) {
-//                showAlertErrorOcr()
-                findNavController().popBackStack()
+               val builder =  MaterialAlertDialogBuilder(requireContext()).apply {
+                    setMessage(R.string.camera_ocr_failure)
+                }.create()
+                builder.setCancelable(false)
+                builder.show()
+                Handler().postDelayed({
+                    builder.dismiss()
+                    findNavController().popBackStack()
+                }, 3000)
+//                findNavController().popBackStack()
             }
         })
         viewModel.networkTrouble.observe(
@@ -164,9 +181,6 @@ class CameraFragment : Fragment() {
 
     private fun showAlertErrorOcr() {
         MaterialAlertDialogBuilder(requireContext()).apply {
-            setPositiveButton(
-                R.string.button_retry, null
-            )
             setMessage(R.string.camera_ocr_failure)
         }.create().show()
     }
@@ -399,8 +413,16 @@ class CameraFragment : Fragment() {
                         ?: kotlin.run {
                             viewModel.releaseLockTakePhoto(true)
                             //show alert
-                            findNavController().popBackStack()
-//                            showAlertErrorOcr()
+//                            findNavController().popBackStack()
+                            val builder =   MaterialAlertDialogBuilder(requireContext()).apply {
+                                setMessage(R.string.camera_ocr_failure)
+                            }.create()
+                            builder.setCancelable(false)
+                            builder.show()
+                            Handler().postDelayed({
+                                builder.dismiss()
+                                findNavController().popBackStack()
+                            }, 3000)
                         }
                 })
             }
