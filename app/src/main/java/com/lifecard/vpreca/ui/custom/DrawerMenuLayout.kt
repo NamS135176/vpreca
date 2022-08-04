@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View.OnClickListener
+import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.lifecard.vpreca.BuildConfig
@@ -47,49 +48,49 @@ class DrawerMenuLayout @JvmOverloads constructor(
             title = context.getString(R.string.menu_group_vpreca_gift),
             show = false
         ),
-//        NavigationItem(
-//            type = 1,
-//            position = 1,
-//            title = context.getString(R.string.menu_vpreca_gift_request),
-//            show = false
-//        ),
+        NavigationItem(
+            type = 1,
+            position = 1,
+            title = context.getString(R.string.menu_vpreca_gift_request),
+            show = false
+        ),
         //Group my account
         NavigationItem(
             type = 0,
             position = 2,
             title = context.getString(R.string.menu_group_my_account),
-            show = true
+            show = false
         ),
-//        NavigationItem(
-//            type = 1,
-//            position = 3,
-//            title = context.getString(R.string.menu_member_info),
-//            show = false
-//        ),
-//        NavigationItem(
-//            type = 1,
-//            position = 4,
-//            title = context.getString(R.string.menu_change_pass),
-//            show = false
-//        ),
-//        NavigationItem(
-//            type = 1,
-//            position = 5,
-//            title = context.getString(R.string.menu_change_phone),
-//            show = false
-//        ),
-//        NavigationItem(
-//            type = 1,
-//            position = 6,
-//            title = context.getString(R.string.menu_credit_card_info),
-//            show = false
-//        ),
-//        NavigationItem(
-//            type = 1,
-//            position = 7,
-//            title = context.getString(R.string.menu_member_setting),
-//            show = false
-//        ),
+        NavigationItem(
+            type = 1,
+            position = 3,
+            title = context.getString(R.string.menu_member_info),
+            show = false
+        ),
+        NavigationItem(
+            type = 1,
+            position = 4,
+            title = context.getString(R.string.menu_change_pass),
+            show = false
+        ),
+        NavigationItem(
+            type = 1,
+            position = 5,
+            title = context.getString(R.string.menu_change_phone),
+            show = false
+        ),
+        NavigationItem(
+            type = 1,
+            position = 6,
+            title = context.getString(R.string.menu_credit_card_info),
+            show = false
+        ),
+        NavigationItem(
+            type = 1,
+            position = 7,
+            title = context.getString(R.string.menu_member_setting),
+            show = false
+        ),
         //Group utilities
         NavigationItem(
             type = 0,
@@ -97,21 +98,21 @@ class DrawerMenuLayout @JvmOverloads constructor(
             title = context.getString(R.string.menu_group_utilities),
             show = false
         ),
-//        NavigationItem(
-//            type = 1,
-//            position = 9,
-//            title = context.getString(R.string.menu_register_lifecard),
-//            show = false
-//        ),
-//        NavigationItem(
-//            type = 1,
-//            position = 10,
-//            title = context.getString(R.string.menu_campain_info),
-//            show = false
-//        ),
+        NavigationItem(
+            type = 1,
+            position = 9,
+            title = context.getString(R.string.menu_register_lifecard),
+            show = false
+        ),
+        NavigationItem(
+            type = 1,
+            position = 10,
+            title = context.getString(R.string.menu_campain_info),
+            show = false
+        ),
         //Group support
         NavigationItem(
-            type = 0,
+            type = 2,
             position = 11,
             title = context.getString(R.string.menu_group_support),
             show = false
@@ -142,7 +143,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
 //        ),
         //Group About VPreca
         NavigationItem(
-            type = 0,
+            type = 2,
             position = 16,
             title = context.getString(R.string.menu_group_about_vpreca),
             show = false
@@ -213,23 +214,25 @@ class DrawerMenuLayout @JvmOverloads constructor(
             print("onClick menu at ${position}")
 //            Toast.makeText(context, "onClick menu at ${position}", Toast.LENGTH_SHORT).show()
 //            closeDrawer()
-                items[position].show = !items[position].show
-//            when (position) {
-//                1 -> viewFindNavController().navigate(R.id.nav_gift_card_policy)
-//                3 -> viewFindNavController().navigate(R.id.nav_change_info_data)
-//                4 -> viewFindNavController().navigate(R.id.nav_change_pass)
-//                5 -> viewFindNavController().navigate(R.id.nav_change_phone_first)
-//                6 -> viewFindNavController().navigate(
-//                    R.id.nav_web_direct,
-//                    WebDirectFragmentArgs(screenId = WebDirectScreen.SCREEN_CREDIT_CARD_INFO).toBundle()
-//                )//menu_member_setting
-//                7 -> viewFindNavController().navigate(R.id.nav_fingerprint_setting)//menu_credit_card_info
-//                9 -> showWebViewActivity("https://www.lifecard.co.jp/card/campaign/ol_nyukai/vpc/1604_1/index.html?utm_source=mail&utm_medium=mail&utm_campaign=vpc_my2&argument=xZcLVgDf&dmai=a627cb5ac0f66f")//menu_register_lifecard
-//                10 -> showWebViewActivity("https://vpc.lifecard.co.jp/campaign/index.html")//menu_campain_info
+
+            when (position) {
+                1 -> viewFindNavController().navigate(R.id.nav_gift_card_policy)
+                3 -> viewFindNavController().navigate(R.id.nav_change_info_data)
+                4 -> viewFindNavController().navigate(R.id.nav_change_pass)
+                5 -> viewFindNavController().navigate(R.id.nav_change_phone_first)
+                6 -> viewFindNavController().navigate(
+                    R.id.nav_web_direct,
+                    WebDirectFragmentArgs(screenId = WebDirectScreen.SCREEN_CREDIT_CARD_INFO).toBundle()
+                )//menu_member_setting
+                7 -> viewFindNavController().navigate(R.id.nav_fingerprint_setting)//menu_credit_card_info
+                9 -> showWebViewActivity("https://www.lifecard.co.jp/card/campaign/ol_nyukai/vpc/1604_1/index.html?utm_source=mail&utm_medium=mail&utm_campaign=vpc_my2&argument=xZcLVgDf&dmai=a627cb5ac0f66f")//menu_register_lifecard
+                10 -> showWebViewActivity("https://vpc.lifecard.co.jp/campaign/index.html")//menu_campain_info
+                11 -> items[position].show = !items[position].show
 //                12 -> showWebViewActivity("https://vpc.lifecard.co.jp/news/index.html")//menu_news
 //                13 -> showWebViewActivity("https://vpreca.dga.jp/")//menu_faq
 //                14 -> showWebViewActivity("https://vpc.lifecard.co.jp/attention/index.html")//menu_attention
 //                15 -> showWebViewActivity("https://vpc.lifecard.co.jp/contact/index.html")//menu_inquiry
+                12 -> items[position].show = !items[position].show
 //                17 -> showWebViewActivity("https://www.lifecard.co.jp/company/")//menu_company
 //                18 -> showWebViewActivity("https://www.lifecard.co.jp/company/business/")//menu_business_info
 //                19 -> showWebViewActivity("https://www.lifecard.co.jp/efforts/compliance/")//menu_compliance
@@ -239,7 +242,7 @@ class DrawerMenuLayout @JvmOverloads constructor(
 //                23 -> showWebViewActivity("https://vpc.lifecard.co.jp/settlement/index.html")//menu_settlement
 //                24 -> showWebViewActivity("https://vpc.lifecard.co.jp/rule/index.html")//menu_rule
 //                25 -> viewFindNavController().navigate(R.id.nav_aboutapp)
-//            }
+            }
         }
     }
 
