@@ -104,7 +104,7 @@ class CameraFragment : Fragment() {
             when (ocr.isNullOrEmpty()) {
                 true -> {
                     val builder =   MaterialAlertDialogBuilder(requireContext()).apply {
-                        setMessage(R.string.camera_ocr_failure)
+                        setMessage("読み取りに失敗しました")
                     }.create()
                     builder.setCancelable(false)
                     builder.show()
@@ -124,7 +124,7 @@ class CameraFragment : Fragment() {
             //show alert error
             if (!message.isNullOrEmpty()) {
                val builder =  MaterialAlertDialogBuilder(requireContext()).apply {
-                    setMessage(R.string.camera_ocr_failure)
+                    setMessage("読み取りに失敗しました")
                 }.create()
                 builder.setCancelable(false)
                 builder.show()
@@ -415,7 +415,7 @@ class CameraFragment : Fragment() {
                             //show alert
 //                            findNavController().popBackStack()
                             val builder =   MaterialAlertDialogBuilder(requireContext()).apply {
-                                setMessage(R.string.camera_ocr_failure)
+                                setMessage("読み取りに失敗しました")
                             }.create()
                             builder.setCancelable(false)
                             builder.show()
