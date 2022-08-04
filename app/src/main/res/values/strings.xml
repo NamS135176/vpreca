@@ -62,7 +62,7 @@
     <string name="btn_next_phone">@string/button_next</string>
     <string name="phone_title">電話番号登録</string>
     <string name="phone_des_top">Vプリカアカウントを作成するにはSMSによる認証が必要です。</string>
-    <string name="phone_des_bot">以下にSMSを受信できる090/080/070ではじまる電話番号をハイフンを入れずに入力、「電話番号認証」をタップしてください。</string>
+    <string name="phone_des_bot">以下にSMSを受信できる電話番号を入力、「電話番号認証」をタップしてください。</string>
     <string name="phone_hint">電話番号</string>
     <string name="des_phone_input">電話番号は、ご連絡先として登録いたします。</string>
 
@@ -99,7 +99,7 @@
     <!--    Introduce Screen-->
     <string name='introduce_title'>Vプリカギフト</string>
     <string name='introduce_des_top'>Vプリカギフトの </string>
-    <string name='introduce_des_bot'>買った方、貰った方はこちらで\nカード番号が確認できます。</string>
+    <string name='introduce_des_bot'>Vプリカギフトを買った方、貰った方は\nこちらでカード番号が確認できます。 </string>
     <string name='introduce_des'>以下の内容をよくお読みのうえ、チェックボックスにチェックを して、「次へ」ボタンを押してください</string>
     <string name='introduce_first_line'>私は、暴力団などの反社会的勢力や、反社会的勢力の関 係者ではないことを表明します。</string>
     <string name='introduce_second_line'>私は、Vプリカギフト利用規約に同意します。</string>
@@ -220,7 +220,7 @@
     <string name='sms_verify_des_bot'>SMSで認証番号を送信いたしました。受け取った認証番号を入力し、「ログイン」ボタンをタップしてください。</string>
     <string name='sms_verify_code_title'>送信先電話番号</string>
     <string name="sms_verify_phone_example">080-0000-0000</string>
-    <string name='sms_verify_code_hint'>認証番号</string>
+    <string name='sms_verify_code_hint'>認証コード</string>
     <string name="sms_verify_description_first">認証手続きの有効時間は10分です。</string>
     <string name='sms_verify_description_second'>認証番号の入力を複数回間違えると、同日中の入力が行えなくなります。</string>
     <string name='sms_verify_description_third'>認証番号が届かない場合は、「キャンセル」ボタンをタップし、ご登録情報を確認のうえ、再度お手続きください。</string>

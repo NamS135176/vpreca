@@ -6,17 +6,34 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-    <TextView
-        style="@style/Widget.AppCompat.TextView.Bold"
-        android:layout_width="match_parent"
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/dialog_spinner_container_bg"
         android:gravity="center"
-        android:paddingVertical="20dp"
-        android:text="読込中"
-        android:textSize="30dp"
-        android:textColor="@color/black"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintVertical_bias="0.069">
+
+        <TextView
+            style="@style/Widget.AppCompat.TextView.Bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="10dp"
+            android:text="読込中"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
