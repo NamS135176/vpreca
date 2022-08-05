@@ -36,7 +36,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{Converter.formatToolbarTitle(title, 12)}" />
+                android:maxLines="1"
+                android:text="@{Converter.formatToolbarTitle(title, 10)}" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonCancel"

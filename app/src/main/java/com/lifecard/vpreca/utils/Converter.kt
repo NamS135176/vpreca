@@ -132,7 +132,7 @@ object Converter {
     }
 
     @JvmStatic
-    fun formatToolbarTitle(title: String, max: Int = 12): String {
+    fun formatToolbarTitle(title: String, max: Int = 10): String {
         return try {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 title

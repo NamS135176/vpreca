@@ -29,6 +29,7 @@
                 style="@style/Widget.Theme.VPreca.ActionBar.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:text="@{Converter.formatToolbarTitle(title, 20)}" />
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
