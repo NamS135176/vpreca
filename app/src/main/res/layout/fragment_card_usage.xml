@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -67,7 +66,6 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="3sp"
                 android:text="¥30,000"
-                android:textColor="#ffffff"
                 android:textSize="22.7sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_no" />
