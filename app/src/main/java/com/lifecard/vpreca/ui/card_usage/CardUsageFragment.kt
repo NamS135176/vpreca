@@ -93,7 +93,12 @@ class CardUsageFragment : Fragment() {
         }
         binding.cardNo.text = Converter.convertPrecaNumber(args.card?.precaNumber)
         binding.balance.text = Converter.convertCurrency(args.card?.publishAmount)
-
+        if(args.card?.publishAmount?.toInt()!! < 0){
+            binding.balance.setTextColor(resources.getColor(R.color.error))
+        }
+        else{
+            binding.balance.setTextColor(resources.getColor(R.color.white))
+        }
 
         return binding.root
     }
