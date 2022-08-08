@@ -32,6 +32,6 @@
     <string name="menu_laws">個人情報保護に関する法律に基づく\n公表事項</string>
     <string name="menu_settlement">資金決済法に基づく表示</string>
     <string name="menu_rule">会員規約</string>
-    <string name="menu_aboutapp">Ｖプリカについて</string>
+    <string name="menu_aboutapp">アプリ利用規約</string>
 
 </resources>
