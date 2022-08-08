@@ -144,6 +144,20 @@ object Converter {
         }
     }
 
+    @JvmStatic
+    fun formatToolbarTitleToNull(title: String, max: Int = 12): String {
+        return try {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                title
+            } else {
+                title.substring(0, min(max, title.length))
+            }
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
+
     /**
      * This method converts dp unit to equivalent pixels, depending on device density.
      *

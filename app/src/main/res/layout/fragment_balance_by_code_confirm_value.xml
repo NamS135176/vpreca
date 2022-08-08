@@ -44,7 +44,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
+                        android:layout_weight="1.5"
                         android:lineSpacingExtra="8sp"
                         android:paddingTop="12dp"
                         android:text="@string/balance_amount_menu_layout_title"
@@ -93,7 +93,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="2"
+                        android:layout_weight="1.5"
                         android:lineSpacingExtra="8sp"
                         android:paddingTop="12dp"
                         android:text="@string/gift_card_confirm_detail_price_title"
