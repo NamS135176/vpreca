@@ -22,7 +22,7 @@
             layout="@layout/toolbar_title_only"
             app:elevation="0dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="" />
+            app:title="@{@string/nothing}"   />
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/gift_card_complete_title"
             style="@style/Widget.AppCompat.TextView.Bold"
