@@ -26,6 +26,7 @@
             android:layout_marginHorizontal="29dp"
             android:gravity="center_horizontal"
             android:paddingTop="32dp"
+            android:lineSpacingExtra="6sp"
             android:text="@string/balance_by_source_complete_title"
             android:textColor="@color/white"
             android:textSize="18sp"

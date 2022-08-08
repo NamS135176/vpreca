@@ -430,15 +430,15 @@
     <string name="balance_amount_by_code_select_appbar_title">不足カードへ入金</string>
     <string name="balance_amount_by_code_select_title">残高不足の合計</string>
     <string name="balance_amount_by_code_select_title_left">入金金額</string>
-    <string name="balance_amount_by_code_select_title_right">入金後の残高不足</string>
+    <string name="balance_amount_by_code_select_title_right">入金後不足残高</string>
     <string name="balance_amount_by_code_select_des">入金するカードを選択してください</string>
     <!--    Balance amount select-->
 
     <!--    Balance by source confirm-->
     <string name="balance_select_source_confirm_appbar_title">不足カードへ入金</string>
     <string name="balance_select_source_confirm_title">残高不足充当の確認</string>
-    <string name="balance_select_source_confirm_des">残高不足充当の内容をご確認ください</string>
-    <string name="balance_select_source_confirm_btn">充当</string>
+    <string name="balance_select_source_confirm_des"> 残高不足入金の内容をご確認ください</string>
+    <string name="balance_select_source_confirm_btn">カードへ入金</string>
     <!--    Balance by source confirm-->
 
     <!--    Balance by code complete-->
