@@ -431,6 +431,7 @@
     <string name="balance_amount_by_code_select_title">残高不足の合計</string>
     <string name="balance_amount_by_code_select_title_left">入金金額</string>
     <string name="balance_amount_by_code_select_title_right">入金後不足残高</string>
+    <string name="balance_amount_by_code_confirm">入金後の残高不足</string>
     <string name="balance_amount_by_code_select_des">入金するカードを選択してください</string>
     <!--    Balance amount select-->
 
