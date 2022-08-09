@@ -193,7 +193,7 @@
                         android:layout_weight="2"
                         android:lineSpacingExtra="8sp"
                         android:paddingTop="12dp"
-                        android:text="@string/balance_amount_by_code_select_title_right"
+                        android:text="@string/balance_amount_by_code_confirm"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
 
