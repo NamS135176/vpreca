@@ -443,7 +443,7 @@
 
     <!--    Balance by code complete-->
     <string name="balance_by_source_complete_appbar_title">不足カードへ入金</string>
-    <string name="balance_by_source_complete_title">残高不足のカードへ\n入金が完了いたしました</string>
+    <string name="balance_by_source_complete_title">残高不足のカードへ\n入金が完了いたしました。</string>
     <string name="balance_by_source_complete_des">残高不足が解消していない場合は、引き続きお手続きをお願いします。</string>
     <!--    Balance by code complete-->
 
