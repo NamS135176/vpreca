@@ -138,7 +138,6 @@
             android:textColor="@color/primary"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:icon="@drawable/ic_home_button_logo"
             app:iconGravity="textStart"
             app:iconPadding="6dp"
             app:iconSize="16dp"

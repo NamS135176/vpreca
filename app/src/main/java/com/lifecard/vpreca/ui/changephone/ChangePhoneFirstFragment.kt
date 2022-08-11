@@ -167,7 +167,7 @@ class ChangePhoneFirstFragment : Fragment() {
                 state.error?.errorMessage?.let { showPopupMessage(message = it) }
                 state.errorText?.let { errorText -> showPopupMessage(message = errorText) }
                 state.success?.let { memberInfo ->
-                    tvPhone.text = UserConverter.formatPhone(memberInfo.telephoneNumber1!!)
+                    tvPhone.text = UserConverter.formatHideDisplayPhoneNumber(memberInfo)
                     dateData = memberInfo.birthday!!
                 }
             })
