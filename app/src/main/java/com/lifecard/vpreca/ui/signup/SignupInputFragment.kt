@@ -223,7 +223,7 @@ class SignupInputFragment : Fragment() {
         viewModel.nameError.observe(
             viewLifecycleOwner
         ) { errors: Array<Number?>? ->
-            binding.hiraNameInputLayout.error = try {
+            binding.nameInputLayout.error = try {
                 val errorInt = errors?.filterNotNull()
                 if (!errorInt.isNullOrEmpty()) {
                     println("errorInt: $errorInt - text ${errorInt.map { getString(it as Int) }}")
