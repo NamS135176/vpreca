@@ -63,7 +63,7 @@
     <string name="phone_title">電話番号登録</string>
     <string name="phone_des_top">Vプリカアカウントを作成するにはSMSによる認証が必要です。</string>
     <string name="phone_des_bot">以下にSMSを受信できる電話番号を入力、「次へ」をタップしてください。</string>
-    <string name="phone_des_bot_have_number">以下にSMSを受信できる入力、「電話番号認証」をタップしてください。</string>
+    <string name="phone_des_bot_have_number">以下にSMSを受信できる入力、「送信」をタップしてください。</string>
     <string name="phone_hint">電話番号</string>
     <string name="des_phone_input">電話番号は、ご連絡先として登録いたします。</string>
 
