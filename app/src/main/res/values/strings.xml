@@ -287,7 +287,7 @@
     <!--    Gift Card Complete-->
     <string name="gift_card_complete_title">Vプリカの登録が完了いたしました。</string>
     <string name="gift_card_complete_des_top">ホーム画面でカードが登録されていることを確認してください。</string>
-    <string name="gift_card_complete_des_bot">なお、ご登録いただいいるメールアドレスに確認メールを送信いたしました。</string>
+    <string name="gift_card_complete_des_bot">ご登録のメールアドレスに確認メールを送信いたしました。</string>
     <string name="gift_card_complete_btn">ホーム</string>
     <!--    Gift Card Complete-->
 
@@ -422,7 +422,7 @@
     <!--    Issue Card By Code Complete without card-->
     <string name="issue_card_by_code_complete_w_card_appbar_title">Vプリカ発行完了</string>
     <string name="issue_card_by_code_complete_w_card_title">Vプリカの発行が完了いたしました。</string>
-    <string name="issue_card_by_code_complete_w_card_des_top">ホーム画面でカードが発行されていることを確認してください。尚、ご登録いただいいるメールアドレスに確認メールを送信いたしました、</string>
+    <string name="issue_card_by_code_complete_w_card_des_top">ホーム画面でVプリカが発行されていることを確認してください。\nご登録のメールアドレスに確認メールを送信いたしました。</string>
     <string name="issue_card_by_code_complete_w_card_des_bot">引き続き残高合算を、ご利用の場合は「残高合算」ボタンを選択してください。</string>
     <!--    Issue Card By Code Complete without card-->
 
@@ -449,9 +449,9 @@
     <!--    Balance by code complete-->
 
     <!--    Issue Card By Code Complete with card-->
-    <string name="issue_card_by_code_complete_with_card_appbar_title">残高加算内容完了</string>
+    <string name="issue_card_by_code_complete_with_card_appbar_title">残高加算完了</string>
     <string name="issue_card_by_code_complete_with_card_title">残高不足のカードへ\n入金が完了いたしました。</string>
-    <string name="issue_card_by_code_complete_with_card_des">ホーム画面でカードが発行されていることを確認してください。\n\nなお、ご登録いただいいるメールアドレスに確認メールを送信いたしました。</string>
+    <string name="issue_card_by_code_complete_with_card_des">ホーム画面でVプリカが発行されていることを確認してください。\n\nご登録のメールアドレスに確認メールを送信いたしました。</string>
     <!--    Issue Card By Code Complete without card-->
 
     <!--    Balance by code confirm-->
