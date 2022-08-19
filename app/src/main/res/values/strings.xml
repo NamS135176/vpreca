@@ -507,7 +507,7 @@
     <string name="issue_card_by_code_des_bot">入力エラーの際は、お手数ですが直接認証コードをご入力ください。</string>
     <string name="issue_card_by_code_input_hint">半角英数字15桁</string>
     <string name="issue_card_by_code_confirm_value_title_confirm">購入券種(金額)</string>
-    <string name="issue_card_by_code_complete_des">ホーム画面でカードが発行されていることを確認してください。\n尚、ご登録のメールアドレスに確認メールを送信いたしました、</string>
+    <string name="issue_card_by_code_complete_des">ホーム画面でカードが発行されていることを確認してください。\n尚、ご登録のメールアドレスに確認メールを送信いたしました。</string>
     <!--    Issue Card by code-->
 
     <!--    Error  -->
