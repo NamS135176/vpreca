@@ -49,6 +49,7 @@
             android:layout_marginHorizontal="29dp"
             android:lineSpacingExtra="6sp"
             android:paddingTop="39dp"
+            android:visibility="invisible"
             android:text="@string/issue_card_by_code_complete_w_card_des_bot"
             android:textColor="@color/white"
             android:textSize="12sp"
