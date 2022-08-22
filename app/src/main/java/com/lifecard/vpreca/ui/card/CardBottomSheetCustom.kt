@@ -52,6 +52,7 @@ class CardBottomSheetCustom(
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         bindingDialog.card = convertObject(newCard)
 
+
         val card = bindingDialog.cardZone
         val btnBack = bindingDialog.btnBack
         val btnCopy = bindingDialog.buttonCopy
