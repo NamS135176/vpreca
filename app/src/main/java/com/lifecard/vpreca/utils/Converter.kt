@@ -67,8 +67,14 @@ object Converter {
 
     @JvmStatic
     fun convertCurrency(value: Int, defaultCurrency: String = "¥"): String {
-        val formatter: NumberFormat = DecimalFormat("#,###")
-        return "${defaultCurrency}${formatter.format(value)}"
+       if(value <0) {
+           val formatter: NumberFormat = DecimalFormat("#,###")
+           return "-${defaultCurrency}${formatter.format(-value)}"
+       }
+        else{
+           val formatter: NumberFormat = DecimalFormat("#,###")
+           return "${defaultCurrency}${formatter.format(value)}"
+       }
     }
 
     @JvmStatic
