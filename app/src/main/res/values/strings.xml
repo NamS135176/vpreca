@@ -421,7 +421,7 @@
 
     <!--    Issue Card By Code Complete without card-->
     <string name="issue_card_by_code_complete_w_card_appbar_title">Vプリカ発行完了</string>
-    <string name="issue_card_by_code_complete_w_card_title">Vプリカの発行が完了いたしました。</string>
+    <string name="issue_card_by_code_complete_w_card_title">Vプリカの発行が完了いたしました</string>
     <string name="issue_card_by_code_complete_w_card_des_top">ホーム画面でVプリカが発行されていることを確認してください。\nご登録のメールアドレスに確認メールを送信いたしました。</string>
     <string name="issue_card_by_code_complete_w_card_des_bot">引き続き残高合算を、ご利用の場合は「残高合算」ボタンを選択してください。</string>
     <!--    Issue Card By Code Complete without card-->
