@@ -92,7 +92,7 @@ class SMSVerifyFragment : Fragment() {
                 listDesignResult.success?.let {
                     extCertDealId = listDesignResult.success.extCertDealId!!
                     certType = listDesignResult.success.certType!!
-                    tvPhone.text = UserConverter.formatPhone(listDesignResult.success.ivrTelephoneNumber)
+//                    tvPhone.text = UserConverter.formatPhone(listDesignResult.success.ivrTelephoneNumber)
                 }
                 listDesignResult.error?.let { error ->
                     error.messageResId?.let { showPopupMessage("", getString(it)) }
